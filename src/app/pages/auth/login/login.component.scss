@@ -1,0 +1,121 @@
+.logo_container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0.6;
+  background-color: #eef0fb;
+  
+  .custom_ar {
+    transform: scaleX(-1);
+  }
+}
+
+.login_container {
+  flex: 0.4;
+
+  .login_wrapper {
+    // width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .form_wrapper {
+      display: flex;
+      flex-direction: column;
+      width: 375px;
+      height: 100%;
+      align-items: center;
+      justify-content: center;
+
+      img,
+      .sign_in {
+        align-self: flex-start;
+        margin-bottom: 25px;
+      }
+
+      form {
+        width: 100%;
+
+        .form-group {
+          position: relative;
+          margin-bottom: 35px;
+
+          label {
+            position: absolute;
+            top: -13px;
+            padding: 1px 0px;
+            background: var(--white-color);
+            margin-left: 14px;
+            margin-right: 14px;
+          }
+
+          input:not([type="checkbox"]) {
+            height: 50px;
+            padding: 12px 14px;
+            border-radius: 10px;
+            border: 2px solid var(--secondary-color);
+          }
+
+          &.checkbox_ar {
+            float: right;
+            display: flex;
+            width: 95px;
+            justify-content: space-between;
+            align-items: center;
+          }
+
+          i {
+            position: absolute;
+            right: 14px;
+            top: 15px;
+            cursor: pointer;
+
+            &.custom_ar {
+              right: unset;
+              left: 14px;
+            }
+          }
+        }
+
+        button {
+          width: 100%;
+          background-color: var(--secondary-color);
+          color: var(--white-color);
+
+          &:disabled {
+            background-color: #6bc5d5;
+          }
+        }
+
+        .change_lang {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          height: 50px;
+          height: 60px;
+          justify-content: space-around;
+
+          a {
+            font-weight: 500;
+            cursor: pointer;
+            color: var(--secondary-color);
+            text-decoration: none;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+
+    .logo_container {
+        display: none;
+    }
+
+    .login_container {
+        flex: 1;
+    }
+
+}

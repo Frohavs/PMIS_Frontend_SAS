@@ -1,1 +1,42 @@
 /* You can add global styles to this file, and also import other style files */
+:root {
+    --primary-color: #0C375A;
+    --primary--hover-color: #0b3f66;
+    --secondary-color: #12A8C0;
+    --danger-color: #F2693F;
+    --white-color: #fff;
+    --black-color: #000;
+}
+
+html:lang(ar) * {
+    direction: rtl;
+
+    .cdk-overlay-pane {
+        /* Your RTL-specific styles here for cdk menu*/
+        place-self: flex-end !important;
+        // margin-left: 20px;
+    }
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    list-style-type: none;
+}
+
+.form-control.ng-touched.ng-invalid {
+    border: 2px solid var(--danger-color) !important;
+    background-color: #FCF1EC;
+}
+
+.form-check-input:checked {
+    background-color: var(--secondary-color);
+    border-color: var(--secondary-color);
+}
+
+.errors {
+    small {
+        color: var(--danger-color) !important;
+    }
+}

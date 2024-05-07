@@ -1,0 +1,22 @@
+.main-content {
+    margin-top: 100px;
+    padding: 20px 30px;
+    transition: margin-left 0.5s ease-in-out;
+    transition: margin-right 0.5s ease-in-out;
+
+    &.en_margin {
+        margin-left: 284px;
+    }
+
+    &.ar_margin {
+        margin-right: 284px;
+    }
+}
+
+@media screen and (max-width: 600px) {
+
+    .main-content {
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+}
