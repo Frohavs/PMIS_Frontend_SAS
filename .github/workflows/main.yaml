@@ -25,3 +25,8 @@ jobs:
 
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@releases/v2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          base_branch: main
+          branch: stage
+          folder: pmis_frontend/dist
