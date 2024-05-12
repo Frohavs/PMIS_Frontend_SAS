@@ -4,9 +4,12 @@
   justify-content: center;
   flex: 0.6;
   background-color: #eef0fb;
-  
-  .custom_ar {
-    transform: scaleX(-1);
+
+  img {
+    width: 60%;
+    &.custom_ar {
+      transform: scaleX(-1);
+    }
   }
 }
 

@@ -14,18 +14,14 @@ jobs:
         node-version: [20]
 
     steps:
-      - name: Checkout
+      - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Install and Build
-        run: |
-          npm install --force
-          npm run build:prod
+      - name: Install dependencies
+        run: npm install --force
+
+      - name: Build Angular app
+        run: npm run build:prod
 
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@releases/v2
-        with:
-          GITHUB_TOKEN: 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
-          base_branch: main
-          branch: stage
-          folder: pmis_frontend/dist
