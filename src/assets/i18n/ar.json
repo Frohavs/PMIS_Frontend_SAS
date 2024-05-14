@@ -9,6 +9,7 @@
     "users": "المستخدمين",
     "notifications": "الإشعارات",
     "login": "تسجيل الدخول",
+    "logout": "تسجيل الخروج",
     "address_required": "العنوان إلزامي",
     "username_required": "اسم المستخدم إلزامي",
     "password_required": "كلمة المرور إلزامية",

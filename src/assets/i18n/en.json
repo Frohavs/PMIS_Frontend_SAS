@@ -9,6 +9,7 @@
     "users": "Users",
     "notifications": "Notifications",
     "login": "Login",
+    "logout": "Logout",
     "address_required": "address is required",
     "username_required": "user name is required",
     "password_required": "password is required",

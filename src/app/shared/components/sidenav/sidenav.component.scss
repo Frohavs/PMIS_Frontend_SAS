@@ -27,6 +27,7 @@ li {
         &::after {
           border: solid;
           border-width: 0 0.075rem 0.075rem 0;
+
           content: "";
           display: inline-block;
           padding: 2px;
@@ -62,7 +63,7 @@ li {
           position: absolute;
           top: 0;
           left: 70;
-          background-color: var(--black-color);
+          // background-color: var(--black-color);
           padding: 0;
           min-width: 15rem;
           display: none;
@@ -91,10 +92,40 @@ li {
         font-weight: 600;
       }
     }
+    .sidebar-nav {
+      overflow-y: auto;
+      overflow-x: hidden;
 
-    .sidebar-nav, .sidebar-footer {
+      &::-webkit-scrollbar {
+        width: 12px;
+      }
+
+      &::-webkit-scrollbar-track {
+        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+        border-radius: 10px;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        border-radius: 10px;
+        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.4);
+      }
+    }
+
+    .sidebar-nav,
+    .sidebar-footer {
       padding: 2rem 0;
       flex: 1 1 auto;
+
+      .first-level {
+        a.sidebar-link {
+          padding: 0.625rem 5rem;
+        }
+      }
+      .second-level {
+        a.sidebar-link {
+          padding: 0.625rem 6rem;
+        }
+      }
 
       a {
         &.sidebar-link {
@@ -110,7 +141,8 @@ li {
             margin-right: 0.75rem;
           }
 
-          &:hover, &.active {
+          &:hover,
+          &.active {
             background-color: rgba(255, 255, 255, 0.075);
             border-left: 3px solid #3b7ddd;
           }
@@ -119,11 +151,32 @@ li {
 
       .sidebar-item {
         position: relative;
+        padding: 0.5rem 0;
+      }
+
+      &.nav_ar {
+        a {
+          &.sidebar-link {
+            &:hover,
+            &.active {
+              background-color: rgba(255, 255, 255, 0.075);
+              border-right: 3px solid #3b7ddd;
+            }
+            i {
+              margin-left: 0.75rem;
+              margin-right: unset;
+            }
+            &::after {
+              left: 1.5rem;
+              right: unset;
+            }
+          }
+        }
       }
     }
 
     .sidebar-footer {
-        flex: unset !important;
+      flex: unset !important;
     }
   }
 }

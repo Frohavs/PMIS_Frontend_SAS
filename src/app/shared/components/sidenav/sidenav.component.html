@@ -1,5 +1,5 @@
 <div class="wrapper">
-  <aside id="sidebar" class="expand">
+  <aside id="sidebar" [ngClass]="{ expand: !collpased }">
     <div class="d-flex">
       <button (click)="toggleSidenav()" class="toggle-btn" type="button">
         <i class="fal fa-compass" aria-hidden="true"></i>
@@ -8,15 +8,23 @@
         <a>PMIS Frontend</a>
       </div>
     </div>
-    <ul class="sidebar-nav">
+    <ul class="sidebar-nav" [ngClass]="{ nav_ar: currentLang == 'ar' }">
       <li class="sidebar-item">
-        <a [routerLink]="['/dashboard/home']" routerLinkActive="active"  class="sidebar-link">
+        <a
+          [routerLink]="['/dashboard/home']"
+          routerLinkActive="active"
+          class="sidebar-link"
+        >
           <i class="fal fa-home"></i>
-          <span>Home</span>
+          <span>{{ "Home" | translate }}</span>
         </a>
       </li>
       <li class="sidebar-item">
-        <a [routerLink]="['/dashboard/profile']" routerLinkActive="active" class="sidebar-link">
+        <a
+          [routerLink]="['/dashboard/profile']"
+          routerLinkActive="active"
+          class="sidebar-link"
+        >
           <i class="fal fa-user"></i>
           <span>profile</span>
         </a>
@@ -40,7 +48,7 @@
         </a>
         <ul
           id="auth"
-          class="sidebar-dropdown list-unstyled collapse"
+          class="sidebar-dropdown list-unstyled collapse first-level"
           data-bs-parent="#sidebar"
         >
           <li class="sidebar-item">
@@ -64,7 +72,7 @@
         </a>
         <ul
           id="multi"
-          class="sidebar-dropdown list-unstyled collapse"
+          class="sidebar-dropdown list-unstyled collapse first-level"
           data-bs-parent="#sidebar"
         >
           <div class="sidebar-item">
@@ -77,7 +85,10 @@
             >
               Two Links
             </a>
-            <ul id="multi-two" class="sidebar-dropdown list-unstyled collapse">
+            <ul
+              id="multi-two"
+              class="sidebar-dropdown list-unstyled collapse second-level"
+            >
               <li class="sidebar-item">
                 <a class="sidebar-link">Link 1</a>
               </li>
@@ -101,10 +112,10 @@
         </a>
       </li>
     </ul>
-    <div class="sidebar-footer">
+    <div class="sidebar-footer" [ngClass]="{ nav_ar: currentLang == 'ar' }">
       <a [routerLink]="['/login']" class="sidebar-link">
         <i class="fal fa-sign-out" aria-hidden="true"></i>
-        <span>Logout</span>
+        <span>{{ 'logout' | translate }}</span>
       </a>
     </div>
   </aside>
