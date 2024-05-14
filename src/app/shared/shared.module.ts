@@ -3,10 +3,11 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
+import { HeaderComponent } from './components/header/header.component';
 
 @NgModule({
   declarations: [
-
+    HeaderComponent
   ],
   imports: [
     CommonModule,
@@ -20,6 +21,7 @@ import { TranslateModule } from '@ngx-translate/core';
     FormsModule,
     RouterModule,
     TranslateModule,
+    HeaderComponent
   ],
 })
 export class SharedModule {}
