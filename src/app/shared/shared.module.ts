@@ -4,10 +4,14 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { HeaderComponent } from './components/header/header.component';
+import { SidenavComponent } from './components/sidenav/sidenav.component';
+import { ProfileComponent } from './components/profile/profile.component';
 
 @NgModule({
   declarations: [
-    HeaderComponent
+    HeaderComponent,
+    SidenavComponent,
+    ProfileComponent
   ],
   imports: [
     CommonModule,
@@ -21,7 +25,9 @@ import { HeaderComponent } from './components/header/header.component';
     FormsModule,
     RouterModule,
     TranslateModule,
-    HeaderComponent
+    HeaderComponent,
+    SidenavComponent,
+    ProfileComponent
   ],
 })
 export class SharedModule {}

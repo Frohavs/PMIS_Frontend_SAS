@@ -1,0 +1,111 @@
+<div class="wrapper">
+  <aside id="sidebar" class="expand">
+    <div class="d-flex">
+      <button (click)="toggleSidenav()" class="toggle-btn" type="button">
+        <i class="fal fa-compass" aria-hidden="true"></i>
+      </button>
+      <div class="sidebar-logo">
+        <a>PMIS Frontend</a>
+      </div>
+    </div>
+    <ul class="sidebar-nav">
+      <li class="sidebar-item">
+        <a [routerLink]="['/dashboard/home']" routerLinkActive="active"  class="sidebar-link">
+          <i class="fal fa-home"></i>
+          <span>Home</span>
+        </a>
+      </li>
+      <li class="sidebar-item">
+        <a [routerLink]="['/dashboard/profile']" routerLinkActive="active" class="sidebar-link">
+          <i class="fal fa-user"></i>
+          <span>profile</span>
+        </a>
+      </li>
+      <li class="sidebar-item">
+        <a class="sidebar-link">
+          <i class="fal fa-tasks" aria-hidden="true"></i>
+          <span>Task</span>
+        </a>
+      </li>
+      <li class="sidebar-item">
+        <a
+          class="sidebar-link has-dropdown collapsed"
+          data-bs-toggle="collapse"
+          data-bs-target="#auth"
+          aria-expanded="false"
+          aria-controls="auth"
+        >
+          <i class="fal fa-lock" aria-hidden="true"></i>
+          <span>Auth</span>
+        </a>
+        <ul
+          id="auth"
+          class="sidebar-dropdown list-unstyled collapse"
+          data-bs-parent="#sidebar"
+        >
+          <li class="sidebar-item">
+            <a class="sidebar-link"> Login </a>
+          </li>
+          <li class="sidebar-item">
+            <a class="sidebar-link"> Register </a>
+          </li>
+        </ul>
+      </li>
+      <li class="sidebar-item">
+        <a
+          class="sidebar-link has-dropdown collapsed"
+          data-bs-toggle="collapse"
+          data-bs-target="#multi"
+          aria-expanded="false"
+          aria-controls="multi"
+        >
+          <i class="fal fa-window-restore" aria-hidden="true"></i>
+          <span>Multi Level</span>
+        </a>
+        <ul
+          id="multi"
+          class="sidebar-dropdown list-unstyled collapse"
+          data-bs-parent="#sidebar"
+        >
+          <div class="sidebar-item">
+            <a
+              class="sidebar-link collapsed"
+              data-bs-toggle="collapse"
+              data-bs-target="#multi-two"
+              aria-expanded="false"
+              aria-controls="multi-two"
+            >
+              Two Links
+            </a>
+            <ul id="multi-two" class="sidebar-dropdown list-unstyled collapse">
+              <li class="sidebar-item">
+                <a class="sidebar-link">Link 1</a>
+              </li>
+              <li class="sidebar-item">
+                <a class="sidebar-link">Link 2</a>
+              </li>
+            </ul>
+          </div>
+        </ul>
+      </li>
+      <li class="sidebar-item">
+        <a class="sidebar-link">
+          <i class="fal fa-bell" aria-hidden="true"></i>
+          <span>notification</span>
+        </a>
+      </li>
+      <li class="sidebar-item">
+        <a class="sidebar-link">
+          <i class="fal fa-cogs" aria-hidden="true"></i>
+          <span>settings</span>
+        </a>
+      </li>
+    </ul>
+    <div class="sidebar-footer">
+      <a [routerLink]="['/login']" class="sidebar-link">
+        <i class="fal fa-sign-out" aria-hidden="true"></i>
+        <span>Logout</span>
+      </a>
+    </div>
+  </aside>
+</div>
