@@ -1,13 +1,13 @@
 import { Component, HostListener } from '@angular/core';
+import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-sidenav',
   templateUrl: './sidenav.component.html',
-  styleUrl: './sidenav.component.scss'
+  styleUrl: './sidenav.component.scss',
 })
 export class SidenavComponent {
-
   currentLang!: string;
   collpased = false;
   screenWidth = 0;
@@ -22,13 +22,18 @@ export class SidenavComponent {
     }
   }
 
-  constructor(private translate: TranslateService) {
+  constructor(private translate: TranslateService, private router: Router) {
     this.currentLang = localStorage.getItem('currentLang') || 'en';
     this.translate.use(this.currentLang);
     document.documentElement.lang = this.currentLang;
   }
 
   toggleSidenav() {
-    document.querySelector('#sidebar')?.classList.toggle('expand')
+    document.querySelector('#sidebar')?.classList.toggle('expand');
+  }
+
+  logout() {
+    this.router.navigate(['/login']);
+    localStorage.clear();
   }
 }
