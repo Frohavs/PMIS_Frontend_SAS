@@ -34,6 +34,6 @@ export class SidenavComponent {
 
   logout() {
     this.router.navigate(['/login']);
-    localStorage.clear();
+    localStorage.removeItem('user');
   }
 }

@@ -1,45 +1,71 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap");
+@import "./app/shared/styles/themes";
 
 /* You can add global styles to this file, and also import other style files */
-:root {
-    --primary-color: #0C375A;
-    --primary--hover-color: #0b3f66;
-    --secondary-color: #12A8C0;
-    --sidenav-color: #1f5c8d;
-    --danger-color: #F2693F;
-    --white-color: #fff;
-    --black-color: #000;
+// :root {
+//     --primary-color: #0C375A;
+//     --primary-hover-color: #0b3f66;
+//     --secondary-color: #12A8C0;
+//     --sidenav-color: #1f5c8d;
+//     --danger-color: #F2693F;
+//     --white-color: #fff;
+//     --black-color: #000;
+// }
+
+.theme1 {
+  --primary-color: #{$theme1-primary};
+  --primary-hover-color: #{$theme1-primary-hover};
+  --secondary-color: #{$theme1-accent};
+  --sidenav-color: #{$theme1-accent};
+  --accent-color: #{$theme1-accent};
+  --background-color: #{$theme1-background};
+  --text-color: #{$theme1-text};
+  --danger-color: #{$theme1-danger};
+  --white-color: #{$theme1-white};
+  --black-color: #{$theme1-black};
+}
+
+.theme2 {
+  --primary-color: #{$theme2-primary};
+  --secondary-color: #{$theme2-accent};
+  --sidenav-color: #{$theme2-accent};
+  --accent-color: #{$theme2-accent};
+  --background-color: #{$theme2-background};
+  --text-color: #{$theme2-text};
+  --danger-color: #{$theme2-danger};
+  --white-color: #{$theme2-white};
+  --black-color: #{$theme2-black};
 }
 
 html:lang(ar) * {
-    direction: rtl;
+  direction: rtl;
 
-    .cdk-overlay-pane {
-        /* Your RTL-specific styles here for cdk menu*/
-        place-self: flex-end !important;
-        // margin-left: 20px;
-    }
+  .cdk-overlay-pane {
+    /* Your RTL-specific styles here for cdk menu*/
+    place-self: flex-end !important;
+    // margin-left: 20px;
+  }
 }
 
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    list-style-type: none;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  list-style-type: none;
 }
 
 .form-control.ng-touched.ng-invalid {
-    border: 2px solid var(--danger-color) !important;
-    background-color: #FCF1EC;
+  border: 2px solid var(--danger-color) !important;
+  background-color: #fcf1ec;
 }
 
 .form-check-input:checked {
-    background-color: var(--secondary-color);
-    border-color: var(--secondary-color);
+  background-color: var(--secondary-color);
+  border-color: var(--secondary-color);
 }
 
 .errors {
-    small {
-        color: var(--danger-color) !important;
-    }
+  small {
+    color: var(--danger-color) !important;
+  }
 }
