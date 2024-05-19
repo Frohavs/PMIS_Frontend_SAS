@@ -10,6 +10,7 @@
     "notifications": "الإشعارات",
     "login": "تسجيل الدخول",
     "logout": "تسجيل الخروج",
+    "profile": "الصفحة الشخصية",
     "address_required": "العنوان إلزامي",
     "username_required": "اسم المستخدم إلزامي",
     "password_required": "كلمة المرور إلزامية",
@@ -30,6 +31,7 @@
     "save": "حفظ",
     "send": "إرسال",
     "continue": "متابعة",
+    "search": "البحث...",
 
 
     "export_as": "تصدير الملفات حسب",
