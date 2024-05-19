@@ -1,44 +1,31 @@
-name: Build and Deploy
+name: Deploy Angular App
 
 on:
   push:
     branches:
-      - main
-
+      - main # Change this to your main branch name
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+    - name: Checkout Repository
+      uses: actions/checkout@v2
 
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v1
-        with:
-          dotnet-version: '6.0.x'
+    - name: Setup Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14'
 
-      - name: Restore dependencies
-        run: dotnet restore
+    - name: Install Dependencies
+      run: npm install
 
-      - name: Build project
-        run: dotnet build --configuration Release
+    - name: Build Angular App
+      run: npm run build -- --prod
 
-      - name: Publish artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: my-app
-          path: ./path/to/artifacts
-
-  deploy:
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v4
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./path/to/artifacts
+    - name: Deploy to GitHub Pages
+      env:
+        ACCESS_TOKEN: ${{ secrets.FE }}
+      run: |
+        echo $ACCESS_TOKEN
+        # Here you can use $ACCESS_TOKEN to deploy your app
