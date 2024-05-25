@@ -50,7 +50,7 @@ export class HeaderComponent implements OnInit {
         this.router.navigate(['/login']);
         break;
       case 'profile':
-        // this.router.navigateByUrl('/profile');
+        this.router.navigateByUrl('/dashboard/profile');
         break;
 
       default:

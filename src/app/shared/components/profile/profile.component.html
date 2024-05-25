@@ -1,1 +1,39 @@
-<p>profile works!</p>
+<div class="form_wrapper">
+  <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+    <div class="d-flex w-100">
+      <div class="form-group">
+        <label *ngIf="profileForm.get('name')?.value">{{
+          "name" | translate
+        }}</label>
+
+        <input type="name" class="form-control" aria-describedby="name-Hint" formControlName="name"
+          [placeholder]="'name' | translate" />
+        <div class="errors" *ngIf="!name?.valid && (name?.dirty || name?.touched)">
+          <small class="form-text text-muted" [hidden]="!name?.errors?.['required']">
+            {{ "name_required" | translate }}
+          </small>
+          <!-- <small class="form-text text-muted" [hidden]="!name?.errors?.['minlength']">
+              min length is 10
+          </small> -->
+        </div>
+      </div>
+      <div class="form-group mx-4">
+        <label *ngIf="profileForm.get('email')?.value">{{
+        "email" | translate
+      }}</label>
+        <input [type]="email" class="form-control" formControlName="email" [placeholder]="'email' | translate" />
+        <div class="errors" *ngIf="!email?.valid && (email?.dirty || email?.touched)">
+          <small class="form-text text-muted" [hidden]="!email?.errors?.['required']">
+            {{ "email_required" | translate }}
+          </small>
+          <small class="form-text text-muted" [hidden]="!email?.errors?.['email']">
+            {{ "email__valid_required" | translate }}
+          </small>
+        </div>
+      </div>
+    </div>
+    <button type="submit" class="btn w-25" [disabled]="!profileForm.valid">
+      {{ "change" | translate }}
+    </button>
+  </form>
+</div>

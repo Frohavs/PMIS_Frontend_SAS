@@ -7,7 +7,7 @@ export const Languages = [
     {
         title: 'Arabic',
         lang:'ar',
-        flag: 'egypt'
+        flag: 'saudi'
     }
 ]
 export const userItems = [

@@ -14,10 +14,16 @@
     "address_required": "العنوان إلزامي",
     "username_required": "اسم المستخدم إلزامي",
     "password_required": "كلمة المرور إلزامية",
+    "name_required": "الإسم إلزامي",
+    "email_required": "البريد الإلكتروني إلزامي",
+    "email__valid_required": "البريد الإلكتروني ليس صالح",
     "address": "العنوان",
     "username": "اسم المستخدم",
+    "name": "الأسم",
+    "email": "البريد الإلكتروني",
     "password": "كلمة المرور",
     "remember_me": "تذكرني",
+    "change": "تغيير",
     "sign_in": "تسجيل الدخول",
     "forget_password": "نسيت كلمة المرور !",
     "back_to_login": "العودة لتسجيل الدخول",
@@ -48,5 +54,5 @@
     "comunications": "الاتصالات",
     "usersList": "قائمة المستخدمين"
 
-    
+
 }
