@@ -9,12 +9,14 @@ import { CdkMenuModule } from '@angular/cdk/menu';
 import { HeaderComponent } from './components/header/header.component';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { ProfileComponent } from './components/profile/profile.component';
+import { PmisTableComponent } from './components/pmis-table/pmis-table.component';
 
 @NgModule({
   declarations: [
     HeaderComponent,
     SidenavComponent,
-    ProfileComponent
+    ProfileComponent,
+    PmisTableComponent
   ],
   imports: [
     CommonModule,
@@ -33,6 +35,7 @@ import { ProfileComponent } from './components/profile/profile.component';
     HeaderComponent,
     SidenavComponent,
     ProfileComponent,
+    PmisTableComponent,
     OverlayModule,
     CdkMenuModule,
   ],

@@ -1,0 +1,34 @@
+.btn_add {
+  color: #fff;
+  background-color: #00684e;
+
+  &:hover {
+      background-color: #015741;
+  }
+}
+
+thead {
+  tr {
+      background-color: #F3F6F9;
+  }
+}
+
+tbody {
+  tr:nth-child(even) {
+      background-color: #F8F9FA;
+  }
+}
+
+::ng-deep .page-item {
+
+  .page-link {
+      color: #587184 !important;
+  }
+
+  &.active {
+      .page-link {
+          background-color: #00684e !important;
+          color: #fff !important;
+      }
+  }
+}
