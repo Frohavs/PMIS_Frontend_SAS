@@ -39,6 +39,10 @@
     "continue": "Continue",
     "search": "Search...",
 
+    "tracking": "Tracking",
+    "documents": "Documents",
+    "vote_result": "Vote Result",
+
 
     "export_as": "Export Files as",
     "expenses": "Expenses",

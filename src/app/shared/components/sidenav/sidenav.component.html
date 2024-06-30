@@ -21,6 +21,46 @@
       </li>
       <li class="sidebar-item">
         <a
+          [routerLink]="['/dashboard/tracking']"
+          routerLinkActive="active"
+          class="sidebar-link"
+        >
+          <i class="fal fa-home"></i>
+          <span>{{ "tracking" | translate }}</span>
+        </a>
+      </li>
+      <li class="sidebar-item">
+        <a
+          class="sidebar-link has-dropdown collapsed"
+          data-bs-toggle="collapse"
+          data-bs-target="#multi"
+          aria-expanded="false"
+          aria-controls="multi"
+        >
+          <i class="fal fa-window-restore" aria-hidden="true"></i>
+          <span>{{"documents" | translate}}</span>
+        </a>
+        <ul
+          id="multi"
+          class="sidebar-dropdown list-unstyled collapse first-level"
+          data-bs-parent="#sidebar"
+        >
+          <li class="sidebar-item">
+            <a class="sidebar-link"> Document Tracker </a>
+          </li>
+          <li class="sidebar-item">
+            <a class="sidebar-link"> Document Management </a>
+          </li>
+          <li class="sidebar-item">
+            <a class="sidebar-link"> tasks </a>
+          </li>
+          <li class="sidebar-item">
+            <a class="sidebar-link"> Translation Request </a>
+          </li>
+        </ul>
+      </li>
+      <!-- <li class="sidebar-item">
+        <a
           [routerLink]="['/dashboard/profile']"
           routerLinkActive="active"
           class="sidebar-link"
@@ -28,13 +68,73 @@
           <i class="fal fa-user"></i>
           <span>{{"profile" | translate}}</span>
         </a>
+      </li> -->
+      <li class="sidebar-item">
+        <a class="sidebar-link">
+          <i class="fal fa-tasks" aria-hidden="true"></i>
+          <span>{{"vote_result" | translate}} </span>
+        </a>
       </li>
       <li class="sidebar-item">
         <a class="sidebar-link">
           <i class="fal fa-tasks" aria-hidden="true"></i>
-          <span>Task</span>
+          <span>Staff Evaluation </span>
         </a>
       </li>
+      <li class="sidebar-item">
+        <a
+          class="sidebar-link has-dropdown collapsed"
+          data-bs-toggle="collapse"
+          data-bs-target="#multi2"
+          aria-expanded="false"
+          aria-controls="multi2"
+        >
+          <i class="fal fa-window-restore" aria-hidden="true"></i>
+          <span> Meeting Room</span>
+        </a>
+        <ul
+          id="multi2"
+          class="sidebar-dropdown list-unstyled collapse first-level"
+          data-bs-parent="#sidebar"
+        >
+          <li class="sidebar-item">
+            <a class="sidebar-link"> Calendar </a>
+          </li>
+          <li class="sidebar-item">
+            <a class="sidebar-link"> Book </a>
+          </li>
+        </ul>
+      </li>
+      <li class="sidebar-item">
+        <a
+          class="sidebar-link has-dropdown collapsed"
+          data-bs-toggle="collapse"
+          data-bs-target="#multi3"
+          aria-expanded="false"
+          aria-controls="multi3"
+        >
+          <i class="fal fa-window-restore" aria-hidden="true"></i>
+          <span> HR Management</span>
+        </a>
+        <ul
+          id="multi3"
+          class="sidebar-dropdown list-unstyled collapse first-level"
+          data-bs-parent="#sidebar"
+        >
+          <li class="sidebar-item">
+            <a class="sidebar-link">  Administrator Survey </a>
+          </li>
+          <li class="sidebar-item">
+            <a class="sidebar-link">  Vacation </a>
+          </li>
+        </ul>
+      </li>
+      <!-- <li class="sidebar-item">
+        <a class="sidebar-link">
+          <i class="fal fa-tasks" aria-hidden="true"></i>
+          <span>Task</span>
+        </a>
+      </li> -->
       <li class="sidebar-item">
         <a
           class="sidebar-link has-dropdown collapsed"
