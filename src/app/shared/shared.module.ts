@@ -12,6 +12,7 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { PmisTableComponent } from './components/pmis-table/pmis-table.component';
 import { PmisTabsComponent } from './pmis-tabs/pmis-tabs.component';
 import { PmisAccordionComponent } from './components/pmis-accordion/pmis-accordion.component';
+import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { PmisAccordionComponent } from './components/pmis-accordion/pmis-accordi
     ProfileComponent,
     PmisTableComponent,
     PmisTabsComponent,
-    PmisAccordionComponent
+    PmisAccordionComponent,
+    BreadcrumbComponent
   ],
   imports: [
     CommonModule,
@@ -42,6 +44,8 @@ import { PmisAccordionComponent } from './components/pmis-accordion/pmis-accordi
     PmisTableComponent,
     PmisTabsComponent,
     PmisAccordionComponent,
+    BreadcrumbComponent,
+
     OverlayModule,
     CdkMenuModule,
   ],
