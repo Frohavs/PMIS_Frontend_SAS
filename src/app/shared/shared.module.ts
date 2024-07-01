@@ -11,6 +11,7 @@ import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { PmisTableComponent } from './components/pmis-table/pmis-table.component';
 import { PmisTabsComponent } from './pmis-tabs/pmis-tabs.component';
+import { PmisAccordionComponent } from './components/pmis-accordion/pmis-accordion.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { PmisTabsComponent } from './pmis-tabs/pmis-tabs.component';
     SidenavComponent,
     ProfileComponent,
     PmisTableComponent,
-    PmisTabsComponent
+    PmisTabsComponent,
+    PmisAccordionComponent
   ],
   imports: [
     CommonModule,
@@ -39,6 +41,7 @@ import { PmisTabsComponent } from './pmis-tabs/pmis-tabs.component';
     ProfileComponent,
     PmisTableComponent,
     PmisTabsComponent,
+    PmisAccordionComponent,
     OverlayModule,
     CdkMenuModule,
   ],
