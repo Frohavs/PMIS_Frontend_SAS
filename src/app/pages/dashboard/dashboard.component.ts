@@ -1,19 +1,21 @@
-import { Component } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
-import { ThemeService } from '../../shared/services/theme.service';
+import { Component, ViewChild } from '@angular/core';
+import { ModalConfig, ModalComponent } from '../../_metronic/partials';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrl: './dashboard.component.scss'
+  styleUrls: ['./dashboard.component.scss'],
 })
 export class DashboardComponent {
-  currentLang!: string;
+  modalConfig: ModalConfig = {
+    modalTitle: 'Modal title',
+    dismissButtonLabel: 'Submit',
+    closeButtonLabel: 'Cancel'
+  };
+  @ViewChild('modal') private modalComponent: ModalComponent;
+  constructor() {}
 
-  constructor(private translate: TranslateService) {
-    this.currentLang = localStorage.getItem('currentLang') || 'en';
-    this.translate.use(this.currentLang);
-    document.documentElement.lang = this.currentLang;
+  async openModal() {
+    return await this.modalComponent.open();
   }
-
 }

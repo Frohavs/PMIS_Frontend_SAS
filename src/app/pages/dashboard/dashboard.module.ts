@@ -1,18 +1,21 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
-import { DashboardRoutingModule } from './dashboard-routing.module';
-import { SharedModule } from '../../shared/shared.module';
+import { RouterModule } from '@angular/router';
 import { DashboardComponent } from './dashboard.component';
-import { HomeComponent } from './components/home/home.component';
-
+import { ModalsModule, WidgetsModule } from '../../_metronic/partials';
 
 @NgModule({
-  declarations: [DashboardComponent, HomeComponent],
+  declarations: [DashboardComponent],
   imports: [
     CommonModule,
-    DashboardRoutingModule,
-    SharedModule
-  ]
+    RouterModule.forChild([
+      {
+        path: '',
+        component: DashboardComponent,
+      },
+    ]),
+    WidgetsModule,
+    ModalsModule,
+  ],
 })
-export class DashboardModule { }
+export class DashboardModule {}

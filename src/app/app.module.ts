@@ -1,18 +1,28 @@
-import { NgModule } from '@angular/core';
+import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
+import { HttpClientModule } from '@angular/common/http';
+import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
+import { ClipboardModule } from 'ngx-clipboard';
+import { TranslateModule } from '@ngx-translate/core';
+import { InlineSVGModule } from 'ng-inline-svg-2';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { SharedModule } from './shared/shared.module';
+import { AuthService } from './modules/auth/services/auth.service';
+import { environment } from 'src/environments/environment';
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+// #fake-start#
+import { FakeAPIService } from './_fake/fake-api.service';
+// #fake-end#
 
-// AoT requires an exported function for factories
-export function createTranslateLoader(http: HttpClient) {
-  return new TranslateHttpLoader(http, '../assets/i18n/', '.json');
+function appInitializer(authService: AuthService) {
+  return () => {
+    return new Promise((resolve) => {
+      //@ts-ignore
+      authService.getUserByToken().subscribe().add(resolve);
+    });
+  };
 }
 
 @NgModule({
@@ -20,20 +30,30 @@ export function createTranslateLoader(http: HttpClient) {
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    AppRoutingModule,
-    NgbModule,
+    TranslateModule.forRoot(),
     HttpClientModule,
-    TranslateModule.forRoot({
-      defaultLanguage: 'ar',
-      loader: {
-        provide: TranslateLoader,
-        useFactory: createTranslateLoader,
-        deps: [HttpClient],
-      },
-    }),
-    SharedModule
+    ClipboardModule,
+    // #fake-start#
+    environment.isMockEnabled
+      ? HttpClientInMemoryWebApiModule.forRoot(FakeAPIService, {
+        passThruUnknownUrl: true,
+        dataEncapsulation: false,
+      })
+      : [],
+    // #fake-end#
+    AppRoutingModule,
+    InlineSVGModule.forRoot(),
+    NgbModule,
+    SweetAlert2Module.forRoot(),
   ],
-  providers: [],
+  providers: [
+    {
+      provide: APP_INITIALIZER,
+      useFactory: appInitializer,
+      multi: true,
+      deps: [AuthService],
+    },
+  ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

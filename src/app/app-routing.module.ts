@@ -1,30 +1,29 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-// import { AuthGuard } from './shared/security/auth-guard.guard';
+import { Routes, RouterModule } from '@angular/router';
+import { AuthGuard } from './modules/auth/services/auth.guard';
 
-const routes: Routes = [
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
+export const routes: Routes = [
   {
-    path: 'login',
+    path: 'auth',
     loadChildren: () =>
-      import('./pages/auth/auth.module').then((m) => m.AuthModule),
+      import('./modules/auth/auth.module').then((m) => m.AuthModule),
   },
   {
-    path: 'dashboard',
-    // canActivate: [AuthGuard],
+    path: 'error',
     loadChildren: () =>
-      import('./pages/dashboard/dashboard.module').then(
-        (m) => m.DashboardModule
-      ),
+      import('./modules/errors/errors.module').then((m) => m.ErrorsModule),
   },
   {
-    path: '**',
-    redirectTo: 'login'
+    path: '',
+    canActivate: [AuthGuard],
+    loadChildren: () =>
+      import('./_metronic/layout/layout.module').then((m) => m.LayoutModule),
   },
+  { path: '**', redirectTo: 'error/404' },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
