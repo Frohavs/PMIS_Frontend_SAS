@@ -46,7 +46,32 @@ export class TranslationService {
       this.translate.use(this.translate.getDefaultLang());
       this.translate.use(lang);
       localStorage.setItem(LOCALIZATION_LOCAL_STORAGE_KEY, lang);
+
+      location.reload();
     }
+  }
+
+  setHtmlLang(lang: any) {
+    const htmlElement = document.getElementsByTagName('html')[0];
+    htmlElement.setAttribute('lang', lang);
+
+    // check arabic lang selection
+    htmlElement.setAttribute('direction', lang === 'ar' ? 'rtl' : 'ltr');
+    htmlElement.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+    htmlElement.setAttribute('style',lang === 'ar' ? 'direction: rtl' : 'direction: ltr')
+
+    // Remove existing stylesheet link
+    const existingStyleLink = document.querySelector('link[href="styles.css"]');
+    const existingStyleLink2 = document.querySelector('link[href="./assets/css/style.rtl.css"]');
+    if (existingStyleLink) existingStyleLink.remove();
+    if (existingStyleLink2) existingStyleLink2.remove();
+
+
+    // Add new stylesheet link based on language
+    const newStyleLink = document.createElement('link');
+    newStyleLink.rel = 'stylesheet';
+    newStyleLink.href = lang === 'ar' ? './assets/css/style.rtl.css' : 'styles.css';
+    document.head.appendChild(newStyleLink);
   }
 
   /**

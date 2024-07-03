@@ -27,12 +27,13 @@ export class AppComponent implements OnInit {
     this.translationService.loadTranslations(
       enLang,
       arLang,
-      chLang,
-      esLang,
-      jpLang,
-      deLang,
-      frLang
+      // chLang,
+      // esLang,
+      // jpLang,
+      // deLang,
+      // frLang
     );
+    this.translationService.setHtmlLang(localStorage.getItem('language'));
   }
 
   ngOnInit() {

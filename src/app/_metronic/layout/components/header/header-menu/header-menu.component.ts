@@ -10,6 +10,8 @@ import { LayoutService } from '../../../core/layout.service';
   styleUrls: ['./header-menu.component.scss'],
 })
 export class HeaderMenuComponent implements OnInit {
+  currentLang = localStorage.getItem('language');
+
   constructor(private router: Router, private layout: LayoutService, private layoutInit: LayoutInitService) {}
 
   ngOnInit(): void {}
@@ -29,11 +31,19 @@ export class HeaderMenuComponent implements OnInit {
       this.layout.saveBaseConfig(currentConfig)
     }
   }
+
+  getMenuDir() {
+    return this.currentLang === 'en' ? 'bottom-start' : 'bottom-end';
+  }
+  getMenuDir2() {
+    return this.currentLang === 'en' ? 'right-start' : 'left-end';
+  }
 }
 
 const getCurrentUrl = (pathname: string): string => {
   return pathname.split(/[?#]/)[0];
 };
+
 
 const checkIsActive = (pathname: string, url: string) => {
   const current = getCurrentUrl(pathname);

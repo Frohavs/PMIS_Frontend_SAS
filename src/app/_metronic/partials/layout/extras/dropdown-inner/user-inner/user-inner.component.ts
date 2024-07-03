@@ -72,29 +72,29 @@ const languages = [
     name: 'Arabic',
     flag: './assets/media/flags/saudi_arabia.svg',
   },
-  {
-    lang: 'zh',
-    name: 'Mandarin',
-    flag: './assets/media/flags/china.svg',
-  },
-  {
-    lang: 'es',
-    name: 'Spanish',
-    flag: './assets/media/flags/spain.svg',
-  },
-  {
-    lang: 'ja',
-    name: 'Japanese',
-    flag: './assets/media/flags/japan.svg',
-  },
-  {
-    lang: 'de',
-    name: 'German',
-    flag: './assets/media/flags/germany.svg',
-  },
-  {
-    lang: 'fr',
-    name: 'French',
-    flag: './assets/media/flags/france.svg',
-  },
+  // {
+  //   lang: 'zh',
+  //   name: 'Mandarin',
+  //   flag: './assets/media/flags/china.svg',
+  // },
+  // {
+  //   lang: 'es',
+  //   name: 'Spanish',
+  //   flag: './assets/media/flags/spain.svg',
+  // },
+  // {
+  //   lang: 'ja',
+  //   name: 'Japanese',
+  //   flag: './assets/media/flags/japan.svg',
+  // },
+  // {
+  //   lang: 'de',
+  //   name: 'German',
+  //   flag: './assets/media/flags/germany.svg',
+  // },
+  // {
+  //   lang: 'fr',
+  //   name: 'French',
+  //   flag: './assets/media/flags/france.svg',
+  // },
 ];
