@@ -1,13 +1,13 @@
 <!-- begin::Header -->
 <div class="card-header border-0 pt-5">
   <h3 class="card-title align-items-start flex-column">
-    <span class="card-label fw-bolder fs-3 mb-1">New Arrivals</span>
-    <span class="text-muted mt-1 fw-bold fs-7">Over 500 new products</span>
+    <span class="card-label fw-bolder fs-3 mb-1">{{tableTitle}}</span>
+    <span class="text-muted mt-1 fw-bold fs-7">{{table_SubTitle}}</span>
   </h3>
   <div class="card-toolbar">
-    <a href="#" class="btn btn-sm btn-light-primary">
+    <a (click)="redirect()" class="btn btn-sm btn-light-primary">
       <app-keenicon name="plus" class="fs-3"></app-keenicon>
-      New Member
+      New Company
     </a>
   </div>
 </div>
@@ -21,10 +21,10 @@
       <!-- begin::Table head -->
       <thead>
         <tr class="fw-bolder text-muted bg-light">
-          <th class="ps-4 min-w-325px rounded-start">Product</th>
-          <th class="min-w-125px">Price</th>
-          <th class="min-w-125px">Deposit</th>
-          <th class="min-w-200px">Agent</th>
+          <th class="min-w-125px" style="padding: 12px;">ID</th>
+          <th class="ps-4 min-w-300px rounded-start">Company</th>
+          <th class="min-w-125px">Arabic Name</th>
+          <th class="min-w-200px">CR Number</th>
           <th class="min-w-150px">Status</th>
           <th class="min-w-200px text-end rounded-end"></th>
         </tr>
@@ -32,25 +32,30 @@
       <!-- end::Table head -->
       <!-- begin::Table body -->
       <tbody>
-        <tr>
+        <tr *ngFor="let data of dataList">
+          <td style="padding: 12px;">
+            <a
+              class="text-gray-900 fw-bolder text-hover-primary d-block mb-1 fs-6"
+            >
+              {{data.id}}
+            </a>
+          </td>
           <td>
             <div class="d-flex align-items-center">
               <div class="symbol symbol-50px me-5">
                 <img
-                  src="./assets/media/stock/600x400/img-26.jpg"
-                  class=""
-                  alt=""
+                  [src]="data.img"
+                  alt="com"
                 />
               </div>
               <div class="d-flex justify-content-start flex-column">
                 <a
-                  href="#"
                   class="text-gray-900 fw-bolder text-hover-primary mb-1 fs-6"
                 >
-                  Sant Extreanet Solution
+                  {{data.name}}
                 </a>
                 <span class="text-muted fw-bold text-muted d-block fs-7">
-                  HTML, JS, ReactJS
+                  {{data.subName}}
                 </span>
               </div>
             </div>
@@ -60,39 +65,30 @@
               href="#"
               class="text-gray-900 fw-bolder text-hover-primary d-block mb-1 fs-6"
             >
-              $2,790
+              {{data.arName}}
             </a>
-            <span class="text-muted fw-bold text-muted d-block fs-7">Paid</span>
           </td>
           <td>
             <a
               href="#"
               class="text-gray-900 fw-bolder text-hover-primary d-block mb-1 fs-6"
             >
-              $520
+              {{data.crNumber}}
             </a>
-            <span class="text-muted fw-bold text-muted d-block fs-7"
-              >Rejected</span
-            >
           </td>
           <td>
-            <a
-              href="#"
-              class="text-gray-900 fw-bolder text-hover-primary d-block mb-1 fs-6"
-            >
-              Bradly Beal
-            </a>
-            <span class="text-muted fw-bold text-muted d-block fs-7"
-              >Insurance</span
-            >
-          </td>
-          <td>
-            <span class="badge badge-light-primary fs-7 fw-bold">Approved</span>
+            <span
+            [ngClass]="{'badge-light-success': data.status === 'Active',
+                        'badge-light-primary': data.status === 'Inactive',
+                        'badge-light-info': data.status === 'In Progress'}"
+                       class="badge fs-7 fw-bold">
+                       {{data.status}}
+            </span>
           </td>
           <td class="text-end">
             <a
-              href="#"
-              class="
+            *ngIf="canChangeStatus"
+            class="
                 btn btn-icon btn-bg-light btn-active-color-primary btn-sm
                 me-1
               "
@@ -100,8 +96,8 @@
               <app-keenicon name="switch" class="fs-3"></app-keenicon>
             </a>
             <a
-              href="#"
-              class="
+            *ngIf="canEdit"
+            class="
                 btn btn-icon btn-bg-light btn-active-color-primary btn-sm
                 me-1
               "
@@ -109,346 +105,8 @@
               <app-keenicon name="pencil" class="fs-3"></app-keenicon>
             </a>
             <a
-              href="#"
-              class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm"
-            >
-              <app-keenicon name="trash" class="fs-3"></app-keenicon>
-            </a>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <div class="d-flex align-items-center">
-              <div class="symbol symbol-50px me-5">
-                <img
-                  src="./assets/media/stock/600x400/img-3.jpg"
-                  class=""
-                  alt=""
-                />
-              </div>
-              <div class="d-flex justify-content-start flex-column">
-                <a
-                  href="#"
-                  class="text-gray-900 fw-bolder text-hover-primary mb-1 fs-6"
-                >
-                  Telegram Development
-                </a>
-                <span class="text-muted fw-bold text-muted d-block fs-7">
-                  C#, ASP.NET, MS SQL
-                </span>
-              </div>
-            </div>
-          </td>
-          <td>
-            <a
-              href="#"
-              class="text-gray-900 fw-bolder text-hover-primary d-block mb-1 fs-6"
-            >
-              $4,790
-            </a>
-            <span class="text-muted fw-bold text-muted d-block fs-7">Paid</span>
-          </td>
-          <td>
-            <a
-              href="#"
-              class="text-gray-900 fw-bolder text-hover-primary d-block mb-1 fs-6"
-            >
-              $240
-            </a>
-            <span class="text-muted fw-bold text-muted d-block fs-7"
-              >Rejected</span
-            >
-          </td>
-          <td>
-            <a
-              href="#"
-              class="text-gray-900 fw-bolder text-hover-primary d-block mb-1 fs-6"
-            >
-              Chris Thompson
-            </a>
-            <span class="text-muted fw-bold text-muted d-block fs-7"
-              >NBA Player</span
-            >
-          </td>
-          <td>
-            <span class="badge badge-light-danger fs-7 fw-bold"
-              >In Progress</span
-            >
-          </td>
-          <td class="text-end">
-            <a
-              href="#"
-              class="
-                btn btn-icon btn-bg-light btn-active-color-primary btn-sm
-                me-1
-              "
-            >
-              <app-keenicon name="switch" class="fs-3"></app-keenicon>
-            </a>
-            <a
-              href="#"
-              class="
-                btn btn-icon btn-bg-light btn-active-color-primary btn-sm
-                me-1
-              "
-            >
-              <app-keenicon name="pencil" class="fs-3"></app-keenicon>
-            </a>
-            <a
-              href="#"
-              class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm"
-            >
-              <app-keenicon name="trash" class="fs-3"></app-keenicon>
-            </a>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <div class="d-flex align-items-center">
-              <div class="symbol symbol-50px me-5">
-                <img
-                  src="./assets/media/stock/600x400/img-9.jpg"
-                  class=""
-                  alt=""
-                />
-              </div>
-              <div class="d-flex justify-content-start flex-column">
-                <a
-                  href="#"
-                  class="text-gray-900 fw-bolder text-hover-primary mb-1 fs-6"
-                >
-                  Payroll Application
-                </a>
-                <span class="text-muted fw-bold text-muted d-block fs-7">
-                  PHP, Laravel, VueJS
-                </span>
-              </div>
-            </div>
-          </td>
-          <td>
-            <a
-              href="#"
-              class="text-gray-900 fw-bolder text-hover-primary d-block mb-1 fs-6"
-            >
-              $4,390
-            </a>
-            <span class="text-muted fw-bold text-muted d-block fs-7">Paid</span>
-          </td>
-          <td>
-            <a
-              href="#"
-              class="text-gray-900 fw-bolder text-hover-primary d-block mb-1 fs-6"
-            >
-              $593
-            </a>
-            <span class="text-muted fw-bold text-muted d-block fs-7"
-              >Rejected</span
-            >
-          </td>
-          <td>
-            <a
-              href="#"
-              class="text-gray-900 fw-bolder text-hover-primary d-block mb-1 fs-6"
-            >
-              Zoey McGee
-            </a>
-            <span class="text-muted fw-bold text-muted d-block fs-7"
-              >Ruby Developer</span
-            >
-          </td>
-          <td>
-            <span class="badge badge-light-success fs-7 fw-bold">Success</span>
-          </td>
-          <td class="text-end">
-            <a
-              href="#"
-              class="
-                btn btn-icon btn-bg-light btn-active-color-primary btn-sm
-                me-1
-              "
-            >
-              <app-keenicon name="switch" class="fs-3"></app-keenicon>
-            </a>
-            <a
-              href="#"
-              class="
-                btn btn-icon btn-bg-light btn-active-color-primary btn-sm
-                me-1
-              "
-            >
-              <app-keenicon name="pencil" class="fs-3"></app-keenicon>
-            </a>
-            <a
-              href="#"
-              class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm"
-            >
-              <app-keenicon name="trash" class="fs-3"></app-keenicon>
-            </a>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <div class="d-flex align-items-center">
-              <div class="symbol symbol-50px me-5">
-                <img
-                  src="./assets/media/stock/600x400/img-18.jpg"
-                  class=""
-                  alt=""
-                />
-              </div>
-              <div class="d-flex justify-content-start flex-column">
-                <a
-                  href="#"
-                  class="text-gray-900 fw-bolder text-hover-primary mb-1 fs-6"
-                >
-                  HR Management System
-                </a>
-                <span class="text-muted fw-bold text-muted d-block fs-7">
-                  Python, PostgreSQL, ReactJS
-                </span>
-              </div>
-            </div>
-          </td>
-          <td>
-            <a
-              href="#"
-              class="text-gray-900 fw-bolder text-hover-primary d-block mb-1 fs-6"
-            >
-              $7,990
-            </a>
-            <span class="text-muted fw-bold text-muted d-block fs-7">Paid</span>
-          </td>
-          <td>
-            <a
-              href="#"
-              class="text-gray-900 fw-bolder text-hover-primary d-block mb-1 fs-6"
-            >
-              $980
-            </a>
-            <span class="text-muted fw-bold text-muted d-block fs-7"
-              >Rejected</span
-            >
-          </td>
-          <td>
-            <a
-              href="#"
-              class="text-gray-900 fw-bolder text-hover-primary d-block mb-1 fs-6"
-            >
-              Brandon Ingram
-            </a>
-            <span class="text-muted fw-bold text-muted d-block fs-7"
-              >Insurance</span
-            >
-          </td>
-          <td>
-            <span class="badge badge-light-info fs-7 fw-bold">Rejected</span>
-          </td>
-          <td class="text-end">
-            <a
-              href="#"
-              class="
-                btn btn-icon btn-bg-light btn-active-color-primary btn-sm
-                me-1
-              "
-            >
-              <app-keenicon name="switch" class="fs-3"></app-keenicon>
-            </a>
-            <a
-              href="#"
-              class="
-                btn btn-icon btn-bg-light btn-active-color-primary btn-sm
-                me-1
-              "
-            >
-              <app-keenicon name="pencil" class="fs-3"></app-keenicon>
-            </a>
-            <a
-              href="#"
-              class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm"
-            >
-              <app-keenicon name="trash" class="fs-3"></app-keenicon>
-            </a>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <div class="d-flex align-items-center">
-              <div class="symbol symbol-50px me-5">
-                <img
-                  src="./assets/media/stock/600x400/img-8.jpg"
-                  class=""
-                  alt=""
-                />
-              </div>
-              <div class="d-flex justify-content-start flex-column">
-                <a
-                  href="#"
-                  class="text-gray-900 fw-bolder text-hover-primary mb-1 fs-6"
-                >
-                  Telegram Mobile
-                </a>
-                <span class="text-muted fw-bold text-muted d-block fs-7">
-                  HTML, JS, ReactJS
-                </span>
-              </div>
-            </div>
-          </td>
-          <td>
-            <a
-              href="#"
-              class="text-gray-900 fw-bolder text-hover-primary d-block mb-1 fs-6"
-            >
-              $5,790
-            </a>
-            <span class="text-muted fw-bold text-muted d-block fs-7">Paid</span>
-          </td>
-          <td>
-            <a
-              href="#"
-              class="text-gray-900 fw-bolder text-hover-primary d-block mb-1 fs-6"
-            >
-              $750
-            </a>
-            <span class="text-muted fw-bold text-muted d-block fs-7"
-              >Rejected</span
-            >
-          </td>
-          <td>
-            <a
-              href="#"
-              class="text-gray-900 fw-bolder text-hover-primary d-block mb-1 fs-6"
-            >
-              Natali Trump
-            </a>
-            <span class="text-muted fw-bold text-muted d-block fs-7"
-              >Insurance</span
-            >
-          </td>
-          <td>
-            <span class="badge badge-light-warning fs-7 fw-bold">Approved</span>
-          </td>
-          <td class="text-end">
-            <a
-              href="#"
-              class="
-                btn btn-icon btn-bg-light btn-active-color-primary btn-sm
-                me-1
-              "
-            >
-              <app-keenicon name="switch" class="fs-3"></app-keenicon>
-            </a>
-            <a
-              href="#"
-              class="
-                btn btn-icon btn-bg-light btn-active-color-primary btn-sm
-                me-1
-              "
-            >
-              <app-keenicon name="pencil" class="fs-3"></app-keenicon>
-            </a>
-            <a
-              href="#"
-              class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm"
+            *ngIf="canDelete"
+            class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm"
             >
               <app-keenicon name="trash" class="fs-3"></app-keenicon>
             </a>

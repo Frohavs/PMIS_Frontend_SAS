@@ -5,6 +5,7 @@ import { first } from 'rxjs/operators';
 import { UserModel } from '../../models/user.model';
 import { AuthService } from '../../services/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-login',
@@ -22,10 +23,14 @@ export class LoginComponent implements OnInit, OnDestroy {
   returnUrl: string;
   isLoading$: Observable<boolean>;
 
+  currentLang = localStorage.getItem('language');
+  LOCALIZATION_LOCAL_STORAGE_KEY = 'language';
+
   // private fields
   private unsubscribe: Subscription[] = []; // Read more: => https://brianflove.com/2016/12/11/anguar-2-unsubscribe-observables/
 
   constructor(
+    private translate: TranslateService,
     private fb: FormBuilder,
     private authService: AuthService,
     private route: ActivatedRoute,
@@ -48,6 +53,14 @@ export class LoginComponent implements OnInit, OnDestroy {
   // convenience getter for easy access to form fields
   get f() {
     return this.loginForm.controls;
+  }
+
+  convertArabic(lang: any) {
+    const convertTo = lang === 'ar' ? 'en' : 'ar';
+    this.translate.use(this.translate.getDefaultLang());
+      this.translate.use(convertTo);
+      localStorage.setItem(this.LOCALIZATION_LOCAL_STORAGE_KEY, convertTo);
+      location.reload();
   }
 
   initForm() {

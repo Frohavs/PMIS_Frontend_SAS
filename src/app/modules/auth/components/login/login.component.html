@@ -4,12 +4,12 @@
   <!--begin::Heading-->
   <div class="text-center mb-11">
     <h1 class="text-gray-900 fw-bolder mb-3">
-      Sign In
+      {{"AUTH.GENERAL.SIGN_IN" | translate}}
     </h1>
     <!--begin::Subtitle-->
-    <div class="text-gray-500 fw-semibold fs-6">
+    <!-- <div class="text-gray-500 fw-semibold fs-6">
       Your Social Campaigns
-    </div>
+    </div> -->
     <!--end::Subtitle--->
     <!-- <div class="text-gray-500 fw-bold fs-4">
       New Here?
@@ -52,6 +52,12 @@
   </div> -->
   <!--end::Separator-->
 
+  <ng-container>
+    <div class="mb-10 p-8 d-flex align-items-center justify-content-center h-40px">
+      <img class="w-60px" src="../../../../../assets/media/logos/amana.png" alt="logo">
+      <img class="w-60px" src="../../../../../assets/media/logos/amana2.png" alt="logo2">
+    </div>
+  </ng-container>
   <!-- begin::Alert info-->
   <ng-container *ngIf="!hasError">
     <div class="mb-10 bg-light-info p-8 rounded">
@@ -76,7 +82,7 @@
 
   <!--begin::Form group-->
   <div class="fv-row mb-8">
-    <label class="form-label fs-6 fw-bolder text-gray-900">Email</label>
+    <label class="form-label fs-6 fw-bolder text-gray-900">{{"AUTH.INPUT.EMAIL" | translate}}</label>
     <input class="form-control bg-transparent" type="email" name="email" formControlName="email" autocomplete="off"
       [ngClass]="{
         'is-invalid': loginForm.controls['email'].invalid,
@@ -108,7 +114,7 @@
   <!--begin::Form group-->
   <div class="fv-row mb-3">
 
-    <label class="form-label fw-bolder text-gray-900 fs-6 mb-0">Password</label>
+    <label class="form-label fw-bolder text-gray-900 fs-6 mb-0">{{"AUTH.INPUT.PASSWORD" | translate}}</label>
 
     <input class="form-control bg-transparent" type="password" name="password" autocomplete="off"
       formControlName="password" [ngClass]="{
@@ -136,11 +142,16 @@
 
   <!--begin::Wrapper-->
   <div class="d-flex flex-stack flex-wrap gap-3 fs-base fw-semibold mb-8">
-    <div></div>
 
     <!--begin::Link-->
     <a routerLink="/auth/forgot-password" class="link-primary">
-      Forgot Password ?
+      {{"AUTH.FORGOT.TITLE" | translate}}
+    </a>
+    <!--end::Link-->
+
+    <!--begin::Link-->
+    <a (click)="convertArabic(currentLang)" class="link-primary cursor-pointer">
+      {{currentLang === 'en' ? 'العربية' : 'English'}}
     </a>
     <!--end::Link-->
   </div>
@@ -156,16 +167,15 @@
         </span>
       </ng-container>
       <ng-container *ngIf="(isLoading$ | async) === false">
-        <span class="indicator-label">Continue</span>
+        <span class="indicator-label">{{"AUTH.GENERAL.CONTINUE" | translate}}</span>
       </ng-container>
     </button>
   </div>
 
   <div class="text-gray-500 text-center fw-semibold fs-6">
-    Not a Member yet?
-
+    {{"AUTH.GENERAL.NOT_MEMBER" | translate}}
     <a routerLink="/auth/registration" class="link-primary">
-      Sign up
+      {{"AUTH.GENERAL.SIGNUP_BUTTON" | translate}}
     </a>
   </div>
 
