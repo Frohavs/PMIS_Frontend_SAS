@@ -53,7 +53,7 @@ const Routing: Routes = [
   },
   {
     path: '',
-    redirectTo: '/dashboard',
+    redirectTo: '/companies',
     pathMatch: 'full',
   },
   {

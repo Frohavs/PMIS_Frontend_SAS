@@ -1,0 +1,27 @@
+<!-- begin::Row -->
+<div class="row g-5 g-xl-8">
+  <div class="col-xl-3">
+    <app-stats-widget6 class="card bg-light-primary card-xl-stretch mb-xl-8" color="primary" title="400k going"
+      description="On going" progress="76%"></app-stats-widget6>
+  </div>
+
+  <div class="col-xl-3">
+    <app-stats-widget6 class="card bg-light-success card-xl-stretch mb-xl-8" color="success" title="300k Delivered"
+      description="Initial Delivery" [progress]="'50%'"></app-stats-widget6>
+  </div>
+
+  <div class="col-xl-3">
+    <app-stats-widget6 class="card bg-light-danger card-xl-stretch mb-xl-8" color="danger" title="350k Track"
+      description="Off track" [progress]="'70%'"></app-stats-widget6>
+  </div>
+
+  <div class="col-xl-3">
+    <app-stats-widget6 class="card bg-light-warning card-xl-stretch mb-xl-8" color="warning" title="48k Prospective"
+      description="Prospective" progress="15%"></app-stats-widget6>
+  </div>
+
+</div>
+<!-- end::Row -->
+
+<app-tables-widget11 class="card mb-5 mb-xl-8" [tableTitle]="'Company List'" [table_SubTitle]="'Over 10 new company'"
+  [canChangeStatus]="false" (newClicked)="redirectToNew()"></app-tables-widget11>

@@ -17,6 +17,7 @@ export const locale = {
     },
     AUTH: {
       GENERAL: {
+        SIGN_IN: 'Sign In',
         OR: 'Or',
         SUBMIT_BUTTON: 'Submit',
         NO_ACCOUNT: 'Don\'t have an account?',
@@ -26,6 +27,8 @@ export const locale = {
         PRIVACY: 'Privacy',
         LEGAL: 'Legal',
         CONTACT: 'Contact',
+        CONTINUE: 'Continue',
+        NOT_MEMBER: 'Not a Member yet ?'
       },
       LOGIN: {
         TITLE: 'Login Account',

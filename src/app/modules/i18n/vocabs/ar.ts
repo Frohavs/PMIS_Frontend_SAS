@@ -17,6 +17,7 @@ export const locale = {
     },
     AUTH: {
       GENERAL: {
+        SIGN_IN: 'تسجيل دخول',
         OR: 'أو',
         SUBMIT_BUTTON: 'إرسال',
         NO_ACCOUNT: 'ليس لديك حساب ؟',
@@ -26,6 +27,9 @@ export const locale = {
         PRIVACY: 'خصوصية',
         LEGAL: 'قانوني',
         CONTACT: 'اتصال',
+        CONTINUE: 'استمرار',
+        NOT_MEMBER: 'لست عضوا حتى الآن ؟'
+
       },
       LOGIN: {
         TITLE: 'تسجيل الدخول',
