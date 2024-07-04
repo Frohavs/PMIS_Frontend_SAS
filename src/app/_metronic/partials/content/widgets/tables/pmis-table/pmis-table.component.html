@@ -44,12 +44,12 @@
       <!-- end::Table head -->
       <!-- begin::Table body -->
       <tbody>
-        <tr *ngFor="let data of dataList">
+        <tr *ngFor="let data of dataList; index as i">
           <td style="padding: 12px;">
             <a
               class="text-gray-900 fw-bolder text-hover-primary d-block mb-1 fs-6"
             >
-              {{data.id}}
+              {{i+1}}
             </a>
           </td>
           <td>
