@@ -71,10 +71,10 @@ import { TablesWidget7Component } from './tables/tables-widget7/tables-widget7.c
 import { TablesWidget8Component } from './tables/tables-widget8/tables-widget8.component';
 import { TablesWidget9Component } from './tables/tables-widget9/tables-widget9.component';
 import { TablesWidget10Component } from './tables/tables-widget10/tables-widget10.component';
-import { TablesWidget11Component } from './tables/tables-widget11/tables-widget11.component';
 import { TablesWidget12Component } from './tables/tables-widget12/tables-widget12.component';
 import { TablesWidget13Component } from './tables/tables-widget13/tables-widget13.component';
 import { TablesWidget14Component } from './tables/tables-widget14/tables-widget14.component';
+import { PMISTableComponent } from './tables/pmis-table/pmis-table.component';
 // new
 import { CardsWidget20Component } from './_new/cards/cards-widget20/cards-widget20.component';
 import { CardsWidget17Component } from './_new/cards/cards-widget17/cards-widget17.component';
@@ -154,7 +154,7 @@ import { SharedModule } from "../../../shared/shared.module";
     TablesWidget8Component,
     TablesWidget9Component,
     TablesWidget10Component,
-    TablesWidget11Component,
+    PMISTableComponent,
     TablesWidget12Component,
     TablesWidget13Component,
     TablesWidget14Component,
@@ -243,7 +243,7 @@ import { SharedModule } from "../../../shared/shared.module";
     TablesWidget8Component,
     TablesWidget9Component,
     TablesWidget10Component,
-    TablesWidget11Component,
+    PMISTableComponent,
     TablesWidget12Component,
     TablesWidget13Component,
     TablesWidget14Component,

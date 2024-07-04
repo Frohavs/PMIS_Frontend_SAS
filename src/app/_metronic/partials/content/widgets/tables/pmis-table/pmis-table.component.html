@@ -1,11 +1,23 @@
 <!-- begin::Header -->
 <div class="card-header border-0 pt-5">
-  <h3 class="card-title align-items-start flex-column">
+  <h3 class="card-title align-items-start flex-column" *ngIf="!canSearch">
     <span class="card-label fw-bolder fs-3 mb-1">{{tableTitle}}</span>
     <span class="text-muted mt-1 fw-bold fs-7">{{table_SubTitle}}</span>
   </h3>
+
+  <!--begin::Card title-->
+  <div class="card-title">
+    <!--begin::Search-->
+    <div class="d-flex align-items-center position-relative my-1">
+      <app-keenicon name="magnifier" class="fs-3 position-absolute ms-5"></app-keenicon>
+      <input type="text" data-action="filter" class="form-control form-control-solid w-250px ps-12" placeholder="Search Company">
+    </div>
+    <!--end::Search-->
+  </div>
+  <!--begin::Card title-->
+
   <div class="card-toolbar">
-    <a (click)="redirect()" class="btn btn-sm btn-light-primary">
+    <a (click)="redirect()" class="d-flex btn btn-sm btn-light-primary">
       <app-keenicon name="plus" class="fs-3"></app-keenicon>
       New Company
     </a>
@@ -113,10 +125,51 @@
           </td>
         </tr>
       </tbody>
+
       <!-- end::Table body -->
     </table>
-    <!-- end::Table -->
+    <!-- start::Table pagination -->
+    <div class="d-flex flex-stack flex-wrap pt-10">
+      <div class="fs-6 fw-bold text-gray-700">Showing 1 to 5 of 5 entries</div>
+
+      <ul class="pagination">
+        <li class="page-item previous">
+          <a class="page-link cursor-pointer">
+            <i class="previous"></i>
+          </a>
+        </li>
+
+        <li class="page-item active">
+          <a class="page-link cursor-pointer"> 1 </a>
+        </li>
+
+        <li class="page-item">
+          <a class="page-link cursor-pointer"> 2 </a>
+        </li>
+
+        <li class="page-item">
+          <a class="page-link cursor-pointer"> 3 </a>
+        </li>
+
+        <li class="page-item">
+          <a class="page-link cursor-pointer"> 4 </a>
+        </li>
+
+        <li class="page-item">
+          <a class="page-link cursor-pointer"> 5 </a>
+        </li>
+
+        <li class="page-item">
+          <a class="page-link cursor-pointer"> 6 </a>
+        </li>
+
+        <li class="page-item next">
+          <a class="page-link cursor-pointer">
+            <i class="next"></i>
+          </a>
+        </li>
+      </ul>
+      <!-- end::Table pagination -->
+    </div>
   </div>
-  <!-- end::Table container -->
 </div>
-<!-- begin::Body -->

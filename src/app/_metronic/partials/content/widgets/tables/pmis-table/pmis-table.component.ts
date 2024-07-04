@@ -1,16 +1,17 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
-  selector: 'app-tables-widget11',
-  templateUrl: './tables-widget11.component.html',
+  selector: 'app-pmis-table',
+  templateUrl: './pmis-table.component.html',
 })
-export class TablesWidget11Component implements OnInit {
+export class PMISTableComponent implements OnInit {
 
   @Input() tableTitle: string = 'New Title';
   @Input() table_SubTitle: string = 'Over 500 new products';
   @Input() canChangeStatus: boolean = true;
   @Input() canEdit: boolean = true;
   @Input() canDelete: boolean = true;
+  @Input() canSearch: boolean = false;
 
   @Input() dataList: any = [
     {
