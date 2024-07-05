@@ -14,6 +14,10 @@ export const locale = {
       APPS: 'تطبيقات',
       DASHBOARD: 'لوحة التحكم',
       COMPANIES: 'الشركات',
+      GROUPS: 'المجموعات',
+    },
+    GROUPS: {
+
     },
     AUTH: {
       GENERAL: {

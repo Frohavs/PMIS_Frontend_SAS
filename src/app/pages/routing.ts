@@ -15,6 +15,11 @@ const Routing: Routes = [
     // data: { layout: 'light-sidebar' },
   },
   {
+    path: 'groups',
+    loadChildren: () => import('../modules/groups/groups.module').then((m) => m.GroupsModule),
+    // data: { layout: 'light-sidebar' },
+  },
+  {
     path: 'crafted/pages/profile',
     loadChildren: () => import('../modules/profile/profile.module').then((m) => m.ProfileModule),
     // data: { layout: 'light-sidebar' },

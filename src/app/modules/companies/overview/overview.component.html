@@ -23,5 +23,5 @@
 </div>
 <!-- end::Row -->
 
-<app-pmis-table class="card mb-5 mb-xl-8" [canSearch]="true"
-  [canChangeStatus]="false" (newClicked)="redirectToNew()"></app-pmis-table>
+<app-pmis-table class="card mb-5 mb-xl-8" [dataList]="dataList" [canSearch]="true" [canChangeStatus]="false"
+  (newClicked)="redirectToNew()"></app-pmis-table>
