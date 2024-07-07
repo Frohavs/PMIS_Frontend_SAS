@@ -109,6 +109,44 @@
 
   <!--begin::Form group-->
   <div class="fv-row mb-8">
+    <label class="form-label fw-bolder text-gray-900 fs-6">Type</label>
+    <!-- <input class="form-control bg-transparent" type="email" placeholder="Email" name="email" formControlName="email"
+      autocomplete="off" [ngClass]="{
+        'is-invalid': registrationForm.controls['email'].invalid,
+        'is-valid': registrationForm.controls['email'].valid
+      }" /> -->
+      <select class="form-select form-select-outline form-select-lg fw-bold" name="Type">
+        <option value="">{{"TRANSLATOR.SELECTION" | translate}}</option>
+        <!-- <option value="consultant">{{"COMPANY.consultant" | translate}}</option>
+        <option value="contractor">{{"COMPANY.contractor" | translate}}</option>
+        <option value="riyadh_municipality">{{"COMPANY.riyadh_municipality" | translate}}</option>
+        <option value="governmental_institution">{{"COMPANY.governmental_institution" | translate}}</option> -->
+      </select>
+    <!-- <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+        validation: 'required',
+        message: 'Email is required',
+        control: registrationForm.controls['email']
+      }"></ng-container>
+    <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+        validation: 'email',
+        message: 'Email is invalid',
+        control: registrationForm.controls['email']
+      }"></ng-container>
+    <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+        validation: 'minlength',
+        message: 'Email should have at least 3 symbols',
+        control: registrationForm.controls['email']
+      }"></ng-container>
+    <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+        validation: 'maxLength',
+        message: 'Email should have maximum 360 symbols',
+        control: registrationForm.controls['email']
+      }"></ng-container> -->
+  </div>
+  <!--end::Form group-->
+
+  <!--begin::Form group-->
+  <div class="fv-row mb-8">
     <label class="form-label fw-bolder text-gray-900 fs-6">Password</label>
     <input class="form-control bg-transparent" type="password" placeholder="Password" name="password"
       formControlName="password" autocomplete="off" [ngClass]="{
