@@ -4,6 +4,7 @@ export const locale = {
   data: {
     TRANSLATOR: {
       SELECT: 'اختر لغتك',
+      SELECTION: 'اختار...'
     },
     MENU: {
       NEW: 'جديد',
@@ -15,6 +16,20 @@ export const locale = {
       DASHBOARD: 'لوحة التحكم',
       COMPANIES: 'الشركات',
       GROUPS: 'المجموعات',
+    },
+    COMPANY: {
+      ID: 'رقم',
+      TITLE: 'شركة',
+      Add_Company: 'إضافة شركة',
+      TYPE: 'النوع',
+      EN_NAME: 'الأسم بالأنجليزية',
+      cr_number: 'CR Number',
+      Status: 'الحالة',
+      Search: 'بحث عن الشركة...',
+      consultant: 'إستشاري',
+      contractor: 'مقاول',
+      riyadh_municipality: 'أمانة الرياض',
+      governmental_institution: 'مؤسسة حكومية',
     },
     GROUPS: {
 
@@ -81,7 +96,8 @@ export const locale = {
         BUSINESS: 'عمل',
         INDIVIDUAL: 'فردي',
         SEARCH: 'بحث',
-        IN_ALL_FIELDS: 'في جميع الحقول'
+        IN_ALL_FIELDS: 'في جميع الحقول',
+        BACK: 'رجوع'
       },
       ECOMMERCE: 'التجارة الإلكترونية',
       CUSTOMERS: {

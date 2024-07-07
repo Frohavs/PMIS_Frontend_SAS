@@ -2,12 +2,12 @@
   <div class="card-header border-0 cursor-pointer" role="button" data-bs-toggle="collapse"
     data-bs-target="#kt_add_company" aria-expanded="true" aria-controls="kt_add_company">
     <div class="card-title m-0">
-      <h3 class="fw-bolder m-0">Add Company</h3>
+      <h3 class="fw-bolder m-0">{{"COMPANY.Add_Company" | translate}}</h3>
     </div>
     <div class="card-toolbar">
       <a (click)="back()" class="btn btn-sm btn-danger d-flex">
         <!-- <app-keenicon name="arrow-left" class="fs-3"></app-keenicon> -->
-        back
+        {{"ECOMMERCE.COMMON.BACK" | translate}}
       </a>
     </div>
   </div>
@@ -32,14 +32,14 @@
           </div>
         </div> -->
         <div class="row mb-6">
-          <label class="col-lg-4 col-form-label required fw-bold fs-6">Company</label>
+          <label class="col-lg-4 col-form-label required fw-bold fs-6">{{"COMPANY.TITLE" | translate}}</label>
           <div class="col-lg-8 fv-row">
             <input type="text" class="form-control form-control-lg form-control-solid" placeholder="Company name"
               name="co_name" />
           </div>
         </div>
         <div class="row mb-6">
-          <label class="col-lg-4 col-form-label required fw-bold fs-6">English Name</label>
+          <label class="col-lg-4 col-form-label required fw-bold fs-6">{{"COMPANY.EN_NAME" | translate}}</label>
           <div class="col-lg-8 fv-row">
             <input type="text" class="form-control form-control-lg form-control-solid" placeholder="Company name"
               name="eng_name" />
@@ -47,14 +47,14 @@
         </div>
 
         <div class="row mb-6">
-          <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="required">Type</span></label>
+          <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="required">{{"COMPANY.TYPE" | translate}}</span></label>
           <div class="col-lg-8 fv-row">
             <select class="form-select form-select-solid form-select-lg fw-bold" name="Type">
-              <option value="">Select a Type...</option>
-              <option value="consultant">consultant</option>
-              <option value="contractor">contractor</option>
-              <option value="riyadh_municipality">riyadh_municipality</option>
-              <option value="governmental_institution">governmental_institution</option>
+              <option value="">{{"TRANSLATOR.SELECTION" | translate}}</option>
+              <option value="consultant">{{"COMPANY.consultant" | translate}}</option>
+              <option value="contractor">{{"COMPANY.contractor" | translate}}</option>
+              <option value="riyadh_municipality">{{"COMPANY.riyadh_municipality" | translate}}</option>
+              <option value="governmental_institution">{{"COMPANY.governmental_institution" | translate}}</option>
             </select>
             <!-- <div class="fv-plugins-message-container">
               <div class="fv-help-block">Type is required</div>

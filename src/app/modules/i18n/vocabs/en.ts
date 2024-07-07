@@ -4,6 +4,7 @@ export const locale = {
   data: {
     TRANSLATOR: {
       SELECT: 'Select your language',
+      SELECTION: 'Select...'
     },
     MENU: {
       NEW: 'new',
@@ -15,6 +16,20 @@ export const locale = {
       DASHBOARD: 'Dashboard',
       COMPANIES: 'Companies',
       GROUPS: 'Groups',
+    },
+    COMPANY: {
+      ID: 'ID',
+      TITLE: 'Company',
+      Add_Company: 'Add Company',
+      EN_NAME: 'English Name',
+      TYPE: 'Type',
+      cr_number: 'CR Number',
+      Status: 'Status',
+      Search: 'Search Company...',
+      consultant: 'Consultant',
+      contractor: 'Contractor',
+      riyadh_municipality: 'Riyadh Municipality',
+      governmental_institution: 'Governmental Institution',
     },
     GROUPS: {
 
@@ -80,7 +95,8 @@ export const locale = {
         BUSINESS: 'Business',
         INDIVIDUAL: 'Individual',
         SEARCH: 'Search',
-        IN_ALL_FIELDS: 'in all fields'
+        IN_ALL_FIELDS: 'in all fields',
+        BACK: 'Back'
       },
       ECOMMERCE: 'eCommerce',
       CUSTOMERS: {
