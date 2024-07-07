@@ -1,8 +1,9 @@
 <!--begin::Logo image-->
 <a routerLink="/dashboard">
-  <ng-container *ngIf="currentLayoutType === 'dark-sidebar'">
-    <img alt="Logo" src="./assets/media/logos/default-dark.svg" class="h-25px app-sidebar-logo-default" />
-  </ng-container>
+  <div class="d-flex align-items-center justify-content-center" *ngIf="currentLayoutType === 'dark-sidebar'">
+    <img alt="Logo" src="./assets/media/logos/froha_logo.png" class="h-45px app-sidebar-logo-default" />
+    <h3 class="text-white mx-4 mt-2">FROHAVS</h3>
+  </div>
   <ng-container *ngIf="currentLayoutType !== 'dark-sidebar'">
     <img alt="Logo" src="./assets/media/logos/default.svg" class="h-25px app-sidebar-logo-default theme-light-show" />
     <img alt="Logo" src="./assets/media/logos/default-dark.svg"

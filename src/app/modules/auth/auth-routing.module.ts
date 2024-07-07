@@ -21,10 +21,10 @@ const routes: Routes = [
         component: LoginComponent,
         data: { returnUrl: window.location.pathname },
       },
-      {
-        path: 'registration',
-        component: RegistrationComponent,
-      },
+      // {
+      //   path: 'registration',
+      //   component: RegistrationComponent,
+      // },
       {
         path: 'forgot-password',
         component: ForgotPasswordComponent,

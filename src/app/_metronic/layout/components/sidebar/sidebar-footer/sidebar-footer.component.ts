@@ -7,7 +7,6 @@ import { environment } from '../../../../../../environments/environment';
   styleUrls: ['./sidebar-footer.component.scss'],
 })
 export class SidebarFooterComponent implements OnInit {
-  appPreviewChangelogUrl: string = environment.appPreviewChangelogUrl;
 
   constructor() {}
 
