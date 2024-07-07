@@ -32,7 +32,14 @@ export const locale = {
       governmental_institution: 'Governmental Institution',
     },
     GROUPS: {
-
+      ID: 'ID',
+      TITLE: 'Groups',
+      Add_Group: 'Add Group',
+      TYPE: 'Type',
+      Test: 'Test',
+      EN_NAME: 'English Name',
+      Status: 'Status',
+      Search: 'Search Group...',
     },
     AUTH: {
       GENERAL: {

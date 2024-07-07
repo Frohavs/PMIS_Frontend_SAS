@@ -9,8 +9,9 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class OverviewComponent implements OnInit {
 
+  Add_text: string;
+  Search_text: string;
   dataColumns: any[] = []
-
   dataList: any[] = [
     {
       id: '1452',
@@ -65,6 +66,8 @@ export class OverviewComponent implements OnInit {
   ]
 
   constructor(private router: Router, private translate: TranslateService) {
+    this.Add_text = this.translate.instant('COMPANY.Add_Company'),
+    this.Search_text = this.translate.instant('COMPANY.Search'),
     this.dataColumns = [
       { title: this.translate.instant('COMPANY.ID'), className: 'min-w-125px rounded-start' },
       { title: this.translate.instant('COMPANY.TITLE'), className: 'ps-4 min-w-300px' },
@@ -81,6 +84,5 @@ export class OverviewComponent implements OnInit {
   redirectToNew() {
     this.router.navigateByUrl('companies/add')
   }
-
 
 }

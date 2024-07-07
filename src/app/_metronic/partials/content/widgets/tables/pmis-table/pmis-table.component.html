@@ -10,7 +10,7 @@
     <!--begin::Search-->
     <div class="d-flex align-items-center position-relative my-1">
       <app-keenicon name="magnifier" class="fs-3 position-absolute ms-5"></app-keenicon>
-      <input type="text" data-action="filter" class="form-control form-control-solid w-250px ps-12" placeholder="{{'COMPANY.Search' | translate}}">
+      <input type="text" data-action="filter" class="form-control form-control-solid w-250px ps-12" [placeholder]="Search_text">
     </div>
     <!--end::Search-->
   </div>
@@ -19,7 +19,7 @@
   <div class="card-toolbar">
     <a (click)="redirect()" class="d-flex btn btn-sm btn-light-primary">
       <app-keenicon name="plus" class="fs-3"></app-keenicon>
-      {{"COMPANY.Add_Company" | translate}}
+      {{Add_text}}
     </a>
   </div>
 </div>

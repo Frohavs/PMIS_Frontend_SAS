@@ -1,1 +1,44 @@
-<p>overview works!</p>
+<!-- begin::Row -->
+<div class="row g-5 g-xl-8">
+  <div class="col-xl-3">
+    <app-stats-widget1 class="card bgi-no-repeat card-xl-stretch mb-xl-8" title="Group 1"
+      time="3:30PM - 4:20PM" description="create a headline that is informative" [ngStyle]="{
+        'background-position': 'right top',
+        'background-size': '30% auto',
+        'background-image': 'url(../../../../../../assets/media/svg/shapes/abstract-1.svg)'
+      }"></app-stats-widget1>
+  </div>
+
+  <div class="col-xl-3">
+    <app-stats-widget1 class="card bgi-no-repeat card-xl-stretch mb-xl-8" title="Group 2" time="03 May 2020"
+      description="Great blog posts don’t just happen Even " [ngStyle]="{
+        'background-position': 'right top',
+        'background-size': '30% auto',
+        'background-image': 'url(../../../../../../assets/media/svg/shapes/abstract-2.svg)'
+      }"></app-stats-widget1>
+  </div>
+
+  <div class="col-xl-3">
+    <app-stats-widget1 class="card bgi-no-repeat card-xl-stretch mb-5 mb-xl-8" title="Group 3"
+      time="10AM Jan, 2021" description="A Front-end solution for build with Angular" [ngStyle]="{
+        'background-position': 'right top',
+        'background-size': '30% auto',
+        'background-image': 'url(../../../../../../assets/media/svg/shapes/abstract-3.svg)'
+      }"></app-stats-widget1>
+  </div>
+
+  <div class="col-xl-3">
+    <app-stats-widget1 class="card bgi-no-repeat card-xl-stretch mb-5 mb-xl-8" title="Group 4"
+      time="10AM Jan, 2021" description="test Group description" [ngStyle]="{
+        'background-position': 'right top',
+        'background-size': '30% auto',
+        'background-image': 'url(../../../../../../assets/media/svg/shapes/abstract-4.svg)'
+      }"></app-stats-widget1>
+  </div>
+</div>
+<!-- end::Row -->
+
+<!-- table -->
+<app-pmis-table class="card mb-5 mb-xl-8" [Add_text]="Add_text" [Search_text]="Search_text" [dataList]="dataList"
+  [dataColumns]="dataColumns" [canSearch]="true" [canChangeStatus]="false" (newClicked)="redirectToNew()">
+</app-pmis-table>

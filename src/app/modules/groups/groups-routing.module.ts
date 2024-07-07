@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { GroupsComponent } from './groups.component';
 import { OverviewComponent } from './overview/overview.component';
+import { AddGroupComponent } from './add-group/add-group.component';
 
 const routes: Routes = [
   {
@@ -12,10 +13,10 @@ const routes: Routes = [
         path: 'overview',
         component: OverviewComponent,
       },
-      // {
-      //   path: 'add',
-      //   component: AddGroupComponent,
-      // },
+      {
+        path: 'add',
+        component: AddGroupComponent,
+      },
       { path: '', redirectTo: 'overview', pathMatch: 'full' },
       { path: '**', redirectTo: 'overview', pathMatch: 'full' },
     ]

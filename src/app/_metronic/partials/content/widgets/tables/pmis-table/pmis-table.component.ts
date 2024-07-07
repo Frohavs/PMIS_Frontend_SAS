@@ -6,6 +6,9 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 })
 export class PMISTableComponent implements OnInit {
 
+
+  @Input() Add_text: string = 'New Title';
+  @Input() Search_text: string = 'Over 500 new products';
   @Input() tableTitle: string = 'New Title';
   @Input() table_SubTitle: string = 'Over 500 new products';
   @Input() canChangeStatus: boolean = true;

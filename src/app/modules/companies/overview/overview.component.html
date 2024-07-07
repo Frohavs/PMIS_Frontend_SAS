@@ -23,5 +23,7 @@
 </div>
 <!-- end::Row -->
 
-<app-pmis-table class="card mb-5 mb-xl-8" [dataList]="dataList" [dataColumns]="dataColumns" [canSearch]="true" [canChangeStatus]="false"
-  (newClicked)="redirectToNew()"></app-pmis-table>
+<!-- table -->
+<app-pmis-table class="card mb-5 mb-xl-8" [Add_text]="Add_text" [Search_text]="Search_text" [dataList]="dataList"
+  [dataColumns]="dataColumns" [canSearch]="true" [canChangeStatus]="false" (newClicked)="redirectToNew()">
+</app-pmis-table>

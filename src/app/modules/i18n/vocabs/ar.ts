@@ -23,7 +23,7 @@ export const locale = {
       Add_Company: 'إضافة شركة',
       TYPE: 'النوع',
       EN_NAME: 'الأسم بالأنجليزية',
-      cr_number: 'CR Number',
+      cr_number: 'الرقم التعريفي',
       Status: 'الحالة',
       Search: 'بحث عن الشركة...',
       consultant: 'إستشاري',
@@ -32,7 +32,14 @@ export const locale = {
       governmental_institution: 'مؤسسة حكومية',
     },
     GROUPS: {
-
+      ID: 'رقم',
+      TITLE: 'مجموعات',
+      Add_Group: 'إضافة مجموعة',
+      TYPE: 'النوع',
+      Test: 'تست',
+      EN_NAME: 'الأسم بالأنجليزية',
+      Status: 'الحالة',
+      Search: 'بحث عن المجموعة...',
     },
     AUTH: {
       GENERAL: {
