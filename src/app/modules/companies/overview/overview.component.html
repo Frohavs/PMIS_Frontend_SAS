@@ -25,5 +25,5 @@
 
 <!-- table -->
 <app-pmis-table class="card mb-5 mb-xl-8" [Add_text]="Add_text" [Search_text]="Search_text" [dataList]="dataList"
-  [dataColumns]="dataColumns" [canSearch]="true" [canChangeStatus]="false" (newClicked)="redirectToNew()">
+  [dataColumns]="dataColumns" [canSearch]="true" [canChangeStatus]="false" (newClicked)="redirectToNew()" (detailsClicked)="detailsClicked($event)">
 </app-pmis-table>

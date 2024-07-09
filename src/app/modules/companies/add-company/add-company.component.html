@@ -2,7 +2,8 @@
   <div class="card-header border-0 cursor-pointer" role="button" data-bs-toggle="collapse"
     data-bs-target="#kt_add_company" aria-expanded="true" aria-controls="kt_add_company">
     <div class="card-title m-0">
-      <h3 class="fw-bolder m-0">{{"COMPANY.Add_Company" | translate}}</h3>
+      <h3 class="fw-bolder m-0" *ngIf="!companyId">{{"COMPANY.Add_Company" | translate}}</h3>
+      <h3 class="fw-bolder m-0" *ngIf="companyId">{{"COMPANY.Edit_Company" | translate}}</h3>
     </div>
     <div class="card-toolbar">
       <a (click)="back()" class="btn btn-sm btn-danger d-flex">
@@ -75,6 +76,14 @@
           <div class="col-lg-8 fv-row">
             <input type="color" class="form-control form-control-lg form-control-solid w-25"
               name="main_color" value="#e66465" />
+          </div>
+        </div>
+
+        <div class="row mb-6">
+          <label class="col-lg-4 col-form-label required fw-bold fs-6">Company icon</label>
+          <div class="col-lg-8 fv-row">
+            <input type="file" class="form-control form-control-lg form-control-solid w-50"
+              name="main_color" />
           </div>
         </div>
 

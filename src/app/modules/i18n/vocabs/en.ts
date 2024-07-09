@@ -21,6 +21,7 @@ export const locale = {
       ID: 'ID',
       TITLE: 'Company',
       Add_Company: 'Add Company',
+      Edit_Company: 'Edit Company',
       EN_NAME: 'English Name',
       TYPE: 'Type',
       cr_number: 'CR Number',

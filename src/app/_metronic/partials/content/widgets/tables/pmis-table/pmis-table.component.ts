@@ -11,13 +11,17 @@ export class PMISTableComponent implements OnInit {
   @Input() Search_text: string = 'Over 500 new products';
   @Input() tableTitle: string = 'New Title';
   @Input() table_SubTitle: string = 'Over 500 new products';
+
+  @Input() canSearch: boolean = false;
+  @Input() canViewDetails: boolean = true;
   @Input() canChangeStatus: boolean = true;
   @Input() canEdit: boolean = true;
   @Input() canDelete: boolean = true;
-  @Input() canSearch: boolean = false;
 
   @Input() dataColumns: any = [];
   @Input() dataList: any = [];
+
+  @Output() detailsClicked: EventEmitter<any> = new EventEmitter<any>();
   @Output() newClicked: EventEmitter<any> = new EventEmitter<any>();
 
   constructor() {}
@@ -26,5 +30,9 @@ export class PMISTableComponent implements OnInit {
 
   redirect() {
     this.newClicked.emit();
+  }
+
+  populateViewClicked(value: any) {
+    this.detailsClicked.emit(value)
   }
 }

@@ -99,6 +99,16 @@
           </td>
           <td class="text-end">
             <a
+            *ngIf="canViewDetails"
+            class="
+                btn btn-icon btn-bg-light btn-active-color-primary btn-sm
+                me-1
+              "
+              (click)="populateViewClicked(data)"
+            >
+              <app-keenicon name="eye" class="fs-3"></app-keenicon>
+            </a>
+            <a
             *ngIf="canChangeStatus"
             class="
                 btn btn-icon btn-bg-light btn-active-color-primary btn-sm

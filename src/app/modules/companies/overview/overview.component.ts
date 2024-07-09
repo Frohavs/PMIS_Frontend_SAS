@@ -85,4 +85,9 @@ export class OverviewComponent implements OnInit {
     this.router.navigateByUrl('companies/add')
   }
 
+  detailsClicked(row: any) {
+    console.log(row);
+    this.router.navigateByUrl('companies/' + row.id)
+  }
+
 }

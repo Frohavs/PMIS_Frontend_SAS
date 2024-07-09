@@ -8,6 +8,7 @@ import { TranslationModule } from '../i18n';
 import { CompaniesComponent } from './companies.component';
 import { WidgetsModule } from 'src/app/_metronic/partials';
 import { OverviewComponent } from './overview/overview.component';
+import { CompanyDetailsComponent } from './company-details/company-details.component';
 import { AddCompanyComponent } from './add-company/add-company.component';
 
 
@@ -15,6 +16,7 @@ import { AddCompanyComponent } from './add-company/add-company.component';
   declarations: [
     CompaniesComponent,
     OverviewComponent,
+    CompanyDetailsComponent,
     AddCompanyComponent
   ],
   imports: [

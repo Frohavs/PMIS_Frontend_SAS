@@ -1,6 +1,7 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import {Location} from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-add-company',
@@ -9,13 +10,23 @@ import {Location} from '@angular/common';
 })
 export class AddCompanyComponent implements OnInit, OnDestroy {
 
+  companyId: number;
   isLoading: boolean;
   private unsubscribe: Subscription[] = [];
 
-  constructor(private cdr: ChangeDetectorRef, private _location: Location) {
+  constructor(private cdr: ChangeDetectorRef, private _location: Location, private activatedRoute: ActivatedRoute) {
   }
 
-  ngOnInit(): void { }
+  ngOnInit() {
+    this.getCompanyId();
+  }
+
+  getCompanyId() {
+    this.activatedRoute.params.subscribe(params => {
+      this.companyId = +params['id'];
+      console.log('Company ID:', this.companyId);
+    });
+  }
 
   saveSettings() {
     this.isLoading = true;

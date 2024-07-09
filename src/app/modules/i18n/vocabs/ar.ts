@@ -21,6 +21,7 @@ export const locale = {
       ID: 'رقم',
       TITLE: 'شركة',
       Add_Company: 'إضافة شركة',
+      Edit_Company: 'تعديل شركة',
       TYPE: 'النوع',
       EN_NAME: 'الأسم بالأنجليزية',
       cr_number: 'الرقم التعريفي',
