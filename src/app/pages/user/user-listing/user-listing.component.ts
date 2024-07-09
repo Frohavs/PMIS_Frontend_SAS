@@ -125,7 +125,7 @@ export class UserListingComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   create() {
-    this.userModel = { id: 0, name: '', email: '', };
+    this.userModel = { id: 0, name: 'Ahmed', email: '', };
   }
 
   onSubmit(event: Event, myForm: NgForm) {

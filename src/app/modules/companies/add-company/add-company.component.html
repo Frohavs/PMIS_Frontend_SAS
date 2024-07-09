@@ -48,7 +48,8 @@
         </div>
 
         <div class="row mb-6">
-          <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="required">{{"COMPANY.TYPE" | translate}}</span></label>
+          <label class="col-lg-4 col-form-label fw-bold fs-6"><span
+              class="required">{{"COMPANY.TYPE" | translate}}</span></label>
           <div class="col-lg-8 fv-row">
             <select class="form-select form-select-solid form-select-lg fw-bold" name="Type">
               <option value="">{{"TRANSLATOR.SELECTION" | translate}}</option>
@@ -66,24 +67,45 @@
         <div class="row mb-6">
           <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="required">CR Number</span></label>
           <div class="col-lg-8 fv-row">
-            <input type="tel" class="form-control form-control-lg form-control-solid" placeholder="cr number"
-            name="cr_number" />
+            <input type="text" class="form-control form-control-lg form-control-solid" placeholder="cr number"
+              name="cr_number" />
+          </div>
+        </div>
+
+        <div class="row mb-6">
+          <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="required">Number of Users</span></label>
+          <div class="col-lg-8 fv-row">
+            <input type="number" class="form-control form-control-lg form-control-solid" placeholder="users no."
+              name="cr_number" min="1" />
           </div>
         </div>
 
         <div class="row mb-6">
           <label class="col-lg-4 col-form-label required fw-bold fs-6">Theme/Main Color</label>
           <div class="col-lg-8 fv-row">
-            <input type="color" class="form-control form-control-lg form-control-solid w-25"
-              name="main_color" value="#e66465" />
+            <input type="color" class="form-control form-control-lg form-control-solid w-25" name="main_color"
+              value="#e66465" />
           </div>
         </div>
 
         <div class="row mb-6">
           <label class="col-lg-4 col-form-label required fw-bold fs-6">Company icon</label>
           <div class="col-lg-8 fv-row">
-            <input type="file" class="form-control form-control-lg form-control-solid w-50"
-              name="main_color" />
+            <input type="file" class="form-control form-control-lg form-control-solid w-50" name="main_color" />
+          </div>
+        </div>
+
+        <div class="row mb-6">
+          <label class="col-lg-4 col-form-label required fw-bold fs-6">Printing Header</label>
+          <div class="col-lg-8 fv-row">
+            <input type="file" class="form-control form-control-lg form-control-solid w-50" name="main_color" />
+          </div>
+        </div>
+
+        <div class="row mb-6">
+          <label class="col-lg-4 col-form-label required fw-bold fs-6">Printing Footer</label>
+          <div class="col-lg-8 fv-row">
+            <input type="file" class="form-control form-control-lg form-control-solid w-50" name="main_color" />
           </div>
         </div>
 
@@ -118,15 +140,18 @@
           </div>
         </div>
 
-        <div class="row mb-0">
-          <label class="col-lg-4 col-form-label fw-bold fs-6">is Deleted</label>
-          <div class="col-lg-8 d-flex align-items-center">
-            <div class="form-check form-check-solid form-switch fv-row">
-              <input class="form-check-input w-45px h-30px" type="checkbox" id="is_deleted" /><label
-                class="form-check-label"></label>
+        <div class="row mb-6">
+          <label class="col-lg-4 col-form-label fw-bold fs-6">Notification by SMS or Mail</label>
+          <div class="col-lg-8 fv-row">
+            <div class="d-flex align-items-center mt-3">
+              <label class="form-check form-check-inline form-check-solid me-5"><input class="form-check-input"
+                  name="communication[]" type="checkbox" /><span class="fw-bold ps-2 fs-6">SMS</span></label><label
+                class="form-check form-check-inline form-check-solid"><input class="form-check-input"
+                  name="communication[]" type="checkbox" /><span class="fw-bold ps-2 fs-6">Email</span></label>
             </div>
           </div>
         </div>
+
       </div>
       <div class="card-footer d-flex justify-content-end py-6 px-9">
         <button type="button" class="btn btn-primary" [disabled]="isLoading" (click)="saveSettings()">

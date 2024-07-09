@@ -10,7 +10,8 @@
     <!--begin::Search-->
     <div class="d-flex align-items-center position-relative my-1">
       <app-keenicon name="magnifier" class="fs-3 position-absolute ms-5"></app-keenicon>
-      <input type="text" data-action="filter" class="form-control form-control-solid w-250px ps-12" [placeholder]="Search_text">
+      <input type="text" data-action="filter" class="form-control form-control-solid w-250px ps-12"
+        [placeholder]="Search_text">
     </div>
     <!--end::Search-->
   </div>
@@ -33,12 +34,9 @@
       <!-- begin::Table head -->
       <thead>
         <tr class="fw-bolder text-muted bg-light">
-          <th *ngFor="let column of dataColumns; index as i" [class]="column.className" [ngStyle]="{'padding': i === 0 ? '12px' : ''}">{{column.title}}</th>
-          <!-- <th class="ps-4 min-w-300px rounded-start">Company</th>
-          <th class="min-w-125px">English Name</th>
-          <th class="min-w-200px">CR Number</th>
-          <th class="min-w-150px">Status</th>
-          <th class="min-w-200px text-end rounded-end"></th> -->
+          <ng-container *ngFor="let column of dataColumns; index as i" [ngStyle]="{'padding': i === 0 ? '12px' : ''}">
+            <th [class]="column.className">{{column.title}}</th>
+          </ng-container>
         </tr>
       </thead>
       <!-- end::Table head -->
@@ -46,24 +44,17 @@
       <tbody>
         <tr *ngFor="let data of dataList; index as i">
           <td style="padding: 12px;">
-            <a
-              class="text-gray-900 fw-bolder text-hover-primary d-block mb-1 fs-6"
-            >
+            <a class="text-gray-900 fw-bolder text-hover-primary d-block mb-1 fs-6">
               {{i+1}}
             </a>
           </td>
           <td>
             <div class="d-flex align-items-center">
               <div class="symbol symbol-50px me-5">
-                <img
-                  [src]="data.img"
-                  alt="com"
-                />
+                <img [src]="data.img" alt="com" />
               </div>
               <div class="d-flex justify-content-start flex-column">
-                <a
-                  class="text-gray-900 fw-bolder text-hover-primary mb-1 fs-6"
-                >
+                <a class="text-gray-900 fw-bolder text-hover-primary mb-1 fs-6">
                   {{data.name}}
                 </a>
                 <span class="text-muted fw-bold text-muted d-block fs-7">
@@ -72,64 +63,43 @@
               </div>
             </div>
           </td>
-          <td>
-            <a
-              href="#"
-              class="text-gray-900 fw-bolder text-hover-primary d-block mb-1 fs-6"
-            >
-              {{data.EN_NAME}}
+          <td *ngIf="data?.EN_NAME">
+            <a href="#" class="text-gray-900 fw-bolder text-hover-primary d-block mb-1 fs-6">
+              {{data?.EN_NAME}}
+            </a>
+          </td>
+          <td *ngIf="data?.crNumber">
+            <a href="#" class="text-gray-900 fw-bolder text-hover-primary d-block mb-1 fs-6">
+              {{data?.crNumber}}
             </a>
           </td>
           <td>
-            <a
-              href="#"
-              class="text-gray-900 fw-bolder text-hover-primary d-block mb-1 fs-6"
-            >
-              {{data.crNumber}}
-            </a>
-          </td>
-          <td>
-            <span
-            [ngClass]="{'badge-light-success': data.status === 'Active',
+            <span [ngClass]="{'badge-light-success': data.status === 'Active',
                         'badge-light-primary': data.status === 'Inactive',
-                        'badge-light-info': data.status === 'In Progress'}"
-                       class="badge fs-7 fw-bold">
-                       {{data.status}}
+                        'badge-light-info': data.status === 'In Progress'}" class="badge fs-7 fw-bold">
+              {{data.status}}
             </span>
           </td>
           <td class="text-end">
-            <a
-            *ngIf="canViewDetails"
-            class="
+            <a *ngIf="canViewDetails" class="
                 btn btn-icon btn-bg-light btn-active-color-primary btn-sm
                 me-1
-              "
-              (click)="populateViewClicked(data)"
-            >
+              " (click)="populateViewClicked(data)">
               <app-keenicon name="eye" class="fs-3"></app-keenicon>
             </a>
-            <a
-            *ngIf="canChangeStatus"
-            class="
+            <a *ngIf="canChangeStatus" class="
                 btn btn-icon btn-bg-light btn-active-color-primary btn-sm
                 me-1
-              "
-            >
+              ">
               <app-keenicon name="switch" class="fs-3"></app-keenicon>
             </a>
-            <a
-            *ngIf="canEdit"
-            class="
+            <a *ngIf="canEdit" class="
                 btn btn-icon btn-bg-light btn-active-color-primary btn-sm
                 me-1
-              "
-            >
+              ">
               <app-keenicon name="pencil" class="fs-3"></app-keenicon>
             </a>
-            <a
-            *ngIf="canDelete"
-            class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm"
-            >
+            <a *ngIf="canDelete" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm">
               <app-keenicon name="trash" class="fs-3"></app-keenicon>
             </a>
           </td>

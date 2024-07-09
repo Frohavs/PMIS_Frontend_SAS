@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, Renderer2 } from '@angular/core';
 import { Router } from '@angular/router';
+import { NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
+import { ROLES } from './mock-data';
 
 @Component({
   selector: 'app-company-details',
@@ -8,12 +10,23 @@ import { Router } from '@angular/router';
 })
 export class CompanyDetailsComponent {
 
-  constructor(private router: Router) {
+  isCollapsed1 = false;
+  isLoading = false;
 
-  }
+  roles = ROLES;
+
+  modalConfig: NgbModalOptions = {
+    modalDialogClass: 'modal-dialog modal-dialog-centered mw-650px',
+  };
+
+  constructor(private router: Router, private renderer: Renderer2, private modalService: NgbModal) { }
 
   navigateEdit() {
     this.router.navigateByUrl('/companies/edit/1452')
+  }
+
+  addUser(modal: any) {
+    this.modalService.open(modal, this.modalConfig);
   }
 
 }

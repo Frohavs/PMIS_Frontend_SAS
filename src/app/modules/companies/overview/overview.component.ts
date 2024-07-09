@@ -69,7 +69,7 @@ export class OverviewComponent implements OnInit {
     this.Add_text = this.translate.instant('COMPANY.Add_Company'),
     this.Search_text = this.translate.instant('COMPANY.Search'),
     this.dataColumns = [
-      { title: this.translate.instant('COMPANY.ID'), className: 'min-w-125px rounded-start' },
+      { title: this.translate.instant('COMPANY.ID'), className: 'min-w-125px p-3 rounded-start' },
       { title: this.translate.instant('COMPANY.TITLE'), className: 'ps-4 min-w-300px' },
       { title: this.translate.instant('COMPANY.EN_NAME'), className: 'min-w-125px' },
       { title: this.translate.instant('COMPANY.cr_number'), className: 'min-w-200px' },
