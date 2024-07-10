@@ -20,6 +20,11 @@ const Routing: Routes = [
     // data: { layout: 'light-sidebar' },
   },
   {
+    path: 'tracking',
+    loadChildren: () => import('../pages/tracking/tracking.module').then((m) => m.TrackingModule),
+    // data: { layout: 'light-sidebar' },
+  },
+  {
     path: 'crafted/pages/profile',
     loadChildren: () => import('../modules/profile/profile.module').then((m) => m.ProfileModule),
     // data: { layout: 'light-sidebar' },

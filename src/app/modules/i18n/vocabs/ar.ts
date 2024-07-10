@@ -16,6 +16,7 @@ export const locale = {
       DASHBOARD: 'لوحة التحكم',
       COMPANIES: 'الشركات',
       GROUPS: 'المجموعات',
+      Tracking: 'التعقب',
     },
     COMPANY: {
       ID: 'رقم',
@@ -41,6 +42,15 @@ export const locale = {
       EN_NAME: 'الأسم بالأنجليزية',
       Status: 'الحالة',
       Search: 'بحث عن المجموعة...',
+    },
+    TRACKING: {
+      ID: 'رقم',
+      Tracking: 'التعقب',
+      full_name: 'الأسم بالكامل',
+      url: 'الرابط',
+      message: 'الرسالة',
+      date: 'التاريخ',
+      Search: 'بحث ...',
     },
     AUTH: {
       GENERAL: {

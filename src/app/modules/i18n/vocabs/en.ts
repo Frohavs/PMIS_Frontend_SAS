@@ -16,6 +16,7 @@ export const locale = {
       DASHBOARD: 'Dashboard',
       COMPANIES: 'Companies',
       GROUPS: 'Groups',
+      Tracking: 'Tracking',
     },
     COMPANY: {
       ID: 'ID',
@@ -41,6 +42,15 @@ export const locale = {
       EN_NAME: 'English Name',
       Status: 'Status',
       Search: 'Search Group...',
+    },
+    TRACKING: {
+      ID: 'ID',
+      Tracking: 'Tracking',
+      full_name: 'Full Name',
+      url: 'URL',
+      message: 'Message',
+      date: 'Date',
+      Search: 'Search Tracking...',
     },
     AUTH: {
       GENERAL: {

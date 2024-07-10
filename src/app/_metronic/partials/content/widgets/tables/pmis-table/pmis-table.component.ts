@@ -12,6 +12,7 @@ export class PMISTableComponent implements OnInit {
   @Input() tableTitle: string = 'New Title';
   @Input() table_SubTitle: string = 'Over 500 new products';
 
+  @Input() showActions: boolean = true;
   @Input() canSearch: boolean = false;
   @Input() canViewDetails: boolean = true;
   @Input() canChangeStatus: boolean = true;
