@@ -19,37 +19,22 @@ export class OverviewComponent implements OnInit {
   dataList: any[] = [
     {
       id: '1452',
-      img: './assets/media/stock/600x400/img-26.jpg',
-      name: 'Group name',
-      subName: 'type',
+      txt1: 'Group1',
       status: 'Active'
     },
     {
       id: '1452',
-      img: './assets/media/stock/600x400/img-3.jpg',
-      name: 'Group name',
-      subName: 'type',
+      txt1: 'Group2',
       status: 'Inactive'
     },
     {
       id: '1452',
-      img: './assets/media/stock/600x400/img-8.jpg',
-      name: 'Group name',
-      subName: 'type',
-      status: 'In Progress'
-    },
-    {
-      id: '1452',
-      img: './assets/media/stock/600x400/img-9.jpg',
-      name: 'Group name',
-      subName: 'type',
+      txt1: 'Group3',
       status: 'Active'
     },
     {
       id: '1452',
-      img: './assets/media/stock/600x400/img-18.jpg',
-      name: 'Group name',
-      subName: 'type',
+      txt1: 'Group4',
       status: 'Inactive'
     },
   ]

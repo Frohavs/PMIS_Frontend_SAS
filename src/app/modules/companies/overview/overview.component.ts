@@ -15,7 +15,7 @@ export class OverviewComponent implements OnInit {
   dataList: any[] = [
     {
       id: '1452',
-      img: './assets/media/stock/600x400/img-26.jpg',
+      img: './assets/media/logos/froha_logo.png',
       name: 'company name',
       subName: 'company type',
       EN_NAME: 'english name',
