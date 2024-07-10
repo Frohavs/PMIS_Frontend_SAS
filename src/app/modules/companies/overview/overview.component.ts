@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
+import { NewUserService } from 'src/app/services/new-user.service';
 
 @Component({
   selector: 'app-overview',
@@ -65,7 +66,7 @@ export class OverviewComponent implements OnInit {
     },
   ]
 
-  constructor(private router: Router, private translate: TranslateService) {
+  constructor(private router: Router, private translate: TranslateService, private newUserService: NewUserService) {
     this.Add_text = this.translate.instant('COMPANY.Add_Company'),
     this.Search_text = this.translate.instant('COMPANY.Search'),
     this.dataColumns = [
@@ -78,7 +79,12 @@ export class OverviewComponent implements OnInit {
     ]
   }
   ngOnInit(): void {
-    throw new Error('Method not implemented.');
+    // throw new Error('Method not implemented.');
+
+    this.newUserService.getUser("c85152e1-cd08-4931-98f7-254251b854e9").subscribe(res => {
+      console.log(res);
+
+    })
   }
 
   redirectToNew() {

@@ -6,8 +6,10 @@ export const environment = {
   production: false,
   appVersion: 'v8.2.4',
   USERDATA_KEY: 'authf649fc9a5f55',
-  isMockEnabled: true,
-  apiUrl: 'api',
+  // isMockEnabled: true,
+  // apiUrl: 'api',
+  isMockEnabled: false,
+  apiUrl: 'https://pmis-backend-d04a17b3c636.herokuapp.com',
   appThemeName: 'Metronic',
   appPurchaseUrl: 'https://1.envato.market/EA4JP',
   appHTMLIntegration:
