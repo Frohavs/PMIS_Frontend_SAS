@@ -16,15 +16,15 @@ export class UserDetailsComponent implements OnInit, AfterViewInit {
   constructor(
     private userService: UserService,
     private route: ActivatedRoute,
-    private changeDetectorRef: ChangeDetectorRef
+    private cdr: ChangeDetectorRef
   ) { }
 
   ngOnInit(): void {
-    const id = Number(this.route.snapshot.paramMap.get('id'));
-    this.userService.getUser(id).subscribe((res: IUserModel) => {
-      this.user = res;
-      this.changeDetectorRef.detectChanges();
-    });
+    // const id = Number(this.route.snapshot.paramMap.get('id'));
+    // this.userService.getUser(id).subscribe((res: IUserModel) => {
+    //   this.user = res;
+    //   this.cdr.detectChanges();
+    // });
   }
 
   ngAfterViewInit(): void {

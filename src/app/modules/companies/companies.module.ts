@@ -10,7 +10,7 @@ import { WidgetsModule } from 'src/app/_metronic/partials';
 import { OverviewComponent } from './overview/overview.component';
 import { CompanyDetailsComponent } from './company-details/company-details.component';
 import { AddCompanyComponent } from './add-company/add-company.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbNavModule, NgbDropdownModule, NgbCollapseModule, NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
@@ -25,6 +25,7 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
   imports: [
     CommonModule,
     CompaniesRoutingModule,
+    FormsModule,
     ReactiveFormsModule,
     WidgetsModule,
     SharedModule,

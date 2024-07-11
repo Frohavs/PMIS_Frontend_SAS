@@ -101,7 +101,6 @@ export class OverviewComponent implements OnInit {
   }
 
   detailsClicked(row: any) {
-    console.log(row);
     this.router.navigateByUrl('companies/' + row.id)
   }
 
