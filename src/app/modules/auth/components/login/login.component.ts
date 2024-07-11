@@ -6,6 +6,7 @@ import { UserModel } from '../../models/user.model';
 import { AuthService } from '../../services/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
+import { NewAuthHTTPService } from 'src/app/services/new-auth.service';
 
 @Component({
   selector: 'app-login',
@@ -33,6 +34,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     private translate: TranslateService,
     private fb: FormBuilder,
     private authService: AuthService,
+    private newAuthHTTPService: NewAuthHTTPService,
     private route: ActivatedRoute,
     private router: Router
   ) {
@@ -71,7 +73,7 @@ export class LoginComponent implements OnInit, OnDestroy {
           Validators.required,
           Validators.email,
           Validators.minLength(3),
-          Validators.maxLength(320), // https://stackoverflow.com/questions/386294/what-is-the-maximum-length-of-a-valid-email-address
+          Validators.maxLength(320),
         ]),
       ],
       password: [
@@ -89,9 +91,9 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.hasError = false;
     const loginSubscr = this.authService
       .login(this.f.email.value, this.f.password.value)
-      .pipe(first())
-      .subscribe((user: UserModel | undefined) => {
-        if (user) {
+      .subscribe((user: any) => {
+        if (user && user.data) {
+          debugger
           this.router.navigate([this.returnUrl]);
         } else {
           this.hasError = true;

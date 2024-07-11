@@ -8,6 +8,7 @@ import { WidgetsModule } from 'src/app/_metronic/partials';
 import { FormsModule } from '@angular/forms';
 import { NgbNavModule, NgbDropdownModule, NgbCollapseModule, NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import { SharedModule } from 'src/app/_metronic/shared/shared.module';
 
 
 @NgModule({
@@ -25,6 +26,7 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
     NgbCollapseModule,
     NgbTooltipModule,
     SweetAlert2Module.forChild(),
+    SharedModule
   ]
 })
 export class GroupsModule { }

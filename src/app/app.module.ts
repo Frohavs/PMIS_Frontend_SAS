@@ -20,7 +20,7 @@ function appInitializer(authService: AuthService) {
   return () => {
     return new Promise((resolve) => {
       //@ts-ignore
-      authService.getUserByToken().subscribe().add(resolve);
+      authService.getUserById().subscribe().add(resolve);
     });
   };
 }

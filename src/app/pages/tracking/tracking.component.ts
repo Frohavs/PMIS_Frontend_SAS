@@ -15,31 +15,31 @@ export class TrackingComponent {
   dataColumns: any[] = []
   dataList: any[] = [
     {
-      txt1: 'أحمد مطاوع',
+      name: 'أحمد مطاوع',
       txt2: '/project_list/125	',
       txt3: 'user visited this url.	',
       txt4: '2023-02-28 12:39:53',
     },
     {
-      txt1: 'أبراهيم مجدي',
+      name: 'أبراهيم مجدي',
       txt2: '/project_list/126',
       txt3: 'user visited this url.	',
       txt4: '2023-02-28 12:39:53',
     },
     {
-      txt1: 'تركي العيسى	',
+      name: 'تركي العيسى	',
       txt2: '/project_list/127',
       txt3: 'user visited this url.	',
       txt4: '2023-02-28 12:39:53',
     },
     {
-      txt1: 'مؤيد العيسى	',
+      name: 'مؤيد العيسى	',
       txt2: '/project_list/128',
       txt3: 'user visited this url.	',
       txt4: '2023-02-28 12:39:53',
     },
     {
-      txt1: 'اسلام الخشاب',
+      name: 'اسلام الخشاب',
       txt2: '/project_list/129',
       txt3: 'user visited this url.	',
       txt4: '2023-02-28 12:39:53',

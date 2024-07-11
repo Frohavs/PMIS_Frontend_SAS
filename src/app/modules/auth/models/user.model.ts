@@ -3,10 +3,12 @@ import { AddressModel } from './address.model';
 import { SocialNetworksModel } from './social-networks.model';
 
 export class UserModel extends AuthModel {
+  //@ts-ignore
   id: number;
   username: string;
   password: string;
   fullname: string;
+  //@ts-ignore
   email: string;
   pic: string;
   roles: number[] = [];

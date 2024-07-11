@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 
 @Component({
   selector: 'app-pmis-table',
@@ -19,15 +19,18 @@ export class PMISTableComponent implements OnInit {
   @Input() canEdit: boolean = true;
   @Input() canDelete: boolean = true;
 
-  @Input() dataColumns: any = [];
   @Input() dataList: any = [];
+  @Input() dataColumns: any = [];
 
-  @Output() detailsClicked: EventEmitter<any> = new EventEmitter<any>();
   @Output() newClicked: EventEmitter<any> = new EventEmitter<any>();
+  @Output() detailsClicked: EventEmitter<any> = new EventEmitter<any>();
+  @Output() editClicked: EventEmitter<any> = new EventEmitter<any>();
+  @Output() deleteClicked: EventEmitter<any> = new EventEmitter<any>();
 
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+  }
 
   redirect() {
     this.newClicked.emit();
@@ -35,5 +38,13 @@ export class PMISTableComponent implements OnInit {
 
   populateViewClicked(value: any) {
     this.detailsClicked.emit(value)
+  }
+
+  populateEditClicked(value: any) {
+    this.editClicked.emit(value)
+  }
+
+  populateDeleteClicked(value: any) {
+    this.deleteClicked.emit(value)
   }
 }

@@ -45,42 +45,47 @@
         <tr *ngFor="let data of dataList; index as i">
           <td style="padding: 12px;">
             <a class="text-gray-900 fw-bolder text-hover-primary d-block mb-1 fs-6">
-              {{i+1}}
+              {{data?.id}}
             </a>
           </td>
-          <td *ngIf="data.name">
+          <td *ngIf="data.subName">
             <div class="d-flex align-items-center">
               <div class="symbol symbol-50px me-5">
                 <img [src]="data.img" alt="com" />
               </div>
               <div class="d-flex justify-content-start flex-column">
                 <a class="text-gray-900 fw-bolder text-hover-primary mb-1 fs-6">
-                  {{data.name}}
+                  {{data?.name}}
                 </a>
                 <span class="text-muted fw-bold text-muted d-block fs-7">
-                  {{data.subName}}
+                  {{data?.subName}}
                 </span>
               </div>
             </div>
           </td>
+          <td *ngIf="data.name">
+            <a class="text-gray-900 fw-bolder text-hover-primary fs-6">
+              {{data?.name}}
+            </a>
+          </td>
           <td *ngIf="data.txt1">
             <a class="text-gray-900 fw-bolder text-hover-primary fs-6">
-              {{data.txt1}}
+              {{data?.txt1}}
             </a>
           </td>
           <td *ngIf="data.txt2">
             <a class="text-gray-900 fw-bolder text-hover-primary fs-6">
-              {{data.txt2}}
+              {{data?.txt2}}
             </a>
           </td>
           <td *ngIf="data.txt3">
             <a class="text-gray-900 fw-bolder text-hover-primary fs-6">
-              {{data.txt3}}
+              {{data?.txt3}}
             </a>
           </td>
           <td *ngIf="data.txt4">
             <a class="text-gray-900 fw-bolder text-hover-primary fs-6">
-              {{data.txt4}}
+              {{data?.txt4}}
             </a>
           </td>
 
@@ -95,10 +100,10 @@
             </a>
           </td>
           <td>
-            <span [ngClass]="{'badge-light-success': data.status === 'Active',
-                        'badge-light-primary': data.status === 'Inactive',
-                        'badge-light-info': data.status === 'In Progress'}" class="badge fs-7 fw-bold">
-              {{data.status}}
+            <span [ngClass]="{'badge-light-success': data.isActive,
+                            'badge-light-danger': !data.isActive}"
+                            class="badge fs-7 fw-bold">
+              {{data.isActive ? 'Active' : 'inActive'}}
             </span>
           </td>
           <td class="text-end" *ngIf="showActions">
@@ -117,10 +122,11 @@
             <a *ngIf="canEdit" class="
                 btn btn-icon btn-bg-light btn-active-color-primary btn-sm
                 me-1
-              ">
+              " (click)="populateEditClicked(data)">
               <app-keenicon name="pencil" class="fs-3"></app-keenicon>
             </a>
-            <a *ngIf="canDelete" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm">
+            <a *ngIf="canDelete" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm"
+            (click)="populateDeleteClicked(data)">
               <app-keenicon name="trash" class="fs-3"></app-keenicon>
             </a>
           </td>
@@ -131,7 +137,7 @@
     </table>
     <!-- start::Table pagination -->
     <div class="d-flex flex-stack flex-wrap pt-10">
-      <div class="fs-6 fw-bold text-gray-700">Showing 1 to 5 of 5 entries</div>
+      <div class="fs-6 fw-bold text-gray-700">Showing {{dataList?.length}} to 10 of 10 entries</div>
 
       <ul class="pagination">
         <li class="page-item previous">
@@ -144,7 +150,7 @@
           <a class="page-link cursor-pointer"> 1 </a>
         </li>
 
-        <li class="page-item">
+        <!-- <li class="page-item">
           <a class="page-link cursor-pointer"> 2 </a>
         </li>
 
@@ -162,7 +168,7 @@
 
         <li class="page-item">
           <a class="page-link cursor-pointer"> 6 </a>
-        </li>
+        </li> -->
 
         <li class="page-item next">
           <a class="page-link cursor-pointer">

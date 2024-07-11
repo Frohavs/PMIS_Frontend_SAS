@@ -1,16 +1,29 @@
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Injectable, OnDestroy } from '@angular/core';
+import { Observable, BehaviorSubject, of, Subscription } from 'rxjs';
+import { map, catchError, switchMap, finalize } from 'rxjs/operators';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
+import { AuthModel } from '../modules/auth/models/auth.model';
+import { UserType } from '../modules/auth';
 
 @Injectable({
   providedIn: 'root',
 })
-export class AuthHTTPService {
+export class NewAuthHTTPService implements OnDestroy {
 
-  API_USERS_URL = `${environment.apiUrl}`;
+  // private fields
+  private unsubscribe: Subscription[] = []; // Read more: => https://brianflove.com/2016/12/11/anguar-2-unsubscribe-observables/
+  private authLocalStorageToken = `${environment.appVersion}-${environment.USERDATA_KEY}`;
 
-  constructor(private http: HttpClient) {}
+  // public fields
+  currentUser$: Observable<UserType>;
+  isLoading$: Observable<boolean>;
+  currentUserSubject: BehaviorSubject<UserType>;
+  isLoadingSubject: BehaviorSubject<boolean>;
+
+  API_USERS_URL = `${environment.apiUrl}/User`;
+
+  constructor(private http: HttpClient) { }
 
   // public methods
   login(email: string, password: string): Observable<any> {
@@ -27,12 +40,18 @@ export class AuthHTTPService {
     });
   }
 
-  // getUserByToken(token: string): Observable<any> {
-  //   const httpHeaders = new HttpHeaders({
-  //     Authorization: `Bearer ${token}`,
-  //   });
-  //   return this.http.get<any>(`${API_USERS_URL}/me`, {
-  //     headers: httpHeaders,
-  //   });
-  // }
+
+  getUserById(auth: any): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${auth.token}`,
+    });
+
+    return this.http.get<any>(`${this.API_USERS_URL}/Get/${auth.id}`, {
+      headers: httpHeaders,
+    });
+  }
+
+  ngOnDestroy() {
+    this.unsubscribe.forEach((sb) => sb.unsubscribe());
+  }
 }
