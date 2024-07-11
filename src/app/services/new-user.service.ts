@@ -26,7 +26,6 @@ export class NewUserService {
   constructor(private http: HttpClient, private authService: AuthService) {
     const lsValue = localStorage.getItem(this.authLocalStorageToken);
     this.token = JSON.parse(lsValue as any)?.token;
-    console.log(this.token);
    }
 
   getUser(id: string): Observable<any> {

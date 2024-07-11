@@ -64,11 +64,9 @@ export class AddCompanyComponent implements OnInit, OnDestroy {
   saveSettings() {
     console.log(this.addCompanyForm.value);
     this.companyService.addCompany(this.addCompanyForm.value).subscribe(res => {
-      console.log(res);
-      this.showAlert({ icon: 'success', title: 'Success!', text: 'Company Added successfully!' });
       this.router.navigateByUrl('companies')
+      this.showAlert({ icon: 'success', title: 'Success!', text: 'Company Added successfully!' });
     })
-    this.isLoading = true;
     setTimeout(() => {
       this.isLoading = false;
       this.cdr.detectChanges();

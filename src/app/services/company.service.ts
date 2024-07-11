@@ -36,5 +36,23 @@ export class CompanyService {
       headers: httpHeaders
     });
   }
+  updateCompany(group: {id: number | null, name: string, isActive: boolean }): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/Update`;
+    return this.http.put<any>(url, group, {
+      headers: httpHeaders
+    });
+  }
+  deleteCompany(id: number): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/Delete/${id}`;
+    return this.http.delete<any>(url, {
+      headers: httpHeaders
+    });
+  }
 
 }

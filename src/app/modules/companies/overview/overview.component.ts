@@ -1,7 +1,9 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
+import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
 import { CompanyService } from 'src/app/services/company.service';
+import { SweetAlertOptions } from 'sweetalert2';
 
 @Component({
   selector: 'app-overview',
@@ -14,17 +16,20 @@ export class OverviewComponent implements OnInit {
   Search_text: string;
   dataColumns: any[] = []
   dataList: any[] = [
-    {
-      id: 452,
-      img: './assets/media/logos/froha_logo.png',
-      nameAr: 'فروهة',
-      name: 'Frohavs',
-      subName: 'consultant',
-      crNumber: '1010014082',
-      notifications: {smsNotification: true, mailNotification: true}
-    },
+    // {
+    //   id: 452,
+    //   img: './assets/media/logos/froha_logo.png',
+    //   nameAr: 'فروهة',
+    //   name: 'Frohavs',
+    //   subName: 'consultant',
+    //   crNumber: '1010014082',
+    //   notifications: { smsNotification: true, mailNotification: true }
+    // }
+  ];
 
-  ]
+  isLoading = false;
+  swalOptions: SweetAlertOptions = {};
+  @ViewChild('noticeSwal') noticeSwal!: SwalComponent;
 
   constructor(
     private router: Router,
@@ -43,7 +48,12 @@ export class OverviewComponent implements OnInit {
         { title: '', className: 'min-w-200px text-end rounded-end' },
       ]
   }
+
   ngOnInit(): void {
+    this.initializeCompanyList()
+  }
+
+  initializeCompanyList() {
     this.companyService.getAll().subscribe(res => {
       for (const iterator of res.data) {
         this.dataList.push(
@@ -52,14 +62,38 @@ export class OverviewComponent implements OnInit {
             img: './assets/media/logos/froha_logo.png',
             nameAr: iterator.nameAr,
             name: iterator.name,
-            subName: iterator?.type,
+            subName: 'consultant', // iterator?.type,
             crNumber: iterator.crNumber,
-            notifications: {smsNotification: iterator.smsNotification, mailNotification: iterator.mailNotification}
+            notifications: { smsNotification: iterator.smsNotification, mailNotification: iterator.mailNotification }
           }
         )
       }
       this.cdr.detectChanges();
     });
+  }
+
+  editRecord(company: any) {
+    this.router.navigateByUrl('companies/add')
+
+  }
+
+  deleteRecord(company: any) {
+    this.isLoading = true;
+    this.companyService.deleteCompany(company.id).subscribe({
+      next: (res) => {
+        this.showAlert({ icon: 'success', title: 'Success!', text: 'Group Deleted successfully!' });
+        setTimeout(() => {
+          this.isLoading = false;
+          this.dataList = [];
+          this.initializeCompanyList();
+        }, 500);
+      },
+      error: (error) => {
+        this.isLoading = false;
+        this.showAlert({ icon: 'error', title: 'Error!', text: 'Please try again' });
+      }
+    })
+
   }
 
   redirectToNew() {
@@ -69,6 +103,22 @@ export class OverviewComponent implements OnInit {
   detailsClicked(row: any) {
     console.log(row);
     this.router.navigateByUrl('companies/' + row.id)
+  }
+
+  showAlert(swalOptions: SweetAlertOptions) {
+    let style = swalOptions.icon?.toString() || 'success';
+    if (swalOptions.icon === 'error') {
+      style = 'danger';
+    }
+    this.swalOptions = Object.assign({
+      buttonsStyling: false,
+      confirmButtonText: "Ok, got it!",
+      customClass: {
+        confirmButton: "btn btn-" + style
+      }
+    }, swalOptions);
+    this.cdr.detectChanges();
+    this.noticeSwal.fire();
   }
 
 }

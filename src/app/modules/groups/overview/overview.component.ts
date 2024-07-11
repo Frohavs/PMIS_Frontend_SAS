@@ -75,7 +75,6 @@ export class OverviewComponent implements OnInit {
     this.isLoading = true;
     this.groupsService.deleteGroup(group.id).subscribe({
       next: (res) => {
-        console.log(res);
         this.showAlert({ icon: 'success', title: 'Success!', text: 'Group Deleted successfully!' });
         this.isLoading = false;
       },
@@ -113,7 +112,6 @@ export class OverviewComponent implements OnInit {
     const updateFn = () => {
       this.groupsService.updateGroup({ id: this.groupModel.id, name: this.groupModel.name, isActive: this.groupModel.isActive }).subscribe({
         next: (res) => {
-          console.log(res);
           this.modalService.dismissAll();
           successAlert.text = 'Group updated successfully!';
           this.showAlert(successAlert);
@@ -128,7 +126,6 @@ export class OverviewComponent implements OnInit {
     const createFn = () => {
       this.groupsService.addGroup({ name: this.groupModel.name, isActive: this.groupModel.isActive }).subscribe({
         next: (res) => {
-          console.log(res);
           this.modalService.dismissAll();
           this.showAlert(successAlert);
         },
