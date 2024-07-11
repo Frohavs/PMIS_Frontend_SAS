@@ -21,7 +21,7 @@
             <input type="text" class="form-control form-control-lg form-control-solid" placeholder="Company name"
               formControlName="nameAr" />
             <div
-              *ngIf="addCompanyForm.get('nameAr')?.invalid && (addCompanyForm.get('nameAr')?.dirty || addCompanyForm.get('nameAr')?.touched)"
+              *ngIf="addCompanyForm?.get('nameAr')?.invalid && (addCompanyForm?.get('nameAr')?.dirty || addCompanyForm?.get('nameAr')?.touched)"
               class="fv-plugins-message-container">
               <div class="fv-help-block">Company name is required</div>
             </div>
@@ -33,7 +33,7 @@
             <input type="text" class="form-control form-control-lg form-control-solid" placeholder="Company name"
               name="name" formControlName="name" />
             <div
-              *ngIf="addCompanyForm.get('name')?.invalid && (addCompanyForm.get('name')?.dirty || addCompanyForm.get('name')?.touched)"
+              *ngIf="addCompanyForm?.get('name')?.invalid && (addCompanyForm?.get('name')?.dirty || addCompanyForm?.get('name')?.touched)"
               class="fv-plugins-message-container">
               <div class="fv-help-block">Company English name is required</div>
             </div>
@@ -52,7 +52,7 @@
               <option value="governmental_institution">{{"COMPANY.governmental_institution" | translate}}</option>
             </select>
             <div
-              *ngIf="addCompanyForm.get('type')?.invalid && (addCompanyForm.get('type')?.dirty || addCompanyForm.get('type')?.touched)"
+              *ngIf="addCompanyForm?.get('type')?.invalid && (addCompanyForm?.get('type')?.dirty || addCompanyForm?.get('type')?.touched)"
               class="fv-plugins-message-container">
               <div class="fv-help-block">Type is required</div>
             </div>

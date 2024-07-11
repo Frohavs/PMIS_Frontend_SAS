@@ -33,8 +33,8 @@ export class AddCompanyComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.initializeCompanyForm();
     this.getCompanyId();
+    this.initializeCompanyForm();
   }
 
   initializeCompanyForm() {
@@ -53,24 +53,57 @@ export class AddCompanyComponent implements OnInit, OnDestroy {
       mailNotification: [false, Validators.required],
     });
   }
+  editCompanyForm(data: any) {
+    this.addCompanyForm.patchValue({
+      name: data?.name,
+      nameAr: data?.nameAr,
+      // type: data?.name,
+      crNumber: data?.crNumber,
+      // usersNo: data?.name,
+      themeColor: data?.themeColor,
+      address: data?.address,
+      description: data?.description,
+      phone: data?.phone,
+      email: data?.email,
+      smsNotification: data?.smsNotification,
+      mailNotification: data?.mailNotification,
+    });
+  }
 
   getCompanyId() {
     this.activatedRoute.params.subscribe(params => {
       this.companyId = +params['id'];
-      console.log('Company ID:', this.companyId);
+      if (this.companyId) {
+        this.companyService.getByID(this.companyId).subscribe(res => {
+          setTimeout(() => {
+            this.editCompanyForm(res.data);
+          }, 500);
+        });
+      }
     });
   }
 
   saveSettings() {
     console.log(this.addCompanyForm.value);
-    this.companyService.addCompany(this.addCompanyForm.value).subscribe(res => {
-      this.router.navigateByUrl('companies')
-      this.showAlert({ icon: 'success', title: 'Success!', text: 'Company Added successfully!' });
-    })
-    setTimeout(() => {
-      this.isLoading = false;
-      this.cdr.detectChanges();
-    }, 1500);
+    if (!this.companyId) {
+      this.companyService.addCompany(this.addCompanyForm.value).subscribe(res => {
+        this.router.navigateByUrl('companies')
+        this.showAlert({ icon: 'success', title: 'Success!', text: 'Company Added successfully!' });
+      })
+      setTimeout(() => {
+        this.isLoading = false;
+        this.cdr.detectChanges();
+      }, 500);
+    } else {
+      this.companyService.updateCompany({id: this.companyId, ...this.addCompanyForm.value}).subscribe(res => {
+        this.router.navigateByUrl('companies')
+        this.showAlert({ icon: 'success', title: 'Success!', text: 'Company Updated successfully!' });
+      })
+      setTimeout(() => {
+        this.isLoading = false;
+        this.cdr.detectChanges();
+      }, 500);
+    }
   }
 
   back() {

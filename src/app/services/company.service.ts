@@ -45,12 +45,12 @@ export class CompanyService {
       headers: httpHeaders
     });
   }
-  updateCompany(group: {id: number | null, name: string, isActive: boolean }): Observable<any> {
+  updateCompany(company: any): Observable<any> {
     const httpHeaders = new HttpHeaders({
       Authorization: `Bearer ${this.token}`,
     });
     const url = `${this.API_USERS_URL}/Update`;
-    return this.http.put<any>(url, group, {
+    return this.http.put<any>(url, company, {
       headers: httpHeaders
     });
   }

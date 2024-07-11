@@ -12,7 +12,6 @@ import { CompanyService } from 'src/app/services/company.service';
 export class CompanyDetailsComponent implements OnInit {
 
   companyId: number;
-  themeColor: string;
   companyDetails: any;
   isCollapsed1 = false;
   isLoading = false;
@@ -38,7 +37,6 @@ export class CompanyDetailsComponent implements OnInit {
       if (this.companyId) {
         this.companyService.getByID(this.companyId).subscribe(res => {
           this.companyDetails = res.data;
-          this.themeColor = this.companyDetails?.themeColor;
           this.cdr.detectChanges();
         })
       }
@@ -46,7 +44,7 @@ export class CompanyDetailsComponent implements OnInit {
   }
 
   navigateEdit() {
-    this.router.navigateByUrl('/companies/edit/1452')
+    this.router.navigateByUrl('/companies/edit/' + this.companyId)
   }
 
   addUser(modal: any) {

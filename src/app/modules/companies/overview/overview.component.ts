@@ -73,8 +73,7 @@ export class OverviewComponent implements OnInit {
   }
 
   editRecord(company: any) {
-    this.router.navigateByUrl('companies/add')
-
+    this.router.navigateByUrl('/companies/edit/' + company.id)
   }
 
   deleteRecord(company: any) {
