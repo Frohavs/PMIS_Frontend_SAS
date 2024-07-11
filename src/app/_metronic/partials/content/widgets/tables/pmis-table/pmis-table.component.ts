@@ -30,6 +30,7 @@ export class PMISTableComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
+
   }
 
   redirect() {

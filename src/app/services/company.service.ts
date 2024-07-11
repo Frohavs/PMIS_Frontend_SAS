@@ -27,5 +27,14 @@ export class CompanyService {
       headers: httpHeaders
     });
   }
+  addCompany(company: any): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/Create`;
+    return this.http.post<any>(url, company, {
+      headers: httpHeaders
+    });
+  }
 
 }

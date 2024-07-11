@@ -27,6 +27,7 @@ export const locale = {
       TYPE: 'Type',
       cr_number: 'CR Number',
       Status: 'Status',
+      notifications: 'Notifications',
       Search: 'Search Company...',
       consultant: 'Consultant',
       contractor: 'Contractor',

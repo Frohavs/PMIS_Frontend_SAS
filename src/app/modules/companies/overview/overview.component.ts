@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { CompanyService } from 'src/app/services/company.service';
@@ -15,49 +15,20 @@ export class OverviewComponent implements OnInit {
   dataColumns: any[] = []
   dataList: any[] = [
     {
-      id: '1452',
+      id: 452,
       img: './assets/media/logos/froha_logo.png',
-      name: 'company name',
-      subName: 'company type',
+      nameAr: 'فروهة',
+      name: 'Frohavs',
+      subName: 'consultant',
       crNumber: '1010014082',
-      status: 'Active'
+      notifications: {smsNotification: true, mailNotification: true}
     },
-    {
-      id: '1452',
-      img: './assets/media/stock/600x400/img-3.jpg',
-      name: 'company name',
-      subName: 'company type',
-      crNumber: '1010014082',
-      status: 'Inactive'
-    },
-    {
-      id: '1452',
-      img: './assets/media/stock/600x400/img-8.jpg',
-      name: 'company name',
-      subName: 'company type',
-      crNumber: '1010014082',
-      status: 'In Progress'
-    },
-    {
-      id: '1452',
-      img: './assets/media/stock/600x400/img-9.jpg',
-      name: 'company name',
-      subName: 'company type',
-      crNumber: '1010014082',
-      status: 'Active'
-    },
-    {
-      id: '1452',
-      img: './assets/media/stock/600x400/img-18.jpg',
-      name: 'company name',
-      subName: 'company type',
-      crNumber: '1010014082',
-      status: 'Inactive'
-    },
+
   ]
 
   constructor(
     private router: Router,
+    private cdr: ChangeDetectorRef,
     private translate: TranslateService,
     private companyService: CompanyService,
   ) {
@@ -68,13 +39,26 @@ export class OverviewComponent implements OnInit {
         { title: this.translate.instant('COMPANY.TITLE'), className: 'ps-4 min-w-300px' },
         { title: this.translate.instant('COMPANY.EN_NAME'), className: 'min-w-125px' },
         { title: this.translate.instant('COMPANY.cr_number'), className: 'min-w-200px' },
-        { title: this.translate.instant('COMPANY.Status'), className: 'min-w-150px' },
+        { title: this.translate.instant('COMPANY.notifications'), className: 'min-w-150px' },
         { title: '', className: 'min-w-200px text-end rounded-end' },
       ]
   }
   ngOnInit(): void {
     this.companyService.getAll().subscribe(res => {
-      console.log('companies', res);
+      for (const iterator of res.data) {
+        this.dataList.push(
+          {
+            id: iterator.id,
+            img: './assets/media/logos/froha_logo.png',
+            nameAr: iterator.nameAr,
+            name: iterator.name,
+            subName: iterator?.type,
+            crNumber: iterator.crNumber,
+            notifications: {smsNotification: iterator.smsNotification, mailNotification: iterator.mailNotification}
+          }
+        )
+      }
+      this.cdr.detectChanges();
     });
   }
 

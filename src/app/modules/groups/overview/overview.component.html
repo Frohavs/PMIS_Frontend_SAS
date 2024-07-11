@@ -40,7 +40,7 @@
 
 <!-- table -->
 <app-pmis-table class="card mb-5 mb-xl-8" [Add_text]="Add_text" [Search_text]="Search_text"
-  [dataList]="(groups$ | async)?.data" [dataColumns]="dataColumns" [canSearch]="true" [canChangeStatus]="false" [canViewDetails]="false"
+  [dataList]="dataList" [dataColumns]="dataColumns" [canSearch]="true" [canChangeStatus]="false" [canViewDetails]="false"
   (newClicked)="addGroup()" (editClicked)="editRecord($event)" (deleteClicked)="deleteRecord($event)">
 </app-pmis-table>
 
@@ -85,19 +85,6 @@
             </div>
             <!--end::Input-->
           </div>
-          <!-- <div class="fv-row mb-7">
-            <label class="col-lg-4 col-form-label fw-bold fs-6">Status</label>
-            <div class="col-lg-8">
-              <div class="d-flex align-items-center mt-3">
-                <label class="form-check form-check-inline form-check-solid me-5">
-                  <input class="form-check-input" #isActive="ngModel" type="checkbox" [checked]="groupModel.isActive"
-                    [(ngModel)]="groupModel.isActive" /><span class="fw-bold ps-2 fs-6">Active</span></label><label
-                  class="form-check form-check-inline form-check-solid">
-                  <input class="form-check-input" #isActive="ngModel" type="checkbox" [checked]="!groupModel.isActive"
-                    [(ngModel)]="groupModel.isActive" /><span class="fw-bold ps-2 fs-6">Inactive</span></label>
-              </div>
-            </div>
-          </div> -->
 
           <div class="fv-row mb-7">
             <label class="form-label fw-bold">Status:</label>

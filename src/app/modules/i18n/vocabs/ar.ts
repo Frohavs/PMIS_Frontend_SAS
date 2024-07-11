@@ -27,6 +27,7 @@ export const locale = {
       EN_NAME: 'الأسم بالأنجليزية',
       cr_number: 'الرقم التعريفي',
       Status: 'الحالة',
+      notifications: 'الأشعارات',
       Search: 'بحث عن الشركة...',
       consultant: 'إستشاري',
       contractor: 'مقاول',

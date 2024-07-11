@@ -27,8 +27,6 @@ export class GroupsService {
       headers: httpHeaders
     });
   }
-
-  // public methods
   addGroup(group: { name: string, isActive: boolean }): Observable<any> {
     const httpHeaders = new HttpHeaders({
       Authorization: `Bearer ${this.token}`,

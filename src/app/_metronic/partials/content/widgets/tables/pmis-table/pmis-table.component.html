@@ -48,14 +48,14 @@
               {{data?.id}}
             </a>
           </td>
-          <td *ngIf="data.subName">
+          <td *ngIf="data?.img">
             <div class="d-flex align-items-center">
               <div class="symbol symbol-50px me-5">
                 <img [src]="data.img" alt="com" />
               </div>
               <div class="d-flex justify-content-start flex-column">
                 <a class="text-gray-900 fw-bolder text-hover-primary mb-1 fs-6">
-                  {{data?.name}}
+                  {{data?.nameAr}}
                 </a>
                 <span class="text-muted fw-bold text-muted d-block fs-7">
                   {{data?.subName}}
@@ -63,27 +63,27 @@
               </div>
             </div>
           </td>
-          <td *ngIf="data.name">
+          <td *ngIf="data?.name">
             <a class="text-gray-900 fw-bolder text-hover-primary fs-6">
               {{data?.name}}
             </a>
           </td>
-          <td *ngIf="data.txt1">
+          <td *ngIf="data?.txt1">
             <a class="text-gray-900 fw-bolder text-hover-primary fs-6">
               {{data?.txt1}}
             </a>
           </td>
-          <td *ngIf="data.txt2">
+          <td *ngIf="data?.txt2">
             <a class="text-gray-900 fw-bolder text-hover-primary fs-6">
               {{data?.txt2}}
             </a>
           </td>
-          <td *ngIf="data.txt3">
+          <td *ngIf="data?.txt3">
             <a class="text-gray-900 fw-bolder text-hover-primary fs-6">
               {{data?.txt3}}
             </a>
           </td>
-          <td *ngIf="data.txt4">
+          <td *ngIf="data?.txt4">
             <a class="text-gray-900 fw-bolder text-hover-primary fs-6">
               {{data?.txt4}}
             </a>
@@ -99,11 +99,18 @@
               {{data?.crNumber}}
             </a>
           </td>
-          <td>
+          <td *ngIf="data?.isActive || data?.isActive === false">
             <span [ngClass]="{'badge-light-success': data.isActive,
-                            'badge-light-danger': !data.isActive}"
-                            class="badge fs-7 fw-bold">
+                            'badge-light-danger': !data.isActive}" class="badge fs-7 fw-bold">
               {{data.isActive ? 'Active' : 'inActive'}}
+            </span>
+          </td>
+          <td>
+            <span *ngIf="data?.notifications?.smsNotification" class="badge-light-success badge fs-7 fw-bold my-2">
+              smsNotification
+            </span>
+            <span *ngIf="data?.notifications?.mailNotification" class="badge-light-info badge fs-7 fw-bold">
+              mailNotification
             </span>
           </td>
           <td class="text-end" *ngIf="showActions">
@@ -126,7 +133,7 @@
               <app-keenicon name="pencil" class="fs-3"></app-keenicon>
             </a>
             <a *ngIf="canDelete" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm"
-            (click)="populateDeleteClicked(data)">
+              (click)="populateDeleteClicked(data)">
               <app-keenicon name="trash" class="fs-3"></app-keenicon>
             </a>
           </td>

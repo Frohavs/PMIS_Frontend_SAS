@@ -13,82 +13,77 @@
     </div>
   </div>
   <div id="kt_add_company" class="collapse show">
-    <form novalidate="" class="form">
+    <form [formGroup]="addCompanyForm" class="form">
       <div class="card-body border-top p-9">
-        <!-- <div class="row mb-6">
-          <label class="col-lg-4 col-form-label required fw-bold fs-6">Full Name</label>
-          <div class="col-lg-8">
-            <div class="row">
-              <div class="col-lg-6 fv-row">
-                <input type="text" class="
-                    form-control form-control-lg form-control-solid
-                    mb-3 mb-lg-0
-                  " placeholder="First name" name="fName" value="Max" />
-              </div>
-              <div class="col-lg-6 fv-row">
-                <input type="text" class="form-control form-control-lg form-control-solid" placeholder="Last name"
-                  name="lName" value="Smith" />
-              </div>
-            </div>
-          </div>
-        </div> -->
         <div class="row mb-6">
           <label class="col-lg-4 col-form-label required fw-bold fs-6">{{"COMPANY.TITLE" | translate}}</label>
           <div class="col-lg-8 fv-row">
             <input type="text" class="form-control form-control-lg form-control-solid" placeholder="Company name"
-              name="co_name" />
+              formControlName="nameAr" />
+            <div
+              *ngIf="addCompanyForm.get('nameAr')?.invalid && (addCompanyForm.get('nameAr')?.dirty || addCompanyForm.get('nameAr')?.touched)"
+              class="fv-plugins-message-container">
+              <div class="fv-help-block">Company name is required</div>
+            </div>
           </div>
         </div>
         <div class="row mb-6">
           <label class="col-lg-4 col-form-label required fw-bold fs-6">{{"COMPANY.EN_NAME" | translate}}</label>
           <div class="col-lg-8 fv-row">
             <input type="text" class="form-control form-control-lg form-control-solid" placeholder="Company name"
-              name="eng_name" />
+              name="name" formControlName="name" />
+            <div
+              *ngIf="addCompanyForm.get('name')?.invalid && (addCompanyForm.get('name')?.dirty || addCompanyForm.get('name')?.touched)"
+              class="fv-plugins-message-container">
+              <div class="fv-help-block">Company English name is required</div>
+            </div>
           </div>
         </div>
 
-        <div class="row mb-6">
+        <!-- <div class="row mb-6">
           <label class="col-lg-4 col-form-label fw-bold fs-6"><span
               class="required">{{"COMPANY.TYPE" | translate}}</span></label>
           <div class="col-lg-8 fv-row">
-            <select class="form-select form-select-solid form-select-lg fw-bold" name="Type">
+            <select class="form-select form-select-solid form-select-lg fw-bold" name="Type" formControlName="type">
               <option value="">{{"TRANSLATOR.SELECTION" | translate}}</option>
               <option value="consultant">{{"COMPANY.consultant" | translate}}</option>
               <option value="contractor">{{"COMPANY.contractor" | translate}}</option>
               <option value="riyadh_municipality">{{"COMPANY.riyadh_municipality" | translate}}</option>
               <option value="governmental_institution">{{"COMPANY.governmental_institution" | translate}}</option>
             </select>
-            <!-- <div class="fv-plugins-message-container">
+            <div
+              *ngIf="addCompanyForm.get('type')?.invalid && (addCompanyForm.get('type')?.dirty || addCompanyForm.get('type')?.touched)"
+              class="fv-plugins-message-container">
               <div class="fv-help-block">Type is required</div>
-            </div> -->
+            </div>
           </div>
-        </div>
+        </div> -->
 
         <div class="row mb-6">
           <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="required">CR Number</span></label>
           <div class="col-lg-8 fv-row">
             <input type="text" class="form-control form-control-lg form-control-solid" placeholder="cr number"
-              name="cr_number" />
+              formControlName="crNumber" name="crNumber" />
           </div>
         </div>
 
-        <div class="row mb-6">
+        <!-- <div class="row mb-6">
           <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="required">Number of Users</span></label>
           <div class="col-lg-8 fv-row">
             <input type="number" class="form-control form-control-lg form-control-solid" placeholder="users no."
-              name="cr_number" min="1" />
+              name="usersNo" min="1" formControlName="usersNo" />
           </div>
-        </div>
+        </div> -->
 
         <div class="row mb-6">
           <label class="col-lg-4 col-form-label required fw-bold fs-6">Theme/Main Color</label>
           <div class="col-lg-8 fv-row">
-            <input type="color" class="form-control form-control-lg form-control-solid w-25" name="main_color"
-              value="#e66465" />
+            <input type="color" class="form-control form-control-lg form-control-solid w-25" name="themeColor"
+              formControlName="themeColor" />
           </div>
         </div>
 
-        <div class="row mb-6">
+        <!-- <div class="row mb-6">
           <label class="col-lg-4 col-form-label required fw-bold fs-6">Company icon</label>
           <div class="col-lg-8 fv-row">
             <input type="file" class="form-control form-control-lg form-control-solid w-50" name="main_color" />
@@ -107,13 +102,13 @@
           <div class="col-lg-8 fv-row">
             <input type="file" class="form-control form-control-lg form-control-solid w-50" name="main_color" />
           </div>
-        </div>
+        </div> -->
 
         <div class="row mb-6">
           <label class="col-lg-4 col-form-label required fw-bold fs-6">Company Address</label>
           <div class="col-lg-8 fv-row">
             <input type="text" class="form-control form-control-lg form-control-solid" placeholder="company address"
-              name="co_address" />
+              name="address" formControlName="address" />
           </div>
         </div>
 
@@ -121,7 +116,7 @@
           <label class="col-lg-4 col-form-label required fw-bold fs-6">Company Description</label>
           <div class="col-lg-8 fv-row">
             <input type="text" class="form-control form-control-lg form-control-solid" placeholder="Company description"
-              name="company_description" />
+              name="description" formControlName="description" />
           </div>
         </div>
 
@@ -129,14 +124,14 @@
           <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="required">Company Phone</span></label>
           <div class="col-lg-8 fv-row">
             <input type="tel" class="form-control form-control-lg form-control-solid" placeholder="company number"
-              name="companyPhone" />
+              name="phone" formControlName="phone" />
           </div>
         </div>
         <div class="row mb-6">
           <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="required">Company Email</span></label>
           <div class="col-lg-8 fv-row">
             <input type="tel" class="form-control form-control-lg form-control-solid" placeholder="company email"
-              name="company_email" />
+              name="email" formControlName="email" />
           </div>
         </div>
 
@@ -145,9 +140,11 @@
           <div class="col-lg-8 fv-row">
             <div class="d-flex align-items-center mt-3">
               <label class="form-check form-check-inline form-check-solid me-5"><input class="form-check-input"
-                  name="communication[]" type="checkbox" /><span class="fw-bold ps-2 fs-6">SMS</span></label><label
+                  name="smsNotification" formControlName="smsNotification" type="checkbox" /><span
+                  class="fw-bold ps-2 fs-6">SMS</span></label><label
                 class="form-check form-check-inline form-check-solid"><input class="form-check-input"
-                  name="communication[]" type="checkbox" /><span class="fw-bold ps-2 fs-6">Email</span></label>
+                  name="mailNotification" formControlName="mailNotification" type="checkbox" /><span
+                  class="fw-bold ps-2 fs-6">Email</span></label>
             </div>
           </div>
         </div>
@@ -167,3 +164,7 @@
     </form>
   </div>
 </div>
+
+// modal
+<swal #noticeSwal [swalOptions]="swalOptions">
+</swal>

@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
@@ -55,7 +55,11 @@ export class OverviewComponent implements OnInit {
   }
 
   initializeGroupDate() {
-    this.groups$ = this.groupsService.getAll();
+    // this.groups$ = this.groupsService.getAll();
+    this.groupsService.getAll().subscribe(res => {
+      this.dataList = res.data;
+      this.cdr.detectChanges();
+    })
   }
 
   addGroup() {
