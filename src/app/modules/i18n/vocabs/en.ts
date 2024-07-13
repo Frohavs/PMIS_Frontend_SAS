@@ -49,12 +49,17 @@ export const locale = {
     USERS: {
       ID: 'ID',
       TITLE: 'Users',
+      Role: 'Role',
       Add_User: 'Add User',
       TYPE: 'Type',
       Test: 'Test',
       EN_NAME: 'English Name',
       Status: 'Status',
       Search: 'Search User...',
+
+      EMAIL: 'Email',
+      PASSWORD: 'Password',
+      CONFIRM_PASSWORD: 'Confirm Password',
     },
     TRACKING: {
       ID: 'ID',

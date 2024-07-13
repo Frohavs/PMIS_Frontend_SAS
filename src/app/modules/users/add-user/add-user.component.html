@@ -1,0 +1,113 @@
+<div class="card mb-5 mb-xl-10">
+  <div class="card-header border-0 cursor-pointer" role="button" data-bs-toggle="collapse"
+    data-bs-target="#kt_add_company" aria-expanded="true" aria-controls="kt_add_company">
+    <div class="card-title m-0">
+      <h3 class="fw-bolder m-0" *ngIf="!userId">{{"COMPANY.Add_Company" | translate}}</h3>
+      <h3 class="fw-bolder m-0" *ngIf="userId">{{"COMPANY.Edit_Company" | translate}}</h3>
+    </div>
+    <div class="card-toolbar">
+      <a (click)="back()" class="btn btn-sm btn-danger d-flex">
+        <!-- <app-keenicon name="arrow-left" class="fs-3"></app-keenicon> -->
+        {{"ECOMMERCE.COMMON.BACK" | translate}}
+      </a>
+    </div>
+  </div>
+  <div id="kt_add_company" class="collapse show">
+    <form [formGroup]="addUserForm" class="form">
+      <div class="card-body border-top p-9">
+
+
+        <div class="row mb-6">
+          <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="required">{{"USERS.EMAIL" | translate}}</span></label>
+          <div class="col-lg-8 fv-row">
+            <input type="email" class="form-control form-control-lg form-control-solid text-start" placeholder="{{'USERS.EMAIL' | translate}}"
+              name="email" formControlName="email" />
+              <div
+              *ngIf="addUserForm?.get('email')?.invalid && (addUserForm?.get('email')?.dirty || addUserForm?.get('email')?.touched)"
+              class="fv-plugins-message-container">
+              <div class="fv-help-block">email is required</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row mb-6">
+          <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="required">{{"USERS.PASSWORD" | translate}}</span></label>
+          <div class="col-lg-8 fv-row">
+            <input type="text" class="form-control form-control-lg form-control-solid" placeholder="{{'USERS.PASSWORD' | translate}}"
+              name="password" formControlName="password" />
+              <div
+              *ngIf="addUserForm?.get('password')?.invalid && (addUserForm?.get('password')?.dirty || addUserForm?.get('password')?.touched)"
+              class="fv-plugins-message-container">
+              <div class="fv-help-block">password is required</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row mb-6">
+          <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="required">{{"USERS.CONFIRM_PASSWORD" | translate}}</span></label>
+          <div class="col-lg-8 fv-row">
+            <input type="text" class="form-control form-control-lg form-control-solid" placeholder="{{'USERS.CONFIRM_PASSWORD' | translate}}"
+              name="confirmPassword" formControlName="confirmPassword" />
+              <div
+              *ngIf="addUserForm?.get('confirmPassword')?.invalid && (addUserForm?.get('confirmPassword')?.dirty || addUserForm?.get('confirmPassword')?.touched)"
+              class="fv-plugins-message-container">
+              <div class="fv-help-block">confirm password is required</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row mb-6">
+          <label class="col-lg-4 col-form-label fw-bold fs-6"><span
+              class="required">{{"COMPANY.TITLE" | translate}}</span></label>
+          <div class="col-lg-8 fv-row">
+            <select class="form-select form-select-solid form-select-lg fw-bold" name="Type" formControlName="companyId">
+              <option value="" disabled>{{"TRANSLATOR.SELECTION" | translate}}</option>
+              <ng-container *ngFor="let company of companies">
+                <option [value]="company?.id">{{company?.name}}</option>
+              </ng-container>
+            </select>
+            <div
+              *ngIf="addUserForm?.get('companyId')?.invalid && (addUserForm?.get('companyId')?.dirty || addUserForm?.get('companyId')?.touched)"
+              class="fv-plugins-message-container">
+              <div class="fv-help-block">company is required</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row mb-6">
+          <label class="col-lg-4 col-form-label fw-bold fs-6"><span
+              class="required">{{"USERS.Role" | translate}}</span></label>
+          <div class="col-lg-8 fv-row">
+            <select class="form-select form-select-solid form-select-lg fw-bold" name="Type" formControlName="roleIds">
+              <option value="" disabled>{{"TRANSLATOR.SELECTION" | translate}}</option>
+              <ng-container *ngFor="let role of roles">
+                <option [value]="role?.id">{{role?.name}}</option>
+              </ng-container>
+            </select>
+            <div
+              *ngIf="addUserForm?.get('type')?.invalid && (addUserForm?.get('type')?.dirty || addUserForm?.get('type')?.touched)"
+              class="fv-plugins-message-container">
+              <div class="fv-help-block">Type is required</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="card-footer d-flex justify-content-end py-6 px-9">
+        <button type="button" class="btn btn-primary" [disabled]="isLoading" (click)="saveUser()">
+          <ng-container *ngIf="!isLoading">Save Changes</ng-container>
+          <ng-container *ngIf="isLoading">
+            <span clas="indicator-progress" [style.display]="'block'">
+              Please wait...{{ " " }}
+              <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+            </span>
+          </ng-container>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+ <!-- modal -->
+<swal #noticeSwal [swalOptions]="swalOptions">
+</swal>

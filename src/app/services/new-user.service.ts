@@ -48,4 +48,23 @@ export class NewUserService {
       headers: httpHeaders
     });
   }
+
+  registerUser(user: string): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/Register`;
+    return this.http.post<any>(url, user, {
+      headers: httpHeaders
+    });
+  }
+  updateUser(user: string): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/UpdateUser`;
+    return this.http.put<any>(url, user, {
+      headers: httpHeaders
+    });
+  }
 }

@@ -56,7 +56,6 @@ export class OverviewComponent implements OnInit {
   initializeCompanyList() {
     this.companyService.getAll().subscribe(res => {
       for (const iterator of res.data) {
-        debugger
         this.dataList.push(
           {
             id: iterator.id,

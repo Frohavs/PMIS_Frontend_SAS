@@ -1,4 +1,5 @@
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
 import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
@@ -30,7 +31,7 @@ export class OverviewComponent implements OnInit {
 
   constructor(
     private cdr: ChangeDetectorRef,
-    private modalService: NgbModal,
+    private router: Router,
     private translate: TranslateService,
     private newUserService: NewUserService
   ) {
@@ -39,7 +40,6 @@ export class OverviewComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
     this.initializeGroupDate()
   }
 
@@ -60,10 +60,11 @@ export class OverviewComponent implements OnInit {
   }
 
   checkUser(event: Event, id: string) {
-    const isChecked = (<HTMLInputElement>event.target).checked;
-    console.log(id);
-    console.log(isChecked);
+    // const isChecked = (<HTMLInputElement>event.target).checked;
+  }
 
+  redirectToNew() {
+    this.router.navigateByUrl('manage/users/add')
   }
 
 }

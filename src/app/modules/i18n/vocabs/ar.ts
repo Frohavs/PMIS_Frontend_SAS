@@ -46,15 +46,20 @@ export const locale = {
       Status: 'الحالة',
       Search: 'بحث عن المجموعة...',
     },
-    Users: {
+    USERS: {
       ID: 'رقم',
       TITLE: 'المستخدمين',
+      Role: 'المسمي الوظيفي',
       Add_Group: 'إضافة مستخدم',
       TYPE: 'النوع',
       Test: 'تست',
       EN_NAME: 'الأسم بالأنجليزية',
       Status: 'الحالة',
       Search: 'بحث عن المستخدم...',
+
+      EMAIL: 'البريد الإلكتروني',
+      PASSWORD: 'كلمة المرور',
+      CONFIRM_PASSWORD: 'تأكيد كلمة المرور',
     },
     TRACKING: {
       ID: 'رقم',
