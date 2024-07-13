@@ -50,7 +50,7 @@ export class OverviewComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.initializeCompanyList()
+    this.initializeCompanyList();
   }
 
   initializeCompanyList() {

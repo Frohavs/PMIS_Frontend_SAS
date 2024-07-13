@@ -20,6 +20,11 @@ const Routing: Routes = [
     // data: { layout: 'light-sidebar' },
   },
   {
+    path: 'manage/users',
+    loadChildren: () => import('../modules/users/users.module').then((m) => m.UsersModule),
+    // data: { layout: 'light-sidebar' },
+  },
+  {
     path: 'tracking',
     loadChildren: () => import('../pages/tracking/tracking.module').then((m) => m.TrackingModule),
     // data: { layout: 'light-sidebar' },

@@ -16,6 +16,8 @@ export const locale = {
       DASHBOARD: 'لوحة التحكم',
       COMPANIES: 'الشركات',
       GROUPS: 'المجموعات',
+      Users_Management: 'إدارة المستخدمين',
+      USERS: 'المستخدمين',
       Tracking: 'التعقب',
     },
     COMPANY: {
@@ -43,6 +45,16 @@ export const locale = {
       EN_NAME: 'الأسم بالأنجليزية',
       Status: 'الحالة',
       Search: 'بحث عن المجموعة...',
+    },
+    Users: {
+      ID: 'رقم',
+      TITLE: 'المستخدمين',
+      Add_Group: 'إضافة مستخدم',
+      TYPE: 'النوع',
+      Test: 'تست',
+      EN_NAME: 'الأسم بالأنجليزية',
+      Status: 'الحالة',
+      Search: 'بحث عن المستخدم...',
     },
     TRACKING: {
       ID: 'رقم',

@@ -6,6 +6,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CompanyService } from 'src/app/services/company.service';
 import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
 import { SweetAlertOptions } from 'sweetalert2';
+import { CompanyTypeService } from 'src/app/services/company-type.service';
 
 @Component({
   selector: 'app-add-company',
@@ -17,6 +18,7 @@ export class AddCompanyComponent implements OnInit, OnDestroy {
   companyId: number;
   isLoading: boolean;
   addCompanyForm: FormGroup;
+  companyTypes: any[] = [];
   private unsubscribe: Subscription[] = [];
 
   swalOptions: SweetAlertOptions = {};
@@ -28,20 +30,24 @@ export class AddCompanyComponent implements OnInit, OnDestroy {
     private cdr: ChangeDetectorRef,
     private formBuilder: FormBuilder,
     private activatedRoute: ActivatedRoute,
-    private companyService: CompanyService
+    private companyService: CompanyService,
+    private companyTypeService: CompanyTypeService
   ) {
   }
 
   ngOnInit() {
     this.getCompanyId();
     this.initializeCompanyForm();
+    this.companyTypeService.getAll().subscribe(res => {
+      this.companyTypes = res.data;
+      this.cdr.detectChanges();
+    });
   }
 
   initializeCompanyForm() {
     this.addCompanyForm = this.formBuilder.group({
       name: ['', Validators.required],
       nameAr: ['', Validators.required],
-      // type: ['', Validators.required],
       crNumber: ['', Validators.required],
       // usersNo: ['', Validators.required],
       themeColor: ['#e66465', Validators.required],
@@ -51,13 +57,13 @@ export class AddCompanyComponent implements OnInit, OnDestroy {
       email: ['', Validators.required],
       smsNotification: [true, Validators.required],
       mailNotification: [false, Validators.required],
+      companyTypeId: ['', Validators.required],
     });
   }
   editCompanyForm(data: any) {
     this.addCompanyForm.patchValue({
       name: data?.name,
       nameAr: data?.nameAr,
-      // type: data?.name,
       crNumber: data?.crNumber,
       // usersNo: data?.name,
       themeColor: data?.themeColor,
@@ -67,6 +73,7 @@ export class AddCompanyComponent implements OnInit, OnDestroy {
       email: data?.email,
       smsNotification: data?.smsNotification,
       mailNotification: data?.mailNotification,
+      companyTypeId: data?.companyTypeId,
     });
   }
 
