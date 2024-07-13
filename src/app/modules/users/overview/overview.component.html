@@ -2,10 +2,18 @@
   <!-- begin::Header -->
 
   <div class="card-header border-0 pt-5">
-    <h3 class="card-title align-items-start flex-column">
-      <span class="card-label fw-bolder fs-3 mb-1">Users Statistics</span>
-      <span class="text-muted mt-1 fw-bold fs-7">Over 5 users</span>
-    </h3>
+
+    <!--begin::Card title-->
+    <div class="card-title">
+      <!--begin::Search-->
+      <div class="d-flex align-items-center position-relative my-1">
+        <app-keenicon name="magnifier" class="fs-3 position-absolute ms-5"></app-keenicon>
+        <input type="text" data-action="filter" class="form-control form-control-solid w-250px ps-12"
+          [placeholder]="Search_text">
+      </div>
+      <!--end::Search-->
+    </div>
+    <!--begin::Card title-->
     <div class="card-toolbar" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-trigger="hover"
       title="Click to add a user">
       <a class="btn btn-sm btn-light-primary">
@@ -29,7 +37,7 @@
                 form-check form-check-sm form-check-custom form-check-solid
               ">
                 <input class="form-check-input" type="checkbox" value="1" data-kt-check="true"
-                  data-kt-check-target=".widget-9-check" />
+                  data-kt-check-target=".widget-9-check" (change)="checkAll($event)" />
               </div>
             </th>
             <th class="min-w-150px">Authors</th>
@@ -41,35 +49,33 @@
         <!-- end::Table head -->
         <!-- begin::Table body -->
         <tbody>
-          <tr>
+          <tr *ngFor="let user of dataList; index as i">
             <td>
-              <div class="
-                form-check form-check-sm form-check-custom form-check-solid
-              ">
-                <input class="form-check-input widget-9-check" type="checkbox" value="1" />
+              <div class="form-check form-check-sm form-check-custom form-check-solid">
+                <input class="form-check-input widget-9-check" type="checkbox" [value]="user?.id" [checked]="user?.checked" (change)="checkUser($event, user?.id)" />
               </div>
             </td>
             <td>
               <div class="d-flex align-items-center">
                 <div class="symbol symbol-45px me-5">
-                  <img src="./assets/media/avatars/300-14.jpg" alt="" />
+                  <img src="./assets/media/icons/user-icon-2400.png" alt="img" />
                 </div>
                 <div class="d-flex justify-content-start flex-column">
                   <a class="text-gray-900 fw-bolder text-hover-primary fs-6">
-                    Ana Simmons
+                    {{user?.userName}}
                   </a>
                   <span class="text-muted fw-bold text-muted d-block fs-7">
-                    HTML, JS, ReactJS
+                    {{user?.email}}
                   </span>
                 </div>
               </div>
             </td>
             <td>
               <a href="#" class="text-gray-900 fw-bolder text-hover-primary d-block fs-6">
-                Intertico
+                {{user?.company || 'Frohavs'}}
               </a>
               <span class="text-muted fw-bold text-muted d-block fs-7">
-                Web, UI/UX Design
+                {{user?.userRoles || 'Admin'}}
               </span>
             </td>
             <td>
@@ -96,21 +102,16 @@
             </td>
             <td>
               <div class="d-flex justify-content-end flex-shrink-0">
-                <a href="#" class="
-                  btn btn-icon btn-bg-light btn-active-color-primary btn-sm
-                  me-1
-                ">
+                <a class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
                   <app-keenicon name="pencil" class="fs-3"></app-keenicon>
                 </a>
-                <a href="#" class="
-                  btn btn-icon btn-bg-light btn-active-color-primary btn-sm
-                ">
+                <a class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm">
                   <app-keenicon name="trash" class="fs-3"></app-keenicon>
                 </a>
               </div>
             </td>
           </tr>
-          <tr>
+          <!-- <tr>
             <td>
               <div class="
                 form-check form-check-sm form-check-custom form-check-solid
@@ -379,7 +380,7 @@
                 </a>
               </div>
             </td>
-          </tr>
+          </tr> -->
         </tbody>
         <!-- end::Table body -->
       </table>

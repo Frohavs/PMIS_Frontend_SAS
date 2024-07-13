@@ -15,8 +15,6 @@ import { SweetAlertOptions } from 'sweetalert2';
 })
 export class OverviewComponent implements OnInit {
 
-  groups$: Observable<any>;
-
   Add_text: string;
   Search_text: string;
   dataColumns: any[] = []
@@ -41,21 +39,20 @@ export class OverviewComponent implements OnInit {
     private groupsService: GroupsService,
 
   ) {
-    this.Add_text = this.translate.instant('GROUPS.Add_Group'),
-      this.Search_text = this.translate.instant('GROUPS.Search'),
-      this.dataColumns = [
-        { title: this.translate.instant('GROUPS.ID'), className: 'min-w-125px p-3 rounded-start' },
-        { title: this.translate.instant('GROUPS.TITLE'), className: 'ps-4 min-w-300px' },
-        { title: this.translate.instant('GROUPS.Status'), className: 'min-w-150px' },
-        { title: '', className: 'min-w-200px text-end rounded-end' },
-      ]
+    this.Add_text = this.translate.instant('GROUPS.Add_Group');
+    this.Search_text = this.translate.instant('GROUPS.Search');
+    this.dataColumns = [
+      { title: this.translate.instant('GROUPS.ID'), className: 'min-w-125px p-3 rounded-start' },
+      { title: this.translate.instant('GROUPS.TITLE'), className: 'ps-4 min-w-300px' },
+      { title: this.translate.instant('GROUPS.Status'), className: 'min-w-150px' },
+      { title: '', className: 'min-w-200px text-end rounded-end' },
+    ]
   }
   ngOnInit(): void {
     this.initializeGroupDate()
   }
 
   initializeGroupDate() {
-    // this.groups$ = this.groupsService.getAll();
     this.groupsService.getAll().subscribe(res => {
       this.dataList = res.data;
       this.cdr.detectChanges();

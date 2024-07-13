@@ -19,21 +19,32 @@ export interface IUserModel {
 })
 export class NewUserService {
 
-  API_USERS_URL = `${environment.apiUrl}`;
+  API_USERS_URL = `${environment.apiUrl}/User`;
   token: string;
   private authLocalStorageToken = `${environment.appVersion}-${environment.USERDATA_KEY}`;
 
-  constructor(private http: HttpClient, private authService: AuthService) {
+  constructor(private http: HttpClient) {
     const lsValue = localStorage.getItem(this.authLocalStorageToken);
     this.token = JSON.parse(lsValue as any)?.token;
-   }
+  }
+
+  // public methods
+  getAll(): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/Get`;
+    return this.http.get<any>(url, {
+      headers: httpHeaders
+    });
+  }
 
   getUser(id: string): Observable<any> {
     const httpHeaders = new HttpHeaders({
       Authorization: `Bearer ${this.token}`,
     });
     const url = `${this.API_USERS_URL}/GetUser/${id}`;
-    return this.http.get<IUserModel>(url,{
+    return this.http.get<IUserModel>(url, {
       headers: httpHeaders
     });
   }

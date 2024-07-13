@@ -56,13 +56,14 @@ export class OverviewComponent implements OnInit {
   initializeCompanyList() {
     this.companyService.getAll().subscribe(res => {
       for (const iterator of res.data) {
+        debugger
         this.dataList.push(
           {
             id: iterator.id,
             img: './assets/media/logos/froha_logo.png',
             nameAr: iterator.nameAr,
             name: iterator.name,
-            subName: 'consultant', // iterator?.type,
+            subName: iterator?.companyType || 'consultant', // iterator?.companyType,
             crNumber: iterator.crNumber,
             notifications: { smsNotification: iterator.smsNotification, mailNotification: iterator.mailNotification }
           }
