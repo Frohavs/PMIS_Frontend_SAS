@@ -16,8 +16,8 @@ import { NewAuthHTTPService } from 'src/app/services/new-auth.service';
 export class LoginComponent implements OnInit, OnDestroy {
   // KeenThemes mock, change it to:
   defaultAuth: any = {
-    email: 'admin@demo.com',
-    password: 'demo',
+    email: 'superadmin@superadmin.com',
+    password: 'Online@@2020',
   };
   loginForm: FormGroup;
   hasError: boolean;
