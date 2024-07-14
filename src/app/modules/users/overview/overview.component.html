@@ -52,7 +52,8 @@
           <tr *ngFor="let user of dataList; index as i">
             <td>
               <div class="form-check form-check-sm form-check-custom form-check-solid">
-                <input class="form-check-input widget-9-check" type="checkbox" [value]="user?.id" [checked]="user?.checked" (change)="checkUser($event, user?.id)" />
+                <input class="form-check-input widget-9-check" type="checkbox" [value]="user?.id"
+                  [checked]="user?.checked" (change)="checkUser($event, user?.id)" />
               </div>
             </td>
             <td>
@@ -101,291 +102,19 @@
               </span>
             </td>
             <td>
-              <div class="d-flex justify-content-end flex-shrink-0">
-                <a class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
+              <div class="d-flex justify-content-end flex-shrink-0" *ngIf="checkAdmin(user.userName)">
+                <a class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1" (click)="editUser(user)">
                   <app-keenicon name="pencil" class="fs-3"></app-keenicon>
                 </a>
-                <a class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm">
+                <a class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm" (click)="deleteUser(user)">
                   <app-keenicon name="trash" class="fs-3"></app-keenicon>
                 </a>
               </div>
             </td>
           </tr>
-          <!-- <tr>
-            <td>
-              <div class="
-                form-check form-check-sm form-check-custom form-check-solid
-              ">
-                <input class="form-check-input widget-9-check" type="checkbox" value="1" />
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="symbol symbol-45px me-5">
-                  <img src="./assets/media/avatars/300-2.jpg" alt="" />
-                </div>
-                <div class="d-flex justify-content-start flex-column">
-                  <a class="text-gray-900 fw-bolder text-hover-primary fs-6">
-                    Jessie Clarcson
-                  </a>
-                  <span class="text-muted fw-bold text-muted d-block fs-7">
-                    C#, ASP.NET, MS SQL
-                  </span>
-                </div>
-              </div>
-            </td>
-            <td>
-              <a href="#" class="text-gray-900 fw-bolder text-hover-primary d-block fs-6">
-                Agoda
-              </a>
-              <span class="text-muted fw-bold text-muted d-block fs-7">
-                Houses &amp; Hotels
-              </span>
-            </td>
-            <td>
-              <div class="rating">
-                <div class="rating-label me-2 checked">
-                  <i class="bi bi-star-fill fs-5"></i>
-                </div>
-                <div class="rating-label me-2 checked">
-                  <i class="bi bi-star-fill fs-5"></i>
-                </div>
-                <div class="rating-label me-2 checked">
-                  <i class="bi bi-star-fill fs-5"></i>
-                </div>
-                <div class="rating-label me-2 checked">
-                  <i class="bi bi-star-fill fs-5"></i>
-                </div>
-                <div class="rating-label me-2 checked">
-                  <i class="bi bi-star-fill fs-5"></i>
-                </div>
-              </div>
-              <span class="text-muted fw-bold text-muted d-block fs-7 mt-1">
-                Best Rated
-              </span>
-            </td>
-            <td>
-              <div class="d-flex justify-content-end flex-shrink-0">
-                <a href="#" class="
-                  btn btn-icon btn-bg-light btn-active-color-primary btn-sm
-                  me-1
-                ">
-                  <app-keenicon name="pencil" class="fs-3"></app-keenicon>
-                </a>
-                <a href="#" class="
-                  btn btn-icon btn-bg-light btn-active-color-primary btn-sm
-                ">
-                  <app-keenicon name="trash" class="fs-3"></app-keenicon>
-                </a>
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <div class="
-                form-check form-check-sm form-check-custom form-check-solid
-              ">
-                <input class="form-check-input widget-9-check" type="checkbox" value="1" />
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="symbol symbol-45px me-5">
-                  <img src="./assets/media/avatars/300-5.jpg" alt="" />
-                </div>
-                <div class="d-flex justify-content-start flex-column">
-                  <a class="text-gray-900 fw-bolder text-hover-primary fs-6">
-                    Lebron Wayde
-                  </a>
-                  <span class="text-muted fw-bold text-muted d-block fs-7">
-                    PHP, Laravel, VueJS
-                  </span>
-                </div>
-              </div>
-            </td>
-            <td>
-              <a href="#" class="text-gray-900 fw-bolder text-hover-primary d-block fs-6">
-                RoadGee
-              </a>
-              <span class="text-muted fw-bold text-muted d-block fs-7">Transportation</span>
-            </td>
-            <td>
-              <div class="rating">
-                <div class="rating-label me-2 checked">
-                  <i class="bi bi-star-fill fs-5"></i>
-                </div>
-                <div class="rating-label me-2 checked">
-                  <i class="bi bi-star-fill fs-5"></i>
-                </div>
-                <div class="rating-label me-2 checked">
-                  <i class="bi bi-star-fill fs-5"></i>
-                </div>
-                <div class="rating-label me-2">
-                  <i class="bi bi-star-fill fs-5"></i>
-                </div>
-                <div class="rating-label me-2">
-                  <i class="bi bi-star-fill fs-5"></i>
-                </div>
-              </div>
-              <span class="text-muted fw-bold text-muted d-block fs-7 mt-1">
-                Average
-              </span>
-            </td>
-            <td>
-              <div class="d-flex justify-content-end flex-shrink-0">
-                <a href="#" class="
-                  btn btn-icon btn-bg-light btn-active-color-primary btn-sm
-                  me-1
-                ">
-                  <app-keenicon name="pencil" class="fs-3"></app-keenicon>
-                </a>
-                <a href="#" class="
-                  btn btn-icon btn-bg-light btn-active-color-primary btn-sm
-                ">
-                  <app-keenicon name="trash" class="fs-3"></app-keenicon>
-                </a>
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <div class="
-                form-check form-check-sm form-check-custom form-check-solid
-              ">
-                <input class="form-check-input widget-9-check" type="checkbox" value="1" />
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="symbol symbol-45px me-5">
-                  <img src="./assets/media/avatars/300-20.jpg" alt="" />
-                </div>
-                <div class="d-flex justify-content-start flex-column">
-                  <a class="text-gray-900 fw-bolder text-hover-primary fs-6">
-                    Natali Goodwin
-                  </a>
-                  <span class="text-muted fw-bold text-muted d-block fs-7">
-                    Python, PostgreSQL, ReactJS
-                  </span>
-                </div>
-              </div>
-            </td>
-            <td>
-              <a href="#" class="text-gray-900 fw-bolder text-hover-primary d-block fs-6">
-                The Hill
-              </a>
-              <span class="text-muted fw-bold text-muted d-block fs-7">Insurance</span>
-            </td>
-            <td>
-              <div class="rating">
-                <div class="rating-label me-2 checked">
-                  <i class="bi bi-star-fill fs-5"></i>
-                </div>
-                <div class="rating-label me-2 checked">
-                  <i class="bi bi-star-fill fs-5"></i>
-                </div>
-                <div class="rating-label me-2 checked">
-                  <i class="bi bi-star-fill fs-5"></i>
-                </div>
-                <div class="rating-label me-2 checked">
-                  <i class="bi bi-star-fill fs-5"></i>
-                </div>
-                <div class="rating-label me-2 checked">
-                  <i class="bi bi-star-fill fs-5"></i>
-                </div>
-              </div>
-              <span class="text-muted fw-bold text-muted d-block fs-7 mt-1">
-                Best Rated
-              </span>
-            </td>
-            <td>
-              <div class="d-flex justify-content-end flex-shrink-0">
-                <a href="#" class="
-                  btn btn-icon btn-bg-light btn-active-color-primary btn-sm
-                  me-1
-                ">
-                  <app-keenicon name="pencil" class="fs-3"></app-keenicon>
-                </a>
-                <a href="#" class="
-                  btn btn-icon btn-bg-light btn-active-color-primary btn-sm
-                ">
-                  <app-keenicon name="trash" class="fs-3"></app-keenicon>
-                </a>
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <div class="
-                form-check form-check-sm form-check-custom form-check-solid
-              ">
-                <input class="form-check-input widget-9-check" type="checkbox" value="1" />
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="symbol symbol-45px me-5">
-                  <img src="./assets/media/avatars/300-23.jpg" alt="" />
-                </div>
-                <div class="d-flex justify-content-start flex-column">
-                  <a class="text-gray-900 fw-bolder text-hover-primary fs-6">
-                    Kevin Leonard
-                  </a>
-                  <span class="text-muted fw-bold text-muted d-block fs-7">
-                    HTML, JS, ReactJS
-                  </span>
-                </div>
-              </div>
-            </td>
-            <td>
-              <a href="#" class="text-gray-900 fw-bolder text-hover-primary d-block fs-6">
-                RoadGee
-              </a>
-              <span class="text-muted fw-bold text-muted d-block fs-7">Art Director</span>
-            </td>
-            <td>
-              <div class="rating">
-                <div class="rating-label me-2 checked">
-                  <i class="bi bi-star-fill fs-5"></i>
-                </div>
-                <div class="rating-label me-2 checked">
-                  <i class="bi bi-star-fill fs-5"></i>
-                </div>
-                <div class="rating-label me-2 checked">
-                  <i class="bi bi-star-fill fs-5"></i>
-                </div>
-                <div class="rating-label me-2 checked">
-                  <i class="bi bi-star-fill fs-5"></i>
-                </div>
-                <div class="rating-label me-2 checked">
-                  <i class="bi bi-star-fill fs-5"></i>
-                </div>
-              </div>
-              <span class="text-muted fw-bold text-muted d-block fs-7 mt-1">
-                Best Rated
-              </span>
-            </td>
-            <td>
-              <div class="d-flex justify-content-end flex-shrink-0">
-                <a href="#" class="
-                  btn btn-icon btn-bg-light btn-active-color-primary btn-sm
-                  me-1
-                ">
-                  <app-keenicon name="pencil" class="fs-3"></app-keenicon>
-                </a>
-                <a href="#" class="
-                  btn btn-icon btn-bg-light btn-active-color-primary btn-sm
-                ">
-                  <app-keenicon name="trash" class="fs-3"></app-keenicon>
-                </a>
-              </div>
-            </td>
-          </tr> -->
         </tbody>
-        <!-- end::Table body -->
       </table>
-      <!-- end::Table -->
-      <!-- start::Table pagination -->
+
       <div class="d-flex flex-stack flex-wrap pt-10">
         <div class="fs-6 fw-bold text-gray-700">Showing 5 to 10 of 10 entries</div>
 
@@ -429,8 +158,15 @@
         <!-- end::Table pagination -->
       </div>
     </div>
-    <!-- end::Table container -->
   </div>
-  <!-- begin::Body -->
-
 </div>
+
+<!-- modal -->
+<swal #noticeSwal [swalOptions]="swalOptions">
+</swal>
+
+
+<swal #deleteSwal [swalOptions]="swalOptions" title="Are you sure to delete?" text="This can't be undone"
+  icon="warning" [showCancelButton]="true" [focusCancel]="true"
+  [customClass]="{confirmButton: 'btn btn-danger', cancelButton: 'btn btn-active-light'}">
+</swal>

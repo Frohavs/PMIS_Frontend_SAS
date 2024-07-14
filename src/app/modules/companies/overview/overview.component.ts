@@ -28,8 +28,11 @@ export class OverviewComponent implements OnInit {
   ];
 
   isLoading = false;
-  swalOptions: SweetAlertOptions = {};
+  swalOptions: SweetAlertOptions = { buttonsStyling: false };
   @ViewChild('noticeSwal') noticeSwal!: SwalComponent;
+
+  @ViewChild('deleteSwal')
+  public readonly deleteSwal!: SwalComponent;
 
   constructor(
     private router: Router,
@@ -62,7 +65,7 @@ export class OverviewComponent implements OnInit {
             img: './assets/media/logos/froha_logo.png',
             nameAr: iterator.nameAr,
             name: iterator.name,
-            subName: iterator?.companyType || 'consultant', // iterator?.companyType,
+            subName: iterator?.companyTypeName || '--',
             crNumber: iterator.crNumber,
             notifications: { smsNotification: iterator.smsNotification, mailNotification: iterator.mailNotification }
           }
@@ -77,21 +80,25 @@ export class OverviewComponent implements OnInit {
   }
 
   deleteRecord(company: any) {
-    this.isLoading = true;
-    this.companyService.deleteCompany(company.id).subscribe({
-      next: (res) => {
-        this.showAlert({ icon: 'success', title: 'Success!', text: 'Group Deleted successfully!' });
-        setTimeout(() => {
-          this.isLoading = false;
-          this.dataList = [];
-          this.initializeCompanyList();
-        }, 500);
-      },
-      error: (error) => {
-        this.isLoading = false;
-        this.showAlert({ icon: 'error', title: 'Error!', text: 'Please try again' });
+    this.deleteSwal.fire().then((clicked) => {
+      if (clicked.isConfirmed) {
+        this.isLoading = true;
+        this.companyService.deleteCompany(company.id).subscribe({
+          next: (res) => {
+            this.showAlert({ icon: 'success', title: 'Success!', text: 'Group Deleted successfully!' });
+            setTimeout(() => {
+              this.isLoading = false;
+              this.dataList = [];
+              this.initializeCompanyList();
+            }, 500);
+          },
+          error: (error) => {
+            this.isLoading = false;
+            this.showAlert({ icon: 'error', title: 'Error!', text: 'Please try again' });
+          }
+        })
       }
-    })
+    });
 
   }
 

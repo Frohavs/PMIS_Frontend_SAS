@@ -8,6 +8,7 @@ import { CompanyTypeService } from 'src/app/services/company-type.service';
 import { CompanyService } from 'src/app/services/company.service';
 import { SweetAlertOptions } from 'sweetalert2';
 import { NewUserService } from 'src/app/services/new-user.service';
+import { RoleService } from 'src/app/services/role.service';
 
 @Component({
   selector: 'app-add-user',
@@ -32,6 +33,7 @@ export class AddUserComponent implements OnInit, OnDestroy {
     private formBuilder: FormBuilder,
     private activatedRoute: ActivatedRoute,
     private companyService: CompanyService,
+    private roleService: RoleService,
     private newUserService: NewUserService
   ) {
   }
@@ -39,8 +41,16 @@ export class AddUserComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.getUserId();
     this.initializeUserForm();
+    this.getLookups();
+  }
+
+  getLookups() {
     this.companyService.getAll().subscribe(res => {
       this.companies = res.data;
+      this.cdr.detectChanges();
+    });
+    this.roleService.getAll().subscribe(res => {
+      this.roles = res.data;
       this.cdr.detectChanges();
     });
   }
@@ -58,18 +68,17 @@ export class AddUserComponent implements OnInit, OnDestroy {
   editUserForm(data: any) {
     this.addUserForm.patchValue({
       email: data?.email,
-      password: data?.password,
-      confirmPassword: data?.confirmPassword,
       companyId: data?.companyId,
-      roleIds: data?.roleIds,
+      roleIds: this.roles?.filter(role => role?.name === 'Manger')[0]?.id,
     });
+    debugger
   }
 
   getUserId() {
     this.activatedRoute.params.subscribe(params => {
-      this.userId = +params['id'];
+      this.userId = params['id'];
       if (this.userId) {
-        this.companyService.getByID(this.userId).subscribe(res => {
+        this.newUserService.getUser(this.userId.toString()).subscribe(res => {
           setTimeout(() => {
             this.editUserForm(res.data);
           }, 500);
@@ -79,22 +88,23 @@ export class AddUserComponent implements OnInit, OnDestroy {
   }
 
   saveUser() {
-    debugger
-    console.log({...this.addUserForm.value, companyId: 13, roleIds: ['test']});
+    console.log({ ...this.addUserForm.value });
     if (!this.userId) {
-      this.newUserService.registerUser({...this.addUserForm.value, companyId: 13, roleIds: ['test']}).subscribe(res => {
+      const payload = { ...this.addUserForm.value, companyId: +this.addUserForm.value.companyId, roleIds: [this.addUserForm.value.roleIds]};
+      this.newUserService.registerUser(payload).subscribe(res => {
         this.router.navigateByUrl('manage/users')
         this.showAlert({ icon: 'success', title: 'Success!', text: 'User Added successfully!' });
-      },() => this.showAlert({ icon: 'error', title: 'Error!', text: 'please try again!' }))
+      }, () => this.showAlert({ icon: 'error', title: 'Error!', text: 'please try again!' }))
       setTimeout(() => {
         this.isLoading = false;
         this.cdr.detectChanges();
       }, 500);
     } else {
-      this.newUserService.updateUser({ id: this.userId, ...this.addUserForm.value }).subscribe(res => {
+      const payload = { id: this.userId, ...this.addUserForm.value, companyId: +this.addUserForm.value.companyId, roleIds: [this.addUserForm.value.roleIds]};
+      this.newUserService.updateUser(payload).subscribe(res => {
         this.router.navigateByUrl('manage/users')
         this.showAlert({ icon: 'success', title: 'Success!', text: 'User Updated successfully!' });
-      },() => this.showAlert({ icon: 'error', title: 'Error!', text: 'please try again!' }))
+      }, () => this.showAlert({ icon: 'error', title: 'Error!', text: 'please try again!' }))
       setTimeout(() => {
         this.isLoading = false;
         this.cdr.detectChanges();

@@ -1,9 +1,9 @@
 <div class="card mb-5 mb-xl-10">
   <div class="card-header border-0 cursor-pointer" role="button" data-bs-toggle="collapse"
-    data-bs-target="#kt_add_company" aria-expanded="true" aria-controls="kt_add_company">
+    data-bs-target="#kt_add_user" aria-expanded="true" aria-controls="kt_add_user">
     <div class="card-title m-0">
-      <h3 class="fw-bolder m-0" *ngIf="!userId">{{"COMPANY.Add_Company" | translate}}</h3>
-      <h3 class="fw-bolder m-0" *ngIf="userId">{{"COMPANY.Edit_Company" | translate}}</h3>
+      <h3 class="fw-bolder m-0" *ngIf="!userId">{{"USERS.Add_User" | translate}}</h3>
+        <h3 class="fw-bolder m-0" *ngIf="userId">{{"USERS.Edit_User" | translate}}</h3>
     </div>
     <div class="card-toolbar">
       <a (click)="back()" class="btn btn-sm btn-danger d-flex">
@@ -12,7 +12,7 @@
       </a>
     </div>
   </div>
-  <div id="kt_add_company" class="collapse show">
+  <div id="kt_add_user" class="collapse show">
     <form [formGroup]="addUserForm" class="form">
       <div class="card-body border-top p-9">
 

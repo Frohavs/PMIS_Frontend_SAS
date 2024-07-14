@@ -29,6 +29,11 @@
   (detailsClicked)="detailsClicked($event)" (editClicked)="editRecord($event)" (deleteClicked)="deleteRecord($event)">
 </app-pmis-table>
 
- <!-- modal -->
- <swal #noticeSwal [swalOptions]="swalOptions">
+<!-- modal -->
+<swal #noticeSwal [swalOptions]="swalOptions">
+</swal>
+
+<swal #deleteSwal [swalOptions]="swalOptions" title="Are you sure to delete?" text="This can't be undone"
+  icon="warning" [showCancelButton]="true" [focusCancel]="true"
+  [customClass]="{confirmButton: 'btn btn-danger', cancelButton: 'btn btn-active-light'}">
 </swal>

@@ -20,9 +20,11 @@ export class OverviewComponent implements OnInit {
   // modal configs
   isLoading = false;
   isCollapsed1 = false;
-  swalOptions: SweetAlertOptions = {};
+  swalOptions: SweetAlertOptions = { buttonsStyling: false };
   @ViewChild('addUserModal') addUserModal!: any;
   @ViewChild('noticeSwal') noticeSwal!: SwalComponent;
+
+  @ViewChild('deleteSwal') public readonly deleteSwal!: SwalComponent;
 
   userModel: { id: number | null, name: string, role: number } = { id: null, name: '', role: 0 };
   modalConfig: NgbModalOptions = {
@@ -40,14 +42,13 @@ export class OverviewComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.initializeGroupDate()
+    this.initializeUserData()
   }
 
-  initializeGroupDate() {
+  initializeUserData() {
     this.newUserService.getAll().subscribe(res => {
       this.dataList = res.data;
       this.cdr.detectChanges();
-      console.log(this.dataList);
 
     })
   }
@@ -65,6 +66,55 @@ export class OverviewComponent implements OnInit {
 
   redirectToNew() {
     this.router.navigateByUrl('manage/users/add')
+  }
+
+  editUser(user: any) {
+    console.log(user);
+    this.router.navigateByUrl('manage/users/edit/' + user.id)
+  }
+
+  deleteUser(user: any) {
+    this.deleteSwal.fire().then((clicked) => {
+      if (clicked.isConfirmed) {
+        this.isLoading = true;
+        this.newUserService.deleteUser(user.id).subscribe({
+          next: (res) => {
+            this.showAlert({ icon: 'success', title: 'Success!', text: 'Group Deleted successfully!' });
+            setTimeout(() => {
+              this.isLoading = false;
+              this.dataList = [];
+              this.initializeUserData();
+            }, 500);
+          },
+          error: (error) => {
+            this.isLoading = false;
+            this.showAlert({ icon: 'error', title: 'Error!', text: 'Please try again' });
+          }
+        });
+      }
+    });
+  }
+
+  showAlert(swalOptions: SweetAlertOptions) {
+    let style = swalOptions.icon?.toString() || 'success';
+    if (swalOptions.icon === 'error') {
+      style = 'danger';
+    }
+    this.swalOptions = Object.assign({
+      buttonsStyling: false,
+      confirmButtonText: "Ok, got it!",
+      customClass: {
+        confirmButton: "btn btn-" + style
+      }
+    }, swalOptions);
+    this.cdr.detectChanges();
+    this.noticeSwal.fire();
+  }
+
+  checkAdmin(userName: string) {
+    console.log(userName);
+    return userName === 'SuperAdmin' ? false : true;
+
   }
 
 }

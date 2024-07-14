@@ -18,6 +18,7 @@ export const locale = {
       GROUPS: 'Groups',
       Users_Management: 'User Management',
       USERS: 'Users',
+      ROLES: 'Roles',
       Tracking: 'Tracking',
     },
     COMPANY: {
@@ -51,6 +52,7 @@ export const locale = {
       TITLE: 'Users',
       Role: 'Role',
       Add_User: 'Add User',
+      Edit_User: 'Edit User',
       TYPE: 'Type',
       Test: 'Test',
       EN_NAME: 'English Name',

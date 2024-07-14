@@ -43,7 +43,7 @@ export class NewUserService {
     const httpHeaders = new HttpHeaders({
       Authorization: `Bearer ${this.token}`,
     });
-    const url = `${this.API_USERS_URL}/GetUser/${id}`;
+    const url = `${this.API_USERS_URL}/Get/${id}`;
     return this.http.get<IUserModel>(url, {
       headers: httpHeaders
     });
@@ -64,6 +64,15 @@ export class NewUserService {
     });
     const url = `${this.API_USERS_URL}/UpdateUser`;
     return this.http.put<any>(url, user, {
+      headers: httpHeaders
+    });
+  }
+  deleteUser(id: number): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/Delete/${id}`;
+    return this.http.delete<any>(url, {
       headers: httpHeaders
     });
   }
