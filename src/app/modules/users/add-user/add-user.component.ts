@@ -68,7 +68,7 @@ export class AddUserComponent implements OnInit, OnDestroy {
     this.addUserForm.patchValue({
       email: data?.email,
       companyId: data?.companyId,
-      roleIds: this.roles?.filter(role => role?.name === 'Manger')[0]?.id,
+      roleIds: this.roles?.filter(role => role?.name === 'Manger')[0]?.name,
     });
   }
 
