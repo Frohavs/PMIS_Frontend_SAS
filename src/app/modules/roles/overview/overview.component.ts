@@ -21,7 +21,7 @@ export class OverviewComponent implements OnInit {
   modalConfig: NgbModalOptions = {
     modalDialogClass: 'modal-dialog modal-dialog-centered mw-650px',
   };
-  roleModel: { id: number | null, name: string, isActive: boolean } = { id: null, name: '', isActive: true };
+  roleModel: { name: string } = { name: '' };
   @ViewChild('addModal') addModal!: any;
   @ViewChild('noticeSwal') noticeSwal!: SwalComponent;
 
@@ -43,7 +43,7 @@ export class OverviewComponent implements OnInit {
   }
 
   addRole() {
-    this.roleModel = { id: null, name: '', isActive: true };
+    this.roleModel = { name: '' };
 
     this.modalService.open(this.addModal, this.modalConfig);
   }
@@ -63,7 +63,7 @@ export class OverviewComponent implements OnInit {
     const successAlert: SweetAlertOptions = {
       icon: 'success',
       title: 'Success!',
-      text: 'Group created successfully!',
+      text: 'Role created successfully!',
     };
     const errorAlert: SweetAlertOptions = {
       icon: 'error',
@@ -74,25 +74,25 @@ export class OverviewComponent implements OnInit {
     const completeFn = () => {
       this.isLoading = false;
       this.initializeRoleData();
-      this.roleModel = { id: null, name: '', isActive: true };
+      this.roleModel = { name: '' };
     };
 
-    const updateFn = () => {
-      this.roleService.updateRole({ id: this.roleModel.id, name: this.roleModel.name, isActive: this.roleModel.isActive }).subscribe({
-        next: (res) => {
-          this.modalService.dismissAll();
-          successAlert.text = 'Group updated successfully!';
-          this.showAlert(successAlert);
-        },
-        error: (error) => {
-          this.showAlert(errorAlert);
-          this.isLoading = false;
-        },
-        complete: completeFn,
-      });
-    };
+    // const updateFn = () => {
+    //   this.roleService.updateRole({ name: this.roleModel.name }).subscribe({
+    //     next: (res) => {
+    //       this.modalService.dismissAll();
+    //       successAlert.text = 'Group updated successfully!';
+    //       this.showAlert(successAlert);
+    //     },
+    //     error: (error) => {
+    //       this.showAlert(errorAlert);
+    //       this.isLoading = false;
+    //     },
+    //     complete: completeFn,
+    //   });
+    // };
     const createFn = () => {
-      this.roleService.addRole({ name: this.roleModel.name, isActive: this.roleModel.isActive }).subscribe({
+      this.roleService.addRole({ name: this.roleModel.name }).subscribe({
         next: (res) => {
           this.modalService.dismissAll();
           this.showAlert(successAlert);
@@ -104,11 +104,7 @@ export class OverviewComponent implements OnInit {
         complete: completeFn,
       });
     };
-    if (this.roleModel.id) {
-      updateFn();
-    } else {
       createFn();
-    }
   }
 
   showAlert(swalOptions: SweetAlertOptions) {

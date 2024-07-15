@@ -27,19 +27,16 @@ export class RoleService {
       headers: httpHeaders
     });
   }
-  addRole(role: { name: string, isActive: boolean }): Observable<any> {
+  addRole(role: { name: string}): Observable<any> {
     const httpHeaders = new HttpHeaders({
       Authorization: `Bearer ${this.token}`,
     });
-    const url = `${this.API_USERS_URL}/Create`;
-    return this.http.post<any>(url, {
-      name: role.name,
-      isActive: role.isActive,
-    }, {
+    const url = `${this.API_USERS_URL}/Create?name=${role.name}`;
+    return this.http.post<any>(url,{}, {
       headers: httpHeaders
     });
   }
-  updateRole(role: {id: number | null, name: string, isActive: boolean }): Observable<any> {
+  updateRole(role: {name: string}): Observable<any> {
     const httpHeaders = new HttpHeaders({
       Authorization: `Bearer ${this.token}`,
     });

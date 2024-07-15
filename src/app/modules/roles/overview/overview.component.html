@@ -19,9 +19,9 @@
               </ng-container>
             </div>
           </div>
-          <div class="card-footer flex-wrap pt-0">
+          <!-- <div class="card-footer flex-wrap pt-0">
             <button type="button" class="btn btn-light btn-active-light-primary my-1" (click)="editRole(role)">Edit Role</button>
-          </div>
+          </div> -->
         </div>
       </div>
     </ng-container>
@@ -80,19 +80,6 @@
             </div>
             <!--end::Input-->
           </div>
-
-          <div class="fv-row mb-7">
-            <label class="form-label fw-bold">Status:</label>
-
-            <div class="
-                form-check form-switch form-switch-sm form-check-custom form-check-solid
-              ">
-              <input class="form-check-input" type="checkbox" [(ngModel)]="roleModel.isActive" #isActive="ngModel"
-                name="notifications" />
-              <label class="form-check-label">{{roleModel.isActive? 'Enabled' : 'Disabled'}}</label>
-            </div>
-          </div>
-          <!--end::Input group-->
         </div>
         <!--end::User form-->
       </div>
