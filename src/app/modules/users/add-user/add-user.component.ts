@@ -4,7 +4,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
 import { Subscription } from 'rxjs';
 import { Location } from '@angular/common';
-import { CompanyTypeService } from 'src/app/services/company-type.service';
 import { CompanyService } from 'src/app/services/company.service';
 import { SweetAlertOptions } from 'sweetalert2';
 import { NewUserService } from 'src/app/services/new-user.service';
