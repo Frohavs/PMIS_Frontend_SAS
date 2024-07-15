@@ -55,11 +55,6 @@ export class CompanyDetailsComponent implements OnInit {
   }
 
   addUser(modal: any) {
-    this.modalService.open(modal, this.modalConfig);
+    this.router.navigateByUrl('manage/users/edit/' + this.companyDetails?.mangerId)
   }
-
-  getCompanyType(companyTypeId: number) {
-    return this.companyTypes.filter(item => item.id === companyTypeId)[0]?.name;
-  }
-
 }

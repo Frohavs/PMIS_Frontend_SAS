@@ -69,7 +69,6 @@ export class OverviewComponent implements OnInit {
   }
 
   editUser(user: any) {
-    console.log(user);
     this.router.navigateByUrl('manage/users/edit/' + user.id)
   }
 

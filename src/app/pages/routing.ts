@@ -25,6 +25,11 @@ const Routing: Routes = [
     // data: { layout: 'light-sidebar' },
   },
   {
+    path: 'manage/roles',
+    loadChildren: () => import('../modules/roles/roles.module').then((m) => m.RolesModule),
+    // data: { layout: 'light-sidebar' },
+  },
+  {
     path: 'tracking',
     loadChildren: () => import('../pages/tracking/tracking.module').then((m) => m.TrackingModule),
     // data: { layout: 'light-sidebar' },

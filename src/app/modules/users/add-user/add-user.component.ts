@@ -87,9 +87,9 @@ export class AddUserComponent implements OnInit, OnDestroy {
 
   saveUser() {
     if (!this.userId) {
-      const payload = { ...this.addUserForm.value, companyId: +this.addUserForm.value.companyId, roleIds: [this.addUserForm.value.roleIds]};
+      const payload = { ...this.addUserForm.value, companyId: +this.addUserForm.value.companyId, roleIds: [this.addUserForm.value.roleIds] };
       this.newUserService.registerUser(payload).subscribe(res => {
-        this.router.navigateByUrl('manage/users')
+        this.router.navigateByUrl('manage/users');
         this.showAlert({ icon: 'success', title: 'Success!', text: 'User Added successfully!' });
       }, () => this.showAlert({ icon: 'error', title: 'Error!', text: 'please try again!' }))
       setTimeout(() => {
@@ -97,11 +97,11 @@ export class AddUserComponent implements OnInit, OnDestroy {
         this.cdr.detectChanges();
       }, 500);
     } else {
-      const payload = { userId: this.userId, ...this.addUserForm.value, companyId: +this.addUserForm.value.companyId, roleIds: [this.addUserForm.value.roleIds]};
+      const payload = { userId: this.userId, ...this.addUserForm.value, companyId: +this.addUserForm.value.companyId, roleIds: [this.addUserForm.value.roleIds] };
       delete payload['password'];
       delete payload['confirmPassword'];
       this.newUserService.updateUser(payload).subscribe(res => {
-        this.router.navigateByUrl('manage/users')
+        this.router.navigateByUrl('manage/users');
         this.showAlert({ icon: 'success', title: 'Success!', text: 'User Updated successfully!' });
       }, () => this.showAlert({ icon: 'error', title: 'Error!', text: 'please try again!' }))
       setTimeout(() => {

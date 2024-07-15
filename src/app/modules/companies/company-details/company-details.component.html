@@ -6,7 +6,7 @@
 
     <div class="d-flex justify-content-center align-items-center">
       <a (click)="addUser(addUserModal)" class="btn btn-danger align-self-center">
-        Add User
+        Edit User
       </a>
       &nbsp;&nbsp;
       <a (click)="navigateEdit()" class="btn btn-primary align-self-center">
@@ -31,10 +31,19 @@
         <span class="fw-bolder fs-6 text-gray-900">{{companyDetails?.name}}</span>
       </div>
     </div>
+
+    <div class="row mb-7">
+      <label class="col-lg-4 fw-bold text-muted">Manager Name</label>
+
+      <div class="col-lg-8">
+        <span class="fw-bolder fs-6 text-gray-900">{{companyDetails?.mangerName || '---'}}</span>
+      </div>
+    </div>
+
     <div class="row mb-7">
       <label class="col-lg-4 fw-bold text-muted">Type</label>
       <div class="col-lg-8">
-        <span class="fw-bolder fs-6 text-gray-900">{{getCompanyType(companyDetails?.companyTypeId)}}</span>
+        <span class="fw-bolder fs-6 text-gray-900">{{companyDetails?.companyTypeName}}</span>
       </div>
     </div>
 
