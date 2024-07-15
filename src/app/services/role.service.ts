@@ -27,4 +27,25 @@ export class RoleService {
       headers: httpHeaders
     });
   }
+  addRole(role: { name: string, isActive: boolean }): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/Create`;
+    return this.http.post<any>(url, {
+      name: role.name,
+      isActive: role.isActive,
+    }, {
+      headers: httpHeaders
+    });
+  }
+  updateRole(role: {id: number | null, name: string, isActive: boolean }): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/Update`;
+    return this.http.put<any>(url, role, {
+      headers: httpHeaders
+    });
+  }
 }
