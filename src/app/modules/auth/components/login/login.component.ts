@@ -93,7 +93,6 @@ export class LoginComponent implements OnInit, OnDestroy {
       .login(this.f.email.value, this.f.password.value)
       .subscribe((user: any) => {
         if (user && user.data) {
-          debugger
           this.router.navigate([this.returnUrl]);
         } else {
           this.hasError = true;

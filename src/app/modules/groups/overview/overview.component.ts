@@ -23,9 +23,10 @@ export class OverviewComponent implements OnInit {
   // modal configs
   isLoading = false;
   isCollapsed1 = false;
-  swalOptions: SweetAlertOptions = {};
+  swalOptions: SweetAlertOptions = { buttonsStyling: false };
   @ViewChild('addModal') addModal!: any;
   @ViewChild('noticeSwal') noticeSwal!: SwalComponent;
+  @ViewChild('deleteSwal') public readonly deleteSwal!: SwalComponent;
 
   groupModel: { id: number | null, name: string, isActive: boolean } = { id: null, name: '', isActive: true };
   modalConfig: NgbModalOptions = {
@@ -69,17 +70,23 @@ export class OverviewComponent implements OnInit {
   }
 
   deleteRecord(group: any) {
-    this.isLoading = true;
-    this.groupsService.deleteGroup(group.id).subscribe({
-      next: (res) => {
-        this.showAlert({ icon: 'success', title: 'Success!', text: 'Group Deleted successfully!' });
-        this.isLoading = false;
-      },
-      error: (error) => {
-        this.showAlert({ icon: 'error', title: 'Error!', text: 'Please try again' });
-        this.isLoading = false;
+    this.deleteSwal.fire().then((clicked) => {
+      if (clicked.isConfirmed) {
+        this.isLoading = true;
+        this.groupsService.deleteGroup(group.id).subscribe({
+          next: (res) => {
+            this.showAlert({ icon: 'success', title: 'Success!', text: 'Group Deleted successfully!' });
+            this.isLoading = false;
+            this.initializeGroupDate();
+            this.cdr.detectChanges();
+          },
+          error: (error) => {
+            this.showAlert({ icon: 'error', title: 'Error!', text: 'Please try again' });
+            this.isLoading = false;
+          }
+        });
       }
-    })
+    });
   }
 
   onSubmit(event: Event, myForm: NgForm) {
