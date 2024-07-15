@@ -70,7 +70,6 @@ export class AddUserComponent implements OnInit, OnDestroy {
       companyId: data?.companyId,
       roleIds: this.roles?.filter(role => role?.name === 'Manger')[0]?.id,
     });
-    debugger
   }
 
   getUserId() {
@@ -87,7 +86,6 @@ export class AddUserComponent implements OnInit, OnDestroy {
   }
 
   saveUser() {
-    console.log({ ...this.addUserForm.value });
     if (!this.userId) {
       const payload = { ...this.addUserForm.value, companyId: +this.addUserForm.value.companyId, roleIds: [this.addUserForm.value.roleIds]};
       this.newUserService.registerUser(payload).subscribe(res => {
@@ -99,7 +97,9 @@ export class AddUserComponent implements OnInit, OnDestroy {
         this.cdr.detectChanges();
       }, 500);
     } else {
-      const payload = { id: this.userId, ...this.addUserForm.value, companyId: +this.addUserForm.value.companyId, roleIds: [this.addUserForm.value.roleIds]};
+      const payload = { userId: this.userId, ...this.addUserForm.value, companyId: +this.addUserForm.value.companyId, roleIds: [this.addUserForm.value.roleIds]};
+      delete payload['password'];
+      delete payload['confirmPassword'];
       this.newUserService.updateUser(payload).subscribe(res => {
         this.router.navigateByUrl('manage/users')
         this.showAlert({ icon: 'success', title: 'Success!', text: 'User Updated successfully!' });
