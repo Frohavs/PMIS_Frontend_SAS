@@ -16,6 +16,7 @@ export const locale = {
       DASHBOARD: 'Dashboard',
       COMPANIES: 'Companies',
       GROUPS: 'Groups',
+      PROJECTS: 'Projects',
       Users_Management: 'User Management',
       USERS: 'Users',
       ROLES: 'Roles',

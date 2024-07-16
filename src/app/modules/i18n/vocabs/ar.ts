@@ -16,6 +16,7 @@ export const locale = {
       DASHBOARD: 'لوحة التحكم',
       COMPANIES: 'الشركات',
       GROUPS: 'المجموعات',
+      PROJECTS: 'المشاريع',
       Users_Management: 'إدارة المستخدمين',
       USERS: 'المستخدمين',
       ROLES: 'الأدوار',

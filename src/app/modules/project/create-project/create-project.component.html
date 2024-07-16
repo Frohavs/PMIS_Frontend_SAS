@@ -1,0 +1,313 @@
+<div class="card mb-5 mb-xl-10">
+  <div class="card-header border-0 cursor-pointer" role="button" data-bs-toggle="collapse"
+    data-bs-target="#kt_add_user" aria-expanded="true" aria-controls="kt_add_user">
+    <div class="card-title m-0">
+      <h3 class="fw-bolder m-0" *ngIf="!userId">{{"USERS.Add_User" | translate}}</h3>
+        <h3 class="fw-bolder m-0" *ngIf="userId">{{"USERS.Edit_User" | translate}}</h3>
+    </div>
+    <div class="card-toolbar">
+      <a (click)="back()" class="btn btn-sm btn-danger d-flex">
+        <!-- <app-keenicon name="arrow-left" class="fs-3"></app-keenicon> -->
+        {{"ECOMMERCE.COMMON.BACK" | translate}}
+      </a>
+    </div>
+  </div>
+  <div id="kt_add_user" class="collapse show">
+    <form [formGroup]="addProjectForm" class="form">
+      <div class="card-body border-top p-9">
+
+        <div class="row mb-6">
+          <label class="col-lg-4 col-form-label fw-bold fs-6"><span
+              class="required">New Project Stage</span></label>
+          <div class="col-lg-8 fv-row">
+            <select class="form-select form-select-solid form-select-lg fw-bold" name="project_stage" formControlName="project_stage">
+              <option value="" disabled>{{"TRANSLATOR.SELECTION" | translate}}</option>
+              <option [value]="'test'">on going</option>
+              <option [value]="'test'">prospective</option>
+              <!-- <ng-container *ngFor="let company of companies">
+              </ng-container> -->
+            </select>
+            <div
+              *ngIf="addProjectForm?.get('project_stage')?.invalid && (addProjectForm?.get('project_stage')?.dirty || addProjectForm?.get('project_stage')?.touched)"
+              class="fv-plugins-message-container">
+              <div class="fv-help-block">stage is required</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row mb-6">
+          <label class="col-lg-4 col-form-label fw-bold fs-6"><span
+              class="required">Classification</span></label>
+          <div class="col-lg-8 fv-row">
+            <select class="form-select form-select-solid form-select-lg fw-bold" name="classification" formControlName="classification">
+              <option value="" disabled>{{"TRANSLATOR.SELECTION" | translate}}</option>
+              <option [value]="'test'">Study and Design</option>
+              <option [value]="'test'">Supervisor</option>
+              <option [value]="'test'">Excuse</option>
+              <option [value]="'test'">Consultant service</option>
+              <!-- <ng-container *ngFor="let company of companies">
+              </ng-container> -->
+            </select>
+            <div
+              *ngIf="addProjectForm?.get('classification')?.invalid && (addProjectForm?.get('classification')?.dirty || addProjectForm?.get('classification')?.touched)"
+              class="fv-plugins-message-container">
+              <div class="fv-help-block">classification is required</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row mb-6">
+          <label class="col-lg-4 col-form-label fw-bold fs-6"><span
+              class="required">Project Sector</span></label>
+          <div class="col-lg-8 fv-row">
+            <select class="form-select form-select-solid form-select-lg fw-bold" name="project_sector" formControlName="project_sector">
+              <option value="" disabled>{{"TRANSLATOR.SELECTION" | translate}}</option>
+              <option [value]="'test'">Study and Design</option>
+              <option [value]="'test'">Supervisor</option>
+              <option [value]="'test'">Excuse</option>
+              <option [value]="'test'">Consultant service</option>
+              <!-- <ng-container *ngFor="let company of companies">
+              </ng-container> -->
+            </select>
+            <div
+              *ngIf="addProjectForm?.get('project_sector')?.invalid && (addProjectForm?.get('project_sector')?.dirty || addProjectForm?.get('project_sector')?.touched)"
+              class="fv-plugins-message-container">
+              <div class="fv-help-block">sector is required</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row mb-6">
+          <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="required">Project name</span></label>
+          <div class="col-lg-8 fv-row">
+            <input type="text" class="form-control form-control-lg form-control-solid text-start" placeholder="Project name"
+              name="project_name" formControlName="project_name" />
+              <div
+              *ngIf="addProjectForm?.get('project_name')?.invalid && (addProjectForm?.get('project_name')?.dirty || addProjectForm?.get('project_name')?.touched)"
+              class="fv-plugins-message-container">
+              <div class="fv-help-block">project name is required</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row mb-6">
+          <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="required">Project Name English</span></label>
+          <div class="col-lg-8 fv-row">
+            <input type="text" class="form-control form-control-lg form-control-solid text-start" placeholder="english name"
+              name="project_nameEn" formControlName="project_nameEn" />
+              <div
+              *ngIf="addProjectForm?.get('project_nameEn')?.invalid && (addProjectForm?.get('project_nameEn')?.dirty || addProjectForm?.get('project_nameEn')?.touched)"
+              class="fv-plugins-message-container">
+              <div class="fv-help-block">english name is required</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row mb-6">
+          <label class="col-lg-4 col-form-label fw-bold fs-6"><span
+              class="required">Contractor</span></label>
+          <div class="col-lg-8 fv-row">
+            <select class="form-select form-select-solid form-select-lg fw-bold" name="contractor" formControlName="contractor">
+              <option value="" disabled>{{"TRANSLATOR.SELECTION" | translate}}</option>
+              <!-- <ng-container *ngFor="let company of companies">
+              </ng-container> -->
+            </select>
+            <div
+              *ngIf="addProjectForm?.get('contractor')?.invalid && (addProjectForm?.get('contractor')?.dirty || addProjectForm?.get('contractor')?.touched)"
+              class="fv-plugins-message-container">
+              <div class="fv-help-block">contractor is required</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row mb-6">
+          <label class="col-lg-4 col-form-label fw-bold fs-6"><span
+              class="required">Consultant</span></label>
+          <div class="col-lg-8 fv-row">
+            <select class="form-select form-select-solid form-select-lg fw-bold" name="Consultant" formControlName="Consultant">
+              <option value="" disabled>{{"TRANSLATOR.SELECTION" | translate}}</option>
+              <!-- <ng-container *ngFor="let company of companies">
+              </ng-container> -->
+            </select>
+            <div
+              *ngIf="addProjectForm?.get('Consultant')?.invalid && (addProjectForm?.get('Consultant')?.dirty || addProjectForm?.get('Consultant')?.touched)"
+              class="fv-plugins-message-container">
+              <div class="fv-help-block">consultant is required</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row mb-6">
+          <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="required">Project number</span></label>
+          <div class="col-lg-8 fv-row">
+            <input type="number" class="form-control form-control-lg form-control-solid text-start" placeholder="Project number"
+              name="project_number" formControlName="project_number" />
+              <div
+              *ngIf="addProjectForm?.get('project_number')?.invalid && (addProjectForm?.get('project_number')?.dirty || addProjectForm?.get('project_number')?.touched)"
+              class="fv-plugins-message-container">
+              <div class="fv-help-block">project number is required</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row mb-6">
+          <label class="col-lg-4 col-form-label fw-bold fs-6"><span
+              class="required">Program Type</span></label>
+          <div class="col-lg-8 fv-row">
+            <select class="form-select form-select-solid form-select-lg fw-bold" name="program_type" formControlName="program_type">
+              <option value="" disabled>{{"TRANSLATOR.SELECTION" | translate}}</option>
+              <!-- <ng-container *ngFor="let company of companies">
+              </ng-container> -->
+            </select>
+            <div
+              *ngIf="addProjectForm?.get('program_type')?.invalid && (addProjectForm?.get('program_type')?.dirty || addProjectForm?.get('program_type')?.touched)"
+              class="fv-plugins-message-container">
+              <div class="fv-help-block">program type is required</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row mb-6">
+          <label class="col-lg-4 col-form-label fw-bold fs-6"><span
+              class="required">Door</span></label>
+          <div class="col-lg-8 fv-row">
+            <select class="form-select form-select-solid form-select-lg fw-bold" name="door" formControlName="door">
+              <option value="" disabled>{{"TRANSLATOR.SELECTION" | translate}}</option>
+              <!-- <ng-container *ngFor="let company of companies">
+              </ng-container> -->
+            </select>
+            <div
+              *ngIf="addProjectForm?.get('door')?.invalid && (addProjectForm?.get('door')?.dirty || addProjectForm?.get('door')?.touched)"
+              class="fv-plugins-message-container">
+              <div class="fv-help-block">door is required</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row mb-6">
+          <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="required">Execution Start Date</span></label>
+          <div class="col-lg-8 fv-row">
+            <input type="date" class="form-control form-control-lg form-control-solid text-start" placeholder="Start Date"
+              name="st_date" formControlName="st_date" />
+              <div
+              *ngIf="addProjectForm?.get('st_date')?.invalid && (addProjectForm?.get('st_date')?.dirty || addProjectForm?.get('st_date')?.touched)"
+              class="fv-plugins-message-container">
+              <div class="fv-help-block">Execution Start Date required</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row mb-6">
+          <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="required">Original Duration(Days)</span></label>
+          <div class="col-lg-8 fv-row">
+            <input type="number" class="form-control form-control-lg form-control-solid text-start" placeholder="Duration"
+              name="duration" formControlName="duration" />
+              <div
+              *ngIf="addProjectForm?.get('duration')?.invalid && (addProjectForm?.get('duration')?.dirty || addProjectForm?.get('duration')?.touched)"
+              class="fv-plugins-message-container">
+              <div class="fv-help-block">duration is required</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row mb-6">
+          <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="required">Program Name</span></label>
+          <div class="col-lg-8 fv-row">
+            <input type="text" class="form-control form-control-lg form-control-solid text-start" placeholder="Program name"
+              name="program_name" formControlName="program_name" />
+              <div
+              *ngIf="addProjectForm?.get('program_name')?.invalid && (addProjectForm?.get('program_name')?.dirty || addProjectForm?.get('program_name')?.touched)"
+              class="fv-plugins-message-container">
+              <div class="fv-help-block">english name is required</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row mb-6">
+          <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="required">Contract No</span></label>
+          <div class="col-lg-8 fv-row">
+            <input type="number" class="form-control form-control-lg form-control-solid text-start" placeholder="Program name"
+              name="contract_no" formControlName="contract_no" />
+              <div
+              *ngIf="addProjectForm?.get('contract_no')?.invalid && (addProjectForm?.get('contract_no')?.dirty || addProjectForm?.get('contract_no')?.touched)"
+              class="fv-plugins-message-container">
+              <div class="fv-help-block">english name is required</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row mb-6">
+          <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="required">Contract Date</span></label>
+          <div class="col-lg-8 fv-row">
+            <input type="date" class="form-control form-control-lg form-control-solid text-start" placeholder="Program name"
+            name="contract_date" formControlName="contract_date" />
+            <div
+            *ngIf="addProjectForm?.get('contract_date')?.invalid && (addProjectForm?.get('contract_date')?.dirty || addProjectForm?.get('contract_date')?.touched)"
+            class="fv-plugins-message-container">
+            <div class="fv-help-block">english name is required</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row mb-6">
+        <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="required">Etimad Number</span></label>
+        <div class="col-lg-8 fv-row">
+          <input type="number" class="form-control form-control-lg form-control-solid text-start" placeholder="Etimad Number"
+            name="etimad_number" formControlName="etimad_number" />
+            <div
+            *ngIf="addProjectForm?.get('etimad_number')?.invalid && (addProjectForm?.get('etimad_number')?.dirty || addProjectForm?.get('etimad_number')?.touched)"
+            class="fv-plugins-message-container">
+            <div class="fv-help-block">english name is required</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row mb-6">
+        <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="required">Project Value</span></label>
+        <div class="col-lg-8 fv-row">
+          <input type="number" class="form-control form-control-lg form-control-solid text-start" placeholder="project_value"
+            name="project_value" formControlName="project_value" />
+            <div
+            *ngIf="addProjectForm?.get('project_value')?.invalid && (addProjectForm?.get('project_value')?.dirty || addProjectForm?.get('project_value')?.touched)"
+            class="fv-plugins-message-container">
+            <div class="fv-help-block">english name is required</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row mb-6">
+        <label class="col-lg-4 col-form-label fw-bold fs-6"><span
+            class="required">Amana Manager</span></label>
+        <div class="col-lg-8 fv-row">
+          <select class="form-select form-select-solid form-select-lg fw-bold" name="amana_manager" formControlName="amana_manager">
+            <option value="" disabled>{{"TRANSLATOR.SELECTION" | translate}}</option>
+            <!-- <ng-container *ngFor="let company of companies">
+            </ng-container> -->
+          </select>
+          <div
+            *ngIf="addProjectForm?.get('amana_manager')?.invalid && (addProjectForm?.get('amana_manager')?.dirty || addProjectForm?.get('amana_manager')?.touched)"
+            class="fv-plugins-message-container">
+            <div class="fv-help-block">manager is required</div>
+          </div>
+        </div>
+      </div>
+
+      </div>
+      <div class="card-footer d-flex justify-content-end py-6 px-9">
+        <button type="button" class="btn btn-primary" [disabled]="isLoading" (click)="saveProject()">
+          <ng-container *ngIf="!isLoading">Save Changes</ng-container>
+          <ng-container *ngIf="isLoading">
+            <span clas="indicator-progress" [style.display]="'block'">
+              Please wait...{{ " " }}
+              <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+            </span>
+          </ng-container>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+ <!-- modal -->
+<swal #noticeSwal [swalOptions]="swalOptions">
+</swal>

@@ -105,7 +105,7 @@
               {{data.isActive ? 'Active' : 'inActive'}}
             </span>
           </td>
-          <td>
+          <td *ngIf="data?.notifications?.smsNotification || data?.notifications?.mailNotification">
             <span *ngIf="data?.notifications?.smsNotification" class="badge-light-success badge fs-7 fw-bold my-2">
               smsNotification
             </span>
