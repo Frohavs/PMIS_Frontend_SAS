@@ -5,14 +5,15 @@ import { ProjectRoutingModule } from './project-routing.module';
 import { DropdownMenusModule, WidgetsModule } from 'src/app/_metronic/partials';
 import { SharedModule } from 'src/app/_metronic/shared/shared.module';
 import { TranslateModule } from '@ngx-translate/core';
-
 import { NgbNavModule, NgbDropdownModule, NgbCollapseModule, NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
+import { ReactiveFormsModule } from '@angular/forms';
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+
 import { ProjectsComponent } from './projects.component';
 import { OverviewComponent } from './overview/overview.component';
 import { CreateProjectComponent } from './create-project/create-project.component';
 import { ProjectDetailsComponent } from './project-details/project-details.component';
-import { ReactiveFormsModule } from '@angular/forms';
-import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import { UpdateProjectInfoComponent } from './update-project-info/update-project-info.component';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
     ProjectsComponent,
     OverviewComponent,
     CreateProjectComponent,
-    ProjectDetailsComponent
+    ProjectDetailsComponent,
+    UpdateProjectInfoComponent
   ],
   imports: [
     CommonModule,
