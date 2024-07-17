@@ -67,7 +67,7 @@ export class CreateProjectComponent {
       Contractor: ['', Validators.required],
       contractor: ['', Validators.required],
       Consultant: ['', Validators.required],
-      project_number: ['', Validators.required],
+      program_number: ['', Validators.required],
       program_type: ['', Validators.required],
       door: ['', Validators.required],
       duration: ['', Validators.required],

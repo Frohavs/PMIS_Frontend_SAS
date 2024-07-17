@@ -35,8 +35,8 @@ export class OverviewComponent {
     private translate: TranslateService,
     private newUserService: NewUserService
   ) {
-    this.Add_text = this.translate.instant('USERS.Add_User');
-    this.Search_text = this.translate.instant('USERS.Search');
+    this.Add_text = this.translate.instant('PROJECTS.Add_Project');
+    this.Search_text = this.translate.instant('PROJECTS.Search');
   }
 
   ngOnInit(): void {

@@ -12,6 +12,7 @@ import { CreateProjectComponent } from './create-project/create-project.componen
 import { ProjectDetailsComponent } from './project-details/project-details.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import { TranslationModule } from '../i18n';
 
 
 @NgModule({
@@ -27,6 +28,7 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
     ReactiveFormsModule,
     WidgetsModule,
     TranslateModule,
+    TranslationModule,
     SweetAlert2Module.forChild(),
     SharedModule
   ]
