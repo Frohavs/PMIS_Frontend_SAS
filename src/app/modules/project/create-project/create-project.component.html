@@ -107,7 +107,7 @@
           <label class="col-lg-4 col-form-label fw-bold fs-6"><span
               class="required">{{"PROJECTS.contractor" | translate}}</span></label>
           <div class="col-lg-8 fv-row">
-            <select class="form-select form-select-solid form-select-lg fw-bold" name="contractor" formControlName="{{'PROJECTS.project_name' | translate}}">
+            <select class="form-select form-select-solid form-select-lg fw-bold" name="contractor" formControlName="contractor">
               <option value="" disabled>{{"TRANSLATOR.SELECTION" | translate}}</option>
               <!-- <ng-container *ngFor="let company of companies">
               </ng-container> -->
@@ -122,9 +122,9 @@
 
         <div class="row mb-6">
           <label class="col-lg-4 col-form-label fw-bold fs-6"><span
-              class="required">{{"PROJECTS.contractor" | translate}}</span></label>
+              class="required">{{"PROJECTS.Consultant" | translate}}</span></label>
           <div class="col-lg-8 fv-row">
-            <select class="form-select form-select-solid form-select-lg fw-bold" name="Consultant" formControlName="{{'PROJECTS.project_name' | translate}}">
+            <select class="form-select form-select-solid form-select-lg fw-bold" name="Consultant" formControlName="Consultant">
               <option value="" disabled>{{"TRANSLATOR.SELECTION" | translate}}</option>
               <!-- <ng-container *ngFor="let company of companies">
               </ng-container> -->
@@ -187,7 +187,7 @@
         <div class="row mb-6">
           <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="required">{{"PROJECTS.st_date" | translate}}</span></label>
           <div class="col-lg-8 fv-row">
-            <input type="date" class="form-control form-control-lg form-control-solid text-start" placeholder="Start Date"
+            <input type="date" class="form-control form-control-lg form-control-solid text-start" placeholder="{{'PROJECTS.st_date' | translate}}"
               name="st_date" formControlName="st_date" />
               <div
               *ngIf="addProjectForm?.get('st_date')?.invalid && (addProjectForm?.get('st_date')?.dirty || addProjectForm?.get('st_date')?.touched)"
@@ -198,9 +198,9 @@
         </div>
 
         <div class="row mb-6">
-          <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="required">Original Duration(Days)</span></label>
+          <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="required">{{"PROJECTS.duration" | translate}}</span></label>
           <div class="col-lg-8 fv-row">
-            <input type="number" class="form-control form-control-lg form-control-solid text-start" placeholder="Duration"
+            <input type="number" class="form-control form-control-lg form-control-solid text-start" placeholder="{{'PROJECTS.duration' | translate}}"
               name="duration" formControlName="duration" />
               <div
               *ngIf="addProjectForm?.get('duration')?.invalid && (addProjectForm?.get('duration')?.dirty || addProjectForm?.get('duration')?.touched)"
@@ -211,9 +211,9 @@
         </div>
 
         <div class="row mb-6">
-          <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="required">Program Name</span></label>
+          <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="required">{{"PROJECTS.program_name" | translate}}</span></label>
           <div class="col-lg-8 fv-row">
-            <input type="text" class="form-control form-control-lg form-control-solid text-start" placeholder="Program name"
+            <input type="text" class="form-control form-control-lg form-control-solid text-start" placeholder="{{'PROJECTS.program_name' | translate}}"
               name="program_name" formControlName="program_name" />
               <div
               *ngIf="addProjectForm?.get('program_name')?.invalid && (addProjectForm?.get('program_name')?.dirty || addProjectForm?.get('program_name')?.touched)"
@@ -224,9 +224,9 @@
         </div>
 
         <div class="row mb-6">
-          <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="required">Contract No</span></label>
+          <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="required">{{"PROJECTS.contract_no" | translate}}</span></label>
           <div class="col-lg-8 fv-row">
-            <input type="number" class="form-control form-control-lg form-control-solid text-start" placeholder="Program name"
+            <input type="number" class="form-control form-control-lg form-control-solid text-start" placeholder="{{'PROJECTS.contract_no' | translate}}"
               name="contract_no" formControlName="contract_no" />
               <div
               *ngIf="addProjectForm?.get('contract_no')?.invalid && (addProjectForm?.get('contract_no')?.dirty || addProjectForm?.get('contract_no')?.touched)"
@@ -237,9 +237,9 @@
         </div>
 
         <div class="row mb-6">
-          <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="required">Contract Date</span></label>
+          <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="required">{{"PROJECTS.contract_date" | translate}}</span></label>
           <div class="col-lg-8 fv-row">
-            <input type="date" class="form-control form-control-lg form-control-solid text-start" placeholder="Program name"
+            <input type="date" class="form-control form-control-lg form-control-solid text-start" placeholder="{{'PROJECTS.contract_date' | translate}}"
             name="contract_date" formControlName="contract_date" />
             <div
             *ngIf="addProjectForm?.get('contract_date')?.invalid && (addProjectForm?.get('contract_date')?.dirty || addProjectForm?.get('contract_date')?.touched)"
@@ -250,9 +250,9 @@
       </div>
 
       <div class="row mb-6">
-        <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="required">Etimad Number</span></label>
+        <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="required">{{"PROJECTS.etimad_number" | translate}}</span></label>
         <div class="col-lg-8 fv-row">
-          <input type="number" class="form-control form-control-lg form-control-solid text-start" placeholder="Etimad Number"
+          <input type="number" class="form-control form-control-lg form-control-solid text-start" placeholder="{{'PROJECTS.etimad_number' | translate}}"
             name="etimad_number" formControlName="etimad_number" />
             <div
             *ngIf="addProjectForm?.get('etimad_number')?.invalid && (addProjectForm?.get('etimad_number')?.dirty || addProjectForm?.get('etimad_number')?.touched)"
@@ -263,9 +263,9 @@
       </div>
 
       <div class="row mb-6">
-        <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="required">Project Value</span></label>
+        <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="required">{{"PROJECTS.project_value" | translate}}</span></label>
         <div class="col-lg-8 fv-row">
-          <input type="number" class="form-control form-control-lg form-control-solid text-start" placeholder="project_value"
+          <input type="number" class="form-control form-control-lg form-control-solid text-start" placeholder="{{'PROJECTS.project_value' | translate}}"
             name="project_value" formControlName="project_value" />
             <div
             *ngIf="addProjectForm?.get('project_value')?.invalid && (addProjectForm?.get('project_value')?.dirty || addProjectForm?.get('project_value')?.touched)"
@@ -277,7 +277,7 @@
 
       <div class="row mb-6">
         <label class="col-lg-4 col-form-label fw-bold fs-6"><span
-            class="required">Amana Manager</span></label>
+            class="required">{{"PROJECTS.amana_manager" | translate}}</span></label>
         <div class="col-lg-8 fv-row">
           <select class="form-select form-select-solid form-select-lg fw-bold" name="amana_manager" formControlName="amana_manager">
             <option value="" disabled>{{"TRANSLATOR.SELECTION" | translate}}</option>
@@ -295,7 +295,7 @@
       </div>
       <div class="card-footer d-flex justify-content-end py-6 px-9">
         <button type="button" class="btn btn-primary" [disabled]="isLoading" (click)="saveProject()">
-          <ng-container *ngIf="!isLoading">Save Changes</ng-container>
+          <ng-container *ngIf="!isLoading">{{"TRANSLATOR.SAVE_CHANGES" | translate}}</ng-container>
           <ng-container *ngIf="isLoading">
             <span clas="indicator-progress" [style.display]="'block'">
               Please wait...{{ " " }}

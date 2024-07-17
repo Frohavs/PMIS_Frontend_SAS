@@ -95,7 +95,7 @@
       </div>
       <div class="card-footer d-flex justify-content-end py-6 px-9">
         <button type="button" class="btn btn-primary" [disabled]="isLoading" (click)="saveUser()">
-          <ng-container *ngIf="!isLoading">Save Changes</ng-container>
+          <ng-container *ngIf="!isLoading">{{"TRANSLATOR.SAVE_CHANGES" | translate}}</ng-container>
           <ng-container *ngIf="isLoading">
             <span clas="indicator-progress" [style.display]="'block'">
               Please wait...{{ " " }}

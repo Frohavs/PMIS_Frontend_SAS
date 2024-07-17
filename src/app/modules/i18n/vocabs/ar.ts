@@ -4,6 +4,7 @@ export const locale = {
   data: {
     TRANSLATOR: {
       SELECT: 'اختر لغتك',
+      SAVE_CHANGES: 'حفظ التغييرات',
       SELECTION: 'اختار...'
     },
     MENU: {
@@ -71,6 +72,13 @@ export const locale = {
       program_type: 'نوع البرنامج',
       Door: 'نوع الميزانية',
       st_date: 'تاريخ بدء المشروع',
+      duration: 'مدة العقد الأصلية(يوم)',
+      program_name: 'اسم البرنامج',
+      contract_date: 'تاريخ العقد',
+      etimad_number: 'الرقم المرجعي للعقد',
+      project_value: 'القيمة الأصلية للعقد',
+      amana_manager: 'مدير المشروع - الأمانة',
+
       EN_NAME: 'الأسم بالأنجليزية',
       Status: 'الحالة',
     },

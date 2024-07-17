@@ -4,7 +4,8 @@ export const locale = {
   data: {
     TRANSLATOR: {
       SELECT: 'Select your language',
-      SELECTION: 'Select...'
+      SAVE_CHANGES: 'Save Changes',
+      SELECTION: 'Select...',
     },
     MENU: {
       NEW: 'new',
@@ -71,6 +72,12 @@ export const locale = {
       program_type: 'Program Type',
       Door: 'Door',
       st_date: 'Execution Start Date',
+      duration: 'Original Duration(Days)',
+      program_name: 'Program Name',
+      contract_date: 'Contract Date',
+      etimad_number: 'Etimad Number',
+      project_value: 'Project Value',
+      amana_manager: 'Amana Manager',
       EN_NAME: 'English Name',
       Status: 'Status',
     },
