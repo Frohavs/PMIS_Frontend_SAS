@@ -1,9 +1,9 @@
 <div class="card mb-5 mb-xl-10">
-  <div class="card-header border-0 cursor-pointer" role="button" data-bs-toggle="collapse"
-    data-bs-target="#kt_add_user" aria-expanded="true" aria-controls="kt_add_user">
+  <div class="card-header border-0 cursor-pointer" role="button" data-bs-toggle="collapse" data-bs-target="#kt_add_user"
+    aria-expanded="true" aria-controls="kt_add_user">
     <div class="card-title m-0">
       <h3 class="fw-bolder m-0" *ngIf="!userId">{{"PROJECTS.Add_Project" | translate}}</h3>
-        <h3 class="fw-bolder m-0" *ngIf="userId">{{"PROJECTS.Edit_Project" | translate}}</h3>
+      <h3 class="fw-bolder m-0" *ngIf="userId">{{"PROJECTS.Edit_Project" | translate}}</h3>
     </div>
     <div class="card-toolbar">
       <a (click)="back()" class="btn btn-sm btn-danger d-flex">
@@ -20,7 +20,8 @@
           <label class="col-lg-4 col-form-label fw-bold fs-6"><span
               class="required">{{"PROJECTS.project_stage" | translate}}</span></label>
           <div class="col-lg-8 fv-row">
-            <select class="form-select form-select-solid form-select-lg fw-bold" name="project_stage" formControlName="project_stage">
+            <select class="form-select form-select-solid form-select-lg fw-bold" name="project_stage"
+              formControlName="project_stage">
               <option value="" disabled>{{"TRANSLATOR.SELECTION" | translate}}</option>
               <option [value]="'test'">on going</option>
               <option [value]="'test'">prospective</option>
@@ -39,7 +40,8 @@
           <label class="col-lg-4 col-form-label fw-bold fs-6"><span
               class="required">{{"PROJECTS.Classification" | translate}}</span></label>
           <div class="col-lg-8 fv-row">
-            <select class="form-select form-select-solid form-select-lg fw-bold" name="classification" formControlName="classification">
+            <select class="form-select form-select-solid form-select-lg fw-bold" name="classification"
+              formControlName="classification">
               <option value="" disabled>{{"TRANSLATOR.SELECTION" | translate}}</option>
               <option [value]="'test'">Study and Design</option>
               <option [value]="'test'">Supervisor</option>
@@ -60,7 +62,8 @@
           <label class="col-lg-4 col-form-label fw-bold fs-6"><span
               class="required">{{"PROJECTS.Sector" | translate}}</span></label>
           <div class="col-lg-8 fv-row">
-            <select class="form-select form-select-solid form-select-lg fw-bold" name="project_sector" formControlName="project_sector">
+            <select class="form-select form-select-solid form-select-lg fw-bold" name="project_sector"
+              formControlName="project_sector">
               <option value="" disabled>{{"TRANSLATOR.SELECTION" | translate}}</option>
               <option [value]="'test'">Study and Design</option>
               <option [value]="'test'">Supervisor</option>
@@ -78,24 +81,68 @@
         </div>
 
         <div class="row mb-6">
-          <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="required">{{"PROJECTS.project_name" | translate}}</span></label>
+          <label class="col-lg-4 col-form-label fw-bold fs-6"><span
+              class="required">{{"PROJECTS.project_name" | translate}}</span></label>
           <div class="col-lg-8 fv-row">
-            <input type="text" class="form-control form-control-lg form-control-solid text-start" placeholder="{{'PROJECTS.project_name' | translate}}"
-              name="project_name" formControlName="project_name" />
-              <div
+            <input type="text" class="form-control form-control-lg form-control-solid text-start"
+              placeholder="{{'PROJECTS.project_name' | translate}}" name="project_name"
+              formControlName="project_name" />
+            <div
               *ngIf="addProjectForm?.get('project_name')?.invalid && (addProjectForm?.get('project_name')?.dirty || addProjectForm?.get('project_name')?.touched)"
               class="fv-plugins-message-container">
               <div class="fv-help-block">project name is required</div>
             </div>
           </div>
         </div>
+        <div class="row mb-6">
+          <label class="col-lg-4 col-form-label fw-bold fs-6"><span
+              class="required">{{"PROJECTS.project_location" | translate}}</span></label>
+          <div class="col-lg-8 fv-row d-flex justify-content-between">
+            <div style="flex: 0.45;">
+              <select class="form-select form-select-solid form-select-lg fw-bold" name="project_sector"
+                formControlName="project_sector">
+                <option value="" disabled>{{"PROJECTS.Municipality" | translate}}</option>
+                <option [value]="'test'">Study and Design</option>
+                <option [value]="'test'">Supervisor</option>
+                <option [value]="'test'">Excuse</option>
+                <option [value]="'test'">Consultant service</option>
+                <!-- <ng-container *ngFor="let company of companies">
+              </ng-container> -->
+              </select>
+              <div
+                *ngIf="addProjectForm?.get('project_sector')?.invalid && (addProjectForm?.get('project_sector')?.dirty || addProjectForm?.get('project_sector')?.touched)"
+                class="fv-plugins-message-container">
+                <div class="fv-help-block">sector is required</div>
+              </div>
+            </div>
+            <div style="flex: 0.45;">
+              <select class="form-select form-select-solid form-select-lg fw-bold" name="project_sector"
+                formControlName="project_sector">
+                <option value="" disabled>{{"PROJECTS.District" | translate}}</option>
+                <option [value]="'test'">Study and Design</option>
+                <option [value]="'test'">Supervisor</option>
+                <option [value]="'test'">Excuse</option>
+                <option [value]="'test'">Consultant service</option>
+                <!-- <ng-container *ngFor="let company of companies">
+              </ng-container> -->
+              </select>
+              <div
+                *ngIf="addProjectForm?.get('project_sector')?.invalid && (addProjectForm?.get('project_sector')?.dirty || addProjectForm?.get('project_sector')?.touched)"
+                class="fv-plugins-message-container">
+                <div class="fv-help-block">sector is required</div>
+              </div>
+            </div>
+          </div>
+        </div>
 
         <div class="row mb-6">
-          <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="required">{{"PROJECTS.project_nameEn" | translate}}</span></label>
+          <label class="col-lg-4 col-form-label fw-bold fs-6"><span
+              class="required">{{"PROJECTS.project_nameEn" | translate}}</span></label>
           <div class="col-lg-8 fv-row">
-            <input type="text" class="form-control form-control-lg form-control-solid text-start" placeholder="{{'PROJECTS.project_nameEn' | translate}}"
-              name="project_nameEn" formControlName="project_nameEn" />
-              <div
+            <input type="text" class="form-control form-control-lg form-control-solid text-start"
+              placeholder="{{'PROJECTS.project_nameEn' | translate}}" name="project_nameEn"
+              formControlName="project_nameEn" />
+            <div
               *ngIf="addProjectForm?.get('project_nameEn')?.invalid && (addProjectForm?.get('project_nameEn')?.dirty || addProjectForm?.get('project_nameEn')?.touched)"
               class="fv-plugins-message-container">
               <div class="fv-help-block">english name is required</div>
@@ -107,7 +154,8 @@
           <label class="col-lg-4 col-form-label fw-bold fs-6"><span
               class="required">{{"PROJECTS.contractor" | translate}}</span></label>
           <div class="col-lg-8 fv-row">
-            <select class="form-select form-select-solid form-select-lg fw-bold" name="contractor" formControlName="contractor">
+            <select class="form-select form-select-solid form-select-lg fw-bold" name="contractor"
+              formControlName="contractor">
               <option value="" disabled>{{"TRANSLATOR.SELECTION" | translate}}</option>
               <!-- <ng-container *ngFor="let company of companies">
               </ng-container> -->
@@ -124,7 +172,8 @@
           <label class="col-lg-4 col-form-label fw-bold fs-6"><span
               class="required">{{"PROJECTS.Consultant" | translate}}</span></label>
           <div class="col-lg-8 fv-row">
-            <select class="form-select form-select-solid form-select-lg fw-bold" name="Consultant" formControlName="Consultant">
+            <select class="form-select form-select-solid form-select-lg fw-bold" name="Consultant"
+              formControlName="Consultant">
               <option value="" disabled>{{"TRANSLATOR.SELECTION" | translate}}</option>
               <!-- <ng-container *ngFor="let company of companies">
               </ng-container> -->
@@ -137,27 +186,30 @@
           </div>
         </div>
 
-        <div class="row mb-6">
-          <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="required">{{'PROJECTS.program_number' | translate}}</span></label>
+        <!-- <div class="row mb-6">
+          <label class="col-lg-4 col-form-label fw-bold fs-6"><span
+              class="required">{{'PROJECTS.program_number' | translate}}</span></label>
           <div class="col-lg-8 fv-row">
-            <input type="number" class="form-control form-control-lg form-control-solid text-start" placeholder="{{'PROJECTS.project_name' | translate}}"
-              name="program_number" formControlName="program_number" />
-              <div
+            <input type="number" class="form-control form-control-lg form-control-solid text-start"
+              placeholder="{{'PROJECTS.program_number' | translate}}" name="program_number"
+              formControlName="program_number" />
+            <div
               *ngIf="addProjectForm?.get('program_number')?.invalid && (addProjectForm?.get('program_number')?.dirty || addProjectForm?.get('program_number')?.touched)"
               class="fv-plugins-message-container">
               <div class="fv-help-block">project number is required</div>
             </div>
           </div>
-        </div>
+        </div> -->
 
-        <div class="row mb-6">
+        <!-- <div class="row mb-6">
           <label class="col-lg-4 col-form-label fw-bold fs-6"><span
               class="required">{{'PROJECTS.program_type' | translate}}</span></label>
           <div class="col-lg-8 fv-row">
-            <select class="form-select form-select-solid form-select-lg fw-bold" name="program_type" formControlName="program_type">
+            <select class="form-select form-select-solid form-select-lg fw-bold" name="program_type"
+              formControlName="program_type">
               <option value="" disabled>{{"TRANSLATOR.SELECTION" | translate}}</option>
-              <!-- <ng-container *ngFor="let company of companies">
-              </ng-container> -->
+              <ng-container>
+              </ng-container>
             </select>
             <div
               *ngIf="addProjectForm?.get('program_type')?.invalid && (addProjectForm?.get('program_type')?.dirty || addProjectForm?.get('program_type')?.touched)"
@@ -165,16 +217,16 @@
               <div class="fv-help-block">program type is required</div>
             </div>
           </div>
-        </div>
+        </div> -->
 
-        <div class="row mb-6">
+        <!-- <div class="row mb-6">
           <label class="col-lg-4 col-form-label fw-bold fs-6"><span
               class="required">{{"PROJECTS.Door" | translate}}</span></label>
           <div class="col-lg-8 fv-row">
             <select class="form-select form-select-solid form-select-lg fw-bold" name="door" formControlName="door">
               <option value="" disabled>{{"TRANSLATOR.SELECTION" | translate}}</option>
-              <!-- <ng-container *ngFor="let company of companies">
-              </ng-container> -->
+              <ng-container *ngFor="let company of companies">
+              </ng-container>
             </select>
             <div
               *ngIf="addProjectForm?.get('door')?.invalid && (addProjectForm?.get('door')?.dirty || addProjectForm?.get('door')?.touched)"
@@ -182,14 +234,15 @@
               <div class="fv-help-block">door is required</div>
             </div>
           </div>
-        </div>
+        </div> -->
 
         <div class="row mb-6">
-          <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="required">{{"PROJECTS.st_date" | translate}}</span></label>
+          <label class="col-lg-4 col-form-label fw-bold fs-6"><span
+              class="required">{{"PROJECTS.st_date" | translate}}</span></label>
           <div class="col-lg-8 fv-row">
-            <input type="date" class="form-control form-control-lg form-control-solid text-start" placeholder="{{'PROJECTS.st_date' | translate}}"
-              name="st_date" formControlName="st_date" />
-              <div
+            <input type="date" class="form-control form-control-lg form-control-solid text-start"
+              placeholder="{{'PROJECTS.st_date' | translate}}" name="st_date" formControlName="st_date" />
+            <div
               *ngIf="addProjectForm?.get('st_date')?.invalid && (addProjectForm?.get('st_date')?.dirty || addProjectForm?.get('st_date')?.touched)"
               class="fv-plugins-message-container">
               <div class="fv-help-block">Execution Start Date required</div>
@@ -198,11 +251,12 @@
         </div>
 
         <div class="row mb-6">
-          <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="required">{{"PROJECTS.duration" | translate}}</span></label>
+          <label class="col-lg-4 col-form-label fw-bold fs-6"><span
+              class="required">{{"PROJECTS.duration" | translate}}</span></label>
           <div class="col-lg-8 fv-row">
-            <input type="number" class="form-control form-control-lg form-control-solid text-start" placeholder="{{'PROJECTS.duration' | translate}}"
-              name="duration" formControlName="duration" />
-              <div
+            <input type="number" class="form-control form-control-lg form-control-solid text-start"
+              placeholder="{{'PROJECTS.duration' | translate}}" name="duration" formControlName="duration" />
+            <div
               *ngIf="addProjectForm?.get('duration')?.invalid && (addProjectForm?.get('duration')?.dirty || addProjectForm?.get('duration')?.touched)"
               class="fv-plugins-message-container">
               <div class="fv-help-block">duration is required</div>
@@ -211,11 +265,27 @@
         </div>
 
         <div class="row mb-6">
-          <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="required">{{"PROJECTS.program_name" | translate}}</span></label>
+          <label class="col-lg-4 col-form-label fw-bold fs-6"><span
+              class="required">{{"PROJECTS.en_date" | translate}}</span></label>
           <div class="col-lg-8 fv-row">
-            <input type="text" class="form-control form-control-lg form-control-solid text-start" placeholder="{{'PROJECTS.program_name' | translate}}"
-              name="program_name" formControlName="program_name" />
-              <div
+            <input type="date" class="form-control form-control-lg form-control-solid text-start"
+              placeholder="{{'PROJECTS.en_date' | translate}}" name="en_date" formControlName="en_date" readonly  />
+            <div
+              *ngIf="addProjectForm?.get('en_date')?.invalid && (addProjectForm?.get('en_date')?.dirty || addProjectForm?.get('en_date')?.touched)"
+              class="fv-plugins-message-container">
+              <div class="fv-help-block">Execution Start Date required</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row mb-6">
+          <label class="col-lg-4 col-form-label fw-bold fs-6"><span
+              class="required">{{"PROJECTS.program_name" | translate}}</span></label>
+          <div class="col-lg-8 fv-row">
+            <input type="text" class="form-control form-control-lg form-control-solid text-start"
+              placeholder="{{'PROJECTS.program_name' | translate}}" name="program_name"
+              formControlName="program_name" />
+            <div
               *ngIf="addProjectForm?.get('program_name')?.invalid && (addProjectForm?.get('program_name')?.dirty || addProjectForm?.get('program_name')?.touched)"
               class="fv-plugins-message-container">
               <div class="fv-help-block">english name is required</div>
@@ -224,11 +294,12 @@
         </div>
 
         <div class="row mb-6">
-          <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="required">{{"PROJECTS.contract_no" | translate}}</span></label>
+          <label class="col-lg-4 col-form-label fw-bold fs-6"><span
+              class="required">{{"PROJECTS.contract_no" | translate}}</span></label>
           <div class="col-lg-8 fv-row">
-            <input type="number" class="form-control form-control-lg form-control-solid text-start" placeholder="{{'PROJECTS.contract_no' | translate}}"
-              name="contract_no" formControlName="contract_no" />
-              <div
+            <input type="number" class="form-control form-control-lg form-control-solid text-start"
+              placeholder="{{'PROJECTS.contract_no' | translate}}" name="contract_no" formControlName="contract_no" />
+            <div
               *ngIf="addProjectForm?.get('contract_no')?.invalid && (addProjectForm?.get('contract_no')?.dirty || addProjectForm?.get('contract_no')?.touched)"
               class="fv-plugins-message-container">
               <div class="fv-help-block">english name is required</div>
@@ -237,60 +308,67 @@
         </div>
 
         <div class="row mb-6">
-          <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="required">{{"PROJECTS.contract_date" | translate}}</span></label>
+          <label class="col-lg-4 col-form-label fw-bold fs-6"><span
+              class="required">{{"PROJECTS.contract_date" | translate}}</span></label>
           <div class="col-lg-8 fv-row">
-            <input type="date" class="form-control form-control-lg form-control-solid text-start" placeholder="{{'PROJECTS.contract_date' | translate}}"
-            name="contract_date" formControlName="contract_date" />
+            <input type="date" class="form-control form-control-lg form-control-solid text-start"
+              placeholder="{{'PROJECTS.contract_date' | translate}}" name="contract_date"
+              formControlName="contract_date" />
             <div
-            *ngIf="addProjectForm?.get('contract_date')?.invalid && (addProjectForm?.get('contract_date')?.dirty || addProjectForm?.get('contract_date')?.touched)"
-            class="fv-plugins-message-container">
-            <div class="fv-help-block">english name is required</div>
+              *ngIf="addProjectForm?.get('contract_date')?.invalid && (addProjectForm?.get('contract_date')?.dirty || addProjectForm?.get('contract_date')?.touched)"
+              class="fv-plugins-message-container">
+              <div class="fv-help-block">english name is required</div>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div class="row mb-6">
-        <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="required">{{"PROJECTS.etimad_number" | translate}}</span></label>
-        <div class="col-lg-8 fv-row">
-          <input type="number" class="form-control form-control-lg form-control-solid text-start" placeholder="{{'PROJECTS.etimad_number' | translate}}"
-            name="etimad_number" formControlName="etimad_number" />
+        <div class="row mb-6">
+          <label class="col-lg-4 col-form-label fw-bold fs-6"><span
+              class="required">{{"PROJECTS.etimad_number" | translate}}</span></label>
+          <div class="col-lg-8 fv-row">
+            <input type="number" class="form-control form-control-lg form-control-solid text-start"
+              placeholder="{{'PROJECTS.etimad_number' | translate}}" name="etimad_number"
+              formControlName="etimad_number" />
             <div
-            *ngIf="addProjectForm?.get('etimad_number')?.invalid && (addProjectForm?.get('etimad_number')?.dirty || addProjectForm?.get('etimad_number')?.touched)"
-            class="fv-plugins-message-container">
-            <div class="fv-help-block">english name is required</div>
+              *ngIf="addProjectForm?.get('etimad_number')?.invalid && (addProjectForm?.get('etimad_number')?.dirty || addProjectForm?.get('etimad_number')?.touched)"
+              class="fv-plugins-message-container">
+              <div class="fv-help-block">english name is required</div>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div class="row mb-6">
-        <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="required">{{"PROJECTS.project_value" | translate}}</span></label>
-        <div class="col-lg-8 fv-row">
-          <input type="number" class="form-control form-control-lg form-control-solid text-start" placeholder="{{'PROJECTS.project_value' | translate}}"
-            name="project_value" formControlName="project_value" />
+        <div class="row mb-6">
+          <label class="col-lg-4 col-form-label fw-bold fs-6"><span
+              class="required">{{"PROJECTS.project_value" | translate}}</span></label>
+          <div class="col-lg-8 fv-row">
+            <input type="number" class="form-control form-control-lg form-control-solid text-start"
+              placeholder="{{'PROJECTS.project_value' | translate}}" name="project_value"
+              formControlName="project_value" />
             <div
-            *ngIf="addProjectForm?.get('project_value')?.invalid && (addProjectForm?.get('project_value')?.dirty || addProjectForm?.get('project_value')?.touched)"
-            class="fv-plugins-message-container">
-            <div class="fv-help-block">english name is required</div>
+              *ngIf="addProjectForm?.get('project_value')?.invalid && (addProjectForm?.get('project_value')?.dirty || addProjectForm?.get('project_value')?.touched)"
+              class="fv-plugins-message-container">
+              <div class="fv-help-block">english name is required</div>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div class="row mb-6">
-        <label class="col-lg-4 col-form-label fw-bold fs-6"><span
-            class="required">{{"PROJECTS.amana_manager" | translate}}</span></label>
-        <div class="col-lg-8 fv-row">
-          <select class="form-select form-select-solid form-select-lg fw-bold" name="amana_manager" formControlName="amana_manager">
-            <option value="" disabled>{{"TRANSLATOR.SELECTION" | translate}}</option>
-            <!-- <ng-container *ngFor="let company of companies">
+        <div class="row mb-6">
+          <label class="col-lg-4 col-form-label fw-bold fs-6"><span
+              class="required">{{"PROJECTS.amana_manager" | translate}}</span></label>
+          <div class="col-lg-8 fv-row">
+            <select class="form-select form-select-solid form-select-lg fw-bold" name="amana_manager"
+              formControlName="amana_manager">
+              <option value="" disabled>{{"TRANSLATOR.SELECTION" | translate}}</option>
+              <!-- <ng-container *ngFor="let company of companies">
             </ng-container> -->
-          </select>
-          <div
-            *ngIf="addProjectForm?.get('amana_manager')?.invalid && (addProjectForm?.get('amana_manager')?.dirty || addProjectForm?.get('amana_manager')?.touched)"
-            class="fv-plugins-message-container">
-            <div class="fv-help-block">manager is required</div>
+            </select>
+            <div
+              *ngIf="addProjectForm?.get('amana_manager')?.invalid && (addProjectForm?.get('amana_manager')?.dirty || addProjectForm?.get('amana_manager')?.touched)"
+              class="fv-plugins-message-container">
+              <div class="fv-help-block">manager is required</div>
+            </div>
           </div>
         </div>
-      </div>
 
       </div>
       <div class="card-footer d-flex justify-content-end py-6 px-9">
@@ -308,6 +386,6 @@
   </div>
 </div>
 
- <!-- modal -->
+<!-- modal -->
 <swal #noticeSwal [swalOptions]="swalOptions">
 </swal>

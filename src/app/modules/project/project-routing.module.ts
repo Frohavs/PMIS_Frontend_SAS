@@ -4,6 +4,7 @@ import { ProjectsComponent } from './projects.component';
 import { OverviewComponent } from './overview/overview.component';
 import { CreateProjectComponent } from './create-project/create-project.component';
 import { ProjectDetailsComponent } from './project-details/project-details.component';
+import { UpdateProjectInfoComponent } from './update-project-info/update-project-info.component';
 
 const routes: Routes = [
   {
@@ -25,6 +26,10 @@ const routes: Routes = [
       {
         path: ':id',
         component: ProjectDetailsComponent,
+      },
+      {
+        path: 'update-project-info/:id',
+        component: UpdateProjectInfoComponent,
       },
       { path: '', redirectTo: 'overview', pathMatch: 'full' },
       { path: '**', redirectTo: 'overview', pathMatch: 'full' },

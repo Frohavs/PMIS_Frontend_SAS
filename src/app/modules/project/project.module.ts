@@ -2,17 +2,17 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { ProjectRoutingModule } from './project-routing.module';
-import { WidgetsModule } from 'src/app/_metronic/partials';
+import { DropdownMenusModule, WidgetsModule } from 'src/app/_metronic/partials';
 import { SharedModule } from 'src/app/_metronic/shared/shared.module';
 import { TranslateModule } from '@ngx-translate/core';
 
+import { NgbNavModule, NgbDropdownModule, NgbCollapseModule, NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { ProjectsComponent } from './projects.component';
 import { OverviewComponent } from './overview/overview.component';
 import { CreateProjectComponent } from './create-project/create-project.component';
 import { ProjectDetailsComponent } from './project-details/project-details.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
-import { TranslationModule } from '../i18n';
 
 
 @NgModule({
@@ -28,7 +28,11 @@ import { TranslationModule } from '../i18n';
     ReactiveFormsModule,
     WidgetsModule,
     TranslateModule,
-    TranslationModule,
+    NgbNavModule,
+    NgbDropdownModule,
+    NgbCollapseModule,
+    NgbTooltipModule,
+    DropdownMenusModule,
     SweetAlert2Module.forChild(),
     SharedModule
   ]

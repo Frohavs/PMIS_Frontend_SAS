@@ -5,6 +5,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
 import { NewUserService } from 'src/app/services/new-user.service';
 import { SweetAlertOptions } from 'sweetalert2';
+import { PROJECT_OPTIONS } from './project-options';
 
 @Component({
   selector: 'app-overview',
@@ -15,6 +16,7 @@ export class OverviewComponent {
   Add_text: string;
   Search_text: string;
   dataList: any[] = []
+  projectOptions: any[] = PROJECT_OPTIONS;
 
   // modal configs
   isLoading = false;
@@ -44,7 +46,7 @@ export class OverviewComponent {
   }
 
   initializeProjectData() {
-    this.dataList = [{projectName: ''}];
+    this.dataList = [{ projectName: '' }];
     this.cdr.detectChanges();
     // this.newUserService.getAll().subscribe(res => {
 
@@ -92,6 +94,11 @@ export class OverviewComponent {
     });
   }
 
+  navigateTo(event: any) {
+    const route = event?.target.value;
+    this.router.navigateByUrl(route + `/${'123'}`)
+  }
+
   showAlert(swalOptions: SweetAlertOptions) {
     let style = swalOptions.icon?.toString() || 'success';
     if (swalOptions.icon === 'error') {
@@ -109,7 +116,6 @@ export class OverviewComponent {
   }
 
   checkAdmin(userName: string) {
-    console.log(userName);
     return userName === 'SuperAdmin' ? false : true;
 
   }

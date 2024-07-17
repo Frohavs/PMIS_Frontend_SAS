@@ -67,9 +67,9 @@ export class CreateProjectComponent {
       Contractor: ['', Validators.required],
       contractor: ['', Validators.required],
       Consultant: ['', Validators.required],
-      program_number: ['', Validators.required],
-      program_type: ['', Validators.required],
-      door: ['', Validators.required],
+      // program_number: ['', Validators.required],
+      // program_type: ['', Validators.required],
+      // door: ['', Validators.required],
       duration: ['', Validators.required],
       program_name: ['', Validators.required],
       contract_no: ['', Validators.required],
@@ -78,19 +78,15 @@ export class CreateProjectComponent {
       project_value: ['', Validators.required],
       amana_manager: ['', Validators.required],
       st_date: ['', Validators.required],
+      en_date: [{value: '', disabled: true}, Validators.required],
 
 
-      email: ['', Validators.required],
-      companyId: [null],
-      roleIds: [null],
     });
   }
   editUserForm(data: any) {
-    this.addProjectForm.patchValue({
-      email: data?.email,
-      companyId: data?.companyId,
-      roleIds: this.roles?.filter(role => role?.name === 'Manger')[0]?.name,
-    });
+    // this.addProjectForm.patchValue({
+
+    // });
   }
 
   getUserId() {
