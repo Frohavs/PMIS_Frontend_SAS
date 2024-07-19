@@ -1,5 +1,15 @@
 <div class="row g-5 g-xl-8 justify-content-between">
   <div class="col-xl-6">
+    <!-- begin::Alert-->
+    <ng-container *ngIf="updateInfo">
+      <div class="mb-10 bg-light-success p-8 rounded">
+        <div class="text-success fs-6">
+          You must click on final submit after updating basic Info to confirm the update
+        </div>
+      </div>
+    </ng-container>
+    <!-- end::Alert-->
+
     <div class="card mb-5 mb-xl-8">
       <!-- begin::Header -->
       <div class="card-header align-items-center border-0 mt-4">
@@ -157,7 +167,7 @@
           <div class="d-flex flex-row-fluid flex-wrap align-items-center justify-content-evenly">
             <div class=" me-2">
               <div class="card-toolbar">
-                <a class="btn btn-sm btn-light-success" (click)="navigateStaff()">
+                <a class="btn btn-sm btn-light-success" (click)="navigateUpdateStaff()">
                   Update Project staff
                 </a>
               </div>
@@ -173,7 +183,7 @@
 
             <div class=" me-2">
               <div class="card-toolbar">
-                <a class="btn btn-sm btn-success">
+                <a class="btn btn-sm btn-success" (click)="updateProjectInfo()">
                   Update Project info
                 </a>
               </div>
@@ -189,7 +199,7 @@
 
             <div class=" me-2">
               <div class="card-toolbar">
-                <a class="btn btn-sm btn-success">
+                <a class="btn btn-sm btn-success" (click)="navigateUpdateProgress()">
                   Update progress info
                 </a>
               </div>

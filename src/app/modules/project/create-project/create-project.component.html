@@ -1,6 +1,6 @@
 <div class="card mb-5 mb-xl-10">
-  <div class="card-header border-0 cursor-pointer" role="button" data-bs-toggle="collapse" data-bs-target="#kt_add_user"
-    aria-expanded="true" aria-controls="kt_add_user">
+  <div class="card-header border-0 cursor-pointer" role="button" data-bs-toggle="collapse" data-bs-target="#kt_create_project"
+    aria-expanded="true" aria-controls="kt_create_project">
     <div class="card-title m-0">
       <h3 class="fw-bolder m-0" *ngIf="!userId">{{"PROJECTS.Add_Project" | translate}}</h3>
       <h3 class="fw-bolder m-0" *ngIf="userId">{{"PROJECTS.Edit_Project" | translate}}</h3>
@@ -12,7 +12,7 @@
       </a>
     </div>
   </div>
-  <div id="kt_add_user" class="collapse show">
+  <div id="kt_create_project" class="collapse show">
     <form [formGroup]="addProjectForm" class="form">
       <div class="card-body border-top p-9">
 

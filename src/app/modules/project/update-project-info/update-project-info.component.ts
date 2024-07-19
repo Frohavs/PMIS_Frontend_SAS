@@ -8,13 +8,23 @@ import { Router } from '@angular/router';
 })
 export class UpdateProjectInfoComponent implements OnInit {
 
+  updateInfo: boolean;
+
   constructor(private router: Router) { }
 
   ngOnInit(): void {
   }
 
 
-  navigateStaff() {
-    this.router.navigateByUrl('projects/update-project-staff' + `/${'123'}`)
+  navigateUpdateStaff() {
+    this.router.navigateByUrl('projects/update-project-staff' + `/${'123'}`);
+  }
+
+  updateProjectInfo() {
+    this.updateInfo = !this.updateInfo;
+  }
+
+  navigateUpdateProgress() {
+    this.router.navigateByUrl('projects/update-progress-info' + `/${'123'}`);
   }
 }
