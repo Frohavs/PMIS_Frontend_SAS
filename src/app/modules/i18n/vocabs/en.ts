@@ -21,6 +21,7 @@ export const locale = {
       Users_Management: 'User Management',
       USERS: 'Users',
       ROLES: 'Roles',
+      VENDORS: 'Vendors',
       Tracking: 'Tracking',
     },
     COMPANY: {

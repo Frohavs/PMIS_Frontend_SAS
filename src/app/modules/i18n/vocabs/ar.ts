@@ -21,6 +21,7 @@ export const locale = {
       Users_Management: 'إدارة المستخدمين',
       USERS: 'المستخدمين',
       ROLES: 'الأدوار',
+      VENDORS: 'البائعون',
       Tracking: 'التعقب',
     },
     COMPANY: {
