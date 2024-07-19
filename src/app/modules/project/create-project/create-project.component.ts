@@ -79,8 +79,6 @@ export class CreateProjectComponent {
       amana_manager: ['', Validators.required],
       st_date: ['', Validators.required],
       en_date: [{value: '', disabled: true}, Validators.required],
-
-
     });
   }
   editUserForm(data: any) {

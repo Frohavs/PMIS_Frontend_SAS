@@ -5,6 +5,7 @@ import { OverviewComponent } from './overview/overview.component';
 import { CreateProjectComponent } from './create-project/create-project.component';
 import { ProjectDetailsComponent } from './project-details/project-details.component';
 import { UpdateProjectInfoComponent } from './update-project-info/update-project-info.component';
+import { UpdateProjectStaffComponent } from './update-project-info/update-project-staff/update-project-staff.component';
 
 const routes: Routes = [
   {
@@ -31,6 +32,12 @@ const routes: Routes = [
         path: 'update-project-info/:id',
         component: UpdateProjectInfoComponent,
       },
+
+      {
+        path: 'update-project-staff/:id',
+        component: UpdateProjectStaffComponent,
+      },
+
       { path: '', redirectTo: 'overview', pathMatch: 'full' },
       { path: '**', redirectTo: 'overview', pathMatch: 'full' },
     ]

@@ -14,6 +14,7 @@ import { OverviewComponent } from './overview/overview.component';
 import { CreateProjectComponent } from './create-project/create-project.component';
 import { ProjectDetailsComponent } from './project-details/project-details.component';
 import { UpdateProjectInfoComponent } from './update-project-info/update-project-info.component';
+import { UpdateProjectStaffComponent } from './update-project-info/update-project-staff/update-project-staff.component';
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import { UpdateProjectInfoComponent } from './update-project-info/update-project
     OverviewComponent,
     CreateProjectComponent,
     ProjectDetailsComponent,
-    UpdateProjectInfoComponent
+    UpdateProjectInfoComponent,
+    UpdateProjectStaffComponent
   ],
   imports: [
     CommonModule,
