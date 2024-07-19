@@ -1,0 +1,173 @@
+<div class="row g-5 g-xl-8 justify-content-between">
+  <div class="col-xl-6">
+    <div class="card mb-5 mb-xl-8">
+      <!-- begin::Header -->
+      <div class="card-header align-items-center border-0 mt-4">
+        <h3 class="card-title align-items-start flex-column">
+          <span class="fw-bolder text-gray-900">Project Information</span>
+          <span class="text-muted mt-1 fw-bold fs-7">test</span>
+        </h3>
+      </div>
+      <!-- end::Header -->
+      <!-- begin::Body -->
+      <div class="card-body pt-3">
+        <!-- begin::Item -->
+        <div class="d-flex align-items-sm-center mb-7">
+
+          <!-- begin::Title -->
+          <div class="d-flex flex-row-fluid flex-wrap align-items-center">
+            <div class="w-50 me-2">
+              <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
+                Project name
+              </a>
+              <span class="text-muted fw-bold d-block pt-1">Design of Heat Cave Resort</span>
+            </div>
+            <div class="flex-grow-1 me-2">
+              <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
+                Contract Date
+              </a>
+              <span class="text-muted fw-bold d-block pt-1">2021-05-12</span>
+            </div>
+          </div>
+          <!-- end::Title -->
+        </div>
+        <!-- end::Item -->
+        <!-- begin::Item -->
+        <div class="d-flex align-items-sm-center mb-7">
+
+          <!-- begin::Title -->
+          <div class="d-flex flex-row-fluid flex-wrap align-items-center">
+            <div class="w-50 me-2">
+              <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
+                Contract No
+              </a>
+              <span class="text-muted fw-bold d-block pt-1">57</span>
+            </div>
+            <div class="flex-grow-1 me-2">
+              <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
+                Consultant
+              </a>
+              <span class="text-muted fw-bold d-block pt-1">SAUDCONSULT</span>
+            </div>
+          </div>
+          <!-- end::Title -->
+        </div>
+        <!-- end::Item -->
+        <!-- begin::Item -->
+        <div class="d-flex align-items-sm-center mb-7">
+
+          <!-- begin::Title -->
+          <div class="d-flex flex-row-fluid flex-wrap align-items-center">
+            <div class="w-50 me-2">
+              <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
+                Contractor
+              </a>
+              <span class="text-muted fw-bold d-block pt-1">N/A</span>
+            </div>
+            <div class="flex-grow-1 me-2">
+              <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
+                Finish date after extension
+              </a>
+              <span class="text-muted fw-bold d-block pt-1">2023-04-10</span>
+            </div>
+          </div>
+          <!-- end::Title -->
+        </div>
+        <!-- end::Item -->
+        <!-- begin::Item -->
+        <div class="d-flex align-items-sm-center">
+
+          <!-- begin::Title -->
+          <div class="d-flex flex-row-fluid flex-wrap align-items-center">
+            <div class="w-50 me-2">
+              <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
+                Amana manager
+              </a>
+              <span class="text-muted fw-bold d-block pt-1">manager</span>
+            </div>
+
+          </div>
+          <!-- end::Title -->
+        </div>
+        <!-- end::Item -->
+      </div>
+      <!-- end::Body -->
+    </div>
+  </div>
+
+  <div class="col-xl-6">
+    <div class="card mb-5 mb-xl-8">
+      <!-- begin::Header -->
+      <div class="card-header align-items-center border-0 mt-4">
+        <h3 class="card-title align-items-start flex-column">
+          <span class="fw-bolder text-gray-900">Project Stage Update</span>
+          <!-- <span class="text-muted mt-1 fw-bold fs-7">test</span> -->
+        </h3>
+        <div class="card-toolbar">
+          <!-- begin::Menu -->
+          <button type="button" class="btn btn-sm btn-icon btn-color-primary btn-active-light-primary"
+            data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end" data-kt-menu-flip="top-end">
+          </button>
+          <!-- end::Menu -->
+        </div>
+      </div>
+      <!-- end::Header -->
+      <!-- begin::Body -->
+      <div class="card-body pt-3">
+
+        <form [formGroup]="UpdateStageForm" class="form">
+          <div class="card-body border-top p-9">
+
+            <div class="mb-3">
+              <div class="d-flex flex-row-fluid flex-wrap align-items-center">
+                <div class="me-2">
+                  <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
+                    Program Name
+                  </a>
+                  <span class="text-muted fw-bold d-block pt-1">
+                    انشاء مكتب لادارة المشاريع و الأصول و المرافق بالامانة (PMO)
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <label class="col-lg-8 col-form-label fw-bold fs-6"><span class="required">New Project
+                  Stage</span></label>
+              <div class="col-lg-12 fv-row">
+                <select class="form-select form-select-solid form-select-lg fw-bold" name="new_project_stage"
+                  formControlName="new_project_stage">
+                  <option value="" disabled>{{"TRANSLATOR.SELECTION" | translate}}</option>
+                  <option value="on_going">on going</option>
+                  <option value="closed">closed</option>
+                  <!-- <ng-container *ngFor="let company of companies">
+                  </ng-container> -->
+                </select>
+                <div
+                  *ngIf="UpdateStageForm?.get('new_project_stage')?.invalid && (UpdateStageForm?.get('new_project_stage')?.dirty || UpdateStageForm?.get('new_project_stage')?.touched)"
+                  class="fv-plugins-message-container">
+                  <div class="fv-help-block">Stage is required</div>
+                </div>
+              </div>
+            </div>
+
+
+          </div>
+          <div class="card-footer d-flex justify-content-end py-6 px-9">
+            <button type="button" class="btn btn-success w-100" [disabled]="isLoading" (click)="saveChanges()">
+              <ng-container *ngIf="!isLoading">Confirm</ng-container>
+              <ng-container *ngIf="isLoading">
+                <span clas="indicator-progress" [style.display]="'block'">
+                  Please wait...{{ " " }}
+                  <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                </span>
+              </ng-container>
+            </button>
+          </div>
+        </form>
+
+      </div>
+      <!-- end::Body -->
+    </div>
+  </div>
+</div>

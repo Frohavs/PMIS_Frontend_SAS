@@ -27,4 +27,8 @@ export class UpdateProjectInfoComponent implements OnInit {
   navigateUpdateProgress() {
     this.router.navigateByUrl('projects/update-progress-info' + `/${'123'}`);
   }
+
+  navigateProjectStage() {
+    this.router.navigateByUrl('projects/project-stage-update' + `/${123}`);
+  }
 }

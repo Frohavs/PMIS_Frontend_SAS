@@ -16,6 +16,7 @@ import { ProjectDetailsComponent } from './project-details/project-details.compo
 import { UpdateProjectInfoComponent } from './update-project-info/update-project-info.component';
 import { UpdateProjectStaffComponent } from './update-project-info/update-project-staff/update-project-staff.component';
 import { UpdateProgressInfoComponent } from './update-project-info/update-progress-info/update-progress-info.component';
+import { ProjectStageUpdateComponent } from './update-project-info/project-stage-update/project-stage-update.component';
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import { UpdateProgressInfoComponent } from './update-project-info/update-progre
     ProjectDetailsComponent,
     UpdateProjectInfoComponent,
     UpdateProjectStaffComponent,
-    UpdateProgressInfoComponent
+    UpdateProgressInfoComponent,
+    ProjectStageUpdateComponent
   ],
   imports: [
     CommonModule,

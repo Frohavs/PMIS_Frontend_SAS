@@ -7,6 +7,7 @@ import { ProjectDetailsComponent } from './project-details/project-details.compo
 import { UpdateProjectInfoComponent } from './update-project-info/update-project-info.component';
 import { UpdateProjectStaffComponent } from './update-project-info/update-project-staff/update-project-staff.component';
 import { UpdateProgressInfoComponent } from './update-project-info/update-progress-info/update-progress-info.component';
+import { ProjectStageUpdateComponent } from './update-project-info/project-stage-update/project-stage-update.component';
 
 const routes: Routes = [
   {
@@ -41,7 +42,10 @@ const routes: Routes = [
         path: 'update-progress-info/:id',
         component: UpdateProgressInfoComponent,
       },
-
+      {
+        path: 'project-stage-update/:id',
+        component: ProjectStageUpdateComponent,
+      },
       { path: '', redirectTo: 'overview', pathMatch: 'full' },
       { path: '**', redirectTo: 'overview', pathMatch: 'full' },
     ]
