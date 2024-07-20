@@ -6,6 +6,7 @@ export const locale = {
       SELECT: 'Select your language',
       SAVE_CHANGES: 'Save Changes',
       SELECTION: 'Select...',
+      ADD: 'Add',
     },
     MENU: {
       NEW: 'new',
@@ -102,6 +103,25 @@ export const locale = {
       EMAIL: 'Email',
       PASSWORD: 'Password',
       CONFIRM_PASSWORD: 'Confirm Password',
+    },
+    VENDORS: {
+      ID: 'ID',
+      TITLE: 'Vendors',
+      Add_Vendor: 'Add Vendor',
+      TYPE: 'Type',
+      Test: 'Test',
+      EN_NAME: 'English Name',
+      Status: 'Status',
+      Search: 'Search Vendor...',
+
+      item_no: 'Item No',
+      item_title: 'Item Title',
+      item_desc: 'Item Description',
+      unit: 'Unit',
+      vat: 'Vat',
+      quantity: 'Quantity',
+      unit_price: 'Unit Price',
+      total_price: 'Total Price',
     },
     TRACKING: {
       ID: 'ID',

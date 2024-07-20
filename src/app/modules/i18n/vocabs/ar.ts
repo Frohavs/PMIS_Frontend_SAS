@@ -5,7 +5,8 @@ export const locale = {
     TRANSLATOR: {
       SELECT: 'اختر لغتك',
       SAVE_CHANGES: 'حفظ التغييرات',
-      SELECTION: 'اختار...'
+      SELECTION: 'اختار...',
+      ADD: "إضافة"
     },
     MENU: {
       NEW: 'جديد',
@@ -103,6 +104,25 @@ export const locale = {
       EMAIL: 'البريد الإلكتروني',
       PASSWORD: 'كلمة المرور',
       CONFIRM_PASSWORD: 'تأكيد كلمة المرور',
+    },
+    VENDORS: {
+      ID: 'رقم',
+      TITLE: 'البائعون',
+      Add_Vendor: 'إضافة بائع',
+      TYPE: 'النوع',
+      Test: 'تست',
+      EN_NAME: 'الأسم بالأنجليزية',
+      Status: 'الحالة',
+      Search: 'بحث عن البائع...',
+
+      item_no: 'رقم الصنف',
+      item_title: 'العنوان',
+      item_desc: 'وصف المنتج',
+      unit: 'الوحدة',
+      vat: 'ضريبة القيمة المضافة',
+      quantity: 'الكمية',
+      unit_price: 'سعر الوحدة',
+      total_price: 'السعر الاجمالي',
     },
     TRACKING: {
       ID: 'رقم',

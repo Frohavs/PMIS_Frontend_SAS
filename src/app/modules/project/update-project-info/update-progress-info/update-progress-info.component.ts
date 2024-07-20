@@ -34,13 +34,14 @@ export class UpdateProgressInfoComponent {
 
   initUpdateProgressForm() {
     this.UpdateProgressForm = this.formBuilder.group({
-      planned_progress: ['1.00', Validators.required],
-      actual_progress: ['1.00', Validators.required],
-      difference: [{ value: '0.00', disabled: true }, Validators.required],
-      value_till_now: ['', Validators.required],
-      previous_work_value: ['', Validators.required],
-      status: [{ value: 'Regular', disabled: true }, Validators.required],
-      attachments: [null, Validators.required],
+      item_no: ['', Validators.required],
+      item_title: ['', Validators.required],
+      item_desc: ['', Validators.required],
+      unit: ['', Validators.required],
+      vat: ['', Validators.required],
+      quantity: ['', Validators.required],
+      unit_price: ['', Validators.required],
+      total_price: [{ value: '', disabled: true }, Validators.required],
 
     });
   }
