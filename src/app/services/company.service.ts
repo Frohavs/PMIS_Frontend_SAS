@@ -23,7 +23,7 @@ export class CompanyService {
       Authorization: `Bearer ${this.token}`,
     });
     const url = `${this.API_USERS_URL}/Get`;
-    return this.http.get<any>(url, {
+    return this.http.post<any>(url,{}, {
       headers: httpHeaders
     });
   }

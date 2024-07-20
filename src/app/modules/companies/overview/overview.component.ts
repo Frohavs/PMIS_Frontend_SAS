@@ -15,17 +15,8 @@ export class OverviewComponent implements OnInit {
   Add_text: string;
   Search_text: string;
   dataColumns: any[] = []
-  dataList: any[] = [
-    // {
-    //   id: 452,
-    //   img: './assets/media/logos/froha_logo.png',
-    //   nameAr: 'فروهة',
-    //   name: 'Frohavs',
-    //   subName: 'consultant',
-    //   crNumber: '1010014082',
-    //   notifications: { smsNotification: true, mailNotification: true }
-    // }
-  ];
+  dataList: any[] = [];
+  totalCount: number;
 
   isLoading = false;
   swalOptions: SweetAlertOptions = { buttonsStyling: false };
@@ -44,7 +35,7 @@ export class OverviewComponent implements OnInit {
       this.Search_text = this.translate.instant('COMPANY.Search'),
       this.dataColumns = [
         { title: this.translate.instant('COMPANY.ID'), className: 'min-w-125px p-3 rounded-start' },
-        { title: this.translate.instant('COMPANY.TITLE'), className: 'ps-4 min-w-300px' },
+        { title: this.translate.instant('COMPANY.TITLE'), className: 'ps-4 min-w-250px' },
         { title: this.translate.instant('COMPANY.EN_NAME'), className: 'min-w-125px' },
         { title: this.translate.instant('COMPANY.cr_number'), className: 'min-w-200px' },
         { title: this.translate.instant('COMPANY.notifications'), className: 'min-w-150px' },
@@ -58,7 +49,7 @@ export class OverviewComponent implements OnInit {
 
   initializeCompanyList() {
     this.companyService.getAll().subscribe(res => {
-      for (const iterator of res.data) {
+      for (const iterator of res.data.items) {
         this.dataList.push(
           {
             id: iterator.id,
@@ -71,6 +62,7 @@ export class OverviewComponent implements OnInit {
           }
         )
       }
+      this.totalCount = res?.data?.totalcount;
       this.cdr.detectChanges();
     });
   }

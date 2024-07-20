@@ -22,7 +22,7 @@ export class CompanyTypeService {
     const httpHeaders = new HttpHeaders({
       Authorization: `Bearer ${this.token}`,
     });
-    const url = `${this.API_USERS_URL}/Get`;
+    const url = `${this.API_USERS_URL}/GetCompanyType`;
     return this.http.get<any>(url, {
       headers: httpHeaders
     });

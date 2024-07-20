@@ -19,8 +19,9 @@ export class PMISTableComponent implements OnInit {
   @Input() canEdit: boolean = true;
   @Input() canDelete: boolean = true;
 
-  @Input() dataList: any = [];
   @Input() dataColumns: any = [];
+  @Input() dataList: any = [];
+  @Input() totalCount: number = 10;
 
   @Output() newClicked: EventEmitter<any> = new EventEmitter<any>();
   @Output() detailsClicked: EventEmitter<any> = new EventEmitter<any>();

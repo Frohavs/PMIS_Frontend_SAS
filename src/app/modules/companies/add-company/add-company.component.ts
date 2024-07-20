@@ -38,10 +38,23 @@ export class AddCompanyComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.getCompanyId();
     this.initializeCompanyForm();
-    this.companyTypeService.getAll().subscribe(res => {
-      this.companyTypes = res.data;
-      this.cdr.detectChanges();
-    });
+    this.companyTypes = [
+      {
+        "id": 1,
+        "name": "Consultant"
+      },
+      {
+        "id": 2,
+        "name": "Contractor"
+      },
+      {
+        "id": 3,
+        "name": "GovernmentalInstitution"
+      }
+    ];
+    // this.companyTypeService.getAll().subscribe(res => {
+    //   this.cdr.detectChanges();
+    // });
   }
 
   initializeCompanyForm() {
@@ -57,7 +70,7 @@ export class AddCompanyComponent implements OnInit, OnDestroy {
       email: ['', Validators.required],
       smsNotification: [true, Validators.required],
       mailNotification: [false, Validators.required],
-      companyTypeId: ['', Validators.required],
+      companyType: ['', Validators.required],
     });
   }
   editCompanyForm(data: any) {
@@ -73,7 +86,7 @@ export class AddCompanyComponent implements OnInit, OnDestroy {
       email: data?.email,
       smsNotification: data?.smsNotification,
       mailNotification: data?.mailNotification,
-      companyTypeId: data?.companyTypeId,
+      companyType: data?.companyTypeId,
     });
   }
 
@@ -93,7 +106,7 @@ export class AddCompanyComponent implements OnInit, OnDestroy {
   saveSettings() {
     console.log(this.addCompanyForm.value);
     if (!this.companyId) {
-      this.companyService.addCompany(this.addCompanyForm.value).subscribe(res => {
+      this.companyService.addCompany({...this.addCompanyForm.value, companyType: Number(this.addCompanyForm.value.companyType)}).subscribe(res => {
         this.router.navigateByUrl('companies')
         this.showAlert({ icon: 'success', title: 'Success!', text: 'Company Added successfully!' });
       })
@@ -102,7 +115,7 @@ export class AddCompanyComponent implements OnInit, OnDestroy {
         this.cdr.detectChanges();
       }, 500);
     } else {
-      this.companyService.updateCompany({id: this.companyId, ...this.addCompanyForm.value}).subscribe(res => {
+      this.companyService.updateCompany({ id: this.companyId, ...this.addCompanyForm.value }).subscribe(res => {
         this.router.navigateByUrl('companies')
         this.showAlert({ icon: 'success', title: 'Success!', text: 'Company Updated successfully!' });
       })

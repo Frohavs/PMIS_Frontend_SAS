@@ -25,15 +25,16 @@
 
 <!-- table -->
 <app-pmis-table class="card mb-5 mb-xl-8" [Add_text]="Add_text" [Search_text]="Search_text" [dataList]="dataList"
-  [dataColumns]="dataColumns" [canSearch]="true" [canChangeStatus]="false" (newClicked)="redirectToNew()"
-  (detailsClicked)="detailsClicked($event)" (editClicked)="editRecord($event)" (deleteClicked)="deleteRecord($event)">
+  [totalCount]="totalCount" [dataColumns]="dataColumns" [canSearch]="true" [canChangeStatus]="false"
+  (newClicked)="redirectToNew()" (detailsClicked)="detailsClicked($event)" (editClicked)="editRecord($event)"
+  (deleteClicked)="deleteRecord($event)">
 </app-pmis-table>
 
 <!-- modal -->
 <swal #noticeSwal [swalOptions]="swalOptions">
 </swal>
 
-<swal #deleteSwal [swalOptions]="swalOptions" title="Are you sure to delete?" text="This can't be undone"
-  icon="warning" [showCancelButton]="true" [focusCancel]="true"
+<swal #deleteSwal [swalOptions]="swalOptions" title="Are you sure to delete?" text="This can't be undone" icon="warning"
+  [showCancelButton]="true" [focusCancel]="true"
   [customClass]="{confirmButton: 'btn btn-danger', cancelButton: 'btn btn-active-light'}">
 </swal>
