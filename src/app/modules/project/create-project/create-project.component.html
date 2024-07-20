@@ -186,56 +186,6 @@
           </div>
         </div>
 
-        <!-- <div class="row mb-6">
-          <label class="col-lg-4 col-form-label fw-bold fs-6"><span
-              class="required">{{'PROJECTS.program_number' | translate}}</span></label>
-          <div class="col-lg-8 fv-row">
-            <input type="number" class="form-control form-control-lg form-control-solid text-start"
-              placeholder="{{'PROJECTS.program_number' | translate}}" name="program_number"
-              formControlName="program_number" />
-            <div
-              *ngIf="addProjectForm?.get('program_number')?.invalid && (addProjectForm?.get('program_number')?.dirty || addProjectForm?.get('program_number')?.touched)"
-              class="fv-plugins-message-container">
-              <div class="fv-help-block">project number is required</div>
-            </div>
-          </div>
-        </div> -->
-
-        <!-- <div class="row mb-6">
-          <label class="col-lg-4 col-form-label fw-bold fs-6"><span
-              class="required">{{'PROJECTS.program_type' | translate}}</span></label>
-          <div class="col-lg-8 fv-row">
-            <select class="form-select form-select-solid form-select-lg fw-bold" name="program_type"
-              formControlName="program_type">
-              <option value="" disabled>{{"TRANSLATOR.SELECTION" | translate}}</option>
-              <ng-container>
-              </ng-container>
-            </select>
-            <div
-              *ngIf="addProjectForm?.get('program_type')?.invalid && (addProjectForm?.get('program_type')?.dirty || addProjectForm?.get('program_type')?.touched)"
-              class="fv-plugins-message-container">
-              <div class="fv-help-block">program type is required</div>
-            </div>
-          </div>
-        </div> -->
-
-        <!-- <div class="row mb-6">
-          <label class="col-lg-4 col-form-label fw-bold fs-6"><span
-              class="required">{{"PROJECTS.Door" | translate}}</span></label>
-          <div class="col-lg-8 fv-row">
-            <select class="form-select form-select-solid form-select-lg fw-bold" name="door" formControlName="door">
-              <option value="" disabled>{{"TRANSLATOR.SELECTION" | translate}}</option>
-              <ng-container *ngFor="let company of companies">
-              </ng-container>
-            </select>
-            <div
-              *ngIf="addProjectForm?.get('door')?.invalid && (addProjectForm?.get('door')?.dirty || addProjectForm?.get('door')?.touched)"
-              class="fv-plugins-message-container">
-              <div class="fv-help-block">door is required</div>
-            </div>
-          </div>
-        </div> -->
-
         <div class="row mb-6">
           <label class="col-lg-4 col-form-label fw-bold fs-6"><span
               class="required">{{"PROJECTS.st_date" | translate}}</span></label>
@@ -316,21 +266,6 @@
               formControlName="contract_date" />
             <div
               *ngIf="addProjectForm?.get('contract_date')?.invalid && (addProjectForm?.get('contract_date')?.dirty || addProjectForm?.get('contract_date')?.touched)"
-              class="fv-plugins-message-container">
-              <div class="fv-help-block">english name is required</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="row mb-6">
-          <label class="col-lg-4 col-form-label fw-bold fs-6"><span
-              class="required">{{"PROJECTS.etimad_number" | translate}}</span></label>
-          <div class="col-lg-8 fv-row">
-            <input type="number" class="form-control form-control-lg form-control-solid text-start"
-              placeholder="{{'PROJECTS.etimad_number' | translate}}" name="etimad_number"
-              formControlName="etimad_number" />
-            <div
-              *ngIf="addProjectForm?.get('etimad_number')?.invalid && (addProjectForm?.get('etimad_number')?.dirty || addProjectForm?.get('etimad_number')?.touched)"
               class="fv-plugins-message-container">
               <div class="fv-help-block">english name is required</div>
             </div>

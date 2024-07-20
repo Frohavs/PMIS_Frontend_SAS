@@ -16,6 +16,7 @@ export class OverviewComponent implements OnInit {
   Add_text: string;
   Search_text: string;
   dataList: any[] = []
+  totalCount: number;
 
   // modal configs
   isLoading = false;
@@ -47,9 +48,9 @@ export class OverviewComponent implements OnInit {
 
   initializeUserData() {
     this.newUserService.getAll().subscribe(res => {
-      this.dataList = res.data;
+      this.totalCount = res?.data?.totalcount;
+      this.dataList = res?.data?.items;
       this.cdr.detectChanges();
-
     })
   }
 

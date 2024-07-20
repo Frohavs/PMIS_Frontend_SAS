@@ -7,6 +7,7 @@ import { CompanyService } from 'src/app/services/company.service';
 import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
 import { SweetAlertOptions } from 'sweetalert2';
 import { CompanyTypeService } from 'src/app/services/company-type.service';
+import { CompanyTypes } from './company-types';
 
 @Component({
   selector: 'app-add-company',
@@ -18,7 +19,7 @@ export class AddCompanyComponent implements OnInit, OnDestroy {
   companyId: number;
   isLoading: boolean;
   addCompanyForm: FormGroup;
-  companyTypes: any[] = [];
+  companyTypes: any[] = CompanyTypes;
   private unsubscribe: Subscription[] = [];
 
   swalOptions: SweetAlertOptions = {};
@@ -38,23 +39,6 @@ export class AddCompanyComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.getCompanyId();
     this.initializeCompanyForm();
-    this.companyTypes = [
-      {
-        "id": 1,
-        "name": "Consultant"
-      },
-      {
-        "id": 2,
-        "name": "Contractor"
-      },
-      {
-        "id": 3,
-        "name": "GovernmentalInstitution"
-      }
-    ];
-    // this.companyTypeService.getAll().subscribe(res => {
-    //   this.cdr.detectChanges();
-    // });
   }
 
   initializeCompanyForm() {
