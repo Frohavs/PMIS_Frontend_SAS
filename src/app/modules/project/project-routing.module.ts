@@ -8,6 +8,9 @@ import { UpdateProjectInfoComponent } from './update-project-info/update-project
 import { UpdateProjectStaffComponent } from './update-project-info/update-project-staff/update-project-staff.component';
 import { UpdateProgressInfoComponent } from './update-project-info/update-progress-info/update-progress-info.component';
 import { ProjectStageUpdateComponent } from './update-project-info/project-stage-update/project-stage-update.component';
+import { UpdateInfoComponent } from './update-project-info/update-info/update-info.component';
+import { UpdateEotComponent } from './update-project-info/update-info/update-eot/update-eot.component';
+import { UpdateVariationOrderComponent } from './update-project-info/update-info/update-variation-order/update-variation-order.component';
 
 const routes: Routes = [
   {
@@ -39,12 +42,24 @@ const routes: Routes = [
         component: UpdateProjectStaffComponent,
       },
       {
+        path: 'update-info/:id',
+        component: UpdateInfoComponent,
+      },
+      {
         path: 'update-progress-info/:id',
         component: UpdateProgressInfoComponent,
       },
       {
         path: 'project-stage-update/:id',
         component: ProjectStageUpdateComponent,
+      },
+      {
+        path: 'update-eot/:id',
+        component: UpdateEotComponent,
+      },
+      {
+        path: 'update-variation/:id',
+        component: UpdateVariationOrderComponent,
       },
       { path: '', redirectTo: 'overview', pathMatch: 'full' },
       { path: '**', redirectTo: 'overview', pathMatch: 'full' },

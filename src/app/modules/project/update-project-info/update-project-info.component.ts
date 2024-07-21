@@ -20,6 +20,10 @@ export class UpdateProjectInfoComponent implements OnInit {
     this.router.navigateByUrl('projects/update-project-staff' + `/${'123'}`);
   }
 
+  navigateUpdateInfo() {
+    this.router.navigateByUrl('projects/update-info' + `/${'123'}`);
+  }
+
   updateProjectInfo() {
     this.updateInfo = !this.updateInfo;
   }

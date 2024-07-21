@@ -1,14 +1,14 @@
 <div class="row g-5 g-xl-8 justify-content-between">
   <div class="col-xl-6">
-
-    <!-- <ng-container *ngIf="updateInfo">
+    <!-- begin::Alert-->
+    <ng-container *ngIf="updatedSuccessfully">
       <div class="mb-10 bg-light-success p-8 rounded">
-        <div class="text-danger fs-5 fw-bold">
-          You must click on final submit after updating basic Info to confirm the update
+        <div class="text-success fs-5 fw-bold">
+          Updated Successfully
         </div>
       </div>
-    </ng-container> -->
-
+    </ng-container>
+    <!-- end::Alert-->
 
     <div class="card mb-5 mb-xl-8">
       <!-- begin::Header -->
@@ -160,81 +160,26 @@
     <div class="card mb-5 mb-xl-8">
 
       <div class="card-body pt-3">
-        <!-- begin::Item -->
-        <div class="d-flex align-items-sm-center">
-
-          <!-- begin::Title -->
+        <div class="d-flex align-items-sm-center ">
           <div class="d-flex flex-row-fluid flex-wrap justify-content-center">
             <div class=" me-2">
               <div class="card-toolbar">
-                <a class="btn btn-sm btn-light-success" (click)="navigateUpdateStaff()">
-                  Update Project staff
+                <a class="btn btn-sm btn-success" (click)="updateEot()">
+                  EOT Details
                 </a>
               </div>
-              <br>
-              <span class="text-success d-block pt-1 fs-4">last update date</span>
-              <br>
-              <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
-                2023-08-17
-              </a>
-              <br>
-              <span class="text-muted fw-bold d-block pt-1">وليد عبد الجليل عبد الرحمن عبد الغني</span>
             </div>
 
             <div class=" me-2">
               <div class="card-toolbar">
-                <a class="btn btn-sm btn-success" (click)="navigateUpdateInfo()">
-                  Update Project info
+                <a class="btn btn-sm btn-success" (click)="updateVariationOrder()">
+                  Variation Orders Details
                 </a>
               </div>
-              <br>
-              <span class="text-success d-block pt-1 fs-4">last update date</span>
-              <br>
-              <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
-                2023-08-17
-              </a>
-              <br>
-              <span class="text-muted fw-bold d-block pt-1">وليد عبد الجليل عبد الرحمن عبد الغني</span>
             </div>
-
-            <!-- <div class=" me-2">
-              <div class="card-toolbar">
-                <a class="btn btn-sm btn-success" (click)="navigateUpdateProgress()">
-                  Update progress info
-                </a>
-              </div>
-              <br>
-              <span class="text-success d-block pt-1 fs-4">last update date</span>
-              <br>
-              <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
-                2023-08-17
-              </a>
-              <br>
-              <span class="text-muted fw-bold d-block pt-1">وليد عبد الجليل عبد الرحمن عبد الغني</span>
-            </div> -->
-
-            <!-- <div class=" me-2">
-              <div class="card-toolbar">
-                <a class="btn btn-sm btn-success" (click)="navigateProjectStage()">
-                  Project Stage Update
-                </a>
-              </div>
-              <br>
-              <span class="text-success d-block pt-1 fs-4">last update date</span>
-              <br>
-              <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
-                2023-08-17
-              </a>
-              <br>
-              <span class="text-muted fw-bold d-block pt-1">وليد عبد الجليل عبد الرحمن عبد الغني</span>
-            </div> -->
           </div>
-          <!-- end::Title -->
         </div>
-
-        <!-- end::Item -->
       </div>
-      <!-- end::Body -->
     </div>
   </div>
 </div>
