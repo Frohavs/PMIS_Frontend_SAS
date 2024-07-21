@@ -1,4 +1,4 @@
-export const CompanyTypes = [
+export const VendorTypes = [
   {
     id: 1,
     name: "Consultant"

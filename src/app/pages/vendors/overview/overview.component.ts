@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
 import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
-import { NewUserService } from 'src/app/services/new-user.service';
+import { VendorService } from 'src/app/services/vendors.service';
 import { SweetAlertOptions } from 'sweetalert2';
 
 @Component({
@@ -30,10 +30,10 @@ export class OverviewComponent implements OnInit {
   };
 
   constructor(
-    private cdr: ChangeDetectorRef,
     private router: Router,
+    private cdr: ChangeDetectorRef,
     private translate: TranslateService,
-    private newUserService: NewUserService
+    private vendorService: VendorService
   ) {
     this.Add_text = this.translate.instant('VENDORS.Add_Vendor');
     this.Search_text = this.translate.instant('VENDORS.Search');
@@ -44,11 +44,10 @@ export class OverviewComponent implements OnInit {
   }
 
   initializeProjectData() {
-    this.dataList = [{ projectName: '' }];
-    this.cdr.detectChanges();
-    // this.newUserService.getAll().subscribe(res => {
-
-    // })
+    this.vendorService.getAll().subscribe(res => {
+      this.dataList = res.data.items;
+      this.cdr.detectChanges();
+    });
   }
 
   checkAll(event: Event) {
@@ -74,7 +73,7 @@ export class OverviewComponent implements OnInit {
     this.deleteSwal.fire().then((clicked) => {
       if (clicked.isConfirmed) {
         this.isLoading = true;
-        this.newUserService.deleteUser(user.id).subscribe({
+        this.vendorService.deleteVendor(user.id).subscribe({
           next: (res) => {
             this.showAlert({ icon: 'success', title: 'Success!', text: 'Project Deleted successfully!' });
             setTimeout(() => {

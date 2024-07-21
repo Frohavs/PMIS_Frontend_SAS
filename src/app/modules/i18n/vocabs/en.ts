@@ -23,6 +23,7 @@ export const locale = {
       USERS: 'Users',
       ROLES: 'Roles',
       VENDORS: 'Vendors',
+      BOQ: 'Boq',
       Tracking: 'Tracking',
     },
     COMPANY: {
@@ -108,11 +109,24 @@ export const locale = {
       ID: 'ID',
       TITLE: 'Vendors',
       Add_Vendor: 'Add Vendor',
+      EN_NAME: 'English Name',
+      Status: 'Status',
+      Search: 'Search Vendor...',
+
+      name: 'Vendor',
+      type: 'Type',
+      address: 'Address',
+      cr_number: 'CR Number',
+    },
+    BOQ: {
+      ID: 'ID',
+      TITLE: 'Boq',
+      Add_Boq: 'Add Boq',
       TYPE: 'Type',
       Test: 'Test',
       EN_NAME: 'English Name',
       Status: 'Status',
-      Search: 'Search Vendor...',
+      Search: 'Search Boq...',
 
       item_no: 'Item No',
       item_title: 'Item Title',

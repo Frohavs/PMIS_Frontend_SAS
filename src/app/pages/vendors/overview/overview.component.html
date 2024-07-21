@@ -40,31 +40,31 @@
                   data-kt-check-target=".widget-9-check" (change)="checkAll($event)" />
               </div>
             </th>
-            <th class="max-w-100px">{{"VENDORS.Project" | translate}}</th>
-            <th class="max-w-100px">{{"VENDORS.contract_no" | translate}}</th>
-            <th class="min-w-200px">{{"VENDORS.Consultant" | translate}}</th>
-            <th class="max-w-110px">{{"VENDORS.Stage" | translate}}</th>
+            <th class="max-w-100px">{{"VENDORS.name" | translate}}</th>
+            <th class="max-w-100px">{{"VENDORS.type" | translate}}</th>
+            <th class="min-w-100px">{{"VENDORS.address" | translate}}</th>
+            <th class="max-w-110px">{{"VENDORS.cr_number" | translate}}</th>
             <th class="max-w-100px text-end">Actions</th>
           </tr>
         </thead>
         <!-- end::Table head -->
         <!-- begin::Table body -->
         <tbody>
-          <tr *ngFor="let project of dataList; index as i">
+          <tr *ngFor="let vendor of dataList; index as i">
             <td>
               <div class="form-check form-check-sm form-check-custom form-check-solid">
-                <input class="form-check-input widget-9-check" type="checkbox" [value]="project?.id"
-                  [checked]="project?.checked" (change)="checkUser($event, project?.id)" />
+                <input class="form-check-input widget-9-check" type="checkbox" [value]="vendor?.id"
+                  [checked]="vendor?.checked" (change)="checkUser($event, vendor?.id)" />
               </div>
             </td>
             <td>
               <div class="d-flex align-items-center">
                 <div class="d-flex justify-content-start flex-column">
                   <a class="text-gray-900 fw-bolder text-hover-primary fs-6">
-                    Project name
+                    {{vendor?.nameAr}}
                   </a>
                   <span class="text-muted fw-bold text-muted d-block fs-7">
-                    en name
+                    {{vendor?.name}}
                   </span>
                 </div>
               </div>
@@ -95,10 +95,10 @@
             </td>
             <td>
               <div class="d-flex justify-content-end flex-shrink-0">
-                <a class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1" (click)="editUser(project)">
+                <a class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1" (click)="editUser(vendor)">
                   <app-keenicon name="pencil" class="fs-3"></app-keenicon>
                 </a>
-                <a class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm" (click)="deleteUser(project)">
+                <a class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm" (click)="deleteUser(vendor)">
                   <app-keenicon name="trash" class="fs-3"></app-keenicon>
                 </a>
               </div>

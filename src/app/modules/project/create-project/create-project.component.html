@@ -7,7 +7,7 @@
     </div>
     <div class="card-toolbar">
       <a (click)="back()" class="btn btn-sm btn-danger d-flex">
-        <!-- <app-keenicon name="arrow-left" class="fs-3"></app-keenicon> -->
+        <app-keenicon name="arrow-left" class="fs-3"></app-keenicon>
         {{"ECOMMERCE.COMMON.BACK" | translate}}
       </a>
     </div>
@@ -172,14 +172,14 @@
           <label class="col-lg-4 col-form-label fw-bold fs-6"><span
               class="required">{{"PROJECTS.Consultant" | translate}}</span></label>
           <div class="col-lg-8 fv-row">
-            <select class="form-select form-select-solid form-select-lg fw-bold" name="Consultant"
-              formControlName="Consultant">
+            <select class="form-select form-select-solid form-select-lg fw-bold" name="consultant"
+              formControlName="consultant">
               <option value="" disabled>{{"TRANSLATOR.SELECTION" | translate}}</option>
               <!-- <ng-container *ngFor="let company of companies">
               </ng-container> -->
             </select>
             <div
-              *ngIf="addProjectForm?.get('Consultant')?.invalid && (addProjectForm?.get('Consultant')?.dirty || addProjectForm?.get('Consultant')?.touched)"
+              *ngIf="addProjectForm?.get('consultant')?.invalid && (addProjectForm?.get('consultant')?.dirty || addProjectForm?.get('consultant')?.touched)"
               class="fv-plugins-message-container">
               <div class="fv-help-block">consultant is required</div>
             </div>

@@ -4,6 +4,7 @@ import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
 import { SweetAlertOptions } from 'sweetalert2';
+import { VendorTypes } from './vendor-types';
 
 @Component({
   selector: 'app-add-vendor',
@@ -14,7 +15,7 @@ export class AddVendorComponent implements OnInit {
   projectId: number;
   isLoading: boolean;
   addVendorForm: FormGroup;
-
+  vendorTypes: any[] = VendorTypes;
   swalOptions: SweetAlertOptions = {};
   @ViewChild('noticeSwal') noticeSwal!: SwalComponent;
 
@@ -33,18 +34,20 @@ export class AddVendorComponent implements OnInit {
 
   initAddVendorForm() {
     this.addVendorForm = this.formBuilder.group({
-      planned_progress: ['1.00', Validators.required],
-      actual_progress: ['1.00', Validators.required],
-      difference: [{ value: '0.00', disabled: true }, Validators.required],
-      value_till_now: ['', Validators.required],
-      previous_work_value: ['', Validators.required],
-      status: [{ value: 'Regular', disabled: true }, Validators.required],
-      attachments: [null, Validators.required],
-
+      crNumber: ['', Validators.required],
+      vendorTypeId: ['', Validators.required],
+      nameAr: ['', Validators.required],
+      name: ['', Validators.required],
+      address: ['', Validators.required],
     });
   }
 
   saveChanges() {
+    console.log(this.addVendorForm.value);
 
+  }
+
+  back() {
+    this._location.back();
   }
 }

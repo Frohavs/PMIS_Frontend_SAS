@@ -23,6 +23,7 @@ export const locale = {
       USERS: 'المستخدمين',
       ROLES: 'الأدوار',
       VENDORS: 'البائعون',
+      BOQ: 'جدول الكميات',
       Tracking: 'التعقب',
     },
     COMPANY: {
@@ -109,11 +110,24 @@ export const locale = {
       ID: 'رقم',
       TITLE: 'البائعون',
       Add_Vendor: 'إضافة بائع',
+      EN_NAME: 'الأسم بالأنجليزية',
+      Status: 'الحالة',
+      Search: 'بحث عن البائع...',
+
+      name: 'البائع',
+      type: 'النوع',
+      address: 'العنوان',
+      cr_number: 'الرقم التعريفي',
+    },
+    BOQ: {
+      ID: 'رقم',
+      TITLE: 'جدول الكميات',
+      Add_Boq: 'إضافة كمية',
       TYPE: 'النوع',
       Test: 'تست',
       EN_NAME: 'الأسم بالأنجليزية',
       Status: 'الحالة',
-      Search: 'بحث عن البائع...',
+      Search: 'بحث عن كمية...',
 
       item_no: 'رقم الصنف',
       item_title: 'العنوان',
