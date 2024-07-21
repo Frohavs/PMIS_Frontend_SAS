@@ -1,27 +1,32 @@
-import { ChangeDetectorRef, Component, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
 import { Subscription } from 'rxjs';
-import { CompanyService } from 'src/app/services/company.service';
-import { NewUserService } from 'src/app/services/new-user.service';
 import { ProjectsService } from 'src/app/services/projects.service';
 import { RoleService } from 'src/app/services/role.service';
 import { SweetAlertOptions } from 'sweetalert2';
+import { ClassificationTypes, ContractStatus, ProjectSectors } from '../Dropdown-Types';
+import { AreaDistrictService } from 'src/app/services/area-district.service';
 
 @Component({
   selector: 'app-create-project',
   templateUrl: './create-project.component.html',
   styleUrl: './create-project.component.scss'
 })
-export class CreateProjectComponent {
+export class CreateProjectComponent implements OnInit {
 
-  userId: number;
+  projectId: number;
   isLoading: boolean;
   addProjectForm: FormGroup;
   companies: any[] = [];
   roles: any[] = [];
+  contractorStatuses: any[] = ContractStatus;
+  projectSectors: any[] = ProjectSectors;
+  classification: any[] = ClassificationTypes;
+  Districts: any[] = [];
+  municipalities: any[] = [];
   private unsubscribe: Subscription[] = [];
 
   swalOptions: SweetAlertOptions = {};
@@ -33,62 +38,61 @@ export class CreateProjectComponent {
     private cdr: ChangeDetectorRef,
     private formBuilder: FormBuilder,
     private activatedRoute: ActivatedRoute,
-    private companyService: CompanyService,
+    private areaDistrictService: AreaDistrictService,
     private roleService: RoleService,
     private projectsService: ProjectsService
   ) {
   }
 
   ngOnInit() {
-    this.getUserId();
+    this.getProjectId();
     this.initializeUserForm();
     this.getLookups();
   }
 
   getLookups() {
-    // this.companyService.getAll().subscribe(res => {
-    //   this.companies = res.data;
-    //   this.cdr.detectChanges();
-    // });
-    // this.roleService.getAll().subscribe(res => {
-    //   this.roles = res.data;
-    //   this.cdr.detectChanges();
-    // });
+    this.areaDistrictService.getAreas().subscribe(res => {
+      this.municipalities = res.data;
+    });
+    this.areaDistrictService.getDistricts().subscribe(res => {
+      this.Districts = res.data;
+    });
   }
 
   initializeUserForm() {
     this.addProjectForm = this.formBuilder.group({
-
-      project_stage: ['', Validators.required],
+      contractStatus: ['', Validators.required],
       classification: ['', Validators.required],
-      project_sector: ['', Validators.required],
+      projectSector: ['', Validators.required],
       project_name: ['', Validators.required],
       project_nameEn: ['', Validators.required],
-      contractor: ['', Validators.required],
-      consultant: ['', Validators.required],
+      contractorId: ['', Validators.required],
+      consultantId: ['', Validators.required],
       duration: ['', Validators.required],// Original Duration
       program_name: ['', Validators.required],
       contract_no: ['', Validators.required],
       contract_date: ['', Validators.required],
       project_value: ['', Validators.required],
-      amana_manager: ['', Validators.required],
+      managerId: ['', Validators.required],
+      areaId: ['', Validators.required],
+      districtId: ['', Validators.required],
       st_date: ['', Validators.required],// Execution Start Date
-      en_date: [{value: '', disabled: true}, Validators.required],// Original Finish Date
+      en_date: [{ value: '', disabled: true }, Validators.required],// Original Finish Date
     });
   }
-  editUserForm(data: any) {
+  editProjectForm(data: any) {
     // this.addProjectForm.patchValue({
 
     // });
   }
 
-  getUserId() {
+  getProjectId() {
     this.activatedRoute.params.subscribe(params => {
-      this.userId = params['id'];
-      if (this.userId) {
+      this.projectId = params['id'];
+      if (this.projectId) {
         // this.projectsService.getProject(this.userId.toString()).subscribe(res => {
         //   setTimeout(() => {
-        //     this.editUserForm(res.data);
+        //     this.editProjectForm(res.data);
         //   }, 500);
         // });
       }
@@ -96,28 +100,26 @@ export class CreateProjectComponent {
   }
 
   saveProject() {
-    if (!this.userId) {
-      const payload = { ...this.addProjectForm.value, companyId: +this.addProjectForm.value.companyId, roleIds: [this.addProjectForm.value.roleIds] };
-      // this.newUserService.registerUser(payload).subscribe(res => {
-      //   this.router.navigateByUrl('manage/users');
-      //   this.showAlert({ icon: 'success', title: 'Success!', text: 'User Added successfully!' });
-      // }, () => this.showAlert({ icon: 'error', title: 'Error!', text: 'please try again!' }))
-      // setTimeout(() => {
-      //   this.isLoading = false;
-      //   this.cdr.detectChanges();
-      // }, 500);
+    if (!this.projectId) {
+      const payload = { ...this.addProjectForm.value };
+      this.projectsService.addProject(payload).subscribe(res => {
+        this.router.navigateByUrl('projects');
+        this.showAlert({ icon: 'success', title: 'Success!', text: 'Project Added successfully!' });
+      }, () => this.showAlert({ icon: 'error', title: 'Error!', text: 'please try again!' }))
+      setTimeout(() => {
+        this.isLoading = false;
+        this.cdr.detectChanges();
+      }, 500);
     } else {
-      // const payload = { userId: this.userId, ...this.addProjectForm.value, companyId: +this.addProjectForm.value.companyId, roleIds: [this.addProjectForm.value.roleIds] };
-      // delete payload['password'];
-      // delete payload['confirmPassword'];
-      // this.newUserService.updateUser(payload).subscribe(res => {
-      //   this.router.navigateByUrl('manage/users');
-      //   this.showAlert({ icon: 'success', title: 'Success!', text: 'User Updated successfully!' });
-      // }, () => this.showAlert({ icon: 'error', title: 'Error!', text: 'please try again!' }))
-      // setTimeout(() => {
-      //   this.isLoading = false;
-      //   this.cdr.detectChanges();
-      // }, 500);
+      const payload = { projectId: this.projectId, ...this.addProjectForm.value };
+      this.projectsService.updateProject(payload).subscribe(res => {
+        this.router.navigateByUrl('projects');
+        this.showAlert({ icon: 'success', title: 'Success!', text: 'Project Updated successfully!' });
+      }, () => this.showAlert({ icon: 'error', title: 'Error!', text: 'please try again!' }))
+      setTimeout(() => {
+        this.isLoading = false;
+        this.cdr.detectChanges();
+      }, 500);
     }
   }
 

@@ -1,9 +1,9 @@
 <div class="card mb-5 mb-xl-10">
-  <div class="card-header border-0 cursor-pointer" role="button" data-bs-toggle="collapse" data-bs-target="#kt_create_project"
-    aria-expanded="true" aria-controls="kt_create_project">
+  <div class="card-header border-0 cursor-pointer" role="button" data-bs-toggle="collapse"
+    data-bs-target="#kt_create_project" aria-expanded="true" aria-controls="kt_create_project">
     <div class="card-title m-0">
-      <h3 class="fw-bolder m-0" *ngIf="!userId">{{"PROJECTS.Add_Project" | translate}}</h3>
-      <h3 class="fw-bolder m-0" *ngIf="userId">{{"PROJECTS.Edit_Project" | translate}}</h3>
+      <h3 class="fw-bolder m-0" *ngIf="!projectId">{{"PROJECTS.Add_Project" | translate}}</h3>
+      <h3 class="fw-bolder m-0" *ngIf="projectId">{{"PROJECTS.Edit_Project" | translate}}</h3>
     </div>
     <div class="card-toolbar">
       <a (click)="back()" class="btn btn-sm btn-danger d-flex">
@@ -20,13 +20,12 @@
           <label class="col-lg-4 col-form-label fw-bold fs-6"><span
               class="required">{{"PROJECTS.project_stage" | translate}}</span></label>
           <div class="col-lg-8 fv-row">
-            <select class="form-select form-select-solid form-select-lg fw-bold" name="project_stage"
-              formControlName="project_stage">
+            <select class="form-select form-select-solid form-select-lg fw-bold" name="contractStatus"
+              formControlName="contractStatus">
               <option value="" disabled>{{"TRANSLATOR.SELECTION" | translate}}</option>
-              <option [value]="'test'">on going</option>
-              <option [value]="'test'">prospective</option>
-              <!-- <ng-container *ngFor="let company of companies">
-              </ng-container> -->
+              <ng-container *ngFor="let contractorStatus of contractorStatuses">
+                <option [value]="contractorStatus?.id">{{contractorStatus?.name}}</option>
+              </ng-container>
             </select>
             <div
               *ngIf="addProjectForm?.get('project_stage')?.invalid && (addProjectForm?.get('project_stage')?.dirty || addProjectForm?.get('project_stage')?.touched)"
@@ -43,12 +42,9 @@
             <select class="form-select form-select-solid form-select-lg fw-bold" name="classification"
               formControlName="classification">
               <option value="" disabled>{{"TRANSLATOR.SELECTION" | translate}}</option>
-              <option [value]="'test'">Study and Design</option>
-              <option [value]="'test'">Supervisor</option>
-              <option [value]="'test'">Excuse</option>
-              <option [value]="'test'">Consultant service</option>
-              <!-- <ng-container *ngFor="let company of companies">
-              </ng-container> -->
+              <ng-container *ngFor="let type of classification">
+                <option [value]="type.id">{{type?.name}}</option>
+              </ng-container>
             </select>
             <div
               *ngIf="addProjectForm?.get('classification')?.invalid && (addProjectForm?.get('classification')?.dirty || addProjectForm?.get('classification')?.touched)"
@@ -62,18 +58,15 @@
           <label class="col-lg-4 col-form-label fw-bold fs-6"><span
               class="required">{{"PROJECTS.Sector" | translate}}</span></label>
           <div class="col-lg-8 fv-row">
-            <select class="form-select form-select-solid form-select-lg fw-bold" name="project_sector"
-              formControlName="project_sector">
+            <select class="form-select form-select-solid form-select-lg fw-bold" name="projectSector"
+              formControlName="projectSector">
               <option value="" disabled>{{"TRANSLATOR.SELECTION" | translate}}</option>
-              <option [value]="'test'">Study and Design</option>
-              <option [value]="'test'">Supervisor</option>
-              <option [value]="'test'">Excuse</option>
-              <option [value]="'test'">Consultant service</option>
-              <!-- <ng-container *ngFor="let company of companies">
-              </ng-container> -->
+              <ng-container *ngFor="let sector of projectSectors">
+                <option [value]="sector.id">{{sector?.name}}</option>
+              </ng-container>
             </select>
             <div
-              *ngIf="addProjectForm?.get('project_sector')?.invalid && (addProjectForm?.get('project_sector')?.dirty || addProjectForm?.get('project_sector')?.touched)"
+              *ngIf="addProjectForm?.get('projectSector')?.invalid && (addProjectForm?.get('projectSector')?.dirty || addProjectForm?.get('projectSector')?.touched)"
               class="fv-plugins-message-container">
               <div class="fv-help-block">sector is required</div>
             </div>
@@ -99,32 +92,26 @@
               class="required">{{"PROJECTS.project_location" | translate}}</span></label>
           <div class="col-lg-8 fv-row d-flex justify-content-between">
             <div style="flex: 0.45;">
-              <select class="form-select form-select-solid form-select-lg fw-bold" name="project_sector"
-                formControlName="project_sector">
+              <select class="form-select form-select-solid form-select-lg fw-bold" name="areaId"
+                formControlName="areaId">
                 <option value="" disabled>{{"PROJECTS.Municipality" | translate}}</option>
-                <option [value]="'test'">Study and Design</option>
-                <option [value]="'test'">Supervisor</option>
-                <option [value]="'test'">Excuse</option>
-                <option [value]="'test'">Consultant service</option>
-                <!-- <ng-container *ngFor="let company of companies">
-              </ng-container> -->
+                <ng-container *ngFor="let municipality of municipalities">
+                  <option [value]="municipality?.id">{{municipality?.name}}</option>
+                </ng-container>
               </select>
               <div
-                *ngIf="addProjectForm?.get('project_sector')?.invalid && (addProjectForm?.get('project_sector')?.dirty || addProjectForm?.get('project_sector')?.touched)"
+                *ngIf="addProjectForm?.get('areaId')?.invalid && (addProjectForm?.get('areaId')?.dirty || addProjectForm?.get('areaId')?.touched)"
                 class="fv-plugins-message-container">
                 <div class="fv-help-block">sector is required</div>
               </div>
             </div>
             <div style="flex: 0.45;">
-              <select class="form-select form-select-solid form-select-lg fw-bold" name="project_sector"
-                formControlName="project_sector">
+              <select class="form-select form-select-solid form-select-lg fw-bold" name="districtId"
+                formControlName="districtId">
                 <option value="" disabled>{{"PROJECTS.District" | translate}}</option>
-                <option [value]="'test'">Study and Design</option>
-                <option [value]="'test'">Supervisor</option>
-                <option [value]="'test'">Excuse</option>
-                <option [value]="'test'">Consultant service</option>
-                <!-- <ng-container *ngFor="let company of companies">
-              </ng-container> -->
+                <ng-container *ngFor="let district of Districts">
+                  <option [value]="district?.id">{{district?.name}}</option>
+                </ng-container>
               </select>
               <div
                 *ngIf="addProjectForm?.get('project_sector')?.invalid && (addProjectForm?.get('project_sector')?.dirty || addProjectForm?.get('project_sector')?.touched)"
@@ -154,14 +141,15 @@
           <label class="col-lg-4 col-form-label fw-bold fs-6"><span
               class="required">{{"PROJECTS.contractor" | translate}}</span></label>
           <div class="col-lg-8 fv-row">
-            <select class="form-select form-select-solid form-select-lg fw-bold" name="contractor"
-              formControlName="contractor">
+            <select class="form-select form-select-solid form-select-lg fw-bold" name="contractorId"
+              formControlName="contractorId">
               <option value="" disabled>{{"TRANSLATOR.SELECTION" | translate}}</option>
-              <!-- <ng-container *ngFor="let company of companies">
+              <!-- <ng-container *ngFor="let contractor of contractors">
+                <option [value]="contractor.id">{{contractor?.name}}</option>
               </ng-container> -->
             </select>
             <div
-              *ngIf="addProjectForm?.get('contractor')?.invalid && (addProjectForm?.get('contractor')?.dirty || addProjectForm?.get('contractor')?.touched)"
+              *ngIf="addProjectForm?.get('contractorId')?.invalid && (addProjectForm?.get('contractorId')?.dirty || addProjectForm?.get('contractorId')?.touched)"
               class="fv-plugins-message-container">
               <div class="fv-help-block">contractor is required</div>
             </div>
@@ -172,14 +160,14 @@
           <label class="col-lg-4 col-form-label fw-bold fs-6"><span
               class="required">{{"PROJECTS.Consultant" | translate}}</span></label>
           <div class="col-lg-8 fv-row">
-            <select class="form-select form-select-solid form-select-lg fw-bold" name="consultant"
-              formControlName="consultant">
+            <select class="form-select form-select-solid form-select-lg fw-bold" name="consultantId"
+              formControlName="consultantId">
               <option value="" disabled>{{"TRANSLATOR.SELECTION" | translate}}</option>
               <!-- <ng-container *ngFor="let company of companies">
               </ng-container> -->
             </select>
             <div
-              *ngIf="addProjectForm?.get('consultant')?.invalid && (addProjectForm?.get('consultant')?.dirty || addProjectForm?.get('consultant')?.touched)"
+              *ngIf="addProjectForm?.get('consultantId')?.invalid && (addProjectForm?.get('consultantId')?.dirty || addProjectForm?.get('consultantId')?.touched)"
               class="fv-plugins-message-container">
               <div class="fv-help-block">consultant is required</div>
             </div>
@@ -219,7 +207,7 @@
               class="required">{{"PROJECTS.en_date" | translate}}</span></label>
           <div class="col-lg-8 fv-row">
             <input type="date" class="form-control form-control-lg form-control-solid text-start"
-              placeholder="{{'PROJECTS.en_date' | translate}}" name="en_date" formControlName="en_date" readonly  />
+              placeholder="{{'PROJECTS.en_date' | translate}}" name="en_date" formControlName="en_date" readonly />
             <div
               *ngIf="addProjectForm?.get('en_date')?.invalid && (addProjectForm?.get('en_date')?.dirty || addProjectForm?.get('en_date')?.touched)"
               class="fv-plugins-message-container">
@@ -291,14 +279,14 @@
           <label class="col-lg-4 col-form-label fw-bold fs-6"><span
               class="required">{{"PROJECTS.amana_manager" | translate}}</span></label>
           <div class="col-lg-8 fv-row">
-            <select class="form-select form-select-solid form-select-lg fw-bold" name="amana_manager"
-              formControlName="amana_manager">
+            <select class="form-select form-select-solid form-select-lg fw-bold" name="managerId"
+              formControlName="managerId">
               <option value="" disabled>{{"TRANSLATOR.SELECTION" | translate}}</option>
               <!-- <ng-container *ngFor="let company of companies">
             </ng-container> -->
             </select>
             <div
-              *ngIf="addProjectForm?.get('amana_manager')?.invalid && (addProjectForm?.get('amana_manager')?.dirty || addProjectForm?.get('amana_manager')?.touched)"
+              *ngIf="addProjectForm?.get('managerId')?.invalid && (addProjectForm?.get('managerId')?.dirty || addProjectForm?.get('managerId')?.touched)"
               class="fv-plugins-message-container">
               <div class="fv-help-block">manager is required</div>
             </div>

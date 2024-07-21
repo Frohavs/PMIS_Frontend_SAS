@@ -27,4 +27,31 @@ export class ProjectsService {
       headers: httpHeaders
     });
   }
+  addProject(project: any): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/Create`;
+    return this.http.post<any>(url, project, {
+      headers: httpHeaders
+    });
+  }
+  updateProject(project: any): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/Update`;
+    return this.http.put<any>(url, project, {
+      headers: httpHeaders
+    });
+  }
+  deleteProject(id: number): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/Delete/${id}`;
+    return this.http.delete<any>(url, {
+      headers: httpHeaders
+    });
+  }
 }
