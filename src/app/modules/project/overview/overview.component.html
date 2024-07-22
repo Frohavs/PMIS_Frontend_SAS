@@ -71,7 +71,7 @@
             <th class="max-w-100px">{{"PROJECTS.Project" | translate}}</th>
             <th class="max-w-100px">{{"PROJECTS.contract_no" | translate}}</th>
             <th class="min-w-200px">{{"PROJECTS.Consultant" | translate}}</th>
-            <th class="max-w-110px">{{"PROJECTS.Stage" | translate}}</th>
+            <th class="max-w-110px">{{"PROJECTS.Sector" | translate}}</th>
             <th class="max-w-100px text-end">Actions</th>
           </tr>
         </thead>
@@ -87,22 +87,19 @@
             </td>
             <td>
               <div class="d-flex align-items-center">
-                <div class="symbol symbol-45px me-5">
-                  <img src="./assets/media/icons/project.png" alt="img" />
-                </div>
                 <div class="d-flex justify-content-start flex-column">
                   <a class="text-gray-900 fw-bolder text-hover-primary fs-6">
-                    Project name
+                    {{project?.nameAr}}
                   </a>
                   <span class="text-muted fw-bold text-muted d-block fs-7">
-                    en name
+                    {{project?.name}}
                   </span>
                 </div>
               </div>
             </td>
             <td>
               <a class="text-gray-900 fw-bolder text-hover-primary d-block fs-6">
-                684654654
+                {{project?.contractNo}}
               </a>
             </td>
             <td>
@@ -110,7 +107,7 @@
                 <div class="col-lg-10 fv-row">
                   <select class="form-select form-select-solid form-select-lg fw-bold" name="Consultant"
                   (change)="navigateTo($event)">
-                    <option value="" selected disabled>{{"PROJECTS.Consultant" | translate}}</option>
+                    <option value="" selected disabled>{{project?.consultantName}}</option>
                     <ng-container *ngFor="let option of projectOptions">
                       <option [value]="option?.route">{{option?.name}}</option>
                     </ng-container>
@@ -121,7 +118,7 @@
 
             <td>
               <a class="text-gray-900 fw-bolder text-hover-primary d-block fs-6">
-                project sector
+                {{project?.projectSectorName}}
               </a>
             </td>
             <td>
