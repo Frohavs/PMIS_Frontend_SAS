@@ -11,7 +11,7 @@ import { SweetAlertOptions } from 'sweetalert2';
 export class UpdateEotComponent implements OnInit {
 
   @ViewChild('UpdateModal') UpdateModal!: any;
-  EotModel = { eotDays: 0, eotApprovedDays: 0, eotFinishDate: new Date(), eotReason: '', eotAttachment: '' };
+  EotModel = { eotDays: 0, eotApprovedDays: 0, eotFinishDate: '', eotReason: '', eotAttachment: '' };
 
   // modal configs
   isLoading = false;

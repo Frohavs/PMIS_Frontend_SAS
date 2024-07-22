@@ -158,41 +158,39 @@
     <div class="modal-body">
       <div class="d-flex flex-column scroll-y me-n7 pe-7 mw-650px">
 
-        <div class="collapse show" #collapse1="ngbCollapse" [(ngbCollapse)]="isCollapsed1">
-          <div class="fv-row mb-3">
-            <label class="required fw-semibold fs-6 mb-2">EOT Days</label>
-            <input type="number" class="form-control form-control-solid" name="name" [(ngModel)]="EotModel.eotDays"
-              #name="ngModel" required />
-          </div>
-          <div class="fv-row mb-3">
-            <label class="required fw-semibold fs-6 mb-2">EOT Approved Days</label>
-            <input type="number" class="form-control form-control-solid" name="name"
-              [(ngModel)]="EotModel.eotApprovedDays" #name="ngModel" required />
-          </div>
-
-          <div class="fv-row mb-3">
-            <label class="required fw-semibold fs-6 mb-2">Expected Finish Date</label>
-            <input type="number" class="form-control form-control-solid" name="name"
-              [(ngModel)]="EotModel.eotFinishDate" #name="ngModel" required />
-          </div>
-
-          <div class="fv-row mb-3">
-            <label class="required fw-semibold fs-6 mb-2">Reason</label>
-            <textarea class="form-control form-control-solid" name="name" [(ngModel)]="EotModel.eotReason"
-              #name="ngModel" required rows="4"></textarea>
-          </div>
-
-          <label class="col-lg-12 col-form-label fw-bold fs-6">
-            <span>
-              Attachments
-            </span>
-          </label>
-          <div class="col-lg-12 fv-row">
-            <input type="file" class="form-control form-control-solid" name="name" [(ngModel)]="EotModel.eotAttachment"
-              #name="ngModel" required />
-          </div>
-
+        <div class="fv-row mb-3">
+          <label class="fw-semibold fs-6 mb-2">EOT Days</label>
+          <input type="number" class="form-control form-control-solid" name="eotDays" [(ngModel)]="EotModel.eotDays"
+            #name="ngModel" />
         </div>
+        <div class="fv-row mb-3">
+          <label class="fw-semibold fs-6 mb-2">EOT Approved Days</label>
+          <input disabled  type="text" class="form-control form-control-solid" name="eotApprovedDays"
+            [(ngModel)]="EotModel.eotApprovedDays" #name="ngModel" />
+        </div>
+
+        <div class="fv-row mb-3">
+          <label class="fw-semibold fs-6 mb-2">Expected Finish Date</label>
+          <input disabled  type="text" class="form-control form-control-solid" name="eotFinishDate" [(ngModel)]="EotModel.eotFinishDate"
+            #name="ngModel" />
+        </div>
+
+        <div class="fv-row mb-3">
+          <label class="fw-semibold fs-6 mb-2">Reason</label>
+          <textarea class="form-control form-control-solid" name="eotReason" [(ngModel)]="EotModel.eotReason" #name="ngModel"
+            required rows="3"></textarea>
+        </div>
+
+        <label class="col-lg-12 col-form-label fw-bold fs-6">
+          <span>
+            Eot Attachments
+          </span>
+        </label>
+        <div class="col-lg-12 fv-row">
+          <input type="file" class="form-control form-control-solid" name="eotAttachment" [(ngModel)]="EotModel.eotAttachment"
+            #name="ngModel" required />
+        </div>
+
       </div>
     </div>
     <div class="modal-footer flex-center">
