@@ -78,10 +78,9 @@
               class="required">{{"PROJECTS.project_name" | translate}}</span></label>
           <div class="col-lg-8 fv-row">
             <input type="text" class="form-control form-control-lg form-control-solid text-start"
-              placeholder="{{'PROJECTS.project_name' | translate}}" name="project_name"
-              formControlName="project_name" />
+              placeholder="{{'PROJECTS.project_name' | translate}}" name="name" formControlName="name" />
             <div
-              *ngIf="addProjectForm?.get('project_name')?.invalid && (addProjectForm?.get('project_name')?.dirty || addProjectForm?.get('project_name')?.touched)"
+              *ngIf="addProjectForm?.get('name')?.invalid && (addProjectForm?.get('name')?.dirty || addProjectForm?.get('name')?.touched)"
               class="fv-plugins-message-container">
               <div class="fv-help-block">project name is required</div>
             </div>
@@ -127,10 +126,9 @@
               class="required">{{"PROJECTS.project_nameEn" | translate}}</span></label>
           <div class="col-lg-8 fv-row">
             <input type="text" class="form-control form-control-lg form-control-solid text-start"
-              placeholder="{{'PROJECTS.project_nameEn' | translate}}" name="project_nameEn"
-              formControlName="project_nameEn" />
+              placeholder="{{'PROJECTS.project_nameEn' | translate}}" name="nameAr" formControlName="nameAr" />
             <div
-              *ngIf="addProjectForm?.get('project_nameEn')?.invalid && (addProjectForm?.get('project_nameEn')?.dirty || addProjectForm?.get('project_nameEn')?.touched)"
+              *ngIf="addProjectForm?.get('nameAr')?.invalid && (addProjectForm?.get('nameAr')?.dirty || addProjectForm?.get('nameAr')?.touched)"
               class="fv-plugins-message-container">
               <div class="fv-help-block">english name is required</div>
             </div>
@@ -218,27 +216,12 @@
 
         <div class="row mb-6">
           <label class="col-lg-4 col-form-label fw-bold fs-6"><span
-              class="required">{{"PROJECTS.program_name" | translate}}</span></label>
-          <div class="col-lg-8 fv-row">
-            <input type="text" class="form-control form-control-lg form-control-solid text-start"
-              placeholder="{{'PROJECTS.program_name' | translate}}" name="program_name"
-              formControlName="program_name" />
-            <div
-              *ngIf="addProjectForm?.get('program_name')?.invalid && (addProjectForm?.get('program_name')?.dirty || addProjectForm?.get('program_name')?.touched)"
-              class="fv-plugins-message-container">
-              <div class="fv-help-block">english name is required</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="row mb-6">
-          <label class="col-lg-4 col-form-label fw-bold fs-6"><span
               class="required">{{"PROJECTS.contract_no" | translate}}</span></label>
           <div class="col-lg-8 fv-row">
             <input type="number" class="form-control form-control-lg form-control-solid text-start"
-              placeholder="{{'PROJECTS.contract_no' | translate}}" name="contract_no" formControlName="contract_no" />
+              placeholder="{{'PROJECTS.contract_no' | translate}}" name="contractNo" formControlName="contractNo" />
             <div
-              *ngIf="addProjectForm?.get('contract_no')?.invalid && (addProjectForm?.get('contract_no')?.dirty || addProjectForm?.get('contract_no')?.touched)"
+              *ngIf="addProjectForm?.get('contractNo')?.invalid && (addProjectForm?.get('contractNo')?.dirty || addProjectForm?.get('contractNo')?.touched)"
               class="fv-plugins-message-container">
               <div class="fv-help-block">english name is required</div>
             </div>
@@ -265,10 +248,10 @@
               class="required">{{"PROJECTS.project_value" | translate}}</span></label>
           <div class="col-lg-8 fv-row">
             <input type="number" class="form-control form-control-lg form-control-solid text-start"
-              placeholder="{{'PROJECTS.project_value' | translate}}" name="project_value"
-              formControlName="project_value" />
+              placeholder="{{'PROJECTS.project_value' | translate}}" name="originalValue"
+              formControlName="originalValue" />
             <div
-              *ngIf="addProjectForm?.get('project_value')?.invalid && (addProjectForm?.get('project_value')?.dirty || addProjectForm?.get('project_value')?.touched)"
+              *ngIf="addProjectForm?.get('originalValue')?.invalid && (addProjectForm?.get('originalValue')?.dirty || addProjectForm?.get('originalValue')?.touched)"
               class="fv-plugins-message-container">
               <div class="fv-help-block">english name is required</div>
             </div>
@@ -282,8 +265,9 @@
             <select class="form-select form-select-solid form-select-lg fw-bold" name="managerId"
               formControlName="managerId">
               <option value="" disabled>{{"TRANSLATOR.SELECTION" | translate}}</option>
-              <!-- <ng-container *ngFor="let company of companies">
-            </ng-container> -->
+              <ng-container *ngFor="let manager of managers">
+                <option [value]="manager?.id">{{manager?.name | translate}}</option>
+              </ng-container>
             </select>
             <div
               *ngIf="addProjectForm?.get('managerId')?.invalid && (addProjectForm?.get('managerId')?.dirty || addProjectForm?.get('managerId')?.touched)"

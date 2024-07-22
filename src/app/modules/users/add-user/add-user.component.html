@@ -81,7 +81,7 @@
             <select class="form-select form-select-solid form-select-lg fw-bold" name="Type" formControlName="roleIds">
               <option value="" disabled>{{"TRANSLATOR.SELECTION" | translate}}</option>
               <ng-container *ngFor="let role of roles">
-                <option [value]="role?.name">{{role?.name}}</option>
+                <option [value]="role?.id">{{role?.name}}</option>
               </ng-container>
             </select>
             <div

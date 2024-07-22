@@ -9,6 +9,7 @@ import { RoleService } from 'src/app/services/role.service';
 import { SweetAlertOptions } from 'sweetalert2';
 import { ClassificationTypes, ContractStatus, ProjectSectors } from '../Dropdown-Types';
 import { AreaDistrictService } from 'src/app/services/area-district.service';
+import { NewUserService } from 'src/app/services/new-user.service';
 
 @Component({
   selector: 'app-create-project',
@@ -27,6 +28,7 @@ export class CreateProjectComponent implements OnInit {
   classification: any[] = ClassificationTypes;
   Districts: any[] = [];
   municipalities: any[] = [];
+  managers: any[] = [];
   private unsubscribe: Subscription[] = [];
 
   swalOptions: SweetAlertOptions = {};
@@ -38,9 +40,9 @@ export class CreateProjectComponent implements OnInit {
     private cdr: ChangeDetectorRef,
     private formBuilder: FormBuilder,
     private activatedRoute: ActivatedRoute,
+    private newUserService: NewUserService,
+    private projectsService: ProjectsService,
     private areaDistrictService: AreaDistrictService,
-    private roleService: RoleService,
-    private projectsService: ProjectsService
   ) {
   }
 
@@ -57,6 +59,9 @@ export class CreateProjectComponent implements OnInit {
     this.areaDistrictService.getDistricts().subscribe(res => {
       this.Districts = res.data;
     });
+    this.newUserService.getManagerUsers().subscribe(res => {
+      this.managers = res.data;
+    });
   }
 
   initializeUserForm() {
@@ -64,15 +69,14 @@ export class CreateProjectComponent implements OnInit {
       contractStatus: ['', Validators.required],
       classification: ['', Validators.required],
       projectSector: ['', Validators.required],
-      project_name: ['', Validators.required],
-      project_nameEn: ['', Validators.required],
+      nameAr: ['', Validators.required],
+      name: ['', Validators.required],
       contractorId: ['', Validators.required],
       consultantId: ['', Validators.required],
       duration: ['', Validators.required],// Original Duration
-      program_name: ['', Validators.required],
-      contract_no: ['', Validators.required],
+      contractNo: ['', Validators.required],
       contract_date: ['', Validators.required],
-      project_value: ['', Validators.required],
+      originalValue: ['', Validators.required],
       managerId: ['', Validators.required],
       areaId: ['', Validators.required],
       districtId: ['', Validators.required],
@@ -100,8 +104,24 @@ export class CreateProjectComponent implements OnInit {
   }
 
   saveProject() {
+    // debugger
     if (!this.projectId) {
-      const payload = { ...this.addProjectForm.value };
+      const payload = {
+        name: this.addProjectForm.value.name,
+        nameAr: this.addProjectForm.value.nameAr,
+        classification: +this.addProjectForm.value.classification,
+        contractStatus: +this.addProjectForm.value.contractStatus,
+        projectSector: +this.addProjectForm.value.projectSector,
+        contractNo: this.addProjectForm.value.contractNo,
+        executionStartDate: new Date(),
+        createdDate: new Date(),
+        originalFinishDate: new Date(new Date().setFullYear(new Date().getFullYear() + 1)),
+        originalValue: +this.addProjectForm.value.originalValue,
+        consultantId: +this.addProjectForm.value.consultantId,
+        contractorId: +this.addProjectForm.value.contractorId,
+        managerId: +this.addProjectForm.value.managerId,
+        districtId: +this.addProjectForm.value.districtId
+      };
       this.projectsService.addProject(payload).subscribe(res => {
         this.router.navigateByUrl('projects');
         this.showAlert({ icon: 'success', title: 'Success!', text: 'Project Added successfully!' });

@@ -6,6 +6,7 @@ import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
 import { NewUserService } from 'src/app/services/new-user.service';
 import { SweetAlertOptions } from 'sweetalert2';
 import { PROJECT_OPTIONS } from './project-options';
+import { ProjectsService } from 'src/app/services/projects.service';
 
 @Component({
   selector: 'app-overview',
@@ -16,6 +17,7 @@ export class OverviewComponent {
   Add_text: string;
   Search_text: string;
   dataList: any[] = []
+  totalCount: number;
   projectOptions: any[] = PROJECT_OPTIONS;
 
   // modal configs
@@ -35,7 +37,8 @@ export class OverviewComponent {
     private cdr: ChangeDetectorRef,
     private router: Router,
     private translate: TranslateService,
-    private newUserService: NewUserService
+    private newUserService: NewUserService,
+    private projectsService: ProjectsService,
   ) {
     this.Add_text = this.translate.instant('PROJECTS.Add_Project');
     this.Search_text = this.translate.instant('PROJECTS.Search');
@@ -46,11 +49,12 @@ export class OverviewComponent {
   }
 
   initializeProjectData() {
-    this.dataList = [{ projectName: '' }];
-    this.cdr.detectChanges();
-    // this.newUserService.getAll().subscribe(res => {
-
-    // })
+    this.projectsService.getAll().subscribe(res => {
+      console.log(res.data.items);
+      this.totalCount = res?.data?.totalcount;
+      this.dataList = res?.data?.items;
+      this.cdr.detectChanges();
+    })
   }
 
   checkAll(event: Event) {

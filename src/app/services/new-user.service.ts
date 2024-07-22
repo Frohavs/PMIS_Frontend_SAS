@@ -49,6 +49,16 @@ export class NewUserService {
     });
   }
 
+  getManagerUsers(): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/GetUserType?role=1`;
+    return this.http.get<IUserModel>(url, {
+      headers: httpHeaders
+    });
+  }
+
   registerUser(user: string): Observable<any> {
     const httpHeaders = new HttpHeaders({
       Authorization: `Bearer ${this.token}`,
