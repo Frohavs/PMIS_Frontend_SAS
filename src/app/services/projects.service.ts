@@ -54,4 +54,25 @@ export class ProjectsService {
       headers: httpHeaders
     });
   }
+
+  updateEot(eot: any): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/CreateEOT`;
+    return this.http.put<any>(url, eot, {
+      headers: httpHeaders
+    });
+  }
+
+  updateVariation(variation: any): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/CreateVo`;
+    return this.http.put<any>(url, variation, {
+      headers: httpHeaders
+    });
+  }
+
 }
