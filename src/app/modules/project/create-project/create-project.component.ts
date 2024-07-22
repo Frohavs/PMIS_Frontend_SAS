@@ -10,6 +10,7 @@ import { SweetAlertOptions } from 'sweetalert2';
 import { ClassificationTypes, ContractStatus, ProjectSectors } from '../Dropdown-Types';
 import { AreaDistrictService } from 'src/app/services/area-district.service';
 import { NewUserService } from 'src/app/services/new-user.service';
+import { VendorService } from 'src/app/services/vendors.service';
 
 @Component({
   selector: 'app-create-project',
@@ -29,6 +30,8 @@ export class CreateProjectComponent implements OnInit {
   Districts: any[] = [];
   municipalities: any[] = [];
   managers: any[] = [];
+  consultants: any[] = [];
+  contractors: any[] = [];
   private unsubscribe: Subscription[] = [];
 
   swalOptions: SweetAlertOptions = {};
@@ -41,6 +44,7 @@ export class CreateProjectComponent implements OnInit {
     private formBuilder: FormBuilder,
     private activatedRoute: ActivatedRoute,
     private newUserService: NewUserService,
+    private vendorService: VendorService,
     private projectsService: ProjectsService,
     private areaDistrictService: AreaDistrictService,
   ) {
@@ -61,6 +65,12 @@ export class CreateProjectComponent implements OnInit {
     });
     this.newUserService.getManagerUsers().subscribe(res => {
       this.managers = res.data;
+    });
+    this.vendorService.getVendorType(1).subscribe(res => {
+      this.consultants = res.data;
+    });
+    this.vendorService.getVendorType(2).subscribe(res => {
+      this.contractors = res.data;
     });
   }
 

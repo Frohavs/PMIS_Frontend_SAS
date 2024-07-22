@@ -142,9 +142,9 @@
             <select class="form-select form-select-solid form-select-lg fw-bold" name="contractorId"
               formControlName="contractorId">
               <option value="" disabled>{{"TRANSLATOR.SELECTION" | translate}}</option>
-              <!-- <ng-container *ngFor="let contractor of contractors">
+              <ng-container *ngFor="let contractor of contractors">
                 <option [value]="contractor.id">{{contractor?.name}}</option>
-              </ng-container> -->
+              </ng-container>
             </select>
             <div
               *ngIf="addProjectForm?.get('contractorId')?.invalid && (addProjectForm?.get('contractorId')?.dirty || addProjectForm?.get('contractorId')?.touched)"
@@ -161,8 +161,9 @@
             <select class="form-select form-select-solid form-select-lg fw-bold" name="consultantId"
               formControlName="consultantId">
               <option value="" disabled>{{"TRANSLATOR.SELECTION" | translate}}</option>
-              <!-- <ng-container *ngFor="let company of companies">
-              </ng-container> -->
+              <ng-container *ngFor="let consultant of consultants">
+                <option [value]="consultant.id">{{consultant?.name}}</option>
+              </ng-container>
             </select>
             <div
               *ngIf="addProjectForm?.get('consultantId')?.invalid && (addProjectForm?.get('consultantId')?.dirty || addProjectForm?.get('consultantId')?.touched)"
@@ -218,7 +219,7 @@
           <label class="col-lg-4 col-form-label fw-bold fs-6"><span
               class="required">{{"PROJECTS.contract_no" | translate}}</span></label>
           <div class="col-lg-8 fv-row">
-            <input type="number" class="form-control form-control-lg form-control-solid text-start"
+            <input type="text" class="form-control form-control-lg form-control-solid text-start"
               placeholder="{{'PROJECTS.contract_no' | translate}}" name="contractNo" formControlName="contractNo" />
             <div
               *ngIf="addProjectForm?.get('contractNo')?.invalid && (addProjectForm?.get('contractNo')?.dirty || addProjectForm?.get('contractNo')?.touched)"

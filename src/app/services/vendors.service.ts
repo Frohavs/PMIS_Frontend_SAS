@@ -36,6 +36,15 @@ export class VendorService {
       headers: httpHeaders
     });
   }
+  getVendorType(id: number): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/GetCompanyVendor?vendorTypeId=${id}`;
+    return this.http.get<any>(url, {
+      headers: httpHeaders
+    });
+  }
 
   addVendor(user: string): Observable<any> {
     const httpHeaders = new HttpHeaders({

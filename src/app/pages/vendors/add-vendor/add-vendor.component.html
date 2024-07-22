@@ -23,12 +23,12 @@
 
 
             <div class="row mb-6">
-              <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="required">CR Number</span></label>
+              <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="required">Email</span></label>
               <div class="col-lg-8 fv-row">
-                <input type="text" class="form-control form-control-lg form-control-solid" placeholder="cr number"
-                  formControlName="crNumber" name="crNumber" />
+                <input type="email" class="form-control form-control-lg form-control-solid" placeholder="email"
+                  formControlName="email" name="email" />
                 <div
-                  *ngIf="addVendorForm?.get('crNumber')?.invalid && (addVendorForm?.get('crNumber')?.dirty || addVendorForm?.get('crNumber')?.touched)"
+                  *ngIf="addVendorForm?.get('email')?.invalid && (addVendorForm?.get('email')?.dirty || addVendorForm?.get('email')?.touched)"
                   class="fv-plugins-message-container">
                   <div class="fv-help-block">Type is required</div>
                 </div>
@@ -36,8 +36,7 @@
             </div>
 
             <div class="row mb-6">
-              <label class="col-lg-4 col-form-label fw-bold fs-6"><span
-                  class="required">Vendor Type</span></label>
+              <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="required">Vendor Type</span></label>
               <div class="col-lg-8 fv-row">
                 <select class="form-select form-select-solid form-select-lg fw-bold" name="vendorTypeId"
                   formControlName="vendorTypeId">
@@ -71,8 +70,8 @@
               <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="required">Vendor English
                   Name</span></label>
               <div class="col-lg-8 fv-row">
-                <input type="text" class="form-control form-control-lg form-control-solid" placeholder="Vendor English Name"
-                  formControlName="name" name="name" />
+                <input type="text" class="form-control form-control-lg form-control-solid"
+                  placeholder="Vendor English Name" formControlName="name" name="name" />
                 <div
                   *ngIf="addVendorForm?.get('name')?.invalid && (addVendorForm?.get('name')?.dirty || addVendorForm?.get('name')?.touched)"
                   class="fv-plugins-message-container">
@@ -82,12 +81,38 @@
             </div>
 
             <div class="row mb-6">
-              <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="required">Address</span></label>
+              <label class="col-lg-4 col-form-label fw-bold fs-6"><span>Phone</span></label>
               <div class="col-lg-8 fv-row">
-                <textarea class="form-control form-control-lg form-control-solid" placeholder="address"
-                  formControlName="address" name="address" rows="4"></textarea>
+                <input type="text" class="form-control form-control-lg form-control-solid" placeholder="phone"
+                  formControlName="phone" name="phone" />
+                <div
+                  *ngIf="addVendorForm?.get('phone')?.invalid && (addVendorForm?.get('phone')?.dirty || addVendorForm?.get('phone')?.touched)"
+                  class="fv-plugins-message-container">
+                  <div class="fv-help-block">Type is required</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row mb-6">
+              <label class="col-lg-4 col-form-label fw-bold fs-6"><span>Address</span></label>
+              <div class="col-lg-8 fv-row">
+                <input type="text" class="form-control form-control-lg form-control-solid" placeholder="address"
+                  formControlName="address" name="address" />
                 <div
                   *ngIf="addVendorForm?.get('address')?.invalid && (addVendorForm?.get('address')?.dirty || addVendorForm?.get('address')?.touched)"
+                  class="fv-plugins-message-container">
+                  <div class="fv-help-block">Type is required</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row mb-6">
+              <label class="col-lg-4 col-form-label fw-bold fs-6"><span>Description</span></label>
+              <div class="col-lg-8 fv-row">
+                <textarea class="form-control form-control-lg form-control-solid" placeholder="description"
+                  formControlName="description" name="description" rows="4"></textarea>
+                <div
+                  *ngIf="addVendorForm?.get('description')?.invalid && (addVendorForm?.get('description')?.dirty || addVendorForm?.get('description')?.touched)"
                   class="fv-plugins-message-container">
                   <div class="fv-help-block">Type is required</div>
                 </div>
@@ -113,3 +138,7 @@
     </div>
   </div>
 </div>
+
+<!-- modal -->
+<swal #noticeSwal [swalOptions]="swalOptions">
+</swal>
