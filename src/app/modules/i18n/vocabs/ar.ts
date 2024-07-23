@@ -80,7 +80,7 @@ export const locale = {
       Door: 'نوع الميزانية',
       st_date: 'تاريخ بدء المشروع',
       duration: 'مدة العقد الأصلية(يوم)',
-      en_date: 'تاريخ انتهاء العقد الأصلي',
+      originalFinishDate: 'تاريخ انتهاء العقد الأصلي',
       program_name: 'اسم البرنامج',
       contract_date: 'تاريخ العقد',
       etimad_number: 'الرقم المرجعي للعقد',

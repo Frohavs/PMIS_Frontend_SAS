@@ -50,7 +50,6 @@ export class OverviewComponent {
 
   initializeProjectData() {
     this.projectsService.getAll().subscribe(res => {
-      console.log(res.data.items);
       this.totalCount = res?.data?.totalcount;
       this.dataList = res?.data?.items;
       this.cdr.detectChanges();
@@ -72,15 +71,15 @@ export class OverviewComponent {
     this.router.navigateByUrl('projects/create')
   }
 
-  editUser(user: any) {
-    this.router.navigateByUrl('projects/edit/' + user.id)
+  editProject(project: any) {
+    this.router.navigateByUrl('projects/edit/' + project.id)
   }
 
-  deleteUser(user: any) {
+  deleteProject(project: any) {
     this.deleteSwal.fire().then((clicked) => {
       if (clicked.isConfirmed) {
         this.isLoading = true;
-        this.newUserService.deleteUser(user.id).subscribe({
+        this.projectsService.deleteProject(project.id).subscribe({
           next: (res) => {
             this.showAlert({ icon: 'success', title: 'Success!', text: 'Project Deleted successfully!' });
             setTimeout(() => {

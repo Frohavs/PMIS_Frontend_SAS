@@ -123,10 +123,10 @@
             </td>
             <td>
               <div class="d-flex justify-content-end flex-shrink-0" *ngIf="checkAdmin(project.userName)">
-                <a class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1" (click)="editUser(project)">
+                <a class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1" (click)="editProject(project)">
                   <app-keenicon name="pencil" class="fs-3"></app-keenicon>
                 </a>
-                <a class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm" (click)="deleteUser(project)">
+                <a class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm" (click)="deleteProject(project)">
                   <app-keenicon name="trash" class="fs-3"></app-keenicon>
                 </a>
               </div>
@@ -136,7 +136,7 @@
       </table>
 
       <div class="d-flex flex-stack flex-wrap pt-10">
-        <div class="fs-6 fw-bold text-gray-700">Showing 5 to 10 of {{totalCount}} entries</div>
+        <div class="fs-6 fw-bold text-gray-700">Showing {{totalCount}} to 10 of {{totalCount}} entries</div>
 
         <ul class="pagination">
           <li class="page-item previous">

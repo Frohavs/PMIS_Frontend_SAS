@@ -80,7 +80,7 @@ export const locale = {
       Door: 'Door',
       st_date: 'Execution Start Date',
       duration: 'Original Duration(Days)',
-      en_date: 'Original Finish Date',
+      originalFinishDate: 'Original Finish Date',
       program_name: 'Program Name',
       contract_date: 'Contract Date',
       etimad_number: 'Etimad Number',

@@ -178,9 +178,9 @@
               class="required">{{"PROJECTS.st_date" | translate}}</span></label>
           <div class="col-lg-8 fv-row">
             <input type="date" class="form-control form-control-lg form-control-solid text-start"
-              placeholder="{{'PROJECTS.st_date' | translate}}" name="st_date" formControlName="st_date" />
+              placeholder="{{'PROJECTS.st_date' | translate}}" name="executionStartDate" formControlName="executionStartDate" />
             <div
-              *ngIf="addProjectForm?.get('st_date')?.invalid && (addProjectForm?.get('st_date')?.dirty || addProjectForm?.get('st_date')?.touched)"
+              *ngIf="addProjectForm?.get('executionStartDate')?.invalid && (addProjectForm?.get('executionStartDate')?.dirty || addProjectForm?.get('executionStartDate')?.touched)"
               class="fv-plugins-message-container">
               <div class="fv-help-block">Execution Start Date required</div>
             </div>
@@ -189,28 +189,39 @@
 
         <div class="row mb-6">
           <label class="col-lg-4 col-form-label fw-bold fs-6"><span
-              class="required">{{"PROJECTS.duration" | translate}}</span></label>
-          <div class="col-lg-8 fv-row">
+              class="required">{{durationDays.value ? 'Original Duration(Days)' : 'Original Duration(Month)'}}</span></label>
+          <div class="col-lg-4 fv-row">
             <input type="number" class="form-control form-control-lg form-control-solid text-start"
-              placeholder="{{'PROJECTS.duration' | translate}}" name="duration" formControlName="duration" />
+              placeholder="{{durationDays.value ? 'Original Duration(Days)' : 'Original Duration(Month)'}}" name="duration" formControlName="duration" min="" />
             <div
               *ngIf="addProjectForm?.get('duration')?.invalid && (addProjectForm?.get('duration')?.dirty || addProjectForm?.get('duration')?.touched)"
               class="fv-plugins-message-container">
               <div class="fv-help-block">duration is required</div>
             </div>
           </div>
+
+          <div class="col-lg-4 d-flex align-items-center">
+            <div class="col-lg-8 d-flex align-items-center">
+              <div class="form-check form-check-solid form-switch d-flex align-items-center">
+                <input class="form-check-input w-45px h-30px me-2" type="checkbox" name="durationDays"
+                  formControlName="durationDays" />
+                <label class="form-check-label">{{durationDays.value ? 'Days' : 'Month'}}</label>
+              </div>
+            </div>
+          </div>
+
         </div>
 
         <div class="row mb-6">
           <label class="col-lg-4 col-form-label fw-bold fs-6"><span
-              class="required">{{"PROJECTS.en_date" | translate}}</span></label>
+              class="required">{{"PROJECTS.originalFinishDate" | translate}}</span></label>
           <div class="col-lg-8 fv-row">
             <input type="date" class="form-control form-control-lg form-control-solid text-start"
-              placeholder="{{'PROJECTS.en_date' | translate}}" name="en_date" formControlName="en_date" readonly />
+              placeholder="{{'PROJECTS.originalFinishDate' | translate}}" name="originalFinishDate" formControlName="originalFinishDate" readonly />
             <div
-              *ngIf="addProjectForm?.get('en_date')?.invalid && (addProjectForm?.get('en_date')?.dirty || addProjectForm?.get('en_date')?.touched)"
+              *ngIf="addProjectForm?.get('originalFinishDate')?.invalid && (addProjectForm?.get('originalFinishDate')?.dirty || addProjectForm?.get('originalFinishDate')?.touched)"
               class="fv-plugins-message-container">
-              <div class="fv-help-block">Execution Start Date required</div>
+              <div class="fv-help-block">{{"originalFinishDate" | translate}} required</div>
             </div>
           </div>
         </div>
@@ -250,7 +261,7 @@
           <div class="col-lg-8 fv-row">
             <input type="number" class="form-control form-control-lg form-control-solid text-start"
               placeholder="{{'PROJECTS.project_value' | translate}}" name="originalValue"
-              formControlName="originalValue" />
+              formControlName="originalValue" min="1" />
             <div
               *ngIf="addProjectForm?.get('originalValue')?.invalid && (addProjectForm?.get('originalValue')?.dirty || addProjectForm?.get('originalValue')?.touched)"
               class="fv-plugins-message-container">
