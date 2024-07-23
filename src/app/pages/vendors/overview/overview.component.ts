@@ -14,7 +14,8 @@ import { SweetAlertOptions } from 'sweetalert2';
 export class OverviewComponent implements OnInit {
   Add_text: string;
   Search_text: string;
-  dataList: any[] = []
+  dataList: any[] = [];
+  totalCount: number;
 
   // modal configs
   isLoading = false;
@@ -45,6 +46,7 @@ export class OverviewComponent implements OnInit {
 
   initializeProjectData() {
     this.vendorService.getAll().subscribe(res => {
+      this.totalCount = res?.data?.totalcount;
       this.dataList = res.data.items;
       this.cdr.detectChanges();
     });

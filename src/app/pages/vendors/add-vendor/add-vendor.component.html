@@ -1,11 +1,10 @@
 <div class="row g-5 g-xl-8 justify-content-between">
   <div class="col-xl-12">
     <div class="card mb-5 mb-xl-8">
-      <!-- begin::Header -->
+
       <div class="card-header align-items-center border-0 mt-4">
         <h3 class="card-title align-items-start flex-column">
           <span class="fw-bolder text-gray-900">{{"VENDORS.Add_Vendor" | translate}}</span>
-          <!-- <span class="text-muted mt-1 fw-bold fs-7">test</span> -->
         </h3>
         <div class="card-toolbar">
           <a (click)="back()" class="btn btn-sm btn-danger d-flex">
@@ -15,12 +14,23 @@
         </div>
       </div>
 
-
       <div class="card-body pt-3">
-
         <form [formGroup]="addVendorForm" class="form">
           <div class="card-body border-top p-9">
 
+
+            <div class="row mb-6">
+              <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="required">{{"VENDORS.cr_number" | translate}}</span></label>
+              <div class="col-lg-8 fv-row">
+                <input type="text" class="form-control form-control-lg form-control-solid" placeholder="{{'VENDORS.cr_number' | translate}}"
+                  formControlName="crNumber" name="crNumber" />
+                <div
+                  *ngIf="addVendorForm?.get('crNumber')?.invalid && (addVendorForm?.get('crNumber')?.dirty || addVendorForm?.get('crNumber')?.touched)"
+                  class="fv-plugins-message-container">
+                  <div class="fv-help-block">Type is required</div>
+                </div>
+              </div>
+            </div>
 
             <div class="row mb-6">
               <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="required">Email</span></label>
@@ -30,7 +40,7 @@
                 <div
                   *ngIf="addVendorForm?.get('email')?.invalid && (addVendorForm?.get('email')?.dirty || addVendorForm?.get('email')?.touched)"
                   class="fv-plugins-message-container">
-                  <div class="fv-help-block">Type is required</div>
+                  <div class="fv-help-block">email is required</div>
                 </div>
               </div>
             </div>

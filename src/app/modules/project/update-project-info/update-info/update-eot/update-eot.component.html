@@ -1,18 +1,28 @@
 <div class="row g-5 g-xl-8 justify-content-between">
   <div class="col-xl-6">
+
+    <!-- <ng-container *ngIf="updateInfo">
+      <div class="mb-10 bg-light-success p-8 rounded">
+        <div class="text-danger fs-5 fw-bold">
+          You must click on final submit after updating basic Info to confirm the update
+        </div>
+      </div>
+    </ng-container> -->
+
+
     <div class="card mb-5 mb-xl-8">
       <!-- begin::Header -->
       <div class="card-header align-items-center border-0 mt-4">
         <h3 class="card-title align-items-start flex-column">
           <span class="fw-bolder text-gray-900">Project Information</span>
-          <span class="text-muted mt-1 fw-bold fs-7">test</span>
+          <!-- <span class="text-muted mt-1 fw-bold fs-7">test</span> -->
         </h3>
       </div>
       <!-- end::Header -->
       <!-- begin::Body -->
       <div class="card-body pt-3">
         <!-- begin::Item -->
-        <div class="d-flex align-items-sm-center mb-3">
+        <div class="d-flex align-items-sm-center mb-7">
 
           <!-- begin::Title -->
           <div class="d-flex flex-row-fluid flex-wrap align-items-center">
@@ -20,20 +30,21 @@
               <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
                 Project name
               </a>
-              <span class="text-muted fw-bold d-block pt-1">Design of Heat Cave Resort</span>
+              <span class="text-muted fw-bold d-block pt-1">{{projectDetails?.nameAr  ||  '--'}}</span>
             </div>
             <div class="flex-grow-1 me-2">
               <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
                 Contract Date
               </a>
-              <span class="text-muted fw-bold d-block pt-1">2021-05-12</span>
+              <span
+                class="text-muted fw-bold d-block pt-1">{{projectDetails?.createdDate?.slice(0, 10)  ||  '--'}}</span>
             </div>
           </div>
           <!-- end::Title -->
         </div>
         <!-- end::Item -->
         <!-- begin::Item -->
-        <div class="d-flex align-items-sm-center mb-3">
+        <div class="d-flex align-items-sm-center mb-7">
 
           <!-- begin::Title -->
           <div class="d-flex flex-row-fluid flex-wrap align-items-center">
@@ -41,20 +52,20 @@
               <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
                 Contract No
               </a>
-              <span class="text-muted fw-bold d-block pt-1">57</span>
+              <span class="text-muted fw-bold d-block pt-1">{{projectDetails?.contractNo  ||  '--'}}</span>
             </div>
             <div class="flex-grow-1 me-2">
               <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
                 Consultant
               </a>
-              <span class="text-muted fw-bold d-block pt-1">SAUDCONSULT</span>
+              <span class="text-muted fw-bold d-block pt-1">{{projectDetails?.consultantName ||  '--'}}</span>
             </div>
           </div>
           <!-- end::Title -->
         </div>
         <!-- end::Item -->
         <!-- begin::Item -->
-        <div class="d-flex align-items-sm-center mb-3">
+        <div class="d-flex align-items-sm-center mb-7">
 
           <!-- begin::Title -->
           <div class="d-flex flex-row-fluid flex-wrap align-items-center">
@@ -62,13 +73,14 @@
               <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
                 Contractor
               </a>
-              <span class="text-muted fw-bold d-block pt-1">N/A</span>
+              <span class="text-muted fw-bold d-block pt-1">{{projectDetails?.contractNo || '--'}}</span>
             </div>
             <div class="flex-grow-1 me-2">
               <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
                 Finish date after extension
               </a>
-              <span class="text-muted fw-bold d-block pt-1">2023-04-10</span>
+              <span
+                class="text-muted fw-bold d-block pt-1">{{projectDetails?.originalFinishDate?.slice(0, 10)  ||  '--'}}</span>
             </div>
           </div>
           <!-- end::Title -->
@@ -81,9 +93,9 @@
           <div class="d-flex flex-row-fluid flex-wrap align-items-center">
             <div class="w-50 me-2">
               <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
-                Amana manager
+                Sector
               </a>
-              <span class="text-muted fw-bold d-block pt-1">manager</span>
+              <span class="text-muted fw-bold d-block pt-1">{{projectDetails?.projectSectorName}}</span>
             </div>
 
           </div>
@@ -111,7 +123,7 @@
       </div>
       <!-- end::Header -->
       <div class="card-body pt-3">
-        <form class="form">
+        <form #EotForm="ngForm" (ngSubmit)="onCardSubmit($event, EotForm)" class="form">
           <div class="card-body border-top p-9">
 
             <div class="row mb-1">
@@ -120,7 +132,7 @@
               </label>
               <div class="col-lg-12 fv-row">
                 <input disabled readonly type="text" class="form-control form-control-lg form-control-solid text-start"
-                  name="planned_progress" value="0" />
+                  name="planned_progress" name="eotDays" [(ngModel)]="eotCard.eotDays" />
               </div>
             </div>
             <div class="row mb-1">
@@ -129,7 +141,7 @@
               </label>
               <div class="col-lg-12 fv-row">
                 <input disabled readonly type="text" class="form-control form-control-lg form-control-solid text-start"
-                  name="planned_progress" value="31" />
+                  name="planned_progress" name="eotDuration" [(ngModel)]="eotCard.eotDuration" />
               </div>
             </div>
             <div class="row mb-1">
@@ -138,7 +150,7 @@
               </label>
               <div class="col-lg-12 fv-row">
                 <input disabled readonly type="text" class="form-control form-control-lg form-control-solid text-start"
-                  name="planned_progress" value="09/12/2025" />
+                  name="planned_progress" name="originalFinishDate" [(ngModel)]="eotCard.originalFinishDate" />
               </div>
             </div>
 
@@ -165,20 +177,20 @@
         </div>
         <div class="fv-row mb-3">
           <label class="fw-semibold fs-6 mb-2">EOT Approved Days</label>
-          <input disabled  type="text" class="form-control form-control-solid" name="eotApprovedDays"
+          <input disabled type="text" class="form-control form-control-solid" name="eotApprovedDays"
             [(ngModel)]="EotModel.eotApprovedDays" #name="ngModel" />
         </div>
 
         <div class="fv-row mb-3">
           <label class="fw-semibold fs-6 mb-2">Expected Finish Date</label>
-          <input disabled  type="text" class="form-control form-control-solid" name="eotFinishDate" [(ngModel)]="EotModel.eotFinishDate"
-            #name="ngModel" />
+          <input disabled type="text" class="form-control form-control-solid" name="eotFinishDate"
+            [(ngModel)]="EotModel.eotFinishDate" #name="ngModel" />
         </div>
 
         <div class="fv-row mb-3">
           <label class="fw-semibold fs-6 mb-2">Reason</label>
-          <textarea class="form-control form-control-solid" name="eotReason" [(ngModel)]="EotModel.eotReason" #name="ngModel"
-            required rows="3"></textarea>
+          <textarea class="form-control form-control-solid" name="eotReason" [(ngModel)]="EotModel.eotReason"
+            #name="ngModel" required rows="3"></textarea>
         </div>
 
         <label class="col-lg-12 col-form-label fw-bold fs-6">
@@ -187,8 +199,8 @@
           </span>
         </label>
         <div class="col-lg-12 fv-row">
-          <input type="file" class="form-control form-control-solid" name="eotAttachment" [(ngModel)]="EotModel.eotAttachment"
-            #name="ngModel" required />
+          <input type="file" class="form-control form-control-solid" name="eotAttachment"
+            [(ngModel)]="EotModel.eotAttachment" #name="ngModel" required />
         </div>
 
       </div>
@@ -208,6 +220,6 @@
   </form>
 </ng-template>
 
- <!-- modal -->
- <swal #noticeSwal [swalOptions]="swalOptions">
+<!-- modal -->
+<swal #noticeSwal [swalOptions]="swalOptions">
 </swal>

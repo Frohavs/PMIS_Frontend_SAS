@@ -1,6 +1,8 @@
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModalOptions, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { TranslateService } from '@ngx-translate/core';
 import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
 import { ProjectsService } from 'src/app/services/projects.service';
 import { SweetAlertOptions } from 'sweetalert2';
@@ -12,8 +14,8 @@ import { SweetAlertOptions } from 'sweetalert2';
 })
 export class UpdateVariationOrderComponent implements OnInit {
 
-  @ViewChild('UpdateModal') UpdateModal!: any;
-  VoModel = { voValue: 0, isIncrement: true, voUpdatedValue: '', voReason: '', voAttachment: '' };
+  projectId: number;
+  projectDetails: any;
 
   // modal configs
   isLoading = false;
@@ -23,16 +25,32 @@ export class UpdateVariationOrderComponent implements OnInit {
     modalDialogClass: 'modal-dialog modal-dialog-centered mw-650px',
   };
   @ViewChild('noticeSwal') noticeSwal!: SwalComponent;
-
+  @ViewChild('UpdateModal') UpdateModal!: any;
+  VoModel = { voValue: 0, isIncrement: true, voUpdatedValue: '', voReason: '', voAttachment: '' };
 
   constructor(
-    private cdr: ChangeDetectorRef,
+    private router: Router,
     private modalService: NgbModal,
+    private cdr: ChangeDetectorRef,
+    private translate: TranslateService,
+    private activatedRoute: ActivatedRoute,
     private projectsService: ProjectsService,
   ) { }
 
   ngOnInit(): void {
-
+    this.activatedRoute.params.subscribe(params => {
+      this.projectId = params['id'];
+      if (this.projectId) {
+        this.projectsService.getByID(this.projectId).subscribe(res => {
+          console.log(res.data);
+          this.projectDetails = res.data;
+          this.cdr.detectChanges();
+          // setTimeout(() => {
+          //   this.editProjectForm(res.data);
+          // }, 1000);
+        });
+      }
+    });
   }
 
   updateEot() {

@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
+import { ProjectsService } from 'src/app/services/projects.service';
 
 @Component({
   selector: 'app-update-project-info',
@@ -9,19 +11,42 @@ import { Router } from '@angular/router';
 export class UpdateProjectInfoComponent implements OnInit {
 
   updateInfo: boolean;
+  projectId: number;
+  projectDetails: any;
+  isLoading: boolean;
 
-  constructor(private router: Router) { }
+  constructor(
+    private router: Router,
+    private cdr: ChangeDetectorRef,
+    private translate: TranslateService,
+    private activatedRoute: ActivatedRoute,
+    private projectsService: ProjectsService,
+  ) { }
 
   ngOnInit(): void {
+    this.activatedRoute.params.subscribe(params => {
+      this.projectId = params['id'];
+      if (this.projectId) {
+        this.projectsService.getByID(this.projectId).subscribe(res => {
+          console.log(res.data);
+          this.projectDetails = res.data;
+          this.cdr.detectChanges();
+          // setTimeout(() => {
+          //   this.editProjectForm(res.data);
+          // }, 1000);
+        });
+      }
+    });
+
   }
 
 
   navigateUpdateStaff() {
-    this.router.navigateByUrl('projects/update-project-staff' + `/${'123'}`);
+    this.router.navigateByUrl('projects/update-project-staff' + `/${this.projectId}`);
   }
 
   navigateUpdateInfo() {
-    this.router.navigateByUrl('projects/update-info' + `/${'123'}`);
+    this.router.navigateByUrl('projects/update-info' + `/${this.projectId}`);
   }
 
   updateProjectInfo() {
@@ -29,10 +54,10 @@ export class UpdateProjectInfoComponent implements OnInit {
   }
 
   navigateUpdateProgress() {
-    this.router.navigateByUrl('projects/update-progress-info' + `/${'123'}`);
+    this.router.navigateByUrl('projects/update-progress-info' + `/${this.projectId}`);
   }
 
   navigateProjectStage() {
-    this.router.navigateByUrl('projects/project-stage-update' + `/${123}`);
+    this.router.navigateByUrl('projects/project-stage-update' + `/${this.projectId}`);
   }
 }

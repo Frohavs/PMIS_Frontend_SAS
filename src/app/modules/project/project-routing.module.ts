@@ -3,7 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { ProjectsComponent } from './projects.component';
 import { OverviewComponent } from './overview/overview.component';
 import { CreateProjectComponent } from './create-project/create-project.component';
-import { ProjectDetailsComponent } from './project-details/project-details.component';
 import { UpdateProjectInfoComponent } from './update-project-info/update-project-info.component';
 import { UpdateProjectStaffComponent } from './update-project-info/update-project-staff/update-project-staff.component';
 import { UpdateProgressInfoComponent } from './update-project-info/update-progress-info/update-progress-info.component';
@@ -28,10 +27,6 @@ const routes: Routes = [
       {
         path: 'edit/:id',
         component: CreateProjectComponent,
-      },
-      {
-        path: ':id',
-        component: ProjectDetailsComponent,
       },
       {
         path: 'update-project-info/:id',

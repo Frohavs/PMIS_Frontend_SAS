@@ -106,7 +106,7 @@
               <div>
                 <div class="col-lg-10 fv-row">
                   <select class="form-select form-select-solid form-select-lg fw-bold" name="Consultant"
-                  (change)="navigateTo($event)">
+                  (change)="navigateTo($event, project?.id)">
                     <option value="" selected disabled>{{project?.consultantName}}</option>
                     <ng-container *ngFor="let option of projectOptions">
                       <option [value]="option?.route">{{option?.name}}</option>

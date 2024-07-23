@@ -37,7 +37,6 @@ export class OverviewComponent {
     private cdr: ChangeDetectorRef,
     private router: Router,
     private translate: TranslateService,
-    private newUserService: NewUserService,
     private projectsService: ProjectsService,
   ) {
     this.Add_text = this.translate.instant('PROJECTS.Add_Project');
@@ -97,9 +96,9 @@ export class OverviewComponent {
     });
   }
 
-  navigateTo(event: any) {
+  navigateTo(event: any, id: number) {
     const route = event?.target.value;
-    this.router.navigateByUrl(route + `/${'123'}`)
+    this.router.navigateByUrl(route + `/${id}`)
   }
 
   showAlert(swalOptions: SweetAlertOptions) {

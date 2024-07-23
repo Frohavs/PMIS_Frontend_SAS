@@ -12,7 +12,6 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { ProjectsComponent } from './projects.component';
 import { OverviewComponent } from './overview/overview.component';
 import { CreateProjectComponent } from './create-project/create-project.component';
-import { ProjectDetailsComponent } from './project-details/project-details.component';
 import { UpdateProjectInfoComponent } from './update-project-info/update-project-info.component';
 import { UpdateProjectStaffComponent } from './update-project-info/update-project-staff/update-project-staff.component';
 import { UpdateProgressInfoComponent } from './update-project-info/update-progress-info/update-progress-info.component';
@@ -27,7 +26,6 @@ import { UpdateVariationOrderComponent } from './update-project-info/update-info
     ProjectsComponent,
     OverviewComponent,
     CreateProjectComponent,
-    ProjectDetailsComponent,
     UpdateProjectInfoComponent,
     UpdateProjectStaffComponent,
     UpdateProgressInfoComponent,

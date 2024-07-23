@@ -27,7 +27,7 @@ export class VendorService {
       headers: httpHeaders
     });
   }
-  getVendor(id: string): Observable<any> {
+  getVendor(id: number | null): Observable<any> {
     const httpHeaders = new HttpHeaders({
       Authorization: `Bearer ${this.token}`,
     });
