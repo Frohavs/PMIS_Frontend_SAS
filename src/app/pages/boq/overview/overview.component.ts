@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
 import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
+import { BoqService } from 'src/app/services/boq.service';
 import { VendorService } from 'src/app/services/vendors.service';
 import { SweetAlertOptions } from 'sweetalert2';
 
@@ -32,8 +33,8 @@ export class OverviewComponent {
   constructor(
     private router: Router,
     private cdr: ChangeDetectorRef,
+    private boqService: BoqService,
     private translate: TranslateService,
-    private vendorService: VendorService
   ) {
     this.Add_text = this.translate.instant('BOQ.Add_Boq');
     this.Search_text = this.translate.instant('BOQ.Search');
@@ -65,17 +66,17 @@ export class OverviewComponent {
     this.router.navigateByUrl('boq/add')
   }
 
-  editUser(user: any) {
+  editBoq(user: any) {
     this.router.navigateByUrl('boq/edit/' + user.id)
   }
 
-  deleteUser(user: any) {
+  deleteBoq(user: any) {
     this.deleteSwal.fire().then((clicked) => {
       if (clicked.isConfirmed) {
         this.isLoading = true;
-        this.vendorService.deleteVendor(user.id).subscribe({
+        this.boqService.deleteBoq(user.id).subscribe({
           next: (res) => {
-            this.showAlert({ icon: 'success', title: 'Success!', text: 'Project Deleted successfully!' });
+            this.showAlert({ icon: 'success', title: 'Success!', text: 'Boq Deleted successfully!' });
             setTimeout(() => {
               this.isLoading = false;
               this.dataList = [];

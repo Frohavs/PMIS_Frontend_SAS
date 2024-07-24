@@ -65,7 +65,7 @@ export class AddVendorComponent implements OnInit {
   }
 
   editVendorForm(data: any) {
-    this.addVendorForm = this.formBuilder.group({
+    this.addVendorForm.patchValue({
       crNumber: data?.crNumber,
       email: data?.email,
       nameAr: data?.nameAr,
