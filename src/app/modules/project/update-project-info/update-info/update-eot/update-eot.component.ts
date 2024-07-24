@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
 import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
+import { AttachmentService } from 'src/app/services/attachment/attachment.service';
 import { ProjectsService } from 'src/app/services/projects.service';
 import { SweetAlertOptions } from 'sweetalert2';
 
@@ -40,6 +41,7 @@ export class UpdateEotComponent implements OnInit {
     private cdr: ChangeDetectorRef,
     private activatedRoute: ActivatedRoute,
     private projectsService: ProjectsService,
+    private attachmentService: AttachmentService
   ) { }
 
   ngOnInit(): void {
@@ -128,7 +130,11 @@ export class UpdateEotComponent implements OnInit {
   onFileSelected(event: any) {
     console.log(event);
     this.selectedFile = <File>event.target.files[0];
-    this.EotModel['eotAttachment'] = this.selectedFile.name;
+    const fd = new FormData();
+    fd.append('Attachment', this.selectedFile, this.selectedFile.name);
+    this.attachmentService.uploadAttachment(fd).subscribe(res => {
+      this.EotModel['eotAttachment'] = this.selectedFile.name;
+    });
   }
 
   onSubmit(event: Event, myForm: NgForm) {
