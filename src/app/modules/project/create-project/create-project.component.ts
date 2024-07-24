@@ -108,7 +108,7 @@ export class CreateProjectComponent implements OnInit, AfterViewInit, OnDestroy 
       areaId: ['', Validators.required],
       districtId: ['', Validators.required],
       executionStartDate: ['', Validators.required],
-      originalFinishDate: [{ value: '', disabled: true }, Validators.required]
+      originalFinishDate: ['']
     });
   }
 
@@ -164,6 +164,7 @@ export class CreateProjectComponent implements OnInit, AfterViewInit, OnDestroy 
         managerId: +this.addProjectForm.value.managerId,
         districtId: +this.addProjectForm.value.districtId
       };
+      debugger
       this.projectsService.addProject(payload).subscribe(res => {
         this.router.navigateByUrl('projects');
         this.showAlert({ icon: 'success', title: 'Success!', text: 'Project Added successfully!' });

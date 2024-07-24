@@ -106,16 +106,17 @@ export class UpdateEotComponent implements OnInit {
 
   getDurationDays() {
     // Date 1: 2024-07-22T22:53:28.997
-    const date1 = new Date(this.projectDetails.originalFinishDate);
+    const date1 = new Date(this.projectDetails?.expectedFinishDate !== '0001-01-01T00:00:00' ? this.projectDetails?.expectedFinishDate : this.projectDetails?.originalFinishDate);
 
     // Date 2: 2025-07-22T22:53:28.997
-    const date2 = new Date(this.projectDetails.executionStartDate);
+    const date2 = new Date(this.projectDetails?.executionStartDate);
 
     // Calculate the difference in milliseconds
     const diffInMilliseconds = date1.getTime() - date2.getTime();
 
     // Convert the difference to days
     const diffInDays = diffInMilliseconds / (1000 * 60 * 60 * 24);
+    debugger
     return diffInDays;
   }
 
@@ -148,14 +149,15 @@ export class UpdateEotComponent implements OnInit {
       eotReason: this.EotModel.eotReason,
       eotAttachment: this.EotModel.eotAttachment,
     }
-    this.isLoading = true;
     this.projectsService.updateEot(payload).subscribe({
       next: (res) => {
+        this.isLoading = false;
         this.modalService.dismissAll();
         this.resetModalValues();
         this.showAlert({ icon: 'success', title: 'Success!', text: 'Eot Updated successfully' });
       },
       error: (error) => {
+        this.isLoading = false;
         this.showAlert({ icon: 'error', title: 'Error!', text: 'please try again' });
         this.isLoading = false;
       }

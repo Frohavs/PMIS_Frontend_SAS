@@ -218,11 +218,6 @@
           <div class="col-lg-8 fv-row">
             <input type="date" class="form-control form-control-lg form-control-solid text-start"
               placeholder="{{'PROJECTS.originalFinishDate' | translate}}" name="originalFinishDate" formControlName="originalFinishDate" readonly />
-            <div
-              *ngIf="addProjectForm?.get('originalFinishDate')?.invalid && (addProjectForm?.get('originalFinishDate')?.dirty || addProjectForm?.get('originalFinishDate')?.touched)"
-              class="fv-plugins-message-container">
-              <div class="fv-help-block">{{"originalFinishDate" | translate}} required</div>
-            </div>
           </div>
         </div>
 

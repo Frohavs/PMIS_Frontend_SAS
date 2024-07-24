@@ -70,7 +70,8 @@
             </th>
             <th class="max-w-100px">{{"PROJECTS.Project" | translate}}</th>
             <th class="max-w-100px">{{"PROJECTS.contract_no" | translate}}</th>
-            <th class="min-w-200px">{{"PROJECTS.Consultant" | translate}}</th>
+            <th class="max-w-150px">{{"PROJECTS.Consultant" | translate}}</th>
+            <th class="max-w-170px">{{"PROJECTS.start_date" | translate}}</th>
             <th class="max-w-110px">{{"PROJECTS.Sector" | translate}}</th>
             <th class="max-w-100px text-end">Actions</th>
           </tr>
@@ -115,7 +116,11 @@
                 </div>
               </div>
             </td>
-
+            <td>
+              <a class="text-gray-900 fw-bolder text-hover-primary d-block fs-6">
+                {{project?.executionStartDate | date: 'dd/MM/yyyy'}}
+              </a>
+            </td>
             <td>
               <a class="text-gray-900 fw-bolder text-hover-primary d-block fs-6">
                 {{project?.projectSectorName}}

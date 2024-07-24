@@ -57,25 +57,26 @@ export class UpdateVariationOrderComponent implements OnInit {
 
       this.VoCard = {
         id: this.projectId,
-        voValue: this.projectDetails.originalValue,
-        voApprovedValue: this.projectDetails.vo.voValue,
-        voUpdatedValue: this.projectDetails.originalValue
+        voValue: this.projectDetails?.vo?.originalValue,
+        voApprovedValue: this.projectDetails?.vo?.voValue,
+        voUpdatedValue: this.projectDetails?.vo?.updatedValue || this.projectDetails?.vo.originalValue
       };
 
       this.VoModel['voValue'] = 0;
-      this.VoModel['voUpdatedValue'] = this.projectDetails.originalValue;
+      this.VoModel['voUpdatedValue'] = this.projectDetails?.vo?.updatedValue || this.projectDetails?.vo.originalValue;
       this.VoModel['voReason'] = '';
+      debugger
       this.cdr.detectChanges();
     });
   }
 
   onVoValueInput(event: Event) {
     const value = (event.target as HTMLInputElement).value;
-    this.VoModel['voUpdatedValue'] = this.projectDetails.originalValue + (+value);
+    this.VoModel['voUpdatedValue'] = (this.projectDetails.vo?.updatedValue || this.projectDetails?.vo.originalValue) + (+value);
     if (this.VoModel['isIncrement']) {
-      this.VoModel['voUpdatedValue'] = this.projectDetails.originalValue + (this.VoModel['voValue']);
+      this.VoModel['voUpdatedValue'] = (this.projectDetails.vo?.updatedValue || this.projectDetails?.vo.originalValue) + (this.VoModel['voValue']);
     } else {
-      this.VoModel['voUpdatedValue'] = this.projectDetails.originalValue - (this.VoModel['voValue']);
+      this.VoModel['voUpdatedValue'] = (this.projectDetails.vo?.updatedValue || this.projectDetails?.vo.originalValue) - (this.VoModel['voValue']);
     }
   }
 
@@ -111,6 +112,7 @@ export class UpdateVariationOrderComponent implements OnInit {
     if (myForm && myForm.invalid) {
       return;
     }
+    this.isLoading = true;
     const payload = {
       voValue: this.VoModel.voValue,
       voAttachment: this.VoModel.voAttachment,
@@ -118,13 +120,14 @@ export class UpdateVariationOrderComponent implements OnInit {
       id: +this.projectId,
       isIncrement: this.VoModel.isIncrement,
     }
-    this.isLoading = true;
     this.projectsService.updateVariation(payload).subscribe({
       next: (res) => {
+        this.isLoading = false;
         this.modalService.dismissAll();
         this.showAlert({ icon: 'success', title: 'Success!', text: 'VO Updated successfully' });
       },
       error: (error) => {
+        this.isLoading = false;
         this.showAlert({ icon: 'error', title: 'Error!', text: 'please try again' });
         this.isLoading = false;
       }

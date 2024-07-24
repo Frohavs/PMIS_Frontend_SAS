@@ -66,6 +66,7 @@ export const locale = {
       Sector: 'Sector',
       Stage: 'Stage',
       contract_no: 'Contract No',
+      start_date: 'Start Date',
       Search: 'Search Project...',
       project_stage: 'New Project Stage',
       project_name: 'Project Name',

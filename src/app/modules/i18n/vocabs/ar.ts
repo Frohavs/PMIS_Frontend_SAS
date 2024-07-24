@@ -66,6 +66,7 @@ export const locale = {
       Sector: 'القطاع',
       Stage: 'المرحلة',
       contract_no: 'رقم العقد',
+      start_date: 'تاريخ البدء',
       Search: 'بحث عن المشروع...',
       project_stage: 'حالة العقد',
       project_name: 'أسم المشروع',
