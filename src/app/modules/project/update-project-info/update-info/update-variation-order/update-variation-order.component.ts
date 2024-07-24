@@ -16,6 +16,7 @@ export class UpdateVariationOrderComponent implements OnInit {
 
   projectId: number;
   projectDetails: any;
+  selectedFile: File;
 
   // modal configs
   isLoading = false;
@@ -26,7 +27,8 @@ export class UpdateVariationOrderComponent implements OnInit {
   };
   @ViewChild('noticeSwal') noticeSwal!: SwalComponent;
   @ViewChild('UpdateModal') UpdateModal!: any;
-  VoModel = { voValue: 0, isIncrement: true, voUpdatedValue: '', voReason: '', voAttachment: '' };
+  VoCard: any = { id: 0, voValue: 0, voApprovedValue: 0, voUpdatedValue: 0 };
+  VoModel = { voValue: 0, isIncrement: true, voUpdatedValue: 0, voReason: '', voAttachment: '' };
 
   constructor(
     private router: Router,
@@ -41,28 +43,77 @@ export class UpdateVariationOrderComponent implements OnInit {
     this.activatedRoute.params.subscribe(params => {
       this.projectId = params['id'];
       if (this.projectId) {
-        this.projectsService.getByID(this.projectId).subscribe(res => {
-          console.log(res.data);
-          this.projectDetails = res.data;
-          this.cdr.detectChanges();
-          // setTimeout(() => {
-          //   this.editProjectForm(res.data);
-          // }, 1000);
-        });
+        this.resetModalValues()
       }
     });
   }
 
+  resetModalValues() {
+    this.projectsService.getByID(this.projectId).subscribe(res => {
+      this.projectDetails = res.data;
+      console.log(res.data);
+
+      this.VoCard = {
+        id: this.projectId,
+        voValue: this.projectDetails.originalValue,
+        voApprovedValue: this.projectDetails.vo.voValue,
+        voUpdatedValue: this.projectDetails.originalValue
+      };
+
+      this.VoModel['voValue'] = 0;
+      this.VoModel['voUpdatedValue'] = this.projectDetails.originalValue;
+      this.VoModel['voReason'] = '';
+      this.cdr.detectChanges();
+    });
+  }
+
+  onVoValueInput(event: Event) {
+    const value = (event.target as HTMLInputElement).value;
+    this.VoModel['voUpdatedValue'] = this.projectDetails.originalValue + (+value);
+    if (this.VoModel['isIncrement']) {
+      this.VoModel['voUpdatedValue'] = this.projectDetails.originalValue + (this.VoModel['voValue']);
+    } else {
+      this.VoModel['voUpdatedValue'] = this.projectDetails.originalValue - (this.VoModel['voValue']);
+    }
+  }
+
+  onIsIncrementChange(event: Event) {
+    const checked = (event.target as HTMLInputElement).checked;
+    if (checked) {
+      this.VoModel['voUpdatedValue'] = this.projectDetails.originalValue + (this.VoModel['voValue']);
+    } else {
+      this.VoModel['voUpdatedValue'] = this.projectDetails.originalValue - (this.VoModel['voValue']);
+    }
+  }
+
   updateEot() {
-    this.modalService.open(this.UpdateModal, this.modalConfig);
+    const modalRef = this.modalService.open(this.UpdateModal, this.modalConfig);
+    modalRef.result.then((data) => { }, (reason) => {
+      // on dismiss
+      this.resetModalValues();
+    });
+  }
+
+  onFileSelected(event: any) {
+    console.log(event);
+    this.selectedFile = <File>event.target.files[0];
+    this.VoModel['voAttachment'] = this.selectedFile.name;
   }
 
   onSubmit(event: Event, myForm: NgForm) {
+    console.log(this.VoModel);
     if (myForm && myForm.invalid) {
       return;
     }
+    const payload = {
+      voValue: this.VoModel.voValue,
+      voAttachment: this.VoModel.voAttachment,
+      voReason: this.VoModel.voReason,
+      id: +this.projectId,
+      isIncrement: this.VoModel.isIncrement,
+    }
     this.isLoading = true;
-    this.projectsService.updateEot(this.VoModel).subscribe({
+    this.projectsService.updateVariation(payload).subscribe({
       next: (res) => {
         this.modalService.dismissAll();
         this.showAlert({ icon: 'success', title: 'Success!', text: 'VO Updated successfully' });
@@ -70,11 +121,7 @@ export class UpdateVariationOrderComponent implements OnInit {
       error: (error) => {
         this.showAlert({ icon: 'error', title: 'Error!', text: 'please try again' });
         this.isLoading = false;
-      },
-      complete: () => {
-        this.isLoading = false;
-        this.VoModel = { voValue: 0, isIncrement: true, voUpdatedValue: '', voReason: '', voAttachment: '' };
-      },
+      }
     });
   }
   showAlert(swalOptions: SweetAlertOptions) {

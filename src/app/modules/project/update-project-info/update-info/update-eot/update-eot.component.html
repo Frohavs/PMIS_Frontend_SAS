@@ -115,7 +115,7 @@
         </h3>
         <div class="me-2">
           <div class="card-toolbar">
-            <a class="btn btn-sm btn-primary" (click)="updateEot()">
+            <a class="btn btn-sm btn-success" (click)="updateEot()">
               Add EOT
             </a>
           </div>
@@ -123,7 +123,8 @@
       </div>
       <!-- end::Header -->
       <div class="card-body pt-3">
-        <form #EotForm="ngForm" (ngSubmit)="onCardSubmit($event, EotForm)" class="form">
+        <form #EotForm="ngForm" class="form">
+
           <div class="card-body border-top p-9">
 
             <div class="row mb-1">
@@ -132,28 +133,29 @@
               </label>
               <div class="col-lg-12 fv-row">
                 <input disabled readonly type="text" class="form-control form-control-lg form-control-solid text-start"
-                  name="planned_progress" name="eotDays" [(ngModel)]="eotCard.eotDays" />
+                  name="eotDays" name="eotDays" [(ngModel)]="eotCard.eotDays" />
               </div>
             </div>
+
             <div class="row mb-1">
               <label class="col-lg-12 col-form-label fw-bold fs-6">
                 <span> EOT Duration </span>
               </label>
               <div class="col-lg-12 fv-row">
                 <input disabled readonly type="text" class="form-control form-control-lg form-control-solid text-start"
-                  name="planned_progress" name="eotDuration" [(ngModel)]="eotCard.eotDuration" />
+                  name="eotDuration" name="eotDuration" [(ngModel)]="eotCard.eotDuration" />
               </div>
             </div>
+
             <div class="row mb-1">
               <label class="col-lg-12 col-form-label fw-bold fs-6">
                 <span> Eot Finish Date </span>
               </label>
               <div class="col-lg-12 fv-row">
                 <input disabled readonly type="text" class="form-control form-control-lg form-control-solid text-start"
-                  name="planned_progress" name="originalFinishDate" [(ngModel)]="eotCard.originalFinishDate" />
+                  name="originalFinishDate" name="originalFinishDate" [(ngModel)]="eotCard.originalFinishDate" />
               </div>
             </div>
-
           </div>
         </form>
       </div>
@@ -172,8 +174,8 @@
 
         <div class="fv-row mb-3">
           <label class="fw-semibold fs-6 mb-2">EOT Days</label>
-          <input type="number" class="form-control form-control-solid" name="eotDays" [(ngModel)]="EotModel.eotDays"
-            #name="ngModel" />
+          <input type="number" class="form-control form-control-solid" name="eotDays" min="0"
+          (input)="onEotDaysInput($event)" [(ngModel)]="EotModel.eotDays" #name="ngModel" />
         </div>
         <div class="fv-row mb-3">
           <label class="fw-semibold fs-6 mb-2">EOT Approved Days</label>
@@ -200,14 +202,14 @@
         </label>
         <div class="col-lg-12 fv-row">
           <input type="file" class="form-control form-control-solid" name="eotAttachment"
-            [(ngModel)]="EotModel.eotAttachment" #name="ngModel" required />
+            [(ngModel)]="EotModel.eotAttachment" #name="ngModel" required (change)="onFileSelected($event)" />
         </div>
 
       </div>
     </div>
     <div class="modal-footer flex-center">
       <!--begin::Button-->
-      <button type="submit" class="btn btn-primary w-100" [attr.data-kt-indicator]="isLoading ? 'on' : 'off'">
+      <button type="submit" class="btn btn-success w-100" [attr.data-kt-indicator]="isLoading ? 'on' : 'off'">
         <span class="indicator-label">
           Submit
         </span>

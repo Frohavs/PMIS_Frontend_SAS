@@ -114,7 +114,7 @@
         </h3>
         <div class="me-2">
           <div class="card-toolbar">
-            <a class="btn btn-sm btn-primary" (click)="updateEot()">
+            <a class="btn btn-sm btn-success" (click)="updateEot()">
               Add Vo
             </a>
           </div>
@@ -122,7 +122,7 @@
       </div>
       <!-- end::Header -->
       <div class="card-body pt-3">
-        <form class="form">
+        <form #voForm="ngForm" class="form">
           <div class="card-body border-top p-9">
 
             <div class="row mb-1">
@@ -131,7 +131,7 @@
               </label>
               <div class="col-lg-12 fv-row">
                 <input disabled readonly type="text" class="form-control form-control-lg form-control-solid text-start"
-                  name="planned_progress" value="0" />
+                  name="voValue" name="voValue" [(ngModel)]="VoCard.voValue" value="0" />
               </div>
             </div>
             <div class="row mb-1">
@@ -140,7 +140,7 @@
               </label>
               <div class="col-lg-12 fv-row">
                 <input disabled readonly type="text" class="form-control form-control-lg form-control-solid text-start"
-                  name="planned_progress" value="31" />
+                  name="voApprovedValue" name="voApprovedValue" [(ngModel)]="VoCard.voApprovedValue" value="31" />
               </div>
             </div>
             <div class="row mb-1">
@@ -149,7 +149,7 @@
               </label>
               <div class="col-lg-12 fv-row">
                 <input disabled readonly type="text" class="form-control form-control-lg form-control-solid text-start"
-                  name="planned_progress" value="09/12/2025" />
+                  name="voUpdatedValue" name="voUpdatedValue" [(ngModel)]="VoCard.voUpdatedValue" value="09/12/2025" />
               </div>
             </div>
 
@@ -172,14 +172,14 @@
         <div class="fv-row mb-3">
           <label class="required fw-semibold fs-6 mb-2">VO Project Value</label>
           <input type="number" class="form-control form-control-solid" name="voValue" [(ngModel)]="VoModel.voValue"
-            #name="ngModel" required />
+            #name="ngModel" required (input)="onVoValueInput($event)" min="0" />
         </div>
 
         <div class="fv-row mb-3">
           <label class="fw-semibold fs-6 mb-2">Value change:</label>
           <div class="form-check form-switch form-switch-sm form-check-custom">
             <input class="form-check-input" type="checkbox" [(ngModel)]="VoModel.isIncrement" #isActive="ngModel"
-              name="isIncrement" />
+              name="isIncrement" (change)="onIsIncrementChange($event)" />
             <label class="form-check-label">{{VoModel.isIncrement? 'Increment' : 'Decrement'}}</label>
           </div>
         </div>
@@ -203,7 +203,7 @@
         </label>
         <div class="col-lg-12 fv-row">
           <input type="file" class="form-control form-control-solid" name="voAttachment" [(ngModel)]="VoModel.voAttachment"
-            #name="ngModel" required />
+            #name="ngModel" required (change)="onFileSelected($event)" />
         </div>
 
       </div>
