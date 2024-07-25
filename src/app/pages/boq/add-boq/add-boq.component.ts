@@ -1,10 +1,11 @@
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
 import { SweetAlertOptions } from 'sweetalert2';
 import { BoqService } from 'src/app/services/boq.service';
+import { LookupService } from 'src/app/services/lookup/lookup.service';
 
 @Component({
   selector: 'app-add-boq',
@@ -16,6 +17,11 @@ export class AddBoqComponent implements OnInit {
   isLoading: boolean;
   addBoqForm: FormGroup;
 
+  vats: any[] = [];
+  units: any[] = [];
+  private updating = false;
+  private updatingVat = false;
+
   swalOptions: SweetAlertOptions = {};
   @ViewChild('noticeSwal') noticeSwal!: SwalComponent;
 
@@ -25,12 +31,14 @@ export class AddBoqComponent implements OnInit {
     private cdr: ChangeDetectorRef,
     private boqService: BoqService,
     private formBuilder: FormBuilder,
+    private lookupService: LookupService,
     private activatedRoute: ActivatedRoute,
   ) { }
 
   ngOnInit(): void {
     this.getBoqId();
     this.initAddBoqForm();
+    this.getLookups();
   }
 
   getBoqId() {
@@ -58,6 +66,44 @@ export class AddBoqComponent implements OnInit {
       unitPrice: ['', Validators.required],
       totalPrice: ['', Validators.required],
     });
+
+    this.addBoqForm.valueChanges.subscribe(res => {
+      if (!this.updating && res.unitPrice) {
+        this.updating = true;
+        let totalPrice = 0;
+        if (+this.vatId.value != 0) {
+          totalPrice = (+this.vatId.value * this.unitPrice.value * this.quantity.value) / 100
+        } else {
+          totalPrice = (this.unitPrice.value * this.quantity.value)
+        }
+        this.addBoqForm.get('totalPrice')?.setValue(totalPrice);
+        this.updating = false;
+      }
+      if (!this.updatingVat && res.vatId) {
+        if (this.quantity.value && this.unitPrice.value) {
+          this.updatingVat = true;
+          let totalPrice = 0;
+          if (+this.vatId.value != 0) {
+            totalPrice = (+this.vatId.value * this.unitPrice.value * this.quantity.value) / 100
+          } else {
+            totalPrice = (this.unitPrice.value * this.quantity.value)
+          }
+          this.addBoqForm.get('totalPrice')?.setValue(totalPrice);
+          this.updatingVat = false;
+        }
+      }
+    });
+  }
+
+  getLookups() {
+    this.lookupService.getUnits().subscribe(res => {
+      this.units = res.data;
+      this.cdr.detectChanges();
+    });
+    this.lookupService.getVats().subscribe(res => {
+      this.vats = res.data;
+      this.cdr.detectChanges();
+    });
   }
 
   editVendorForm(data: any) {
@@ -68,8 +114,8 @@ export class AddBoqComponent implements OnInit {
       quantity: data?.quantity,
       unitPrice: data?.unitPrice,
       totalPrice: data?.totalPrice,
-      vatId: data?.vatId,
-      unitId: data?.unitId
+      vatId: data?.vatId?.toString(),
+      unitId: data?.unitId?.toString()
     });
   }
 
@@ -78,10 +124,16 @@ export class AddBoqComponent implements OnInit {
       return;
     }
     this.isLoading = true;
-    this.boqService.addBoq(this.addBoqForm.value).subscribe({
+    this.boqService.addBoq(
+      {
+        ...this.addBoqForm.value,
+        unitId: +this.addBoqForm.value.unitId,
+        vatId: +this.addBoqForm.value.vatId
+      }
+    ).subscribe({
       next: (res) => {
         this.isLoading = false;
-        this.router.navigateByUrl('projects');
+        this.router.navigateByUrl('boq');
         this.showAlert({ icon: 'success', title: 'Success!', text: 'Boq Added successfully!' });
         this.cdr.detectChanges();
       },
@@ -106,6 +158,18 @@ export class AddBoqComponent implements OnInit {
     }, swalOptions);
     this.cdr.detectChanges();
     this.noticeSwal.fire();
+  }
+
+  get vatId(): FormControl {
+    return this.addBoqForm.get('vatId') as FormControl;
+  }
+
+  get quantity(): FormControl {
+    return this.addBoqForm.get('quantity') as FormControl;
+  }
+
+  get unitPrice(): FormControl {
+    return this.addBoqForm.get('unitPrice') as FormControl;
   }
 
   back() {
