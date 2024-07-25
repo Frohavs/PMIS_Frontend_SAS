@@ -61,12 +61,13 @@ export class UpdateEotComponent implements OnInit {
       this.eotCard = {
         id: this.projectId,
         eotDays: this.projectDetails?.eot?.eotDays,
-        eotDuration: this.getDurationDays(),
-        originalFinishDate: this.projectDetails?.eot?.expectedFinishDate ? this.datePipe.transform(this.projectDetails?.expectedFinishDate, 'yyyy-MM-dd') : this.datePipe.transform(this.projectDetails?.originalFinishDate, 'yyyy-MM-dd')
+        eotDuration: this.projectDetails?.eot?.originalDuration + (this.projectDetails?.eot?.eotDays || 0),
+        originalFinishDate: (this.projectDetails?.eot?.expectedFinishDate === '0001-01-01T00:00:00') ? this.datePipe.transform(this.projectDetails?.originalFinishDate, 'yyyy-MM-dd') : this.datePipe.transform(this.projectDetails?.expectedFinishDate, 'yyyy-MM-dd')
       };
 
       this.EotModel['eotDays'] = 0;
-      this.EotModel['eotApprovedDays'] = this.getDurationDays();
+      this.EotModel['eotReason'] = '';
+      this.EotModel['eotApprovedDays'] = this.projectDetails?.eot?.eotDays;
       this.EotModel['eotFinishDate'] = this.projectDetails?.eot?.expectedFinishDate ? this.datePipe.transform(this.projectDetails?.expectedFinishDate, 'yyyy-MM-dd') : this.datePipe.transform(this.projectDetails?.originalFinishDate, 'yyyy-MM-dd');
       this.cdr.detectChanges();
     });
@@ -75,24 +76,20 @@ export class UpdateEotComponent implements OnInit {
   onEotDaysInput(event: Event) {
     const value = (event.target as HTMLInputElement).value;
     const durationDays = this.getDurationDays();
-    this.EotModel.eotApprovedDays = durationDays + (+value);
+    this.EotModel.eotApprovedDays = (+value);
     this.EotModel.eotFinishDate = this.addDaysToDate(+value);
   }
 
   addDaysToDate(days: number) {
     // Step 1: Parse the date string into a Date object
-    const parts = this.eotCard.originalFinishDate.split('-');
-    const year = parseInt(parts[0], 10);
-    const month = parseInt(parts[1], 10) - 1; // Months are 0-based in JavaScript Date object
-    const day = parseInt(parts[2], 10);
-    const originalDate = new Date(this.projectDetails.originalFinishDate);
+    const originalDate = new Date(this.projectDetails.eot.originalFinishDate);
 
     // Step 2: Add days to the Date object
     originalDate.setDate(originalDate.getDate() + days);
 
     // Step 3: Format the result
     const formattedDate = this.formatDate(originalDate);
-    debugger
+
     return formattedDate;
   }
 

@@ -63,29 +63,30 @@ export class UpdateVariationOrderComponent implements OnInit {
       };
 
       this.VoModel['voValue'] = 0;
+      this.VoModel['isIncrement'] = true;
       this.VoModel['voUpdatedValue'] = this.projectDetails?.vo?.updatedValue || this.projectDetails?.vo.originalValue;
       this.VoModel['voReason'] = '';
-      debugger
       this.cdr.detectChanges();
     });
   }
 
   onVoValueInput(event: Event) {
     const value = (event.target as HTMLInputElement).value;
-    this.VoModel['voUpdatedValue'] = (this.projectDetails.vo?.updatedValue || this.projectDetails?.vo.originalValue) + (+value);
+    this.VoModel['voUpdatedValue'] =  this.projectDetails?.vo.originalValue + (+value);
     if (this.VoModel['isIncrement']) {
-      this.VoModel['voUpdatedValue'] = (this.projectDetails.vo?.updatedValue || this.projectDetails?.vo.originalValue) + (this.VoModel['voValue']);
+      this.VoModel['voUpdatedValue'] =  this.projectDetails?.vo.originalValue + (this.VoModel['voValue']);
     } else {
-      this.VoModel['voUpdatedValue'] = (this.projectDetails.vo?.updatedValue || this.projectDetails?.vo.originalValue) - (this.VoModel['voValue']);
+      this.VoModel['voUpdatedValue'] =  this.projectDetails?.vo.originalValue - (this.VoModel['voValue']);
     }
   }
 
   onIsIncrementChange(event: Event) {
+    debugger
     const checked = (event.target as HTMLInputElement).checked;
     if (checked) {
-      this.VoModel['voUpdatedValue'] = this.projectDetails.originalValue + (this.VoModel['voValue']);
+      this.VoModel['voUpdatedValue'] = this.projectDetails?.vo.originalValue + (this.VoModel['voValue']);
     } else {
-      this.VoModel['voUpdatedValue'] = this.projectDetails.originalValue - (this.VoModel['voValue']);
+      this.VoModel['voUpdatedValue'] = this.projectDetails?.vo.originalValue - (this.VoModel['voValue']);
     }
   }
 
@@ -122,6 +123,7 @@ export class UpdateVariationOrderComponent implements OnInit {
     }
     this.projectsService.updateVariation(payload).subscribe({
       next: (res) => {
+        this.VoModel['voValue'] = 0;
         this.isLoading = false;
         this.modalService.dismissAll();
         this.showAlert({ icon: 'success', title: 'Success!', text: 'VO Updated successfully' });
