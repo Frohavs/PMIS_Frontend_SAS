@@ -62,12 +62,12 @@ export class UpdateEotComponent implements OnInit {
         id: this.projectId,
         eotDays: this.projectDetails?.eot?.eotDays,
         eotDuration: this.getDurationDays(),
-        originalFinishDate: this.datePipe.transform(this.projectDetails?.originalFinishDate, 'yyyy-MM-dd')
+        originalFinishDate: this.projectDetails?.eot?.expectedFinishDate ? this.datePipe.transform(this.projectDetails?.expectedFinishDate, 'yyyy-MM-dd') : this.datePipe.transform(this.projectDetails?.originalFinishDate, 'yyyy-MM-dd')
       };
 
       this.EotModel['eotDays'] = 0;
       this.EotModel['eotApprovedDays'] = this.getDurationDays();
-      this.EotModel['eotFinishDate'] = this.datePipe.transform(this.projectDetails?.originalFinishDate, 'yyyy-MM-dd');
+      this.EotModel['eotFinishDate'] = this.projectDetails?.eot?.expectedFinishDate ? this.datePipe.transform(this.projectDetails?.expectedFinishDate, 'yyyy-MM-dd') : this.datePipe.transform(this.projectDetails?.originalFinishDate, 'yyyy-MM-dd');
       this.cdr.detectChanges();
     });
   }

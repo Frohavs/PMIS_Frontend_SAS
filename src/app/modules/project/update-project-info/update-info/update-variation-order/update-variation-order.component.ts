@@ -59,7 +59,7 @@ export class UpdateVariationOrderComponent implements OnInit {
         id: this.projectId,
         voValue: this.projectDetails?.vo?.originalValue,
         voApprovedValue: this.projectDetails?.vo?.voValue,
-        voUpdatedValue: this.projectDetails?.vo?.updatedValue || this.projectDetails?.vo.originalValue
+        voUpdatedValue: this.projectDetails?.vo?.updatedValue
       };
 
       this.VoModel['voValue'] = 0;
