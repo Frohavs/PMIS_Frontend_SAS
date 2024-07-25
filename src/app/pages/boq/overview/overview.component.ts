@@ -45,10 +45,10 @@ export class OverviewComponent {
   }
 
   initializeProjectData() {
-    this.dataList = [];
-    // this.vendorService.getAll().subscribe(res => {
-    //   this.cdr.detectChanges();
-    // });
+    this.boqService.getAll().subscribe(res => {
+      this.dataList = res.data;
+      this.cdr.detectChanges();
+    });
   }
 
   checkAll(event: Event) {
@@ -70,11 +70,11 @@ export class OverviewComponent {
     this.router.navigateByUrl('boq/edit/' + user.id)
   }
 
-  deleteBoq(user: any) {
+  deleteBoq(boq: any) {
     this.deleteSwal.fire().then((clicked) => {
       if (clicked.isConfirmed) {
         this.isLoading = true;
-        this.boqService.deleteBoq(user.id).subscribe({
+        this.boqService.deleteBoq(boq.id).subscribe({
           next: (res) => {
             this.showAlert({ icon: 'success', title: 'Success!', text: 'Boq Deleted successfully!' });
             setTimeout(() => {

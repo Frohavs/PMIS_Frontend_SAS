@@ -114,9 +114,34 @@ export class AddBoqComponent implements OnInit {
       quantity: data?.quantity,
       unitPrice: data?.unitPrice,
       totalPrice: data?.totalPrice,
-      vatId: data?.vatId?.toString(),
+      vatId: this.getVatValue(data.vatId),
       unitId: data?.unitId?.toString()
     });
+    this.cdr.detectChanges()
+  }
+
+  getVatID(value: string) {
+    let id = 0;
+    if (value == '0') {
+      id = 1;
+    } else if (value == '5') {
+      id = 2;
+    } else if (value == '15') {
+      id = 3;
+    }
+    return id;
+  }
+  getVatValue(id: number) {
+    let value = '';
+    if (id == 1) {
+      value = '0';
+    } else if (id == 2) {
+      value = '5';
+    } else if (id == 3) {
+      value = '10';
+    }
+    return value;
+
   }
 
   saveChanges() {
@@ -124,24 +149,48 @@ export class AddBoqComponent implements OnInit {
       return;
     }
     this.isLoading = true;
-    this.boqService.addBoq(
-      {
-        ...this.addBoqForm.value,
-        unitId: +this.addBoqForm.value.unitId,
-        vatId: +this.addBoqForm.value.vatId
-      }
-    ).subscribe({
-      next: (res) => {
-        this.isLoading = false;
-        this.router.navigateByUrl('boq');
-        this.showAlert({ icon: 'success', title: 'Success!', text: 'Boq Added successfully!' });
-        this.cdr.detectChanges();
-      },
-      error: (error) => {
-        this.showAlert({ icon: 'error', title: 'Error!', text: 'Please try again' });
-        this.isLoading = false;
-      }
-    });
+    if (!this.boqId) {
+      this.boqService.addBoq(
+        {
+          ...this.addBoqForm.value,
+          unitId: +this.addBoqForm.value.unitId,
+          vatId: this.getVatID(this.addBoqForm.value.vatId)
+        }
+      ).subscribe({
+        next: (res) => {
+          this.isLoading = false;
+          this.router.navigateByUrl('boq');
+          this.showAlert({ icon: 'success', title: 'Success!', text: 'Boq Added successfully!' });
+          this.cdr.detectChanges();
+        },
+        error: (error) => {
+          this.showAlert({ icon: 'error', title: 'Error!', text: 'Please try again' });
+          this.isLoading = false;
+        }
+      });
+
+    } else {
+      this.boqService.updateBoq(
+        {
+          ...this.addBoqForm.value,
+          id: this.boqId,
+          unitId: +this.addBoqForm.value.unitId,
+          vatId: this.getVatID(this.addBoqForm.value.vatId)
+        }
+      ).subscribe({
+        next: (res) => {
+          this.isLoading = false;
+          this.router.navigateByUrl('boq');
+          this.showAlert({ icon: 'success', title: 'Success!', text: 'Boq Updated successfully!' });
+          this.cdr.detectChanges();
+        },
+        error: (error) => {
+          this.showAlert({ icon: 'error', title: 'Error!', text: 'Please try again' });
+          this.isLoading = false;
+        }
+      });
+
+    }
   }
 
   showAlert(swalOptions: SweetAlertOptions) {

@@ -32,11 +32,11 @@
         <!-- begin::Table head -->
         <thead>
           <tr class="fw-bolder text-muted">
-            <th class="max-w-100px">{{"BOQ.item_no" | translate}}</th>
-            <th class="max-w-100px">{{"BOQ.item_title" | translate}}</th>
-            <th class="min-w-100px">{{"BOQ.vat" | translate}}</th>
+            <th class="max-w-150px">{{"BOQ.item_no" | translate}}</th>
+            <th class="max-w-150px">{{"BOQ.item_title" | translate}}</th>
             <th class="max-w-110px">{{"BOQ.quantity" | translate}}</th>
             <th class="max-w-110px">{{"BOQ.unit_price" | translate}}</th>
+            <th class="min-w-100px">{{"BOQ.description" | translate}}</th>
             <th class="max-w-100px text-end">Actions</th>
           </tr>
         </thead>
@@ -45,39 +45,30 @@
         <tbody>
           <tr *ngFor="let boq of dataList; index as i">
             <td>
-              <div class="d-flex align-items-center">
-                <div class="d-flex justify-content-start flex-column">
-                  <a class="text-gray-900 fw-bolder text-hover-primary fs-6">
-                    {{boq?.nameAr}}
-                  </a>
-                  <span class="text-muted fw-bold text-muted d-block fs-7">
-                    {{boq?.name}}
-                  </span>
-                </div>
-              </div>
+              <a class="text-gray-900 fw-bolder text-hover-primary fs-6">
+                {{boq?.itemNo}}
+              </a>
             </td>
             <td>
               <a class="text-gray-900 fw-bolder text-hover-primary d-block fs-6">
-                684654654
+                {{boq?.title}}
               </a>
             </td>
 
             <td>
-              <div class="d-flex align-items-center">
-                <div class="d-flex justify-content-start flex-column">
-                  <a class="text-gray-900 fw-bolder text-hover-primary fs-6">
-                    Project name
-                  </a>
-                  <span class="text-muted fw-bold text-muted d-block fs-7">
-                    en name
-                  </span>
-                </div>
-              </div>
+              <a class="text-gray-900 fw-bolder text-hover-primary fs-6">
+                {{boq?.quantity}}
+              </a>
+            </td>
+            <td>
+              <a class="text-gray-900 fw-bolder text-hover-primary fs-6">
+                {{boq?.unitPrice}}
+              </a>
             </td>
 
             <td>
               <a class="text-gray-900 fw-bolder text-hover-primary d-block fs-6">
-                project sector
+                {{boq?.description}}
               </a>
             </td>
             <td>
