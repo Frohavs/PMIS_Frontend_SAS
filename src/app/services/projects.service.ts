@@ -64,6 +64,16 @@ export class ProjectsService {
     });
   }
 
+  updateProjectStaff(staff: any): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/CreateProjectStaff`;
+    return this.http.put<any>(url, staff, {
+      headers: httpHeaders
+    });
+  }
+
   updateEot(eot: any): Observable<any> {
     const httpHeaders = new HttpHeaders({
       Authorization: `Bearer ${this.token}`,

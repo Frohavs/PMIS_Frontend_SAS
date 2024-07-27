@@ -86,7 +86,7 @@ export const locale = {
       contract_date: 'Contract Date',
       etimad_number: 'Etimad Number',
       project_value: 'Project Value',
-      amana_manager: 'Amana Manager',
+      project_manager: 'Project Manager',
       EN_NAME: 'English Name',
       Status: 'Status',
     },

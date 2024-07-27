@@ -81,6 +81,7 @@ export class CreateProjectComponent implements OnInit, AfterViewInit, OnDestroy 
     });
     this.lookupService.getManagerUsers().subscribe(res => {
       this.managers = res.data;
+      this.cdr.detectChanges()
     });
     this.lookupService.getVendorType(1).subscribe(res => {
       this.consultants = res.data;

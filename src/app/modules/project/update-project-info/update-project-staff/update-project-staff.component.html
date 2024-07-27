@@ -17,18 +17,17 @@
 
         <div class="row mb-6">
           <label
-            class="col-lg-4 col-form-label fw-bold fs-6"><span>{{"PROJECTS.amana_manager" | translate}}</span></label>
+            class="col-lg-4 col-form-label fw-bold fs-6"><span>{{"PROJECTS.project_manager" | translate}}</span></label>
           <div class="col-lg-8 fv-row">
-            <select class="form-select form-select-solid form-select-lg fw-bold" name="amana_manager"
-              formControlName="amana_manager">
+            <select class="form-select form-select-solid form-select-lg fw-bold" name="project_manager"
+              formControlName="project_manager">
               <option value="" disabled>{{"TRANSLATOR.SELECTION" | translate}}</option>
-              <option [value]="'test'">admin</option>
-              <option [value]="'test'">employee</option>
-              <!-- <ng-container *ngFor="let company of companies">
-              </ng-container> -->
+              <ng-container *ngFor="let user of managers">
+                <option [value]="user?.id">{{user?.name}}</option>
+              </ng-container>
             </select>
             <!-- <div
-              *ngIf="UpdateStaffForm?.get('amana_manager')?.invalid && (UpdateStaffForm?.get('amana_manager')?.dirty || UpdateStaffForm?.get('amana_manager')?.touched)"
+              *ngIf="UpdateStaffForm?.get('project_manager')?.invalid && (UpdateStaffForm?.get('project_manager')?.dirty || UpdateStaffForm?.get('project_manager')?.touched)"
               class="fv-plugins-message-container">
               <div class="fv-help-block">stage is required</div>
             </div> -->
@@ -41,12 +40,9 @@
             <select class="form-select form-select-solid form-select-lg fw-bold" name="project_consultant_manager"
               formControlName="project_consultant_manager">
               <option value="" disabled>{{"TRANSLATOR.SELECTION" | translate}}</option>
-              <option [value]="'test'">Study and Design</option>
-              <option [value]="'test'">Supervisor</option>
-              <option [value]="'test'">Excuse</option>
-              <option [value]="'test'">Consultant service</option>
-              <!-- <ng-container *ngFor="let company of companies">
-              </ng-container> -->
+              <ng-container *ngFor="let user of managers">
+                <option [value]="user?.id">{{user?.name}}</option>
+              </ng-container>
             </select>
             <!-- <div
               *ngIf="UpdateStaffForm?.get('project_consultant_manager')?.invalid && (UpdateStaffForm?.get('project_consultant_manager')?.dirty || UpdateStaffForm?.get('project_consultant_manager')?.touched)"
@@ -62,8 +58,9 @@
             <select class="form-select form-select-solid form-select-lg fw-bold" name="project_contractor_manager"
               formControlName="project_contractor_manager">
               <option value="" disabled>{{"TRANSLATOR.SELECTION" | translate}}</option>
-              <!-- <ng-container *ngFor="let company of companies">
-              </ng-container> -->
+              <ng-container *ngFor="let user of managers">
+                <option [value]="user?.id">{{user?.name}}</option>
+              </ng-container>
             </select>
             <!-- <div
               *ngIf="UpdateStaffForm?.get('project_contractor_manager')?.invalid && (UpdateStaffForm?.get('project_contractor_manager')?.dirty || UpdateStaffForm?.get('project_contractor_manager')?.touched)"
@@ -79,8 +76,9 @@
             <select class="form-select form-select-solid form-select-lg fw-bold" name="project_consultant_data_entry"
               formControlName="project_consultant_data_entry">
               <option value="" disabled>{{"TRANSLATOR.SELECTION" | translate}}</option>
-              <!-- <ng-container *ngFor="let company of companies">
-              </ng-container> -->
+              <ng-container *ngFor="let user of managers">
+                <option [value]="user?.id">{{user?.name}}</option>
+              </ng-container>
             </select>
             <div
               *ngIf="UpdateStaffForm?.get('project_consultant_data_entry')?.invalid && (UpdateStaffForm?.get('project_consultant_data_entry')?.dirty || UpdateStaffForm?.get('project_consultant_data_entry')?.touched)"
@@ -96,8 +94,9 @@
             <select class="form-select form-select-solid form-select-lg fw-bold" name="project_contractor_data_entry"
               formControlName="project_contractor_data_entry">
               <option value="" disabled>{{"TRANSLATOR.SELECTION" | translate}}</option>
-              <!-- <ng-container *ngFor="let company of companies">
-              </ng-container> -->
+              <ng-container *ngFor="let user of managers">
+                <option [value]="user?.id">{{user?.name}}</option>
+              </ng-container>
             </select>
             <div
               *ngIf="UpdateStaffForm?.get('project_contractor_data_entry')?.invalid && (UpdateStaffForm?.get('project_contractor_data_entry')?.dirty || UpdateStaffForm?.get('project_contractor_data_entry')?.touched)"
@@ -113,8 +112,9 @@
             <select class="form-select form-select-solid form-select-lg fw-bold" name="project_consultant_hse"
               formControlName="project_consultant_hse">
               <option value="" disabled>{{"TRANSLATOR.SELECTION" | translate}}</option>
-              <!-- <ng-container *ngFor="let company of companies">
-              </ng-container> -->
+              <ng-container *ngFor="let user of managers">
+                <option [value]="user?.id">{{user?.name}}</option>
+              </ng-container>
             </select>
             <div
               *ngIf="UpdateStaffForm?.get('project_consultant_hse')?.invalid && (UpdateStaffForm?.get('project_consultant_hse')?.dirty || UpdateStaffForm?.get('project_consultant_hse')?.touched)"
@@ -130,8 +130,9 @@
             <select class="form-select form-select-solid form-select-lg fw-bold" name="project_contractor_hse"
               formControlName="project_contractor_hse">
               <option value="" disabled>{{"TRANSLATOR.SELECTION" | translate}}</option>
-              <!-- <ng-container *ngFor="let company of companies">
-              </ng-container> -->
+              <ng-container *ngFor="let user of managers">
+                <option [value]="user?.id">{{user?.name}}</option>
+              </ng-container>
             </select>
             <!-- <div
               *ngIf="UpdateStaffForm?.get('project_contractor_hse')?.invalid && (UpdateStaffForm?.get('project_contractor_hse')?.dirty || UpdateStaffForm?.get('project_contractor_hse')?.touched)"

@@ -86,7 +86,7 @@ export const locale = {
       contract_date: 'تاريخ العقد',
       etimad_number: 'الرقم المرجعي للعقد',
       project_value: 'القيمة الأصلية للعقد',
-      amana_manager: 'مدير المشروع - الأمانة',
+      project_manager: 'مدير المشروع',
 
       EN_NAME: 'الأسم بالأنجليزية',
       Status: 'الحالة',
