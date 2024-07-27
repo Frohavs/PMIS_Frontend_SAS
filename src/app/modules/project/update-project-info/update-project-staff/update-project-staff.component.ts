@@ -7,6 +7,7 @@ import { SweetAlertOptions } from 'sweetalert2';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ProjectsService } from 'src/app/services/projects.service';
 import { LookupService } from 'src/app/services/lookup/lookup.service';
+import { StaffTypes } from './staff-types';
 
 @Component({
   selector: 'app-update-project-staff',
@@ -37,6 +38,7 @@ export class UpdateProjectStaffComponent implements OnInit {
   ngOnInit(): void {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     this.initUpdateStaffForm();
+    this.getProjectId()
     this.getLookups()
   }
 
@@ -53,6 +55,12 @@ export class UpdateProjectStaffComponent implements OnInit {
     });
   }
 
+  getProjectId() {
+    this.activatedRoute.params.subscribe(params => {
+      this.projectId = params['id'];
+    });
+  }
+
   getLookups() {
     this.lookupService.getManagerUsers().subscribe(res => {
       this.managers = res.data;
@@ -65,12 +73,43 @@ export class UpdateProjectStaffComponent implements OnInit {
   }
 
   saveProject() {
+    const staff = [
+      {
+        userId: this.UpdateStaffForm.value.project_manager,
+        staffType: StaffTypes.ProjectManager
+      },
+      {
+        userId: this.UpdateStaffForm.value.project_consultant_manager,
+        staffType: StaffTypes.ProjectConsultantManager
+      },
+      {
+        userId: this.UpdateStaffForm.value.project_contractor_manager,
+        staffType: StaffTypes.ProjectContractorManager
+      },
+      {
+        userId: this.UpdateStaffForm.value.project_consultant_data_entry,
+        staffType: StaffTypes.ProjectConsultantDataEntry
+      },
+      {
+        userId: this.UpdateStaffForm.value.project_contractor_data_entry,
+        staffType: StaffTypes.ProjectContractorDataEntry
+      },
+      {
+        userId: this.UpdateStaffForm.value.project_consultant_hse,
+        staffType: StaffTypes.ProjectConsultantHse
+      },
+      {
+        userId: this.UpdateStaffForm.value.project_contractor_hse,
+        staffType: StaffTypes.ProjectContractorHse
+      },
+    ]
 
-    this.projectsService.updateEot({projectId: this.projectId, ...this.UpdateStaffForm.value}).subscribe({
+
+    this.projectsService.updateProjectStaff({ projectId: this.projectId, staff: staff }).subscribe({
       next: (res) => {
         this.isLoading = false;
         this._location.back();
-        this.showAlert({ icon: 'success', title: 'Success!', text: 'Eot Updated successfully' });
+        this.showAlert({ icon: 'success', title: 'Success!', text: 'Project Staff Updated successfully' });
       },
       error: (error) => {
         this.isLoading = false;
