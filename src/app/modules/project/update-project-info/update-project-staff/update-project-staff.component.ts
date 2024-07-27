@@ -17,6 +17,7 @@ import { StaffTypes } from './staff-types';
 export class UpdateProjectStaffComponent implements OnInit {
 
   projectId: number;
+  projectDetails: any;
   isLoading: boolean;
   managers: any[] = [];
   UpdateStaffForm: FormGroup;
@@ -58,13 +59,30 @@ export class UpdateProjectStaffComponent implements OnInit {
   getProjectId() {
     this.activatedRoute.params.subscribe(params => {
       this.projectId = params['id'];
+      this.projectsService.getByID(this.projectId).subscribe(res => {
+        console.log(res.data);
+        this.projectDetails = res.data;
+        this.cdr.detectChanges();
+        setTimeout(() => {
+          this.UpdateStaffForm.patchValue({
+            project_manager: this.projectDetails.staff[0]?.userId || '',
+            project_consultant_manager: this.projectDetails.staff[1]?.userId || '',
+            project_contractor_manager: this.projectDetails.staff[2]?.userId || '',
+            project_consultant_data_entry: this.projectDetails.staff[3]?.userId || '',
+            project_contractor_data_entry: this.projectDetails.staff[4]?.userId || '',
+            project_consultant_hse: this.projectDetails.staff[5]?.userId || '',
+            project_contractor_hse: this.projectDetails.staff[6]?.userId || '',
+          });
+          debugger
+        }, 1000);
+      });
     });
   }
 
   getLookups() {
     this.lookupService.getManagerUsers().subscribe(res => {
       this.managers = res.data;
-      this.cdr.detectChanges()
+      this.cdr.detectChanges();
     });
   }
 
@@ -102,19 +120,16 @@ export class UpdateProjectStaffComponent implements OnInit {
         userId: this.UpdateStaffForm.value.project_contractor_hse,
         staffType: StaffTypes.ProjectContractorHse
       },
-    ]
-
-
-    this.projectsService.updateProjectStaff({ projectId: this.projectId, staff: staff }).subscribe({
+    ];
+    const filteredStaff = staff.filter(item => item.userId !== '');
+    this.projectsService.updateProjectStaff({ projectId: this.projectId, staff: filteredStaff }).subscribe({
       next: (res) => {
         this.isLoading = false;
-        this._location.back();
         this.showAlert({ icon: 'success', title: 'Success!', text: 'Project Staff Updated successfully' });
       },
       error: (error) => {
         this.isLoading = false;
         this.showAlert({ icon: 'error', title: 'Error!', text: 'please try again' });
-        this.isLoading = false;
       }
     });
   }
