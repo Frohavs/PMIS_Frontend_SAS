@@ -6,6 +6,7 @@ import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
 import { SweetAlertOptions } from 'sweetalert2';
 import { BoqService } from 'src/app/services/boq.service';
 import { LookupService } from 'src/app/services/lookup/lookup.service';
+import { ProjectsService } from 'src/app/services/projects.service';
 
 @Component({
   selector: 'app-add-boq',
@@ -19,6 +20,7 @@ export class AddBoqComponent implements OnInit {
 
   vats: any[] = [];
   units: any[] = [];
+  projects: any[] = [];
   private updating = false;
   private updatingVat = false;
 
@@ -33,6 +35,7 @@ export class AddBoqComponent implements OnInit {
     private formBuilder: FormBuilder,
     private lookupService: LookupService,
     private activatedRoute: ActivatedRoute,
+    private projectsService: ProjectsService,
   ) { }
 
   ngOnInit(): void {
@@ -57,6 +60,7 @@ export class AddBoqComponent implements OnInit {
 
   initAddBoqForm() {
     this.addBoqForm = this.formBuilder.group({
+      projectId: ['', Validators.required],
       itemNo: ['', Validators.required],
       title: ['', Validators.required],
       description: ['', Validators.required],
@@ -67,12 +71,19 @@ export class AddBoqComponent implements OnInit {
       totalPrice: ['', Validators.required],
     });
 
+    this.projectsService.getAll().subscribe(res => {
+      this.projects = res?.data?.items;
+      this.cdr.detectChanges();
+    });
+
     this.addBoqForm.valueChanges.subscribe(res => {
       if (!this.updating && res.unitPrice) {
         this.updating = true;
         let totalPrice = 0;
         if (+this.vatId.value != 0) {
-          totalPrice = (+this.vatId.value * this.unitPrice.value * this.quantity.value) / 100
+          console.log();
+
+          totalPrice = ((+this.vatId.value + 100) * this.unitPrice.value * this.quantity.value) / 100
         } else {
           totalPrice = (this.unitPrice.value * this.quantity.value)
         }
@@ -84,7 +95,7 @@ export class AddBoqComponent implements OnInit {
           this.updatingVat = true;
           let totalPrice = 0;
           if (+this.vatId.value != 0) {
-            totalPrice = (+this.vatId.value * this.unitPrice.value * this.quantity.value) / 100
+            totalPrice = ((+this.vatId.value + 100) * this.unitPrice.value * this.quantity.value) / 100
           } else {
             totalPrice = (this.unitPrice.value * this.quantity.value)
           }
@@ -108,6 +119,7 @@ export class AddBoqComponent implements OnInit {
 
   editVendorForm(data: any) {
     this.addBoqForm.patchValue({
+      projectId: data?.projectId,
       itemNo: data?.itemNo,
       title: data?.title,
       description: data?.description,

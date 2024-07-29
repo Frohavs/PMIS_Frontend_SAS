@@ -129,6 +129,7 @@ export const locale = {
       Status: 'Status',
       Search: 'Search Boq...',
 
+      project: 'Project',
       item_no: 'Item No',
       item_title: 'Item Title',
       item_desc: 'Item Description',

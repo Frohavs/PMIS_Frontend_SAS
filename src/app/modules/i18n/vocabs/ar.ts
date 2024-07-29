@@ -130,6 +130,7 @@ export const locale = {
       Status: 'الحالة',
       Search: 'بحث عن كمية...',
 
+      project: 'المشروع',
       item_no: 'رقم الصنف',
       item_title: 'العنوان',
       item_desc: 'وصف المنتج',

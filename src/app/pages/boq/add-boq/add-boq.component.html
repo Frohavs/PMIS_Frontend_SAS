@@ -26,6 +26,30 @@
               <div class="col-lg-6">
                 <label class="col-lg-12 col-form-label fw-bold fs-6">
                   <span>
+                    {{"BOQ.project" | translate}}
+                  </span>
+                </label>
+                <div class="col-lg-12 fv-row">
+                  <select class="form-select form-select-solid form-select-lg fw-bold" name="projectId"
+                    formControlName="projectId">
+                    <option value="" disabled selected>{{"TRANSLATOR.SELECTION" | translate}}</option>
+                    <ng-container *ngFor="let project of projects">
+                      <option [value]="project?.id">{{project?.name}}</option>
+                    </ng-container>
+                  </select>
+                  <div
+                    *ngIf="addBoqForm?.get('projectId')?.invalid && (addBoqForm?.get('projectId')?.dirty || addBoqForm?.get('projectId')?.touched)"
+                    class="fv-plugins-message-container">
+                    <div class="fv-help-block">vat is required</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row mb-1">
+              <div class="col-lg-6">
+                <label class="col-lg-12 col-form-label fw-bold fs-6">
+                  <span>
                     {{"BOQ.item_no" | translate}}
                   </span>
                 </label>

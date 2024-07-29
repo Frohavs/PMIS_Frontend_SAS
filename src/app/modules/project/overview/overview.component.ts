@@ -52,7 +52,7 @@ export class OverviewComponent {
       this.totalCount = res?.data?.totalcount;
       this.dataList = res?.data?.items;
       this.cdr.detectChanges();
-    })
+    });
   }
 
   checkAll(event: Event) {
