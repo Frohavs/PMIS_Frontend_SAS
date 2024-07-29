@@ -28,12 +28,8 @@ export class UpdateProjectInfoComponent implements OnInit {
       this.projectId = params['id'];
       if (this.projectId) {
         this.projectsService.getByID(this.projectId).subscribe(res => {
-          console.log(res.data);
           this.projectDetails = res.data;
           this.cdr.detectChanges();
-          // setTimeout(() => {
-          //   this.editProjectForm(res.data);
-          // }, 1000);
         });
       }
     });

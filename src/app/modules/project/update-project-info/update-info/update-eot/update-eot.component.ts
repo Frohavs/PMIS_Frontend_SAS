@@ -56,7 +56,6 @@ export class UpdateEotComponent implements OnInit {
   resetModalValues() {
     this.projectsService.getByID(this.projectId).subscribe(res => {
       this.projectDetails = res.data;
-      console.log(res.data);
 
       this.eotCard = {
         id: this.projectId,
@@ -82,7 +81,7 @@ export class UpdateEotComponent implements OnInit {
 
   addDaysToDate(days: number) {
     // Step 1: Parse the date string into a Date object
-    const originalDate = new Date(this.projectDetails.eot.originalFinishDate);
+    const originalDate = new Date(this.projectDetails.eot.expectedFinishDate);
 
     // Step 2: Add days to the Date object
     originalDate.setDate(originalDate.getDate() + days);
@@ -113,7 +112,7 @@ export class UpdateEotComponent implements OnInit {
 
     // Convert the difference to days
     const diffInDays = diffInMilliseconds / (1000 * 60 * 60 * 24);
-    debugger
+
     return diffInDays;
   }
 
@@ -126,7 +125,6 @@ export class UpdateEotComponent implements OnInit {
   }
 
   onFileSelected(event: any) {
-    console.log(event);
     this.selectedFile = <File>event.target.files[0];
     const fd = new FormData();
     fd.append('Attachment', this.selectedFile, this.selectedFile.name);

@@ -53,7 +53,6 @@ export class UpdateVariationOrderComponent implements OnInit {
   resetModalValues() {
     this.projectsService.getByID(this.projectId).subscribe(res => {
       this.projectDetails = res.data;
-      console.log(res.data);
 
       this.VoCard = {
         id: this.projectId,
@@ -72,21 +71,20 @@ export class UpdateVariationOrderComponent implements OnInit {
 
   onVoValueInput(event: Event) {
     const value = (event.target as HTMLInputElement).value;
-    this.VoModel['voUpdatedValue'] =  this.projectDetails?.vo.originalValue + (+value);
+    this.VoModel['voUpdatedValue'] =  this.projectDetails?.vo.updatedValue + (+value);
     if (this.VoModel['isIncrement']) {
-      this.VoModel['voUpdatedValue'] =  this.projectDetails?.vo.originalValue + (this.VoModel['voValue']);
+      this.VoModel['voUpdatedValue'] =  this.projectDetails?.vo.updatedValue + (this.VoModel['voValue']);
     } else {
-      this.VoModel['voUpdatedValue'] =  this.projectDetails?.vo.originalValue - (this.VoModel['voValue']);
+      this.VoModel['voUpdatedValue'] =  this.projectDetails?.vo.updatedValue - (this.VoModel['voValue']);
     }
   }
 
   onIsIncrementChange(event: Event) {
-    debugger
     const checked = (event.target as HTMLInputElement).checked;
     if (checked) {
-      this.VoModel['voUpdatedValue'] = this.projectDetails?.vo.originalValue + (this.VoModel['voValue']);
+      this.VoModel['voUpdatedValue'] = this.projectDetails?.vo.updatedValue + (this.VoModel['voValue']);
     } else {
-      this.VoModel['voUpdatedValue'] = this.projectDetails?.vo.originalValue - (this.VoModel['voValue']);
+      this.VoModel['voUpdatedValue'] = this.projectDetails?.vo.updatedValue - (this.VoModel['voValue']);
     }
   }
 
@@ -99,7 +97,6 @@ export class UpdateVariationOrderComponent implements OnInit {
   }
 
   onFileSelected(event: any) {
-    console.log(event);
     this.selectedFile = <File>event.target.files[0];
     const fd = new FormData();
     fd.append('Attachment', this.selectedFile, this.selectedFile.name);
@@ -109,7 +106,6 @@ export class UpdateVariationOrderComponent implements OnInit {
   }
 
   onSubmit(event: Event, myForm: NgForm) {
-    console.log(this.VoModel);
     if (myForm && myForm.invalid) {
       return;
     }

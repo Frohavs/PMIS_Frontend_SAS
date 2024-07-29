@@ -60,7 +60,6 @@ export class UpdateProjectStaffComponent implements OnInit {
     this.activatedRoute.params.subscribe(params => {
       this.projectId = params['id'];
       this.projectsService.getByID(this.projectId).subscribe(res => {
-        console.log(res.data);
         this.projectDetails = res.data;
         this.cdr.detectChanges();
         setTimeout(() => {

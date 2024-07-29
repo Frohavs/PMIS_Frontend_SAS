@@ -88,7 +88,6 @@ export class AddCompanyComponent implements OnInit, OnDestroy {
   }
 
   saveSettings() {
-    console.log(this.addCompanyForm.value);
     if (!this.companyId) {
       this.companyService.addCompany({...this.addCompanyForm.value, companyType: Number(this.addCompanyForm.value.companyType)}).subscribe(res => {
         this.router.navigateByUrl('companies')
