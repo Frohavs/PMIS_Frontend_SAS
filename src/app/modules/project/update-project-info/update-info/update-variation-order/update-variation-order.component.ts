@@ -56,7 +56,7 @@ export class UpdateVariationOrderComponent implements OnInit {
 
       this.VoCard = {
         id: this.projectId,
-        voValue: this.projectDetails?.vo?.originalValue,
+        voValue: this.projectDetails?.vo?.updatedValue - this.projectDetails?.vo?.voValue,
         voApprovedValue: this.projectDetails?.vo?.voValue,
         voUpdatedValue: this.projectDetails?.vo?.updatedValue
       };
@@ -70,6 +70,7 @@ export class UpdateVariationOrderComponent implements OnInit {
   }
 
   onVoValueInput(value: Event) {
+
     this.VoModel['voUpdatedValue'] =  (this.projectDetails?.vo.updatedValue || this.projectDetails?.vo?.originalValue) + (+value);
     if (this.VoModel['isIncrement']) {
       this.VoModel['voUpdatedValue'] =  (this.projectDetails?.vo.updatedValue || this.projectDetails?.vo?.originalValue) + (this.VoModel['voValue']);

@@ -50,7 +50,6 @@ export class AddBoqComponent implements OnInit {
       this.projectId = params['id'];
     });
     const queryParams = this.activatedRoute.snapshot.queryParams;
-    debugger
     this.boqId = +queryParams?.boqId
     if (this.boqId) {
       this.boqService.getBoq(this.boqId).subscribe(res => {

@@ -178,7 +178,8 @@
               class="required">{{"PROJECTS.st_date" | translate}}</span></label>
           <div class="col-lg-8 fv-row">
             <input type="date" class="form-control form-control-lg form-control-solid text-start"
-              placeholder="{{'PROJECTS.st_date' | translate}}" name="executionStartDate" formControlName="executionStartDate" />
+              placeholder="{{'PROJECTS.st_date' | translate}}" name="executionStartDate"
+              formControlName="executionStartDate" />
             <div
               *ngIf="addProjectForm?.get('executionStartDate')?.invalid && (addProjectForm?.get('executionStartDate')?.dirty || addProjectForm?.get('executionStartDate')?.touched)"
               class="fv-plugins-message-container">
@@ -192,7 +193,8 @@
               class="required">{{durationDays.value ? 'Original Duration(Days)' : 'Original Duration(Month)'}}</span></label>
           <div class="col-lg-4 fv-row">
             <input type="number" class="form-control form-control-lg form-control-solid text-start"
-              placeholder="{{durationDays.value ? 'Original Duration(Days)' : 'Original Duration(Month)'}}" name="duration" formControlName="duration" min="" />
+              placeholder="{{durationDays.value ? 'Original Duration(Days)' : 'Original Duration(Month)'}}"
+              name="duration" formControlName="duration" min="" />
             <div
               *ngIf="addProjectForm?.get('duration')?.invalid && (addProjectForm?.get('duration')?.dirty || addProjectForm?.get('duration')?.touched)"
               class="fv-plugins-message-container">
@@ -217,7 +219,8 @@
               class="required">{{"PROJECTS.originalFinishDate" | translate}}</span></label>
           <div class="col-lg-8 fv-row">
             <input type="date" class="form-control form-control-lg form-control-solid text-start"
-              placeholder="{{'PROJECTS.originalFinishDate' | translate}}" name="originalFinishDate" formControlName="originalFinishDate" readonly />
+              placeholder="{{'PROJECTS.originalFinishDate' | translate}}" name="originalFinishDate"
+              formControlName="originalFinishDate" readonly />
           </div>
         </div>
 
@@ -254,7 +257,8 @@
           <label class="col-lg-4 col-form-label fw-bold fs-6"><span
               class="required">{{"PROJECTS.project_value" | translate}}</span></label>
           <div class="col-lg-8 fv-row">
-            <input type="number" class="form-control form-control-lg form-control-solid text-start"
+            <input type="text" class="form-control form-control-lg form-control-solid text-start"
+              [currencyMask]="{ prefix: 'SAR ', thousands: ',', precision: 0, align: 'left' }"
               placeholder="{{'PROJECTS.project_value' | translate}}" name="originalValue"
               formControlName="originalValue" min="1" />
             <div
