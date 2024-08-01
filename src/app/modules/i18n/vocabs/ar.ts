@@ -90,6 +90,7 @@ export const locale = {
 
       EN_NAME: 'الأسم بالأنجليزية',
       Status: 'الحالة',
+      actions: 'Actions'
     },
     USERS: {
       ID: 'رقم',

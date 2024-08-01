@@ -165,7 +165,6 @@ export class CreateProjectComponent implements OnInit, AfterViewInit, OnDestroy 
         managerId: +this.addProjectForm.value.managerId,
         districtId: +this.addProjectForm.value.districtId
       };
-      debugger
       this.projectsService.addProject(payload).subscribe(res => {
         this.router.navigateByUrl('projects');
         this.showAlert({ icon: 'success', title: 'Success!', text: 'Project Added successfully!' });

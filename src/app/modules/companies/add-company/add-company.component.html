@@ -44,7 +44,8 @@
           <label class="col-lg-4 col-form-label fw-bold fs-6"><span
               class="required">{{"COMPANY.TYPE" | translate}}</span></label>
           <div class="col-lg-8 fv-row">
-            <select class="form-select form-select-solid form-select-lg fw-bold" name="Type" formControlName="companyType">
+            <select class="form-select form-select-solid form-select-lg fw-bold" name="Type"
+              formControlName="companyType">
               <option value="" disabled>{{"TRANSLATOR.SELECTION" | translate}}</option>
               <ng-container *ngFor="let item of companyTypes">
                 <option [value]="item?.id">{{item?.name}}</option>
@@ -133,6 +134,21 @@
               name="email" formControlName="email" />
           </div>
         </div>
+        <!-- <div class="row mb-6">
+          <label class="col-lg-4 col-form-label fw-bold fs-6"><span
+              class="required">{{"VENDORS.TITLE" | translate}}</span></label>
+          <div class="col-lg-8 fv-row">
+            <ng-multiselect-dropdown [placeholder]="'vendor list'" [settings]="dropdownSettings"
+              [data]="vendorList" formControlName="vendorIds" (onSelect)="onItemSelect($event)" (onDeSelect)="onItemDeselect($event)"
+              (onSelectAll)="onSelectAll($event)">
+            </ng-multiselect-dropdown>
+            <div
+              *ngIf="addCompanyForm?.get('type')?.invalid && (addCompanyForm?.get('type')?.dirty || addCompanyForm?.get('type')?.touched)"
+              class="fv-plugins-message-container">
+              <div class="fv-help-block">vendor is required</div>
+            </div>
+          </div>
+        </div> -->
 
         <div class="row mb-6">
           <label class="col-lg-4 col-form-label fw-bold fs-6">Notification by SMS or Mail</label>
@@ -164,6 +180,6 @@
   </div>
 </div>
 
- <!-- modal -->
+<!-- modal -->
 <swal #noticeSwal [swalOptions]="swalOptions">
 </swal>

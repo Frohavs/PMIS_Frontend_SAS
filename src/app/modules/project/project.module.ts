@@ -19,6 +19,8 @@ import { ProjectStageUpdateComponent } from './update-project-info/project-stage
 import { UpdateInfoComponent } from './update-project-info/update-info/update-info.component';
 import { UpdateEotComponent } from './update-project-info/update-info/update-eot/update-eot.component';
 import { UpdateVariationOrderComponent } from './update-project-info/update-info/update-variation-order/update-variation-order.component';
+import { AddBoqComponent } from './add-boq/add-boq.component';
+import { BoqListComponent } from './boq-list/boq-list.component';
 
 
 @NgModule({
@@ -26,6 +28,8 @@ import { UpdateVariationOrderComponent } from './update-project-info/update-info
     ProjectsComponent,
     OverviewComponent,
     CreateProjectComponent,
+    BoqListComponent,
+    AddBoqComponent,
     UpdateProjectInfoComponent,
     UpdateProjectStaffComponent,
     UpdateProgressInfoComponent,

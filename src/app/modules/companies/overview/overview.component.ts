@@ -36,7 +36,7 @@ export class OverviewComponent implements OnInit {
       this.dataColumns = [
         { title: this.translate.instant('COMPANY.ID'), className: 'min-w-125px p-3 rounded-start' },
         { title: this.translate.instant('COMPANY.TITLE'), className: 'ps-4 min-w-250px' },
-        { title: this.translate.instant('COMPANY.EN_NAME'), className: 'min-w-125px' },
+        { title: this.translate.instant('AUTH.INPUT.EMAIL'), className: 'min-w-125px' },
         { title: this.translate.instant('COMPANY.cr_number'), className: 'min-w-200px' },
         { title: this.translate.instant('COMPANY.notifications'), className: 'min-w-150px' },
         { title: '', className: 'min-w-200px text-end rounded-end' },
@@ -54,9 +54,9 @@ export class OverviewComponent implements OnInit {
           {
             id: iterator.id,
             img: './assets/media/logos/froha_logo.png',
-            nameAr: iterator.nameAr,
-            name: iterator.name,
-            subName: iterator?.companyTypeName || '--',
+            nameAr: iterator.name,
+            name: iterator.email,
+            subName: iterator?.nameAr || '--',
             crNumber: iterator.crNumber,
             notifications: { smsNotification: iterator.smsNotification, mailNotification: iterator.mailNotification }
           }

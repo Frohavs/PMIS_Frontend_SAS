@@ -7,11 +7,18 @@
           <span class="fw-bolder text-gray-900">{{"BOQ.Add_Boq" | translate}}</span>
           <!-- <span class="text-muted mt-1 fw-bold fs-7">test</span> -->
         </h3>
-        <div class="card-toolbar">
-          <a (click)="back()" class="btn btn-sm btn-danger d-flex">
-            <app-keenicon name="arrow-left" class="fs-3"></app-keenicon>
-            {{"ECOMMERCE.COMMON.BACK" | translate}}
-          </a>
+        <div class="d-flex">
+          <div class="card-toolbar">
+            <a (click)="navigateBoqTable()" class="btn btn-sm btn-primary d-flex mx-2">
+              show BOQs
+            </a>
+          </div>
+          <div class="card-toolbar">
+            <a (click)="back()" class="btn btn-sm btn-danger d-flex">
+              <app-keenicon name="arrow-left" class="fs-3"></app-keenicon>
+              {{"ECOMMERCE.COMMON.BACK" | translate}}
+            </a>
+          </div>
         </div>
       </div>
 
@@ -20,31 +27,6 @@
 
         <form [formGroup]="addBoqForm" class="form">
           <div class="card-body border-top p-9">
-
-
-            <div class="row mb-1">
-              <div class="col-lg-6">
-                <label class="col-lg-12 col-form-label fw-bold fs-6">
-                  <span>
-                    {{"BOQ.project" | translate}}
-                  </span>
-                </label>
-                <div class="col-lg-12 fv-row">
-                  <select class="form-select form-select-solid form-select-lg fw-bold" name="projectId"
-                    formControlName="projectId">
-                    <option value="" disabled selected>{{"TRANSLATOR.SELECTION" | translate}}</option>
-                    <ng-container *ngFor="let project of projects">
-                      <option [value]="project?.id">{{project?.name}}</option>
-                    </ng-container>
-                  </select>
-                  <div
-                    *ngIf="addBoqForm?.get('projectId')?.invalid && (addBoqForm?.get('projectId')?.dirty || addBoqForm?.get('projectId')?.touched)"
-                    class="fv-plugins-message-container">
-                    <div class="fv-help-block">vat is required</div>
-                  </div>
-                </div>
-              </div>
-            </div>
 
             <div class="row mb-1">
               <div class="col-lg-6">

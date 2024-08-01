@@ -3,7 +3,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 import { ROLES } from './mock-data';
 import { CompanyService } from 'src/app/services/company.service';
-import { CompanyTypeService } from 'src/app/services/company-type.service';
 
 @Component({
   selector: 'app-company-details',
@@ -13,7 +12,6 @@ import { CompanyTypeService } from 'src/app/services/company-type.service';
 export class CompanyDetailsComponent implements OnInit {
 
   companyId: number;
-  companyTypes: any[] = [];
   companyDetails: any;
   isCollapsed1 = false;
   isLoading = false;
@@ -30,7 +28,6 @@ export class CompanyDetailsComponent implements OnInit {
     private cdr: ChangeDetectorRef,
     private modalService: NgbModal,
     private companyService: CompanyService,
-    private companyTypeService: CompanyTypeService,
   ) { }
 
   ngOnInit(): void {
@@ -45,9 +42,6 @@ export class CompanyDetailsComponent implements OnInit {
       }
     });
 
-    this.companyTypeService.getAll().subscribe(res => {
-      this.companyTypes = res?.data;
-    });
   }
 
   navigateEdit() {

@@ -1,18 +1,20 @@
 import { ChangeDetectorRef, Component, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Location } from '@angular/common';
 import { NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
 import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
 import { BoqService } from 'src/app/services/boq.service';
-import { VendorService } from 'src/app/services/vendors.service';
 import { SweetAlertOptions } from 'sweetalert2';
 
 @Component({
-  selector: 'app-overview',
-  templateUrl: './overview.component.html',
-  styleUrl: './overview.component.scss'
+  selector: 'app-boq-list',
+  templateUrl: './boq-list.component.html',
+  styleUrl: './boq-list.component.scss'
 })
-export class OverviewComponent {
+export class BoqListComponent {
+  projectId: number;
+
   Add_text: string;
   Search_text: string;
   dataList: any[] = []
@@ -32,6 +34,8 @@ export class OverviewComponent {
 
   constructor(
     private router: Router,
+    private _location: Location,
+    private activatedRoute: ActivatedRoute,
     private cdr: ChangeDetectorRef,
     private boqService: BoqService,
     private translate: TranslateService,
@@ -41,13 +45,22 @@ export class OverviewComponent {
   }
 
   ngOnInit(): void {
-    this.initializeProjectData()
+    this.getBoqId()
   }
 
-  initializeProjectData() {
-    this.boqService.getAll().subscribe(res => {
+  initializeProjectData(id: number) {
+    this.boqService.getAll(id).subscribe(res => {
       this.dataList = res.data;
       this.cdr.detectChanges();
+    });
+  }
+
+  getBoqId() {
+    this.activatedRoute.params.subscribe(params => {
+      this.projectId = params['id'];
+      if (this.projectId) {
+        this.initializeProjectData(this.projectId)
+      }
     });
   }
 
@@ -62,12 +75,10 @@ export class OverviewComponent {
     // const isChecked = (<HTMLInputElement>event.target).checked;
   }
 
-  redirectToNew() {
-    this.router.navigateByUrl('boq/add')
-  }
-
-  editBoq(user: any) {
-    this.router.navigateByUrl('boq/edit/' + user.id)
+  editBoq(boq: any) {
+    this.router.navigate([`projects/add-boq/${this.projectId}`], {
+      queryParams: { boqId: boq.id }
+    });
   }
 
   deleteBoq(boq: any) {
@@ -80,7 +91,7 @@ export class OverviewComponent {
             setTimeout(() => {
               this.isLoading = false;
               this.dataList = [];
-              this.initializeProjectData();
+              this.initializeProjectData(this.projectId);
             }, 500);
           },
           error: (error) => {
@@ -111,5 +122,9 @@ export class OverviewComponent {
     }, swalOptions);
     this.cdr.detectChanges();
     this.noticeSwal.fire();
+  }
+
+  back() {
+    this._location.back();
   }
 }

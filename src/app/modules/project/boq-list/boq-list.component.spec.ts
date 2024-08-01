@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { OverviewComponent } from './overview.component';
+import { BoqListComponent } from './boq-list.component';
 
-describe('OverviewComponent', () => {
-  let component: OverviewComponent;
-  let fixture: ComponentFixture<OverviewComponent>;
+describe('BoqListComponent', () => {
+  let component: BoqListComponent;
+  let fixture: ComponentFixture<BoqListComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [OverviewComponent]
+      imports: [BoqListComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(OverviewComponent);
+    fixture = TestBed.createComponent(BoqListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

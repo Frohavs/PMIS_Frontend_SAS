@@ -36,7 +36,8 @@
               <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
                 Contract Date
               </a>
-              <span class="text-muted fw-bold d-block pt-1">{{projectDetails?.createdDate?.slice(0, 10)  ||  '--'}}</span>
+              <span
+                class="text-muted fw-bold d-block pt-1">{{projectDetails?.createdDate?.slice(0, 10)  ||  '--'}}</span>
             </div>
           </div>
           <!-- end::Title -->
@@ -78,7 +79,8 @@
               <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
                 Finish date after extension
               </a>
-              <span class="text-muted fw-bold d-block pt-1">{{projectDetails?.originalFinishDate?.slice(0, 10)  ||  '--'}}</span>
+              <span
+                class="text-muted fw-bold d-block pt-1">{{projectDetails?.originalFinishDate?.slice(0, 10)  ||  '--'}}</span>
             </div>
           </div>
           <!-- end::Title -->
@@ -131,7 +133,7 @@
               </label>
               <div class="col-lg-12 fv-row">
                 <input disabled readonly type="text" class="form-control form-control-lg form-control-solid text-start"
-                  name="voValue" name="voValue" [(ngModel)]="VoCard.voValue" value="0" />
+                  name="voValue" name="voValue" [(ngModel)]="VoCard.voValue" />
               </div>
             </div>
             <div class="row mb-1">
@@ -140,7 +142,7 @@
               </label>
               <div class="col-lg-12 fv-row">
                 <input disabled readonly type="text" class="form-control form-control-lg form-control-solid text-start"
-                  name="voApprovedValue" name="voApprovedValue" [(ngModel)]="VoCard.voApprovedValue" value="31" />
+                  name="voApprovedValue" name="voApprovedValue" [(ngModel)]="VoCard.voApprovedValue" />
               </div>
             </div>
             <div class="row mb-1">
@@ -149,7 +151,7 @@
               </label>
               <div class="col-lg-12 fv-row">
                 <input disabled readonly type="text" class="form-control form-control-lg form-control-solid text-start"
-                  name="voUpdatedValue" name="voUpdatedValue" [(ngModel)]="VoCard.voUpdatedValue" value="09/12/2025" />
+                  name="voUpdatedValue" name="voUpdatedValue" [(ngModel)]="VoCard.voUpdatedValue" />
               </div>
             </div>
 
@@ -171,8 +173,8 @@
 
         <div class="fv-row mb-3">
           <label class="required fw-semibold fs-6 mb-2">VO Project Value</label>
-          <input type="number" class="form-control form-control-solid" name="voValue" [(ngModel)]="VoModel.voValue"
-            #name="ngModel" required (input)="onVoValueInput($event)" min="0" />
+          <input type="number" class="form-control form-control-solid " name="voValue" [(ngModel)]="VoModel.voValue"
+            #name="ngModel" required (ngModelChange)="onVoValueInput($event)" min="0" />
         </div>
 
         <div class="fv-row mb-3">
@@ -186,14 +188,14 @@
 
         <div class="fv-row mb-3">
           <label class="required fw-semibold fs-6 mb-2">Updated Project Value</label>
-          <input disabled readonly type="number" class="form-control form-control-solid" name="voUpdatedValue" [(ngModel)]="VoModel.voUpdatedValue"
-            #name="ngModel" required />
+          <input disabled readonly type="text" class="form-control form-control-solid " name="voUpdatedValue"
+            [(ngModel)]="VoModel.voUpdatedValue" #name="ngModel" required />
         </div>
 
         <div class="fv-row mb-3">
           <label class="required fw-semibold fs-6 mb-2">Reason</label>
-          <textarea class="form-control form-control-solid" name="voReason" [(ngModel)]="VoModel.voReason" #name="ngModel"
-            required rows="3"></textarea>
+          <textarea class="form-control form-control-solid" name="voReason" [(ngModel)]="VoModel.voReason"
+            #name="ngModel" required rows="3"></textarea>
         </div>
 
         <label class="col-lg-12 col-form-label fw-bold fs-6">
@@ -202,15 +204,15 @@
           </span>
         </label>
         <div class="col-lg-12 fv-row">
-          <input type="file" class="form-control form-control-solid" name="voAttachment" [(ngModel)]="VoModel.voAttachment"
-            #name="ngModel" required (change)="onFileSelected($event)" />
+          <input type="file" class="form-control form-control-solid" name="voAttachment"
+            [(ngModel)]="VoModel.voAttachment" #name="ngModel" required (change)="onFileSelected($event)" />
         </div>
 
       </div>
     </div>
     <div class="modal-footer flex-center">
       <!--begin::Button-->
-      <button type="submit" class="btn btn-primary w-100" [attr.data-kt-indicator]="isLoading ? 'on' : 'off'">
+      <button type="submit" class="btn btn-success w-100" [attr.data-kt-indicator]="isLoading ? 'on' : 'off'">
         <span class="indicator-label">
           Submit
         </span>
@@ -223,6 +225,6 @@
   </form>
 </ng-template>
 
- <!-- modal -->
- <swal #noticeSwal [swalOptions]="swalOptions">
+<!-- modal -->
+<swal #noticeSwal [swalOptions]="swalOptions">
 </swal>

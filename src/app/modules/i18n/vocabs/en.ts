@@ -89,6 +89,7 @@ export const locale = {
       project_manager: 'Project Manager',
       EN_NAME: 'English Name',
       Status: 'Status',
+      actions: 'Actions'
     },
     USERS: {
       ID: 'ID',

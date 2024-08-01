@@ -8,6 +8,7 @@ import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
 import { SweetAlertOptions } from 'sweetalert2';
 import { CompanyTypeService } from 'src/app/services/company-type.service';
 import { CompanyTypes } from './company-types';
+import { VendorService } from 'src/app/services/vendors.service';
 
 @Component({
   selector: 'app-add-company',
@@ -25,6 +26,17 @@ export class AddCompanyComponent implements OnInit, OnDestroy {
   swalOptions: SweetAlertOptions = {};
   @ViewChild('noticeSwal') noticeSwal!: SwalComponent;
 
+  vendorList: any = [];
+  dropdownSettings: any = {
+    singleSelection: false,
+    idField: 'id',
+    textField: 'name',
+    selectAllText: 'Select All',
+    unSelectAllText: 'UnSelect All',
+    itemsShowLimit: 8,
+    allowSearchFilter: true,
+  };
+
   constructor(
     private router: Router,
     private _location: Location,
@@ -32,13 +44,30 @@ export class AddCompanyComponent implements OnInit, OnDestroy {
     private formBuilder: FormBuilder,
     private activatedRoute: ActivatedRoute,
     private companyService: CompanyService,
-    private companyTypeService: CompanyTypeService
+    private vendorService: VendorService
   ) {
   }
 
   ngOnInit() {
     this.getCompanyId();
     this.initializeCompanyForm();
+    this.vendorService.getAll().subscribe(res => {
+      // console.log('vendorService', res.data.items);
+      this.vendorList = res.data.items;
+      this.cdr.detectChanges();
+    })
+  }
+
+  onItemSelect(item: any) {
+    // console.log(item);
+
+  }
+  onItemDeselect(item: any) {
+    // console.log(item);
+
+  }
+  onSelectAll(items: any) {
+    // console.log(items);
   }
 
   initializeCompanyForm() {
@@ -55,6 +84,7 @@ export class AddCompanyComponent implements OnInit, OnDestroy {
       smsNotification: [true, Validators.required],
       mailNotification: [false, Validators.required],
       companyType: ['', Validators.required],
+      vendorIds: [[], Validators.required],
     });
   }
   editCompanyForm(data: any) {
@@ -71,6 +101,15 @@ export class AddCompanyComponent implements OnInit, OnDestroy {
       smsNotification: data?.smsNotification,
       mailNotification: data?.mailNotification,
       companyType: data?.companyTypeId,
+
+    });
+  }
+
+  getSelectedVendors(ids: number[]) {
+    let result: any = [];
+    result = this.vendorList.filter((item: any) => ids?.includes(item.id));
+    this.addCompanyForm.patchValue({
+      vendorIds: result
     });
   }
 
@@ -81,6 +120,8 @@ export class AddCompanyComponent implements OnInit, OnDestroy {
         this.companyService.getByID(this.companyId).subscribe(res => {
           setTimeout(() => {
             this.editCompanyForm(res.data);
+            this.getSelectedVendors(res.data?.vendorIds);
+
           }, 500);
         });
       }
@@ -89,7 +130,13 @@ export class AddCompanyComponent implements OnInit, OnDestroy {
 
   saveSettings() {
     if (!this.companyId) {
-      this.companyService.addCompany({...this.addCompanyForm.value, companyType: Number(this.addCompanyForm.value.companyType)}).subscribe(res => {
+      let formatVendors = []
+      for (const iterator of this.addCompanyForm.value.vendorIds) {
+        formatVendors.push(iterator.id)
+      }
+      const payload =
+        { ...this.addCompanyForm.value, companyType: Number(this.addCompanyForm.value.companyType), vendorIds: formatVendors }
+      this.companyService.addCompany(payload).subscribe(res => {
         this.router.navigateByUrl('companies')
         this.showAlert({ icon: 'success', title: 'Success!', text: 'Company Added successfully!' });
       })
@@ -98,7 +145,13 @@ export class AddCompanyComponent implements OnInit, OnDestroy {
         this.cdr.detectChanges();
       }, 500);
     } else {
-      this.companyService.updateCompany({ id: this.companyId, ...this.addCompanyForm.value }).subscribe(res => {
+      let formatVendors = []
+      for (const iterator of this.addCompanyForm.value.vendorIds) {
+        formatVendors.push(iterator.id)
+      }
+      const payload =
+        { id: this.companyId, ...this.addCompanyForm.value, vendorIds: formatVendors }
+      this.companyService.updateCompany(payload).subscribe(res => {
         this.router.navigateByUrl('companies')
         this.showAlert({ icon: 'success', title: 'Success!', text: 'Company Updated successfully!' });
       })

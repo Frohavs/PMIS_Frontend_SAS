@@ -60,7 +60,7 @@ export class UpdateEotComponent implements OnInit {
       this.eotCard = {
         id: this.projectId,
         eotDays: this.projectDetails?.eot?.eotDays,
-        eotDuration: this.projectDetails?.eot?.originalDuration + (this.projectDetails?.eot?.eotDays || 0),
+        eotDuration: this.projectDetails?.eot?.duration,
         originalFinishDate: (this.projectDetails?.eot?.expectedFinishDate === '0001-01-01T00:00:00') ? this.datePipe.transform(this.projectDetails?.originalFinishDate, 'yyyy-MM-dd') : this.datePipe.transform(this.projectDetails?.expectedFinishDate, 'yyyy-MM-dd')
       };
 

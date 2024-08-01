@@ -14,13 +14,13 @@ import { ProjectsService } from 'src/app/services/projects.service';
   styleUrl: './add-boq.component.scss'
 })
 export class AddBoqComponent implements OnInit {
+  projectId: number;
   boqId: number;
   isLoading: boolean;
   addBoqForm: FormGroup;
 
   vats: any[] = [];
   units: any[] = [];
-  projects: any[] = [];
   private updating = false;
   private updatingVat = false;
 
@@ -39,28 +39,32 @@ export class AddBoqComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.getBoqId();
     this.initAddBoqForm();
+    this.getBoqId();
     this.getLookups();
   }
 
   getBoqId() {
     this.activatedRoute.params.subscribe(params => {
       this.boqId = params['id'];
-      if (this.boqId) {
-        this.boqService.getBoq(this.boqId).subscribe(res => {
-          setTimeout(() => {
-            this.editVendorForm(res.data);
-            this.cdr.detectChanges();
-          }, 1000);
-        });
-      }
+      this.projectId = params['id'];
     });
+    const queryParams = this.activatedRoute.snapshot.queryParams;
+    debugger
+    this.boqId = +queryParams?.boqId
+    if (this.boqId) {
+      this.boqService.getBoq(this.boqId).subscribe(res => {
+        setTimeout(() => {
+          this.editVendorForm(res.data);
+          this.cdr.detectChanges();
+        }, 1000);
+      });
+    }
   }
 
   initAddBoqForm() {
     this.addBoqForm = this.formBuilder.group({
-      projectId: ['', Validators.required],
+      projectId: [''],
       itemNo: ['', Validators.required],
       title: ['', Validators.required],
       description: ['', Validators.required],
@@ -69,11 +73,6 @@ export class AddBoqComponent implements OnInit {
       unitId: ['', Validators.required],
       unitPrice: ['', Validators.required],
       totalPrice: ['', Validators.required],
-    });
-
-    this.projectsService.getAll().subscribe(res => {
-      this.projects = res?.data?.items;
-      this.cdr.detectChanges();
     });
 
     this.addBoqForm.valueChanges.subscribe(res => {
@@ -165,6 +164,7 @@ export class AddBoqComponent implements OnInit {
       this.boqService.addBoq(
         {
           ...this.addBoqForm.value,
+          projectId: +this.projectId,
           unitId: +this.addBoqForm.value.unitId,
           vatId: this.getVatID(this.addBoqForm.value.vatId)
         }
@@ -186,22 +186,23 @@ export class AddBoqComponent implements OnInit {
         {
           ...this.addBoqForm.value,
           id: this.boqId,
+          projectId: +this.projectId,
           unitId: +this.addBoqForm.value.unitId,
           vatId: this.getVatID(this.addBoqForm.value.vatId)
         }
       ).subscribe({
         next: (res) => {
           this.isLoading = false;
-          this.router.navigateByUrl('boq');
           this.showAlert({ icon: 'success', title: 'Success!', text: 'Boq Updated successfully!' });
-          this.cdr.detectChanges();
+          setTimeout(() => {
+            this.router.navigateByUrl(`projects/boq-list/${this.projectId}`);
+          }, 1000);
         },
         error: (error) => {
           this.showAlert({ icon: 'error', title: 'Error!', text: 'Please try again' });
           this.isLoading = false;
         }
       });
-
     }
   }
 
@@ -233,6 +234,9 @@ export class AddBoqComponent implements OnInit {
     return this.addBoqForm.get('unitPrice') as FormControl;
   }
 
+  navigateBoqTable() {
+    this.router.navigateByUrl('projects/boq-list' + `/${this.projectId}`);
+  }
   back() {
     this._location.back();
   }

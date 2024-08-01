@@ -40,11 +40,6 @@ const Routing: Routes = [
     // data: { layout: 'light-sidebar' },
   },
   {
-    path: 'boq',
-    loadChildren: () => import('../pages/boq/boq.module').then((m) => m.BoqModule),
-    // data: { layout: 'light-sidebar' },
-  },
-  {
     path: 'tracking',
     loadChildren: () => import('../pages/tracking/tracking.module').then((m) => m.TrackingModule),
     // data: { layout: 'light-sidebar' },

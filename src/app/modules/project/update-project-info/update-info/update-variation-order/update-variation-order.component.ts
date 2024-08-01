@@ -29,7 +29,7 @@ export class UpdateVariationOrderComponent implements OnInit {
   @ViewChild('noticeSwal') noticeSwal!: SwalComponent;
   @ViewChild('UpdateModal') UpdateModal!: any;
   VoCard: any = { id: 0, voValue: 0, voApprovedValue: 0, voUpdatedValue: 0 };
-  VoModel = { voValue: 0, isIncrement: true, voUpdatedValue: 0, voReason: '', voAttachment: '' };
+  VoModel: any = { voValue: 0, isIncrement: true, voUpdatedValue: 0, voReason: '', voAttachment: '' };
 
   constructor(
     private router: Router,
@@ -69,22 +69,21 @@ export class UpdateVariationOrderComponent implements OnInit {
     });
   }
 
-  onVoValueInput(event: Event) {
-    const value = (event.target as HTMLInputElement).value;
-    this.VoModel['voUpdatedValue'] =  this.projectDetails?.vo.updatedValue + (+value);
+  onVoValueInput(value: Event) {
+    this.VoModel['voUpdatedValue'] =  (this.projectDetails?.vo.updatedValue || this.projectDetails?.vo?.originalValue) + (+value);
     if (this.VoModel['isIncrement']) {
-      this.VoModel['voUpdatedValue'] =  this.projectDetails?.vo.updatedValue + (this.VoModel['voValue']);
+      this.VoModel['voUpdatedValue'] =  (this.projectDetails?.vo.updatedValue || this.projectDetails?.vo?.originalValue) + (this.VoModel['voValue']);
     } else {
-      this.VoModel['voUpdatedValue'] =  this.projectDetails?.vo.updatedValue - (this.VoModel['voValue']);
+      this.VoModel['voUpdatedValue'] =  (this.projectDetails?.vo.updatedValue || this.projectDetails?.vo?.originalValue) - (this.VoModel['voValue']);
     }
   }
 
   onIsIncrementChange(event: Event) {
     const checked = (event.target as HTMLInputElement).checked;
     if (checked) {
-      this.VoModel['voUpdatedValue'] = this.projectDetails?.vo.updatedValue + (this.VoModel['voValue']);
+      this.VoModel['voUpdatedValue'] = (this.projectDetails?.vo.updatedValue || this.projectDetails?.vo?.originalValue) + (this.VoModel['voValue']);
     } else {
-      this.VoModel['voUpdatedValue'] = this.projectDetails?.vo.updatedValue - (this.VoModel['voValue']);
+      this.VoModel['voUpdatedValue'] = (this.projectDetails?.vo.updatedValue || this.projectDetails?.vo?.originalValue) - (this.VoModel['voValue']);
     }
   }
 
@@ -99,9 +98,10 @@ export class UpdateVariationOrderComponent implements OnInit {
   onFileSelected(event: any) {
     this.selectedFile = <File>event.target.files[0];
     const fd = new FormData();
-    fd.append('Attachment', this.selectedFile, this.selectedFile.name);
+
+    fd.append('Attachment', this.selectedFile, this.selectedFile?.name);
     this.attachmentService.uploadAttachment(fd).subscribe(res => {
-      this.VoModel['voAttachment'] = this.selectedFile.name;
+      this.VoModel['voAttachment'] = this.selectedFile?.name;
     });
   }
 
