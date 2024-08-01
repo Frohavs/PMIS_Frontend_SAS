@@ -1,9 +1,11 @@
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
 import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
 import { NewUserService } from 'src/app/services/new-user.service';
+import { PermissionService } from 'src/app/services/permission.service';
 import { SweetAlertOptions } from 'sweetalert2';
 
 @Component({
@@ -18,24 +20,29 @@ export class OverviewComponent implements OnInit {
   dataList: any[] = []
   totalCount: number;
 
+  permissionList: any[] = [];
+
   // modal configs
   isLoading = false;
   isCollapsed1 = false;
   swalOptions: SweetAlertOptions = { buttonsStyling: false };
-  @ViewChild('addUserModal') addUserModal!: any;
+
+
   @ViewChild('noticeSwal') noticeSwal!: SwalComponent;
-
+  @ViewChild('permissionModal') permissionModal!: any;
   @ViewChild('deleteSwal') public readonly deleteSwal!: SwalComponent;
-
-  userModel: { id: number | null, name: string, role: number } = { id: null, name: '', role: 0 };
   modalConfig: NgbModalOptions = {
     modalDialogClass: 'modal-dialog modal-dialog-centered mw-650px',
   };
 
+  permissionModelValue: any = { userId: null, permissionIds: [] };
+
   constructor(
-    private cdr: ChangeDetectorRef,
     private router: Router,
+    private modalService: NgbModal,
+    private cdr: ChangeDetectorRef,
     private translate: TranslateService,
+    private permissionService: PermissionService,
     private newUserService: NewUserService
   ) {
     this.Add_text = this.translate.instant('USERS.Add_User');
@@ -43,7 +50,8 @@ export class OverviewComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.initializeUserData()
+    this.initializeUserData();
+    this.getPermissionList();
   }
 
   initializeUserData() {
@@ -51,7 +59,14 @@ export class OverviewComponent implements OnInit {
       this.totalCount = res?.data?.totalcount;
       this.dataList = res?.data?.items;
       this.cdr.detectChanges();
-    })
+    });
+  }
+
+  getPermissionList() {
+    this.permissionService.getAll().subscribe(res => {
+      this.permissionList = res?.data;
+      this.cdr.detectChanges();
+    });
   }
 
   checkAll(event: Event) {
@@ -68,6 +83,7 @@ export class OverviewComponent implements OnInit {
   redirectToNew() {
     this.router.navigateByUrl('manage/users/add')
   }
+
 
   editUser(user: any) {
     this.router.navigateByUrl('manage/users/edit/' + user.id)
@@ -95,6 +111,49 @@ export class OverviewComponent implements OnInit {
     });
   }
 
+  openPermissionModal(user: any) {
+    // console.log(user);
+
+    this.permissionModelValue.userId = user.id;
+    const modalRef = this.modalService.open(this.permissionModal, this.modalConfig);
+
+    modalRef.result.then((data) => { }, (reason) => {
+      // on dismiss
+      this.permissionModelValue = { userId: null, permissionIds: [] };
+    });
+  }
+
+  onCheckboxChange(event: Event, permission: any) {
+    const checked = (event.target as HTMLInputElement).checked;
+    if (checked) {
+      // Add ID to array if not already present
+      if (!this.permissionModelValue.permissionIds?.includes(permission?.id)) {
+        this.permissionModelValue.permissionIds.push(permission?.id);
+      }
+    } else {
+      // Remove ID from array if present
+      this.permissionModelValue.permissionIds = this.permissionModelValue.permissionIds.filter((permissionId: any) => permissionId !== permission.id);
+    }
+    // console.log(this.permissionModelValue);
+  }
+
+  onSubmit() {
+    this.isLoading = true;
+    this.newUserService.addUserPermissions(this.permissionModelValue).subscribe(res => {
+      this.isLoading = false;
+      this.permissionModelValue = { userId: null, permissionIds: [] };
+      this.modalService.dismissAll();
+      this.showAlert({ icon: 'success', title: 'Success!', text: 'Permissions Added successfully!' });
+    }, (error) => {
+      this.isLoading = false;
+      this.showAlert({ icon: 'error', title: 'Error!', text: 'Please try again' });
+    });
+  }
+
+  checkAdmin(userName: string) {
+    return userName === 'SuperAdmin' ? false : true;
+  }
+
   showAlert(swalOptions: SweetAlertOptions) {
     let style = swalOptions.icon?.toString() || 'success';
     if (swalOptions.icon === 'error') {
@@ -109,12 +168,6 @@ export class OverviewComponent implements OnInit {
     }, swalOptions);
     this.cdr.detectChanges();
     this.noticeSwal.fire();
-  }
-
-  checkAdmin(userName: string) {
-    console.log(userName);
-    return userName === 'SuperAdmin' ? false : true;
-
   }
 
 }

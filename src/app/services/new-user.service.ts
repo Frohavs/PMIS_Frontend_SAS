@@ -58,6 +58,15 @@ export class NewUserService {
       headers: httpHeaders
     });
   }
+  addUserPermissions(permissions: string): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/AddPermissions`;
+    return this.http.post<any>(url, permissions, {
+      headers: httpHeaders
+    });
+  }
   updateUser(user: string): Observable<any> {
     const httpHeaders = new HttpHeaders({
       Authorization: `Bearer ${this.token}`,
