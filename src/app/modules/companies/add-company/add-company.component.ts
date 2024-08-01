@@ -121,7 +121,6 @@ export class AddCompanyComponent implements OnInit, OnDestroy {
           setTimeout(() => {
             this.editCompanyForm(res.data);
             this.getSelectedVendors(res.data?.vendorIds);
-
           }, 500);
         });
       }

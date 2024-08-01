@@ -46,7 +46,6 @@ export class AddUserComponent implements OnInit, OnDestroy {
   getLookups() {
     this.companyService.getAll().subscribe(res => {
       this.companies = res.data?.items;
-      debugger
       this.cdr.detectChanges();
     });
     this.roleService.getAll().subscribe(res => {

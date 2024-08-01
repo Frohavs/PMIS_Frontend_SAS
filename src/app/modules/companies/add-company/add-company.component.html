@@ -67,14 +67,6 @@
           </div>
         </div>
 
-        <!-- <div class="row mb-6">
-          <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="required">Number of Users</span></label>
-          <div class="col-lg-8 fv-row">
-            <input type="number" class="form-control form-control-lg form-control-solid" placeholder="users no."
-              name="usersNo" min="1" formControlName="usersNo" />
-          </div>
-        </div> -->
-
         <div class="row mb-6">
           <label class="col-lg-4 col-form-label required fw-bold fs-6">Theme/Main Color</label>
           <div class="col-lg-8 fv-row">
@@ -82,27 +74,6 @@
               formControlName="themeColor" />
           </div>
         </div>
-
-        <!-- <div class="row mb-6">
-          <label class="col-lg-4 col-form-label required fw-bold fs-6">Company icon</label>
-          <div class="col-lg-8 fv-row">
-            <input type="file" class="form-control form-control-lg form-control-solid w-50" name="main_color" />
-          </div>
-        </div>
-
-        <div class="row mb-6">
-          <label class="col-lg-4 col-form-label required fw-bold fs-6">Printing Header</label>
-          <div class="col-lg-8 fv-row">
-            <input type="file" class="form-control form-control-lg form-control-solid w-50" name="main_color" />
-          </div>
-        </div>
-
-        <div class="row mb-6">
-          <label class="col-lg-4 col-form-label required fw-bold fs-6">Printing Footer</label>
-          <div class="col-lg-8 fv-row">
-            <input type="file" class="form-control form-control-lg form-control-solid w-50" name="main_color" />
-          </div>
-        </div> -->
 
         <div class="row mb-6">
           <label class="col-lg-4 col-form-label required fw-bold fs-6">Company Address</label>
@@ -127,6 +98,7 @@
               name="phone" formControlName="phone" />
           </div>
         </div>
+
         <div class="row mb-6">
           <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="required">Company Email</span></label>
           <div class="col-lg-8 fv-row">
@@ -134,11 +106,12 @@
               name="email" formControlName="email" />
           </div>
         </div>
-        <!-- <div class="row mb-6">
+
+        <div class="row mb-6">
           <label class="col-lg-4 col-form-label fw-bold fs-6"><span
               class="required">{{"VENDORS.TITLE" | translate}}</span></label>
           <div class="col-lg-8 fv-row">
-            <ng-multiselect-dropdown [placeholder]="'vendor list'" [settings]="dropdownSettings"
+            <ng-multiselect-dropdown  [settings]="dropdownSettings"
               [data]="vendorList" formControlName="vendorIds" (onSelect)="onItemSelect($event)" (onDeSelect)="onItemDeselect($event)"
               (onSelectAll)="onSelectAll($event)">
             </ng-multiselect-dropdown>
@@ -148,7 +121,7 @@
               <div class="fv-help-block">vendor is required</div>
             </div>
           </div>
-        </div> -->
+        </div>
 
         <div class="row mb-6">
           <label class="col-lg-4 col-form-label fw-bold fs-6">Notification by SMS or Mail</label>

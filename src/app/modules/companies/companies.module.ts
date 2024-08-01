@@ -13,7 +13,7 @@ import { AddCompanyComponent } from './add-company/add-company.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbNavModule, NgbDropdownModule, NgbCollapseModule, NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
-
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 
 @NgModule({
   declarations: [
@@ -36,6 +36,7 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
     NgbCollapseModule,
     NgbTooltipModule,
     SweetAlert2Module.forChild(),
+    NgMultiSelectDropDownModule.forRoot()
   ]
 })
 export class CompaniesModule { }

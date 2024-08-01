@@ -72,7 +72,6 @@ export class UpdateProjectStaffComponent implements OnInit {
             project_consultant_hse: this.projectDetails.staff[5]?.userId || '',
             project_contractor_hse: this.projectDetails.staff[6]?.userId || '',
           });
-          debugger
         }, 1000);
       });
     });
