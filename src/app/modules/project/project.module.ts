@@ -8,6 +8,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { NgbNavModule, NgbDropdownModule, NgbCollapseModule, NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import { NgxCurrencyDirective } from "ngx-currency";
 
 import { ProjectsComponent } from './projects.component';
 import { OverviewComponent } from './overview/overview.component';
@@ -51,7 +52,8 @@ import { BoqListComponent } from './boq-list/boq-list.component';
     NgbTooltipModule,
     DropdownMenusModule,
     SweetAlert2Module.forChild(),
-    SharedModule
+    SharedModule,
+    NgxCurrencyDirective
   ]
 })
 export class ProjectModule { }
