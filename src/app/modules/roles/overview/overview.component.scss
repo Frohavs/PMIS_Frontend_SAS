@@ -3,3 +3,8 @@
     background-color: rgb(22 18 225 / 10%);
   }
 }
+
+.collapse.show {
+  overflow-y: scroll !important;
+  max-height: 450px;
+}

@@ -45,4 +45,13 @@ export class RoleService {
       headers: httpHeaders
     });
   }
+  addRolePermissions(permissions: string): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/AddRolePermissions`;
+    return this.http.post<any>(url, permissions, {
+      headers: httpHeaders
+    });
+  }
 }

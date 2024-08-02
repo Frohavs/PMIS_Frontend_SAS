@@ -62,7 +62,7 @@ export class NewUserService {
     const httpHeaders = new HttpHeaders({
       Authorization: `Bearer ${this.token}`,
     });
-    const url = `${this.API_USERS_URL}/AddPermissions`;
+    const url = `${this.API_USERS_URL}/AddUserPermissions`;
     return this.http.post<any>(url, permissions, {
       headers: httpHeaders
     });

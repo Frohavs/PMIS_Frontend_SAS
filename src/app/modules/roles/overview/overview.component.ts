@@ -2,6 +2,7 @@ import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
+import { PermissionService } from 'src/app/services/permission.service';
 import { RoleService } from 'src/app/services/role.service';
 import { SweetAlertOptions } from 'sweetalert2';
 
@@ -13,6 +14,8 @@ import { SweetAlertOptions } from 'sweetalert2';
 export class OverviewComponent implements OnInit {
 
   roles: any[] = [];
+  permissionList: any[] = [];
+  permissionModelValue: any = { roleId: null, permissionIds: [] };
 
   // modal configs
   isLoading = false;
@@ -23,21 +26,31 @@ export class OverviewComponent implements OnInit {
   };
   roleModel: { name: string } = { name: '' };
   @ViewChild('addModal') addModal!: any;
+  @ViewChild('permissionModal') permissionModal!: any;
   @ViewChild('noticeSwal') noticeSwal!: SwalComponent;
 
   constructor(
     private cdr: ChangeDetectorRef,
     private modalService: NgbModal,
     private roleService: RoleService,
+    private permissionService: PermissionService,
   ) { }
 
   ngOnInit(): void {
     this.initializeRoleData();
+    this.getPermissionList();
   }
 
   initializeRoleData() {
     this.roleService.getAll().subscribe(res => {
       this.roles = res.data;
+      this.cdr.detectChanges();
+    });
+  }
+
+  getPermissionList() {
+    this.permissionService.getAll().subscribe(res => {
+      this.permissionList = res?.data;
       this.cdr.detectChanges();
     });
   }
@@ -48,9 +61,30 @@ export class OverviewComponent implements OnInit {
     this.modalService.open(this.addModal, this.modalConfig);
   }
 
-  editRole(role: any) {
-    this.roleModel = role;
-    this.modalService.open(this.addModal, this.modalConfig)
+  openPermissionModal(role: any) {
+    // console.log(role);
+
+    this.permissionModelValue.roleId = role.id;
+    const modalRef = this.modalService.open(this.permissionModal, this.modalConfig);
+
+    modalRef.result.then((data) => { }, (reason) => {
+      // on dismiss
+      this.permissionModelValue = { roleId: null, permissionIds: [] };
+    });
+  }
+
+  onCheckboxChange(event: Event, permission: any) {
+    const checked = (event.target as HTMLInputElement).checked;
+    if (checked) {
+      // Add ID to array if not already present
+      if (!this.permissionModelValue.permissionIds?.includes(permission?.id)) {
+        this.permissionModelValue.permissionIds.push(permission?.id);
+      }
+    } else {
+      // Remove ID from array if present
+      this.permissionModelValue.permissionIds = this.permissionModelValue.permissionIds.filter((permissionId: any) => permissionId !== permission.id);
+    }
+    // console.log(this.permissionModelValue);
   }
 
   onSubmit(event: Event, myForm: NgForm) {
@@ -105,6 +139,19 @@ export class OverviewComponent implements OnInit {
       });
     };
       createFn();
+  }
+
+  onPermissionSubmit() {
+    this.isLoading = true;
+    this.roleService.addRolePermissions(this.permissionModelValue).subscribe(res => {
+      this.isLoading = false;
+      this.permissionModelValue = { userId: null, permissionIds: [] };
+      this.modalService.dismissAll();
+      this.showAlert({ icon: 'success', title: 'Success!', text: 'Permissions Added successfully!' });
+    }, (error) => {
+      this.isLoading = false;
+      this.showAlert({ icon: 'error', title: 'Error!', text: 'Please try again' });
+    });
   }
 
   showAlert(swalOptions: SweetAlertOptions) {
