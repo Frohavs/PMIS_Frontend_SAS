@@ -11,16 +11,27 @@
           <div class="card-body pt-1">
             <div class="fw-bold text-gray-600 mb-5">Total users with this role: {{ role?.length }}</div>
             <br>
+            <!--begin::Permissions-->
             <div class="d-flex flex-column text-gray-600">
-              <ng-container>
+              <ng-container *ngFor="let permission of role.permissions.slice(0, 3); let i = index">
                 <div class="d-flex align-items-center py-2">
-                  <span class="bullet bg-primary me-3"></span>{{ roles[0]?.permission || 'No permissions given...' }}
+                  <span class="bullet bg-primary me-3"></span>{{ permission.name | titlecase }}
                 </div>
               </ng-container>
+
+              <div *ngIf="role.permissions.length > 3 || role.permissions.length === 0"
+                class='d-flex align-items-center py-2'>
+                <span class='bullet bg-primary me-3'></span>
+                <em>
+                  {{ role.permissions.length === 0 ? 'No permissions given...' : 'and ' + (role.permissions.length - 3) + ' more...' }}
+                </em>
+              </div>
             </div>
+            <!--end::Permissions-->
           </div>
           <div class="card-footer flex-wrap pt-0">
-            <button type="button" class="btn btn-light btn-active-light-primary my-1" (click)="openPermissionModal(role)">add Permission</button>
+            <button type="button" class="btn btn-light btn-active-light-primary my-1"
+              (click)="openPermissionModal(role)">check Permission</button>
           </div>
         </div>
       </div>
@@ -135,7 +146,8 @@
             <ng-container *ngFor="let permission of permissionList">
 
               <label class="form-check form-check-custom form-check-solid align-items-start">
-                <input class="form-check-input me-3" type="checkbox" name="test" (change)="onCheckboxChange($event, permission)" />
+                <input class="form-check-input me-3" type="checkbox" name="test"
+                  (change)="onCheckboxChange($event, permission)" [checked]="permission?.checked" />
                 <span class="form-check-label d-flex flex-column align-items-start">
                   <span class="fw-bolder fs-5 mb-0">{{permission?.displayName}}</span>
                   <span class="text-muted fs-6">{{permission?.group}}</span>

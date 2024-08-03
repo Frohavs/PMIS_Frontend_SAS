@@ -38,19 +38,11 @@ export class OverviewComponent implements OnInit {
 
   ngOnInit(): void {
     this.initializeRoleData();
-    this.getPermissionList();
   }
 
   initializeRoleData() {
     this.roleService.getAll().subscribe(res => {
       this.roles = res.data;
-      this.cdr.detectChanges();
-    });
-  }
-
-  getPermissionList() {
-    this.permissionService.getAll().subscribe(res => {
-      this.permissionList = res?.data;
       this.cdr.detectChanges();
     });
   }
@@ -62,14 +54,28 @@ export class OverviewComponent implements OnInit {
   }
 
   openPermissionModal(role: any) {
-    // console.log(role);
+    this.permissionService.getAll().subscribe(res => {
+      this.permissionList = res?.data;
 
-    this.permissionModelValue.roleId = role.id;
-    const modalRef = this.modalService.open(this.permissionModal, this.modalConfig);
+      const permissionIds: number[] = []
+      for (const element of role.permissions) {
+        permissionIds.push(element.id);
+      }
 
-    modalRef.result.then((data) => { }, (reason) => {
-      // on dismiss
-      this.permissionModelValue = { roleId: null, permissionIds: [] };
+      const updatedOriginal = this.permissionList.map((item: any) => ({
+        ...item,
+        checked: permissionIds.includes(item.id) ? true : item.checked || false
+      }));
+      this.permissionList = updatedOriginal;
+
+      this.permissionModelValue.roleId = role.id;
+      this.permissionModelValue.permissionIds = permissionIds;
+      const modalRef = this.modalService.open(this.permissionModal, this.modalConfig);
+
+      modalRef.result.then((data) => { }, (reason) => {
+        this.permissionModelValue = { roleId: null, permissionIds: [] };
+      });
+      this.cdr.detectChanges();
     });
   }
 
@@ -110,21 +116,6 @@ export class OverviewComponent implements OnInit {
       this.initializeRoleData();
       this.roleModel = { name: '' };
     };
-
-    // const updateFn = () => {
-    //   this.roleService.updateRole({ name: this.roleModel.name }).subscribe({
-    //     next: (res) => {
-    //       this.modalService.dismissAll();
-    //       successAlert.text = 'Group updated successfully!';
-    //       this.showAlert(successAlert);
-    //     },
-    //     error: (error) => {
-    //       this.showAlert(errorAlert);
-    //       this.isLoading = false;
-    //     },
-    //     complete: completeFn,
-    //   });
-    // };
     const createFn = () => {
       this.roleService.addRole({ name: this.roleModel.name }).subscribe({
         next: (res) => {
@@ -138,7 +129,7 @@ export class OverviewComponent implements OnInit {
         complete: completeFn,
       });
     };
-      createFn();
+    createFn();
   }
 
   onPermissionSubmit() {
@@ -147,6 +138,7 @@ export class OverviewComponent implements OnInit {
       this.isLoading = false;
       this.permissionModelValue = { userId: null, permissionIds: [] };
       this.modalService.dismissAll();
+      this.initializeRoleData();
       this.showAlert({ icon: 'success', title: 'Success!', text: 'Permissions Added successfully!' });
     }, (error) => {
       this.isLoading = false;
