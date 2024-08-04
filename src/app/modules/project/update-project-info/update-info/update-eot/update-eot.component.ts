@@ -32,6 +32,7 @@ export class UpdateEotComponent implements OnInit {
   @ViewChild('UpdateModal') UpdateModal!: any;
 
   eotCard: any = { id: 0, eotDays: 0, eotDuration: 0, originalFinishDate: '' };
+
   EotModel: any = { eotDays: 0, eotApprovedDays: 0, eotFinishDate: '', eotContractNumber: 0, eotContractDate: '',  eotReason: '', eotAttachment: '' };
 
   constructor(
@@ -56,18 +57,18 @@ export class UpdateEotComponent implements OnInit {
   resetModalValues() {
     this.projectsService.getByID(this.projectId).subscribe(res => {
       this.projectDetails = res.data;
-
+      debugger
       this.eotCard = {
         id: this.projectId,
         eotDays: this.projectDetails?.eot?.eotDays,
         eotDuration: this.projectDetails?.eot?.duration,
-        originalFinishDate: (this.projectDetails?.eot?.expectedFinishDate === '0001-01-01T00:00:00') ? this.datePipe.transform(this.projectDetails?.originalFinishDate, 'yyyy-MM-dd') : this.datePipe.transform(this.projectDetails?.expectedFinishDate, 'yyyy-MM-dd')
+        originalFinishDate: (this.projectDetails?.eot?.expectedFinishDate === "0001-01-01T00:00:00") ? this.datePipe.transform(this.projectDetails?.originalFinishDate, 'yyyy-MM-dd') : this.datePipe.transform(this.projectDetails?.expectedFinishDate, 'yyyy-MM-dd')
       };
 
       this.EotModel['eotDays'] = 0;
       this.EotModel['eotReason'] = '';
       this.EotModel['eotApprovedDays'] = this.projectDetails?.eot?.eotDays;
-      this.EotModel['eotFinishDate'] = this.projectDetails?.eot?.expectedFinishDate ? this.datePipe.transform(this.projectDetails?.expectedFinishDate, 'yyyy-MM-dd') : this.datePipe.transform(this.projectDetails?.originalFinishDate, 'yyyy-MM-dd');
+      this.EotModel['eotFinishDate'] = (this.projectDetails?.eot?.expectedFinishDate === "0001-01-01T00:00:00") ? this.datePipe.transform(this.projectDetails?.originalFinishDate , 'yyyy-MM-dd') : this.datePipe.transform(this.projectDetails?.expectedFinishDate, 'yyyy-MM-dd');
       this.cdr.detectChanges();
     });
   }
@@ -81,7 +82,7 @@ export class UpdateEotComponent implements OnInit {
 
   addDaysToDate(days: number) {
     // Step 1: Parse the date string into a Date object
-    const originalDate = new Date(this.projectDetails.eot.expectedFinishDate);
+    const originalDate = new Date((this.projectDetails?.eot?.expectedFinishDate === "0001-01-01T00:00:00") ? this.projectDetails.eot.originalFinishDate : this.projectDetails.eot.expectedFinishDate);
 
     // Step 2: Add days to the Date object
     originalDate.setDate(originalDate.getDate() + days);
@@ -102,7 +103,7 @@ export class UpdateEotComponent implements OnInit {
 
   getDurationDays() {
     // Date 1: 2024-07-22T22:53:28.997
-    const date1 = new Date(this.projectDetails?.expectedFinishDate !== '0001-01-01T00:00:00' ? this.projectDetails?.expectedFinishDate : this.projectDetails?.originalFinishDate);
+    const date1 = new Date(this.projectDetails?.expectedFinishDate !== "0001-01-01T00:00:00" ? this.projectDetails?.expectedFinishDate : this.projectDetails?.originalFinishDate);
 
     // Date 2: 2025-07-22T22:53:28.997
     const date2 = new Date(this.projectDetails?.executionStartDate);
