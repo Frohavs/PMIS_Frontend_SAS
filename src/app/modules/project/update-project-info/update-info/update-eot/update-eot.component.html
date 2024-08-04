@@ -175,7 +175,7 @@
         <div class="fv-row mb-3">
           <label class="fw-semibold fs-6 mb-2">EOT Days</label>
           <input type="number" class="form-control form-control-solid" name="eotDays" min="0"
-          (input)="onEotDaysInput($event)" [(ngModel)]="EotModel.eotDays" #name="ngModel" />
+            (input)="onEotDaysInput($event)" [(ngModel)]="EotModel.eotDays" #name="ngModel" />
         </div>
         <div class="fv-row mb-3">
           <label class="fw-semibold fs-6 mb-2">EOT Approved Days</label>
@@ -191,16 +191,14 @@
 
         <div class="fv-row mb-3">
           <label class=" fw-semibold fs-6 mb-2">Approved letter number</label>
-          <input type="number" class="form-control form-control-solid " name="eotContractNumber"
-            [(ngModel)]="EotModel.eotContractNumber" #name="ngModel"
-            [currencyMask]="{ prefix: 'SAR ', thousands: ',', precision: 0, align: 'left' }" />
+          <input type="number" class="form-control form-control-solid " name="approvedLetterNumber"
+            [(ngModel)]="EotModel.approvedLetterNumber" #name="ngModel" />
         </div>
 
         <div class="fv-row mb-3">
           <label class=" fw-semibold fs-6 mb-2">Approved letter date</label>
-          <input type="date" class="form-control form-control-solid " name="eotUpdatedValue"
-            [(ngModel)]="EotModel.eotContractDate" #name="ngModel"
-            [currencyMask]="{ prefix: 'SAR ', thousands: ',', precision: 0, align: 'left' }" />
+          <input type="date" class="form-control form-control-solid " name="approvedLetterDate"
+            [(ngModel)]="EotModel.approvedLetterDate" #name="ngModel" />
         </div>
 
         <div class="fv-row mb-3">

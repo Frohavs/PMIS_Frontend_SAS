@@ -29,7 +29,7 @@ export class UpdateVariationOrderComponent implements OnInit {
   @ViewChild('noticeSwal') noticeSwal!: SwalComponent;
   @ViewChild('UpdateModal') UpdateModal!: any;
   VoCard: any = { id: 0, voValue: 0, voApprovedValue: 0, voUpdatedValue: 0 };
-  VoModel: any = { voValue: 0, isIncrement: true, voUpdatedValue: 0, voContractNumber: 0,  voContractDate: '', voReason: '', voAttachment: '' };
+  VoModel: any = { voValue: 0, isIncrement: true, voUpdatedValue: 0, approvedLetterNumber: 0,  approvedLetterDate: '', voReason: '', voAttachment: '' };
 
   constructor(
     private router: Router,
@@ -56,14 +56,14 @@ export class UpdateVariationOrderComponent implements OnInit {
 
       this.VoCard = {
         id: this.projectId,
-        voValue: this.projectDetails?.vo?.originalValue,
-        voApprovedValue: this.projectDetails?.vo?.voValue,
-        voUpdatedValue: this.projectDetails?.vo?.updatedValue
+        voValue: this.projectDetails?.originalValue,
+        voApprovedValue: this.projectDetails?.vo?.voValue || 0,
+        voUpdatedValue: this.projectDetails?.vo?.updatedValue || 0
       };
 
       this.VoModel['voValue'] = 0;
       this.VoModel['isIncrement'] = true;
-      this.VoModel['voUpdatedValue'] = this.projectDetails?.vo?.updatedValue || this.projectDetails?.vo.originalValue;
+      this.VoModel['voUpdatedValue'] = this.projectDetails?.updatedValue || this.projectDetails?.originalValue;
       this.VoModel['voReason'] = '';
       this.cdr.detectChanges();
     });
@@ -71,20 +71,20 @@ export class UpdateVariationOrderComponent implements OnInit {
 
   onVoValueInput(value: Event) {
 
-    this.VoModel['voUpdatedValue'] =  (this.projectDetails?.vo.updatedValue || this.projectDetails?.vo?.originalValue) + (+value);
+    this.VoModel['voUpdatedValue'] =  (this.projectDetails?.updatedValue || this.projectDetails?.originalValue) + (+value);
     if (this.VoModel['isIncrement']) {
-      this.VoModel['voUpdatedValue'] =  (this.projectDetails?.vo.updatedValue || this.projectDetails?.vo?.originalValue) + (this.VoModel['voValue']);
+      this.VoModel['voUpdatedValue'] =  (this.projectDetails?.updatedValue || this.projectDetails?.originalValue) + (this.VoModel['voValue']);
     } else {
-      this.VoModel['voUpdatedValue'] =  (this.projectDetails?.vo.updatedValue || this.projectDetails?.vo?.originalValue) - (this.VoModel['voValue']);
+      this.VoModel['voUpdatedValue'] =  (this.projectDetails?.updatedValue || this.projectDetails?.originalValue) - (this.VoModel['voValue']);
     }
   }
 
   onIsIncrementChange(event: Event) {
     const checked = (event.target as HTMLInputElement).checked;
     if (checked) {
-      this.VoModel['voUpdatedValue'] = (this.projectDetails?.vo.updatedValue || this.projectDetails?.vo?.originalValue) + (this.VoModel['voValue']);
+      this.VoModel['voUpdatedValue'] = (this.projectDetails?.updatedValue || this.projectDetails?.originalValue) + (this.VoModel['voValue']);
     } else {
-      this.VoModel['voUpdatedValue'] = (this.projectDetails?.vo.updatedValue || this.projectDetails?.vo?.originalValue) - (this.VoModel['voValue']);
+      this.VoModel['voUpdatedValue'] = (this.projectDetails?.updatedValue || this.projectDetails?.originalValue) - (this.VoModel['voValue']);
     }
   }
 
@@ -114,6 +114,8 @@ export class UpdateVariationOrderComponent implements OnInit {
     const payload = {
       voValue: this.VoModel.voValue,
       voAttachment: this.VoModel.voAttachment,
+      approvedLetterNumber: this.VoModel.approvedLetterNumber,
+      approvedLetterDate: this.VoModel.approvedLetterDate,
       voReason: this.VoModel.voReason,
       id: +this.projectId,
       isIncrement: this.VoModel.isIncrement,
