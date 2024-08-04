@@ -32,7 +32,7 @@ export class UpdateEotComponent implements OnInit {
   @ViewChild('UpdateModal') UpdateModal!: any;
 
   eotCard: any = { id: 0, eotDays: 0, eotDuration: 0, originalFinishDate: '' };
-  EotModel: any = { eotDays: 0, eotApprovedDays: 0, eotFinishDate: '', eotReason: '', eotAttachment: '' };
+  EotModel: any = { eotDays: 0, eotApprovedDays: 0, eotFinishDate: '', eotContractNumber: 0, eotContractDate: '',  eotReason: '', eotAttachment: '' };
 
   constructor(
     private modalService: NgbModal,

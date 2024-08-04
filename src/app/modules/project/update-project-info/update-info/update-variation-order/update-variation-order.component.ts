@@ -29,7 +29,7 @@ export class UpdateVariationOrderComponent implements OnInit {
   @ViewChild('noticeSwal') noticeSwal!: SwalComponent;
   @ViewChild('UpdateModal') UpdateModal!: any;
   VoCard: any = { id: 0, voValue: 0, voApprovedValue: 0, voUpdatedValue: 0 };
-  VoModel: any = { voValue: 0, isIncrement: true, voUpdatedValue: 0, voReason: '', voAttachment: '' };
+  VoModel: any = { voValue: 0, isIncrement: true, voUpdatedValue: 0, voContractNumber: 0,  voContractDate: '', voReason: '', voAttachment: '' };
 
   constructor(
     private router: Router,
@@ -56,7 +56,7 @@ export class UpdateVariationOrderComponent implements OnInit {
 
       this.VoCard = {
         id: this.projectId,
-        voValue: this.projectDetails?.vo?.updatedValue - this.projectDetails?.vo?.voValue,
+        voValue: this.projectDetails?.vo?.originalValue,
         voApprovedValue: this.projectDetails?.vo?.voValue,
         voUpdatedValue: this.projectDetails?.vo?.updatedValue
       };

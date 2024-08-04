@@ -190,6 +190,20 @@
         </div>
 
         <div class="fv-row mb-3">
+          <label class=" fw-semibold fs-6 mb-2">Approved Contract number</label>
+          <input type="number" class="form-control form-control-solid " name="eotContractNumber"
+            [(ngModel)]="EotModel.eotContractNumber" #name="ngModel"
+            [currencyMask]="{ prefix: 'SAR ', thousands: ',', precision: 0, align: 'left' }" />
+        </div>
+
+        <div class="fv-row mb-3">
+          <label class=" fw-semibold fs-6 mb-2">Approved Contract date</label>
+          <input type="date" class="form-control form-control-solid " name="eotUpdatedValue"
+            [(ngModel)]="EotModel.eotContractDate" #name="ngModel"
+            [currencyMask]="{ prefix: 'SAR ', thousands: ',', precision: 0, align: 'left' }" />
+        </div>
+
+        <div class="fv-row mb-3">
           <label class="fw-semibold fs-6 mb-2">Reason</label>
           <textarea class="form-control form-control-solid" name="eotReason" [(ngModel)]="EotModel.eotReason"
             #name="ngModel" required rows="3"></textarea>
