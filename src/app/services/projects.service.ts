@@ -79,7 +79,7 @@ export class ProjectsService {
       Authorization: `Bearer ${this.token}`,
     });
     const url = `${this.API_USERS_URL}/CreateEOT`;
-    return this.http.put<any>(url, eot, {
+    return this.http.post<any>(url, eot, {
       headers: httpHeaders
     });
   }
@@ -89,7 +89,7 @@ export class ProjectsService {
       Authorization: `Bearer ${this.token}`,
     });
     const url = `${this.API_USERS_URL}/CreateVo`;
-    return this.http.put<any>(url, variation, {
+    return this.http.post<any>(url, variation, {
       headers: httpHeaders
     });
   }

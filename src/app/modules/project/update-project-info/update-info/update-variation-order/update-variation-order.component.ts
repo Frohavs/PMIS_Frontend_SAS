@@ -111,14 +111,18 @@ export class UpdateVariationOrderComponent implements OnInit {
       return;
     }
     this.isLoading = true;
-    const payload = {
+    const payload: any = {
       voValue: this.VoModel.voValue,
       voAttachment: this.VoModel.voAttachment,
-      approvedLetterNumber: this.VoModel.approvedLetterNumber,
-      approvedLetterDate: this.VoModel.approvedLetterDate,
       voReason: this.VoModel.voReason,
-      id: +this.projectId,
+      projectId: +this.projectId,
       isIncrement: this.VoModel.isIncrement,
+    }
+    if (this.VoModel.approvedLetterNumber) {
+      payload['approvedLetterNumber'] = this.VoModel.approvedLetterNumber
+    }
+    if (this.VoModel.approvedLetterDate) {
+      payload['approvedLetterDate'] = this.VoModel.approvedLetterDate
     }
     this.projectsService.updateVariation(payload).subscribe({
       next: (res) => {

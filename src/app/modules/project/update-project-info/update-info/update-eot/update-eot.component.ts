@@ -136,14 +136,19 @@ export class UpdateEotComponent implements OnInit {
       return;
     }
     this.isLoading = true;
-    const payload = {
-      id: this.projectId,
+    const payload: any = {
+      projectId: +this.projectId,
       eotDays: this.EotModel.eotDays,
-      approvedLetterNumber: this.EotModel.approvedLetterNumber,
-      approvedLetterDate: this.EotModel.approvedLetterDate,
       eotReason: this.EotModel.eotReason,
       eotAttachment: this.EotModel.eotAttachment,
     }
+    if (this.EotModel.approvedLetterNumber) {
+      payload['approvedLetterNumber'] = this.EotModel.approvedLetterNumber
+    }
+    if (this.EotModel.approvedLetterDate) {
+      payload['approvedLetterDate'] = this.EotModel.approvedLetterDate
+    }
+    payload
     this.projectsService.updateEot(payload).subscribe({
       next: (res) => {
         this.isLoading = false;
