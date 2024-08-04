@@ -48,6 +48,7 @@ export class OverviewComponent implements OnInit {
   }
 
   initializeCompanyList(pageIndex?: number) {
+    this.dataList = [];
     this.companyService.getAll(pageIndex).subscribe(res => {
       for (const iterator of res.data.items) {
         this.dataList.push(

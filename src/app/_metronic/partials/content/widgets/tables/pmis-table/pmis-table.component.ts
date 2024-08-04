@@ -6,6 +6,7 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange
 })
 export class PMISTableComponent implements OnInit {
 
+  selected = 1;
 
   @Input() Add_text: string = 'New Title';
   @Input() Search_text: string = 'Over 500 new products';
@@ -53,5 +54,6 @@ export class PMISTableComponent implements OnInit {
 
   navigatePage(pageIndex: number) {
     this.pageClicked.emit(pageIndex)
+    this.selected = pageIndex;
   }
 }

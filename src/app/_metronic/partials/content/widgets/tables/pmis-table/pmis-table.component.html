@@ -153,19 +153,19 @@
           </a>
         </li>
 
-        <li class="page-item active" (click)="navigatePage(1)">
+        <li class="page-item " [ngClass]="{'active': selected === 1}" (click)="navigatePage(1)">
           <a class="page-link cursor-pointer"> 1 </a>
         </li>
 
-        <li class="page-item" *ngIf="totalCount > 10" (click)="navigatePage(2)">
+        <li class="page-item" [ngClass]="{'active': selected === 2}" *ngIf="totalCount > 10" (click)="navigatePage(2)">
          <a class="page-link cursor-pointer"> 2 </a>
        </li>
 
-       <li class="page-item" *ngIf="totalCount > 20" (click)="navigatePage(3)">
+       <li class="page-item" [ngClass]="{'active': selected === 3}" *ngIf="totalCount > 20" (click)="navigatePage(3)">
          <a class="page-link cursor-pointer"> 3 </a>
        </li>
 
-       <li class="page-item" *ngIf="totalCount > 30" (click)="navigatePage(4)">
+       <li class="page-item" [ngClass]="{'active': selected === 4}" *ngIf="totalCount > 30" (click)="navigatePage(4)">
          <a class="page-link cursor-pointer"> 4 </a>
        </li>
         <!--
