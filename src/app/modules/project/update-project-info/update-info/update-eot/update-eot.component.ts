@@ -57,7 +57,6 @@ export class UpdateEotComponent implements OnInit {
   resetModalValues() {
     this.projectsService.getByID(this.projectId).subscribe(res => {
       this.projectDetails = res.data;
-      debugger
       this.eotCard = {
         id: this.projectId,
         eotDays: this.projectDetails?.eot?.eotDays,
@@ -102,7 +101,6 @@ export class UpdateEotComponent implements OnInit {
 
 
   getDurationDays() {
-    debugger
     const date1 = new Date(this.projectDetails?.expectedFinishDate !== "0001-01-01T00:00:00" ? this.projectDetails?.expectedFinishDate : this.projectDetails?.originalFinishDate);
 
     const date2 = new Date(this.projectDetails?.executionStartDate);
