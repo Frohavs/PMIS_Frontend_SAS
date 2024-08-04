@@ -27,6 +27,7 @@ export class PMISTableComponent implements OnInit {
   @Output() detailsClicked: EventEmitter<any> = new EventEmitter<any>();
   @Output() editClicked: EventEmitter<any> = new EventEmitter<any>();
   @Output() deleteClicked: EventEmitter<any> = new EventEmitter<any>();
+  @Output() pageClicked: EventEmitter<any> = new EventEmitter<any>();
 
   constructor() {}
 
@@ -48,5 +49,9 @@ export class PMISTableComponent implements OnInit {
 
   populateDeleteClicked(value: any) {
     this.deleteClicked.emit(value)
+  }
+
+  navigatePage(pageIndex: number) {
+    this.pageClicked.emit(pageIndex)
   }
 }

@@ -47,8 +47,8 @@ export class OverviewComponent implements OnInit {
     this.initializeCompanyList();
   }
 
-  initializeCompanyList() {
-    this.companyService.getAll().subscribe(res => {
+  initializeCompanyList(pageIndex?: number) {
+    this.companyService.getAll(pageIndex).subscribe(res => {
       for (const iterator of res.data.items) {
         this.dataList.push(
           {
@@ -100,6 +100,10 @@ export class OverviewComponent implements OnInit {
 
   detailsClicked(row: any) {
     this.router.navigateByUrl('companies/' + row.id)
+  }
+
+  navigatePage(pageIndex: number) {
+    this.initializeCompanyList(pageIndex)
   }
 
   showAlert(swalOptions: SweetAlertOptions) {

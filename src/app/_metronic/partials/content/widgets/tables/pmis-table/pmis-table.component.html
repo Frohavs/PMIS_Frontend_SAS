@@ -153,21 +153,22 @@
           </a>
         </li>
 
-        <li class="page-item active">
+        <li class="page-item active" (click)="navigatePage(1)">
           <a class="page-link cursor-pointer"> 1 </a>
         </li>
 
-        <!-- <li class="page-item">
-          <a class="page-link cursor-pointer"> 2 </a>
-        </li>
+        <li class="page-item" *ngIf="totalCount > 10" (click)="navigatePage(2)">
+         <a class="page-link cursor-pointer"> 2 </a>
+       </li>
 
-        <li class="page-item">
-          <a class="page-link cursor-pointer"> 3 </a>
-        </li>
+       <li class="page-item" *ngIf="totalCount > 20" (click)="navigatePage(3)">
+         <a class="page-link cursor-pointer"> 3 </a>
+       </li>
 
-        <li class="page-item">
-          <a class="page-link cursor-pointer"> 4 </a>
-        </li>
+       <li class="page-item" *ngIf="totalCount > 30" (click)="navigatePage(4)">
+         <a class="page-link cursor-pointer"> 4 </a>
+       </li>
+        <!--
 
         <li class="page-item">
           <a class="page-link cursor-pointer"> 5 </a>
