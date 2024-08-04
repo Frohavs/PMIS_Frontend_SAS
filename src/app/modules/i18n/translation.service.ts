@@ -1,7 +1,8 @@
 // Localization is based on '@ngx-translate/core';
 // Please be familiar with official documentations first => https://github.com/ngx-translate/core
 
-import { Injectable } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 
 export interface Locale {
@@ -18,7 +19,7 @@ export class TranslationService {
   // Private properties
   private langIds: any = [];
 
-  constructor(private translate: TranslateService) {
+  constructor(private translate: TranslateService, @Inject(PLATFORM_ID) private platformId: Object) {
     // add new langIds to the list
     this.translate.addLangs(['en']);
 
@@ -55,16 +56,18 @@ export class TranslationService {
     const htmlElement = document.getElementsByTagName('html')[0];
     htmlElement.setAttribute('lang', lang);
 
-    // check arabic lang selection
-    htmlElement.setAttribute('direction', lang === 'ar' ? 'rtl' : 'ltr');
-    htmlElement.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
-    htmlElement.setAttribute('style',lang === 'ar' ? 'direction: rtl' : 'direction: ltr')
 
     // Remove existing stylesheet link
     const existingStyleLink = document.querySelector('link[href="styles.css"]');
     const existingStyleLink2 = document.querySelector('link[href="./assets/css/style.rtl.css"]');
     if (existingStyleLink) existingStyleLink.remove();
     if (existingStyleLink2) existingStyleLink2.remove();
+
+    // check arabic lang selection
+    htmlElement.setAttribute('direction', lang === 'ar' ? 'rtl' : 'ltr');
+    htmlElement.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+    htmlElement.setAttribute('style',lang === 'ar' ? 'direction: rtl' : 'direction: ltr')
+    if(isPlatformBrowser(this.platformId)) document.documentElement.lang = lang;
 
 
     // Add new stylesheet link based on language
