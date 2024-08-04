@@ -48795,6 +48795,7 @@ body,
   }
   [data-kt-app-sidebar-fixed=true] .app-wrapper {
     margin-right: calc(var(--bs-app-sidebar-width) + var(--bs-app-sidebar-gap-start, 0px) + var(--bs-app-sidebar-gap-end, 0px));
+    margin-left: 0 !important;
   }
   [data-kt-app-sidebar-panel-fixed=true] .app-wrapper {
     margin-right: calc(var(--bs-app-sidebar-width) + var(--bs-app-sidebar-gap-start, 0px) + var(--bs-app-sidebar-gap-end, 0px) + var(--bs-app-sidebar-panel-width) + var(--bs-app-sidebar-panel-gap-start, 0px) + var(--bs-app-sidebar-panel-gap-end, 0px));
