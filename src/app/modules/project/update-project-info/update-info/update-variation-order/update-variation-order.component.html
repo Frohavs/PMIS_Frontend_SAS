@@ -165,6 +165,48 @@
   </div>
 </div>
 
+<div class="card mb-5 mb-xl-8" *ngIf="projectDetails?.vos?.length">
+  <div class="card-body py-3">
+    <div class="table-responsive">
+      <table class="table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4">
+        <thead>
+          <tr class="fw-bolder text-muted">
+
+            <th class="min-w-140px">Project Value</th>
+            <th class="min-w-140px">Approved Value</th>
+            <th class="min-w-140px">Updated Value</th>
+            <th class="min-w-140px">Reason</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let record of projectDetails?.vos">
+            <td>
+              <a class="text-gray-900 fw-bolder text-hover-primary d-block fs-6">
+                {{(record?.updatedValue - record?.voValue) | number}}
+              </a>
+            </td>
+            <td>
+              <a class="text-gray-900 fw-bolder text-hover-primary d-block fs-6">
+                {{(record?.voValue | number) || '--'}}
+              </a>
+            </td>
+            <td>
+              <a class="text-gray-900 fw-bolder text-hover-primary d-block fs-6">
+                {{(record?.updatedValue | number) || '--'}}
+              </a>
+            </td>
+            <td>
+              <a class="text-gray-900 fw-bolder text-hover-primary d-block fs-6">
+                {{record?.voReason || '--'}}
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
 <ng-template #UpdateModal let-modal>
   <form #addForm="ngForm" (ngSubmit)="onSubmit($event, addForm)">
     <div class="modal-header">
