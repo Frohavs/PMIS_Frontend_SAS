@@ -138,6 +138,11 @@
             </a>
           </td>
         </tr>
+        <tr *ngIf="!dataList?.length">
+          <td colspan="8" class="text-center fs-2 text-primary">
+            Search Key has no Values
+          </td>
+        </tr>
       </tbody>
 
       <!-- end::Table body -->

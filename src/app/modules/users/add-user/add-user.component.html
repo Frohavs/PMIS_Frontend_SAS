@@ -18,9 +18,9 @@
 
 
         <div class="row mb-6">
-          <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="required">{{"USERS.fullName" | translate}}</span></label>
+          <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="required">{{"USERS.userName" | translate}}</span></label>
           <div class="col-lg-8 fv-row">
-            <input type="text" class="form-control form-control-lg form-control-solid text-start" placeholder="{{'USERS.fullName' | translate}}"
+            <input type="text" class="form-control form-control-lg form-control-solid text-start" placeholder="{{'USERS.userName' | translate}}"
               name="userName" formControlName="userName" />
               <div
               *ngIf="addUserForm?.get('userName')?.invalid && (addUserForm?.get('userName')?.dirty || addUserForm?.get('userName')?.touched)"
@@ -59,7 +59,7 @@
         <div class="row mb-6" *ngIf="!userId">
           <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="required">{{"USERS.PASSWORD" | translate}}</span></label>
           <div class="col-lg-8 fv-row">
-            <input type="text" class="form-control form-control-lg form-control-solid" placeholder="{{'USERS.PASSWORD' | translate}}"
+            <input type="password" class="form-control form-control-lg form-control-solid" placeholder="{{'USERS.PASSWORD' | translate}}"
               name="password" formControlName="password" />
               <div
               *ngIf="addUserForm?.get('password')?.invalid && (addUserForm?.get('password')?.dirty || addUserForm?.get('password')?.touched)"
@@ -72,7 +72,7 @@
         <div class="row mb-6" *ngIf="!userId">
           <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="required">{{"USERS.CONFIRM_PASSWORD" | translate}}</span></label>
           <div class="col-lg-8 fv-row">
-            <input type="text" class="form-control form-control-lg form-control-solid" placeholder="{{'USERS.CONFIRM_PASSWORD' | translate}}"
+            <input type="password" class="form-control form-control-lg form-control-solid" placeholder="{{'USERS.CONFIRM_PASSWORD' | translate}}"
               name="confirmPassword" formControlName="confirmPassword" />
               <div
               *ngIf="addUserForm?.get('confirmPassword')?.invalid && (addUserForm?.get('confirmPassword')?.dirty || addUserForm?.get('confirmPassword')?.touched)"

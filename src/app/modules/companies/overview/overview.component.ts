@@ -48,9 +48,9 @@ export class OverviewComponent implements OnInit {
     this.initializeCompanyList();
   }
 
-  initializeCompanyList(pageIndex?: number) {
+  initializeCompanyList(pageIndex?: number, search?: string) {
     this.dataList = [];
-    this.companyService.getAll(pageIndex).subscribe(res => {
+    this.companyService.getAll(pageIndex, search).subscribe(res => {
       for (const iterator of res.data.items) {
         this.dataList.push(
           {
@@ -69,6 +69,10 @@ export class OverviewComponent implements OnInit {
       debugger
       this.cdr.detectChanges();
     });
+  }
+
+  searchKeyEmitter(searchText: string) {
+    this.initializeCompanyList(1, searchText);
   }
 
   editRecord(company: any) {

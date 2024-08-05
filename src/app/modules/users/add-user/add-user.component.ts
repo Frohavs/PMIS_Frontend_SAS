@@ -94,7 +94,12 @@ export class AddUserComponent implements OnInit, OnDestroy {
       this.newUserService.registerUser(payload).subscribe(res => {
         this.router.navigateByUrl('manage/users');
         this.showAlert({ icon: 'success', title: 'Success!', text: 'User Added successfully!' });
-      }, () => this.showAlert({ icon: 'error', title: 'Error!', text: 'please try again!' }))
+      }, (error) => {
+        this.showAlert({
+          icon: 'error', title: 'Error!', text:
+            error.error.responseException.exceptionMessage.title || 'please try again!'
+        })
+      });
       setTimeout(() => {
         this.isLoading = false;
         this.cdr.detectChanges();
@@ -106,7 +111,12 @@ export class AddUserComponent implements OnInit, OnDestroy {
       this.newUserService.updateUser(payload).subscribe(res => {
         this.router.navigateByUrl('manage/users');
         this.showAlert({ icon: 'success', title: 'Success!', text: 'User Updated successfully!' });
-      }, () => this.showAlert({ icon: 'error', title: 'Error!', text: 'please try again!' }))
+      }, (error) => {
+        this.showAlert({
+          icon: 'error', title: 'Error!', text:
+            error.error.responseException.exceptionMessage.title || 'please try again!'
+        })
+      });
       setTimeout(() => {
         this.isLoading = false;
         this.cdr.detectChanges();

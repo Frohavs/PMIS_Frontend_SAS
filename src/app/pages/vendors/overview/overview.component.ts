@@ -1,8 +1,9 @@
-import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
 import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
+import { Subscription, fromEvent, debounceTime, distinctUntilChanged } from 'rxjs';
 import { VendorService } from 'src/app/services/vendors.service';
 import { SweetAlertOptions } from 'sweetalert2';
 
@@ -11,7 +12,7 @@ import { SweetAlertOptions } from 'sweetalert2';
   templateUrl: './overview.component.html',
   styleUrl: './overview.component.scss'
 })
-export class OverviewComponent implements OnInit {
+export class OverviewComponent implements OnInit, AfterViewInit, OnDestroy {
   Add_text: string;
   Search_text: string;
   dataList: any[] = [];
@@ -32,8 +33,12 @@ export class OverviewComponent implements OnInit {
     modalDialogClass: 'modal-dialog modal-dialog-centered mw-650px',
   };
 
+  private inputSubscription: Subscription;
+
+
   constructor(
     private router: Router,
+    private elRef: ElementRef,
     private cdr: ChangeDetectorRef,
     private translate: TranslateService,
     private vendorService: VendorService
@@ -46,8 +51,21 @@ export class OverviewComponent implements OnInit {
     this.initializeProjectData()
   }
 
+  ngAfterViewInit(): void {
+    const inputElement = this.elRef.nativeElement.querySelector('input[data-action="filter"]');
+
+    this.inputSubscription = fromEvent(inputElement, 'input').pipe(
+      debounceTime(500),
+      distinctUntilChanged(),
+    ).subscribe((event: any) => {
+      const searchText = event.target.value;
+      // console.log(event.target.value);
+      this.initializeProjectData(1, searchText)
+    });
+  }
+
   initializeProjectData(pageIndex?: number, search?: string) {
-    this.vendorService.getAll().subscribe(res => {
+    this.vendorService.getAll(pageIndex, search).subscribe(res => {
       this.totalCount = res?.data?.totalcount;
       this.dataList = res.data.items;
       this.pagesCount = Array.from({ length: Math.ceil(this.totalCount / 10) }, (_, index) => index + 1) ;
@@ -104,6 +122,12 @@ export class OverviewComponent implements OnInit {
   navigatePage(pageIndex: number) {
     this.selected = pageIndex;
     this.initializeProjectData(pageIndex, '');
+  }
+
+  ngOnDestroy(): void {
+    if (this.inputSubscription) {
+      this.inputSubscription.unsubscribe();
+    }
   }
 
   showAlert(swalOptions: SweetAlertOptions) {

@@ -1,9 +1,10 @@
-import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
+import { fromEvent, Subscription } from 'rxjs';
+import { debounceTime, distinctUntilChanged, } from 'rxjs';
 import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
-import { NewUserService } from 'src/app/services/new-user.service';
 import { SweetAlertOptions } from 'sweetalert2';
 import { PROJECT_OPTIONS } from './project-options';
 import { ProjectsService } from 'src/app/services/projects.service';
@@ -13,7 +14,7 @@ import { ProjectsService } from 'src/app/services/projects.service';
   templateUrl: './overview.component.html',
   styleUrl: './overview.component.scss'
 })
-export class OverviewComponent implements OnInit{
+export class OverviewComponent implements OnInit, AfterViewInit, OnDestroy {
   Add_text: string;
   Search_text: string;
   dataList: any[] = []
@@ -35,9 +36,12 @@ export class OverviewComponent implements OnInit{
     modalDialogClass: 'modal-dialog modal-dialog-centered mw-650px',
   };
 
+  private inputSubscription: Subscription;
+
   constructor(
     private cdr: ChangeDetectorRef,
     private router: Router,
+    private elRef: ElementRef,
     private translate: TranslateService,
     private projectsService: ProjectsService,
   ) {
@@ -46,14 +50,27 @@ export class OverviewComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    this.initializeProjectData()
+    this.initializeProjectData();
+  }
+
+  ngAfterViewInit(): void {
+    const inputElement = this.elRef.nativeElement.querySelector('input[data-action="filter"]');
+
+    this.inputSubscription = fromEvent(inputElement, 'input').pipe(
+      debounceTime(500),
+      distinctUntilChanged(),
+    ).subscribe((event: any) => {
+      const searchText = event.target.value;
+      // console.log(event.target.value);
+      this.initializeProjectData(1, searchText)
+    });
   }
 
   initializeProjectData(pageIndex?: number, search?: string) {
     this.projectsService.getAll(pageIndex, search).subscribe(res => {
       this.dataList = res?.data?.items;
       this.totalCount = res?.data?.totalcount;
-      this.pagesCount = Array.from({ length: Math.ceil(this.totalCount / 10) }, (_, index) => index + 1) ;
+      this.pagesCount = Array.from({ length: Math.ceil(this.totalCount / 10) }, (_, index) => index + 1);
       this.cdr.detectChanges();
     });
   }
@@ -127,5 +144,11 @@ export class OverviewComponent implements OnInit{
 
   checkAdmin(userName: string) {
     return userName === 'SuperAdmin' ? false : true;
+  }
+
+  ngOnDestroy(): void {
+    if (this.inputSubscription) {
+      this.inputSubscription.unsubscribe();
+    }
   }
 }

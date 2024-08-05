@@ -1,12 +1,15 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from '@angular/core';
+import { debounceTime, distinctUntilChanged, fromEvent, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-pmis-table',
   templateUrl: './pmis-table.component.html',
 })
-export class PMISTableComponent implements OnInit {
+export class PMISTableComponent implements OnInit, AfterViewInit, OnDestroy {
 
   selected = 1;
+  private inputSubscription: Subscription;
+
 
   @Input() Add_text: string = 'New Title';
   @Input() Search_text: string = 'Over 500 new products';
@@ -30,11 +33,24 @@ export class PMISTableComponent implements OnInit {
   @Output() editClicked: EventEmitter<any> = new EventEmitter<any>();
   @Output() deleteClicked: EventEmitter<any> = new EventEmitter<any>();
   @Output() pageClicked: EventEmitter<any> = new EventEmitter<any>();
+  @Output() searchKeyEmitter: EventEmitter<any> = new EventEmitter<any>();
 
-  constructor() {}
+  constructor(private elRef: ElementRef) {}
 
   ngOnInit(): void {
 
+  }
+
+  ngAfterViewInit(): void {
+    const inputElement = this.elRef.nativeElement.querySelector('input[data-action="filter"]');
+
+    this.inputSubscription = fromEvent(inputElement, 'input').pipe(
+      debounceTime(500),
+      distinctUntilChanged(),
+    ).subscribe((event: any) => {
+      const searchText = event.target.value;
+      this.searchKeyEmitter.emit(searchText)
+    });
   }
 
   redirect() {
@@ -56,5 +72,11 @@ export class PMISTableComponent implements OnInit {
   navigatePage(pageIndex: number) {
     this.selected = pageIndex;
     this.pageClicked.emit(pageIndex)
+  }
+
+  ngOnDestroy(): void {
+    if (this.inputSubscription) {
+      this.inputSubscription.unsubscribe();
+    }
   }
 }

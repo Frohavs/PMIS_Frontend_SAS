@@ -1,9 +1,10 @@
-import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
 import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
+import { Subscription, fromEvent, debounceTime, distinctUntilChanged } from 'rxjs';
 import { NewUserService } from 'src/app/services/new-user.service';
 import { PermissionService } from 'src/app/services/permission.service';
 import { SweetAlertOptions } from 'sweetalert2';
@@ -13,7 +14,7 @@ import { SweetAlertOptions } from 'sweetalert2';
   templateUrl: './overview.component.html',
   styleUrl: './overview.component.scss'
 })
-export class OverviewComponent implements OnInit {
+export class OverviewComponent implements OnInit, AfterViewInit, OnDestroy {
 
   Add_text: string;
   Search_text: string;
@@ -37,10 +38,12 @@ export class OverviewComponent implements OnInit {
     modalDialogClass: 'modal-dialog modal-dialog-centered mw-650px',
   };
 
+  private inputSubscription: Subscription;
   permissionModelValue: any = { userId: null, permissionIds: [] };
 
   constructor(
     private router: Router,
+    private elRef: ElementRef,
     private modalService: NgbModal,
     private cdr: ChangeDetectorRef,
     private translate: TranslateService,
@@ -56,11 +59,23 @@ export class OverviewComponent implements OnInit {
     this.getPermissionList();
   }
 
+  ngAfterViewInit(): void {
+    const inputElement = this.elRef.nativeElement.querySelector('input[data-action="filter"]');
+
+    this.inputSubscription = fromEvent(inputElement, 'input').pipe(
+      debounceTime(500),
+      distinctUntilChanged(),
+    ).subscribe((event: any) => {
+      const searchText = event.target.value;
+      this.initializeUserData(1, searchText)
+    });
+  }
+
   initializeUserData(pageIndex?: number, search?: string) {
     this.newUserService.getAll(pageIndex, search).subscribe(res => {
       this.totalCount = res?.data?.totalcount;
       this.dataList = res?.data?.items;
-      this.pagesCount = Array.from({ length: Math.ceil(this.totalCount / 10) }, (_, index) => index + 1) ;
+      this.pagesCount = Array.from({ length: Math.ceil(this.totalCount / 10) }, (_, index) => index + 1);
       this.cdr.detectChanges();
     });
   }
@@ -120,7 +135,6 @@ export class OverviewComponent implements OnInit {
   }
 
   openPermissionModal(user: any) {
-    // console.log(user);
     this.newUserService.getUser(user.id).subscribe(res => {
       const permissions = res?.data?.permissions
       if (permissions) {
@@ -132,7 +146,6 @@ export class OverviewComponent implements OnInit {
           ...item,
           checked: permissionIds.includes(item.id) ? true : item.checked || false
         }));
-        // console.log(updatedOriginal);
         this.permissionList = updatedOriginal;
         this.permissionModelValue.permissionIds = permissionIds;
         // this.cdr.detectChanges();
@@ -161,7 +174,6 @@ export class OverviewComponent implements OnInit {
       // Remove ID from array if present
       this.permissionModelValue.permissionIds = this.permissionModelValue.permissionIds.filter((permissionId: any) => permissionId !== permission.id);
     }
-    // console.log(this.permissionModelValue);
   }
 
   onSubmit() {
@@ -195,6 +207,12 @@ export class OverviewComponent implements OnInit {
     }, swalOptions);
     this.cdr.detectChanges();
     this.noticeSwal.fire();
+  }
+
+  ngOnDestroy(): void {
+    if (this.inputSubscription) {
+      this.inputSubscription.unsubscribe();
+    }
   }
 
 }
