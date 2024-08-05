@@ -18,12 +18,20 @@ export class BoqService {
   }
 
   // public methods
-  getAll(id: number): Observable<any> {
+  getAll(id: number, pageIndex?: number, search?: string): Observable<any> {
     const httpHeaders = new HttpHeaders({
       Authorization: `Bearer ${this.token}`,
     });
+    const body = {
+      projectId: id,
+      quickSearch: search,
+      pagedSearch: {
+        "pageIndex": pageIndex,
+        "pageSize": 10
+      }
+    }
     const url = `${this.API_USERS_URL}/Get?projectId=${id}`;
-    return this.http.get<any>(url, {
+    return this.http.post<any>(url, body, {
       headers: httpHeaders
     });
   }

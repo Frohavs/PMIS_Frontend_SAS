@@ -7,18 +7,11 @@
           <span class="fw-bolder text-gray-900">{{"BOQ.Add_Boq" | translate}}</span>
           <!-- <span class="text-muted mt-1 fw-bold fs-7">test</span> -->
         </h3>
-        <div class="d-flex">
-          <div class="card-toolbar">
-            <a (click)="navigateBoqTable()" class="btn btn-sm btn-primary d-flex mx-2">
-              show BOQs
-            </a>
-          </div>
-          <div class="card-toolbar">
-            <a (click)="back()" class="btn btn-sm btn-danger d-flex">
-              <app-keenicon name="arrow-left" class="fs-3"></app-keenicon>
-              {{"ECOMMERCE.COMMON.BACK" | translate}}
-            </a>
-          </div>
+        <div class="card-toolbar">
+          <a (click)="back()" class="btn btn-sm btn-danger d-flex">
+            <app-keenicon name="arrow-left" class="fs-3"></app-keenicon>
+            {{"ECOMMERCE.COMMON.BACK" | translate}}
+          </a>
         </div>
       </div>
 

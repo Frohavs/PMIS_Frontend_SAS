@@ -170,7 +170,7 @@ export class AddBoqComponent implements OnInit {
       ).subscribe({
         next: (res) => {
           this.isLoading = false;
-          this.router.navigateByUrl('boq');
+          this.router.navigateByUrl(`projects/boq-list/${this.projectId}`);
           this.showAlert({ icon: 'success', title: 'Success!', text: 'Boq Added successfully!' });
           this.cdr.detectChanges();
         },
@@ -234,7 +234,7 @@ export class AddBoqComponent implements OnInit {
   }
 
   navigateBoqTable() {
-    this.router.navigateByUrl('projects/boq-list' + `/${this.projectId}`);
+    this.router.navigateByUrl('projects/add-boq' + `/${this.projectId}`);
   }
   back() {
     this._location.back();

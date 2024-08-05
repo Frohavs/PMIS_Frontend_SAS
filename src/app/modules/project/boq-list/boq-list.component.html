@@ -16,9 +16,9 @@
     <!--begin::Card title-->
     <div class="card-toolbar" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-trigger="hover"
       title="Click to add a user">
-      <a class="btn btn-sm btn-light-danger" (click)="back()">
-        <app-keenicon name="arrow-left" class="fs-3"></app-keenicon>
-        back to add
+        <a class="btn btn-sm btn-light-primary" (click)="redirectToNew()">
+          <app-keenicon name="plus" class="fs-3"></app-keenicon>
+        Add New Boq
       </a>
     </div>
   </div>
@@ -82,6 +82,11 @@
               </div>
             </td>
           </tr>
+          <tr *ngIf="!dataList?.length">
+            <td colspan="8" class="text-center fs-2 text-primary">
+              Search Key has no Values
+            </td>
+          </tr>
         </tbody>
       </table>
 
@@ -95,29 +100,9 @@
             </a>
           </li>
 
-          <li class="page-item active">
-            <a class="page-link cursor-pointer"> 1 </a>
+          <li class="page-item" [ngClass]="{'active': selected === i+1}" (click)="navigatePage(i+1)" *ngFor="let page of pagesCount; index as i">
+            <a class="page-link cursor-pointer"> {{i+1}} </a>
           </li>
-
-          <!-- <li class="page-item">
-          <a class="page-link cursor-pointer"> 2 </a>
-        </li>
-
-        <li class="page-item">
-          <a class="page-link cursor-pointer"> 3 </a>
-        </li>
-
-        <li class="page-item">
-          <a class="page-link cursor-pointer"> 4 </a>
-        </li>
-
-        <li class="page-item">
-          <a class="page-link cursor-pointer"> 5 </a>
-        </li>
-
-        <li class="page-item">
-          <a class="page-link cursor-pointer"> 6 </a>
-        </li> -->
 
           <li class="page-item next">
             <a class="page-link cursor-pointer">

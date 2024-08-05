@@ -4,7 +4,7 @@ export const PROJECT_OPTIONS = [
     route: 'projects/update-project-info'
   },
   {
-    name: 'add project boq',
-    route: 'projects/add-boq'
+    name: 'add project BOQs',
+    route: 'projects/boq-list'
   }
 ]

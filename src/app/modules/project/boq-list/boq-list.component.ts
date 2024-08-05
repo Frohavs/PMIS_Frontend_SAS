@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
@@ -6,18 +6,22 @@ import { TranslateService } from '@ngx-translate/core';
 import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
 import { BoqService } from 'src/app/services/boq.service';
 import { SweetAlertOptions } from 'sweetalert2';
+import { debounceTime, distinctUntilChanged, fromEvent, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-boq-list',
   templateUrl: './boq-list.component.html',
   styleUrl: './boq-list.component.scss'
 })
-export class BoqListComponent {
+export class BoqListComponent implements OnInit, AfterViewInit, OnDestroy {
   projectId: number;
 
   Add_text: string;
   Search_text: string;
-  dataList: any[] = []
+  dataList: any[] = [];
+  totalCount: number;
+  pagesCount: number[] = [];
+  selected = 1;
 
   // modal configs
   isLoading = false;
@@ -32,8 +36,11 @@ export class BoqListComponent {
     modalDialogClass: 'modal-dialog modal-dialog-centered mw-650px',
   };
 
+  private inputSubscription: Subscription;
+
   constructor(
     private router: Router,
+    private elRef: ElementRef,
     private _location: Location,
     private activatedRoute: ActivatedRoute,
     private cdr: ChangeDetectorRef,
@@ -48,9 +55,23 @@ export class BoqListComponent {
     this.getBoqId()
   }
 
-  initializeProjectData(id: number) {
-    this.boqService.getAll(id).subscribe(res => {
-      this.dataList = res.data;
+  ngAfterViewInit(): void {
+    const inputElement = this.elRef.nativeElement.querySelector('input[data-action="filter"]');
+
+    this.inputSubscription = fromEvent(inputElement, 'input').pipe(
+      debounceTime(500),
+      distinctUntilChanged(),
+    ).subscribe((event: any) => {
+      const searchText = event.target.value;
+      // console.log(event.target.value);
+      this.initializeProjectData(this.projectId, 1, searchText)
+    });
+  }
+
+  initializeProjectData(id: number, pageIndex?: number, search?: string) {
+    this.boqService.getAll(id, pageIndex, search).subscribe(res => {
+      this.dataList = res.data.items;
+      this.pagesCount = Array.from({ length: Math.ceil(this.totalCount / 10) }, (_, index) => index + 1) ;
       this.cdr.detectChanges();
     });
   }
@@ -103,9 +124,19 @@ export class BoqListComponent {
     });
   }
 
-  navigateTo(event: any) {
-    const route = event?.target.value;
-    this.router.navigateByUrl(route + `/${'123'}`)
+  redirectToNew() {
+    this.router.navigateByUrl('projects/add-boq' + `/${this.projectId}`)
+  }
+
+  navigatePage(pageIndex: number) {
+    this.selected = pageIndex;
+    this.initializeProjectData(this.projectId, pageIndex, '');
+  }
+
+  ngOnDestroy(): void {
+    if (this.inputSubscription) {
+      this.inputSubscription.unsubscribe();
+    }
   }
 
   showAlert(swalOptions: SweetAlertOptions) {
