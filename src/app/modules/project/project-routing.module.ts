@@ -12,6 +12,8 @@ import { UpdateEotComponent } from './update-project-info/update-info/update-eot
 import { UpdateVariationOrderComponent } from './update-project-info/update-info/update-variation-order/update-variation-order.component';
 import { AddBoqComponent } from './add-boq/add-boq.component';
 import { BoqListComponent } from './boq-list/boq-list.component';
+import { CashFlowComponent } from './cash-flow/cash-flow.component';
+import { AddCashFlowComponent } from './cash-flow/add-cash-flow/add-cash-flow.component';
 
 const routes: Routes = [
   {
@@ -65,6 +67,14 @@ const routes: Routes = [
       {
         path: 'update-variation/:id',
         component: UpdateVariationOrderComponent,
+      },
+      {
+        path: 'cash-flow/:id',
+        component: CashFlowComponent,
+      },
+      {
+        path: 'add-cash-flow/:id',
+        component: AddCashFlowComponent,
       },
       { path: '', redirectTo: 'overview', pathMatch: 'full' },
       { path: '**', redirectTo: 'overview', pathMatch: 'full' },

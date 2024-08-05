@@ -98,7 +98,7 @@ export class AddUserComponent implements OnInit, OnDestroy {
         this.showAlert({
           icon: 'error', title: 'Error!', text:
             error.error.responseException.exceptionMessage.title || 'please try again!'
-        })
+        });
       });
       setTimeout(() => {
         this.isLoading = false;

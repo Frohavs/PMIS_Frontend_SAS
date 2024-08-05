@@ -1,0 +1,81 @@
+<div class="card mb-5 mb-xl-10">
+  <div class="card-header border-0 cursor-pointer" role="button" data-bs-toggle="collapse"
+    data-bs-target="#kt_add_company" aria-expanded="true" aria-controls="kt_add_company">
+    <div class="card-title m-0">
+      <h3 class="fw-bolder m-0">{{'CASHFLOW.createCashFlowValue' | translate}}</h3>
+    </div>
+    <div class="card-toolbar">
+      <a (click)="back()" class="btn btn-sm btn-danger d-flex">
+        <app-keenicon name="arrow-left" class="fs-3"></app-keenicon>
+        {{"ECOMMERCE.COMMON.BACK" | translate}}
+      </a>
+    </div>
+  </div>
+  <div id="kt_add_company" class="collapse show">
+    <form [formGroup]="addCashForm" class="form">
+      <div class="card-body border-top p-9">
+
+        <div formArrayName="cashflowItems">
+          <div *ngFor="let item of cashflowItems.controls; let i = index" [formGroupName]="i" class="row mb-6">
+            <label class="col-lg-3 mb-2 col-form-label required fw-bold fs-6">
+              {{ months[i].name }} 2024
+            </label>
+            <div class="col-lg-3 mb-2 fv-row">
+              <input type="number" class="form-control form-control-lg form-control-solid"
+                (keypress)="numbersOnly($event)" min="0" formControlName="abstractValue" placeholder="{{'CASHFLOW.CashflowValue' | translate}}" />
+            </div>
+            <div class="col-lg-3 mb-2 fv-row">
+              <input type="number" class="form-control form-control-lg form-control-solid"
+                (keypress)="numbersOnly($event)" min="0" formControlName="abstractNumber"
+                placeholder="{{'CASHFLOW.InvoiceNumber' | translate}}" />
+            </div>
+            <div class="col-lg-3 mb-2 fv-row">
+              <select class="form-select form-select-solid form-select-lg fw-bold" formControlName="abstractType">
+                <option value="" disabled selected>{{'CASHFLOW.InvoiceType' | translate}}</option>
+                <!-- Options should be populated dynamically if needed -->
+                <option *ngFor="let type of invoiceTypes" [value]="type.id">{{ type.name }}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="row mb-6">
+          <label class="col-lg-3 col-form-label required fw-bold fs-6">{{'CASHFLOW.total' | translate}}</label>
+          <div class="col-lg-2 mb-2 fv-row">
+            <input type="text" class="form-control form-control-lg form-control-solid" formControlName="total"
+              [currencyMask]="{ prefix: 'SAR ', thousands: ',', precision: 0, align: 'left' }" name="total"
+              placeholder="total values" />
+          </div>
+
+          <div class="col-lg-5 fv-row">
+            <input type="number" class="form-control form-control-lg form-control-solid text-start" formControlName="estimatedCost"
+              (keypress)="numbersOnly($event)" min="0" name="estimatedCost"
+              placeholder="{{'CASHFLOW.EstimatedCost' | translate}}" />
+            <div
+              *ngIf="addCashForm?.get('estimatedCost')?.invalid && (addCashForm?.get('estimatedCost')?.dirty || addCashForm?.get('estimatedCost')?.touched)"
+              class="fv-plugins-message-container">
+              <div class="fv-help-block">Estimated cost is required</div>
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+      <div class="card-footer d-flex justify-content-end py-6 px-9">
+        <button type="button" class="btn btn-primary" [disabled]="isLoading" (click)="saveSettings()">
+          <ng-container *ngIf="!isLoading">{{"TRANSLATOR.SAVE_CHANGES" | translate}}</ng-container>
+          <ng-container *ngIf="isLoading">
+            <span clas="indicator-progress" [style.display]="'block'">
+              Please wait...{{ " " }}
+              <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+            </span>
+          </ng-container>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- modal -->
+<swal #noticeSwal [swalOptions]="swalOptions">
+</swal>

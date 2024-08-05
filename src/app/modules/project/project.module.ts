@@ -22,6 +22,8 @@ import { UpdateEotComponent } from './update-project-info/update-info/update-eot
 import { UpdateVariationOrderComponent } from './update-project-info/update-info/update-variation-order/update-variation-order.component';
 import { AddBoqComponent } from './add-boq/add-boq.component';
 import { BoqListComponent } from './boq-list/boq-list.component';
+import { CashFlowComponent } from './cash-flow/cash-flow.component';
+import { AddCashFlowComponent } from './cash-flow/add-cash-flow/add-cash-flow.component';
 
 
 @NgModule({
@@ -38,6 +40,8 @@ import { BoqListComponent } from './boq-list/boq-list.component';
     UpdateInfoComponent,
     UpdateEotComponent,
     UpdateVariationOrderComponent,
+    CashFlowComponent,
+    AddCashFlowComponent
   ],
   imports: [
     CommonModule,
