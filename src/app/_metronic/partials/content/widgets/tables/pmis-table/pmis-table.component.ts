@@ -23,6 +23,7 @@ export class PMISTableComponent implements OnInit {
   @Input() dataColumns: any = [];
   @Input() dataList: any = [];
   @Input() totalCount: number = 10;
+  @Input() pagesCount: number[] = [];
 
   @Output() newClicked: EventEmitter<any> = new EventEmitter<any>();
   @Output() detailsClicked: EventEmitter<any> = new EventEmitter<any>();
@@ -53,7 +54,7 @@ export class PMISTableComponent implements OnInit {
   }
 
   navigatePage(pageIndex: number) {
-    this.pageClicked.emit(pageIndex)
     this.selected = pageIndex;
+    this.pageClicked.emit(pageIndex)
   }
 }

@@ -17,6 +17,7 @@ export class OverviewComponent implements OnInit {
   dataColumns: any[] = []
   dataList: any[] = [];
   totalCount: number;
+  pagesCount: number[] = [];
 
   isLoading = false;
   swalOptions: SweetAlertOptions = { buttonsStyling: false };
@@ -64,6 +65,8 @@ export class OverviewComponent implements OnInit {
         )
       }
       this.totalCount = res?.data?.totalcount;
+      this.pagesCount = Array.from({ length: Math.ceil(this.totalCount / 10) }, (_, index) => index + 1) ;
+      debugger
       this.cdr.detectChanges();
     });
   }

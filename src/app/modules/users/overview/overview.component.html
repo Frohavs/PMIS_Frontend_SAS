@@ -129,29 +129,10 @@
             </a>
           </li>
 
-          <li class="page-item active">
-            <a class="page-link cursor-pointer"> 1 </a>
+          <li class="page-item" [ngClass]="{'active': selected === i+1}" (click)="navigatePage(i+1)"
+            *ngFor="let page of pagesCount; index as i">
+            <a class="page-link cursor-pointer"> {{i+1}} </a>
           </li>
-
-          <!-- <li class="page-item">
-          <a class="page-link cursor-pointer"> 2 </a>
-        </li>
-
-        <li class="page-item">
-          <a class="page-link cursor-pointer"> 3 </a>
-        </li>
-
-        <li class="page-item">
-          <a class="page-link cursor-pointer"> 4 </a>
-        </li>
-
-        <li class="page-item">
-          <a class="page-link cursor-pointer"> 5 </a>
-        </li>
-
-        <li class="page-item">
-          <a class="page-link cursor-pointer"> 6 </a>
-        </li> -->
 
           <li class="page-item next">
             <a class="page-link cursor-pointer">
@@ -197,7 +178,8 @@
             <ng-container *ngFor="let permission of permissionList">
 
               <label class="form-check form-check-custom form-check-solid align-items-start">
-                <input class="form-check-input me-3" type="checkbox" name="test" (change)="onCheckboxChange($event, permission)" />
+                <input class="form-check-input me-3" type="checkbox" [checked]="permission?.checked" name="test"
+                  (change)="onCheckboxChange($event, permission)" />
                 <span class="form-check-label d-flex flex-column align-items-start">
                   <span class="fw-bolder fs-5 mb-0">{{permission?.displayName}}</span>
                   <span class="text-muted fs-6">{{permission?.group}}</span>

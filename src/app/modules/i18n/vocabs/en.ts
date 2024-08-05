@@ -94,6 +94,8 @@ export const locale = {
     USERS: {
       ID: 'ID',
       TITLE: 'Users',
+      fullName: 'Full Name',
+      userName: 'User Name',
       Role: 'Role',
       Add_User: 'Add User',
       Edit_User: 'Edit User',

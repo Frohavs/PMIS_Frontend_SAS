@@ -16,6 +16,8 @@ export class OverviewComponent implements OnInit {
   Search_text: string;
   dataList: any[] = [];
   totalCount: number;
+  pagesCount: number[] = [];
+  selected = 1;
 
   // modal configs
   isLoading = false;
@@ -44,10 +46,11 @@ export class OverviewComponent implements OnInit {
     this.initializeProjectData()
   }
 
-  initializeProjectData() {
+  initializeProjectData(pageIndex?: number, search?: string) {
     this.vendorService.getAll().subscribe(res => {
       this.totalCount = res?.data?.totalcount;
       this.dataList = res.data.items;
+      this.pagesCount = Array.from({ length: Math.ceil(this.totalCount / 10) }, (_, index) => index + 1) ;
       this.cdr.detectChanges();
     });
   }
@@ -96,6 +99,11 @@ export class OverviewComponent implements OnInit {
   navigateTo(event: any) {
     const route = event?.target.value;
     this.router.navigateByUrl(route + `/${'123'}`)
+  }
+
+  navigatePage(pageIndex: number) {
+    this.selected = pageIndex;
+    this.initializeProjectData(pageIndex, '');
   }
 
   showAlert(swalOptions: SweetAlertOptions) {

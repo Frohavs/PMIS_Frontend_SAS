@@ -56,7 +56,8 @@ export class AddUserComponent implements OnInit, OnDestroy {
 
   initializeUserForm() {
     this.addUserForm = this.formBuilder.group({
-
+      fullName: ['', Validators.required],
+      userName: ['', Validators.required],
       email: ['', Validators.required],
       password: ['', Validators.required],
       confirmPassword: ['', Validators.required],
@@ -66,6 +67,8 @@ export class AddUserComponent implements OnInit, OnDestroy {
   }
   editUserForm(data: any) {
     this.addUserForm.patchValue({
+      fullName: data?.fullName || '',
+      userName: data?.userName || '',
       email: data?.email,
       companyId: data?.companyId,
       roleIds: this.roles?.filter(role => role?.name === 'Manger')[0]?.name,

@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
@@ -13,11 +13,13 @@ import { ProjectsService } from 'src/app/services/projects.service';
   templateUrl: './overview.component.html',
   styleUrl: './overview.component.scss'
 })
-export class OverviewComponent {
+export class OverviewComponent implements OnInit{
   Add_text: string;
   Search_text: string;
   dataList: any[] = []
   totalCount: number;
+  pagesCount: number[] = [];
+  selected = 1;
   projectOptions: any[] = PROJECT_OPTIONS;
 
   // modal configs
@@ -47,10 +49,11 @@ export class OverviewComponent {
     this.initializeProjectData()
   }
 
-  initializeProjectData() {
-    this.projectsService.getAll().subscribe(res => {
-      this.totalCount = res?.data?.totalcount;
+  initializeProjectData(pageIndex?: number, search?: string) {
+    this.projectsService.getAll(pageIndex, search).subscribe(res => {
       this.dataList = res?.data?.items;
+      this.totalCount = res?.data?.totalcount;
+      this.pagesCount = Array.from({ length: Math.ceil(this.totalCount / 10) }, (_, index) => index + 1) ;
       this.cdr.detectChanges();
     });
   }
@@ -117,8 +120,12 @@ export class OverviewComponent {
     this.noticeSwal.fire();
   }
 
+  navigatePage(pageIndex: number) {
+    this.selected = pageIndex;
+    this.initializeProjectData(pageIndex, '');
+  }
+
   checkAdmin(userName: string) {
     return userName === 'SuperAdmin' ? false : true;
-
   }
 }

@@ -18,13 +18,16 @@ export class CompanyService {
   }
 
   // public methods
-  getAll(pageIndex?: number): Observable<any> {
+  getAll(pageIndex?: number, search?: string): Observable<any> {
     const httpHeaders = new HttpHeaders({
       Authorization: `Bearer ${this.token}`,
     });
     const body = {
-      "pageIndex": pageIndex,
-      "pageSize": 10
+      quickSearch: search,
+      pagedSearch: {
+        "pageIndex": pageIndex,
+        "pageSize": 10
+      }
     }
     const url = `${this.API_USERS_URL}/Get`;
     return this.http.post<any>(url,body, {

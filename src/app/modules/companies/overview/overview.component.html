@@ -27,7 +27,7 @@
 <app-pmis-table class="card mb-5 mb-xl-8" [Add_text]="Add_text" [Search_text]="Search_text" [dataList]="dataList"
   [totalCount]="totalCount" [dataColumns]="dataColumns" [canSearch]="true" [canChangeStatus]="false"
   (newClicked)="redirectToNew()" (detailsClicked)="detailsClicked($event)" (editClicked)="editRecord($event)"
-  (deleteClicked)="deleteRecord($event)" (pageClicked)="navigatePage($event)">
+  (deleteClicked)="deleteRecord($event)" (pageClicked)="navigatePage($event)" [pagesCount]="pagesCount">
 </app-pmis-table>
 
 <!-- modal -->

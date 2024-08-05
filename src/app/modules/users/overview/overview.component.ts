@@ -19,6 +19,8 @@ export class OverviewComponent implements OnInit {
   Search_text: string;
   dataList: any[] = []
   totalCount: number;
+  pagesCount: number[] = [];
+  selected = 1;
 
   permissionList: any[] = [];
 
@@ -54,10 +56,11 @@ export class OverviewComponent implements OnInit {
     this.getPermissionList();
   }
 
-  initializeUserData() {
-    this.newUserService.getAll().subscribe(res => {
+  initializeUserData(pageIndex?: number, search?: string) {
+    this.newUserService.getAll(pageIndex, search).subscribe(res => {
       this.totalCount = res?.data?.totalcount;
       this.dataList = res?.data?.items;
+      this.pagesCount = Array.from({ length: Math.ceil(this.totalCount / 10) }, (_, index) => index + 1) ;
       this.cdr.detectChanges();
     });
   }
@@ -111,14 +114,38 @@ export class OverviewComponent implements OnInit {
     });
   }
 
+  navigatePage(pageIndex: number) {
+    this.selected = pageIndex;
+    this.initializeUserData(pageIndex, '');
+  }
+
   openPermissionModal(user: any) {
     // console.log(user);
+    this.newUserService.getUser(user.id).subscribe(res => {
+      const permissions = res?.data?.permissions
+      if (permissions) {
+        const permissionIds: number[] = []
+        for (const element of permissions) {
+          permissionIds.push(element.id);
+        }
+        const updatedOriginal = this.permissionList.map((item: any) => ({
+          ...item,
+          checked: permissionIds.includes(item.id) ? true : item.checked || false
+        }));
+        // console.log(updatedOriginal);
+        this.permissionList = updatedOriginal;
+        this.permissionModelValue.permissionIds = permissionIds;
+        // this.cdr.detectChanges();
+      }
+
+    })
 
     this.permissionModelValue.userId = user.id;
     const modalRef = this.modalService.open(this.permissionModal, this.modalConfig);
 
     modalRef.result.then((data) => { }, (reason) => {
       // on dismiss
+      this.getPermissionList();
       this.permissionModelValue = { userId: null, permissionIds: [] };
     });
   }

@@ -18,6 +18,32 @@
 
 
         <div class="row mb-6">
+          <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="required">{{"USERS.fullName" | translate}}</span></label>
+          <div class="col-lg-8 fv-row">
+            <input type="text" class="form-control form-control-lg form-control-solid text-start" placeholder="{{'USERS.fullName' | translate}}"
+              name="userName" formControlName="userName" />
+              <div
+              *ngIf="addUserForm?.get('userName')?.invalid && (addUserForm?.get('userName')?.dirty || addUserForm?.get('userName')?.touched)"
+              class="fv-plugins-message-container">
+              <div class="fv-help-block">User Name is required</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row mb-6">
+          <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="required">{{"USERS.fullName" | translate}}</span></label>
+          <div class="col-lg-8 fv-row">
+            <input type="text" class="form-control form-control-lg form-control-solid text-start" placeholder="{{'USERS.fullName' | translate}}"
+              name="fullName" formControlName="fullName" />
+              <div
+              *ngIf="addUserForm?.get('fullName')?.invalid && (addUserForm?.get('fullName')?.dirty || addUserForm?.get('fullName')?.touched)"
+              class="fv-plugins-message-container">
+              <div class="fv-help-block">Full Name is required</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row mb-6">
           <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="required">{{"USERS.EMAIL" | translate}}</span></label>
           <div class="col-lg-8 fv-row">
             <input type="email" class="form-control form-control-lg form-control-solid text-start" placeholder="{{'USERS.EMAIL' | translate}}"
