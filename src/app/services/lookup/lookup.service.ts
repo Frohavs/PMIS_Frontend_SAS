@@ -56,5 +56,14 @@ export class LookupService {
       headers: httpHeaders
     });
   }
+  getCashFlowYears(projectId: number): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/GetYears?projectId=${projectId}`;
+    return this.http.get<any>(url, {
+      headers: httpHeaders
+    });
+  }
 
 }

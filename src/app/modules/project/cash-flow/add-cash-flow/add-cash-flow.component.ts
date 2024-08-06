@@ -27,6 +27,7 @@ export class AddCashFlowComponent implements OnInit, OnDestroy {
   private unsubscribe: Subscription[] = [];
 
   months: any[] = [];
+  yearId: number;
 
   invoiceTypes = InvoiceTypes;
 
@@ -76,7 +77,6 @@ export class AddCashFlowComponent implements OnInit, OnDestroy {
     const total = this.cashflowItems.controls
       .map((item: any) => item.get('abstractValue').value || 0)
       .reduce((acc, value) => acc + value, 0);
-    console.log(total);
     //@ts-ignore
     this.addCashForm?.get('total').setValue(total, { emitEvent: false });
   }
@@ -84,7 +84,7 @@ export class AddCashFlowComponent implements OnInit, OnDestroy {
   createCashflowItem(month: number): FormGroup {
     return this.formBuilder.group({
       month: [month],
-      yearId: [2024],
+      yearId: [this.yearId],
       abstractValue: [''],
       abstractNumber: [''],
       abstractType: [1]
@@ -103,6 +103,10 @@ export class AddCashFlowComponent implements OnInit, OnDestroy {
     this.activatedRoute.params.subscribe(params => {
       this.projectId = +params['id'];
     });
+
+    this.activatedRoute.queryParams.subscribe(params => {
+      this.yearId = +params['yearId'];
+    });
   }
 
 
@@ -111,8 +115,16 @@ export class AddCashFlowComponent implements OnInit, OnDestroy {
       this.addCashForm.markAllAsTouched();
       return;
     }
-    const formValue = {projectId: this.projectId, ...this.addCashForm.value};
-    console.log('Form Value:', formValue);
+
+    const formValue = { projectId: this.projectId, ...this.addCashForm.value };
+    formValue.cashflowItems.forEach((element: any) => {
+      if (element.abstractValue === '') {
+        element.abstractValue = 0;
+      }
+      if (element.abstractNumber === '') {
+        element.abstractNumber = 0;
+      }
+    });
 
     // Process your form data here
     this.cashFlowService.addCashFlow(formValue).subscribe(res => {

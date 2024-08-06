@@ -18,11 +18,12 @@ export class CashFlowService {
   }
 
   // public methods
-  getAll(pageIndex?: number, search?: string): Observable<any> {
+  getAll(id: number, pageIndex?: number, search?: string): Observable<any> {
     const httpHeaders = new HttpHeaders({
       Authorization: `Bearer ${this.token}`,
     });
     const body = {
+      projectId: id,
       quickSearch: search,
       pagedSearch: {
         "pageIndex": pageIndex,
@@ -41,6 +42,16 @@ export class CashFlowService {
     });
     const url = `${this.API_USERS_URL}/Create`;
     return this.http.post<any>(url, cashFlow, {
+      headers: httpHeaders
+    });
+  }
+
+  deleteCashFlow(id: number): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/Delete?id=${id}`;
+    return this.http.post<any>(url,{id: id}, {
       headers: httpHeaders
     });
   }

@@ -14,6 +14,7 @@ import { AddBoqComponent } from './add-boq/add-boq.component';
 import { BoqListComponent } from './boq-list/boq-list.component';
 import { CashFlowComponent } from './cash-flow/cash-flow.component';
 import { AddCashFlowComponent } from './cash-flow/add-cash-flow/add-cash-flow.component';
+import { CashFlowDetailsComponent } from './cash-flow/cash-flow-details/cash-flow-details.component';
 
 const routes: Routes = [
   {
@@ -75,6 +76,10 @@ const routes: Routes = [
       {
         path: 'add-cash-flow/:id',
         component: AddCashFlowComponent,
+      },
+      {
+        path: 'cash-details/:id',
+        component: CashFlowDetailsComponent,
       },
       { path: '', redirectTo: 'overview', pathMatch: 'full' },
       { path: '**', redirectTo: 'overview', pathMatch: 'full' },

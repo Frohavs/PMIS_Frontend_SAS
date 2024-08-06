@@ -8,6 +8,8 @@ import { Subscription, fromEvent, debounceTime, distinctUntilChanged } from 'rxj
 import { BoqService } from 'src/app/services/boq.service';
 import { SweetAlertOptions } from 'sweetalert2';
 import { NgForm } from '@angular/forms';
+import { LookupService } from 'src/app/services/lookup/lookup.service';
+import { CashFlowService } from 'src/app/services/cash-flow.service';
 
 @Component({
   selector: 'app-cash-flow',
@@ -23,6 +25,8 @@ export class CashFlowComponent implements OnInit, AfterViewInit, OnDestroy {
   totalCount: number;
   pagesCount: number[] = [];
   selected = 1;
+  selectedYear: number;
+  years: any[] = [];
 
   // modal configs
   isLoading = false;
@@ -48,7 +52,8 @@ export class CashFlowComponent implements OnInit, AfterViewInit, OnDestroy {
     private _location: Location,
     private activatedRoute: ActivatedRoute,
     private cdr: ChangeDetectorRef,
-    private boqService: BoqService,
+    private cashFlowService: CashFlowService,
+    private lookupService: LookupService,
     private translate: TranslateService,
     private modalService: NgbModal
   ) {
@@ -57,7 +62,8 @@ export class CashFlowComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.getProjectId()
+    this.getProjectId();
+    this.getLookups();
   }
 
   ngAfterViewInit(): void {
@@ -69,13 +75,14 @@ export class CashFlowComponent implements OnInit, AfterViewInit, OnDestroy {
     ).subscribe((event: any) => {
       const searchText = event.target.value;
       // console.log(event.target.value);
-      this.initializeProjectData(this.projectId, 1, searchText)
+      this.initCashFlowData(this.projectId, 1, searchText)
     });
   }
 
-  initializeProjectData(id: number, pageIndex?: number, search?: string) {
-    this.boqService.getAll(id, pageIndex, search).subscribe(res => {
+  initCashFlowData(id: number, pageIndex?: number, search?: string) {
+    this.cashFlowService.getAll(id, pageIndex, search).subscribe(res => {
       this.dataList = res.data.items;
+      this.totalCount = res?.data?.totalcount;
       this.pagesCount = Array.from({ length: Math.ceil(this.totalCount / 10) }, (_, index) => index + 1);
       this.cdr.detectChanges();
     });
@@ -85,8 +92,14 @@ export class CashFlowComponent implements OnInit, AfterViewInit, OnDestroy {
     this.activatedRoute.params.subscribe(params => {
       this.projectId = params['id'];
       if (this.projectId) {
-        // this.initializeProjectData(this.projectId)
+        this.initCashFlowData(this.projectId)
       }
+    });
+  }
+
+  getLookups() {
+    this.lookupService.getCashFlowYears(this.projectId).subscribe(res => {
+      this.years = res.data;
     });
   }
 
@@ -101,23 +114,24 @@ export class CashFlowComponent implements OnInit, AfterViewInit, OnDestroy {
     // const isChecked = (<HTMLInputElement>event.target).checked;
   }
 
-  editBoq(boq: any) {
-    this.router.navigate([`projects/add-boq/${this.projectId}`], {
-      queryParams: { boqId: boq.id }
+  editCashFlow(cashflow: any) {
+    this.router.navigate([`projects/cash-details/${this.projectId}`], {
+      queryParams: { boqId: cashflow.id }
     });
   }
 
-  deleteBoq(boq: any) {
+  deleteCashFlow(cashflow: any) {
     this.deleteSwal.fire().then((clicked) => {
       if (clicked.isConfirmed) {
         this.isLoading = true;
-        this.boqService.deleteBoq(boq.id).subscribe({
+        this.cashFlowService.deleteCashFlow(cashflow.id).subscribe({
           next: (res) => {
             this.showAlert({ icon: 'success', title: 'Success!', text: 'Boq Deleted successfully!' });
             setTimeout(() => {
-              this.isLoading = false;
               this.dataList = [];
-              this.initializeProjectData(this.projectId);
+              this.isLoading = false;
+              this.getLookups();
+              this.initCashFlowData(this.projectId);
             }, 500);
           },
           error: (error) => {
@@ -129,23 +143,31 @@ export class CashFlowComponent implements OnInit, AfterViewInit, OnDestroy {
     });
   }
 
+  onYearChange(event: Event): void {
+    const yearId = (event.target as HTMLSelectElement).value;
+    this.selectedYear = +yearId;
+  }
+
   redirectToNew() {
     this.modalService.open(this.fileModal, this.modalConfig)
   }
 
   navigatePage(pageIndex: number) {
     this.selected = pageIndex;
-    this.initializeProjectData(this.projectId, pageIndex, '');
+    this.initCashFlowData(this.projectId, pageIndex, '');
   }
 
   onSendFile(event: Event, myForm: NgForm) {
-    if (!this.selectedFile) {
+    if (!this.selectedFile && !this.selectedYear) {
       return;
     }
     this.isLoading = true;
     setTimeout(() => {
       this.modalService.dismissAll()
-      this.router.navigateByUrl('projects/add-cash-flow' + `/${this.projectId}`)
+      this.router.navigate(['projects/add-cash-flow', this.projectId], {
+        queryParams: { yearId: this.selectedYear }
+      });
+
     }, 1500);
   }
 

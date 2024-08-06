@@ -162,6 +162,7 @@ export const locale = {
       October: 'October',
       November: 'November',
       December: 'December',
+      Year: "Year",
       CashflowValue: 'Cashflow Value',
       InvoiceNumber: 'Invoice Number',
       InvoiceType: 'Invoice Type',

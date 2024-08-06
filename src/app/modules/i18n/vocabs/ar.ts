@@ -162,6 +162,7 @@ export const locale = {
       October: 'اكتوبر',
       November: 'نوفمبر',
       December: 'ديسمبر',
+      Year: 'العام',
       CashflowValue: 'قيمة المستخلص',
       InvoiceNumber: 'رقم المستخلص',
       InvoiceType: 'نوع المستخلص',

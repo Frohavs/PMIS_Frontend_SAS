@@ -24,6 +24,7 @@ import { AddBoqComponent } from './add-boq/add-boq.component';
 import { BoqListComponent } from './boq-list/boq-list.component';
 import { CashFlowComponent } from './cash-flow/cash-flow.component';
 import { AddCashFlowComponent } from './cash-flow/add-cash-flow/add-cash-flow.component';
+import { CashFlowDetailsComponent } from './cash-flow/cash-flow-details/cash-flow-details.component';
 
 
 @NgModule({
@@ -41,7 +42,8 @@ import { AddCashFlowComponent } from './cash-flow/add-cash-flow/add-cash-flow.co
     UpdateEotComponent,
     UpdateVariationOrderComponent,
     CashFlowComponent,
-    AddCashFlowComponent
+    AddCashFlowComponent,
+    CashFlowDetailsComponent
   ],
   imports: [
     CommonModule,

@@ -1,0 +1,145 @@
+<div class="row g-5 g-xl-8 justify-content-between">
+  <div class="col-xl-6">
+
+    <!-- <ng-container>
+      <div class="mb-10 bg-light-success p-8 rounded">
+        <div class="text-success fs-5 fw-bold">
+          You must click on final submit after updating basic Info to confirm the update
+        </div>
+      </div>
+    </ng-container> -->
+
+
+    <div class="card mb-5 mb-xl-8">
+      <!-- begin::Header -->
+      <div class="card-header align-items-center border-0 mt-4">
+        <h3 class="card-title align-items-start flex-column">
+          <span class="fw-bolder text-gray-900">Cash Flow Details</span>
+        </h3>
+      </div>
+      <!-- end::Header -->
+      <!-- begin::Body -->
+      <div class="card-body pt-3">
+        <!-- begin::Item -->
+        <div class="d-flex align-items-sm-center mb-7">
+
+          <!-- begin::Title -->
+          <div class="d-flex flex-row-fluid flex-wrap align-items-center">
+            <div class="w-50 me-2">
+              <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
+                Project name
+              </a>
+              <span class="text-muted fw-bold d-block pt-1">{{projectDetails?.nameAr  ||  '--'}}</span>
+            </div>
+            <div class="flex-grow-1 me-2">
+              <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
+                Last Invoice Number
+              </a>
+              <span
+                class="text-muted fw-bold d-block pt-1">{{projectDetails?.createdDate?.slice(0, 10)  ||  '--'}}</span>
+            </div>
+          </div>
+          <!-- end::Title -->
+        </div>
+        <!-- end::Item -->
+        <!-- begin::Item -->
+        <div class="d-flex align-items-sm-center mb-7">
+
+          <!-- begin::Title -->
+          <div class="d-flex flex-row-fluid flex-wrap align-items-center">
+            <div class="w-50 me-2">
+              <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
+                Estimated cost of works until the end of the project
+              </a>
+              <span class="text-muted fw-bold d-block pt-1">{{projectDetails?.contractNo  ||  '--'}}</span>
+            </div>
+            <div class="flex-grow-1 me-2">
+              <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
+                Approved Status
+              </a>
+              <span class="text-muted fw-bold d-block pt-1">{{projectDetails?.consultantName ||  '--'}}</span>
+            </div>
+          </div>
+          <!-- end::Title -->
+        </div>
+        <!-- end::Item -->
+        <!-- begin::Item -->
+        <div class="d-flex align-items-sm-center mb-7">
+
+          <!-- begin::Title -->
+          <div class="d-flex flex-row-fluid flex-wrap align-items-center">
+            <div class="w-50 me-2">
+              <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
+                Submitted by
+              </a>
+              <span class="text-muted fw-bold d-block pt-1">{{projectDetails?.contractNo || '--'}}</span>
+            </div>
+            <div class="flex-grow-1 me-2">
+              <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
+                Submitted date
+              </a>
+              <span
+                class="text-muted fw-bold d-block pt-1">{{projectDetails?.originalFinishDate?.slice(0, 10)  ||  '--'}}</span>
+            </div>
+          </div>
+          <!-- end::Title -->
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="col-xl-6">
+    <div class="card mb-5 mb-xl-8">
+      <div class="card-body py-3">
+        <!-- begin::Table container -->
+        <div class="table-responsive">
+          <!-- begin::Table -->
+          <table class="table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4">
+            <!-- begin::Table head -->
+            <thead>
+              <tr class="fw-bolder text-muted">
+
+                <th class="min-w-120px">Created By</th>
+                <th class="min-w-140px">Date</th>
+                <th class="min-w-120px">Status</th>
+                <th class="min-w-120px">Notes</th>
+              </tr>
+            </thead>
+            <!-- end::Table head -->
+            <!-- begin::Table body -->
+            <tbody>
+              <tr>
+
+                <td>
+                  <a class="text-gray-900 fw-bolder text-hover-primary fs-6">
+                    Admin
+                  </a>
+                </td>
+                <td>
+                  <a class="text-gray-900 fw-bolder text-hover-primary fs-6">
+                    30-07-2024
+                  </a>
+                </td>
+                <td>
+                  <a class="text-gray-900 fw-bolder text-hover-primary fs-6">
+                    --
+                  </a>
+                </td>
+                <td>
+                  <a class="text-gray-900 fw-bolder text-hover-primary fs-6">
+                    --
+                  </a>
+                </td>
+              </tr>
+
+            </tbody>
+            <!-- end::Table body -->
+          </table>
+          <!-- end::Table -->
+        </div>
+        <!-- end::Table container -->
+      </div>
+    </div>
+  </div>
+</div>
