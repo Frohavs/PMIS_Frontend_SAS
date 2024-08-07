@@ -11,6 +11,11 @@
         <input type="text" data-action="filter" class="form-control form-control-solid w-250px ps-12"
           [placeholder]="Search_text">
       </div>
+      <a class="btn btn-sm btn-light-info mx-2" (click)="fileInput.click()">
+        Upload
+      </a>
+      <input type="file" #fileInput (change)="uploadTemplate($event)" style="display: none;"
+      accept=".csv, .xlsx, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
       <!--end::Search-->
     </div>
     <!--begin::Card title-->
@@ -92,11 +97,6 @@
           </tr>
         </tbody>
       </table>
-
-      <a class="btn btn-sm btn-light-info mx-2" (click)="fileInput.click()">
-        Upload
-      </a>
-      <input type="file" #fileInput (change)="uploadTemplate($event)" style="display: none;">
 
       <div class="d-flex flex-stack flex-wrap pt-10">
         <div class="fs-6 fw-bold text-gray-700">Showing {{dataList.length}} to 10 of 10 entries</div>

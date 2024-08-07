@@ -156,7 +156,10 @@ export class BoqListComponent implements OnInit, AfterViewInit, OnDestroy {
         this.showAlert({ icon: 'success', title: 'Success!', text: 'file Uploaded successfully!' });
         this.initializeProjectData(this.projectId)
         this.fileInput.nativeElement.value = '';
-      }, (error)=> this.fileInput.nativeElement.value = '');
+      }, (error) => {
+        this.fileInput.nativeElement.value = ''
+        this.showAlert({ icon: 'error', title: 'Error!', text: 'Please try again' });
+      });
     }
   }
 
