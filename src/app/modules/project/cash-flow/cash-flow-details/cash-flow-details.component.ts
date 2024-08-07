@@ -12,11 +12,19 @@ import { CashFlowService } from 'src/app/services/cash-flow.service';
   styleUrl: './cash-flow-details.component.scss'
 })
 export class CashFlowDetailsComponent implements OnInit, OnDestroy {
+
   cashDetails: any;
+  cashId: any;
 
   @ViewChild('approveModal')
   approveModal: TemplateRef<any>;
-  approveModel: any = { status: 1, notes: '' };
+  // {
+  //   "accepted": true,
+  //   "note": "string",
+  //   "cashflowId": 0,
+  //   "approval": 1
+  // }
+  approveModelData: any = { accepted: true, note: '', cashflowId: 0, approval: 1 };
 
 
   @ViewChild('noticeSwal')
@@ -40,16 +48,15 @@ export class CashFlowDetailsComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.activatedRoute.queryParams.subscribe(res => {
-      console.log(res['cashId']);
+      this.cashId = res['cashId'];
       this.cashFlowService.getCashFlowById(res['cashId']).subscribe(res => {
         this.cashDetails = res.data;
         this.cdr.detectChanges()
         console.log(this.cashDetails);
-        // this.cashDetails.cashflowItems.forEach(element => {
-        //   if (element) {
-
-        //   }
-        // });
+        this.approveModelData['approval'] = 0;
+        this.approveModelData['cashflowId'] = this.cashId;
+        // if (!this.cashDetails?.cashflowApprovals.length) {
+        // }
       });
     })
   }
@@ -59,6 +66,15 @@ export class CashFlowDetailsComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
+    debugger
+    console.log(this.approveModelData);
+    this.cashFlowService.cashApprove(this.approveModelData).subscribe(res => {
+      this.showAlert({ icon: 'success', title: 'Success!', text: 'Vendor Added successfully!' });
+      this.modalService.dismissAll();
+      this.approveModelData = { accepted: true, note: '', cashflowId: this.cashId, approval: 0 };
+    }, () => {
+      this.showAlert({ icon: 'error', title: 'Error!', text: 'please try again!' })
+    });
 
   }
 

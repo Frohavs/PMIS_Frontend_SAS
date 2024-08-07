@@ -1,5 +1,5 @@
 <div class="row g-5 g-xl-8 justify-content-between">
-  <div class="col-xl-6">
+  <div class="col-xl-5">
 
     <!-- <ng-container>
       <div class="mb-10 bg-light-success p-8 rounded">
@@ -29,8 +29,7 @@
               <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
                 Last Invoice Number
               </a>
-              <span
-                class="text-muted fw-bold d-block pt-1">{{cashDetails?.createdDate?.slice(0, 10)  ||  '--'}}</span>
+              <span class="text-muted fw-bold d-block pt-1">{{cashDetails?.createdDate?.slice(0, 10)  ||  '--'}}</span>
             </div>
           </div>
           <!-- end::Title -->
@@ -72,8 +71,7 @@
               <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
                 Submitted date
               </a>
-              <span
-                class="text-muted fw-bold d-block pt-1">{{cashDetails?.lastUpdated | date: 'dd-MM-yyyy'}}</span>
+              <span class="text-muted fw-bold d-block pt-1">{{cashDetails?.lastUpdated | date: 'dd-MM-yyyy'}}</span>
             </div>
           </div>
           <!-- end::Title -->
@@ -83,11 +81,14 @@
     </div>
   </div>
 
-  <div class="col-xl-6">
+  <div class="col-xl-7">
     <div class="card mb-5 mb-xl-8">
       <div class="card-body py-3">
-        <a class="btn btn-sm btn-success my-3" (click)="handleDecision()">
+        <a class="btn btn-sm btn-success my-3" (click)="handleDecision()" *ngIf="!cashDetails?.cashflowApprovals.length">
           Consultant Decision
+        </a>
+        <a class="btn btn-sm btn-success my-3" (click)="handleDecision()" *ngIf="cashDetails?.cashflowApprovals.length">
+          Manager Decision
         </a>
         <!-- begin::Table container -->
         <div class="table-responsive">
@@ -106,30 +107,28 @@
             <!-- end::Table head -->
             <!-- begin::Table body -->
             <tbody>
-              <tr>
-
+              <tr *ngFor="let item of cashDetails?.cashflowApprovals; index as i">
                 <td>
-                  <a class="text-gray-900 fw-bolder text-hover-primary fs-6">
-                    Admin
+                  <a class="text-gray-900 fw-bolder text-hover-primary" style="font-size: 12px;">
+                    {{item?.userEmail}}
                   </a>
                 </td>
                 <td>
-                  <a class="text-gray-900 fw-bolder text-hover-primary fs-6">
-                    30-07-2024
+                  <a class="text-gray-900 fw-bolder text-hover-primary" style="font-size: 12px;">
+                    {{item?.createdOn | date : 'dd-MM-yyyy'}}
                   </a>
                 </td>
                 <td>
-                  <a class="text-gray-900 fw-bolder text-hover-primary fs-6">
-                    --
+                  <a class="text-gray-900 fw-bolder text-hover-primary" style="font-size: 12px;">
+                    {{item.accepted ? 'approved from' : 'rejected'}} {{item?.accepted && (i === 0) && 'Consultant'}} {{(item?.accepted && (i === 1)) ? 'Manager' : ''}}
                   </a>
                 </td>
                 <td>
-                  <a class="text-gray-900 fw-bolder text-hover-primary fs-6">
-                    --
+                  <a class="text-gray-900 fw-bolder text-hover-primary" style="font-size: 12px;">
+                    {{item?.note}}
                   </a>
                 </td>
               </tr>
-
             </tbody>
             <!-- end::Table body -->
           </table>
@@ -160,29 +159,45 @@
         <!-- end::Table head -->
         <!-- begin::Table body -->
         <tbody>
-          <tr>
+          <tr *ngFor="let item of cashDetails?.cashflowItems">
             <td>
               <a class="text-gray-900 fw-bolder text-hover-primary fs-6">
-                Admin
+                {{item?.monthName}}
               </a>
             </td>
             <td>
               <a class="text-gray-900 fw-bolder text-hover-primary fs-6">
-                Admin
+                {{item?.year}}
               </a>
             </td>
             <td>
               <a class="text-gray-900 fw-bolder text-hover-primary fs-6">
-                Admin
+                {{item?.abstractValue | number}}
               </a>
             </td>
             <td>
               <a class="text-gray-900 fw-bolder text-hover-primary fs-6">
-                Admin
+                {{item?.abstractNumber}}
               </a>
             </td>
           </tr>
-
+          <tr>
+            <td>
+              <a class="text-gray-900 fw-bolder text-hover-primary fs-3">
+                total
+              </a>
+            </td>
+            <td colspan="3">
+              <a class="text-gray-900 fw-bolder text-hover-primary fs-3">
+                {{cashDetails?.totalValue | number}}
+              </a>
+            </td>
+          </tr>
+          <tr *ngIf="!cashDetails?.cashflowItems?.length">
+            <td colspan="8" class="text-center fs-2 text-primary">
+              no items retrieved yet
+            </td>
+          </tr>
         </tbody>
         <!-- end::Table body -->
       </table>
@@ -207,15 +222,15 @@
         <div class="col-lg-8 d-flex align-items-center">
           <div class="form-check form-check-solid form-switch d-flex align-items-center">
             <input class="form-check-input w-45px h-30px me-2" type="checkbox" name="durationDays"
-              [(ngModel)]="approveModel.status" />
-            <label class="form-check-label">{{(approveModel.status === 1) ? 'approve' : 'reject'}}</label>
+              [(ngModel)]="approveModelData.accepted" />
+            <label class="form-check-label">{{approveModelData.accepted ? 'approve' : 'reject'}}</label>
           </div>
         </div>
       </div>
 
       <div class="fv-row mb-7">
         <label class="fw-semibold fs-6 mb-2">Reason</label>
-        <textarea class="form-control form-control-solid" name="eotReason" [(ngModel)]="approveModel.notes"
+        <textarea class="form-control form-control-solid" name="eotReason" [(ngModel)]="approveModelData.note"
           rows="3"></textarea>
       </div>
 

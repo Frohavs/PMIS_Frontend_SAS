@@ -60,8 +60,19 @@ export class CashFlowService {
       Authorization: `Bearer ${this.token}`,
     });
     const url = `${this.API_USERS_URL}/Delete?id=${id}`;
-    return this.http.post<any>(url,{id: id}, {
+    return this.http.post<any>(url, { id: id }, {
       headers: httpHeaders
     });
+  }
+
+  cashApprove(payload: any) {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/Approve`;
+    return this.http.post<any>(url, payload, {
+      headers: httpHeaders
+    });
+
   }
 }
