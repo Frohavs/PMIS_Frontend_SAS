@@ -7,6 +7,7 @@ import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
 import { BoqService } from 'src/app/services/boq.service';
 import { SweetAlertOptions } from 'sweetalert2';
 import { debounceTime, distinctUntilChanged, fromEvent, Subscription } from 'rxjs';
+import { AttachmentService } from 'src/app/services/attachment/attachment.service';
 
 @Component({
   selector: 'app-boq-list',
@@ -22,6 +23,7 @@ export class BoqListComponent implements OnInit, AfterViewInit, OnDestroy {
   totalCount: number;
   pagesCount: number[] = [];
   selected = 1;
+  boqTemplate: string;
 
   // modal configs
   isLoading = false;
@@ -35,6 +37,7 @@ export class BoqListComponent implements OnInit, AfterViewInit, OnDestroy {
   modalConfig: NgbModalOptions = {
     modalDialogClass: 'modal-dialog modal-dialog-centered mw-650px',
   };
+  @ViewChild('fileInput') fileInput: ElementRef;
 
   private inputSubscription: Subscription;
 
@@ -45,6 +48,7 @@ export class BoqListComponent implements OnInit, AfterViewInit, OnDestroy {
     private activatedRoute: ActivatedRoute,
     private cdr: ChangeDetectorRef,
     private boqService: BoqService,
+    private attachmentService: AttachmentService,
     private translate: TranslateService,
   ) {
     this.Add_text = this.translate.instant('BOQ.Add_Boq');
@@ -52,7 +56,10 @@ export class BoqListComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.getBoqId()
+    this.getBoqId();
+    this.attachmentService.downloadBoqAttachment().subscribe(res => {
+      this.boqTemplate = res.data;
+    })
   }
 
   ngAfterViewInit(): void {
@@ -71,7 +78,7 @@ export class BoqListComponent implements OnInit, AfterViewInit, OnDestroy {
   initializeProjectData(id: number, pageIndex?: number, search?: string) {
     this.boqService.getAll(id, pageIndex, search).subscribe(res => {
       this.dataList = res.data.items;
-      this.pagesCount = Array.from({ length: Math.ceil(this.totalCount / 10) }, (_, index) => index + 1) ;
+      this.pagesCount = Array.from({ length: Math.ceil(this.totalCount / 10) }, (_, index) => index + 1);
       this.cdr.detectChanges();
     });
   }
@@ -131,6 +138,26 @@ export class BoqListComponent implements OnInit, AfterViewInit, OnDestroy {
   navigatePage(pageIndex: number) {
     this.selected = pageIndex;
     this.initializeProjectData(this.projectId, pageIndex, '');
+  }
+
+  downloadTemplate() {
+    window.open(this.boqTemplate);
+  }
+
+  uploadTemplate(event: Event) {
+
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      const file = input.files[0];
+      const fd = new FormData();
+      fd.append('file', file, file.name);
+
+      this.boqService.uploadBoqFile(fd).subscribe(res => {
+        this.showAlert({ icon: 'success', title: 'Success!', text: 'file Uploaded successfully!' });
+        this.initializeProjectData(this.projectId)
+        this.fileInput.nativeElement.value = '';
+      }, (error)=> this.fileInput.nativeElement.value = '');
+    }
   }
 
   ngOnDestroy(): void {

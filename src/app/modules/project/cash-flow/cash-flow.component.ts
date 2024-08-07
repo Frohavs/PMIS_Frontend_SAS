@@ -116,7 +116,7 @@ export class CashFlowComponent implements OnInit, AfterViewInit, OnDestroy {
 
   editCashFlow(cashflow: any) {
     this.router.navigate([`projects/cash-details/${this.projectId}`], {
-      queryParams: { boqId: cashflow.id }
+      queryParams: { cashId: cashflow.id }
     });
   }
 

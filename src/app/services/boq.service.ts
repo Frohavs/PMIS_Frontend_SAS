@@ -71,4 +71,14 @@ export class BoqService {
       headers: httpHeaders
     });
   }
+
+  uploadBoqFile(file: any) {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/CreateRange`;
+    return this.http.post<any>(url, file, {
+      headers: httpHeaders
+    });
+  }
 }

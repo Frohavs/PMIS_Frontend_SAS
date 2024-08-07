@@ -45,6 +45,15 @@ export class CashFlowService {
       headers: httpHeaders
     });
   }
+  getCashFlowById(cashFlowId: any): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/Get/${cashFlowId}`;
+    return this.http.get<any>(url, {
+      headers: httpHeaders
+    });
+  }
 
   deleteCashFlow(id: number): Observable<any> {
     const httpHeaders = new HttpHeaders({
