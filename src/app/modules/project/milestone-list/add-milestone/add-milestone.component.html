@@ -15,114 +15,78 @@
   <div id="kt_add_mileStone" class="collapse show">
     <form [formGroup]="addMileStoneForm" class="form">
       <div class="card-body border-top p-9">
+        <div formArrayName="milestones">
+          <div *ngFor="let milestone of milestones.controls; let i = index" [formGroupName]="i" class="row mb-1">
 
-
-        <div class="row mb-1">
-          <div class="col-lg-6">
-            <label class="col-lg-12 col-form-label fw-bold fs-6">
-              <span>
-                Milestone Title
-              </span>
-            </label>
-            <div class="col-lg-12 fv-row">
-              <input type="text" class="form-control form-control-lg form-control-solid text-start" name="title"
-                formControlName="title" placeholder="{{'BOQ.item_no' | translate}}" />
-              <div
-                *ngIf="addMileStoneForm?.get('title')?.invalid && (addMileStoneForm?.get('title')?.dirty || addMileStoneForm?.get('title')?.touched)"
-                class="fv-plugins-message-container">
-                <div class="fv-help-block">title is required</div>
+            <div class="col-lg-6">
+              <label class="col-lg-12 col-form-label fw-bold fs-6">Milestone Title</label>
+              <div class="col-lg-12 fv-row">
+                <input type="text" class="form-control form-control-lg form-control-solid text-start" formControlName="title" placeholder="Title" />
+                <div *ngIf="milestone.get('title')?.invalid && (milestone.get('title')?.dirty || milestone.get('title')?.touched)" class="fv-plugins-message-container">
+                  <div class="fv-help-block">Title is required</div>
+                </div>
               </div>
             </div>
-          </div>
 
-          <div class="col-lg-6">
-            <label class="col-lg-12 col-form-label fw-bold fs-6">
-              <span>
-                Description
-              </span>
-            </label>
-            <div class="col-lg-12 fv-row">
-              <textarea type="text" class="form-control form-control-lg form-control-solid text-start"
-                name="description" formControlName="description" placeholder="description"></textarea>
-              <div
-                *ngIf="addMileStoneForm?.get('description')?.invalid && (addMileStoneForm?.get('description')?.dirty || addMileStoneForm?.get('description')?.touched)"
-                class="fv-plugins-message-container">
-                <div class="fv-help-block">description is required</div>
+            <div class="col-lg-6">
+              <label class="col-lg-12 col-form-label fw-bold fs-6">Description</label>
+              <div class="col-lg-12 fv-row">
+                <textarea class="form-control form-control-lg form-control-solid text-start" formControlName="description" placeholder="Description"></textarea>
+                <div *ngIf="milestone.get('description')?.invalid && (milestone.get('description')?.dirty || milestone.get('description')?.touched)" class="fv-plugins-message-container">
+                  <div class="fv-help-block">Description is required</div>
+                </div>
               </div>
             </div>
-          </div>
-        </div>
-        <div class="row mb-1">
-          <div class="col-lg-6">
-            <label class="col-lg-12 col-form-label fw-bold fs-6">
-              <span>
-                Planned start date
-              </span>
-            </label>
-            <div class="col-lg-12 fv-row">
-              <input type="date" class="form-control form-control-lg form-control-solid text-start" name="title"
-                formControlName="startDate" />
-              <div
-                *ngIf="addMileStoneForm?.get('startDate')?.invalid && (addMileStoneForm?.get('startDate')?.dirty || addMileStoneForm?.get('startDate')?.touched)"
-                class="fv-plugins-message-container">
-                <div class="fv-help-block">start Date is required</div>
-              </div>
-            </div>
-          </div>
 
-          <div class="col-lg-6">
-            <label class="col-lg-12 col-form-label fw-bold fs-6">
-              <span>
-                Planned end date
-              </span>
-            </label>
-            <div class="col-lg-12 fv-row">
-              <input type="date" class="form-control form-control-lg form-control-solid text-start" name="endDate"
-                formControlName="endDate" />
-              <div
-                *ngIf="addMileStoneForm?.get('endDate')?.invalid && (addMileStoneForm?.get('endDate')?.dirty || addMileStoneForm?.get('endDate')?.touched)"
-                class="fv-plugins-message-container">
-                <div class="fv-help-block">endDate is required</div>
+            <div class="col-lg-6">
+              <label class="col-lg-12 col-form-label fw-bold fs-6">Planned Start Date</label>
+              <div class="col-lg-12 fv-row">
+                <input type="date" class="form-control form-control-lg form-control-solid text-start" formControlName="startDate" />
+                <div *ngIf="milestone.get('startDate')?.invalid && (milestone.get('startDate')?.dirty || milestone.get('startDate')?.touched)" class="fv-plugins-message-container">
+                  <div class="fv-help-block">Start Date is required</div>
+                </div>
               </div>
             </div>
+
+            <div class="col-lg-6">
+              <label class="col-lg-12 col-form-label fw-bold fs-6">Planned End Date</label>
+              <div class="col-lg-12 fv-row">
+                <input type="date" class="form-control form-control-lg form-control-solid text-start" formControlName="endDate" />
+                <div *ngIf="milestone.get('endDate')?.invalid && (milestone.get('endDate')?.dirty || milestone.get('endDate')?.touched)" class="fv-plugins-message-container">
+                  <div class="fv-help-block">End Date is required</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-6">
+              <label class="col-lg-12 col-form-label fw-bold fs-6">Actual Start Date</label>
+              <div class="col-lg-12 fv-row">
+                <input type="date" class="form-control form-control-lg form-control-solid text-start" formControlName="actualStartDate" />
+              </div>
+            </div>
+
+            <div class="col-lg-6">
+              <label class="col-lg-12 col-form-label fw-bold fs-6">Actual End Date</label>
+              <div class="col-lg-12 fv-row">
+                <input type="date" class="form-control form-control-lg form-control-solid text-start" formControlName="actualEndDate" />
+              </div>
+            </div>
+
+            <div class="col-lg-12">
+              <button type="button" class="btn btn-danger mt-2" (click)="removeMilestone(i)" *ngIf="i > 0">-</button>
+            </div>
+
           </div>
         </div>
 
-        <div class="row mb-1">
-          <div class="col-lg-6">
-            <label class="col-lg-12 col-form-label fw-bold fs-6">
-              <span>
-                Actual start date
-              </span>
-            </label>
-            <div class="col-lg-12 fv-row">
-              <input type="date" class="form-control form-control-lg form-control-solid text-start" name="title"
-                formControlName="actualStartDate" />
-
-            </div>
-          </div>
-
-          <div class="col-lg-6">
-            <label class="col-lg-12 col-form-label fw-bold fs-6">
-              <span>
-                Actual end date
-              </span>
-            </label>
-            <div class="col-lg-12 fv-row">
-              <input type="date" class="form-control form-control-lg form-control-solid text-start" name="actualEndDate"
-                formControlName="actualEndDate" />
-
-            </div>
-          </div>
-        </div>
-
-
+        <button type="button" class="btn btn-success mt-4" (click)="addMilestone()" *ngIf="!mileStoneId">Add Milestone</button>
       </div>
+
       <div class="card-footer d-flex justify-content-end py-6 px-9">
         <button type="button" class="btn btn-primary" [disabled]="isLoading" (click)="saveUser()">
           <ng-container *ngIf="!isLoading">{{"TRANSLATOR.SAVE_CHANGES" | translate}}</ng-container>
           <ng-container *ngIf="isLoading">
-            <span clas="indicator-progress" [style.display]="'block'">
+            <span class="indicator-progress" [style.display]="'block'">
               Please wait...{{ " " }}
               <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
             </span>
@@ -130,6 +94,7 @@
         </button>
       </div>
     </form>
+
   </div>
 </div>
 

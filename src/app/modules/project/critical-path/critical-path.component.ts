@@ -54,7 +54,6 @@ export class CriticalPathComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    debugger
     this.getProjectId();
     this.initializeMilesStoneList();
   }

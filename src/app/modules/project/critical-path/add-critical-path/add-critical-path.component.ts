@@ -1,6 +1,6 @@
 import { Location } from '@angular/common';
 import { ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
 import { Subscription } from 'rxjs';
@@ -41,15 +41,33 @@ export class AddCriticalPathComponent implements OnInit, OnDestroy {
 
   initCriticalPathForm() {
     this.addCriticalPathForm = this.formBuilder.group({
+      criticalPaths: this.formBuilder.array([this.createCriticalPath()])
+    });
+  }
+
+  get criticalPaths(): FormArray {
+    return this.addCriticalPathForm.get('criticalPaths') as FormArray;
+  }
+
+  createCriticalPath(): FormGroup {
+    return this.formBuilder.group({
       title: ['', Validators.required],
       description: ['', Validators.required],
-      startDate: [null, Validators.required],
-      endDate: [null, Validators.required],
-      plannedPercentage: [0, Validators.required],
-      actualStartDate: [null],
-      actualEndDate: [null],
-      actualPercentage: [0],
+      startDate: ['', Validators.required],
+      endDate: ['', Validators.required],
+      plannedPercentage: ['', [Validators.required, Validators.min(0)]],
+      actualStartDate: [''],
+      actualEndDate: [''],
+      actualPercentage: ['', [Validators.min(0)]]
     });
+  }
+
+  addCriticalPath(): void {
+    this.criticalPaths.push(this.createCriticalPath());
+  }
+
+  removeCriticalPath(index: number): void {
+    this.criticalPaths.removeAt(index);
   }
 
   getMileStoneId() {
@@ -67,7 +85,7 @@ export class AddCriticalPathComponent implements OnInit, OnDestroy {
   }
 
   initMileStoneEditForm(data: any) {
-    this.addCriticalPathForm.patchValue({
+    this.criticalPaths.at(0).patchValue({
       title: data?.title,
       description: data?.description,
       startDate: data?.startDate?.slice(0, 10) || null,
@@ -96,7 +114,7 @@ export class AddCriticalPathComponent implements OnInit, OnDestroy {
         this.cdr.detectChanges();
       }, 500);
     } else {
-      const payload = { id: +this.pathId, ...this.addCriticalPathForm.value, projectId: +this.projectId };
+      const payload = { id: +this.pathId, ...this.addCriticalPathForm.value?.criticalPaths[0], projectId: +this.projectId };
       this.criticalPathService.updateCriticalPath(payload).subscribe(res => {
         this.router.navigateByUrl('projects/critical_path/' + this.projectId);
         this.showAlert({ icon: 'success', title: 'Success!', text: 'Path Updated successfully!' });

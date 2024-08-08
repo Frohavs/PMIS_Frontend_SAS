@@ -1,6 +1,6 @@
 import { Location } from '@angular/common';
 import { ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
 import { Subscription } from 'rxjs';
@@ -35,27 +35,36 @@ export class AddMilestoneComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.getMileStoneId();
-    this.initMileStoneForm();
-
+    this.initMileStoneFormArray();
   }
 
-  initMileStoneForm() {
+  initMileStoneFormArray() {
     this.addMileStoneForm = this.formBuilder.group({
+      milestones: this.formBuilder.array([this.createMilestone()])
+    });
+  }
+
+  createMilestone(): FormGroup {
+    return this.formBuilder.group({
       title: ['', Validators.required],
       description: ['', Validators.required],
-      startDate: [null, Validators.required],
-      endDate: [null, Validators.required],
-      actualStartDate: [null],
-      actualEndDate: [null],
+      startDate: ['', Validators.required],
+      endDate: ['', Validators.required],
+      actualStartDate: [''],
+      actualEndDate: ['']
     });
   }
-  editUserForm(data: any) {
-    this.addMileStoneForm.patchValue({
-      fullName: data?.fullName || '',
-      userName: data?.userName || '',
-      email: data?.email,
-      companyId: data?.companyId,
-    });
+
+  get milestones(): FormArray {
+    return this.addMileStoneForm.get('milestones') as FormArray;
+  }
+
+  addMilestone(): void {
+    this.milestones.push(this.createMilestone());
+  }
+
+  removeMilestone(index: number): void {
+    this.milestones.removeAt(index);
   }
 
   getMileStoneId() {
@@ -66,7 +75,7 @@ export class AddMilestoneComponent implements OnInit, OnDestroy {
       this.mileStoneId = +params['mileStoneId'];
       if (this.mileStoneId) {
         this.milestoneService.getById(this.mileStoneId).subscribe(res => {
-          debugger
+
           this.initMileStoneEditForm(res.data);
         })
       }
@@ -74,19 +83,23 @@ export class AddMilestoneComponent implements OnInit, OnDestroy {
   }
 
   initMileStoneEditForm(data: any) {
-    this.addMileStoneForm.patchValue({
-      title: data?.title ,
-      description: data?.description ,
-      startDate: data?.startDate?.slice(0, 10) || null ,
-      endDate: data?.endDate?.slice(0, 10) || null ,
-      actualStartDate: data?.actualStartDate?.slice(0, 10) || null ,
-      actualEndDate: data?.actualEndDate?.slice(0, 10) || null ,
+    this.milestones.at(0).patchValue({
+      title: data?.title,
+      description: data?.description,
+      startDate: data?.startDate?.slice(0, 10) || null,
+      endDate: data?.endDate?.slice(0, 10) || null,
+      actualStartDate: data?.actualStartDate?.slice(0, 10) || null,
+      actualEndDate: data?.actualEndDate?.slice(0, 10) || null,
     });
   }
 
   saveUser() {
+    console.log(this.addMileStoneForm.value);
+    this.addMileStoneForm.value?.milestones?.forEach((element: any) => {
+      element['projectId'] = +this.projectId;
+    });
     if (!this.mileStoneId) {
-      const payload = [{ ...this.addMileStoneForm.value, projectId: +this.projectId }];
+      const payload = [{ ...this.addMileStoneForm.value.milestones, projectId: +this.projectId }];
       this.milestoneService.addMileStone(payload).subscribe(res => {
         this.router.navigateByUrl('projects/milestone_list/' + this.projectId);
         this.showAlert({ icon: 'success', title: 'Success!', text: 'MileStone Added successfully!' });
@@ -101,7 +114,7 @@ export class AddMilestoneComponent implements OnInit, OnDestroy {
         this.cdr.detectChanges();
       }, 500);
     } else {
-      const payload = { id: this.mileStoneId, ...this.addMileStoneForm.value, projectId: +this.projectId };
+      const payload = { id: this.mileStoneId, ...this.addMileStoneForm.value?.milestones[0], projectId: +this.projectId };
       this.milestoneService.updateMilestone(payload).subscribe(res => {
         this.router.navigateByUrl('projects/milestone_list/' + this.projectId);
         this.showAlert({ icon: 'success', title: 'Success!', text: 'MileStone Updated successfully!' });

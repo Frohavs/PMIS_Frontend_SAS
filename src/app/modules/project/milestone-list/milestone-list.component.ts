@@ -81,7 +81,6 @@ export class MilestoneListComponent implements OnInit, AfterViewInit, OnDestroy{
   }
 
   getProjectId() {
-    debugger
     this.activatedRoute.params.subscribe(params => {
       this.projectId = params['id'];
     });
