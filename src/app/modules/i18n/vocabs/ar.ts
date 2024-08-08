@@ -122,6 +122,19 @@ export const locale = {
       address: 'العنوان',
       cr_number: 'الرقم التعريفي',
     },
+    MILESTONE: {
+      ID: 'رقم',
+      TITLE: 'تفاصيل المخرجات الرئيسية',
+      Add_MileStone: 'إضافة مخرج رئيسي',
+      EN_NAME: 'الأسم بالأنجليزية',
+      Status: 'الحالة',
+      Search: 'بحث عن مخرجات...',
+
+      name: 'البائع',
+      type: 'النوع',
+      address: 'العنوان',
+      cr_number: 'الرقم التعريفي',
+    },
     BOQ: {
       ID: 'رقم',
       TITLE: 'جدول الكميات',

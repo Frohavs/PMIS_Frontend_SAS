@@ -122,6 +122,19 @@ export const locale = {
       address: 'Address',
       cr_number: 'CR Number',
     },
+    MILESTONE: {
+      ID: 'ID',
+      TITLE: 'MileStone',
+      Add_MileStone: 'Create MileStone',
+      EN_NAME: 'English Name',
+      Status: 'Status',
+      Search: 'Search Milestone...',
+
+      name: 'Vendor',
+      type: 'Type',
+      address: 'Address',
+      cr_number: 'CR Number',
+    },
     BOQ: {
       ID: 'ID',
       TITLE: 'Boq',

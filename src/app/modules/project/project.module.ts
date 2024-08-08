@@ -25,6 +25,8 @@ import { BoqListComponent } from './boq-list/boq-list.component';
 import { CashFlowComponent } from './cash-flow/cash-flow.component';
 import { AddCashFlowComponent } from './cash-flow/add-cash-flow/add-cash-flow.component';
 import { CashFlowDetailsComponent } from './cash-flow/cash-flow-details/cash-flow-details.component';
+import { MilestoneListComponent } from './milestone-list/milestone-list.component';
+import { AddMilestoneComponent } from './milestone-list/add-milestone/add-milestone.component';
 
 
 @NgModule({
@@ -32,8 +34,10 @@ import { CashFlowDetailsComponent } from './cash-flow/cash-flow-details/cash-flo
     ProjectsComponent,
     OverviewComponent,
     CreateProjectComponent,
+
     BoqListComponent,
     AddBoqComponent,
+
     UpdateProjectInfoComponent,
     UpdateProjectStaffComponent,
     UpdateProgressInfoComponent,
@@ -41,9 +45,13 @@ import { CashFlowDetailsComponent } from './cash-flow/cash-flow-details/cash-flo
     UpdateInfoComponent,
     UpdateEotComponent,
     UpdateVariationOrderComponent,
+
     CashFlowComponent,
     AddCashFlowComponent,
-    CashFlowDetailsComponent
+    CashFlowDetailsComponent,
+
+    MilestoneListComponent,
+    AddMilestoneComponent
   ],
   imports: [
     CommonModule,

@@ -15,6 +15,8 @@ import { BoqListComponent } from './boq-list/boq-list.component';
 import { CashFlowComponent } from './cash-flow/cash-flow.component';
 import { AddCashFlowComponent } from './cash-flow/add-cash-flow/add-cash-flow.component';
 import { CashFlowDetailsComponent } from './cash-flow/cash-flow-details/cash-flow-details.component';
+import { MilestoneListComponent } from './milestone-list/milestone-list.component';
+import { AddMilestoneComponent } from './milestone-list/add-milestone/add-milestone.component';
 
 const routes: Routes = [
   {
@@ -69,6 +71,7 @@ const routes: Routes = [
         path: 'update-variation/:id',
         component: UpdateVariationOrderComponent,
       },
+
       {
         path: 'cash-flow/:id',
         component: CashFlowComponent,
@@ -80,6 +83,19 @@ const routes: Routes = [
       {
         path: 'cash-details/:id',
         component: CashFlowDetailsComponent,
+      },
+
+      {
+        path: 'milestone_list/:id',
+        component: MilestoneListComponent,
+      },
+      {
+        path: 'add-milestone/:id',
+        component: AddMilestoneComponent,
+      },
+      {
+        path: 'edit-milestone/:id',
+        component: AddMilestoneComponent,
       },
       { path: '', redirectTo: 'overview', pathMatch: 'full' },
       { path: '**', redirectTo: 'overview', pathMatch: 'full' },

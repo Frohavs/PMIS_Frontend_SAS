@@ -11,4 +11,8 @@ export const PROJECT_OPTIONS = [
     name: 'Cash Flow',
     route: 'projects/cash-flow'
   },
+  {
+    name: 'Milestone List',
+    route: 'projects/milestone_list'
+  },
 ]
