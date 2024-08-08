@@ -21,11 +21,11 @@
               {{ months[i].name }}
             </label>
             <div class="col-lg-3 mb-2 fv-row">
-              <input type="number" class="form-control form-control-lg form-control-solid"
+              <input type="text" class="form-control form-control-lg form-control-solid" [currencyMask]="{ prefix: 'SAR ',nullable: true, thousands: ',', precision: 0, align: 'left' }"
                 (keypress)="numbersOnly($event)" min="0" formControlName="abstractValue" placeholder="{{'CASHFLOW.CashflowValue' | translate}}" />
             </div>
             <div class="col-lg-3 mb-2 fv-row">
-              <input type="number" class="form-control form-control-lg form-control-solid"
+              <input type="text" class="form-control form-control-lg form-control-solid"
                 (keypress)="numbersOnly($event)" min="0" formControlName="abstractNumber"
                 placeholder="{{'CASHFLOW.InvoiceNumber' | translate}}" />
             </div>

@@ -85,7 +85,7 @@ export class AddCashFlowComponent implements OnInit, OnDestroy {
     return this.formBuilder.group({
       month: [month],
       yearId: [this.yearId],
-      abstractValue: [''],
+      abstractValue: [false],
       abstractNumber: [''],
       abstractType: [1]
     });
@@ -118,7 +118,7 @@ export class AddCashFlowComponent implements OnInit, OnDestroy {
 
     const formValue = { projectId: this.projectId, ...this.addCashForm.value };
     formValue.cashflowItems.forEach((element: any) => {
-      if (element.abstractValue === '') {
+      if (element.abstractValue === false) {
         element.abstractValue = 0;
       }
       if (element.abstractNumber === '') {

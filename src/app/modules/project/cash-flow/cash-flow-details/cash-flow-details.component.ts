@@ -68,7 +68,8 @@ export class CashFlowDetailsComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    debugger
+    // debugger
+    if(this.approveModelData.accepted === false) this.approveModelData.approval = 2;
     this.cashFlowService.cashApprove(this.approveModelData).subscribe(res => {
       this.showAlert({ icon: 'success', title: 'Success!', text: 'Vendor Added successfully!' });
       this.modalService.dismissAll();
