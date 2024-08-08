@@ -18,7 +18,7 @@
         <div formArrayName="cashflowItems">
           <div *ngFor="let item of cashflowItems.controls; let i = index" [formGroupName]="i" class="row mb-6">
             <label class="col-lg-3 mb-2 col-form-label required fw-bold fs-6">
-              {{ months[i].name }} 2024
+              {{ months[i].name }}
             </label>
             <div class="col-lg-3 mb-2 fv-row">
               <input type="number" class="form-control form-control-lg form-control-solid"
