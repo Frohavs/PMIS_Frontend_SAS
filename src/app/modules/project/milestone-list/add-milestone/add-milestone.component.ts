@@ -48,10 +48,10 @@ export class AddMilestoneComponent implements OnInit, OnDestroy {
     return this.formBuilder.group({
       title: ['', Validators.required],
       description: ['', Validators.required],
-      startDate: ['', Validators.required],
-      endDate: ['', Validators.required],
-      actualStartDate: [''],
-      actualEndDate: ['']
+      startDate: [null, Validators.required],
+      endDate: [null, Validators.required],
+      actualStartDate: [null],
+      actualEndDate: [null]
     });
   }
 
@@ -94,13 +94,12 @@ export class AddMilestoneComponent implements OnInit, OnDestroy {
   }
 
   saveUser() {
-    console.log(this.addMileStoneForm.value);
-    this.addMileStoneForm.value?.milestones?.forEach((element: any) => {
-      element['projectId'] = +this.projectId;
-    });
     if (!this.mileStoneId) {
-      const payload = [{ ...this.addMileStoneForm.value.milestones, projectId: +this.projectId }];
-      this.milestoneService.addMileStone(payload).subscribe(res => {
+      const dataArray = this.addMileStoneForm.value.milestones.filter((item: any) => typeof item === 'object' && !Array.isArray(item));
+      dataArray.forEach((element: any) => {
+        element['projectId'] = +this.projectId
+      });
+      this.milestoneService.addMileStone(dataArray).subscribe(res => {
         this.router.navigateByUrl('projects/milestone_list/' + this.projectId);
         this.showAlert({ icon: 'success', title: 'Success!', text: 'MileStone Added successfully!' });
       }, (error) => {

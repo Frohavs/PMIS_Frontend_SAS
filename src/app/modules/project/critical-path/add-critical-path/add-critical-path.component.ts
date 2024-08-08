@@ -55,10 +55,10 @@ export class AddCriticalPathComponent implements OnInit, OnDestroy {
       description: ['', Validators.required],
       startDate: ['', Validators.required],
       endDate: ['', Validators.required],
-      plannedPercentage: ['', [Validators.required, Validators.min(0)]],
-      actualStartDate: [''],
-      actualEndDate: [''],
-      actualPercentage: ['', [Validators.min(0)]]
+      plannedPercentage: [0, [Validators.required, Validators.min(0)]],
+      actualStartDate: [null],
+      actualEndDate: [null],
+      actualPercentage: [0, [Validators.min(0)]]
     });
   }
 
@@ -99,8 +99,11 @@ export class AddCriticalPathComponent implements OnInit, OnDestroy {
 
   saveUser() {
     if (!this.pathId) {
-      const payload = [{ ...this.addCriticalPathForm.value, projectId: +this.projectId }];
-      this.criticalPathService.addCriticalPath(payload).subscribe(res => {
+      const dataArray = this.addCriticalPathForm.value.criticalPaths.filter((item: any) => typeof item === 'object' && !Array.isArray(item));
+      dataArray.forEach((element: any) => {
+        element['projectId'] = +this.projectId
+      });
+      this.criticalPathService.addCriticalPath(dataArray).subscribe(res => {
         this.router.navigateByUrl('projects/critical_path/' + this.projectId);
         this.showAlert({ icon: 'success', title: 'Success!', text: 'Path Added successfully!' });
       }, (error) => {
