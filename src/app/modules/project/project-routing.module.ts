@@ -17,6 +17,8 @@ import { AddCashFlowComponent } from './cash-flow/add-cash-flow/add-cash-flow.co
 import { CashFlowDetailsComponent } from './cash-flow/cash-flow-details/cash-flow-details.component';
 import { MilestoneListComponent } from './milestone-list/milestone-list.component';
 import { AddMilestoneComponent } from './milestone-list/add-milestone/add-milestone.component';
+import { AddCriticalPathComponent } from './critical-path/add-critical-path/add-critical-path.component';
+import { CriticalPathComponent } from './critical-path/critical-path.component';
 
 const routes: Routes = [
   {
@@ -97,6 +99,20 @@ const routes: Routes = [
         path: 'edit-milestone/:id',
         component: AddMilestoneComponent,
       },
+
+      {
+        path: 'critical_path/:id',
+        component: CriticalPathComponent,
+      },
+      {
+        path: 'add-critical_path/:id',
+        component: AddCriticalPathComponent,
+      },
+      {
+        path: 'edit-critical_path/:id',
+        component: AddCriticalPathComponent,
+      },
+
       { path: '', redirectTo: 'overview', pathMatch: 'full' },
       { path: '**', redirectTo: 'overview', pathMatch: 'full' },
     ]

@@ -4,19 +4,19 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
 import { Subscription } from 'rxjs';
-import { MilestoneService } from 'src/app/services/milestone.service';
+import { CriticalPathService } from 'src/app/services/critical-path.service';
 import { SweetAlertOptions } from 'sweetalert2';
 
 @Component({
-  selector: 'app-add-milestone',
-  templateUrl: './add-milestone.component.html',
-  styleUrl: './add-milestone.component.scss'
+  selector: 'app-add-critical-path',
+  templateUrl: './add-critical-path.component.html',
+  styleUrl: './add-critical-path.component.scss'
 })
-export class AddMilestoneComponent implements OnInit, OnDestroy {
+export class AddCriticalPathComponent implements OnInit, OnDestroy {
   projectId: number;
-  mileStoneId: number;
+  pathId: number;
   isLoading: boolean;
-  addMileStoneForm: FormGroup;
+  addCriticalPathForm: FormGroup;
 
   private unsubscribe: Subscription[] = [];
 
@@ -29,32 +29,26 @@ export class AddMilestoneComponent implements OnInit, OnDestroy {
     private cdr: ChangeDetectorRef,
     private formBuilder: FormBuilder,
     private activatedRoute: ActivatedRoute,
-    private milestoneService: MilestoneService
+    private criticalPathService: CriticalPathService
   ) {
   }
 
   ngOnInit() {
     this.getMileStoneId();
-    this.initMileStoneForm();
+    this.initCriticalPathForm();
 
   }
 
-  initMileStoneForm() {
-    this.addMileStoneForm = this.formBuilder.group({
+  initCriticalPathForm() {
+    this.addCriticalPathForm = this.formBuilder.group({
       title: ['', Validators.required],
       description: ['', Validators.required],
       startDate: [null, Validators.required],
       endDate: [null, Validators.required],
+      plannedPercentage: [0, Validators.required],
       actualStartDate: [null],
       actualEndDate: [null],
-    });
-  }
-  editUserForm(data: any) {
-    this.addMileStoneForm.patchValue({
-      fullName: data?.fullName || '',
-      userName: data?.userName || '',
-      email: data?.email,
-      companyId: data?.companyId,
+      actualPercentage: [0],
     });
   }
 
@@ -63,10 +57,9 @@ export class AddMilestoneComponent implements OnInit, OnDestroy {
       this.projectId = params['id'];
     });
     this.activatedRoute.queryParams.subscribe(params => {
-      this.mileStoneId = +params['mileStoneId'];
-      if (this.mileStoneId) {
-        this.milestoneService.getById(this.mileStoneId).subscribe(res => {
-          debugger
+      this.pathId = +params['pathId'];
+      if (this.pathId) {
+        this.criticalPathService.getById(this.pathId).subscribe(res => {
           this.initMileStoneEditForm(res.data);
         })
       }
@@ -74,22 +67,24 @@ export class AddMilestoneComponent implements OnInit, OnDestroy {
   }
 
   initMileStoneEditForm(data: any) {
-    this.addMileStoneForm.patchValue({
-      title: data?.title ,
-      description: data?.description ,
-      startDate: data?.startDate?.slice(0, 10) || null ,
-      endDate: data?.endDate?.slice(0, 10) || null ,
-      actualStartDate: data?.actualStartDate?.slice(0, 10) || null ,
-      actualEndDate: data?.actualEndDate?.slice(0, 10) || null ,
+    this.addCriticalPathForm.patchValue({
+      title: data?.title,
+      description: data?.description,
+      startDate: data?.startDate?.slice(0, 10) || null,
+      endDate: data?.endDate?.slice(0, 10) || null,
+      plannedPercentage: +data?.plannedPercentage,
+      actualStartDate: data?.actualStartDate?.slice(0, 10) || null,
+      actualEndDate: data?.actualEndDate?.slice(0, 10) || null,
+      actualPercentage: +data?.actualPercentage,
     });
   }
 
   saveUser() {
-    if (!this.mileStoneId) {
-      const payload = [{ ...this.addMileStoneForm.value, projectId: +this.projectId }];
-      this.milestoneService.addMileStone(payload).subscribe(res => {
-        this.router.navigateByUrl('projects/milestone_list/' + this.projectId);
-        this.showAlert({ icon: 'success', title: 'Success!', text: 'MileStone Added successfully!' });
+    if (!this.pathId) {
+      const payload = [{ ...this.addCriticalPathForm.value, projectId: +this.projectId }];
+      this.criticalPathService.addCriticalPath(payload).subscribe(res => {
+        this.router.navigateByUrl('projects/critical_path/' + this.projectId);
+        this.showAlert({ icon: 'success', title: 'Success!', text: 'Path Added successfully!' });
       }, (error) => {
         this.showAlert({
           icon: 'error', title: 'Error!', text:
@@ -101,10 +96,10 @@ export class AddMilestoneComponent implements OnInit, OnDestroy {
         this.cdr.detectChanges();
       }, 500);
     } else {
-      const payload = { id: this.mileStoneId, ...this.addMileStoneForm.value, projectId: +this.projectId };
-      this.milestoneService.updateMilestone(payload).subscribe(res => {
-        this.router.navigateByUrl('projects/milestone_list/' + this.projectId);
-        this.showAlert({ icon: 'success', title: 'Success!', text: 'MileStone Updated successfully!' });
+      const payload = { id: +this.pathId, ...this.addCriticalPathForm.value, projectId: +this.projectId };
+      this.criticalPathService.updateCriticalPath(payload).subscribe(res => {
+        this.router.navigateByUrl('projects/critical_path/' + this.projectId);
+        this.showAlert({ icon: 'success', title: 'Success!', text: 'Path Updated successfully!' });
       }, (error) => {
         this.showAlert({
           icon: 'error', title: 'Error!', text:
@@ -116,6 +111,14 @@ export class AddMilestoneComponent implements OnInit, OnDestroy {
         this.cdr.detectChanges();
       }, 500);
     }
+  }
+
+  numbersOnly(event: any): boolean {
+    const charCode = (event.which) ? event.which : event.keyCode;
+    if ((charCode > 31 && charCode != 43) && (charCode < 48 || charCode > 57)) {
+      return false;
+    }
+    return true;
   }
 
   back() {

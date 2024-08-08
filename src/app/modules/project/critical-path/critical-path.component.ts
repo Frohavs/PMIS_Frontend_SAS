@@ -4,16 +4,16 @@ import { Location } from '@angular/common';
 import { NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
 import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
-import { Subscription, debounceTime, distinctUntilChanged, fromEvent } from 'rxjs';
-import { MilestoneService } from 'src/app/services/milestone.service';
+import { Subscription, fromEvent, debounceTime, distinctUntilChanged } from 'rxjs';
+import { CriticalPathService } from 'src/app/services/critical-path.service';
 import { SweetAlertOptions } from 'sweetalert2';
 
 @Component({
-  selector: 'app-milestone-list',
-  templateUrl: './milestone-list.component.html',
-  styleUrl: './milestone-list.component.scss'
+  selector: 'app-critical-path',
+  templateUrl: './critical-path.component.html',
+  styleUrl: './critical-path.component.scss'
 })
-export class MilestoneListComponent implements OnInit, AfterViewInit, OnDestroy{
+export class CriticalPathComponent implements OnInit, AfterViewInit, OnDestroy {
 
   projectId: number;
 
@@ -47,20 +47,21 @@ export class MilestoneListComponent implements OnInit, AfterViewInit, OnDestroy{
     private activatedRoute: ActivatedRoute,
     private cdr: ChangeDetectorRef,
     private translate: TranslateService,
-    private milestoneService: MilestoneService
+    private criticalPathService: CriticalPathService
   ) {
-    this.Add_text = this.translate.instant('MILESTONE.Add_MileStone');
-    this.Search_text = this.translate.instant('MILESTONE.Search');
+    this.Add_text = this.translate.instant('CRITICALPATH.Add_Path');
+    this.Search_text = this.translate.instant('CRITICALPATH.Search');
   }
 
   ngOnInit(): void {
+    debugger
     this.getProjectId();
     this.initializeMilesStoneList();
   }
 
   initializeMilesStoneList(pageIndex?: number, search?: string) {
     this.dataList = [];
-    this.milestoneService.getAll(pageIndex, search).subscribe(res => {
+    this.criticalPathService.getAll(pageIndex, search).subscribe(res => {
       this.dataList = res?.data?.items;
       this.totalCount = res?.data?.totalcount;
       this.pagesCount = Array.from({ length: Math.ceil(this.totalCount / 10) }, (_, index) => index + 1);
@@ -81,31 +82,28 @@ export class MilestoneListComponent implements OnInit, AfterViewInit, OnDestroy{
   }
 
   getProjectId() {
-    debugger
     this.activatedRoute.params.subscribe(params => {
       this.projectId = params['id'];
     });
   }
 
   redirectToNew() {
-    this.router.navigateByUrl('projects/add-milestone/' + this.projectId)
+    this.router.navigateByUrl('projects/add-critical_path/' + this.projectId)
   }
 
-  editMileStone(milestone: any) {
-    this.router.navigate(['projects/edit-milestone/' + this.projectId], {
-      queryParams: { mileStoneId: milestone.id }
-    })
-
-
+  editCriticalPath(criticalPath: any) {
+    this.router.navigate(['projects/edit-critical_path/' + this.projectId], {
+      queryParams: { pathId: criticalPath.id }
+    });
   }
 
-  deleteMileStone(user: any) {
+  deleteCriticalPath(user: any) {
     this.deleteSwal.fire().then((clicked) => {
       if (clicked.isConfirmed) {
         this.isLoading = true;
-        this.milestoneService.deleteMilestone(user.id).subscribe({
+        this.criticalPathService.deleteCriticalPath(user.id).subscribe({
           next: (res) => {
-            this.showAlert({ icon: 'success', title: 'Success!', text: 'Milestone Deleted successfully!' });
+            this.showAlert({ icon: 'success', title: 'Success!', text: 'Path Deleted successfully!' });
             setTimeout(() => {
               this.isLoading = false;
               this.dataList = [];

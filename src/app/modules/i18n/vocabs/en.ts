@@ -129,11 +129,14 @@ export const locale = {
       EN_NAME: 'English Name',
       Status: 'Status',
       Search: 'Search Milestone...',
-
-      name: 'Vendor',
-      type: 'Type',
-      address: 'Address',
-      cr_number: 'CR Number',
+    },
+    CRITICALPATH: {
+      ID: 'ID',
+      TITLE: 'Critical Path',
+      Add_Path: 'Create Critical Path',
+      EN_NAME: 'English Name',
+      Status: 'Status',
+      Search: 'Search Paths...',
     },
     BOQ: {
       ID: 'ID',

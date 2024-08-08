@@ -129,11 +129,14 @@ export const locale = {
       EN_NAME: 'الأسم بالأنجليزية',
       Status: 'الحالة',
       Search: 'بحث عن مخرجات...',
-
-      name: 'البائع',
-      type: 'النوع',
-      address: 'العنوان',
-      cr_number: 'الرقم التعريفي',
+    },
+    CRITICALPATH: {
+      ID: 'رقم',
+      TITLE: 'تفاصيل المسارات الحرجة',
+      Add_Path: 'إضافة مسار',
+      EN_NAME: 'الأسم بالأنجليزية',
+      Status: 'الحالة',
+      Search: 'بحث عن مخرجات...',
     },
     BOQ: {
       ID: 'رقم',

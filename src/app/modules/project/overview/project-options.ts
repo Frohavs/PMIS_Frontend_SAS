@@ -15,4 +15,8 @@ export const PROJECT_OPTIONS = [
     name: 'Milestone List',
     route: 'projects/milestone_list'
   },
+  {
+    name: 'Critical Path',
+    route: 'projects/critical_path'
+  },
 ]

@@ -6,9 +6,10 @@ import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root'
 })
-export class MilestoneService {
+export class CriticalPathService {
 
-  API_USERS_URL = `${environment.apiUrl}/Milestone`;
+
+  API_USERS_URL = `${environment.apiUrl}/CriticalPath`;
   token: string;
   private authLocalStorageToken = `${environment.appVersion}-${environment.USERDATA_KEY}`;
 
@@ -44,25 +45,25 @@ export class MilestoneService {
       headers: httpHeaders
     });
   }
-  addMileStone(milestone: any): Observable<any> {
+  addCriticalPath(path: any): Observable<any> {
     const httpHeaders = new HttpHeaders({
       Authorization: `Bearer ${this.token}`,
     });
     const url = `${this.API_USERS_URL}/Create`;
-    return this.http.post<any>(url, milestone, {
+    return this.http.post<any>(url, path, {
       headers: httpHeaders
     });
   }
-  updateMilestone(milestone: any): Observable<any> {
+  updateCriticalPath(path: any): Observable<any> {
     const httpHeaders = new HttpHeaders({
       Authorization: `Bearer ${this.token}`,
     });
     const url = `${this.API_USERS_URL}/Update`;
-    return this.http.put<any>(url, milestone, {
+    return this.http.put<any>(url, path, {
       headers: httpHeaders
     });
   }
-  deleteMilestone(id: number): Observable<any> {
+  deleteCriticalPath(id: number): Observable<any> {
     const httpHeaders = new HttpHeaders({
       Authorization: `Bearer ${this.token}`,
     });

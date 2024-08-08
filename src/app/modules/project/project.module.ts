@@ -27,6 +27,8 @@ import { AddCashFlowComponent } from './cash-flow/add-cash-flow/add-cash-flow.co
 import { CashFlowDetailsComponent } from './cash-flow/cash-flow-details/cash-flow-details.component';
 import { MilestoneListComponent } from './milestone-list/milestone-list.component';
 import { AddMilestoneComponent } from './milestone-list/add-milestone/add-milestone.component';
+import { CriticalPathComponent } from './critical-path/critical-path.component';
+import { AddCriticalPathComponent } from './critical-path/add-critical-path/add-critical-path.component';
 
 
 @NgModule({
@@ -51,7 +53,10 @@ import { AddMilestoneComponent } from './milestone-list/add-milestone/add-milest
     CashFlowDetailsComponent,
 
     MilestoneListComponent,
-    AddMilestoneComponent
+    AddMilestoneComponent,
+
+    CriticalPathComponent,
+    AddCriticalPathComponent
   ],
   imports: [
     CommonModule,
