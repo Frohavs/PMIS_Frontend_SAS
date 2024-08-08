@@ -1,13 +1,5 @@
 <div class="row g-5 g-xl-8 justify-content-between">
-  <div class="col-xl-5">
-
-    <!-- <ng-container>
-      <div class="mb-10 bg-light-success p-8 rounded">
-        <div class="text-success fs-5 fw-bold">
-          You must click on final submit after updating basic Info to confirm the update
-        </div>
-      </div>
-    </ng-container> -->
+  <div class="col-xl-6">
 
     <div class="card mb-5 mb-xl-8">
       <div class="card-header align-items-center border-0 mt-4">
@@ -81,14 +73,17 @@
     </div>
   </div>
 
-  <div class="col-xl-7">
+  <div class="col-xl-6">
     <div class="card mb-5 mb-xl-8">
       <div class="card-body py-3">
-        <a class="btn btn-sm btn-success my-3" (click)="handleDecision()" *ngIf="!cashDetails?.cashflowApprovals.length">
+        <a *ngIf="cashDetails?.approval === 0" class="btn btn-sm btn-success my-3" (click)="handleDecision()">
           Consultant Decision
         </a>
-        <a class="btn btn-sm btn-success my-3" (click)="handleDecision()" *ngIf="cashDetails?.cashflowApprovals.length">
+        <a *ngIf="cashDetails?.approval === 1" class="btn btn-sm btn-success my-3" (click)="handleDecision()">
           Manager Decision
+        </a>
+        <a *ngIf="cashDetails?.approval === 2" class="btn btn-sm btn-info my-3">
+          Approved
         </a>
         <!-- begin::Table container -->
         <div class="table-responsive">
@@ -120,7 +115,7 @@
                 </td>
                 <td>
                   <a class="text-gray-900 fw-bolder text-hover-primary" style="font-size: 12px;">
-                    {{item.accepted ? 'approved from' : 'rejected'}} {{item?.accepted && (i === 0) && 'Consultant'}} {{(item?.accepted && (i === 1)) ? 'Manager' : ''}}
+                    {{item.accepted ? 'approved' : 'rejected'}}
                   </a>
                 </td>
                 <td>
