@@ -1,21 +1,20 @@
 import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Location } from '@angular/common';
 import { NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
 import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
-import { Subscription, debounceTime, distinctUntilChanged, fromEvent } from 'rxjs';
-import { MilestoneService } from 'src/app/services/milestone.service';
+import { Subscription, fromEvent, debounceTime, distinctUntilChanged } from 'rxjs';
+import { DailyReportService } from 'src/app/services/daily-report.service';
 import { SweetAlertOptions } from 'sweetalert2';
 
 @Component({
-  selector: 'app-milestone-list',
-  templateUrl: './milestone-list.component.html',
-  styleUrl: './milestone-list.component.scss'
+  selector: 'app-daily-report',
+  templateUrl: './daily-report.component.html',
+  styleUrl: './daily-report.component.scss'
 })
-export class MilestoneListComponent implements OnInit, AfterViewInit, OnDestroy {
+export class DailyReportComponent implements OnInit, AfterViewInit, OnDestroy {
 
-  projectId: number;
+  reportId: number;
 
   Add_text: string;
   Search_text: string;
@@ -43,24 +42,23 @@ export class MilestoneListComponent implements OnInit, AfterViewInit, OnDestroy 
   constructor(
     private router: Router,
     private elRef: ElementRef,
-    private _location: Location,
     private activatedRoute: ActivatedRoute,
     private cdr: ChangeDetectorRef,
     private translate: TranslateService,
-    private milestoneService: MilestoneService
+    private dailyReportService: DailyReportService
   ) {
-    this.Add_text = this.translate.instant('MILESTONE.Add_MileStone');
-    this.Search_text = this.translate.instant('MILESTONE.Search');
+    this.Add_text = this.translate.instant('DAILYREPORT.Add_Report');
+    this.Search_text = this.translate.instant('DAILYREPORT.Search');
   }
 
   ngOnInit(): void {
-    this.getProjectId();
-    this.initializeMilesStoneList();
+    this.getReportId();
+    this.initDailyReportList();
   }
 
-  initializeMilesStoneList(pageIndex?: number, search?: string) {
+  initDailyReportList(pageIndex?: number, search?: string) {
     this.dataList = [];
-    this.milestoneService.getAll(pageIndex, search).subscribe(res => {
+    this.dailyReportService.getAll(pageIndex, search).subscribe(res => {
       this.dataList = res?.data?.items;
       this.totalCount = res?.data?.totalcount;
       this.pagesCount = Array.from({ length: Math.ceil(this.totalCount / 10) }, (_, index) => index + 1);
@@ -76,39 +74,39 @@ export class MilestoneListComponent implements OnInit, AfterViewInit, OnDestroy 
       distinctUntilChanged(),
     ).subscribe((event: any) => {
       const searchText = event.target.value;
-      this.initializeMilesStoneList(1, searchText)
+      this.initDailyReportList(1, searchText)
     });
   }
 
-  getProjectId() {
+  getReportId() {
     this.activatedRoute.params.subscribe(params => {
-      this.projectId = params['id'];
+      this.reportId = params['id'];
     });
   }
 
   redirectToNew() {
-    this.router.navigateByUrl('projects/add-milestone/' + this.projectId)
+    this.router.navigateByUrl('projects/add-daily-report/' + this.reportId)
   }
 
-  editMileStone(milestone: any) {
-    this.router.navigate(['projects/edit-milestone/' + this.projectId], {
-      queryParams: { mileStoneId: milestone.id }
+  editDailyReport(report: any) {
+    this.router.navigate(['projects/edit-daily-report/' + this.reportId], {
+      queryParams: { reportId: report.id }
     })
 
 
   }
 
-  deleteMileStone(user: any) {
+  deleteDailyReport(report: any) {
     this.deleteSwal.fire().then((clicked) => {
       if (clicked.isConfirmed) {
         this.isLoading = true;
-        this.milestoneService.deleteMilestone(user.id).subscribe({
+        this.dailyReportService.deleteDailyReport(report.id).subscribe({
           next: (res) => {
             this.showAlert({ icon: 'success', title: 'Success!', text: 'Milestone Deleted successfully!' });
             setTimeout(() => {
               this.isLoading = false;
               this.dataList = [];
-              this.initializeMilesStoneList();
+              this.initDailyReportList();
             }, 500);
           },
           error: (error) => {
@@ -122,7 +120,7 @@ export class MilestoneListComponent implements OnInit, AfterViewInit, OnDestroy 
 
   navigatePage(pageIndex: number) {
     this.selected = pageIndex;
-    this.initializeMilesStoneList(pageIndex, '');
+    this.initDailyReportList(pageIndex, '');
   }
 
   ngOnDestroy(): void {

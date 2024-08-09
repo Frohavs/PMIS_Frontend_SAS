@@ -19,6 +19,8 @@ import { MilestoneListComponent } from './milestone-list/milestone-list.componen
 import { AddMilestoneComponent } from './milestone-list/add-milestone/add-milestone.component';
 import { AddCriticalPathComponent } from './critical-path/add-critical-path/add-critical-path.component';
 import { CriticalPathComponent } from './critical-path/critical-path.component';
+import { DailyReportComponent } from './daily-report/daily-report.component';
+import { AddDailyReportComponent } from './daily-report/add-daily-report/add-daily-report.component';
 
 const routes: Routes = [
   {
@@ -111,6 +113,19 @@ const routes: Routes = [
       {
         path: 'edit-critical_path/:id',
         component: AddCriticalPathComponent,
+      },
+
+      {
+        path: 'daily-report/:id',
+        component: DailyReportComponent,
+      },
+      {
+        path: 'add-daily-report/:id',
+        component: AddDailyReportComponent,
+      },
+      {
+        path: 'edit-daily-report/:id',
+        component: AddDailyReportComponent,
       },
 
       { path: '', redirectTo: 'overview', pathMatch: 'full' },

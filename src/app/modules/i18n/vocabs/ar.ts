@@ -130,6 +130,14 @@ export const locale = {
       Status: 'الحالة',
       Search: 'بحث عن مخرجات...',
     },
+    DAILYREPORT: {
+      ID: 'رقم',
+      TITLE: 'التقرير اليومي',
+      Add_Report: 'إضافة تقرير',
+      EN_NAME: 'الأسم بالأنجليزية',
+      Status: 'الحالة',
+      Search: 'بحث عن تقرير...',
+    },
     CRITICALPATH: {
       ID: 'رقم',
       TITLE: 'تفاصيل المسارات الحرجة',

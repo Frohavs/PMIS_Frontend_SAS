@@ -130,6 +130,14 @@ export const locale = {
       Status: 'Status',
       Search: 'Search Milestone...',
     },
+    DAILYREPORT: {
+      ID: 'ID',
+      TITLE: 'Daily Report',
+      Add_Report: 'Create Report',
+      EN_NAME: 'English Name',
+      Status: 'Status',
+      Search: 'Search Reports...',
+    },
     CRITICALPATH: {
       ID: 'ID',
       TITLE: 'Critical Path',

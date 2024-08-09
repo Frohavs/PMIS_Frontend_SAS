@@ -29,6 +29,8 @@ import { MilestoneListComponent } from './milestone-list/milestone-list.componen
 import { AddMilestoneComponent } from './milestone-list/add-milestone/add-milestone.component';
 import { CriticalPathComponent } from './critical-path/critical-path.component';
 import { AddCriticalPathComponent } from './critical-path/add-critical-path/add-critical-path.component';
+import { DailyReportComponent } from './daily-report/daily-report.component';
+import { AddDailyReportComponent } from './daily-report/add-daily-report/add-daily-report.component';
 
 
 @NgModule({
@@ -56,7 +58,10 @@ import { AddCriticalPathComponent } from './critical-path/add-critical-path/add-
     AddMilestoneComponent,
 
     CriticalPathComponent,
-    AddCriticalPathComponent
+    AddCriticalPathComponent,
+
+    DailyReportComponent,
+    AddDailyReportComponent
   ],
   imports: [
     CommonModule,

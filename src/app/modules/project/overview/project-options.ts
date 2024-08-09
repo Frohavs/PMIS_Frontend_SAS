@@ -19,4 +19,8 @@ export const PROJECT_OPTIONS = [
     name: 'Critical Path',
     route: 'projects/critical_path'
   },
+  {
+    name: 'Daily Report',
+    route: 'projects/daily-report'
+  },
 ]
