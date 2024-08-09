@@ -4,7 +4,7 @@
       <!-- begin::Header -->
       <div class="card-header align-items-center border-0 mt-4">
         <h3 class="card-title align-items-start flex-column">
-          <span class="fw-bolder text-gray-900">{{"BOQ.Add_Boq" | translate}}</span>
+          <span class="fw-bolder text-gray-900">{{"DAILYREPORT.Add_Report" | translate}}</span>
           <!-- <span class="text-muted mt-1 fw-bold fs-7">test</span> -->
         </h3>
         <div class="card-toolbar">
@@ -15,8 +15,7 @@
         </div>
       </div>
 
-
-      <div class="card-body pt-3">
+      <div class="card-body pt-3" *ngIf="currentStep === 0">
 
         <form [formGroup]="addReportForm" class="form">
           <div class="card-body border-top p-9">
@@ -115,7 +114,7 @@
 
           </div>
           <div class="card-footer d-flex justify-content-end py-6 px-9">
-            <button type="button" class="btn btn-primary" [disabled]="isLoading" (click)="saveChanges()">
+            <button type="button" class="btn btn-primary" [disabled]="isLoading" (click)="moveToWizard()">
               <ng-container *ngIf="!isLoading">{{"TRANSLATOR.ADD" | translate}}</ng-container>
               <ng-container *ngIf="isLoading">
                 <span clas="indicator-progress" [style.display]="'block'">
@@ -128,7 +127,783 @@
         </form>
 
       </div>
-      <!-- end::Body -->
+
+
+      <div class="card-body" *ngIf="currentStep !== 0">
+        <div class="stepper stepper-links d-flex flex-column" id="kt_create_account_stepper">
+          <div class="stepper-nav mb-5">
+            <div class="stepper-item" [ngClass]="{
+                current: currentStep === 1,
+                completed: currentStep > 1
+              }">
+              <h3 class="stepper-title">Positions</h3>
+            </div>
+
+            <div class="stepper-item" [ngClass]="{ current: currentStep === 2, completed: currentStep > 2 }">
+              <h3 class="stepper-title">Equipments</h3>
+            </div>
+
+            <div class="stepper-item" [ngClass]="{
+                current: currentStep === 3,
+                completed: currentStep > 3
+              }">
+              <h3 class="stepper-title">WORK PERFORMED TODAY</h3>
+            </div>
+
+            <div class="stepper-item" [ngClass]="{
+                current: currentStep === 4,
+                completed: currentStep > 4
+              }">
+              <h3 class="stepper-title">Images</h3>
+            </div>
+
+          </div>
+
+          <form class="mx-auto mw-800px w-100 pt-15 pb-10" noValidate id="kt_create_account_form">
+            <div class="current">
+              <ng-container *ngIf="currentStep === 1">
+
+                <form [formGroup]="addPositionsForm" class="form">
+                  <div class="card-body border-top p-9">
+
+                    <div class="row mb-1">
+                      <label class="col-lg-2 col-form-label fw-bold fs-6"> <span> PM </span> </label>
+                      <div class="col-lg-5 fv-row">
+                        <input type="number" class="form-control form-control-lg form-control-solid text-start my-2"
+                          name="pmValue" formControlName="pmValue" placeholder="value"
+                          (keypress)="numbersOnly($event)" min="0" />
+                      </div>
+                      <div class="col-lg-5 fv-row">
+                        <input type="number" class="form-control form-control-lg form-control-solid text-start my-2"
+                          name="pmSubContractor" formControlName="pmSubContractor" placeholder="Sub Contractor"
+                          (keypress)="numbersOnly($event)" min="0" />
+                      </div>
+                    </div>
+
+                    <div class="row mb-1">
+                      <label class="col-lg-2 col-form-label fw-bold fs-6"> <span> QA/QC Eng. </span> </label>
+                      <div class="col-lg-5 fv-row">
+                        <input type="number" class="form-control form-control-lg form-control-solid text-start my-2"
+                          name="qaValue" formControlName="qaValue" placeholder="value"
+                          (keypress)="numbersOnly($event)" min="0" />
+                      </div>
+                      <div class="col-lg-5 fv-row">
+                        <input type="number" class="form-control form-control-lg form-control-solid text-start my-2"
+                          name="qaSubContractor" formControlName="qaSubContractor" placeholder="Sub Contractor"
+                          (keypress)="numbersOnly($event)" min="0" />
+                      </div>
+                    </div>
+
+                    <div class="row mb-1">
+                      <label class="col-lg-2 col-form-label fw-bold fs-6"> <span> CM </span> </label>
+                      <div class="col-lg-5 fv-row">
+                        <input type="number" class="form-control form-control-lg form-control-solid text-start my-2"
+                          name="cmValue" formControlName="cmValue" placeholder="value"
+                          (keypress)="numbersOnly($event)" min="0" />
+                      </div>
+                      <div class="col-lg-5 fv-row">
+                        <input type="number" class="form-control form-control-lg form-control-solid text-start my-2"
+                          name="cmSubContractor" formControlName="cmSubContractor" placeholder="Sub Contractor"
+                          (keypress)="numbersOnly($event)" min="0" />
+                      </div>
+                    </div>
+
+                    <div class="row mb-1">
+                      <label class="col-lg-2 col-form-label fw-bold fs-6"> <span> CE </span> </label>
+                      <div class="col-lg-5 fv-row">
+                        <input type="number" class="form-control form-control-lg form-control-solid text-start my-2"
+                          name="ceValue" formControlName="ceValue" placeholder="value"
+                          (keypress)="numbersOnly($event)" min="0" />
+                      </div>
+                      <div class="col-lg-5 fv-row">
+                        <input type="number" class="form-control form-control-lg form-control-solid text-start my-2"
+                          name="ceSubContractor" formControlName="ceSubContractor" placeholder="Sub Contractor"
+                          (keypress)="numbersOnly($event)" min="0" />
+                      </div>
+                    </div>
+
+                    <div class="row mb-1">
+                      <label class="col-lg-2 col-form-label fw-bold fs-6"> <span> Arch </span> </label>
+                      <div class="col-lg-5 fv-row">
+                        <input type="number" class="form-control form-control-lg form-control-solid text-start my-2"
+                          name="archValue" formControlName="archValue" placeholder="value"
+                          (keypress)="numbersOnly($event)" min="0" />
+                      </div>
+                      <div class="col-lg-5 fv-row">
+                        <input type="number" class="form-control form-control-lg form-control-solid text-start my-2"
+                          name="archSubContractor" formControlName="archSubContractor" placeholder="Sub Contractor"
+                          (keypress)="numbersOnly($event)" min="0" />
+                      </div>
+                    </div>
+
+                    <div class="row mb-1">
+                      <label class="col-lg-2 col-form-label fw-bold fs-6"> <span> Elec.Eng </span> </label>
+                      <div class="col-lg-5 fv-row">
+                        <input type="number" class="form-control form-control-lg form-control-solid text-start my-2"
+                          name="elecValue" formControlName="elecValue" placeholder="value"
+                          (keypress)="numbersOnly($event)" min="0" />
+                      </div>
+                      <div class="col-lg-5 fv-row">
+                        <input type="number" class="form-control form-control-lg form-control-solid text-start my-2"
+                          name="elecSubContractor" formControlName="elecSubContractor" placeholder="Sub Contractor"
+                          (keypress)="numbersOnly($event)" min="0" />
+                      </div>
+                    </div>
+
+                    <div class="row mb-1">
+                      <label class="col-lg-2 col-form-label fw-bold fs-6"> <span> Mech.Eng. </span> </label>
+                      <div class="col-lg-5 fv-row">
+                        <input type="number" class="form-control form-control-lg form-control-solid text-start my-2"
+                          name="mechValue" formControlName="mechValue" placeholder="value"
+                          (keypress)="numbersOnly($event)" min="0" />
+                      </div>
+                      <div class="col-lg-5 fv-row">
+                        <input type="number" class="form-control form-control-lg form-control-solid text-start my-2"
+                          name="mechSubContractor" formControlName="mechSubContractor" placeholder="Sub Contractor"
+                          (keypress)="numbersOnly($event)" min="0" />
+                      </div>
+                    </div>
+
+                    <div class="row mb-1">
+                      <label class="col-lg-2 col-form-label fw-bold fs-6"> <span> Material Eng. </span> </label>
+                      <div class="col-lg-5 fv-row">
+                        <input type="number" class="form-control form-control-lg form-control-solid text-start my-2"
+                          name="materialValue" formControlName="materialValue" placeholder="value"
+                          (keypress)="numbersOnly($event)" min="0" />
+                      </div>
+                      <div class="col-lg-5 fv-row">
+                        <input type="number" class="form-control form-control-lg form-control-solid text-start my-2"
+                          name="materialSubContractor" formControlName="materialSubContractor"
+                          placeholder="Sub Contractor" (keypress)="numbersOnly($event)" min="0" />
+                      </div>
+                    </div>
+
+                    <div class="row mb-1">
+                      <label class="col-lg-2 col-form-label fw-bold fs-6"> <span> Bridge Eng. </span> </label>
+                      <div class="col-lg-5 fv-row">
+                        <input type="number" class="form-control form-control-lg form-control-solid text-start my-2"
+                          name="bridgeValue" formControlName="bridgeValue" placeholder="value"
+                          (keypress)="numbersOnly($event)" min="0" />
+                      </div>
+                      <div class="col-lg-5 fv-row">
+                        <input type="number" class="form-control form-control-lg form-control-solid text-start my-2"
+                          name="bridgeSubContractor" formControlName="bridgeSubContractor"
+                          placeholder="Sub Contractor" (keypress)="numbersOnly($event)" min="0" />
+                      </div>
+                    </div>
+
+                    <div class="row mb-1">
+                      <label class="col-lg-2 col-form-label fw-bold fs-6"> <span> HSE Eng. </span> </label>
+                      <div class="col-lg-5 fv-row">
+                        <input type="number" class="form-control form-control-lg form-control-solid text-start my-2"
+                          name="hseValue" formControlName="hseValue" placeholder="value"
+                          (keypress)="numbersOnly($event)" min="0" />
+                      </div>
+                      <div class="col-lg-5 fv-row">
+                        <input type="number" class="form-control form-control-lg form-control-solid text-start my-2"
+                          name="hseSubContractor" formControlName="hseSubContractor" placeholder="Sub Contractor"
+                          (keypress)="numbersOnly($event)" min="0" />
+                      </div>
+                    </div>
+
+                    <div class="row mb-1">
+                      <label class="col-lg-2 col-form-label fw-bold fs-6"> <span> Quantity Surveyor </span> </label>
+                      <div class="col-lg-5 fv-row">
+                        <input type="number" class="form-control form-control-lg form-control-solid text-start my-2"
+                          name="quantityValue" formControlName="quantityValue" placeholder="value"
+                          (keypress)="numbersOnly($event)" min="0" />
+                      </div>
+                      <div class="col-lg-5 fv-row">
+                        <input type="number" class="form-control form-control-lg form-control-solid text-start my-2"
+                          name="quantitySubContractor" formControlName="quantitySubContractor"
+                          placeholder="Sub Contractor" (keypress)="numbersOnly($event)" min="0" />
+                      </div>
+                    </div>
+
+                    <div class="row mb-1">
+                      <label class="col-lg-2 col-form-label fw-bold fs-6"> <span> Planning Eng. </span> </label>
+                      <div class="col-lg-5 fv-row">
+                        <input type="number" class="form-control form-control-lg form-control-solid text-start my-2"
+                          name="planningValue" formControlName="planningValue" placeholder="value"
+                          (keypress)="numbersOnly($event)" min="0" />
+                      </div>
+                      <div class="col-lg-5 fv-row">
+                        <input type="number" class="form-control form-control-lg form-control-solid text-start my-2"
+                          name="planningSubContractor" formControlName="planningSubContractor"
+                          placeholder="Sub Contractor" (keypress)="numbersOnly($event)" min="0" />
+                      </div>
+                    </div>
+
+                    <div class="row mb-1">
+                      <label class="col-lg-2 col-form-label fw-bold fs-6"> <span> Land Surveyor </span> </label>
+                      <div class="col-lg-5 fv-row">
+                        <input type="number" class="form-control form-control-lg form-control-solid text-start my-2"
+                          name="landValue" formControlName="landValue" placeholder="value"
+                          (keypress)="numbersOnly($event)" min="0" />
+                      </div>
+                      <div class="col-lg-5 fv-row">
+                        <input type="number" class="form-control form-control-lg form-control-solid text-start my-2"
+                          name="landSubContractor" formControlName="landSubContractor" placeholder="Sub Contractor"
+                          (keypress)="numbersOnly($event)" min="0" />
+                      </div>
+                    </div>
+
+                    <div class="row mb-1">
+                      <label class="col-lg-2 col-form-label fw-bold fs-6"> <span> Assistant surveyor </span> </label>
+                      <div class="col-lg-5 fv-row">
+                        <input type="number" class="form-control form-control-lg form-control-solid text-start my-2"
+                          name="assistantValue" formControlName="assistantValue" placeholder="value"
+                          (keypress)="numbersOnly($event)" min="0" />
+                      </div>
+                      <div class="col-lg-5 fv-row">
+                        <input type="number" class="form-control form-control-lg form-control-solid text-start my-2"
+                          name="assistantSubContractor" formControlName="assistantSubContractor"
+                          placeholder="Sub Contractor" (keypress)="numbersOnly($event)" min="0" />
+                      </div>
+                    </div>
+
+                    <div class="row mb-1">
+                      <label class="col-lg-2 col-form-label fw-bold fs-6"> <span> Inspector </span> </label>
+                      <div class="col-lg-5 fv-row">
+                        <input type="number" class="form-control form-control-lg form-control-solid text-start my-2"
+                          name="inspectorValue" formControlName="inspectorValue" placeholder="value"
+                          (keypress)="numbersOnly($event)" min="0" />
+                      </div>
+                      <div class="col-lg-5 fv-row">
+                        <input type="number" class="form-control form-control-lg form-control-solid text-start my-2"
+                          name="inspectorSubContractor" formControlName="inspectorSubContractor"
+                          placeholder="Sub Contractor" (keypress)="numbersOnly($event)" min="0" />
+                      </div>
+                    </div>
+
+                    <div class="row mb-1">
+                      <label class="col-lg-2 col-form-label fw-bold fs-6"> <span> Document Controller </span> </label>
+                      <div class="col-lg-5 fv-row">
+                        <input type="number" class="form-control form-control-lg form-control-solid text-start my-2"
+                          name="documentValue" formControlName="documentValue" placeholder="value"
+                          (keypress)="numbersOnly($event)" min="0" />
+                      </div>
+                      <div class="col-lg-5 fv-row">
+                        <input type="number" class="form-control form-control-lg form-control-solid text-start my-2"
+                          name="documentSubContractor" formControlName="documentSubContractor"
+                          placeholder="Sub Contractor" (keypress)="numbersOnly($event)" min="0" />
+                      </div>
+                    </div>
+
+                    <div class="row mb-1">
+                      <label class="col-lg-2 col-form-label fw-bold fs-6"> <span> Mason </span> </label>
+                      <div class="col-lg-5 fv-row">
+                        <input type="number" class="form-control form-control-lg form-control-solid text-start my-2"
+                          name="masonValue" formControlName="masonValue" placeholder="value"
+                          (keypress)="numbersOnly($event)" min="0" />
+                      </div>
+                      <div class="col-lg-5 fv-row">
+                        <input type="number" class="form-control form-control-lg form-control-solid text-start my-2"
+                          name="masonSubContractor" formControlName="masonSubContractor" placeholder="Sub Contractor"
+                          (keypress)="numbersOnly($event)" min="0" />
+                      </div>
+                    </div>
+
+                    <div class="row mb-1">
+                      <label class="col-lg-2 col-form-label fw-bold fs-6"> <span> Labour </span> </label>
+                      <div class="col-lg-5 fv-row">
+                        <input type="number" class="form-control form-control-lg form-control-solid text-start my-2"
+                          name="labourValue" formControlName="labourValue" placeholder="value"
+                          (keypress)="numbersOnly($event)" min="0" />
+                      </div>
+                      <div class="col-lg-5 fv-row">
+                        <input type="number" class="form-control form-control-lg form-control-solid text-start my-2"
+                          name="labourSubContractor" formControlName="labourSubContractor"
+                          placeholder="Sub Contractor" (keypress)="numbersOnly($event)" min="0" />
+                      </div>
+                    </div>
+
+                    <div class="row mb-1">
+                      <label class="col-lg-2 col-form-label fw-bold fs-6"> <span> Carpenter </span> </label>
+                      <div class="col-lg-5 fv-row">
+                        <input type="number" class="form-control form-control-lg form-control-solid text-start my-2"
+                          name="carpenterValue" formControlName="carpenterValue" placeholder="value"
+                          (keypress)="numbersOnly($event)" min="0" />
+                      </div>
+                      <div class="col-lg-5 fv-row">
+                        <input type="number" class="form-control form-control-lg form-control-solid text-start my-2"
+                          name="carpenterSubContractor" formControlName="carpenterSubContractor"
+                          placeholder="Sub Contractor" (keypress)="numbersOnly($event)" min="0" />
+                      </div>
+                    </div>
+
+                    <div class="row mb-1">
+                      <label class="col-lg-2 col-form-label fw-bold fs-6"> <span> Painter </span> </label>
+                      <div class="col-lg-5 fv-row">
+                        <input type="number" class="form-control form-control-lg form-control-solid text-start my-2"
+                          name="painterValue" formControlName="painterValue" placeholder="value"
+                          (keypress)="numbersOnly($event)" min="0" />
+                      </div>
+                      <div class="col-lg-5 fv-row">
+                        <input type="number" class="form-control form-control-lg form-control-solid text-start my-2"
+                          name="painterSubContractor" formControlName="painterSubContractor"
+                          placeholder="Sub Contractor" (keypress)="numbersOnly($event)" min="0" />
+                      </div>
+                    </div>
+
+                    <div class="row mb-1">
+                      <label class="col-lg-2 col-form-label fw-bold fs-6"> <span> Steel fixer </span> </label>
+                      <div class="col-lg-5 fv-row">
+                        <input type="number" class="form-control form-control-lg form-control-solid text-start my-2"
+                          name="steelValue" formControlName="steelValue" placeholder="value"
+                          (keypress)="numbersOnly($event)" min="0" />
+                      </div>
+                      <div class="col-lg-5 fv-row">
+                        <input type="number" class="form-control form-control-lg form-control-solid text-start my-2"
+                          name="steelSubContractor" formControlName="steelSubContractor" placeholder="Sub Contractor"
+                          (keypress)="numbersOnly($event)" min="0" />
+                      </div>
+                    </div>
+
+                    <div class="row mb-1">
+                      <label class="col-lg-2 col-form-label fw-bold fs-6"> <span> Machine operator </span> </label>
+                      <div class="col-lg-5 fv-row">
+                        <input type="number" class="form-control form-control-lg form-control-solid text-start my-2"
+                          name="machineValue" formControlName="machineValue" placeholder="value"
+                          (keypress)="numbersOnly($event)" min="0" />
+                      </div>
+                      <div class="col-lg-5 fv-row">
+                        <input type="number" class="form-control form-control-lg form-control-solid text-start my-2"
+                          name="machineSubContractor" formControlName="machineSubContractor"
+                          placeholder="Sub Contractor" (keypress)="numbersOnly($event)" min="0" />
+                      </div>
+                    </div>
+
+                    <div class="row mb-1">
+                      <label class="col-lg-2 col-form-label fw-bold fs-6"> <span> Driver </span> </label>
+                      <div class="col-lg-5 fv-row">
+                        <input type="number" class="form-control form-control-lg form-control-solid text-start my-2"
+                          name="driverValue" formControlName="driverValue" placeholder="value"
+                          (keypress)="numbersOnly($event)" min="0" />
+                      </div>
+                      <div class="col-lg-5 fv-row">
+                        <input type="number" class="form-control form-control-lg form-control-solid text-start my-2"
+                          name="driverSubContractor" formControlName="driverSubContractor"
+                          placeholder="Sub Contractor" (keypress)="numbersOnly($event)" min="0" />
+                      </div>
+                    </div>
+
+                    <div class="row mb-1">
+                      <label class="col-lg-2 col-form-label fw-bold fs-6"> <span> Welding </span> </label>
+                      <div class="col-lg-5 fv-row">
+                        <input type="number" class="form-control form-control-lg form-control-solid text-start my-2"
+                          name="weldingValue" formControlName="weldingValue" placeholder="value"
+                          (keypress)="numbersOnly($event)" min="0" />
+                      </div>
+                      <div class="col-lg-5 fv-row">
+                        <input type="number" class="form-control form-control-lg form-control-solid text-start my-2"
+                          name="weldingSubContractor" formControlName="weldingSubContractor"
+                          placeholder="Sub Contractor" (keypress)="numbersOnly($event)" min="0" />
+                      </div>
+                    </div>
+
+                    <div class="row mb-1">
+                      <label class="col-lg-2 col-form-label fw-bold fs-6"> <span> Warehouse curator </span> </label>
+                      <div class="col-lg-5 fv-row">
+                        <input type="number" class="form-control form-control-lg form-control-solid text-start my-2"
+                          name="warehouseValue" formControlName="warehouseValue" placeholder="value"
+                          (keypress)="numbersOnly($event)" min="0" />
+                      </div>
+                      <div class="col-lg-5 fv-row">
+                        <input type="number" class="form-control form-control-lg form-control-solid text-start my-2"
+                          name="warehouseSubContractor" formControlName="warehouseSubContractor"
+                          placeholder="Sub Contractor" (keypress)="numbersOnly($event)" min="0" />
+                      </div>
+                    </div>
+
+                  </div>
+                </form>
+              </ng-container>
+
+              <ng-container *ngIf="currentStep === 2">
+                <form [formGroup]="addEquipmentsForm" class="form">
+                  <div class="card-body border-top p-9">
+
+                    <div class="row mb-1">
+                      <label class="col-lg-4 col-form-label fw-bold fs-6"> <span> Central concrete mixer </span>
+                      </label>
+                      <div class="col-lg-8 fv-row">
+                        <input type="number" class="form-control form-control-lg form-control-solid text-start my-2"
+                          name="centralValue" formControlName="centralValue" placeholder="value"
+                          (keypress)="numbersOnly($event)" min="0" />
+                      </div>
+                    </div>
+
+                    <div class="row mb-1">
+                      <label class="col-lg-4 col-form-label fw-bold fs-6"> <span> Dump Truck </span> </label>
+                      <div class="col-lg-8 fv-row">
+                        <input type="number" class="form-control form-control-lg form-control-solid text-start my-2"
+                          name="dumpValue" formControlName="dumpValue" placeholder="value"
+                          (keypress)="numbersOnly($event)" min="0" />
+                      </div>
+                    </div>
+
+                    <div class="row mb-1">
+                      <label class="col-lg-4 col-form-label fw-bold fs-6"> <span> Excavator </span> </label>
+                      <div class="col-lg-8 fv-row">
+                        <input type="number" class="form-control form-control-lg form-control-solid text-start my-2"
+                          name="excavatorValue" formControlName="excavatorValue" placeholder="value"
+                          (keypress)="numbersOnly($event)" min="0" />
+                      </div>
+                    </div>
+
+                    <div class="row mb-1">
+                      <label class="col-lg-4 col-form-label fw-bold fs-6"> <span> Concrete Mixer </span> </label>
+                      <div class="col-lg-8 fv-row">
+                        <input type="number" class="form-control form-control-lg form-control-solid text-start my-2"
+                          name="concreteMixerValue" formControlName="concreteMixerValue" placeholder="value"
+                          (keypress)="numbersOnly($event)" min="0" />
+                      </div>
+                    </div>
+
+                    <div class="row mb-1">
+                      <label class="col-lg-4 col-form-label fw-bold fs-6"> <span> Bulldozer </span> </label>
+                      <div class="col-lg-8 fv-row">
+                        <input type="number" class="form-control form-control-lg form-control-solid text-start my-2"
+                          name="bulldozerValue" formControlName="bulldozerValue" placeholder="value"
+                          (keypress)="numbersOnly($event)" min="0" />
+                      </div>
+                    </div>
+
+                    <div class="row mb-1">
+                      <label class="col-lg-4 col-form-label fw-bold fs-6"> <span> Front & backhoe loader </span>
+                      </label>
+                      <div class="col-lg-8 fv-row">
+                        <input type="number" class="form-control form-control-lg form-control-solid text-start my-2"
+                          name="frontBackLoaderValue" formControlName="frontBackLoaderValue" placeholder="value"
+                          (keypress)="numbersOnly($event)" min="0" />
+                      </div>
+                    </div>
+
+                    <div class="row mb-1">
+                      <label class="col-lg-4 col-form-label fw-bold fs-6"> <span> Skid steer loader </span> </label>
+                      <div class="col-lg-8 fv-row">
+                        <input type="number" class="form-control form-control-lg form-control-solid text-start my-2"
+                          name="skidLoaderValue" formControlName="skidLoaderValue" placeholder="value"
+                          (keypress)="numbersOnly($event)" min="0" />
+                      </div>
+                    </div>
+
+                    <div class="row mb-1">
+                      <label class="col-lg-4 col-form-label fw-bold fs-6"> <span> Fuel truck </span> </label>
+                      <div class="col-lg-8 fv-row">
+                        <input type="number" class="form-control form-control-lg form-control-solid text-start my-2"
+                          name="fuelValue" formControlName="fuelValue" placeholder="value"
+                          (keypress)="numbersOnly($event)" min="0" />
+                      </div>
+                    </div>
+
+                    <div class="row mb-1">
+                      <label class="col-lg-4 col-form-label fw-bold fs-6"> <span> Flat bed truck </span> </label>
+                      <div class="col-lg-8 fv-row">
+                        <input type="number" class="form-control form-control-lg form-control-solid text-start my-2"
+                          name="flatBedValue" formControlName="flatBedValue" placeholder="value"
+                          (keypress)="numbersOnly($event)" min="0" />
+                      </div>
+                    </div>
+
+                    <div class="row mb-1">
+                      <label class="col-lg-4 col-form-label fw-bold fs-6"> <span> Road roller </span> </label>
+                      <div class="col-lg-8 fv-row">
+                        <input type="number" class="form-control form-control-lg form-control-solid text-start my-2"
+                          name="roadValue" formControlName="roadValue" placeholder="value"
+                          (keypress)="numbersOnly($event)" min="0" />
+                      </div>
+                    </div>
+
+                    <div class="row mb-1">
+                      <label class="col-lg-4 col-form-label fw-bold fs-6"> <span> Crane </span> </label>
+                      <div class="col-lg-8 fv-row">
+                        <input type="number" class="form-control form-control-lg form-control-solid text-start my-2"
+                          name="craneValue" formControlName="craneValue" placeholder="value"
+                          (keypress)="numbersOnly($event)" min="0" />
+                      </div>
+                    </div>
+
+                    <div class="row mb-1">
+                      <label class="col-lg-4 col-form-label fw-bold fs-6"> <span> Grader </span> </label>
+                      <div class="col-lg-8 fv-row">
+                        <input type="number" class="form-control form-control-lg form-control-solid text-start my-2"
+                          name="graderValue" formControlName="graderValue" placeholder="value"
+                          (keypress)="numbersOnly($event)" min="0" />
+                      </div>
+                    </div>
+
+                    <div class="row mb-1">
+                      <label class="col-lg-4 col-form-label fw-bold fs-6"> <span> Mobile crane </span> </label>
+                      <div class="col-lg-8 fv-row">
+                        <input type="number" class="form-control form-control-lg form-control-solid text-start my-2"
+                          name="mobileValue" formControlName="mobileValue" placeholder="value"
+                          (keypress)="numbersOnly($event)" min="0" />
+                      </div>
+                    </div>
+
+                    <div class="row mb-1">
+                      <label class="col-lg-4 col-form-label fw-bold fs-6"> <span> Tower crane </span> </label>
+                      <div class="col-lg-8 fv-row">
+                        <input type="number" class="form-control form-control-lg form-control-solid text-start my-2"
+                          name="towerValue" formControlName="towerValue" placeholder="value"
+                          (keypress)="numbersOnly($event)" min="0" />
+                      </div>
+                    </div>
+
+                    <div class="row mb-1">
+                      <label class="col-lg-4 col-form-label fw-bold fs-6"> <span> Forklift </span> </label>
+                      <div class="col-lg-8 fv-row">
+                        <input type="number" class="form-control form-control-lg form-control-solid text-start my-2"
+                          name="forkliftValue" formControlName="forkliftValue" placeholder="value"
+                          (keypress)="numbersOnly($event)" min="0" />
+                      </div>
+                    </div>
+
+                    <div class="row mb-1">
+                      <label class="col-lg-4 col-form-label fw-bold fs-6"> <span> Concrete pump </span> </label>
+                      <div class="col-lg-8 fv-row">
+                        <input type="number" class="form-control form-control-lg form-control-solid text-start my-2"
+                          name="concretePumpValue" formControlName="concretePumpValue" placeholder="value"
+                          (keypress)="numbersOnly($event)" min="0" />
+                      </div>
+                    </div>
+
+                    <div class="row mb-1">
+                      <label class="col-lg-4 col-form-label fw-bold fs-6"> <span> Iron crushing machine </span>
+                      </label>
+                      <div class="col-lg-8 fv-row">
+                        <input type="number" class="form-control form-control-lg form-control-solid text-start my-2"
+                          name="ironCrushingValue" formControlName="ironCrushingValue" placeholder="value"
+                          (keypress)="numbersOnly($event)" min="0" />
+                      </div>
+                    </div>
+
+                    <div class="row mb-1">
+                      <label class="col-lg-4 col-form-label fw-bold fs-6"> <span> Water tanker </span> </label>
+                      <div class="col-lg-8 fv-row">
+                        <input type="number" class="form-control form-control-lg form-control-solid text-start my-2"
+                          name="waterValue" formControlName="waterValue" placeholder="value"
+                          (keypress)="numbersOnly($event)" min="0" />
+                      </div>
+                    </div>
+
+                    <div class="row mb-1">
+                      <label class="col-lg-4 col-form-label fw-bold fs-6"> <span> Asphalt finisher </span> </label>
+                      <div class="col-lg-8 fv-row">
+                        <input type="number" class="form-control form-control-lg form-control-solid text-start my-2"
+                          name="asphaltValue" formControlName="asphaltValue" placeholder="value"
+                          (keypress)="numbersOnly($event)" min="0" />
+                      </div>
+                    </div>
+
+                    <div class="row mb-1">
+                      <label class="col-lg-4 col-form-label fw-bold fs-6"> <span> Water pump </span> </label>
+                      <div class="col-lg-8 fv-row">
+                        <input type="number" class="form-control form-control-lg form-control-solid text-start my-2"
+                          name="waterPumpValue" formControlName="waterPumpValue" placeholder="value"
+                          (keypress)="numbersOnly($event)" min="0" />
+                      </div>
+                    </div>
+
+                    <div class="row mb-1">
+                      <label class="col-lg-4 col-form-label fw-bold fs-6"> <span> Iron cutting saw </span> </label>
+                      <div class="col-lg-8 fv-row">
+                        <input type="number" class="form-control form-control-lg form-control-solid text-start my-2"
+                          name="ironCutting" formControlName="ironCutting" placeholder="value"
+                          (keypress)="numbersOnly($event)" min="0" />
+                      </div>
+                    </div>
+
+                    <div class="row mb-1">
+                      <label class="col-lg-4 col-form-label fw-bold fs-6"> <span> Front loader </span> </label>
+                      <div class="col-lg-8 fv-row">
+                        <input type="number" class="form-control form-control-lg form-control-solid text-start my-2"
+                          name="frontLoaderValue" formControlName="frontLoaderValue" placeholder="value"
+                          (keypress)="numbersOnly($event)" min="0" />
+                      </div>
+                    </div>
+
+                  </div>
+                </form>
+              </ng-container>
+
+              <ng-container *ngIf="currentStep === 3">
+                <form [formGroup]="addEquipmentsForm" class="form">
+                  <div class="card-body border-top p-9">
+
+                    <div class="row mb-1">
+
+                      <div class="col-lg-6">
+                        <label class="col-lg-12 col-form-label fw-bold fs-6">
+                          <span>
+                            ARCH.&Civil
+                          </span>
+                        </label>
+                        <div class="col-lg-12 fv-row">
+                          <textarea class="form-control form-control-lg form-control-solid text-start"
+                            name="archCivil" formControlName="archCivil" rows="3"></textarea>
+
+                        </div>
+                      </div>
+
+                      <div class="col-lg-6">
+                        <label class="col-lg-12 col-form-label fw-bold fs-6">
+                          <span>
+                            MECHANICAL
+                          </span>
+                        </label>
+                        <div class="col-lg-12 fv-row">
+                          <textarea class="form-control form-control-lg form-control-solid text-start"
+                            name="mechanical" formControlName="mechanical" rows="3"></textarea>
+                        </div>
+                      </div>
+
+                    </div>
+                    <div class="row mb-1">
+
+                      <div class="col-lg-6">
+                        <label class="col-lg-12 col-form-label fw-bold fs-6">
+                          <span>
+                            ELECTRICAL
+                          </span>
+                        </label>
+                        <div class="col-lg-12 fv-row">
+                          <textarea class="form-control form-control-lg form-control-solid text-start"
+                            name="electrical" formControlName="electrical" rows="3"></textarea>
+
+                        </div>
+                      </div>
+
+                      <div class="col-lg-6">
+                        <label class="col-lg-12 col-form-label fw-bold fs-6">
+                          <span>
+                            SAFETY OBSERVATIONS/CONCERNS
+                          </span>
+                        </label>
+                        <div class="col-lg-12 fv-row">
+                          <textarea class="form-control form-control-lg form-control-solid text-start"
+                            name="safetyObservation" formControlName="safetyObservation" rows="3"></textarea>
+                        </div>
+                      </div>
+
+                    </div>
+
+                    <div class="row mb-1">
+
+                      <div class="col-lg-6">
+                        <label class="col-lg-12 col-form-label fw-bold fs-6">
+                          <span>
+                            QUALITY OBSERVATIONS/CONCERNS
+                          </span>
+                        </label>
+                        <div class="col-lg-12 fv-row">
+                          <textarea class="form-control form-control-lg form-control-solid text-start"
+                            name="qualityObservation" formControlName="qualityObservation" rows="3"></textarea>
+
+                        </div>
+                      </div>
+
+                      <div class="col-lg-6">
+                        <label class="col-lg-12 col-form-label fw-bold fs-6">
+                          <span>
+                            MATERIAL PROCUREMENT/DELIVERY CONCERNS
+                          </span>
+                        </label>
+                        <div class="col-lg-12 fv-row">
+                          <textarea class="form-control form-control-lg form-control-solid text-start"
+                            name="materialDelivery" formControlName="materialDelivery" rows="3"></textarea>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row mb-1">
+
+                      <div class="col-lg-6">
+                        <label class="col-lg-12 col-form-label fw-bold fs-6">
+                          <span>
+                            INTERFACE AND COORDINATION ISSUES
+                          </span>
+                        </label>
+                        <div class="col-lg-12 fv-row">
+                          <textarea class="form-control form-control-lg form-control-solid text-start"
+                            name="interfaceIssues" formControlName="interfaceIssues" rows="3"></textarea>
+
+                        </div>
+                      </div>
+
+                      <div class="col-lg-6">
+                        <label class="col-lg-12 col-form-label fw-bold fs-6">
+                          <span>
+                            DESCRIPTION OF WORK PERFORMED TODAY
+                          </span>
+                        </label>
+                        <div class="col-lg-12 fv-row">
+                          <textarea class="form-control form-control-lg form-control-solid text-start"
+                            name="workPerformedDescription" formControlName="workPerformedDescription" rows="3"></textarea>
+                        </div>
+                      </div>
+
+                    </div>
+
+
+                  </div>
+                </form>
+              </ng-container>
+
+              <ng-container *ngIf="currentStep === 4">
+                <form [formGroup]="addUploadFilesForm" class="form">
+                  <div class="card-body border-top p-9">
+
+                    <div class="row mb-1">
+                      <label class="col-lg-4 col-form-label fw-bold fs-6"> <span> Upload </span>
+                      </label>
+                      <div class="col-lg-8 fv-row">
+                        <input type="file" class="form-control form-control-lg form-control-solid text-start my-2"
+                          name="files" formControlName="files"
+                           />
+                      </div>
+                    </div>
+
+
+
+                  </div>
+                </form>
+              </ng-container>
+
+            </div>
+
+            <div class="d-flex flex-stack pt-15">
+              <div class="mr-2">
+                <ng-container *ngIf="currentStep !== 1">
+                  <button type="button" class="btn btn-lg btn-light-primary me-3" (click)="prevStep()">
+                    <app-keenicon name="arrow-left" class="fs-3 ms-4 me-1"></app-keenicon>
+                    Back
+                  </button>
+                </ng-container>
+              </div>
+
+              <ng-container>
+                <div>
+                  <button type="button" class="btn btn-lg btn-primary me-3" >
+                    <span class="indicator-label">
+                      <span *ngIf="currentStep < 4" (click)="nextStep()">
+                        Continue {{ " " }}
+                        <app-keenicon name="arrow-right" class="fs-3 ms-2 me-0"></app-keenicon>
+                      </span>
+                      <span *ngIf="currentStep === 4" (click)="saveChanges()">
+                        Submit
+                      </span>
+                    </span>
+                  </button>
+                </div>
+              </ng-container>
+            </div>
+          </form>
+        </div>
+      </div>
+
     </div>
   </div>
 </div>

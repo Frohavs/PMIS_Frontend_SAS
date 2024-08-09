@@ -23,8 +23,14 @@ export class AddDailyReportComponent implements OnInit {
   vats: any[] = [];
   units: any[] = [];
 
-  weatherStatusList: any[] = WeatherStatusEnum;
   shifts: any[] = ShiftEnum;
+  weatherStatusList: any[] = WeatherStatusEnum;
+  currentStep: number = 0;
+
+  addPositionsForm: FormGroup;
+  addEquipmentsForm: FormGroup;
+  addWorkPerformedTodayForm: FormGroup;
+  addUploadFilesForm: FormGroup;
 
   swalOptions: SweetAlertOptions = {};
   @ViewChild('noticeSwal') noticeSwal!: SwalComponent;
@@ -43,6 +49,11 @@ export class AddDailyReportComponent implements OnInit {
 
     this.initAddReportForm();
     this.getReportId();
+
+    this.initPositionsForm();
+    this.initEquipmentsForm();
+    this.initWorkPerformedForm();
+    this.initUploadFilesForm();
 
   }
 
@@ -73,7 +84,6 @@ export class AddDailyReportComponent implements OnInit {
   }
 
   editReportForm(data: any) {
-    debugger
     this.addReportForm.patchValue({
       projectId: data?.projectId,
       weatherStatus: data?.weatherStatus,
@@ -86,10 +96,163 @@ export class AddDailyReportComponent implements OnInit {
     this.cdr.detectChanges()
   }
 
-  saveChanges() {
+  numbersOnly(event: any): boolean {
+    const charCode = (event.which) ? event.which : event.keyCode;
+    if ((charCode > 31 && charCode != 43) && (charCode < 48 || charCode > 57)) {
+      return false;
+    }
+    return true;
+  }
+
+  initPositionsForm() {
+    this.addPositionsForm = this.formBuilder.group({
+      pmValue: [null],
+      pmSubContractor: [null],
+
+      qaValue: [null],
+      qaSubContractor: [null],
+
+      cmValue: [null],
+      cmSubContractor: [null],
+
+      ceValue: [null],
+      ceSubContractor: [null],
+
+      archValue: [null],
+      archSubContractor: [null],
+
+      elecValue: [null],
+      elecSubContractor: [null],
+
+      mechValue: [null],
+      mechSubContractor: [null],
+
+      materialValue: [null],
+      materialSubContractor: [null],
+
+      bridgeValue: [null],
+      bridgeSubContractor: [null],
+
+      hseValue: [null],
+      hseSubContractor: [null],
+
+      quantityValue: [null],
+      quantitySubContractor: [null],
+
+      planningValue: [null],
+      planningSubContractor: [null],
+
+      landValue: [null],
+      landSubContractor: [null],
+
+      assistantValue: [null],
+      assistantSubContractor: [null],
+
+      inspectorValue: [null],
+      inspectorSubContractor: [null],
+
+      documentValue: [null],
+      documentSubContractor: [null],
+
+      masonValue: [null],
+      masonSubContractor: [null],
+
+      labourValue: [null],
+      labourSubContractor: [null],
+
+      carpenterValue: [null],
+      carpenterSubContractor: [null],
+
+      painterValue: [null],
+      painterSubContractor: [null],
+
+      steelValue: [null],
+      steelSubContractor: [null],
+
+      machineValue: [null],
+      machineSubContractor: [null],
+
+      driverValue: [null],
+      driverSubContractor: [null],
+
+      weldingValue: [null],
+      weldingSubContractor: [null],
+
+      warehouseValue: [null],
+      warehouseSubContractor: [null],
+
+    });
+  }
+  initEquipmentsForm() {
+    this.addEquipmentsForm = this.formBuilder.group({
+      centralValue: [null],
+      dumpValue: [null],
+      excavatorValue: [null],
+      concreteMixerValue: [null],
+      bulldozerValue: [null],
+      frontBackLoaderValue: [null],
+      skidLoaderValue: [null],
+      fuelValue: [null],
+      flatBedValue: [null],
+      roadValue: [null],
+      craneValue: [null],
+      graderValue: [null],
+      mobileValue: [null],
+      towerValue: [null],
+      forkliftValue: [null],
+      concretePumpValue: [null],
+      ironCrushingValue: [null],
+      waterValue: [null],
+      asphaltValue: [null],
+      waterPumpValue: [null],
+      ironCutting: [null],
+      frontLoaderValue: [null],
+    });
+  }
+  initWorkPerformedForm() {
+    this.addWorkPerformedTodayForm = this.formBuilder.group({
+      archCivil: [null],
+      mechanical: [null],
+      electrical: [null],
+      safetyObservation: [null],
+      qualityObservation: [null],
+      materialDelivery: [null],
+      interfaceIssues: [null],
+      workPerformedDescription: [null],
+    });
+  }
+  initUploadFilesForm() {
+    this.addUploadFilesForm = this.formBuilder.group({
+      files: [null],
+    });
+  }
+
+  nextStep() {
+    this.currentStep += 1;
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }
+
+
+  prevStep() {
+    this.currentStep -= 1;
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }
+
+  moveToWizard() {
     if (!this.addReportForm.valid) {
+      this.addReportForm.markAllAsTouched();
       return;
     }
+    this.currentStep = 1;
+  }
+
+  saveChanges() {
     this.isLoading = true;
     if (!this.reportId) {
       this.dailyReportService.addDailyReport(
