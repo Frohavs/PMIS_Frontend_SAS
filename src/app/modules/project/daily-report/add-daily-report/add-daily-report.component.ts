@@ -25,12 +25,14 @@ export class AddDailyReportComponent implements OnInit {
 
   shifts: any[] = ShiftEnum;
   weatherStatusList: any[] = WeatherStatusEnum;
-  currentStep: number = 0;
+  currentStep: number = 4;
 
   addPositionsForm: FormGroup;
   addEquipmentsForm: FormGroup;
   addWorkPerformedTodayForm: FormGroup;
   addUploadFilesForm: FormGroup;
+  selectedFile: File | null = null;
+  selectedFiles: string[] = [];
 
   swalOptions: SweetAlertOptions = {};
   @ViewChild('noticeSwal') noticeSwal!: SwalComponent;
@@ -211,20 +213,36 @@ export class AddDailyReportComponent implements OnInit {
   }
   initWorkPerformedForm() {
     this.addWorkPerformedTodayForm = this.formBuilder.group({
-      archCivil: [null],
-      mechanical: [null],
-      electrical: [null],
-      safetyObservation: [null],
-      qualityObservation: [null],
-      materialDelivery: [null],
-      interfaceIssues: [null],
-      workPerformedDescription: [null],
+      archCivil: [''],
+      mechanical: [''],
+      electrical: [''],
+      safetyObservation: [''],
+      qualityObservation: [''],
+      materialDelivery: [''],
+      interfaceIssues: [''],
+      workPerformedDescription: [''],
     });
   }
   initUploadFilesForm() {
     this.addUploadFilesForm = this.formBuilder.group({
       files: [null],
     });
+  }
+
+  onFileSelected(event: any) {
+    this.selectedFile = <File>event.target.files[0];
+
+    this.selectedFiles.push(this.selectedFile.name);
+    // Reset the file input field
+    (event.target as HTMLInputElement).value = '';
+    // Optionally, clear the selectedFile variable
+    this.selectedFile = null;
+  }
+
+  removeIndex(index: number) {
+    if (index >= 0 && index < this.selectedFiles.length) {
+      this.selectedFiles.splice(index, 1);
+    }
   }
 
   nextStep() {
@@ -250,6 +268,10 @@ export class AddDailyReportComponent implements OnInit {
       return;
     }
     this.currentStep = 1;
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
   }
 
   saveChanges() {

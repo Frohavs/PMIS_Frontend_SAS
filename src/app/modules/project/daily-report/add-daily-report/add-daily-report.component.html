@@ -68,8 +68,8 @@
                   </span>
                 </label>
                 <div class="col-lg-12 fv-row">
-                  <input type="text" class="form-control form-control-lg form-control-solid text-start" name="temperature"
-                    formControlName="temperature" placeholder="Temperature" />
+                  <input type="text" class="form-control form-control-lg form-control-solid text-start"
+                    name="temperature" formControlName="temperature" placeholder="Temperature" />
                   <div
                     *ngIf="addReportForm?.get('temperature')?.invalid && (addReportForm?.get('temperature')?.dirty || addReportForm?.get('temperature')?.touched)"
                     class="fv-plugins-message-container">
@@ -159,7 +159,7 @@
 
           </div>
 
-          <form class="mx-auto mw-800px w-100 pt-15 pb-10" noValidate id="kt_create_account_form">
+          <form class="mx-auto mw-900px w-100 pt-15 pb-10" noValidate id="kt_create_account_form">
             <div class="current">
               <ng-container *ngIf="currentStep === 1">
 
@@ -170,8 +170,8 @@
                       <label class="col-lg-2 col-form-label fw-bold fs-6"> <span> PM </span> </label>
                       <div class="col-lg-5 fv-row">
                         <input type="number" class="form-control form-control-lg form-control-solid text-start my-2"
-                          name="pmValue" formControlName="pmValue" placeholder="value"
-                          (keypress)="numbersOnly($event)" min="0" />
+                          name="pmValue" formControlName="pmValue" placeholder="value" (keypress)="numbersOnly($event)"
+                          min="0" />
                       </div>
                       <div class="col-lg-5 fv-row">
                         <input type="number" class="form-control form-control-lg form-control-solid text-start my-2"
@@ -184,8 +184,8 @@
                       <label class="col-lg-2 col-form-label fw-bold fs-6"> <span> QA/QC Eng. </span> </label>
                       <div class="col-lg-5 fv-row">
                         <input type="number" class="form-control form-control-lg form-control-solid text-start my-2"
-                          name="qaValue" formControlName="qaValue" placeholder="value"
-                          (keypress)="numbersOnly($event)" min="0" />
+                          name="qaValue" formControlName="qaValue" placeholder="value" (keypress)="numbersOnly($event)"
+                          min="0" />
                       </div>
                       <div class="col-lg-5 fv-row">
                         <input type="number" class="form-control form-control-lg form-control-solid text-start my-2"
@@ -198,8 +198,8 @@
                       <label class="col-lg-2 col-form-label fw-bold fs-6"> <span> CM </span> </label>
                       <div class="col-lg-5 fv-row">
                         <input type="number" class="form-control form-control-lg form-control-solid text-start my-2"
-                          name="cmValue" formControlName="cmValue" placeholder="value"
-                          (keypress)="numbersOnly($event)" min="0" />
+                          name="cmValue" formControlName="cmValue" placeholder="value" (keypress)="numbersOnly($event)"
+                          min="0" />
                       </div>
                       <div class="col-lg-5 fv-row">
                         <input type="number" class="form-control form-control-lg form-control-solid text-start my-2"
@@ -212,8 +212,8 @@
                       <label class="col-lg-2 col-form-label fw-bold fs-6"> <span> CE </span> </label>
                       <div class="col-lg-5 fv-row">
                         <input type="number" class="form-control form-control-lg form-control-solid text-start my-2"
-                          name="ceValue" formControlName="ceValue" placeholder="value"
-                          (keypress)="numbersOnly($event)" min="0" />
+                          name="ceValue" formControlName="ceValue" placeholder="value" (keypress)="numbersOnly($event)"
+                          min="0" />
                       </div>
                       <div class="col-lg-5 fv-row">
                         <input type="number" class="form-control form-control-lg form-control-solid text-start my-2"
@@ -287,8 +287,8 @@
                       </div>
                       <div class="col-lg-5 fv-row">
                         <input type="number" class="form-control form-control-lg form-control-solid text-start my-2"
-                          name="bridgeSubContractor" formControlName="bridgeSubContractor"
-                          placeholder="Sub Contractor" (keypress)="numbersOnly($event)" min="0" />
+                          name="bridgeSubContractor" formControlName="bridgeSubContractor" placeholder="Sub Contractor"
+                          (keypress)="numbersOnly($event)" min="0" />
                       </div>
                     </div>
 
@@ -413,8 +413,8 @@
                       </div>
                       <div class="col-lg-5 fv-row">
                         <input type="number" class="form-control form-control-lg form-control-solid text-start my-2"
-                          name="labourSubContractor" formControlName="labourSubContractor"
-                          placeholder="Sub Contractor" (keypress)="numbersOnly($event)" min="0" />
+                          name="labourSubContractor" formControlName="labourSubContractor" placeholder="Sub Contractor"
+                          (keypress)="numbersOnly($event)" min="0" />
                       </div>
                     </div>
 
@@ -483,8 +483,8 @@
                       </div>
                       <div class="col-lg-5 fv-row">
                         <input type="number" class="form-control form-control-lg form-control-solid text-start my-2"
-                          name="driverSubContractor" formControlName="driverSubContractor"
-                          placeholder="Sub Contractor" (keypress)="numbersOnly($event)" min="0" />
+                          name="driverSubContractor" formControlName="driverSubContractor" placeholder="Sub Contractor"
+                          (keypress)="numbersOnly($event)" min="0" />
                       </div>
                     </div>
 
@@ -730,7 +730,7 @@
               </ng-container>
 
               <ng-container *ngIf="currentStep === 3">
-                <form [formGroup]="addEquipmentsForm" class="form">
+                <form [formGroup]="addWorkPerformedTodayForm" class="form">
                   <div class="card-body border-top p-9">
 
                     <div class="row mb-1">
@@ -742,8 +742,8 @@
                           </span>
                         </label>
                         <div class="col-lg-12 fv-row">
-                          <textarea class="form-control form-control-lg form-control-solid text-start"
-                            name="archCivil" formControlName="archCivil" rows="3"></textarea>
+                          <textarea class="form-control form-control-lg form-control-solid text-start" name="archCivil"
+                            formControlName="archCivil" rows="3"></textarea>
 
                         </div>
                       </div>
@@ -755,8 +755,8 @@
                           </span>
                         </label>
                         <div class="col-lg-12 fv-row">
-                          <textarea class="form-control form-control-lg form-control-solid text-start"
-                            name="mechanical" formControlName="mechanical" rows="3"></textarea>
+                          <textarea class="form-control form-control-lg form-control-solid text-start" name="mechanical"
+                            formControlName="mechanical" rows="3"></textarea>
                         </div>
                       </div>
 
@@ -770,8 +770,8 @@
                           </span>
                         </label>
                         <div class="col-lg-12 fv-row">
-                          <textarea class="form-control form-control-lg form-control-solid text-start"
-                            name="electrical" formControlName="electrical" rows="3"></textarea>
+                          <textarea class="form-control form-control-lg form-control-solid text-start" name="electrical"
+                            formControlName="electrical" rows="3"></textarea>
 
                         </div>
                       </div>
@@ -841,7 +841,8 @@
                         </label>
                         <div class="col-lg-12 fv-row">
                           <textarea class="form-control form-control-lg form-control-solid text-start"
-                            name="workPerformedDescription" formControlName="workPerformedDescription" rows="3"></textarea>
+                            name="workPerformedDescription" formControlName="workPerformedDescription"
+                            rows="3"></textarea>
                         </div>
                       </div>
 
@@ -861,10 +862,27 @@
                       </label>
                       <div class="col-lg-8 fv-row">
                         <input type="file" class="form-control form-control-lg form-control-solid text-start my-2"
-                          name="files" formControlName="files"
-                           />
+                          name="files" formControlName="files" (change)="onFileSelected($event)" />
                       </div>
                     </div>
+                    <!-- show files -->
+                    <ng-container *ngIf="selectedFiles.length">
+                      <div class="shadow-xs card-rounded  my-3 px-6 py-4 position-relative z-index-1 bg-body"
+                      *ngFor="let file of selectedFiles; index as i">
+                        <div class="d-flex align-items-center ">
+                          <div class="d-flex align-items-center flex-wrap w-100">
+                            <div class="mb-1 pe-3 flex-grow-1">
+                              <a class="fs-5 text-gray-800 text-hover-primary fw-bolder">
+                                {{file}}
+                              </a>
+                            </div>
+                            <div class="d-flex align-items-center">
+                              <span class="close text-white cursor-pointer p-1 px-2 bg-danger rounded-circle" (click)="removeIndex(i)">X</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </ng-container>
 
 
 
@@ -886,7 +904,7 @@
 
               <ng-container>
                 <div>
-                  <button type="button" class="btn btn-lg btn-primary me-3" >
+                  <button type="button" class="btn btn-lg btn-primary me-3">
                     <span class="indicator-label">
                       <span *ngIf="currentStep < 4" (click)="nextStep()">
                         Continue {{ " " }}
