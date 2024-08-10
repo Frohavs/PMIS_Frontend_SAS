@@ -25,7 +25,7 @@ export class AddDailyReportComponent implements OnInit {
 
   shifts: any[] = ShiftEnum;
   weatherStatusList: any[] = WeatherStatusEnum;
-  currentStep: number = 0;
+  currentStep: number = 4;
 
   addPositionsForm: FormGroup;
   addEquipmentsForm: FormGroup;
