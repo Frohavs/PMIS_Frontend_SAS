@@ -118,6 +118,20 @@ export class DailyReportComponent implements OnInit, AfterViewInit, OnDestroy {
     });
   }
 
+  approveReport(id: number) {
+    console.log(id);
+    this.dailyReportService.approveDailyReport(id).subscribe(res => {
+      this.showAlert({ icon: 'success', title: 'Success!', text: 'Report Approved successfully!' });
+      setTimeout(() => {
+        this.isLoading = false;
+        this.initDailyReportList();
+      }, 500);
+    }, () => {
+      this.isLoading = false;
+      this.showAlert({ icon: 'error', title: 'Error!', text: 'Please try again' });
+    })
+  }
+
   navigatePage(pageIndex: number) {
     this.selected = pageIndex;
     this.initDailyReportList(pageIndex, '');

@@ -32,7 +32,7 @@ export class AddDailyReportComponent implements OnInit {
   addWorkPerformedTodayForm: FormGroup;
   addUploadFilesForm: FormGroup;
   selectedFile: File | null = null;
-  selectedFiles: string[] = [];
+  dailyReportAttachments: any[] = [];
 
   swalOptions: SweetAlertOptions = {};
   @ViewChild('noticeSwal') noticeSwal!: SwalComponent;
@@ -95,6 +95,12 @@ export class AddDailyReportComponent implements OnInit {
       startDate: data?.startDate?.slice(0, 10) || null,
       endDate: data?.endDate?.slice(0, 10) || null,
     });
+    this.dailyReportAttachments = data.dailyReportAttachments;
+    const forms = JSON.parse(data.dataForm)
+    this.editPositionsForm(forms?.positions);
+    this.editEquipmentForm(forms?.equipments);
+    this.editWorkPerformedDailyForm(forms?.workPerformedToday);
+    debugger
     this.cdr.detectChanges()
   }
 
@@ -229,10 +235,105 @@ export class AddDailyReportComponent implements OnInit {
     });
   }
 
+  editPositionsForm(data: any) {
+    this.addPositionsForm.patchValue({
+      pmValue: data?.pmValue,
+      pmSubContractor: data?.pmSubContractor,
+      qaValue: data?.qaValue,
+      qaSubContractor: data?.qaSubContractor,
+      cmValue: data?.cmValue,
+      cmSubContractor: data?.cmSubContractor,
+      ceValue: data?.ceValue,
+      ceSubContractor: data?.ceSubContractor,
+      archValue: data?.archValue,
+      archSubContractor: data?.archSubContractor,
+      elecValue: data?.elecValue,
+      elecSubContractor: data?.elecSubContractor,
+      mechValue: data?.mechValue,
+      mechSubContractor: data?.mechSubContractor,
+      materialValue: data?.materialValue,
+      materialSubContractor: data?.materialSubContractor,
+      bridgeValue: data?.bridgeValue,
+      bridgeSubContractor: data?.bridgeSubContractor,
+      hseValue: data?.hseValue,
+      hseSubContractor: data?.hseSubContractor,
+      quantityValue: data?.quantityValue,
+      quantitySubContractor: data?.quantitySubContractor,
+      planningValue: data?.planningValue,
+      planningSubContractor: data?.planningSubContractor,
+      landValue: data?.landValue,
+      landSubContractor: data?.landSubContractor,
+      assistantValue: data?.assistantValue,
+      assistantSubContractor: data?.assistantSubContractor,
+      inspectorValue: data?.inspectorValue,
+      inspectorSubContractor: data?.inspectorSubContractor,
+      documentValue: data?.documentValue,
+      documentSubContractor: data?.documentSubContractor,
+      masonValue: data?.masonValue,
+      masonSubContractor: data?.masonSubContractor,
+      labourValue: data?.labourValue,
+      labourSubContractor: data?.labourSubContractor,
+      carpenterValue: data?.carpenterValue,
+      carpenterSubContractor: data?.carpenterSubContractor,
+      painterValue: data?.painterValue,
+      painterSubContractor: data?.painterSubContractor,
+      steelValue: data?.steelValue,
+      steelSubContractor: data?.steelSubContractor,
+      machineValue: data?.machineValue,
+      machineSubContractor: data?.machineSubContractor,
+      driverValue: data?.driverValue,
+      driverSubContractor: data?.driverSubContractor,
+      weldingValue: data?.weldingValue,
+      weldingSubContractor: data?.weldingSubContractor,
+      warehouseValue: data?.warehouseValue,
+      warehouseSubContractor: data?.warehouseSubContractor,
+    });
+  }
+  editEquipmentForm(data: any) {
+    this.addEquipmentsForm.patchValue({
+      centralValue: data?.centralValue,
+      dumpValue: data?.dumpValue,
+      excavatorValue: data?.excavatorValue,
+      concreteMixerValue: data?.concreteMixerValue,
+      bulldozerValue: data?.bulldozerValue,
+      frontBackLoaderValue: data?.frontBackLoaderValue,
+      skidLoaderValue: data?.skidLoaderValue,
+      fuelValue: data?.fuelValue,
+      flatBedValue: data?.flatBedValue,
+      roadValue: data?.roadValue,
+      craneValue: data?.craneValue,
+      graderValue: data?.graderValue,
+      mobileValue: data?.mobileValue,
+      towerValue: data?.towerValue,
+      forkliftValue: data?.forkliftValue,
+      concretePumpValue: data?.concretePumpValue,
+      ironCrushingValue: data?.ironCrushingValue,
+      waterValue: data?.waterValue,
+      asphaltValue: data?.asphaltValue,
+      waterPumpValue: data?.waterPumpValue,
+      ironCutting: data?.ironCutting,
+      frontLoaderValue: data?.frontLoaderValue,
+    });
+
+  }
+  editWorkPerformedDailyForm(data: any) {
+    this.addWorkPerformedTodayForm.patchValue({
+      archCivil: data?.archCivil,
+      mechanical: data?.mechanical,
+      electrical: data?.electrical,
+      safetyObservation: data?.safetyObservation,
+      qualityObservation: data?.qualityObservation,
+      materialDelivery: data?.materialDelivery,
+      interfaceIssues: data?.interfaceIssues,
+      workPerformedDescription: data?.workPerformedDescription,
+    });
+
+  }
+
   onFileSelected(event: any) {
     this.selectedFile = <File>event.target.files[0];
 
-    this.selectedFiles.push(this.selectedFile.name);
+    this.dailyReportAttachments.push({ attachment: this.selectedFile.name });
     // Reset the file input field
     (event.target as HTMLInputElement).value = '';
     // Optionally, clear the selectedFile variable
@@ -240,8 +341,8 @@ export class AddDailyReportComponent implements OnInit {
   }
 
   removeIndex(index: number) {
-    if (index >= 0 && index < this.selectedFiles.length) {
-      this.selectedFiles.splice(index, 1);
+    if (index >= 0 && index < this.dailyReportAttachments.length) {
+      this.dailyReportAttachments.splice(index, 1);
     }
   }
 
@@ -276,10 +377,14 @@ export class AddDailyReportComponent implements OnInit {
 
   saveChanges() {
     this.isLoading = true;
+
+
+    const dataForm = JSON.stringify({ positions: { ...this.addPositionsForm.value }, equipments: { ...this.addEquipmentsForm.value }, workPerformedToday: { ...this.addWorkPerformedTodayForm.value } });
+    const payload = { ...this.addReportForm.value, dataForm: dataForm, dailyReportAttachments: this.dailyReportAttachments }
     if (!this.reportId) {
       this.dailyReportService.addDailyReport(
         {
-          ...this.addReportForm.value,
+          ...payload,
           projectId: +this.projectId,
         }
       ).subscribe({
@@ -298,7 +403,7 @@ export class AddDailyReportComponent implements OnInit {
     } else {
       this.dailyReportService.updateDailyReport(
         {
-          ...this.addReportForm.value,
+          ...payload,
           id: this.reportId,
           projectId: +this.projectId,
         }

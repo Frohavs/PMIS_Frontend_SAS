@@ -63,6 +63,15 @@ export class DailyReportService {
       headers: httpHeaders
     });
   }
+  approveDailyReport(id: number): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/Approve?id=${id}`;
+    return this.http.put<any>(url, {}, {
+      headers: httpHeaders
+    });
+  }
   deleteDailyReport(id: number): Observable<any> {
     const httpHeaders = new HttpHeaders({
       Authorization: `Bearer ${this.token}`,
