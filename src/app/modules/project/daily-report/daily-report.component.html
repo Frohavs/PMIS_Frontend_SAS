@@ -36,12 +36,12 @@
           <tr *ngFor="let report of dataList; index as i">
             <td>
               <a class="text-gray-900 fw-bolder text-hover-primary d-block fs-6">
-                {{report?.shift}}
+                {{ report?.shift === 1 ? 'First' : 'Second'}}
               </a>
             </td>
             <td>
               <a class="text-gray-900 fw-bolder text-hover-primary d-block fs-6">
-                {{report?.weatherStatus}}
+                {{ report?.weatherStatus === 1 ? 'Sunny' : (report?.weatherStatus === 2)  ? 'Windy' : (report?.weatherStatus === 3)  ? 'Cloudy' : 'Rainy'}}
               </a>
             </td>
             <td>
