@@ -61,7 +61,7 @@
             </td>
             <td>
               <a class="text-gray-900 fw-bolder text-hover-primary d-block fs-6">
-                {{vendor?.vendorTypeId === 1 ? 'Consultant' : 'Contractor'}}
+                {{vendor?.vendorTypeId === 1 ? 'Consultant' : (vendor?.vendorTypeId === 2)  ? 'Contractor' : 'Governmental Institution'}}
               </a>
             </td>
 

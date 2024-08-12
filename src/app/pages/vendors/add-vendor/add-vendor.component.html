@@ -19,7 +19,7 @@
           <div class="card-body border-top p-9">
 
 
-            <div class="row mb-6">
+            <div class="row mb-6" *ngIf="vendorId">
               <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="required">{{"VENDORS.cr_number" | translate}}</span></label>
               <div class="col-lg-8 fv-row">
                 <input type="text" class="form-control form-control-lg form-control-solid" placeholder="{{'VENDORS.cr_number' | translate}}"
