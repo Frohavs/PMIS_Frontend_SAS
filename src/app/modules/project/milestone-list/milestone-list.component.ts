@@ -55,12 +55,11 @@ export class MilestoneListComponent implements OnInit, AfterViewInit, OnDestroy 
 
   ngOnInit(): void {
     this.getProjectId();
-    this.initializeMilesStoneList();
   }
 
-  initializeMilesStoneList(pageIndex?: number, search?: string) {
+  initializeMilesStoneList(id: number, pageIndex?: number, search?: string) {
     this.dataList = [];
-    this.milestoneService.getAll(pageIndex, search).subscribe(res => {
+    this.milestoneService.getAll(id, pageIndex, search).subscribe(res => {
       this.dataList = res?.data?.items;
       this.totalCount = res?.data?.totalcount;
       this.pagesCount = Array.from({ length: Math.ceil(this.totalCount / 10) }, (_, index) => index + 1);
@@ -83,6 +82,7 @@ export class MilestoneListComponent implements OnInit, AfterViewInit, OnDestroy 
   getProjectId() {
     this.activatedRoute.params.subscribe(params => {
       this.projectId = params['id'];
+      this.initializeMilesStoneList(this.projectId);
     });
   }
 
@@ -108,7 +108,7 @@ export class MilestoneListComponent implements OnInit, AfterViewInit, OnDestroy 
             setTimeout(() => {
               this.isLoading = false;
               this.dataList = [];
-              this.initializeMilesStoneList();
+              this.initializeMilesStoneList(this.projectId);
             }, 500);
           },
           error: (error) => {
@@ -122,7 +122,7 @@ export class MilestoneListComponent implements OnInit, AfterViewInit, OnDestroy 
 
   navigatePage(pageIndex: number) {
     this.selected = pageIndex;
-    this.initializeMilesStoneList(pageIndex, '');
+    this.initializeMilesStoneList(this.projectId, pageIndex, '');
   }
 
   ngOnDestroy(): void {
