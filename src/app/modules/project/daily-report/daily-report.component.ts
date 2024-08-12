@@ -81,8 +81,7 @@ export class DailyReportComponent implements OnInit, AfterViewInit, OnDestroy {
 
   getReportId() {
     this.activatedRoute.params.subscribe(params => {
-      this.projectId = params['id'];
-      debugger
+      this.projectId = +params['id'];
       this.initDailyReportList(this.projectId);
     });
   }

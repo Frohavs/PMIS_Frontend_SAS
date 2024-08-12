@@ -90,7 +90,7 @@ export class CashFlowComponent implements OnInit, AfterViewInit, OnDestroy {
 
   getProjectId() {
     this.activatedRoute.params.subscribe(params => {
-      this.projectId = params['id'];
+      this.projectId = +params['id'];
       if (this.projectId) {
         this.initCashFlowData(this.projectId)
       }

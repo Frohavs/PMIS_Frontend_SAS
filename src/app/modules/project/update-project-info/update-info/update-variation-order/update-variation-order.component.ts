@@ -43,7 +43,7 @@ export class UpdateVariationOrderComponent implements OnInit {
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe(params => {
-      this.projectId = params['id'];
+      this.projectId = +params['id'];
       if (this.projectId) {
         this.resetModalValues()
       }
@@ -56,9 +56,10 @@ export class UpdateVariationOrderComponent implements OnInit {
 
       this.VoCard = {
         id: this.projectId,
-        voValue: this.projectDetails?.vos.length && (this.projectDetails?.vos[this.projectDetails?.vos.length - 2]?.updatedValue || this.projectDetails?.originalValue),
-
-        voApprovedValue: this.projectDetails?.vos.length ? this.projectDetails?.vos[this.projectDetails?.vos.length - 1]?.voValue : this.projectDetails?.originalValue,
+        voValue: this.projectDetails?.vos.length === 2 ? this.projectDetails?.vos[this.projectDetails?.vos.length - 2]?.updatedValue : this.projectDetails?.originalValue,
+        approvedLetterNumber: 0,
+        approvedLetterDate: null,
+        voApprovedValue: this.projectDetails?.vos.length ? this.projectDetails?.vos[this.projectDetails?.vos.length - 1]?.voValue : 0,
 
         voUpdatedValue: this.projectDetails?.vos.length ? this.projectDetails?.vos[this.projectDetails?.vos.length - 1]?.updatedValue : 0,
       };

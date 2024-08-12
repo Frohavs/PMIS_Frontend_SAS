@@ -115,7 +115,7 @@ export class CreateProjectComponent implements OnInit, AfterViewInit, OnDestroy 
 
   getProjectId() {
     this.activatedRoute.params.subscribe(params => {
-      this.projectId = params['id'];
+      this.projectId = +params['id'];
       if (this.projectId) {
         this.projectsService.getByID(this.projectId).subscribe(res => {
           setTimeout(() => {

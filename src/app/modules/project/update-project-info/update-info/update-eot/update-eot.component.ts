@@ -47,7 +47,7 @@ export class UpdateEotComponent implements OnInit {
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe(params => {
-      this.projectId = params['id'];
+      this.projectId = +params['id'];
       if (this.projectId) {
         this.resetModalValues();
       }
@@ -59,8 +59,10 @@ export class UpdateEotComponent implements OnInit {
       this.projectDetails = res.data;
       this.eotCard = {
         id: this.projectId,
+        approvedLetterNumber: 0,
+        approvedLetterDate: null,
         eotDays: this.projectDetails?.eoTs.length ? this.projectDetails?.eoTs[this.projectDetails?.eoTs.length - 1]?.eotDays : 0,
-        eotDuration: this.projectDetails?.eoTs.length ? this.projectDetails?.eoTs[this.projectDetails?.eoTs.length - 1]?.duration : 0,
+        eotDuration: this.projectDetails?.eoTs.length ? (this.projectDetails?.eoTs[this.projectDetails?.eoTs.length - 1]?.duration + this.getDurationToSum()) : this.getDurationDays(),
         originalFinishDate: this.projectDetails?.eoTs.length ? this.datePipe.transform(this.projectDetails?.eoTs[this.projectDetails?.eoTs.length - 1]?.expectedFinishDate, 'yyyy-MM-dd') : this.datePipe.transform(this.projectDetails?.originalFinishDate, 'yyyy-MM-dd')
       };
 
@@ -102,6 +104,19 @@ export class UpdateEotComponent implements OnInit {
 
   getDurationDays() {
     const date1 = new Date(this.projectDetails?.eoTs.length ? this.projectDetails?.eoTs[this.projectDetails?.eoTs.length - 1]?.expectedFinishDate : this.projectDetails?.originalFinishDate);
+
+    const date2 = new Date(this.projectDetails?.executionStartDate);
+
+    // Calculate the difference in milliseconds
+    const diffInMilliseconds = date1.getTime() - date2.getTime();
+
+    // Convert the difference to days
+    const diffInDays = diffInMilliseconds / (1000 * 60 * 60 * 24);
+
+    return diffInDays;
+  }
+  getDurationToSum() {
+    const date1 = new Date(this.projectDetails?.originalFinishDate);
 
     const date2 = new Date(this.projectDetails?.executionStartDate);
 

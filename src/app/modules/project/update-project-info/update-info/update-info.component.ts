@@ -26,7 +26,7 @@ export class UpdateInfoComponent implements OnInit {
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe(params => {
-      this.projectId = params['id'];
+      this.projectId = +params['id'];
       if (this.projectId) {
         this.projectsService.getByID(this.projectId).subscribe(res => {
           this.projectDetails = res.data;

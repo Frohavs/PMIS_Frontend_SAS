@@ -46,8 +46,10 @@ export class AddBoqComponent implements OnInit {
 
   getBoqId() {
     this.activatedRoute.params.subscribe(params => {
-      this.boqId = params['id'];
-      this.projectId = params['id'];
+      this.projectId = +params['id'];
+    });
+    this.activatedRoute.queryParams.subscribe(params => {
+      this.boqId = params['boqId'];
     });
     const queryParams = this.activatedRoute.snapshot.queryParams;
     this.boqId = +queryParams?.boqId

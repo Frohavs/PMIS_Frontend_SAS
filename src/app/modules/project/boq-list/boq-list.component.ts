@@ -85,7 +85,7 @@ export class BoqListComponent implements OnInit, AfterViewInit, OnDestroy {
 
   getBoqId() {
     this.activatedRoute.params.subscribe(params => {
-      this.projectId = params['id'];
+      this.projectId = +params['id'];
       if (this.projectId) {
         this.initializeProjectData(this.projectId)
       }

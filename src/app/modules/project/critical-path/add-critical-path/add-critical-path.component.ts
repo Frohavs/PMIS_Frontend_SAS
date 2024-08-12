@@ -72,7 +72,7 @@ export class AddCriticalPathComponent implements OnInit, OnDestroy {
 
   getMileStoneId() {
     this.activatedRoute.params.subscribe(params => {
-      this.projectId = params['id'];
+      this.projectId = +params['id'];
     });
     this.activatedRoute.queryParams.subscribe(params => {
       this.pathId = +params['pathId'];
