@@ -14,6 +14,7 @@ import { SweetAlertOptions } from 'sweetalert2';
 })
 export class DailyReportComponent implements OnInit, AfterViewInit, OnDestroy {
 
+  projectId: number;
   reportId: number;
 
   Add_text: string;
@@ -53,12 +54,12 @@ export class DailyReportComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnInit(): void {
     this.getReportId();
-    this.initDailyReportList();
+
   }
 
-  initDailyReportList(pageIndex?: number, search?: string) {
+  initDailyReportList(id: number, pageIndex?: number, search?: string) {
     this.dataList = [];
-    this.dailyReportService.getAll(pageIndex, search).subscribe(res => {
+    this.dailyReportService.getAll(id, pageIndex, search).subscribe(res => {
       this.dataList = res?.data?.items;
       this.totalCount = res?.data?.totalcount;
       this.pagesCount = Array.from({ length: Math.ceil(this.totalCount / 10) }, (_, index) => index + 1);
@@ -80,16 +81,18 @@ export class DailyReportComponent implements OnInit, AfterViewInit, OnDestroy {
 
   getReportId() {
     this.activatedRoute.params.subscribe(params => {
-      this.reportId = params['id'];
+      this.projectId = params['id'];
+      debugger
+      this.initDailyReportList(this.projectId);
     });
   }
 
   redirectToNew() {
-    this.router.navigateByUrl('projects/add-daily-report/' + this.reportId)
+    this.router.navigateByUrl('projects/add-daily-report/' + this.projectId)
   }
 
   editDailyReport(report: any) {
-    this.router.navigate(['projects/edit-daily-report/' + this.reportId], {
+    this.router.navigate(['projects/edit-daily-report/' + report.id], {
       queryParams: { reportId: report.id }
     })
 
@@ -106,7 +109,7 @@ export class DailyReportComponent implements OnInit, AfterViewInit, OnDestroy {
             setTimeout(() => {
               this.isLoading = false;
               this.dataList = [];
-              this.initDailyReportList();
+              this.initDailyReportList(this.projectId);
             }, 500);
           },
           error: (error) => {
@@ -124,7 +127,7 @@ export class DailyReportComponent implements OnInit, AfterViewInit, OnDestroy {
       this.showAlert({ icon: 'success', title: 'Success!', text: 'Report Approved successfully!' });
       setTimeout(() => {
         this.isLoading = false;
-        this.initDailyReportList();
+        this.initDailyReportList(this.projectId);
       }, 500);
     }, () => {
       this.isLoading = false;
@@ -134,7 +137,7 @@ export class DailyReportComponent implements OnInit, AfterViewInit, OnDestroy {
 
   navigatePage(pageIndex: number) {
     this.selected = pageIndex;
-    this.initDailyReportList(pageIndex, '');
+    this.initDailyReportList(this.projectId, pageIndex, '');
   }
 
   ngOnDestroy(): void {

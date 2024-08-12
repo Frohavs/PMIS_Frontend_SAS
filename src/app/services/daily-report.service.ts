@@ -19,11 +19,12 @@ export class DailyReportService {
   }
 
   // public methods
-  getAll(pageIndex?: number, search?: string): Observable<any> {
+  getAll(id: number, pageIndex?: number, search?: string): Observable<any> {
     const httpHeaders = new HttpHeaders({
       Authorization: `Bearer ${this.token}`,
     });
     const milestone = {
+      projectId: id,
       quickSearch: search,
       pagedSearch: {
         "pageIndex": pageIndex,
