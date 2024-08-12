@@ -78,6 +78,7 @@ export class BoqListComponent implements OnInit, AfterViewInit, OnDestroy {
   initializeProjectData(id: number, pageIndex?: number, search?: string) {
     this.boqService.getAll(id, pageIndex, search).subscribe(res => {
       this.dataList = res.data.items;
+      this.totalCount = res?.data?.totalcount;
       this.pagesCount = Array.from({ length: Math.ceil(this.totalCount / 10) }, (_, index) => index + 1);
       this.cdr.detectChanges();
     });
@@ -152,7 +153,7 @@ export class BoqListComponent implements OnInit, AfterViewInit, OnDestroy {
       const fd = new FormData();
       fd.append('file', file, file.name);
 
-      this.boqService.uploadBoqFile(fd).subscribe(res => {
+      this.boqService.uploadBoqFile(this.projectId, fd).subscribe(res => {
         this.showAlert({ icon: 'success', title: 'Success!', text: 'file Uploaded successfully!' });
         this.initializeProjectData(this.projectId)
         this.fileInput.nativeElement.value = '';

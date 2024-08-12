@@ -59,7 +59,7 @@ export class CashFlowDetailsComponent implements OnInit, OnDestroy {
       this.cdr.detectChanges()
       console.log(this.cashDetails);
       this.approveModelData['approval'] = this.cashDetails.approval + 1;
-      this.approveModelData['cashflowId'] = this.cashId;
+      this.approveModelData['cashflowId'] = +this.cashId;
     });
   }
 
@@ -69,7 +69,7 @@ export class CashFlowDetailsComponent implements OnInit, OnDestroy {
 
   onSubmit() {
     // debugger
-    if(this.approveModelData.accepted === false) this.approveModelData.approval = 2;
+    if(this.approveModelData.accepted === false) this.approveModelData.approval = 3;
     this.cashFlowService.cashApprove(this.approveModelData).subscribe(res => {
       this.showAlert({ icon: 'success', title: 'Success!', text: 'Vendor Added successfully!' });
       this.modalService.dismissAll();

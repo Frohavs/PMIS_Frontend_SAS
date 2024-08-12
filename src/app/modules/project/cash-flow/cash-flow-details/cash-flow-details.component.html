@@ -102,6 +102,28 @@
             <!-- end::Table head -->
             <!-- begin::Table body -->
             <tbody>
+              <tr>
+                <td>
+                  <a class="text-gray-900 fw-bolder text-hover-primary" style="font-size: 12px;">
+                    {{'userEmail'}}
+                  </a>
+                </td>
+                <td>
+                  <a class="text-gray-900 fw-bolder text-hover-primary" style="font-size: 12px;">
+                    {{cashDetails?.lastUpdated | date : 'dd-MM-yyyy'}}
+                  </a>
+                </td>
+                <td>
+                  <a class="text-gray-900 fw-bolder text-hover-primary" style="font-size: 12px;">
+                    {{'created'}}
+                  </a>
+                </td>
+                <td>
+                  <a class="text-gray-900 fw-bolder text-hover-primary" style="font-size: 12px;">
+                    {{'--'}}
+                  </a>
+                </td>
+              </tr>
               <tr *ngFor="let item of cashDetails?.cashflowApprovals; index as i">
                 <td>
                   <a class="text-gray-900 fw-bolder text-hover-primary" style="font-size: 12px;">

@@ -7,6 +7,7 @@ import { DailyReportService } from 'src/app/services/daily-report.service';
 import { LookupService } from 'src/app/services/lookup/lookup.service';
 import { SweetAlertOptions } from 'sweetalert2';
 import { ShiftEnum, WeatherStatusEnum } from '../report-enums';
+import { AttachmentService } from 'src/app/services/attachment/attachment.service';
 
 @Component({
   selector: 'app-add-daily-report',
@@ -31,7 +32,7 @@ export class AddDailyReportComponent implements OnInit {
   addEquipmentsForm: FormGroup;
   addWorkPerformedTodayForm: FormGroup;
   addUploadFilesForm: FormGroup;
-  selectedFile: File | null = null;
+  selectedFiles: any;
   dailyReportAttachments: any[] = [];
 
   swalOptions: SweetAlertOptions = {};
@@ -45,6 +46,8 @@ export class AddDailyReportComponent implements OnInit {
     private formBuilder: FormBuilder,
     private lookupService: LookupService,
     private activatedRoute: ActivatedRoute,
+    private attachmentService: AttachmentService,
+
   ) { }
 
   ngOnInit(): void {
@@ -95,7 +98,11 @@ export class AddDailyReportComponent implements OnInit {
       startDate: data?.startDate?.slice(0, 10) || null,
       endDate: data?.endDate?.slice(0, 10) || null,
     });
-    this.dailyReportAttachments = data.dailyReportAttachments;
+    if (data?.dailyReportAttachments.length) {
+      for (const file of data?.dailyReportAttachments) {
+        this.dailyReportAttachments.push({ attachment: file.attachment });
+      }
+    }
     const forms = JSON.parse(data.dataForm)
     this.editPositionsForm(forms?.positions);
     this.editEquipmentForm(forms?.equipments);
@@ -331,13 +338,23 @@ export class AddDailyReportComponent implements OnInit {
   }
 
   onFileSelected(event: any) {
-    this.selectedFile = <File>event.target.files[0];
+    this.selectedFiles = <File>event.target.files;
 
-    this.dailyReportAttachments.push({ attachment: this.selectedFile.name });
+    for (const file of this.selectedFiles) {
+      const fd = new FormData();
+      fd.append('Attachment', file, file.name)
+      this.attachmentService.uploadAttachment(fd).subscribe(res => {
+        this.dailyReportAttachments.push({ attachment: file.name });
+        this.cdr.detectChanges();
+      }, () => {
+        this.showAlert({ icon: 'error', title: 'Error!', text: 'Please try Upload again' });
+      });
+    }
+
     // Reset the file input field
     (event.target as HTMLInputElement).value = '';
     // Optionally, clear the selectedFile variable
-    this.selectedFile = null;
+    this.selectedFiles = null;
   }
 
   removeIndex(index: number) {
@@ -386,6 +403,7 @@ export class AddDailyReportComponent implements OnInit {
         {
           ...payload,
           projectId: +this.projectId,
+          dailyReportAttachments: [...this.dailyReportAttachments]
         }
       ).subscribe({
         next: (res) => {
@@ -406,6 +424,7 @@ export class AddDailyReportComponent implements OnInit {
           ...payload,
           id: this.reportId,
           projectId: +this.projectId,
+          dailyReportAttachments: [...this.dailyReportAttachments]
         }
       ).subscribe({
         next: (res) => {
