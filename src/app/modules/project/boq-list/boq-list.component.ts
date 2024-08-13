@@ -141,6 +141,24 @@ export class BoqListComponent implements OnInit, AfterViewInit, OnDestroy {
     this.initializeProjectData(this.projectId, pageIndex, '');
   }
 
+  navigateArrows(next: boolean) {
+    if(next) {
+      if (this.selected === this.pagesCount.length) {
+        return;
+      } else {
+        this.selected += 1;
+        this.initializeProjectData(this.projectId, this.selected);
+      }
+    } else {
+      if (this.selected === 1) {
+        return;
+      } else {
+        this.selected -= 1;
+        this.initializeProjectData(this.projectId, this.selected);
+      }
+    }
+  }
+
   downloadTemplate() {
     window.open(this.boqTemplate);
   }

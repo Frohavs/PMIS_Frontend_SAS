@@ -33,7 +33,7 @@
               </div>
             </th>
             <th class="max-w-100px">{{"VENDORS.name" | translate}}</th>
-            <th class="max-w-100px">{{"VENDORS.type" | translate}}</th>
+            <th class="max-w-90px">{{"VENDORS.type" | translate}}</th>
             <th class="min-w-100px">{{"VENDORS.address" | translate}}</th>
             <th class="max-w-110px">{{"VENDORS.cr_number" | translate}}</th>
             <th class="max-w-100px text-end">Actions</th>
@@ -106,8 +106,8 @@
         <div class="fs-6 fw-bold text-gray-700">Showing {{totalCount}} to 10 of {{totalCount}} entries</div>
 
         <ul class="pagination">
-          <li class="page-item previous">
-            <a class="page-link cursor-pointer">
+          <li class="page-item previous" (click)="navigateArrows(false)">
+            <a class="page-link cursor-pointer" >
               <i class="previous"></i>
             </a>
           </li>
@@ -116,7 +116,7 @@
             <a class="page-link cursor-pointer"> {{i+1}} </a>
           </li>
 
-          <li class="page-item next">
+          <li class="page-item next" (click)="navigateArrows(true)">
             <a class="page-link cursor-pointer">
               <i class="next"></i>
             </a>

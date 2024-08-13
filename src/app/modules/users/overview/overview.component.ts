@@ -67,7 +67,7 @@ export class OverviewComponent implements OnInit, AfterViewInit, OnDestroy {
       distinctUntilChanged(),
     ).subscribe((event: any) => {
       const searchText = event.target.value;
-      this.initializeUserData(1, searchText)
+      this.initializeUserData(1, '')
     });
   }
 
@@ -132,6 +132,24 @@ export class OverviewComponent implements OnInit, AfterViewInit, OnDestroy {
   navigatePage(pageIndex: number) {
     this.selected = pageIndex;
     this.initializeUserData(pageIndex, '');
+  }
+
+  navigateArrows(next: boolean) {
+    if(next) {
+      if (this.selected === this.pagesCount.length) {
+        return;
+      } else {
+        this.selected += 1;
+        this.initializeUserData(this.selected);
+      }
+    } else {
+      if (this.selected === 1) {
+        return;
+      } else {
+        this.selected -= 1;
+        this.initializeUserData(this.selected);
+      }
+    }
   }
 
   openPermissionModal(user: any) {

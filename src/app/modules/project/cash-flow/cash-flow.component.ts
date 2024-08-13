@@ -157,6 +157,24 @@ export class CashFlowComponent implements OnInit, AfterViewInit, OnDestroy {
     this.initCashFlowData(this.projectId, pageIndex, '');
   }
 
+  navigateArrows(next: boolean) {
+    if(next) {
+      if (this.selected === this.pagesCount.length) {
+        return;
+      } else {
+        this.selected += 1;
+        this.initCashFlowData(this.projectId, this.selected);
+      }
+    } else {
+      if (this.selected === 1) {
+        return;
+      } else {
+        this.selected -= 1;
+        this.initCashFlowData(this.projectId, this.selected);
+      }
+    }
+  }
+
   onSendFile(event: Event, myForm: NgForm) {
     if (!this.selectedFile && !this.selectedYear) {
       return;

@@ -62,7 +62,7 @@ export class OverviewComponent implements OnInit, AfterViewInit, OnDestroy {
     ).subscribe((event: any) => {
       const searchText = event.target.value;
       // console.log(event.target.value);
-      this.initializeProjectData(1, searchText)
+      this.initializeProjectData(1, '')
     });
   }
 
@@ -140,6 +140,24 @@ export class OverviewComponent implements OnInit, AfterViewInit, OnDestroy {
   navigatePage(pageIndex: number) {
     this.selected = pageIndex;
     this.initializeProjectData(pageIndex, '');
+  }
+
+  navigateArrows(next: boolean) {
+    if(next) {
+      if (this.selected === this.pagesCount.length) {
+        return;
+      } else {
+        this.selected += 1;
+        this.initializeProjectData(this.selected);
+      }
+    } else {
+      if (this.selected === 1) {
+        return;
+      } else {
+        this.selected -= 1;
+        this.initializeProjectData(this.selected);
+      }
+    }
   }
 
   checkAdmin(userName: string) {

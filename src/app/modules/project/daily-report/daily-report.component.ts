@@ -139,6 +139,24 @@ export class DailyReportComponent implements OnInit, AfterViewInit, OnDestroy {
     this.initDailyReportList(this.projectId, pageIndex, '');
   }
 
+  navigateArrows(next: boolean) {
+    if(next) {
+      if (this.selected === this.pagesCount.length) {
+        return;
+      } else {
+        this.selected += 1;
+        this.initDailyReportList(this.projectId, this.selected, '');
+      }
+    } else {
+      if (this.selected === 1) {
+        return;
+      } else {
+        this.selected -= 1;
+        this.initDailyReportList(this.projectId, this.selected, '');
+      }
+    }
+  }
+
   ngOnDestroy(): void {
     if (this.inputSubscription) {
       this.inputSubscription.unsubscribe();

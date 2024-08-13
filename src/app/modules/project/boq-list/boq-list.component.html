@@ -102,7 +102,7 @@
         <div class="fs-6 fw-bold text-gray-700">Showing {{dataList.length}} to 10 of 10 entries</div>
 
         <ul class="pagination">
-          <li class="page-item previous">
+          <li class="page-item previous" (click)="navigateArrows(false)">
             <a class="page-link cursor-pointer">
               <i class="previous"></i>
             </a>
@@ -113,7 +113,7 @@
             <a class="page-link cursor-pointer"> {{i+1}} </a>
           </li>
 
-          <li class="page-item next">
+          <li class="page-item next" (click)="navigateArrows(true)">
             <a class="page-link cursor-pointer">
               <i class="next"></i>
             </a>

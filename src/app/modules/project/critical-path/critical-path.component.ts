@@ -123,6 +123,24 @@ export class CriticalPathComponent implements OnInit, AfterViewInit, OnDestroy {
     this.initializeMilesStoneList(pageIndex, '');
   }
 
+  navigateArrows(next: boolean) {
+    if(next) {
+      if (this.selected === this.pagesCount.length) {
+        return;
+      } else {
+        this.selected += 1;
+        this.initializeMilesStoneList(this.selected, '');
+      }
+    } else {
+      if (this.selected === 1) {
+        return;
+      } else {
+        this.selected -= 1;
+        this.initializeMilesStoneList(this.selected, '');
+      }
+    }
+  }
+
   ngOnDestroy(): void {
     if (this.inputSubscription) {
       this.inputSubscription.unsubscribe();
