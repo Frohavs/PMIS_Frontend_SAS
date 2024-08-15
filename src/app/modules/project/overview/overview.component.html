@@ -60,31 +60,31 @@
         <!-- begin::Table head -->
         <thead>
           <tr class="fw-bolder text-muted">
-            <th class="w-25px">
+            <!-- <th class="w-25px">
               <div class="form-check form-check-sm form-check-custom form-check-solid">
                 <input class="form-check-input" type="checkbox" value="1" data-kt-check="true"
                   data-kt-check-target=".widget-9-check" (change)="checkAll($event)" />
               </div>
-            </th>
-            <th class="max-w-100px">{{"PROJECTS.Project" | translate}}</th>
-            <th class="max-w-100px">{{"PROJECTS.contract_no" | translate}}</th>
-            <th class="">{{"PROJECTS.Consultant" | translate}}</th>
-            <th class="">{{"PROJECTS.actions" | translate}}</th>
-            <th class="">{{"PROJECTS.start_date" | translate}}</th>
-            <th class="">{{"PROJECTS.Sector" | translate}}</th>
-            <th class="max-w-100px text-end">Actions</th>
+            </th> -->
+            <th class="min-w-200px">{{"PROJECTS.Project" | translate}}</th>
+            <th class="min-w-200px">{{"PROJECTS.Consultant" | translate}}</th>
+            <th class="min-w-200px">{{"PROJECTS.start_date" | translate}}</th>
+            <th class="min-w-200px">{{"PROJECTS.Sector" | translate}}</th>
+            <th class="max-w-50px">Actions</th>
+            <th class="max-w-100px text-end"></th>
+
           </tr>
         </thead>
         <!-- end::Table head -->
         <!-- begin::Table body -->
         <tbody>
           <tr *ngFor="let project of dataList; index as i">
-            <td>
+            <!-- <td>
               <div class="form-check form-check-sm form-check-custom form-check-solid">
                 <input class="form-check-input widget-9-check" type="checkbox" [value]="project?.id"
                   [checked]="project?.checked" (change)="checkUser($event, project?.id)" />
               </div>
-            </td>
+            </td> -->
             <td>
               <div class="d-flex align-items-center">
                 <div class="d-flex justify-content-start flex-column">
@@ -97,29 +97,13 @@
                 </div>
               </div>
             </td>
-            <td>
-              <a class="text-gray-900 fw-bolder text-hover-primary d-block fs-6">
-                {{project?.contractNo}}
-              </a>
-            </td>
+
             <td>
               <a class="text-gray-900 fw-bolder text-hover-primary d-block fs-6">
                 {{project?.consultantName}}
               </a>
             </td>
-            <td>
-              <div>
-                <div class="col-lg-8 fv-row">
-                  <select class="form-select form-select-solid form-select-lg fw-bold" name="Consultant"
-                    (change)="navigateTo($event, project?.id)">
-                    <option value="" selected disabled></option>
-                    <ng-container *ngFor="let option of projectOptions">
-                      <option [value]="option?.route">{{option?.name}}</option>
-                    </ng-container>
-                  </select>
-                </div>
-              </div>
-            </td>
+
             <td>
               <a class="text-gray-900 fw-bolder text-hover-primary d-block fs-6">
                 {{project?.executionStartDate | date: 'dd/MM/yyyy'}}
@@ -129,6 +113,19 @@
               <a class="text-gray-900 fw-bolder text-hover-primary d-block fs-6">
                 {{project?.projectSectorName}}
               </a>
+            </td>
+            <td>
+              <div>
+                <div class="col-lg-11 fv-row">
+                  <select class="form-select form-select-solid form-select-lg fw-bold" name="Consultant"
+                    (change)="navigateTo($event, project?.id)">
+                    <option value="" selected disabled></option>
+                    <ng-container *ngFor="let option of projectOptions">
+                      <option [value]="option?.route">{{option?.name}}</option>
+                    </ng-container>
+                  </select>
+                </div>
+              </div>
             </td>
             <td>
               <div class="d-flex justify-content-end flex-shrink-0" *ngIf="checkAdmin(project.userName)">
@@ -155,12 +152,13 @@
 
         <ul class="pagination">
           <li class="page-item previous" (click)="navigateArrows(false)">
-            <a class="page-link cursor-pointer" >
+            <a class="page-link cursor-pointer">
               <i class="previous"></i>
             </a>
           </li>
 
-          <li class="page-item" [ngClass]="{'active': selected === i+1}" (click)="navigatePage(i+1)" *ngFor="let page of pagesCount; index as i">
+          <li class="page-item" [ngClass]="{'active': selected === i+1}" (click)="navigatePage(i+1)"
+            *ngFor="let page of pagesCount; index as i">
             <a class="page-link cursor-pointer"> {{i+1}} </a>
           </li>
 
