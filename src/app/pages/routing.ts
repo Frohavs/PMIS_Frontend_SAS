@@ -40,6 +40,11 @@ const Routing: Routes = [
     // data: { layout: 'light-sidebar' },
   },
   {
+    path: 'user-profile',
+    loadChildren: () => import('../pages/user-profile/user-profile.module').then((m) => m.UserProfileModule),
+    // data: { layout: 'light-sidebar' },
+  },
+  {
     path: 'tracking',
     loadChildren: () => import('../pages/tracking/tracking.module').then((m) => m.TrackingModule),
     // data: { layout: 'light-sidebar' },
