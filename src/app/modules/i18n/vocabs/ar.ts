@@ -25,6 +25,7 @@ export const locale = {
       VENDORS: 'البائعون',
       BOQ: 'جدول الكميات',
       Tracking: 'التعقب',
+      user_profile: 'الملف الشخصي',
     },
     COMPANY: {
       ID: 'رقم',

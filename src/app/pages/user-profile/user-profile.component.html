@@ -1,1 +1,139 @@
-<p>user-profile works!</p>
+<form [formGroup]="profileForm" class="form">
+  <div class="row g-5 g-xl-8 justify-content-between">
+
+    <div class="col-xl-6">
+
+      <div class="card mb-5 mb-xl-8">
+        <!-- begin::Header -->
+        <div class="card-header align-items-center border-0 mt-4">
+          <h3 class="card-title align-items-start flex-column">
+            <span class="fw-bolder text-gray-900">Project Information</span>
+            <span class="text-muted mt-1 fw-bold fs-7">test</span>
+          </h3>
+        </div>
+
+
+        <div class="card-body border-top p-9">
+
+          <div class="row mb-6">
+            <label class="col-lg-4 col-form-label required fw-bold fs-6">Full Name</label>
+            <div class="col-lg-8 fv-row">
+              <input type="text" class="form-control form-control-lg form-control-solid"
+                placeholder="Please enter your full name" formControlName="name" />
+              <div
+                *ngIf="profileForm?.get('name')?.invalid && (profileForm?.get('name')?.dirty || profileForm?.get('name')?.touched)"
+                class="fv-plugins-message-container">
+                <div class="fv-help-block">full name is required</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row mb-6">
+            <label class="col-lg-4 col-form-label required fw-bold fs-6">Email</label>
+            <div class="col-lg-8 fv-row">
+              <input type="email" class="form-control form-control-lg form-control-solid" placeholder="email@doamin.com"
+                formControlName="email" />
+              <div
+                *ngIf="profileForm?.get('email')?.invalid && (profileForm?.get('email')?.dirty || profileForm?.get('email')?.touched)"
+                class="fv-plugins-message-container">
+                <div class="fv-help-block" *ngIf="profileForm.get('email')?.hasError('required')">email is required
+                </div>
+                <div class="fv-help-block" *ngIf="profileForm.get('email')?.hasError('email')">Wrong email format</div>
+              </div>
+
+            </div>
+          </div>
+          <div class="row mb-6">
+            <label class="col-lg-4 col-form-label required fw-bold fs-6">Phone</label>
+            <div class="col-lg-8 fv-row">
+              <input type="text" class="form-control form-control-lg form-control-solid" placeholder="your phone number"
+                formControlName="phone" />
+              <div
+                *ngIf="profileForm?.get('phone')?.invalid && (profileForm?.get('phone')?.dirty || profileForm?.get('phone')?.touched)"
+                class="fv-plugins-message-container">
+                <div class="fv-help-block">phone is required</div>
+              </div>
+            </div>
+          </div>
+          <div class="row mb-6">
+            <label class="col-lg-4 col-form-label required fw-bold fs-6">Password</label>
+            <div class="col-lg-8 fv-row">
+              <input type="password" class="form-control form-control-lg form-control-solid" formControlName="password"
+                placeholder="password" />
+              <div
+                *ngIf="profileForm?.get('password')?.invalid && (profileForm?.get('password')?.dirty || profileForm?.get('password')?.touched)"
+                class="fv-plugins-message-container">
+                <div class="fv-help-block">password is required</div>
+              </div>
+            </div>
+          </div>
+          <div class="row mb-6">
+            <label class="col-lg-4 col-form-label required fw-bold fs-6">Confirm Password</label>
+            <div class="col-lg-8 fv-row">
+              <input type="password" class="form-control form-control-lg form-control-solid"
+                formControlName="confirmPassword" placeholder="confirm password" />
+              <div
+                *ngIf="profileForm?.get('confirmPassword')?.invalid && (profileForm?.get('confirmPassword')?.dirty || profileForm?.get('confirmPassword')?.touched)"
+                class="fv-plugins-message-container">
+                <div class="fv-help-block">confirm password is required</div>
+              </div>
+            </div>
+          </div>
+
+
+
+        </div>
+
+      </div>
+    </div>
+
+    <div class="col-xl-6">
+      <ng-container *ngIf="true">
+        <div class="mb-1 bg-light-info p-8 rounded">
+          <div class="text-primary fs-5 fw-bold">
+            We will never share your email with anyone else.
+          </div>
+        </div>
+      </ng-container>
+
+      <div class="card  mb-xl-7">
+        <!-- begin::Header -->
+        <div class="card-header align-items-center border-0 mt-4">
+          <h3 class="card-title align-items-start flex-column">
+            <span class="fw-bolder text-gray-900">Updated CV</span>
+            <span class="text-muted mt-1 fw-bold fs-7">Upload Here</span>
+          </h3>
+        </div>
+        <div class="card-body pt-3">
+
+          <div class="row mb-6">
+            <div class="col-lg-8 fv-row">
+              <input type="file" class="form-control form-control-lg form-control-solid" formControlName="updatedCV" />
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div class="card  mb-xl-8">
+        <!-- begin::Header -->
+        <div class="card-header align-items-center border-0 mt-4">
+          <h3 class="card-title align-items-start flex-column">
+            <span class="fw-bolder text-gray-900">Profile Image</span>
+            <span class="text-muted mt-1 fw-bold fs-7">Upload Here</span>
+          </h3>
+        </div>
+        <div class="card-body pt-3">
+
+          <div class="row mb-6">
+            <div class="col-lg-8 fv-row">
+              <input type="file" class="form-control form-control-lg form-control-solid" formControlName="updatedImg" />
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</form>

@@ -1,14 +1,13 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { Subscription } from 'rxjs';
 import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CompanyService } from 'src/app/services/company.service';
 import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
 import { SweetAlertOptions } from 'sweetalert2';
-import { CompanyTypeService } from 'src/app/services/company-type.service';
 import { CompanyTypes } from './company-types';
 import { VendorService } from 'src/app/services/vendors.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-add-company',

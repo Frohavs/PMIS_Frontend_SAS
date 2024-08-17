@@ -25,6 +25,7 @@ export const locale = {
       VENDORS: 'Vendors',
       BOQ: 'Boq',
       Tracking: 'Tracking',
+      user_profile: 'Profile',
     },
     COMPANY: {
       ID: 'ID',
