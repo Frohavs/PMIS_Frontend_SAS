@@ -1,6 +1,6 @@
-import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
 import { fromEvent, Subscription } from 'rxjs';
 import { debounceTime, distinctUntilChanged, } from 'rxjs';
@@ -21,6 +21,7 @@ export class OverviewComponent implements OnInit, AfterViewInit, OnDestroy {
   totalCount: number;
   pagesCount: number[] = [];
   selected = 1;
+  selectedSettingId: number | null;
   projectOptions: any[] = PROJECT_OPTIONS;
 
   // modal configs
@@ -30,6 +31,9 @@ export class OverviewComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('noticeSwal') noticeSwal!: SwalComponent;
 
   @ViewChild('deleteSwal') public readonly deleteSwal!: SwalComponent;
+
+  @ViewChild('SettingsModal')
+  SettingsModal: TemplateRef<any>;
 
   userModel: { id: number | null, name: string, role: number } = { id: null, name: '', role: 0 };
   modalConfig: NgbModalOptions = {
@@ -42,6 +46,7 @@ export class OverviewComponent implements OnInit, AfterViewInit, OnDestroy {
     private cdr: ChangeDetectorRef,
     private router: Router,
     private elRef: ElementRef,
+    private modalService: NgbModal,
     private translate: TranslateService,
     private projectsService: ProjectsService,
   ) {
@@ -82,8 +87,9 @@ export class OverviewComponent implements OnInit, AfterViewInit, OnDestroy {
     });
   }
 
-  checkUser(event: Event, id: string) {
-    // const isChecked = (<HTMLInputElement>event.target).checked;
+  checkProject(id: number) {
+    this.selectedSettingId = id;
+    this.modalService.open(this.SettingsModal, this.modalConfig);
   }
 
   redirectToNew() {
@@ -116,9 +122,10 @@ export class OverviewComponent implements OnInit, AfterViewInit, OnDestroy {
     });
   }
 
-  navigateTo(event: any, id: number) {
-    const route = event?.target.value;
-    this.router.navigateByUrl(route + `/${id}`)
+  navigateTo(route: any) {
+    this.router.navigateByUrl(route + `/${this.selectedSettingId}`);
+    this.modalService.dismissAll();
+    this.selectedSettingId = null;
   }
 
   showAlert(swalOptions: SweetAlertOptions) {

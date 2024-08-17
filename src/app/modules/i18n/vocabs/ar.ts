@@ -55,6 +55,7 @@ export const locale = {
     PROJECTS: {
       ID: 'رقم',
       TITLE: 'المشاريع',
+      projectSettings: 'اعدادات المشروع',
       Project: 'المشروع',
       Add_Project: 'إضافة مشروع',
       Edit_Project: 'تعديل مشروع',
