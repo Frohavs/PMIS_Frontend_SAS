@@ -23,4 +23,8 @@ export const PROJECT_OPTIONS = [
     name: 'Daily Report',
     route: 'projects/daily-report'
   },
+  {
+    name: 'S Curve',
+    route: 'projects/s-curve'
+  },
 ]

@@ -21,6 +21,7 @@ import { AddCriticalPathComponent } from './critical-path/add-critical-path/add-
 import { CriticalPathComponent } from './critical-path/critical-path.component';
 import { DailyReportComponent } from './daily-report/daily-report.component';
 import { AddDailyReportComponent } from './daily-report/add-daily-report/add-daily-report.component';
+import { SCurveComponent } from './s-curve/s-curve.component';
 
 const routes: Routes = [
   {
@@ -126,6 +127,10 @@ const routes: Routes = [
       {
         path: 'edit-daily-report/:id',
         component: AddDailyReportComponent,
+      },
+      {
+        path: 's-curve/:id',
+        component: SCurveComponent,
       },
 
       { path: '', redirectTo: 'overview', pathMatch: 'full' },

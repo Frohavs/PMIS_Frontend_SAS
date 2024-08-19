@@ -70,7 +70,6 @@ export class BoqListComponent implements OnInit, AfterViewInit, OnDestroy {
       distinctUntilChanged(),
     ).subscribe((event: any) => {
       const searchText = event.target.value;
-      // console.log(event.target.value);
       this.initializeProjectData(this.projectId, 1, searchText)
     });
   }

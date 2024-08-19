@@ -36,4 +36,13 @@ export class AttachmentService {
       headers: httpHeaders
     });
   }
+  downloadSCurveAttachment(): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/DownLoad?fileName=Boq_Template.xlsx`;
+    return this.http.post<any>(url, {}, {
+      headers: httpHeaders
+    });
+  }
 }
