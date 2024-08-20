@@ -32,6 +32,7 @@ import { AddCriticalPathComponent } from './critical-path/add-critical-path/add-
 import { DailyReportComponent } from './daily-report/daily-report.component';
 import { AddDailyReportComponent } from './daily-report/add-daily-report/add-daily-report.component';
 import { SCurveComponent } from './s-curve/s-curve.component';
+import { ResourcePlanListComponent } from './resource-plan-list/resource-plan-list.component';
 
 
 @NgModule({
@@ -64,7 +65,8 @@ import { SCurveComponent } from './s-curve/s-curve.component';
     DailyReportComponent,
     AddDailyReportComponent,
 
-    SCurveComponent
+    SCurveComponent,
+    ResourcePlanListComponent
   ],
   imports: [
     CommonModule,

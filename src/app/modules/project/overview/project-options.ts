@@ -27,4 +27,8 @@ export const PROJECT_OPTIONS = [
     name: 'S Curve',
     route: 'projects/s-curve'
   },
+  {
+    name: 'Resource Plan List',
+    route: 'projects/resource-plan-list'
+  },
 ]

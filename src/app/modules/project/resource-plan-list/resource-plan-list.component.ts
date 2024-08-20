@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, ElementRef, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
@@ -11,11 +11,11 @@ import { SweetAlertOptions } from 'sweetalert2';
 
 
 @Component({
-  selector: 'app-s-curve',
-  templateUrl: './s-curve.component.html',
-  styleUrl: './s-curve.component.scss'
+  selector: 'app-resource-plan-list',
+  templateUrl: './resource-plan-list.component.html',
+  styleUrl: './resource-plan-list.component.scss'
 })
-export class SCurveComponent {
+export class ResourcePlanListComponent implements OnInit, OnDestroy {
   projectId: number;
 
   Add_text: string;
@@ -58,7 +58,7 @@ export class SCurveComponent {
   }
 
   ngOnInit(): void {
-    this.getBoqId();
+    this.getProjectId();
     this.attachmentService.downloadSCurveAttachment().subscribe(res => {
       this.sCurveTemplate = res.data;
     })
@@ -72,11 +72,11 @@ export class SCurveComponent {
       distinctUntilChanged(),
     ).subscribe((event: any) => {
       const searchText = event.target.value;
-      this.initializeProjectData(this.projectId, 1, searchText)
+      this.initResourceListData(this.projectId, 1, searchText)
     });
   }
 
-  initializeProjectData(id: number, pageIndex?: number, search?: string) {
+  initResourceListData(id: number, pageIndex?: number, search?: string) {
     this.dataList = [];
     // this.boqService.getAll(id, pageIndex, search).subscribe(res => {
     //   this.totalCount = res?.data?.totalcount;
@@ -85,15 +85,14 @@ export class SCurveComponent {
     // });
   }
 
-  getBoqId() {
+  getProjectId() {
     this.activatedRoute.params.subscribe(params => {
       this.projectId = +params['id'];
       if (this.projectId) {
-        this.initializeProjectData(this.projectId)
+        this.initResourceListData(this.projectId)
       }
     });
   }
-
 
   checkUser(event: Event, id: string) {
     // const isChecked = (<HTMLInputElement>event.target).checked;
@@ -115,7 +114,7 @@ export class SCurveComponent {
             setTimeout(() => {
               this.isLoading = false;
               this.dataList = [];
-              this.initializeProjectData(this.projectId);
+              this.initResourceListData(this.projectId);
             }, 500);
           },
           error: (error) => {
@@ -133,7 +132,7 @@ export class SCurveComponent {
 
   navigatePage(pageIndex: number) {
     this.selected = pageIndex;
-    this.initializeProjectData(this.projectId, pageIndex, '');
+    this.initResourceListData(this.projectId, pageIndex, '');
   }
 
   navigateArrows(next: boolean) {
@@ -142,14 +141,14 @@ export class SCurveComponent {
         return;
       } else {
         this.selected += 1;
-        this.initializeProjectData(this.projectId, this.selected);
+        this.initResourceListData(this.projectId, this.selected);
       }
     } else {
       if (this.selected === 1) {
         return;
       } else {
         this.selected -= 1;
-        this.initializeProjectData(this.projectId, this.selected);
+        this.initResourceListData(this.projectId, this.selected);
       }
     }
   }
@@ -172,7 +171,7 @@ export class SCurveComponent {
       fd.append('file', this.selectedFile, this.selectedFile.name);
       this.boqService.uploadBoqFile(this.projectId, fd).subscribe(res => {
         this.showAlert({ icon: 'success', title: 'Success!', text: 'file Uploaded successfully!' });
-        this.initializeProjectData(this.projectId)
+        this.initResourceListData(this.projectId)
         this.fileInput.nativeElement.value = '';
         this.selectedFile = null;
       }, (error) => {

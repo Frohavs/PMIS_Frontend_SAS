@@ -22,6 +22,7 @@ import { CriticalPathComponent } from './critical-path/critical-path.component';
 import { DailyReportComponent } from './daily-report/daily-report.component';
 import { AddDailyReportComponent } from './daily-report/add-daily-report/add-daily-report.component';
 import { SCurveComponent } from './s-curve/s-curve.component';
+import { ResourcePlanListComponent } from './resource-plan-list/resource-plan-list.component';
 
 const routes: Routes = [
   {
@@ -131,6 +132,10 @@ const routes: Routes = [
       {
         path: 's-curve/:id',
         component: SCurveComponent,
+      },
+      {
+        path: 'resource-plan-list/:id',
+        component: ResourcePlanListComponent,
       },
 
       { path: '', redirectTo: 'overview', pathMatch: 'full' },
