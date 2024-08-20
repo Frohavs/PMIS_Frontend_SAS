@@ -31,4 +31,8 @@ export const PROJECT_OPTIONS = [
     name: 'Resource Plan List',
     route: 'projects/resource-plan-list'
   },
+  {
+    name: 'Project Letters',
+    route: 'projects/project-letter'
+  },
 ]
