@@ -33,6 +33,8 @@ import { DailyReportComponent } from './daily-report/daily-report.component';
 import { AddDailyReportComponent } from './daily-report/add-daily-report/add-daily-report.component';
 import { SCurveComponent } from './s-curve/s-curve.component';
 import { ResourcePlanListComponent } from './resource-plan-list/resource-plan-list.component';
+import { ProjectLettersComponent } from './project-letters/project-letters.component';
+import { AddLetterComponent } from './project-letters/add-letter/add-letter.component';
 
 
 @NgModule({
@@ -66,7 +68,10 @@ import { ResourcePlanListComponent } from './resource-plan-list/resource-plan-li
     AddDailyReportComponent,
 
     SCurveComponent,
-    ResourcePlanListComponent
+    ResourcePlanListComponent,
+
+    ProjectLettersComponent,
+    AddLetterComponent
   ],
   imports: [
     CommonModule,

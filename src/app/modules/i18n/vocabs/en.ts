@@ -148,6 +148,14 @@ export const locale = {
       Status: 'Status',
       Search: 'Search Paths...',
     },
+    LETTERS: {
+      ID: 'ID',
+      TITLE: 'Project Letters',
+      Add_Letter: 'Create Letter',
+      EN_NAME: 'English Name',
+      Status: 'Status',
+      Search: 'Search Letter...',
+    },
     BOQ: {
       ID: 'ID',
       TITLE: 'Boq',

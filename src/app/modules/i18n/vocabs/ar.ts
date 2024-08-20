@@ -148,6 +148,14 @@ export const locale = {
       Status: 'الحالة',
       Search: 'بحث عن مخرجات...',
     },
+    LETTERS: {
+      ID: 'رقم',
+      TITLE: 'سجل التنسيقات',
+      Add_Letter: 'إضافة سجل',
+      EN_NAME: 'الأسم بالأنجليزية',
+      Status: 'الحالة',
+      Search: 'بحث عن سجل...',
+    },
     BOQ: {
       ID: 'رقم',
       TITLE: 'جدول الكميات',
