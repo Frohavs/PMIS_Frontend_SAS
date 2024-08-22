@@ -37,8 +37,8 @@ export class SCurveService {
   }
 
   downloadScurve(id: number | null): Observable<any> {
-    const url = `${this.API_USERS_URL}/DownloadScurve?projectId=${id}`;
-    return this.http.post<any>(url, {});
+    const url = `${this.API_USERS_URL}/DownloadScurve/${id}`;
+    return this.http.get<any>(url);
   }
 
   uploadSCurveFile(id: number, file: any) {
