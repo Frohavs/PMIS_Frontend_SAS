@@ -18,24 +18,27 @@ export class SCurveService {
   }
 
   // public methods
-  getAll(id: number): Observable<any> {
+  getAll(id: number, pageIndex?: number, search?: string): Observable<any> {
     const httpHeaders = new HttpHeaders({
       Authorization: `Bearer ${this.token}`,
     });
-    const url = `${this.API_USERS_URL}/Get/${id}`;
-    return this.http.get<any>(url, {
+    const body = {
+      projectId: id,
+      quickSearch: search,
+      pagedSearch: {
+        "pageIndex": pageIndex,
+        "pageSize": 10
+      }
+    }
+    const url = `${this.API_USERS_URL}/Get`;
+    return this.http.post<any>(url, body, {
       headers: httpHeaders
     });
   }
 
   downloadScurve(id: number | null): Observable<any> {
-    const httpHeaders = new HttpHeaders({
-      Authorization: `Bearer ${this.token}`,
-    });
     const url = `${this.API_USERS_URL}/DownloadScurve?projectId=${id}`;
-    return this.http.post<any>(url, {}, {
-      headers: httpHeaders
-    });
+    return this.http.post<any>(url, {});
   }
 
   uploadSCurveFile(id: number, file: any) {

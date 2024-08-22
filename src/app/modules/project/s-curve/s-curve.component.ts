@@ -1,9 +1,10 @@
 import { Location } from '@angular/common';
-import { ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
 import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
+import { debounceTime, distinctUntilChanged, fromEvent, Subscription } from 'rxjs';
 import { SCurveService } from 'src/app/services/s-curve.service';
 import { SweetAlertOptions } from 'sweetalert2';
 
@@ -13,12 +14,15 @@ import { SweetAlertOptions } from 'sweetalert2';
   templateUrl: './s-curve.component.html',
   styleUrl: './s-curve.component.scss'
 })
-export class SCurveComponent implements OnInit {
+export class SCurveComponent implements OnInit, AfterViewInit, OnDestroy {
   projectId: number;
 
   Add_text: string;
   Search_text: string;
   dataList: any[] = [];
+  totalCount: number;
+  pagesCount: number[] = [];
+  selected = 1;
   sCurveTemplate: string;
   selectedFile: File | null;
 
@@ -36,8 +40,11 @@ export class SCurveComponent implements OnInit {
   };
   @ViewChild('fileInput') fileInput: ElementRef;
 
+  private inputSubscription: Subscription;
 
   constructor(
+    private router: Router,
+    private elRef: ElementRef,
     private _location: Location,
     private activatedRoute: ActivatedRoute,
     private cdr: ChangeDetectorRef,
@@ -51,14 +58,27 @@ export class SCurveComponent implements OnInit {
   ngOnInit(): void {
     this.getBoqId();
     this.sCurveService.downloadScurve(this.projectId).subscribe(res => {
-      debugger
       this.sCurveTemplate = res.data;
     })
   }
 
-  initializeProjectData(id: number) {
-    this.sCurveService.getAll(id).subscribe(res => {
-      this.dataList = [];
+  ngAfterViewInit(): void {
+    // const inputElement = this.elRef.nativeElement.querySelector('input[data-action="filter"]');
+
+    // this.inputSubscription = fromEvent(inputElement, 'input').pipe(
+    //   debounceTime(500),
+    //   distinctUntilChanged(),
+    // ).subscribe((event: any) => {
+    //   const searchText = event.target.value;
+    //   this.initializeProjectData(this.projectId, 1, searchText)
+    // });
+  }
+
+  initializeProjectData(id: number, pageIndex?: number, search?: string) {
+    this.sCurveService.getAll(id, pageIndex, search).subscribe(res => {
+      this.dataList = res.data.items[0].items;
+      this.totalCount = res?.data?.totalcount;
+      this.pagesCount = Array.from({ length: Math.ceil(this.totalCount / 10) }, (_, index) => index + 1);
       this.cdr.detectChanges();
     });
   }
@@ -72,13 +92,47 @@ export class SCurveComponent implements OnInit {
     });
   }
 
+  checkAll(event: Event) {
+    const isChecked = (<HTMLInputElement>event.target).checked;
+    this.dataList.forEach(project => {
+      project.checked = isChecked ? true : false;
+    });
+  }
+
+  checkUser(event: Event, id: string) {
+    // const isChecked = (<HTMLInputElement>event.target).checked;
+  }
+
+  navigatePage(pageIndex: number) {
+    this.selected = pageIndex;
+    this.initializeProjectData(this.projectId, pageIndex, '');
+  }
+
+  navigateArrows(next: boolean) {
+    if(next) {
+      if (this.selected === this.pagesCount.length) {
+        return;
+      } else {
+        this.selected += 1;
+        this.initializeProjectData(this.projectId, this.selected);
+      }
+    } else {
+      if (this.selected === 1) {
+        return;
+      } else {
+        this.selected -= 1;
+        this.initializeProjectData(this.projectId, this.selected);
+      }
+    }
+  }
+
   approveSCurve() {
     // this.router.navigateByUrl('projects/add-boq' + `/${this.projectId}`)
   }
 
   downloadTemplate() {
-    if(!this.sCurveTemplate) {
-      alert('file not returned')
+    if (!this.sCurveTemplate) {
+      alert('file not returned');
       return;
     }
     window.open(this.sCurveTemplate);
@@ -107,6 +161,12 @@ export class SCurveComponent implements OnInit {
       });
     }
 
+  }
+
+  ngOnDestroy(): void {
+    if (this.inputSubscription) {
+      this.inputSubscription.unsubscribe();
+    }
   }
 
   showAlert(swalOptions: SweetAlertOptions) {
