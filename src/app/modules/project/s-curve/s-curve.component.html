@@ -24,9 +24,13 @@
       <a class="btn btn-sm btn-light-success mx-2" (click)="downloadTemplate()">
         Download
       </a>
-      <a class="btn btn-sm btn-light-warning" (click)="approveSCurve()">
-
-        Consultant approve
+      <a class="btn btn-sm " (click)="approveSCurve(dataList?.sCurveApproval)"
+      [ngClass]="{
+        'btn-info': dataList?.sCurveApproval === 2,
+        'btn-danger': dataList?.sCurveApproval === 3,
+        'btn-light-warning': dataList?.sCurveApproval !== 2 && dataList?.sCurveApproval !== 3,
+    }">
+        {{!dataList?.sCurveApproval ? 'Consultant approve' : dataList?.sCurveApproval === 1 ? 'Manager Approved' : dataList?.sCurveApproval === 2 ? 'Approved' : 'Rejected'}}
       </a>
     </div>
   </div>
@@ -52,7 +56,7 @@
         <!-- end::Table head -->
         <!-- begin::Table body -->
         <tbody>
-          <tr *ngFor="let curve of dataList; index as i">
+          <tr *ngFor="let curve of dataList?.items; index as i">
 
             <td>
               <a class="text-gray-900 fw-bolder text-hover-primary fs-6">
@@ -91,7 +95,7 @@
             </td>
 
           </tr>
-          <tr *ngIf="!dataList?.length">
+          <tr *ngIf="!dataList?.items?.length">
             <td colspan="8" class="text-center fs-2 text-primary">
               no items retrieved yet
             </td>
@@ -108,7 +112,51 @@
 </swal>
 
 
-<swal #deleteSwal [swalOptions]="swalOptions" title="Are you sure to delete?" text="This can't be undone" icon="warning"
-  [showCancelButton]="true" [focusCancel]="true"
-  [customClass]="{confirmButton: 'btn btn-danger', cancelButton: 'btn btn-active-light'}">
-</swal>
+<ng-template #approveModal let-modal>
+  <form #myForm="ngForm" (ngSubmit)="onSubmit()">
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Role Details</h4>
+      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+
+      <div class="fv-row mb-7">
+        <div class="col-lg-8 d-flex align-items-center">
+          <div class="form-check form-check-solid form-switch d-flex align-items-center">
+            <input class="form-check-input w-45px h-30px me-2" type="checkbox" name="durationDays"
+              [(ngModel)]="approveModelData.accepted" />
+            <label class="form-check-label">{{approveModelData.accepted ? 'approve' : 'reject'}}</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="fv-row mb-7">
+        <label class="fw-semibold fs-6 mb-2">Reason</label>
+        <textarea class="form-control form-control-solid" name="eotReason" [(ngModel)]="approveModelData.note"
+          rows="3"></textarea>
+      </div>
+
+    </div>
+    <div class="modal-footer flex-center">
+      <!--begin::Button-->
+      <button type="reset" id="kt_modal_update_customer_cancel" class="btn btn-light me-3"
+        (click)="modal.dismiss('cancel')">
+        Discard
+      </button>
+      <!--end::Button-->
+
+      <!--begin::Button-->
+      <button type="submit" id="kt_modal_update_customer_submit" class="btn btn-primary"
+        [attr.data-kt-indicator]="isLoading ? 'on' : 'off'">
+        <span class="indicator-label">
+          Submit
+        </span>
+        <span class="indicator-progress">
+          Please wait... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+        </span>
+      </button>
+      <!--end::Button-->
+    </div>
+  </form>
+</ng-template>
+

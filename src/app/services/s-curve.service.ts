@@ -36,9 +36,9 @@ export class SCurveService {
     });
   }
 
-  downloadScurve(id: number | null): Observable<any> {
-    const url = `${this.API_USERS_URL}/DownloadScurve/${id}`;
-    return this.http.get<any>(url);
+  downloadScurve(id: number | null) {
+    const url = `${this.API_USERS_URL}/Download/${id}`;
+    return url;
   }
 
   uploadSCurveFile(id: number, file: any) {
@@ -49,5 +49,16 @@ export class SCurveService {
     return this.http.post<any>(url, file, {
       headers: httpHeaders
     });
+  }
+
+  approve(payload: any) {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/Approve`;
+    return this.http.put<any>(url, payload, {
+      headers: httpHeaders
+    });
+
   }
 }
