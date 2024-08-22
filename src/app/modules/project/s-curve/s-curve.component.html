@@ -98,29 +98,6 @@
         </tbody>
       </table>
 
-      <div class="d-flex flex-stack flex-wrap pt-10">
-        <div class="fs-6 fw-bold text-gray-700">Showing {{dataList.length}} to 10 of 10 entries</div>
-
-        <ul class="pagination">
-          <li class="page-item previous" (click)="navigateArrows(false)">
-            <a class="page-link cursor-pointer">
-              <i class="previous"></i>
-            </a>
-          </li>
-
-          <li class="page-item" [ngClass]="{'active': selected === i+1}" (click)="navigatePage(i+1)"
-            *ngFor="let page of pagesCount; index as i">
-            <a class="page-link cursor-pointer"> {{i+1}} </a>
-          </li>
-
-          <li class="page-item next" (click)="navigateArrows(true)">
-            <a class="page-link cursor-pointer">
-              <i class="next"></i>
-            </a>
-          </li>
-        </ul>
-        <!-- end::Table pagination -->
-      </div>
     </div>
   </div>
 </div>

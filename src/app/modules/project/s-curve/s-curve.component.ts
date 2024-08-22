@@ -1,12 +1,10 @@
-import { ChangeDetectorRef, Component, ElementRef, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
+import { ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
 import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
-import { Subscription, debounceTime, distinctUntilChanged, fromEvent } from 'rxjs';
-import { AttachmentService } from 'src/app/services/attachment/attachment.service';
-import { BoqService } from 'src/app/services/boq.service';
+import { SCurveService } from 'src/app/services/s-curve.service';
 import { SweetAlertOptions } from 'sweetalert2';
 
 
@@ -15,15 +13,12 @@ import { SweetAlertOptions } from 'sweetalert2';
   templateUrl: './s-curve.component.html',
   styleUrl: './s-curve.component.scss'
 })
-export class SCurveComponent {
+export class SCurveComponent implements OnInit {
   projectId: number;
 
   Add_text: string;
   Search_text: string;
   dataList: any[] = [];
-  totalCount: number;
-  pagesCount: number[] = [];
-  selected = 1;
   sCurveTemplate: string;
   selectedFile: File | null;
 
@@ -41,16 +36,12 @@ export class SCurveComponent {
   };
   @ViewChild('fileInput') fileInput: ElementRef;
 
-  private inputSubscription: Subscription;
 
   constructor(
-    private router: Router,
-    private elRef: ElementRef,
     private _location: Location,
     private activatedRoute: ActivatedRoute,
     private cdr: ChangeDetectorRef,
-    private boqService: BoqService,
-    private attachmentService: AttachmentService,
+    private sCurveService: SCurveService,
     private translate: TranslateService,
   ) {
     this.Add_text = this.translate.instant('BOQ.Add_Boq');
@@ -59,30 +50,17 @@ export class SCurveComponent {
 
   ngOnInit(): void {
     this.getBoqId();
-    this.attachmentService.downloadSCurveAttachment().subscribe(res => {
+    this.sCurveService.downloadScurve(this.projectId).subscribe(res => {
+      debugger
       this.sCurveTemplate = res.data;
     })
   }
 
-  ngAfterViewInit(): void {
-    const inputElement = this.elRef.nativeElement.querySelector('input[data-action="filter"]');
-
-    this.inputSubscription = fromEvent(inputElement, 'input').pipe(
-      debounceTime(500),
-      distinctUntilChanged(),
-    ).subscribe((event: any) => {
-      const searchText = event.target.value;
-      this.initializeProjectData(this.projectId, 1, searchText)
+  initializeProjectData(id: number) {
+    this.sCurveService.getAll(id).subscribe(res => {
+      this.dataList = [];
+      this.cdr.detectChanges();
     });
-  }
-
-  initializeProjectData(id: number, pageIndex?: number, search?: string) {
-    this.dataList = [];
-    // this.boqService.getAll(id, pageIndex, search).subscribe(res => {
-    //   this.totalCount = res?.data?.totalcount;
-    //   this.pagesCount = Array.from({ length: Math.ceil(this.totalCount / 10) }, (_, index) => index + 1);
-    //   this.cdr.detectChanges();
-    // });
   }
 
   getBoqId() {
@@ -94,67 +72,15 @@ export class SCurveComponent {
     });
   }
 
-
-  checkUser(event: Event, id: string) {
-    // const isChecked = (<HTMLInputElement>event.target).checked;
-  }
-
-  editBoq(boq: any) {
-    this.router.navigate([`projects/add-boq/${this.projectId}`], {
-      queryParams: { boqId: boq.id }
-    });
-  }
-
-  deleteBoq(boq: any) {
-    this.deleteSwal.fire().then((clicked) => {
-      if (clicked.isConfirmed) {
-        this.isLoading = true;
-        this.boqService.deleteBoq(boq.id).subscribe({
-          next: (res) => {
-            this.showAlert({ icon: 'success', title: 'Success!', text: 'Boq Deleted successfully!' });
-            setTimeout(() => {
-              this.isLoading = false;
-              this.dataList = [];
-              this.initializeProjectData(this.projectId);
-            }, 500);
-          },
-          error: (error) => {
-            this.isLoading = false;
-            this.showAlert({ icon: 'error', title: 'Error!', text: 'Please try again' });
-          }
-        });
-      }
-    });
-  }
-
   approveSCurve() {
     // this.router.navigateByUrl('projects/add-boq' + `/${this.projectId}`)
   }
 
-  navigatePage(pageIndex: number) {
-    this.selected = pageIndex;
-    this.initializeProjectData(this.projectId, pageIndex, '');
-  }
-
-  navigateArrows(next: boolean) {
-    if (next) {
-      if (this.selected === this.pagesCount.length) {
-        return;
-      } else {
-        this.selected += 1;
-        this.initializeProjectData(this.projectId, this.selected);
-      }
-    } else {
-      if (this.selected === 1) {
-        return;
-      } else {
-        this.selected -= 1;
-        this.initializeProjectData(this.projectId, this.selected);
-      }
-    }
-  }
-
   downloadTemplate() {
+    if(!this.sCurveTemplate) {
+      alert('file not returned')
+      return;
+    }
     window.open(this.sCurveTemplate);
   }
 
@@ -170,7 +96,7 @@ export class SCurveComponent {
     if (this.selectedFile) {
       const fd = new FormData();
       fd.append('file', this.selectedFile, this.selectedFile.name);
-      this.boqService.uploadBoqFile(this.projectId, fd).subscribe(res => {
+      this.sCurveService.uploadSCurveFile(this.projectId, fd).subscribe(res => {
         this.showAlert({ icon: 'success', title: 'Success!', text: 'file Uploaded successfully!' });
         this.initializeProjectData(this.projectId)
         this.fileInput.nativeElement.value = '';
@@ -181,12 +107,6 @@ export class SCurveComponent {
       });
     }
 
-  }
-
-  ngOnDestroy(): void {
-    if (this.inputSubscription) {
-      this.inputSubscription.unsubscribe();
-    }
   }
 
   showAlert(swalOptions: SweetAlertOptions) {
