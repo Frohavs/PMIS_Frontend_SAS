@@ -47,11 +47,11 @@
             <label class="col-lg-4 col-form-label required fw-bold fs-6">Phone</label>
             <div class="col-lg-8 fv-row">
               <input type="text" class="form-control form-control-lg form-control-solid" placeholder="your phone number"
-                formControlName="phone" />
+                formControlName="phoneNumber" />
               <div
-                *ngIf="profileForm?.get('phone')?.invalid && (profileForm?.get('phone')?.dirty || profileForm?.get('phone')?.touched)"
+                *ngIf="profileForm?.get('phoneNumber')?.invalid && (profileForm?.get('phoneNumber')?.dirty || profileForm?.get('phoneNumber')?.touched)"
                 class="fv-plugins-message-container">
-                <div class="fv-help-block">phone is required</div>
+                <div class="fv-help-block">phone number is required</div>
               </div>
             </div>
           </div>

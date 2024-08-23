@@ -53,7 +53,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         this.profileForm.patchValue({
           fullName: res?.data.fullName,
           email: res?.data?.email,
-          phone: res?.data?.phoneNumber || ''
+          phoneNumber: res?.data?.phoneNumber || ''
         })
       })
     });
@@ -63,7 +63,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     this.profileForm = this.fb.group({
       fullName: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      phone: ['', Validators.required],
+      phoneNumber: ['', Validators.required],
       password: ['', Validators.required],
       confirmPassword: ['', Validators.required],
       attachment: ['', Validators.required],

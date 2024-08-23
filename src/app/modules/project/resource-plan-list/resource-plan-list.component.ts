@@ -1,12 +1,11 @@
-import { ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
-import { NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
+import { ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
 import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
-import { Subscription, debounceTime, distinctUntilChanged, fromEvent } from 'rxjs';
-import { AttachmentService } from 'src/app/services/attachment/attachment.service';
-import { BoqService } from 'src/app/services/boq.service';
+import { Subscription } from 'rxjs';
+import { ResourcePlanService } from 'src/app/services/resource-plan.service';
 import { SweetAlertOptions } from 'sweetalert2';
 
 
@@ -20,11 +19,10 @@ export class ResourcePlanListComponent implements OnInit, OnDestroy {
 
   Add_text: string;
   Search_text: string;
-  dataList: any[] = [];
+  dataList: any;
   totalCount: number;
   pagesCount: number[] = [];
   selected = 1;
-  sCurveTemplate: string;
   selectedFile: File | null;
 
   // modal configs
@@ -33,24 +31,26 @@ export class ResourcePlanListComponent implements OnInit, OnDestroy {
   swalOptions: SweetAlertOptions = { buttonsStyling: false };
   @ViewChild('noticeSwal') noticeSwal!: SwalComponent;
 
-  @ViewChild('deleteSwal') public readonly deleteSwal!: SwalComponent;
+  // @ViewChild('deleteSwal') public readonly deleteSwal!: SwalComponent;
+  @ViewChild('approveModal')
+  approveModal: TemplateRef<any>;
 
   userModel: { id: number | null, name: string, role: number } = { id: null, name: '', role: 0 };
   modalConfig: NgbModalOptions = {
     modalDialogClass: 'modal-dialog modal-dialog-centered mw-650px',
   };
+  private inputSubscription: Subscription;
   @ViewChild('fileInput') fileInput: ElementRef;
 
-  private inputSubscription: Subscription;
+  approveModelData: any = { accepted: true, notes: '', id: 0, approval: 1 };
 
   constructor(
     private router: Router,
-    private elRef: ElementRef,
+    private modalService: NgbModal,
     private _location: Location,
     private activatedRoute: ActivatedRoute,
     private cdr: ChangeDetectorRef,
-    private boqService: BoqService,
-    private attachmentService: AttachmentService,
+    private resourcePlanService: ResourcePlanService,
     private translate: TranslateService,
   ) {
     this.Add_text = this.translate.instant('BOQ.Add_Boq');
@@ -58,81 +58,33 @@ export class ResourcePlanListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.getProjectId();
-    this.attachmentService.downloadSCurveAttachment().subscribe(res => {
-      this.sCurveTemplate = res.data;
-    })
+    this.getBoqId();
   }
 
-  ngAfterViewInit(): void {
-    const inputElement = this.elRef.nativeElement.querySelector('input[data-action="filter"]');
+  initializeProjectData(id: number, pageIndex?: number, search?: string) {
+    this.resourcePlanService.getAll(id, pageIndex, search).subscribe(res => {
+      this.dataList = res.data.items[0];
+      this.approveModelData.id = this.dataList?.id;
+      this.approveModelData.approval = !this.dataList?.approval ? 1 : this.dataList?.approval;
 
-    this.inputSubscription = fromEvent(inputElement, 'input').pipe(
-      debounceTime(500),
-      distinctUntilChanged(),
-    ).subscribe((event: any) => {
-      const searchText = event.target.value;
-      this.initResourceListData(this.projectId, 1, searchText)
+      this.totalCount = res?.data?.totalcount;
+      this.pagesCount = Array.from({ length: Math.ceil(this.totalCount / 10) }, (_, index) => index + 1);
+      this.cdr.detectChanges();
     });
   }
 
-  initResourceListData(id: number, pageIndex?: number, search?: string) {
-    this.dataList = [];
-    // this.boqService.getAll(id, pageIndex, search).subscribe(res => {
-    //   this.totalCount = res?.data?.totalcount;
-    //   this.pagesCount = Array.from({ length: Math.ceil(this.totalCount / 10) }, (_, index) => index + 1);
-    //   this.cdr.detectChanges();
-    // });
-  }
-
-  getProjectId() {
+  getBoqId() {
     this.activatedRoute.params.subscribe(params => {
       this.projectId = +params['id'];
       if (this.projectId) {
-        this.initResourceListData(this.projectId)
+        this.initializeProjectData(this.projectId)
       }
     });
-  }
-
-  checkUser(event: Event, id: string) {
-    // const isChecked = (<HTMLInputElement>event.target).checked;
-  }
-
-  editBoq(boq: any) {
-    this.router.navigate([`projects/add-boq/${this.projectId}`], {
-      queryParams: { boqId: boq.id }
-    });
-  }
-
-  deleteBoq(boq: any) {
-    this.deleteSwal.fire().then((clicked) => {
-      if (clicked.isConfirmed) {
-        this.isLoading = true;
-        this.boqService.deleteBoq(boq.id).subscribe({
-          next: (res) => {
-            this.showAlert({ icon: 'success', title: 'Success!', text: 'Boq Deleted successfully!' });
-            setTimeout(() => {
-              this.isLoading = false;
-              this.dataList = [];
-              this.initResourceListData(this.projectId);
-            }, 500);
-          },
-          error: (error) => {
-            this.isLoading = false;
-            this.showAlert({ icon: 'error', title: 'Error!', text: 'Please try again' });
-          }
-        });
-      }
-    });
-  }
-
-  approveSCurve() {
-    // this.router.navigateByUrl('projects/add-boq' + `/${this.projectId}`)
   }
 
   navigatePage(pageIndex: number) {
     this.selected = pageIndex;
-    this.initResourceListData(this.projectId, pageIndex, '');
+    this.initializeProjectData(this.projectId, pageIndex, '');
   }
 
   navigateArrows(next: boolean) {
@@ -141,20 +93,26 @@ export class ResourcePlanListComponent implements OnInit, OnDestroy {
         return;
       } else {
         this.selected += 1;
-        this.initResourceListData(this.projectId, this.selected);
+        this.initializeProjectData(this.projectId, this.selected);
       }
     } else {
       if (this.selected === 1) {
         return;
       } else {
         this.selected -= 1;
-        this.initResourceListData(this.projectId, this.selected);
+        this.initializeProjectData(this.projectId, this.selected);
       }
     }
   }
 
+  approveSCurve(approval: number) {
+    if ((!approval || approval === 0  || approval === 1) && this.dataList.items.length) {
+      this.modalService.open(this.approveModal, this.modalConfig);
+    }
+  }
+
   downloadTemplate() {
-    window.open(this.sCurveTemplate);
+    window.open(this.resourcePlanService.downloadResourcePlan(this.projectId));
   }
 
   uploadTemplate(event: Event) {
@@ -169,9 +127,9 @@ export class ResourcePlanListComponent implements OnInit, OnDestroy {
     if (this.selectedFile) {
       const fd = new FormData();
       fd.append('file', this.selectedFile, this.selectedFile.name);
-      this.boqService.uploadBoqFile(this.projectId, fd).subscribe(res => {
+      this.resourcePlanService.uploadResourcePlanFile(this.projectId, fd).subscribe(res => {
         this.showAlert({ icon: 'success', title: 'Success!', text: 'file Uploaded successfully!' });
-        this.initResourceListData(this.projectId)
+        this.initializeProjectData(this.projectId)
         this.fileInput.nativeElement.value = '';
         this.selectedFile = null;
       }, (error) => {
@@ -179,6 +137,19 @@ export class ResourcePlanListComponent implements OnInit, OnDestroy {
         this.showAlert({ icon: 'error', title: 'Error!', text: 'Please try again' });
       });
     }
+  }
+
+  onSubmit() {
+    this.approveModelData.approval = this.approveModelData.accepted === false ? 3 : this.approveModelData.approval + 1;
+    delete this.approveModelData['accepted'];
+    this.resourcePlanService.approve(this.approveModelData).subscribe(res => {
+      this.showAlert({ icon: 'success', title: 'Success!', text: 's-curve approved successfully!' });
+      this.modalService.dismissAll();
+      this.approveModelData = { accepted: true, notes: '', id: this.dataList?.id, approval: 0 };
+      this.initializeProjectData(this.projectId);
+    }, () => {
+      this.showAlert({ icon: 'error', title: 'Error!', text: 'please try again!' })
+    });
 
   }
 

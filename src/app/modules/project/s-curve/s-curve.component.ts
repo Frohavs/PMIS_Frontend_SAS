@@ -106,7 +106,7 @@ export class SCurveComponent implements OnInit, OnDestroy {
   }
 
   approveSCurve(approval: number) {
-    if (!approval || approval === 0  || approval === 1) {
+    if ((!approval || approval === 0  || approval === 1) && this.dataList.items.length) {
       this.modalService.open(this.approveModal, this.modalConfig);
     }
   }
