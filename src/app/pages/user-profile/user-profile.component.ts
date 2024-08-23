@@ -53,7 +53,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         this.profileForm.patchValue({
           fullName: res?.data.fullName,
           email: res?.data?.email,
-          phone: res?.data?.phone || ''
+          phone: res?.data?.phoneNumber || ''
         })
       })
     });
