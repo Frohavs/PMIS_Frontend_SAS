@@ -25,7 +25,8 @@ import { TranslationModule } from 'src/app/modules/i18n';
     WidgetsModule,
     SharedModule,
     TranslationModule,
-    TranslateModule
+    TranslateModule,
+    SweetAlert2Module.forChild(),
   ]
 })
 export class UserProfileModule { }

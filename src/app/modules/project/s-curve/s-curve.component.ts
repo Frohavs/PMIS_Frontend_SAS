@@ -1,10 +1,10 @@
+import { ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { Location } from '@angular/common';
-import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
 import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
-import { debounceTime, distinctUntilChanged, fromEvent, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { SCurveService } from 'src/app/services/s-curve.service';
 import { SweetAlertOptions } from 'sweetalert2';
 

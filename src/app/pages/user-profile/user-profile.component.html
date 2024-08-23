@@ -19,9 +19,9 @@
             <label class="col-lg-4 col-form-label required fw-bold fs-6">Full Name</label>
             <div class="col-lg-8 fv-row">
               <input type="text" class="form-control form-control-lg form-control-solid"
-                placeholder="Please enter your full name" formControlName="name" />
+                placeholder="Please enter your full name" formControlName="fullName" />
               <div
-                *ngIf="profileForm?.get('name')?.invalid && (profileForm?.get('name')?.dirty || profileForm?.get('name')?.touched)"
+                *ngIf="profileForm?.get('fullName')?.invalid && (profileForm?.get('fullName')?.dirty || profileForm?.get('fullName')?.touched)"
                 class="fv-plugins-message-container">
                 <div class="fv-help-block">full name is required</div>
               </div>
@@ -79,7 +79,15 @@
               </div>
             </div>
           </div>
-
+          <button type="button" class="btn btn-primary float-end" [disabled]="isLoading" (click)="saveData()">
+            <ng-container *ngIf="!isLoading">{{"TRANSLATOR.SAVE_CHANGES" | translate}}</ng-container>
+            <ng-container *ngIf="isLoading">
+              <span clas="indicator-progress" [style.display]="'block'">
+                Please wait...{{ " " }}
+                <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+              </span>
+            </ng-container>
+          </button>
 
 
         </div>
@@ -89,9 +97,9 @@
 
     <div class="col-xl-6">
       <ng-container *ngIf="true">
-        <div class="mb-1 bg-light-info p-8 rounded">
-          <div class="text-primary fs-5 fw-bold">
-            We will never share your email with anyone else.
+        <div class="mb-1 bg-light-success p-8 rounded">
+          <div class="text-success fs-5 fw-bold">
+            We will never share your Information with anyone else.
           </div>
         </div>
       </ng-container>
@@ -108,7 +116,11 @@
 
           <div class="row mb-6">
             <div class="col-lg-8 fv-row">
-              <input type="file" class="form-control form-control-lg form-control-solid" formControlName="updatedCV" />
+              <input type="file" class="form-control form-control-lg form-control-solid" formControlName="attachment"
+                (change)="onCVSelected($event)" />
+            </div>
+            <div class="col-lg-4" *ngIf="profileForm?.get('attachment')?.value">
+              <img class="w-50px" src="../../../assets/media/svg/files/pdf.svg" alt="icon">
             </div>
           </div>
 
@@ -126,10 +138,13 @@
 
           <div class="row mb-6">
             <div class="col-lg-8 fv-row">
-              <input type="file" class="form-control form-control-lg form-control-solid" formControlName="updatedImg" />
+              <input type="file" class="form-control form-control-lg form-control-solid" formControlName="profilePic"
+                (change)="onImgSelected($event)" />
+            </div>
+            <div class="col-lg-4" *ngIf="profileForm?.get('profilePic')?.value">
+              <img class="w-50px" [src]="imageSrc" alt="img">
             </div>
           </div>
-
         </div>
       </div>
 
@@ -137,3 +152,7 @@
 
   </div>
 </form>
+
+<!-- modal -->
+<swal #noticeSwal [swalOptions]="swalOptions">
+</swal>
