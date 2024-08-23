@@ -24,13 +24,13 @@
       <a class="btn btn-sm btn-light-success mx-2" (click)="downloadTemplate()">
         Download
       </a>
-      <a class="btn btn-sm " (click)="approveSCurve(dataList?.sCurveApproval)"
+      <a class="btn btn-sm " (click)="approveSCurve(dataList?.approval)"
       [ngClass]="{
-        'btn-info': dataList?.sCurveApproval === 2,
-        'btn-danger': dataList?.sCurveApproval === 3,
-        'btn-light-warning': dataList?.sCurveApproval !== 2 && dataList?.sCurveApproval !== 3,
+        'btn-info': dataList?.approval === 2,
+        'btn-danger': dataList?.approval === 3,
+        'btn-light-warning': dataList?.approval !== 2 && dataList?.approval !== 3,
     }">
-        {{!dataList?.sCurveApproval ? 'Consultant approve' : dataList?.sCurveApproval === 1 ? 'Manager Approved' : dataList?.sCurveApproval === 2 ? 'Approved' : 'Rejected'}}
+        {{!dataList?.approval ? 'Consultant approve' : dataList?.approval === 1 ? 'Manager Approved' : dataList?.approval === 2 ? 'Approved' : 'Rejected'}}
       </a>
     </div>
   </div>

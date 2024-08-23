@@ -42,7 +42,7 @@ export class SCurveComponent implements OnInit, OnDestroy {
   private inputSubscription: Subscription;
   @ViewChild('fileInput') fileInput: ElementRef;
 
-  approveModelData: any = { accepted: true, notes: '', id: 0, scurveApproval: 1 };
+  approveModelData: any = { accepted: true, notes: '', id: 0, approval: 1 };
 
   constructor(
     private router: Router,
@@ -65,7 +65,7 @@ export class SCurveComponent implements OnInit, OnDestroy {
     this.sCurveService.getAll(id, pageIndex, search).subscribe(res => {
       this.dataList = res.data.items[0];
       this.approveModelData.id = this.dataList?.id;
-      this.approveModelData.scurveApproval = !this.dataList?.sCurveApproval ? 1 : this.dataList?.sCurveApproval;
+      this.approveModelData.approval = !this.dataList?.approval ? 1 : this.dataList?.approval;
 
       this.totalCount = res?.data?.totalcount;
       this.pagesCount = Array.from({ length: Math.ceil(this.totalCount / 10) }, (_, index) => index + 1);
@@ -105,8 +105,8 @@ export class SCurveComponent implements OnInit, OnDestroy {
     }
   }
 
-  approveSCurve(sCurveApproval: number) {
-    if (sCurveApproval === 0  || sCurveApproval === 1) {
+  approveSCurve(approval: number) {
+    if (!approval || approval === 0  || approval === 1) {
       this.modalService.open(this.approveModal, this.modalConfig);
     }
   }
@@ -140,12 +140,12 @@ export class SCurveComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    this.approveModelData.scurveApproval = this.approveModelData.accepted === false ? 3 : this.approveModelData.scurveApproval + 1;
+    this.approveModelData.approval = this.approveModelData.accepted === false ? 3 : this.approveModelData.approval + 1;
     delete this.approveModelData['accepted'];
     this.sCurveService.approve(this.approveModelData).subscribe(res => {
       this.showAlert({ icon: 'success', title: 'Success!', text: 's-curve approved successfully!' });
       this.modalService.dismissAll();
-      this.approveModelData = { accepted: true, notes: '', id: this.dataList?.id, scurveApproval: 0 };
+      this.approveModelData = { accepted: true, notes: '', id: this.dataList?.id, approval: 0 };
       this.initializeProjectData(this.projectId);
     }, () => {
       this.showAlert({ icon: 'error', title: 'Error!', text: 'please try again!' })

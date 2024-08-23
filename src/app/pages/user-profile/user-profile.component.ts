@@ -48,6 +48,12 @@ export class UserProfileComponent implements OnInit, OnDestroy {
 
     this.authService.currentUser$.subscribe((res: any) => {
       this.userId = +res.id;
+      debugger
+      this.profileForm.patchValue({
+        fullName: res.fullName,
+        email: res?.email,
+        phone: res?.phone || ''
+      })
     });
   }
 
