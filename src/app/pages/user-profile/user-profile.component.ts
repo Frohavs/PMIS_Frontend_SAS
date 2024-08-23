@@ -48,11 +48,13 @@ export class UserProfileComponent implements OnInit, OnDestroy {
 
     this.authService.currentUser$.subscribe((res: any) => {
       this.userId = +res.id;
-      debugger
-      this.profileForm.patchValue({
-        fullName: res.fullName,
-        email: res?.email,
-        phone: res?.phone || ''
+      this.newUserService.getUser(res.id).subscribe(res => {
+        debugger
+        this.profileForm.patchValue({
+          fullName: res?.data.fullName,
+          email: res?.data?.email,
+          phone: res?.data?.phone || ''
+        })
       })
     });
   }
@@ -118,8 +120,10 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   saveData() {
     const payload =
       { ...this.profileForm.value, id: this.userId }
-    this.newUserService.updateUser(payload).subscribe(res => {
+    this.newUserService.UpdateUserProfile(payload).subscribe(res => {
       this.showAlert({ icon: 'success', title: 'Success!', text: 'Data Updated successfully!' });
+    },() => {
+      this.showAlert({ icon: 'error', title: 'Error!', text: 'Please try again' });
     });
   }
 

@@ -83,6 +83,15 @@ export class NewUserService {
       headers: httpHeaders
     });
   }
+  UpdateUserProfile(user: string): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/UpdateUserProfile`;
+    return this.http.put<any>(url, user, {
+      headers: httpHeaders
+    });
+  }
   deleteUser(id: number): Observable<any> {
     const httpHeaders = new HttpHeaders({
       Authorization: `Bearer ${this.token}`,
