@@ -1,1 +1,159 @@
-<p>add-letter works!</p>
+<div class="row g-5 g-xl-8 justify-content-between">
+
+  <div class="col-xl-12">
+    <div class="card mb-5 mb-xl-10">
+      <div class="card-header border-0 cursor-pointer" role="button" data-bs-toggle="collapse"
+        data-bs-target="#kt_add_company" aria-expanded="true" aria-controls="kt_add_company">
+        <div class="card-title m-0">
+          <h3 class="fw-bolder m-0">{{"COMPANY.Add_Company" | translate}}</h3>
+        </div>
+        <div class="card-toolbar">
+          <a (click)="back()" class="btn btn-sm btn-danger d-flex">
+            <app-keenicon name="arrow-left" class="fs-3"></app-keenicon>
+            {{"ECOMMERCE.COMMON.BACK" | translate}}
+          </a>
+        </div>
+      </div>
+      <div id="kt_add_company" class="collapse show">
+        <form [formGroup]="addLetterForm" class="form">
+          <div class="card-body border-top p-9">
+
+            <div class="row mb-6">
+              <label class="col-lg-4 col-form-label required fw-bold fs-6">Date of request for coordination:</label>
+              <div class="col-lg-8 fv-row">
+                <input type="date" class="form-control form-control-lg form-control-solid" formControlName="date" />
+                <div
+                  *ngIf="addLetterForm?.get('date')?.invalid && (addLetterForm?.get('date')?.dirty || addLetterForm?.get('date')?.touched)"
+                  class="fv-plugins-message-container">
+                  <div class="fv-help-block">date is required</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row mb-6">
+              <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="required">Coordinating
+                  Body</span></label>
+              <div class="col-lg-8 fv-row">
+                <select class="form-select form-select-solid form-select-lg fw-bold" name="Type" formControlName="body">
+                  <option value="" disabled>{{"TRANSLATOR.SELECTION" | translate}}</option>
+                  <!-- <ng-container *ngFor="let item of companyTypes">
+                    <option [value]="item?.id">{{item?.name}}</option>
+                  </ng-container> -->
+                </select>
+                <div
+                  *ngIf="addLetterForm?.get('body')?.invalid && (addLetterForm?.get('body')?.dirty || addLetterForm?.get('body')?.touched)"
+                  class="fv-plugins-message-container">
+                  <div class="fv-help-block">body is required</div>
+                </div>
+              </div>
+            </div>
+
+
+            <div class="row mb-6">
+              <label class="col-lg-4 col-form-label required fw-bold fs-6">Subject</label>
+              <div class="col-lg-8 fv-row">
+                <textarea class="form-control form-control-lg form-control-solid" formControlName="subject"
+                  cols="3"></textarea>
+                <div
+                  *ngIf="addLetterForm?.get('subject')?.invalid && (addLetterForm?.get('subject')?.dirty || addLetterForm?.get('subject')?.touched)"
+                  class="fv-plugins-message-container">
+                  <div class="fv-help-block">subject is required</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row mb-6">
+              <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="required">District</span></label>
+              <div class="col-lg-8 fv-row">
+                <select class="form-select form-select-solid form-select-lg fw-bold" name="Type"
+                  formControlName="district">
+                  <option value="" disabled>{{"TRANSLATOR.SELECTION" | translate}}</option>
+                  <ng-container *ngFor="let dis of Districts">
+                    <option [value]="dis?.id">{{dis?.name}}</option>
+                  </ng-container>
+                </select>
+                <div
+                  *ngIf="addLetterForm?.get('district')?.invalid && (addLetterForm?.get('district')?.dirty || addLetterForm?.get('district')?.touched)"
+                  class="fv-plugins-message-container">
+                  <div class="fv-help-block">district is required</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row mb-6">
+              <label class="col-lg-4 col-form-label required fw-bold fs-6">Street</label>
+              <div class="col-lg-8 fv-row">
+                <input type="text" class="form-control form-control-lg form-control-solid" formControlName="street" />
+                <div
+                  *ngIf="addLetterForm?.get('street')?.invalid && (addLetterForm?.get('street')?.dirty || addLetterForm?.get('street')?.touched)"
+                  class="fv-plugins-message-container">
+                  <div class="fv-help-block">street is required</div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <div class="card-footer d-flex justify-content-end py-6 px-9">
+            <button type="button" class="btn btn-primary" [disabled]="isLoading" (click)="saveSettings()">
+              <ng-container *ngIf="!isLoading">{{"TRANSLATOR.SAVE_CHANGES" | translate}}</ng-container>
+              <ng-container *ngIf="isLoading">
+                <span clas="indicator-progress" [style.display]="'block'">
+                  Please wait...{{ " " }}
+                  <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                </span>
+              </ng-container>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="col-xl-6" *ngIf="false">
+    <div class="card mb-5 mb-xl-8">
+      <!-- begin::Header -->
+      <div class="card-header align-items-center border-0 mt-4">
+        <h3 class="card-title align-items-center justify-content-between w-100">
+          <span class="fw-bolder text-gray-900">Credits and Notes</span>
+          <!-- <span class="text-muted mt-1 fw-bold fs-7">test</span> -->
+          <a class="btn btn-sm btn-light-warning">
+            Approve
+          </a>
+        </h3>
+        <div class="card-toolbar">
+          <!-- begin::Menu -->
+          <button type="button" class="btn btn-sm btn-icon btn-color-primary btn-active-light-primary"
+            data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end" data-kt-menu-flip="top-end">
+          </button>
+          <!-- end::Menu -->
+        </div>
+      </div>
+      <!-- end::Header -->
+      <!-- begin::Body -->
+      <div class="card-body pt-3">
+
+        <div class="row mb-6 d-flex flex-column">
+          <label class="col-lg-4 col-form-label required fw-bold fs-6">notes</label>
+          <div class="col-lg-12 fv-row">
+            <textarea class="form-control form-control-lg form-control-solid" cols="3" #notes></textarea>
+          </div>
+        </div>
+
+        <button type="button" class="btn btn-primary float-end">
+          Add
+        </button>
+
+      </div>
+      <!-- end::Body -->
+    </div>
+  </div>
+
+
+</div>
+
+
+
+<!-- modal -->
+<swal #noticeSwal [swalOptions]="swalOptions">
+</swal>
