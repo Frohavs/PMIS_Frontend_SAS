@@ -10,7 +10,7 @@ export class SubContractorsService {
 
 
 
-  API_USERS_URL = `${environment.apiUrl}/Letter`;
+  API_USERS_URL = `${environment.apiUrl}/SubContract`;
   token: string;
   private authLocalStorageToken = `${environment.appVersion}-${environment.USERDATA_KEY}`;
 
@@ -47,7 +47,7 @@ export class SubContractorsService {
       headers: httpHeaders
     });
   }
-  addLetter(path: any): Observable<any> {
+  addContractor(path: any): Observable<any> {
     const httpHeaders = new HttpHeaders({
       Authorization: `Bearer ${this.token}`,
     });
@@ -56,7 +56,16 @@ export class SubContractorsService {
       headers: httpHeaders
     });
   }
-  updateLetter(path: any): Observable<any> {
+  createSubContractor(path: any): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/createSubContractor`;
+    return this.http.post<any>(url, path, {
+      headers: httpHeaders
+    });
+  }
+  updateContractor(path: any): Observable<any> {
     const httpHeaders = new HttpHeaders({
       Authorization: `Bearer ${this.token}`,
     });
@@ -65,7 +74,7 @@ export class SubContractorsService {
       headers: httpHeaders
     });
   }
-  deleteLetter(id: number): Observable<any> {
+  deleteContractor(id: number): Observable<any> {
     const httpHeaders = new HttpHeaders({
       Authorization: `Bearer ${this.token}`,
     });

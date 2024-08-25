@@ -91,7 +91,7 @@ export class ProjectLettersComponent implements OnInit, AfterViewInit, OnDestroy
     this.router.navigateByUrl('projects/add-project-letter/' + this.projectId)
   }
 
-  editLetter(letter: any) {
+  letterDetails(letter: any) {
     this.router.navigate(['projects/project-letter-details/' + this.projectId], {
       queryParams: { pathId: letter.id }
     });

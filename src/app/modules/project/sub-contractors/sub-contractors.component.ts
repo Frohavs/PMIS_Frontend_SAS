@@ -98,7 +98,7 @@ export class SubContractorsComponent implements OnInit, AfterViewInit, OnDestroy
       this.deleteSwal.fire().then((clicked) => {
         if (clicked.isConfirmed) {
           this.isLoading = true;
-          this.subContractorsService.deleteLetter(user.id).subscribe({
+          this.subContractorsService.deleteContractor(user.id).subscribe({
             next: (res) => {
               this.showAlert({ icon: 'success', title: 'Success!', text: 'Letter Deleted successfully!' });
               setTimeout(() => {

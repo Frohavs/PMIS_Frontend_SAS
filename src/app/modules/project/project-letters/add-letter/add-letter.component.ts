@@ -1,14 +1,12 @@
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
-import { CompanyTypes } from 'src/app/modules/companies/add-company/company-types';
-import { CompanyService } from 'src/app/services/company.service';
-import { SweetAlertOptions } from 'sweetalert2';
 import { AreaDistrictService } from 'src/app/services/area-district.service';
 import { LookupService } from 'src/app/services/lookup/lookup.service';
 import { ProjectLettersService } from 'src/app/services/project-letters.service';
+import { SweetAlertOptions } from 'sweetalert2';
 
 
 @Component({
@@ -104,11 +102,12 @@ export class AddLetterComponent implements OnInit {
 
   saveSettings() {
     const payload =
-      { ...this.addLetterForm.value, projectId: this.projectId,
-         stakeHolderId: +this.addLetterForm.value.stakeHolderId,
-         districtId: +this.addLetterForm.value.districtId,
-         }
-      debugger
+    {
+      ...this.addLetterForm.value, projectId: this.projectId,
+      stakeHolderId: +this.addLetterForm.value.stakeHolderId,
+      districtId: +this.addLetterForm.value.districtId,
+    }
+    debugger
     this.lettersService.addLetter(payload).subscribe(res => {
       this.router.navigateByUrl(`projects/project-letter/${this.projectId}`)
       this.showAlert({ icon: 'success', title: 'Success!', text: 'Letter Added successfully!' });
