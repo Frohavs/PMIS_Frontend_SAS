@@ -35,4 +35,8 @@ export const PROJECT_OPTIONS = [
     name: 'Project Letters',
     route: 'projects/project-letter'
   },
+  {
+    name: 'Sub Contractors',
+    route: 'projects/sub-contractors'
+  },
 ]

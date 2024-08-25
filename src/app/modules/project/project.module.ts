@@ -35,6 +35,8 @@ import { SCurveComponent } from './s-curve/s-curve.component';
 import { ResourcePlanListComponent } from './resource-plan-list/resource-plan-list.component';
 import { ProjectLettersComponent } from './project-letters/project-letters.component';
 import { AddLetterComponent } from './project-letters/add-letter/add-letter.component';
+import { SubContractorsComponent } from './sub-contractors/sub-contractors.component';
+import { AddSubContractorComponent } from './sub-contractors/add-sub-contractor/add-sub-contractor.component';
 
 
 @NgModule({
@@ -71,7 +73,10 @@ import { AddLetterComponent } from './project-letters/add-letter/add-letter.comp
     ResourcePlanListComponent,
 
     ProjectLettersComponent,
-    AddLetterComponent
+    AddLetterComponent,
+
+    SubContractorsComponent,
+    AddSubContractorComponent
   ],
   imports: [
     CommonModule,

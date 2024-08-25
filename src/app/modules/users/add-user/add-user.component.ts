@@ -105,7 +105,7 @@ export class AddUserComponent implements OnInit, OnDestroy {
         this.cdr.detectChanges();
       }, 500);
     } else {
-      const payload = { userId: this.userId, ...this.addUserForm.value, companyId: +this.addUserForm.value.companyId, roleIds: [this.addUserForm.value.roleIds] };
+      const payload = { userId: +this.userId, ...this.addUserForm.value, companyId: +this.addUserForm.value.companyId, roleIds: [this.addUserForm.value.roleIds] };
       delete payload['password'];
       delete payload['confirmPassword'];
       this.newUserService.updateUser(payload).subscribe(res => {
