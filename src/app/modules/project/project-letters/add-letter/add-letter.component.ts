@@ -7,6 +7,8 @@ import { CompanyTypes } from 'src/app/modules/companies/add-company/company-type
 import { CompanyService } from 'src/app/services/company.service';
 import { SweetAlertOptions } from 'sweetalert2';
 import { AreaDistrictService } from 'src/app/services/area-district.service';
+import { LookupService } from 'src/app/services/lookup/lookup.service';
+import { ProjectLettersService } from 'src/app/services/project-letters.service';
 
 
 @Component({
@@ -20,6 +22,8 @@ export class AddLetterComponent implements OnInit {
   projectId: number;
   isLoading: boolean;
   addLetterForm: FormGroup;
+  areas: any;
+  stackHolders: any[] = [];
   Districts: any[] = [];
 
 
@@ -32,7 +36,8 @@ export class AddLetterComponent implements OnInit {
     private cdr: ChangeDetectorRef,
     private formBuilder: FormBuilder,
     private activatedRoute: ActivatedRoute,
-    private companyService: CompanyService,
+    private lettersService: ProjectLettersService,
+    private lookupService: LookupService,
     private areaDistrictService: AreaDistrictService,
   ) {
   }
@@ -41,8 +46,16 @@ export class AddLetterComponent implements OnInit {
     this.getProjectId();
     this.initializeCompanyForm();
     this.getLookups();
-  }
 
+    this.addLetterForm.get('districtId')?.valueChanges.subscribe((id: number) => {
+      if (id) {
+        this.areaDistrictService.getAreaById(id).subscribe(res => {
+          this.areas = res.data;
+          this.cdr.detectChanges();
+        });
+      }
+    })
+  }
 
   getProjectId() {
     this.activatedRoute.params.subscribe(params => {
@@ -61,29 +74,28 @@ export class AddLetterComponent implements OnInit {
 
   initializeCompanyForm() {
     this.addLetterForm = this.formBuilder.group({
-      date: ['', Validators.required],
-      body: ['', Validators.required],
+      requestDate: ['', Validators.required],
       subject: ['', Validators.required],
-      district: ['', Validators.required],
       street: ['', Validators.required],
-      companyType: ['', Validators.required],
+      stakeHolderId: [null, Validators.required],
+      districtId: [null, Validators.required],
     });
   }
   editCompanyForm(data: any) {
     this.addLetterForm.patchValue({
-      date: data?.name,
-      body: data?.body,
-      subject: data?.body,
-      district: data?.body,
-      street: data?.body,
-      companyType: data?.companyTypeId,
+      requestDate: data?.requestDate,
+      stakeHolderId: data?.stakeHolderId,
+      subject: data?.subject,
+      districtId: data?.districtId,
+      street: data?.street,
     });
   }
 
   getLookups() {
-    // this.areaDistrictService.getAreas().subscribe(res => {
-      // this.municipalities = res.data;
-    // });
+    this.lookupService.getStackHolders().subscribe(res => {
+      this.stackHolders = res.data;
+      this.cdr.detectChanges();
+    });
     this.areaDistrictService.getDistricts().subscribe(res => {
       this.Districts = res.data;
       this.cdr.detectChanges();
@@ -91,16 +103,20 @@ export class AddLetterComponent implements OnInit {
   }
 
   saveSettings() {
-      const payload =
-        { ...this.addLetterForm.value }
-      this.companyService.addCompany(payload).subscribe(res => {
-        this.router.navigateByUrl(`projects/project-letter/${this.projectId}`)
-        this.showAlert({ icon: 'success', title: 'Success!', text: 'Letter Added successfully!' });
-      })
-      setTimeout(() => {
-        this.isLoading = false;
-        this.cdr.detectChanges();
-      }, 500);
+    const payload =
+      { ...this.addLetterForm.value, projectId: this.projectId,
+         stakeHolderId: +this.addLetterForm.value.stakeHolderId,
+         districtId: +this.addLetterForm.value.districtId,
+         }
+      debugger
+    this.lettersService.addLetter(payload).subscribe(res => {
+      this.router.navigateByUrl(`projects/project-letter/${this.projectId}`)
+      this.showAlert({ icon: 'success', title: 'Success!', text: 'Letter Added successfully!' });
+    })
+    setTimeout(() => {
+      this.isLoading = false;
+      this.cdr.detectChanges();
+    }, 500);
 
   }
 

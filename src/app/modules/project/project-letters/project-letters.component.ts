@@ -7,6 +7,7 @@ import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
 import { Subscription, fromEvent, debounceTime, distinctUntilChanged } from 'rxjs';
 import { CriticalPathService } from 'src/app/services/critical-path.service';
 import { SweetAlertOptions } from 'sweetalert2';
+import { ProjectLettersService } from 'src/app/services/project-letters.service';
 
 @Component({
   selector: 'app-project-letters',
@@ -47,7 +48,7 @@ export class ProjectLettersComponent implements OnInit, AfterViewInit, OnDestroy
     private activatedRoute: ActivatedRoute,
     private cdr: ChangeDetectorRef,
     private translate: TranslateService,
-    private criticalPathService: CriticalPathService
+    private lettersService: ProjectLettersService
   ) {
     this.Add_text = this.translate.instant('LETTERS.Add_Letter');
     this.Search_text = this.translate.instant('LETTERS.Search');
@@ -60,12 +61,12 @@ export class ProjectLettersComponent implements OnInit, AfterViewInit, OnDestroy
 
   initializeMilesStoneList(pageIndex?: number, search?: string) {
     this.dataList = [];
-    // this.criticalPathService.getAll(pageIndex, search).subscribe(res => {
-    //   this.dataList = res?.data?.items;
-    //   this.totalCount = res?.data?.totalcount;
-    //   this.pagesCount = Array.from({ length: Math.ceil(this.totalCount / 10) }, (_, index) => index + 1);
-    //   this.cdr.detectChanges();
-    // });
+    this.lettersService.getAll(this.projectId, pageIndex, search).subscribe(res => {
+      this.dataList = res?.data?.items;
+      this.totalCount = res?.data?.totalcount;
+      this.pagesCount = Array.from({ length: Math.ceil(this.totalCount / 10) }, (_, index) => index + 1);
+      this.cdr.detectChanges();
+    });
   }
 
   ngAfterViewInit(): void {
@@ -90,17 +91,17 @@ export class ProjectLettersComponent implements OnInit, AfterViewInit, OnDestroy
     this.router.navigateByUrl('projects/add-project-letter/' + this.projectId)
   }
 
-  editCriticalPath(criticalPath: any) {
-    this.router.navigate(['projects/edit-project-letter/' + this.projectId], {
-      queryParams: { pathId: criticalPath.id }
+  editLetter(letter: any) {
+    this.router.navigate(['projects/project-letter-details/' + this.projectId], {
+      queryParams: { pathId: letter.id }
     });
   }
 
-  deleteCriticalPath(user: any) {
+  deleteLetter(letter: any) {
     this.deleteSwal.fire().then((clicked) => {
       if (clicked.isConfirmed) {
         this.isLoading = true;
-        this.criticalPathService.deleteCriticalPath(user.id).subscribe({
+        this.lettersService.deleteLetter(letter.id).subscribe({
           next: (res) => {
             this.showAlert({ icon: 'success', title: 'Success!', text: 'Letter Deleted successfully!' });
             setTimeout(() => {

@@ -47,8 +47,8 @@ export class SubContractorsComponent implements OnInit, AfterViewInit, OnDestroy
       private translate: TranslateService,
       private subContractorsService: SubContractorsService
     ) {
-      this.Add_text = this.translate.instant('LETTERS.Add_Letter');
-      this.Search_text = this.translate.instant('LETTERS.Search');
+      this.Add_text = this.translate.instant('SubContractors.Add_Contractor');
+      this.Search_text = this.translate.instant('SubContractors.Search');
     }
 
     ngOnInit(): void {

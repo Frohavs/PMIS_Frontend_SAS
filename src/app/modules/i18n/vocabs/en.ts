@@ -156,6 +156,14 @@ export const locale = {
       Status: 'Status',
       Search: 'Search Letter...',
     },
+    SubContractors: {
+      ID: 'ID',
+      TITLE: 'Project Sub-Contractors',
+      Add_Contractor: 'Create Contractor',
+      EN_NAME: 'English Name',
+      Status: 'Status',
+      Search: 'Search Contractor...',
+    },
     BOQ: {
       ID: 'ID',
       TITLE: 'Boq',

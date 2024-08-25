@@ -65,5 +65,14 @@ export class LookupService {
       headers: httpHeaders
     });
   }
+  getStackHolders(): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/GetStakeHolders`;
+    return this.http.get<any>(url, {
+      headers: httpHeaders
+    });
+  }
 
 }

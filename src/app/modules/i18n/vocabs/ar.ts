@@ -156,6 +156,14 @@ export const locale = {
       Status: 'الحالة',
       Search: 'بحث عن سجل...',
     },
+    SubContractors: {
+      ID: 'رقم',
+      TITLE: 'مقاولين الباطن',
+      Add_Contractor: 'إضافة مقاول',
+      EN_NAME: 'الأسم بالأنجليزية',
+      Status: 'الحالة',
+      Search: 'بحث عن مقاول...',
+    },
     BOQ: {
       ID: 'رقم',
       TITLE: 'جدول الكميات',

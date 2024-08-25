@@ -21,9 +21,9 @@
             <div class="row mb-6">
               <label class="col-lg-4 col-form-label required fw-bold fs-6">Date of request for coordination:</label>
               <div class="col-lg-8 fv-row">
-                <input type="date" class="form-control form-control-lg form-control-solid" formControlName="date" />
+                <input type="date" class="form-control form-control-lg form-control-solid" formControlName="requestDate" />
                 <div
-                  *ngIf="addLetterForm?.get('date')?.invalid && (addLetterForm?.get('date')?.dirty || addLetterForm?.get('date')?.touched)"
+                  *ngIf="addLetterForm?.get('requestDate')?.invalid && (addLetterForm?.get('requestDate')?.dirty || addLetterForm?.get('requestDate')?.touched)"
                   class="fv-plugins-message-container">
                   <div class="fv-help-block">date is required</div>
                 </div>
@@ -34,16 +34,16 @@
               <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="required">Coordinating
                   Body</span></label>
               <div class="col-lg-8 fv-row">
-                <select class="form-select form-select-solid form-select-lg fw-bold" name="Type" formControlName="body">
+                <select class="form-select form-select-solid form-select-lg fw-bold" name="Type" formControlName="stakeHolderId">
                   <option value="" disabled>{{"TRANSLATOR.SELECTION" | translate}}</option>
-                  <!-- <ng-container *ngFor="let item of companyTypes">
+                  <ng-container *ngFor="let item of stackHolders">
                     <option [value]="item?.id">{{item?.name}}</option>
-                  </ng-container> -->
+                  </ng-container>
                 </select>
                 <div
-                  *ngIf="addLetterForm?.get('body')?.invalid && (addLetterForm?.get('body')?.dirty || addLetterForm?.get('body')?.touched)"
+                  *ngIf="addLetterForm?.get('stakeHolderId')?.invalid && (addLetterForm?.get('stakeHolderId')?.dirty || addLetterForm?.get('stakeHolderId')?.touched)"
                   class="fv-plugins-message-container">
-                  <div class="fv-help-block">body is required</div>
+                  <div class="fv-help-block">stakeHolder is required</div>
                 </div>
               </div>
             </div>
@@ -66,17 +66,26 @@
               <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="required">District</span></label>
               <div class="col-lg-8 fv-row">
                 <select class="form-select form-select-solid form-select-lg fw-bold" name="Type"
-                  formControlName="district">
+                  formControlName="districtId">
                   <option value="" disabled>{{"TRANSLATOR.SELECTION" | translate}}</option>
                   <ng-container *ngFor="let dis of Districts">
                     <option [value]="dis?.id">{{dis?.name}}</option>
                   </ng-container>
                 </select>
                 <div
-                  *ngIf="addLetterForm?.get('district')?.invalid && (addLetterForm?.get('district')?.dirty || addLetterForm?.get('district')?.touched)"
+                  *ngIf="addLetterForm?.get('districtId')?.invalid && (addLetterForm?.get('districtId')?.dirty || addLetterForm?.get('districtId')?.touched)"
                   class="fv-plugins-message-container">
                   <div class="fv-help-block">district is required</div>
                 </div>
+              </div>
+            </div>
+
+            <div class="row mb-6">
+              <label class="col-lg-4 col-form-label fw-bold fs-6"><span></span></label>
+              <div class="col-lg-8 fv-row">
+                <select class="form-select form-select-solid form-select-lg fw-bold" disabled>
+                  <option [value]="areas?.id" disabled selected>{{areas?.name}}</option>
+                </select>
               </div>
             </div>
 

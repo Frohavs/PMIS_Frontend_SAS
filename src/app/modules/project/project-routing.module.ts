@@ -151,7 +151,7 @@ const routes: Routes = [
         component: AddLetterComponent,
       },
       {
-        path: 'edit-project-letter/:id',
+        path: 'project-letter-details/:id',
         component: AddLetterComponent,
       },
 
