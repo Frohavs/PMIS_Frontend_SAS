@@ -19,17 +19,20 @@
           <div class="card-body border-top p-9">
 
             <div class="row mb-1 flex-column">
-              <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="required">Sub Contractor</span></label>
+              <label class="col-lg-6 col-form-label fw-bold fs-6 d-flex justify-content-between align-items-center">
+                <span class="required">Sub Contractor</span>
+                <button class="btn btn-sm btn-light-warning" (click)="addStackholderModal()">+ add new</button>
+              </label>
               <div class="col-lg-6 fv-row">
                 <select class="form-select form-select-solid form-select-lg fw-bold" name="unitId"
-                  formControlName="subContractor">
+                  formControlName="subContractorId">
                   <option value="" disabled selected>{{"TRANSLATOR.SELECTION" | translate}}</option>
-                  <!-- <ng-container *ngFor="let unit of units">
-                    <option [value]="unit?.id">{{unit?.name}}</option>
-                  </ng-container> -->
+                  <ng-container *ngFor="let user of stackHolders">
+                    <option [value]="user?.id">{{user?.name}}</option>
+                  </ng-container>
                 </select>
                 <div
-                  *ngIf="addSubContractorForm?.get('subContractor')?.invalid && (addSubContractorForm?.get('subContractor')?.dirty || addSubContractorForm?.get('subContractor')?.touched)"
+                  *ngIf="addSubContractorForm?.get('subContractorId')?.invalid && (addSubContractorForm?.get('subContractorId')?.dirty || addSubContractorForm?.get('subContractor')?.touched)"
                   class="fv-plugins-message-container">
                   <div class="fv-help-block">sub Contractor is required</div>
                 </div>
@@ -81,10 +84,10 @@
                   </span>
                 </label>
                 <div class="col-lg-12 fv-row">
-                  <input type="text" class="form-control form-control-lg form-control-solid text-start"
-                    name="contractValue" formControlName="contractValue" placeholder="Contract Value" />
+                  <input type="text" class="form-control form-control-lg form-control-solid text-start" name="value"
+                    formControlName="value" placeholder="Contract Value" />
                   <div
-                    *ngIf="addSubContractorForm?.get('contractValue')?.invalid && (addSubContractorForm?.get('contractValue')?.dirty || addSubContractorForm?.get('contractValue')?.touched)"
+                    *ngIf="addSubContractorForm?.get('value')?.invalid && (addSubContractorForm?.get('value')?.dirty || addSubContractorForm?.get('value')?.touched)"
                     class="fv-plugins-message-container">
                     <div class="fv-help-block">value is required</div>
                   </div>
@@ -99,7 +102,7 @@
                 </label>
                 <div class="col-lg-12 fv-row">
                   <input type="text" class="form-control form-control-lg form-control-solid text-start"
-                    name="finishDate" formControlName="percentage" />
+                    name="percentage" formControlName="percentage" />
 
                 </div>
               </div>
@@ -113,8 +116,8 @@
                   </span>
                 </label>
                 <div class="col-lg-12 fv-row">
-                  <textarea type="text" class="form-control form-control-lg form-control-solid text-start"
-                    name="finishDate" formControlName="percentage" cols="5"></textarea>
+                  <textarea type="text" class="form-control form-control-lg form-control-solid text-start" name="scope"
+                    formControlName="scope" cols="5"></textarea>
 
                 </div>
               </div>
@@ -132,20 +135,8 @@
                     (change)="onAttachment1($event)" />
                 </div>
               </div>
-              <div class="col-lg-6">
-                <label class="col-lg-12 col-form-label fw-bold fs-6">
-                  <span>
-                    Is Soudi Company
-                  </span>
-                </label>
-                <div class="col-lg-12 d-flex align-items-center">
-                  <div class="form-check form-check-solid form-switch d-flex align-items-center">
-                    <input class="form-check-input w-45px h-30px me-2" type="checkbox" />
-                    <label class="form-check-label">{{true ? 'yes' : 'reject'}}</label>
-                  </div>
-                </div>
-              </div>
             </div>
+
             <div class="row mb-1">
               <div class="col-lg-6">
                 <label class="col-lg-12 col-form-label fw-bold fs-6">
@@ -172,6 +163,37 @@
                 </div>
               </div>
             </div>
+            <div class="row mb-1">
+              <div class="col-lg-6">
+                <label class="col-lg-12 col-form-label fw-bold fs-6">
+                  <span>
+                    Is Soudi Company
+                  </span>
+                </label>
+                <div class="col-lg-12 d-flex align-items-center">
+                  <div class="form-check form-check-solid form-switch d-flex align-items-center">
+                    <input class="form-check-input w-45px h-30px me-2" type="checkbox" formControlName="isSoudi" />
+                    <label
+                      class="form-check-label">{{addSubContractorForm.get('isSoudi')?.value ? 'yes' : 'No'}}</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row mb-1" *ngIf="!addSubContractorForm.get('isSoudi')?.value">
+              <div class="col-lg-12">
+                <label class="col-lg-12 col-form-label fw-bold fs-6">
+                  <span>
+                    Reason for Not Being Saudi Company
+                  </span>
+                </label>
+                <div class="col-lg-12 fv-row">
+                  <textarea type="text" class="form-control form-control-lg form-control-solid text-start" name="reason"
+                    formControlName="reason" cols="3"></textarea>
+
+                </div>
+              </div>
+            </div>
+
 
             <div class="row mb-1">
               <div class="col-lg-6">
@@ -181,7 +203,8 @@
                   </span>
                 </label>
                 <div class="col-lg-12 fv-row">
-                  <input type="text" class="form-control form-control-solid" required />
+                  <input type="text" class="form-control form-control-solid" required name="representiveName"
+                    formControlName="representiveName" />
                 </div>
               </div>
 
@@ -192,7 +215,8 @@
                   </span>
                 </label>
                 <div class="col-lg-12 fv-row">
-                  <input type="text" class="form-control form-control-solid" required />
+                  <input type="text" class="form-control form-control-solid" required name="representiveEmail"
+                    formControlName="representiveEmail" />
 
                 </div>
               </div>
@@ -206,7 +230,8 @@
                   </span>
                 </label>
                 <div class="col-lg-12 fv-row">
-                  <input type="text" class="form-control form-control-solid" required />
+                  <input type="text" class="form-control form-control-solid" required name="representivePhone"
+                    formControlName="representivePhone" />
                 </div>
               </div>
             </div>
@@ -268,12 +293,46 @@
       <!-- end::Body -->
     </div>
   </div>
-
-
 </div>
-
-
 
 <!-- modal -->
 <swal #noticeSwal [swalOptions]="swalOptions">
 </swal>
+
+<ng-template #stackHolderModal let-modal>
+  <form>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Add Stackholder</h4>
+      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+
+    <div class="modal-body">
+
+      <div class="fv-row mb-7">
+        <label class="required fw-semibold fs-6 mb-2">English Name</label>
+        <input type="text" class="form-control form-control-solid" name="name" [(ngModel)]="stackholderModelData.name"
+          required />
+      </div>
+      <div class="fv-row mb-7">
+        <label class="required fw-semibold fs-6 mb-2">Arabic Name</label>
+        <input type="text" class="form-control form-control-solid" name="nameAr"
+          [(ngModel)]="stackholderModelData.nameAr" required />
+      </div>
+
+    </div>
+    <div class="modal-footer flex-center">
+
+      <!--begin::Button-->
+      <button type="button" id="kt_modal_update_customer_submit" class="btn btn-primary"
+        [attr.data-kt-indicator]="isLoading ? 'on' : 'off'" (click)="submitNewSubContractor()">
+        <span class="indicator-label">
+          Submit
+        </span>
+        <span class="indicator-progress">
+          Please wait... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+        </span>
+      </button>
+      <!--end::Button-->
+    </div>
+  </form>
+</ng-template>
