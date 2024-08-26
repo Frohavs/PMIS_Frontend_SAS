@@ -19,11 +19,14 @@ export class AddLetterComponent implements OnInit {
 
   projectId: number;
   letterId: number;
+  letterDetails: any;
   isLoading: boolean;
   addLetterForm: FormGroup;
   areas: any;
   stackHolders: any[] = [];
   Districts: any[] = [];
+
+  noteText: string;
 
 
   swalOptions: SweetAlertOptions = {};
@@ -59,19 +62,22 @@ export class AddLetterComponent implements OnInit {
   getProjectId() {
     this.activatedRoute.params.subscribe(params => {
       this.projectId = +params['id'];
-
-      if (this.projectId) {
-        this.lettersService.getById(this.projectId).subscribe(res => {
-          setTimeout(() => {
-
-            this.editCompanyForm(res?.data);
-          }, 500);
-        });
-      }
     });
 
     this.activatedRoute.queryParams.subscribe(params => {
       this.letterId = +params['letterId'];
+      if (this.letterId) {
+        this.getDetailsInfo();
+      }
+    });
+  }
+
+
+  getDetailsInfo() {
+    this.lettersService.getById(this.letterId).subscribe(res => {
+      this.letterDetails = res.data;
+      this.editCompanyForm(res?.data);
+      this.cdr.detectChanges()
     });
   }
 
@@ -122,6 +128,25 @@ export class AddLetterComponent implements OnInit {
       this.cdr.detectChanges();
     }, 500);
 
+  }
+
+  addNewNote() {
+    if (!this.noteText) {
+      return;
+    }
+    this.lettersService.addNote({ letterId: this.letterId, note: this.noteText }).subscribe(res => {
+      this.noteText = '';
+      this.getDetailsInfo();
+    }, () => {
+      this.showAlert({ icon: 'error', title: 'Error!', text: 'Please try again' });
+    });
+  }
+
+  approveLetter() {
+    this.lettersService.approveLetter(this.letterId).subscribe(res => {
+      this.showAlert({ icon: 'success', title: 'Success!', text: 'Letter Approved successfully!' });
+      this.router.navigateByUrl(`projects/project-letter/${this.projectId}`)
+    });
   }
 
   back() {

@@ -62,7 +62,7 @@
             </td>
             <td>
               <a class="text-gray-900 fw-bolder text-hover-primary d-block fs-6">
-                {{letter?.approved ? 'approved' : 'pending'}}
+                {{letter?.approved ? 'تم التنسيق' : 'معلق'}}
               </a>
             </td>
             <td>
@@ -71,7 +71,8 @@
                   (click)="letterDetails(letter)">
                   <app-keenicon name="eye" class="fs-3"></app-keenicon>
                 </a>
-                <a class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm" (click)="deleteLetter(letter)">
+                <a class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm" (click)="deleteLetter(letter)"
+                *ngIf="!letter?.approved">
                   <app-keenicon name="trash" class="fs-3"></app-keenicon>
                 </a>
               </div>

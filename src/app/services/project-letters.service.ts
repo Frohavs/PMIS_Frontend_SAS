@@ -55,12 +55,30 @@ export class ProjectLettersService {
       headers: httpHeaders
     });
   }
-  updateLetter(path: any): Observable<any> {
+  addNote(note: any): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/CreateNote`;
+    return this.http.post<any>(url, note, {
+      headers: httpHeaders
+    });
+  }
+  approveLetter(id: any) {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/Approve/${id}`;
+    return this.http.put<any>(url, {}, {
+      headers: httpHeaders
+    });
+  }
+  updateLetter(letter: any): Observable<any> {
     const httpHeaders = new HttpHeaders({
       Authorization: `Bearer ${this.token}`,
     });
     const url = `${this.API_USERS_URL}/Update`;
-    return this.http.put<any>(url, path, {
+    return this.http.put<any>(url, letter, {
       headers: httpHeaders
     });
   }

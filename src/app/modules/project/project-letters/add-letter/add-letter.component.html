@@ -126,7 +126,7 @@
         <h3 class="card-title align-items-center justify-content-between w-100">
           <span class="fw-bolder text-gray-900">Credits and Notes</span>
           <!-- <span class="text-muted mt-1 fw-bold fs-7">test</span> -->
-          <a class="btn btn-sm btn-light-warning">
+          <a class="btn btn-sm btn-light-warning" (click)="approveLetter()" *ngIf="!letterDetails?.approved">
             Approve
           </a>
         </h3>
@@ -145,11 +145,31 @@
         <div class="row mb-6 d-flex flex-column">
           <label class="col-lg-4 col-form-label required fw-bold fs-6">notes</label>
           <div class="col-lg-12 fv-row">
-            <textarea class="form-control form-control-lg form-control-solid" cols="3" #notes></textarea>
+            <textarea class="form-control form-control-lg form-control-solid" cols="3" name="noteText" [(ngModel)]="noteText"></textarea>
           </div>
         </div>
 
-        <button type="button" class="btn btn-primary float-end">
+        <ng-container *ngIf="letterDetails?.notes.length">
+          <div class="d-flex align-items-center mb-4" *ngFor="let item of letterDetails?.notes">
+            <div class="symbol symbol-45px me-5">
+              <img src="../../../../../assets/media/icons/user-icon-2400.png" alt="img" />
+            </div>
+            <div class="d-flex justify-content-start flex-column">
+              <a class="text-gray-900 fw-bolder text-hover-primary fs-4">
+                {{item?.userName}}
+              </a>
+              <a class="text-gray-900 fw-bolder text-hover-primary fs-6">
+                {{item?.note}}
+              </a>
+              <span class="text-muted fw-bold text-muted d-block fs-7">
+                {{item?.createdOn | date: 'dd-MM-yyyy'}}
+              </span>
+            </div>
+          </div>
+        </ng-container>
+
+
+        <button type="button" class="btn btn-primary float-end" (click)="addNewNote()" *ngIf="!letterDetails?.approved">
           Add
         </button>
 
