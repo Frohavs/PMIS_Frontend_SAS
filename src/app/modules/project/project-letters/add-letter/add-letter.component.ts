@@ -18,6 +18,7 @@ import { SweetAlertOptions } from 'sweetalert2';
 export class AddLetterComponent implements OnInit {
 
   projectId: number;
+  letterId: number;
   isLoading: boolean;
   addLetterForm: FormGroup;
   areas: any;
@@ -60,28 +61,32 @@ export class AddLetterComponent implements OnInit {
       this.projectId = +params['id'];
 
       if (this.projectId) {
-        // this.companyService.getByID(this.projectId).subscribe(res => {
-        //   setTimeout(() => {
-        //     this.editCompanyForm(res.data);
-        //     this.getSelectedVendors(res.data?.vendorIds);
-        //   }, 500);
-        // });
+        this.lettersService.getById(this.projectId).subscribe(res => {
+          setTimeout(() => {
+
+            this.editCompanyForm(res?.data);
+          }, 500);
+        });
       }
+    });
+
+    this.activatedRoute.queryParams.subscribe(params => {
+      this.letterId = +params['letterId'];
     });
   }
 
   initializeCompanyForm() {
     this.addLetterForm = this.formBuilder.group({
-      requestDate: ['', Validators.required],
-      subject: ['', Validators.required],
-      street: ['', Validators.required],
-      stakeHolderId: [null, Validators.required],
-      districtId: [null, Validators.required],
+      requestDate: [{ value: '', disabled: this.letterId }, Validators.required],
+      subject: [{ value: '', disabled: this.letterId }, Validators.required],
+      street: [{ value: '', disabled: this.letterId }, Validators.required],
+      stakeHolderId: [{ value: null, disabled: this.letterId }, Validators.required],
+      districtId: [{ value: null, disabled: this.letterId }, Validators.required],
     });
   }
   editCompanyForm(data: any) {
     this.addLetterForm.patchValue({
-      requestDate: data?.requestDate,
+      requestDate: data?.requestDate?.slice(0, 10),
       stakeHolderId: data?.stakeHolderId,
       subject: data?.subject,
       districtId: data?.districtId,
@@ -107,7 +112,7 @@ export class AddLetterComponent implements OnInit {
       stakeHolderId: +this.addLetterForm.value.stakeHolderId,
       districtId: +this.addLetterForm.value.districtId,
     }
-    debugger
+
     this.lettersService.addLetter(payload).subscribe(res => {
       this.router.navigateByUrl(`projects/project-letter/${this.projectId}`)
       this.showAlert({ icon: 'success', title: 'Success!', text: 'Letter Added successfully!' });

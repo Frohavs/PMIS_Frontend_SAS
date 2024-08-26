@@ -1,6 +1,6 @@
 <div class="row g-5 g-xl-8 justify-content-between">
 
-  <div class="col-xl-12">
+  <div [ngClass]="{'col-xl-6': letterId, 'col-xl-12': !letterId}">
     <div class="card mb-5 mb-xl-10">
       <div class="card-header border-0 cursor-pointer" role="button" data-bs-toggle="collapse"
         data-bs-target="#kt_add_company" aria-expanded="true" aria-controls="kt_add_company">
@@ -102,7 +102,7 @@
             </div>
 
           </div>
-          <div class="card-footer d-flex justify-content-end py-6 px-9">
+          <div class="card-footer d-flex justify-content-end py-6 px-9" *ngIf="!letterId">
             <button type="button" class="btn btn-primary" [disabled]="isLoading" (click)="saveSettings()">
               <ng-container *ngIf="!isLoading">{{"TRANSLATOR.SAVE_CHANGES" | translate}}</ng-container>
               <ng-container *ngIf="isLoading">
@@ -119,7 +119,7 @@
   </div>
 
 
-  <div class="col-xl-6" *ngIf="false">
+  <div class="col-xl-6" *ngIf="letterId">
     <div class="card mb-5 mb-xl-8">
       <!-- begin::Header -->
       <div class="card-header align-items-center border-0 mt-4">

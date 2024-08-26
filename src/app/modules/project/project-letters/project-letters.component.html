@@ -30,57 +30,45 @@
             <th class="min-w-100px">District</th>
             <th class="min-w-100px">Street</th>
             <th class="min-w-100px">Status</th>
-            <th class="max-w-100px text-end">Actions</th>
+            <th class="max-w-100px text-center">Actions</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let letter of dataList; index as i">
             <td>
-              <div class="d-flex align-items-center">
-                <div class="d-flex justify-content-start flex-column">
-                  <a class="text-gray-900 fw-bolder text-hover-primary fs-6">
-                    {{letter?.title}}
-                  </a>
-                  <span class="text-muted fw-bold text-muted d-block fs-7">
-                    {{letter?.description}}
-                  </span>
-                </div>
-              </div>
-            </td>
-            <td>
               <a class="text-gray-900 fw-bolder text-hover-primary d-block fs-6">
-                {{letter?.actualStartDate ? (letter?.actualStartDate | date: 'dd-MM-yyyy') : '--'}}
+                {{letter?.requestDate ? (letter?.requestDate | date: 'dd-MM-yyyy') : '--'}}
               </a>
             </td>
             <td>
               <a class="text-gray-900 fw-bolder text-hover-primary d-block fs-6">
-                {{letter?.actualEndDate ? (letter?.actualEndDate | date: 'dd-MM-yyyy') : '--'}}
+                {{letter?.stakeHolderId || '--'}}
               </a>
             </td>
             <td>
               <a class="text-gray-900 fw-bolder text-hover-primary d-block fs-6">
-                {{letter?.actualPercentage}}
+                {{letter?.subject || '--'}}
               </a>
             </td>
             <td>
               <a class="text-gray-900 fw-bolder text-hover-primary d-block fs-6">
-                {{letter?.startDate ? (letter?.startDate | date: 'dd-MM-yyyy') : '--'}}
+                {{letter?.district || '--'}}
               </a>
             </td>
             <td>
               <a class="text-gray-900 fw-bolder text-hover-primary d-block fs-6">
-                {{letter?.endDate ? (letter?.endDate | date: 'dd-MM-yyyy') : '--'}}
+                {{letter?.street || '--'}}
               </a>
             </td>
             <td>
               <a class="text-gray-900 fw-bolder text-hover-primary d-block fs-6">
-                {{letter?.plannedPercentage}}
+                {{letter?.approved ? 'approved' : 'pending'}}
               </a>
             </td>
-
             <td>
-              <div class="d-flex justify-content-end flex-shrink-0">
-                <a class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1" (click)="letterDetails(letter)">
+              <div class="d-flex justify-content-center flex-shrink-0">
+                <a class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1"
+                  (click)="letterDetails(letter)">
                   <app-keenicon name="eye" class="fs-3"></app-keenicon>
                 </a>
                 <a class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm" (click)="deleteLetter(letter)">
@@ -102,12 +90,13 @@
 
         <ul class="pagination">
           <li class="page-item previous" (click)="navigateArrows(false)">
-            <a class="page-link cursor-pointer" >
+            <a class="page-link cursor-pointer">
               <i class="previous"></i>
             </a>
           </li>
 
-          <li class="page-item" [ngClass]="{'active': selected === i+1}" (click)="navigatePage(i+1)" *ngFor="let page of pagesCount; index as i">
+          <li class="page-item" [ngClass]="{'active': selected === i+1}" (click)="navigatePage(i+1)"
+            *ngFor="let page of pagesCount; index as i">
             <a class="page-link cursor-pointer"> {{i+1}} </a>
           </li>
 

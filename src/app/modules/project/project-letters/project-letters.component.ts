@@ -88,12 +88,12 @@ export class ProjectLettersComponent implements OnInit, AfterViewInit, OnDestroy
   }
 
   redirectToNew() {
-    this.router.navigateByUrl('projects/add-project-letter/' + this.projectId)
+    if(!this.dataList.length) this.router.navigateByUrl('projects/add-project-letter/' + this.projectId)
   }
 
   letterDetails(letter: any) {
     this.router.navigate(['projects/project-letter-details/' + this.projectId], {
-      queryParams: { pathId: letter.id }
+      queryParams: { letterId: letter.id }
     });
   }
 
