@@ -74,6 +74,15 @@ export class SubContractorsService {
       headers: httpHeaders
     });
   }
+  approve(subcontractor: any): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/Approve`;
+    return this.http.put<any>(url, subcontractor, {
+      headers: httpHeaders
+    });
+  }
   deleteContractor(id: number): Observable<any> {
     const httpHeaders = new HttpHeaders({
       Authorization: `Bearer ${this.token}`,

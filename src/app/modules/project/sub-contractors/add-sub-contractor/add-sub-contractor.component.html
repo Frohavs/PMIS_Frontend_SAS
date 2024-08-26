@@ -22,7 +22,8 @@
             <div class="row mb-1 flex-column">
               <label class="col-lg-6 col-form-label fw-bold fs-6 d-flex justify-content-between align-items-center">
                 <span class="required">Sub Contractor</span>
-                <button class="btn btn-sm btn-light-warning" (click)="addStackholderModal()" *ngIf="!subId">+ add new</button>
+                <button class="btn btn-sm btn-light-warning" (click)="addStackholderModal()" *ngIf="!subId">+ add
+                  new</button>
               </label>
               <div class="col-lg-6 fv-row">
                 <select class="form-select form-select-solid form-select-lg fw-bold" name="unitId"
@@ -263,14 +264,13 @@
         <h3 class="card-title align-items-center justify-content-between w-100">
           <span class="fw-bolder text-gray-900">Sub Contractor Logs</span>
           <!-- <span class="text-muted mt-1 fw-bold fs-7">test</span> -->
-          <a class="btn btn-sm"
-          [ngClass]="{
+          <a class="btn btn-sm" (click)="approveSCurve(subcontractorDetails?.subContractApprovals)" [ngClass]="{
             'btn-info': subcontractorDetails?.approval === 2,
             'btn-danger': subcontractorDetails?.approval === 3,
             'btn-light-warning': subcontractorDetails?.approval !== 2 && subcontractorDetails?.approval !== 3
           }">
 
-            {{!subcontractorDetails?.approval ? 'Consultant approve' : subcontractorDetails?.approval === 1 ? 'Manager Approved' : subcontractorDetails?.approval === 2 ? 'Approved' : 'Rejected'}}
+            {{!subcontractorDetails?.subContractApprovals.length ? 'Consultant approve' : subcontractorDetails?.subContractApprovals.length === 1 ? 'Manager Approved' : subcontractorDetails?.subContractApprovals.length === 2 ? 'Approved' : 'Rejected'}}
           </a>
         </h3>
         <div class="card-toolbar">
@@ -285,7 +285,63 @@
       <!-- begin::Body -->
       <div class="card-body pt-3">
 
+        <div class="table-responsive">
+          <!-- begin::Table -->
+          <table class="table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4">
+            <!-- begin::Table head -->
+            <thead>
+              <tr class="fw-bolder text-muted">
 
+                <th class="min-w-120px">Created By</th>
+                <th class="min-w-120px">Status</th>
+                <th class="min-w-120px">Notes</th>
+              </tr>
+            </thead>
+            <!-- end::Table head -->
+            <!-- begin::Table body -->
+            <tbody>
+              <tr>
+                <td>
+                  <a class="text-gray-900 fw-bolder text-hover-primary" style="font-size: 12px;">
+                    {{userDetails?.userName}}
+                  </a>
+                </td>
+                <td>
+                  <a class="text-gray-900 fw-bolder text-hover-primary" style="font-size: 12px;">
+                    {{'created'}}
+                  </a>
+                </td>
+                <td>
+                  <a class="text-gray-900 fw-bolder text-hover-primary" style="font-size: 12px;">
+                    {{'--'}}
+                  </a>
+                </td>
+              </tr>
+              <ng-container *ngIf="subcontractorDetails && subcontractorDetails?.subContractApprovals?.length">
+                <tr *ngFor="let item of subcontractorDetails?.subContractApprovals; index as i">
+                  <td>
+                    <a class="text-gray-900 fw-bolder text-hover-primary" style="font-size: 12px;">
+                      {{item?.createdBy || '--'}}
+                    </a>
+                  </td>
+                  <td>
+                    <a class="text-gray-900 fw-bolder text-hover-primary" style="font-size: 12px;">
+                      {{item.approved === 0 ? 'consultant approved' : item.approved === 1 ? 'Manager Approve' : item.approved === 2 ? 'fully Approved' : 'Rejected'}}
+                    </a>
+                  </td>
+                  <td>
+                    <a class="text-gray-900 fw-bolder text-hover-primary" style="font-size: 12px;">
+                      {{item?.note}}
+                    </a>
+                  </td>
+                </tr>
+              </ng-container>
+
+            </tbody>
+            <!-- end::Table body -->
+          </table>
+          <!-- end::Table -->
+        </div>
 
       </div>
       <!-- end::Body -->
@@ -323,6 +379,54 @@
       <!--begin::Button-->
       <button type="button" id="kt_modal_update_customer_submit" class="btn btn-primary"
         [attr.data-kt-indicator]="isLoading ? 'on' : 'off'" (click)="submitNewSubContractor()">
+        <span class="indicator-label">
+          Submit
+        </span>
+        <span class="indicator-progress">
+          Please wait... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+        </span>
+      </button>
+      <!--end::Button-->
+    </div>
+  </form>
+</ng-template>
+
+<ng-template #approveModal let-modal>
+  <form #myForm="ngForm" (ngSubmit)="onSubmit()">
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Role Details</h4>
+      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+
+      <div class="fv-row mb-7">
+        <div class="col-lg-8 d-flex align-items-center">
+          <div class="form-check form-check-solid form-switch d-flex align-items-center">
+            <input class="form-check-input w-45px h-30px me-2" type="checkbox" name="durationDays"
+              [(ngModel)]="approveModelData.accepted" />
+            <label class="form-check-label">{{approveModelData.accepted ? 'approve' : 'reject'}}</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="fv-row mb-7">
+        <label class="fw-semibold fs-6 mb-2">Reason</label>
+        <textarea class="form-control form-control-solid" name="eotReason" [(ngModel)]="approveModelData.note"
+          rows="3"></textarea>
+      </div>
+
+    </div>
+    <div class="modal-footer flex-center">
+      <!--begin::Button-->
+      <button type="reset" id="kt_modal_update_customer_cancel" class="btn btn-light me-3"
+        (click)="modal.dismiss('cancel')">
+        Discard
+      </button>
+      <!--end::Button-->
+
+      <!--begin::Button-->
+      <button type="submit" id="kt_modal_update_customer_submit" class="btn btn-primary"
+        [attr.data-kt-indicator]="isLoading ? 'on' : 'off'">
         <span class="indicator-label">
           Submit
         </span>

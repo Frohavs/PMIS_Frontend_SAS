@@ -9,6 +9,7 @@ import { LookupService } from 'src/app/services/lookup/lookup.service';
 import { SweetAlertOptions } from 'sweetalert2';
 import { AttachmentService } from 'src/app/services/attachment/attachment.service';
 import { NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
+import { AuthService } from 'src/app/modules/auth';
 
 @Component({
   selector: 'app-add-sub-contractor',
@@ -16,6 +17,9 @@ import { NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
   styleUrl: './add-sub-contractor.component.scss'
 })
 export class AddSubContractorComponent implements OnInit {
+
+  userDetails: any;
+  userId: number;
 
   projectId: number;
   subId: number;
@@ -34,6 +38,10 @@ export class AddSubContractorComponent implements OnInit {
   swalOptions: SweetAlertOptions = {};
   @ViewChild('noticeSwal') noticeSwal!: SwalComponent;
 
+  @ViewChild('approveModal')
+  approveModal: TemplateRef<any>;
+  approveModelData: any = { accepted: true, note: '', subContractId: 0, approval: 1 };
+
   @ViewChild('stackHolderModal')
   stackHolderModal: TemplateRef<any>;
   modalConfig: NgbModalOptions = {
@@ -48,6 +56,7 @@ export class AddSubContractorComponent implements OnInit {
     private cdr: ChangeDetectorRef,
     private modalService: NgbModal,
     private formBuilder: FormBuilder,
+    private authService: AuthService,
     private activatedRoute: ActivatedRoute,
     private subContractorsService: SubContractorsService,
     private lookupService: LookupService,
@@ -74,7 +83,7 @@ export class AddSubContractorComponent implements OnInit {
         this.addSubContractorForm.patchValue({
           percentage: amount / 10000000
         })
-      } else if(!amount) {
+      } else if (!amount) {
         this.addSubContractorForm.patchValue({
           percentage: 0
         })
@@ -89,15 +98,25 @@ export class AddSubContractorComponent implements OnInit {
 
     this.activatedRoute.queryParams.subscribe(params => {
       this.subId = +params['subcontractorId'];
-      this.cdr.detectChanges()
-      debugger
-      if(this.subId) {
-        this.subContractorsService.getById(this.subId).subscribe(res => {
-          setTimeout(() => {
-            this.editCompanyForm(res.data);
-          }, 500);
-        });
+      this.approveModelData.subContractId = this.subId;
+      // this.approveModelData.userId = this.subId;
+      if (this.subId) {
+        this.getSubInfo()
       }
+    });
+
+    this.authService.currentUser$.subscribe((res: any) => {
+      this.userDetails = res;
+      this.userId = +res.id;
+      this.approveModelData.userId = this.userId;
+    });
+  }
+
+  getSubInfo() {
+    this.subContractorsService.getById(this.subId).subscribe(res => {
+      setTimeout(() => {
+        this.editCompanyForm(res.data);
+      }, 500);
     });
   }
 
@@ -121,16 +140,24 @@ export class AddSubContractorComponent implements OnInit {
     });
   }
   editCompanyForm(data: any) {
-    debugger
     this.subcontractorDetails = data;
-    // this.addSubContractorForm.patchValue({
-    //   subContractorId: data?.subContractorId,
-    //   startDate: data?.startDate,
-    //   finishDate: data?.finishDate,
-    //   value: data?.value,
-    //   districtId: data?.districtId,
-    //   scope: data?.scope,
-    // });
+    this.addSubContractorForm.patchValue({
+      subContractorId: data?.subContractorId,
+      startDate: data?.startDate?.slice(0, 10),
+      finishDate: data?.finishDate?.slice(0, 10),
+      value: data?.value,
+      districtId: data?.districtId,
+      scope: data?.scope,
+      letter: data?.letter,
+      attachment2: data?.attachment2,
+      attachment3: data?.attachment3,
+      isSoudi: data?.isSoudi,
+
+      representiveName: data?.representiveName,
+      representiveEmail: data?.representiveEmail,
+      representivePhone: data?.representivePhone,
+    });
+    this.cdr.detectChanges();
   }
 
   getLookups() {
@@ -175,6 +202,24 @@ export class AddSubContractorComponent implements OnInit {
     });
   }
 
+  onSubmit() {
+    if(this.approveModelData.accepted) {
+      this.approveModelData.approval = this.subcontractorDetails.subContractApprovals.length === 0 ? 1 : this.approveModelData.approval + 1;
+    } else {
+      this.approveModelData.approval = 3;
+    }
+    delete this.approveModelData['accepted'];
+    this.subContractorsService.approve(this.approveModelData).subscribe(res => {
+      this.showAlert({ icon: 'success', title: 'Success!', text: 'Sub-Contractor approved successfully!' });
+      this.modalService.dismissAll();
+      this.approveModelData = { accepted: true, note: '', subContractId: this.subId, approval: 1 };
+      this.getSubInfo();
+    }, () => {
+      this.showAlert({ icon: 'error', title: 'Error!', text: 'please try again!' })
+    });
+
+  }
+
   submitNewSubContractor() {
     console.log(this.stackholderModelData);
     this.subContractorsService.createSubContractor(this.stackholderModelData).subscribe(res => {
@@ -189,6 +234,12 @@ export class AddSubContractorComponent implements OnInit {
     });
   }
 
+  approveSCurve(subContractApprovals: any[]) {
+    if ((!subContractApprovals || subContractApprovals.length === 0 || subContractApprovals.length === 1)) {
+      this.modalService.open(this.approveModal, this.modalConfig);
+    }
+  }
+
   saveSettings() {
     if (this.addSubContractorForm.value.isSoudi) {
       delete this.addSubContractorForm.value['reason']
@@ -199,7 +250,6 @@ export class AddSubContractorComponent implements OnInit {
       projectId: this.projectId,
       subContractorId: +this.addSubContractorForm.value.subContractorId
     }
-    debugger
     this.subContractorsService.addContractor(payload).subscribe(res => {
       this.router.navigateByUrl(`projects/sub-contractors/${this.projectId}`)
       this.showAlert({ icon: 'success', title: 'Success!', text: 'Sub-Contractor Added successfully!' });
