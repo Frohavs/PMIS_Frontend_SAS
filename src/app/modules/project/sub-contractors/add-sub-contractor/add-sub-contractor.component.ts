@@ -126,7 +126,7 @@ export class AddSubContractorComponent implements OnInit {
       startDate: [{ value: '', disabled: this.subId }, Validators.required],
       finishDate: [{ value: '', disabled: this.subId }, Validators.required],
       value: [{ value: 0, disabled: this.subId }, Validators.required],
-      percentage: [{ value: { value: '', disabled: this.subId }, disabled: true }, Validators.required],
+      percentage: [{ value: '', disabled: this.subId }, Validators.required],
       scope: [{ value: '', disabled: this.subId }, Validators.required],
       letter: [{ value: 'test.jpeg', disabled: this.subId }, Validators.required],
       attachment2: [{ value: 'test.jpeg', disabled: this.subId }, Validators.required],
@@ -203,12 +203,14 @@ export class AddSubContractorComponent implements OnInit {
   }
 
   onSubmit() {
+
     if(this.approveModelData.accepted) {
       this.approveModelData.approval = this.subcontractorDetails.subContractApprovals.length === 0 ? 1 : this.approveModelData.approval + 1;
     } else {
       this.approveModelData.approval = 3;
     }
     delete this.approveModelData['accepted'];
+    debugger
     this.subContractorsService.approve(this.approveModelData).subscribe(res => {
       this.showAlert({ icon: 'success', title: 'Success!', text: 'Sub-Contractor approved successfully!' });
       this.modalService.dismissAll();
