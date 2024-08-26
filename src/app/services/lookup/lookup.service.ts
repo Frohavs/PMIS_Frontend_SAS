@@ -26,6 +26,15 @@ export class LookupService {
       headers: httpHeaders
     });
   }
+  allUsers(): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/GetUserType`;
+    return this.http.get<any>(url, {
+      headers: httpHeaders
+    });
+  }
 
   getUnits() {
     const httpHeaders = new HttpHeaders({
@@ -70,6 +79,15 @@ export class LookupService {
       Authorization: `Bearer ${this.token}`,
     });
     const url = `${this.API_USERS_URL}/GetStakeHolders`;
+    return this.http.get<any>(url, {
+      headers: httpHeaders
+    });
+  }
+  getSubContractors(): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/GetSubContractors`;
     return this.http.get<any>(url, {
       headers: httpHeaders
     });

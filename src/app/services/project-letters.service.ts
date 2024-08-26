@@ -73,7 +73,7 @@ export class ProjectLettersService {
       headers: httpHeaders
     });
   }
-  updateLetter(letter: any): Observable<any> {
+  update(letter: any): Observable<any> {
     const httpHeaders = new HttpHeaders({
       Authorization: `Bearer ${this.token}`,
     });

@@ -64,12 +64,12 @@ export class SubContractorsComponent implements OnInit, AfterViewInit, OnDestroy
 
     initLettersList(id: number, pageIndex?: number, search?: string) {
       this.dataList = [];
-      // this.subContractorsService.getAll(id, pageIndex, search).subscribe(res => {
-      //   this.dataList = res?.data?.items;
-      //   this.totalCount = res?.data?.totalcount;
-      //   this.pagesCount = Array.from({ length: Math.ceil(this.totalCount / 10) }, (_, index) => index + 1);
-      //   this.cdr.detectChanges();
-      // });
+      this.subContractorsService.getAll(id, pageIndex, search).subscribe(res => {
+        this.dataList = res?.data?.items;
+        this.totalCount = res?.data?.totalcount;
+        this.pagesCount = Array.from({ length: Math.ceil(this.totalCount / 10) }, (_, index) => index + 1);
+        this.cdr.detectChanges();
+      });
     }
 
     ngAfterViewInit(): void {
@@ -90,7 +90,7 @@ export class SubContractorsComponent implements OnInit, AfterViewInit, OnDestroy
 
     contractorDetails(letter: any) {
       this.router.navigate(['projects/sub-contractor-details/' + this.projectId], {
-        queryParams: { letterId: letter.id }
+        queryParams: { subcontractorId: letter.id }
       });
     }
 

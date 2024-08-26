@@ -160,6 +160,7 @@ export const locale = {
       ID: 'ID',
       TITLE: 'Project Sub-Contractors',
       Add_Contractor: 'Create Sub Contractor',
+      contractor_details: 'Sub Contractor Details',
       EN_NAME: 'English Name',
       Status: 'Status',
       Search: 'Search Contractor...',

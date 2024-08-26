@@ -1,11 +1,12 @@
 <div class="row g-5 g-xl-8 justify-content-between">
 
-  <div class="col-xl-12">
+  <div [ngClass]="{'col-xl-6': subId, 'col-xl-12': !subId}">
     <div class="card mb-5 mb-xl-10">
       <div class="card-header border-0 cursor-pointer" role="button" data-bs-toggle="collapse"
         data-bs-target="#kt_add_company" aria-expanded="true" aria-controls="kt_add_company">
         <div class="card-title m-0">
-          <h3 class="fw-bolder m-0">{{"SubContractors.Add_Contractor" | translate}}</h3>
+          <h3 class="fw-bolder m-0" *ngIf="!subId">{{"SubContractors.Add_Contractor" | translate}}</h3>
+          <h3 class="fw-bolder m-0" *ngIf="subId">{{"SubContractors.contractor_details" | translate}}</h3>
         </div>
         <div class="card-toolbar">
           <a (click)="back()" class="btn btn-sm btn-danger d-flex">
@@ -21,13 +22,13 @@
             <div class="row mb-1 flex-column">
               <label class="col-lg-6 col-form-label fw-bold fs-6 d-flex justify-content-between align-items-center">
                 <span class="required">Sub Contractor</span>
-                <button class="btn btn-sm btn-light-warning" (click)="addStackholderModal()">+ add new</button>
+                <button class="btn btn-sm btn-light-warning" (click)="addStackholderModal()" *ngIf="!subId">+ add new</button>
               </label>
               <div class="col-lg-6 fv-row">
                 <select class="form-select form-select-solid form-select-lg fw-bold" name="unitId"
                   formControlName="subContractorId">
                   <option value="" disabled selected>{{"TRANSLATOR.SELECTION" | translate}}</option>
-                  <ng-container *ngFor="let user of stackHolders">
+                  <ng-container *ngFor="let user of subContractors">
                     <option [value]="user?.id">{{user?.name}}</option>
                   </ng-container>
                 </select>
@@ -238,7 +239,7 @@
 
           </div>
 
-          <div class="card-footer d-flex justify-content-end py-6 px-9">
+          <div class="card-footer d-flex justify-content-end py-6 px-9" *ngIf="!subId">
             <button type="button" class="btn btn-primary" [disabled]="isLoading" (click)="saveSettings()">
               <ng-container *ngIf="!isLoading">{{"TRANSLATOR.SAVE_CHANGES" | translate}}</ng-container>
               <ng-container *ngIf="isLoading">
@@ -255,15 +256,21 @@
   </div>
 
 
-  <div class="col-xl-6" *ngIf="false">
+  <div class="col-xl-6" *ngIf="subId">
     <div class="card mb-5 mb-xl-8">
       <!-- begin::Header -->
       <div class="card-header align-items-center border-0 mt-4">
         <h3 class="card-title align-items-center justify-content-between w-100">
-          <span class="fw-bolder text-gray-900">Credits and Notes</span>
+          <span class="fw-bolder text-gray-900">Sub Contractor Logs</span>
           <!-- <span class="text-muted mt-1 fw-bold fs-7">test</span> -->
-          <a class="btn btn-sm btn-light-warning">
-            Approve
+          <a class="btn btn-sm"
+          [ngClass]="{
+            'btn-info': subcontractorDetails?.approval === 2,
+            'btn-danger': subcontractorDetails?.approval === 3,
+            'btn-light-warning': subcontractorDetails?.approval !== 2 && subcontractorDetails?.approval !== 3
+          }">
+
+            {{!subcontractorDetails?.approval ? 'Consultant approve' : subcontractorDetails?.approval === 1 ? 'Manager Approved' : subcontractorDetails?.approval === 2 ? 'Approved' : 'Rejected'}}
           </a>
         </h3>
         <div class="card-toolbar">
@@ -278,16 +285,7 @@
       <!-- begin::Body -->
       <div class="card-body pt-3">
 
-        <div class="row mb-6 d-flex flex-column">
-          <label class="col-lg-4 col-form-label required fw-bold fs-6">notes</label>
-          <div class="col-lg-12 fv-row">
-            <textarea class="form-control form-control-lg form-control-solid" cols="3" #notes></textarea>
-          </div>
-        </div>
 
-        <button type="button" class="btn btn-primary float-end">
-          Add
-        </button>
 
       </div>
       <!-- end::Body -->

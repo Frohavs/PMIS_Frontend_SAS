@@ -18,10 +18,12 @@ import { NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 export class AddSubContractorComponent implements OnInit {
 
   projectId: number;
+  subId: number;
+  subcontractorDetails: any;
   isLoading: boolean;
   addSubContractorForm: FormGroup;
   areas: any;
-  stackHolders: any[] = [];
+  subContractors: any[] = [];
   Districts: any[] = [];
 
   selectedFile1: File;
@@ -66,57 +68,74 @@ export class AddSubContractorComponent implements OnInit {
           this.cdr.detectChanges();
         });
       }
-    })
+    });
+    this.addSubContractorForm.get('value')?.valueChanges.subscribe((amount: number) => {
+      if (amount > 10) {
+        this.addSubContractorForm.patchValue({
+          percentage: amount / 10000000
+        })
+      } else if(!amount) {
+        this.addSubContractorForm.patchValue({
+          percentage: 0
+        })
+      }
+    });
   }
 
   getProjectId() {
     this.activatedRoute.params.subscribe(params => {
       this.projectId = +params['id'];
+    });
 
-      if (this.projectId) {
-        // this.companyService.getByID(this.projectId).subscribe(res => {
-        //   setTimeout(() => {
-        //     this.editCompanyForm(res.data);
-        //     this.getSelectedVendors(res.data?.vendorIds);
-        //   }, 500);
-        // });
+    this.activatedRoute.queryParams.subscribe(params => {
+      this.subId = +params['subcontractorId'];
+      this.cdr.detectChanges()
+      debugger
+      if(this.subId) {
+        this.subContractorsService.getById(this.subId).subscribe(res => {
+          setTimeout(() => {
+            this.editCompanyForm(res.data);
+          }, 500);
+        });
       }
     });
   }
 
   initializeCompanyForm() {
     this.addSubContractorForm = this.formBuilder.group({
-      subContractorId: [null, Validators.required],
-      startDate: ['', Validators.required],
-      finishDate: ['', Validators.required],
-      value: [0, Validators.required],
-      percentage: [{ value: '', disabled: true }, Validators.required],
-      scope: ['', Validators.required],
-      letter: ['test.jpeg', Validators.required],
-      attachment2: ['test.jpeg', Validators.required],
-      attachment3: ['test.jpeg', Validators.required],
-      isSoudi: [true, Validators.required],
-      reason: [''],
+      subContractorId: [{ value: null, disabled: this.subId }, Validators.required],
+      startDate: [{ value: '', disabled: this.subId }, Validators.required],
+      finishDate: [{ value: '', disabled: this.subId }, Validators.required],
+      value: [{ value: 0, disabled: this.subId }, Validators.required],
+      percentage: [{ value: { value: '', disabled: this.subId }, disabled: true }, Validators.required],
+      scope: [{ value: '', disabled: this.subId }, Validators.required],
+      letter: [{ value: 'test.jpeg', disabled: this.subId }, Validators.required],
+      attachment2: [{ value: 'test.jpeg', disabled: this.subId }, Validators.required],
+      attachment3: [{ value: 'test.jpeg', disabled: this.subId }, Validators.required],
+      isSoudi: [{ value: true, disabled: this.subId }, Validators.required],
+      reason: [{ value: '', disabled: this.subId }],
 
-      representiveName: ['', Validators.required],
-      representiveEmail: ['', Validators.required],
-      representivePhone: ['', Validators.required],
+      representiveName: [{ value: '', disabled: this.subId }, Validators.required],
+      representiveEmail: [{ value: '', disabled: this.subId }, Validators.required],
+      representivePhone: [{ value: '', disabled: this.subId }, Validators.required],
     });
   }
   editCompanyForm(data: any) {
-    this.addSubContractorForm.patchValue({
-      subContractorId: data?.subContractorId,
-      startDate: data?.startDate,
-      finishDate: data?.finishDate,
-      value: data?.value,
-      districtId: data?.districtId,
-      scope: data?.scope,
-    });
+    debugger
+    this.subcontractorDetails = data;
+    // this.addSubContractorForm.patchValue({
+    //   subContractorId: data?.subContractorId,
+    //   startDate: data?.startDate,
+    //   finishDate: data?.finishDate,
+    //   value: data?.value,
+    //   districtId: data?.districtId,
+    //   scope: data?.scope,
+    // });
   }
 
   getLookups() {
-    this.lookupService.getStackHolders().subscribe(res => {
-      this.stackHolders = res.data;
+    this.lookupService.getSubContractors().subscribe(res => {
+      this.subContractors = res.data;
       this.cdr.detectChanges();
     });
     this.areaDistrictService.getDistricts().subscribe(res => {
@@ -182,8 +201,8 @@ export class AddSubContractorComponent implements OnInit {
     }
     debugger
     this.subContractorsService.addContractor(payload).subscribe(res => {
-      this.router.navigateByUrl(`projects/project-letter/${this.projectId}`)
-      this.showAlert({ icon: 'success', title: 'Success!', text: 'Letter Added successfully!' });
+      this.router.navigateByUrl(`projects/sub-contractors/${this.projectId}`)
+      this.showAlert({ icon: 'success', title: 'Success!', text: 'Sub-Contractor Added successfully!' });
     })
     setTimeout(() => {
       this.isLoading = false;

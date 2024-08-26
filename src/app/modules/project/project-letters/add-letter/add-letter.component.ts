@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { Location } from '@angular/common';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -7,6 +7,7 @@ import { AreaDistrictService } from 'src/app/services/area-district.service';
 import { LookupService } from 'src/app/services/lookup/lookup.service';
 import { ProjectLettersService } from 'src/app/services/project-letters.service';
 import { SweetAlertOptions } from 'sweetalert2';
+import { NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 
 
 @Component({
@@ -25,17 +26,25 @@ export class AddLetterComponent implements OnInit {
   areas: any;
   stackHolders: any[] = [];
   Districts: any[] = [];
+  inspectionUsers: any[] = [];
 
   noteText: string;
 
-
   swalOptions: SweetAlertOptions = {};
   @ViewChild('noticeSwal') noticeSwal!: SwalComponent;
+
+  @ViewChild('inspectorModal')
+  inspectorModal: TemplateRef<any>;
+  modalConfig: NgbModalOptions = {
+    modalDialogClass: 'modal-dialog modal-dialog-centered mw-650px',
+  };
+  inspectorModelData: any = { id: '', inspectorId: '' };
 
   constructor(
     private router: Router,
     private _location: Location,
     private cdr: ChangeDetectorRef,
+    private modalService: NgbModal,
     private formBuilder: FormBuilder,
     private activatedRoute: ActivatedRoute,
     private lettersService: ProjectLettersService,
@@ -67,6 +76,7 @@ export class AddLetterComponent implements OnInit {
     this.activatedRoute.queryParams.subscribe(params => {
       this.letterId = +params['letterId'];
       if (this.letterId) {
+        this.inspectorModelData.id = this.letterId;
         this.getDetailsInfo();
       }
     });
@@ -76,6 +86,7 @@ export class AddLetterComponent implements OnInit {
   getDetailsInfo() {
     this.lettersService.getById(this.letterId).subscribe(res => {
       this.letterDetails = res.data;
+
       this.editCompanyForm(res?.data);
       this.cdr.detectChanges()
     });
@@ -105,6 +116,12 @@ export class AddLetterComponent implements OnInit {
       this.stackHolders = res.data;
       this.cdr.detectChanges();
     });
+
+    this.lookupService.allUsers().subscribe(res => {
+      this.inspectionUsers = res.data;
+      this.cdr.detectChanges()
+    });
+
     this.areaDistrictService.getDistricts().subscribe(res => {
       this.Districts = res.data;
       this.cdr.detectChanges();
@@ -146,6 +163,26 @@ export class AddLetterComponent implements OnInit {
     this.lettersService.approveLetter(this.letterId).subscribe(res => {
       this.showAlert({ icon: 'success', title: 'Success!', text: 'Letter Approved successfully!' });
       this.router.navigateByUrl(`projects/project-letter/${this.projectId}`)
+    });
+  }
+
+  addInspectorModal() {
+    this.modalService.open(this.inspectorModal, this.modalConfig);
+  }
+
+  submitNewInspector() {
+    console.log(this.inspectorModelData);
+    debugger
+    this.lettersService.update({ ...this.inspectorModelData, inspectorId: +this.inspectorModelData.inspectorId }).subscribe(res => {
+
+      this.getLookups();
+      this.showAlert({ icon: 'success', title: 'Success!', text: 'Added successfully!' });
+      this.modalService.dismissAll();
+      this.inspectorModelData = { id: this.letterId, inspectorId: '' };
+      this.getDetailsInfo();
+    }, () => {
+      this.modalService.dismissAll();
+      this.showAlert({ icon: 'error', title: 'Error!', text: 'please try again!' })
     });
   }
 

@@ -160,6 +160,7 @@ export const locale = {
       ID: 'رقم',
       TITLE: 'مقاولين الباطن',
       Add_Contractor: 'إضافة مقاول',
+      contractor_details: 'تفاصيل المقاول',
       EN_NAME: 'الأسم بالأنجليزية',
       Status: 'الحالة',
       Search: 'بحث عن مقاول...',
