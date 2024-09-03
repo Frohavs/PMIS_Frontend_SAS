@@ -1,1 +1,53 @@
-<p>overview works!</p>
+<ul class="nav nav-tabs">
+  <li class="nav-item" (click)="setActiveTab(0)">
+    <a [ngClass]="{'nav-link': true, 'active': activeTab === 0}"> Projects Agency</a>
+  </li>
+  <li class="nav-item" (click)="setActiveTab(1)">
+    <a [ngClass]="{'nav-link': true, 'active': activeTab === 1}"> Agency of operation & maintenance</a>
+  </li>
+</ul>
+<div class="card mb-5 mb-xl-8">
+  <div class="card-header border-0 pt-2">
+    <div>
+      <div class="row mb-6">
+        <label class="col-lg-12 col-form-label required fw-bold fs-6">Etimad Number</label>
+        <div class="col-lg-8 fv-row">
+          <input type="text" class="form-control form-control-lg form-control-solid" (keypress)="numbersOnly($event)"
+            [(ngModel)]="etimadNumber" />
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- total -->
+  <div class="col-xl-4 mx-5">
+    <app-stats-widget5 imgIcon="../../../../assets/media/icons/staff.png"
+      class="card bg-primary hoverable card-xl-stretch mb-xl-8" color="primary" iconColor="white"
+      title="Total Spent Value" description="0.00"></app-stats-widget5>
+  </div>
+</div>
+
+<div class="row g-5 g-xl-8">
+
+  <div class="col-xl-3">
+    <app-stats-widget6 class="card bg-light-warning card-xl-stretch mb-xl-8" color="warning"
+      title="{{'PROJECTS.TITLE' | translate}}" description="OnProgress" progress="20%">
+    </app-stats-widget6>
+  </div>
+  <div class="col-xl-3">
+    <app-stats-widget6 class="card bg-light-success card-xl-stretch mb-xl-8" color="success"
+      title="{{'PROJECTS.TITLE' | translate}}" description="Approved" [progress]="'40%'"></app-stats-widget6>
+  </div>
+  <div class="col-xl-3">
+    <app-stats-widget6 class="card bg-light-primary card-xl-stretch mb-xl-8" color="primary"
+      title="{{'PROJECTS.TITLE' | translate}}" description="Completed" progress="30%">
+    </app-stats-widget6>
+  </div>
+
+
+  <div class="col-xl-3">
+    <app-stats-widget6 class="card bg-light-danger card-xl-stretch mb-xl-8" color="danger"
+      title="{{'PROJECTS.TITLE' | translate}}" description="Canceled" progress="10%">
+    </app-stats-widget6>
+  </div>
+
+</div>

@@ -1,14 +1,13 @@
-<div class="card-body">
-  <span
-    [inlineSVG]="svgIcon"
-    class="svg-icon fs-2x fs-3x ms-n1"
-    [ngClass]="'svg-icon-' + iconColor"
-  ></span>
-  <div [ngClass]="'text-inverse-' + color" class="fw-bolder fs-2 mb-2 mt-5">
-    {{ title }}
-  </div>
+<div class="card-body d-flex align-items-center">
+  <img [src]="imgIcon" alt="icon" width="50px" style="object-fit: contain; margin: 0 10px;">
+  <div class="d-flex align-items-start flex-column">
 
-  <div class="fw-bold" [ngClass]="'text-inverse-' + color + ' fs-7'">
-    {{ description }}
+    <div [ngClass]="'text-inverse-' + color" class="fw-bolder fs-2 mb-2 mt-5">
+      {{ title }}
+    </div>
+
+    <div class="fw-bold" [ngClass]="'text-inverse-' + color + ' fs-7'">
+      {{ description }}
+    </div>
   </div>
 </div>

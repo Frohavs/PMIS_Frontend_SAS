@@ -7,9 +7,24 @@ import { Component, OnInit } from '@angular/core';
 })
 export class OverviewComponent implements OnInit {
 
+  activeTab: number = 0;
+
+  etimadNumber: string;
+
   constructor() { }
 
   ngOnInit(): void {
 
+  }
+  setActiveTab(index: number) {
+    this.activeTab = index;
+  }
+
+  numbersOnly(event: any): boolean {
+    const charCode = (event.which) ? event.which : event.keyCode;
+    if ((charCode > 31 && charCode != 43) && (charCode < 48 || charCode > 57)) {
+      return false;
+    }
+    return true;
   }
 }
