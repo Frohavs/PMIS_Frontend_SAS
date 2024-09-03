@@ -19,6 +19,7 @@ export const locale = {
       COMPANIES: 'الشركات',
       GROUPS: 'المجموعات',
       PROJECTS: 'المشاريع',
+      INVOICES: 'بوابة المطالبات المالية',
       Users_Management: 'إدارة المستخدمين',
       USERS: 'المستخدمين',
       ROLES: 'الأدوار',

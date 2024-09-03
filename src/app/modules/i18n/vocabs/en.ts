@@ -19,6 +19,7 @@ export const locale = {
       COMPANIES: 'Companies',
       GROUPS: 'Groups',
       PROJECTS: 'Projects',
+      INVOICES: 'Invoices',
       Users_Management: 'User Management',
       USERS: 'Users',
       ROLES: 'Roles',

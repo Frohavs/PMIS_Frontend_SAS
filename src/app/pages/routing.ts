@@ -25,6 +25,11 @@ const Routing: Routes = [
     // data: { layout: 'light-sidebar' },
   },
   {
+    path: 'invoices',
+    loadChildren: () => import('../modules/invoices/invoices.module').then((m) => m.InvoicesModule),
+    // data: { layout: 'light-sidebar' },
+  },
+  {
     path: 'manage/users',
     loadChildren: () => import('../modules/users/users.module').then((m) => m.UsersModule),
     // data: { layout: 'light-sidebar' },
