@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
@@ -11,7 +11,7 @@ import { SweetAlertOptions } from 'sweetalert2';
   templateUrl: './overview.component.html',
   styleUrl: './overview.component.scss'
 })
-export class OverviewComponent implements OnInit {
+export class OverviewComponent implements OnInit, AfterViewInit {
 
   activeTab: number = 0;
   etimadNumber: string = '190301099926';
@@ -58,6 +58,13 @@ export class OverviewComponent implements OnInit {
   }
   setActiveTab(index: number) {
     this.activeTab = index;
+  }
+
+  navigateExpenditure() {
+    this.router.navigateByUrl('invoices')
+    this.router.navigate(['invoices/expenditure'], {
+      queryParams: { id: this.etimadNumber }
+    });
   }
 
   numbersOnly(event: any): boolean {

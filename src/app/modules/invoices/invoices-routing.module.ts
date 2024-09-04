@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { InvoicesComponent } from './invoices.component';
 import { OverviewComponent } from './overview/overview.component';
+import { ExpenditureComponent } from './expenditure/expenditure.component';
 
 const routes: Routes = [
   {
@@ -11,6 +12,10 @@ const routes: Routes = [
       {
         path: 'overview',
         component: OverviewComponent,
+      },
+      {
+        path: 'expenditure',
+        component: ExpenditureComponent,
       },
       { path: '', redirectTo: 'overview', pathMatch: 'full' },
       { path: '**', redirectTo: 'overview', pathMatch: 'full' },
