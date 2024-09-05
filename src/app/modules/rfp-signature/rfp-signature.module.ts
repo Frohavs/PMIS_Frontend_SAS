@@ -14,6 +14,8 @@ import { SharedModule } from 'src/app/_metronic/shared/shared.module';
 import { CategoryComponent } from './category/category.component';
 import { SubCategoryComponent } from './sub-category/sub-category.component';
 import { AddRfpComponent } from './add-rfp/add-rfp.component';
+import { AddCategoryComponent } from './category/add-category/add-category.component';
+import { AddSubCategoryComponent } from './sub-category/add-sub-category/add-sub-category.component';
 
 
 @NgModule({
@@ -22,7 +24,9 @@ import { AddRfpComponent } from './add-rfp/add-rfp.component';
     OverviewComponent,
     AddRfpComponent,
     CategoryComponent,
-    SubCategoryComponent
+    AddCategoryComponent,
+    SubCategoryComponent,
+    AddSubCategoryComponent
   ],
   imports: [
     CommonModule,

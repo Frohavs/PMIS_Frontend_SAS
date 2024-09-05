@@ -5,6 +5,8 @@ import { OverviewComponent } from './overview/overview.component';
 import { CategoryComponent } from './category/category.component';
 import { SubCategoryComponent } from './sub-category/sub-category.component';
 import { AddRfpComponent } from './add-rfp/add-rfp.component';
+import { AddCategoryComponent } from './category/add-category/add-category.component';
+import { AddSubCategoryComponent } from './sub-category/add-sub-category/add-sub-category.component';
 
 const routes: Routes = [
   {
@@ -24,8 +26,16 @@ const routes: Routes = [
         component: CategoryComponent,
       },
       {
+        path: 'add-category',
+        component: AddCategoryComponent,
+      },
+      {
         path: 'sub-category',
         component: SubCategoryComponent,
+      },
+      {
+        path: 'add-sub-category',
+        component: AddSubCategoryComponent,
       },
       { path: '', redirectTo: 'overview', pathMatch: 'full' },
       { path: '**', redirectTo: 'overview', pathMatch: 'full' },
