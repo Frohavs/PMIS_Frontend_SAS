@@ -30,6 +30,11 @@ const Routing: Routes = [
     // data: { layout: 'light-sidebar' },
   },
   {
+    path: 'rfp_signature',
+    loadChildren: () => import('../modules/rfp-signature/rfp-signature.module').then((m) => m.RfpSignatureModule),
+    // data: { layout: 'light-sidebar' },
+  },
+  {
     path: 'manage/users',
     loadChildren: () => import('../modules/users/users.module').then((m) => m.UsersModule),
     // data: { layout: 'light-sidebar' },

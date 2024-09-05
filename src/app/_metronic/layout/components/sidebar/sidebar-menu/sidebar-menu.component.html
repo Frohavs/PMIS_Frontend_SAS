@@ -1,7 +1,10 @@
 <!--begin::Menu wrapper-->
-<div id="kt_app_sidebar_menu_scroll" class="scroll-y my-5 mx-3" data-kt-scroll="true" data-kt-scroll-activate="true" data-kt-scroll-height="auto" data-kt-scroll-dependencies="#kt_app_sidebar_logo, #kt_app_sidebar_footer" data-kt-scroll-wrappers="#kt_app_sidebar_menu" data-kt-scroll-offset="5px" data-kt-scroll-save-state="true">
+<div id="kt_app_sidebar_menu_scroll" class="scroll-y my-5 mx-3" data-kt-scroll="true" data-kt-scroll-activate="true"
+  data-kt-scroll-height="auto" data-kt-scroll-dependencies="#kt_app_sidebar_logo, #kt_app_sidebar_footer"
+  data-kt-scroll-wrappers="#kt_app_sidebar_menu" data-kt-scroll-offset="5px" data-kt-scroll-save-state="true">
   <!--begin::Menu-->
-  <div class="menu menu-column menu-rounded menu-sub-indention fw-semibold fs-6" id="#kt_app_sidebar_menu" data-kt-menu="true" data-kt-menu-expand="false">
+  <div class="menu menu-column menu-rounded menu-sub-indention fw-semibold fs-6" id="#kt_app_sidebar_menu"
+    data-kt-menu="true" data-kt-menu-expand="false">
     <!-- Dashboard -->
     <div class="menu-item">
       <a class="menu-link without-sub" routerLink="/dashboard" routerLinkActive="active">
@@ -69,6 +72,45 @@
       </a>
     </div>
 
+    <!-- RFP module -->
+    <div class="menu-item menu-accordion" data-kt-menu-trigger="click" routerLinkActive="here show">
+      <span class="menu-link">
+        <span class="menu-icon">
+          <app-keenicon name="abstract-13" class="fs-2"></app-keenicon>
+        </span>
+        <span class="menu-title" data-link="/rfp_signature" translate="MENU.RFP_SIGNATURE">
+        </span>
+        <span class="menu-arrow"></span>
+      </span>
+
+      <div class="menu-sub menu-sub-accordion" routerLinkActive="menu-active-bg">
+        <div class="menu-item">
+          <a class="menu-link without-sub" routerLinkActive="active" routerLink="/rfp_signature/overview">
+            <span class="menu-bullet">
+              <span class="bullet bullet-dot"></span>
+            </span>
+            <span class="menu-title" translate="MENU.RFP_SIGNATURE_LIST"></span>
+          </a>
+        </div>
+        <div class="menu-item">
+          <a class="menu-link without-sub" routerLinkActive="active" routerLink="/rfp_signature/category">
+            <span class="menu-bullet">
+              <span class="bullet bullet-dot"></span>
+            </span>
+            <span class="menu-title" translate="MENU.RFP_SIGNATURE_Category"></span>
+          </a>
+        </div>
+        <div class="menu-item">
+          <a class="menu-link without-sub" routerLinkActive="active" routerLink="/rfp_signature/sub-category">
+            <span class="menu-bullet">
+              <span class="bullet bullet-dot"></span>
+            </span>
+            <span class="menu-title" translate="MENU.RFP_SIGNATURE_Category_sub"></span>
+          </a>
+        </div>
+      </div>
+    </div>
+
     <!-- Vendors module -->
     <div class="menu-item">
       <a class="menu-link without-sub" routerLink="/vendors" routerLinkActive="active">
@@ -111,8 +153,7 @@
       <div class="menu-sub menu-sub-accordion" routerLinkActive="menu-active-bg">
         <div class="menu-item">
           <a class="menu-link without-sub" routerLinkActive="active" routerLink="/manage/users">
-            <span
-              class="menu-bullet">
+            <span class="menu-bullet">
               <span class="bullet bullet-dot"></span>
             </span>
             <span class="menu-title" translate="MENU.USERS"></span>
@@ -120,8 +161,7 @@
         </div>
         <div class="menu-item">
           <a class="menu-link without-sub" routerLinkActive="active" routerLink="/manage/roles">
-            <span
-              class="menu-bullet">
+            <span class="menu-bullet">
               <span class="bullet bullet-dot"></span>
             </span>
             <span class="menu-title" translate="MENU.ROLES"></span>
@@ -449,8 +489,8 @@
     </div> -->
 
 
-        <!-- Widgets -->
-        <!-- <div class="menu-item menu-accordion" data-kt-menu-trigger="click" routerLinkActive="here show">
+    <!-- Widgets -->
+    <!-- <div class="menu-item menu-accordion" data-kt-menu-trigger="click" routerLinkActive="here show">
           <span class="menu-link">
             <span class="menu-icon">
               <app-keenicon name="element-7" class="fs-2"></app-keenicon>
