@@ -1,0 +1,295 @@
+<div class="row g-5 g-xl-8 justify-content-between">
+
+  <div class="col-xl-12">
+
+    <div class="card mb-5 mb-xl-8">
+      <div class="card-header align-items-center border-0 mt-4">
+        <h3 class="card-title align-items-center justify-content-start w-100">
+          <a class="btn btn-light-success font-weight-bolder font-size-sm cursor-pointer" (click)="openStatusModal()">
+            Change Status
+          </a>
+          <a class="btn btn-light-success font-weight-bolder font-size-sm cursor-pointer mx-2"
+          (click)="resetInvoiceModal()">
+            Claim registration and modification
+          </a>
+          <a class="btn btn-light-danger font-weight-bolder font-size-sm cursor-pointer" (click)="cancelInvoice()">
+            Cancel
+          </a>
+        </h3>
+      </div>
+      <div class="card-body pt-3">
+        <div class="d-flex align-items-sm-center mb-7">
+
+          <div class="d-flex flex-row-fluid flex-wrap align-items-center">
+            <div class="w-50 me-2">
+              <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
+                Project name
+
+              </a>
+              <span class="text-muted fw-bold d-block pt-1">
+                Execution of King Abdullah International Gardens - Phase III</span>
+            </div>
+
+          </div>
+        </div>
+        <div class="d-flex align-items-sm-center mb-7">
+
+          <div class="d-flex flex-row-fluid flex-wrap align-items-center">
+            <div class="w-50 me-2">
+              <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
+                Administrator
+
+              </a>
+              <span class="text-muted fw-bold d-block pt-1">Project of King Abdullah International Gardens</span>
+            </div>
+            <div class="flex-grow-1 me-2">
+              <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
+                Etimad Number
+              </a>
+              <span class="text-muted fw-bold d-block pt-1">190301099926</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="d-flex align-items-sm-center mb-7">
+          <div class="d-flex flex-row-fluid flex-wrap align-items-center">
+            <div class="w-50 me-2">
+              <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
+                MOF Number
+              </a>
+              <span class="text-muted fw-bold d-block pt-1">221002231906</span>
+            </div>
+            <div class="flex-grow-1 me-2">
+              <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
+                Partners
+              </a>
+              <span class="text-muted fw-bold d-block pt-1">Dar Al-Handasah</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="d-flex align-items-sm-center mb-7">
+
+          <div class="d-flex flex-row-fluid flex-wrap align-items-center">
+            <div class="w-50 me-2">
+              <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
+                Etimad submit date
+              </a>
+              <span class="text-muted fw-bold d-block pt-1">2022-10-28</span>
+            </div>
+            <div class="flex-grow-1 me-2">
+              <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
+                Invoice Reference
+              </a>
+              <span class="text-muted fw-bold d-block pt-1">30.00</span>
+            </div>
+          </div>
+        </div>
+        <div class="d-flex align-items-sm-center mb-7">
+
+          <div class="d-flex flex-row-fluid flex-wrap align-items-center">
+            <div class="w-50 me-2">
+              <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
+                Invoice Value
+              </a>
+              <span class="text-muted fw-bold d-block pt-1">290,857,001.49</span>
+            </div>
+            <div class="flex-grow-1 me-2">
+              <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
+                Spent value
+              </a>
+              <span class="text-muted fw-bold d-block pt-1">290,857,001.49</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="stepper-container">
+        <div class="step" [class.active]="currentStep === 1">
+          <div class="circle">1</div>
+          <p>On Progress</p>
+        </div>
+        <div class="line"></div>
+        <div class="step" [class.active]="currentStep === 2">
+          <div class="circle">2</div>
+          <p>Approved</p>
+        </div>
+        <div class="line"></div>
+        <div class="step" [class.active]="currentStep === 3">
+          <div class="circle">3</div>
+          <p>Completed</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<ng-template #UpdateStatusModal let-modal>
+  <form #updateForm="ngForm" (ngSubmit)="onSubmit($event, updateForm)">
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Invoice Status</h4>
+      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+
+      <div class="row mb-6">
+        <div class="col-lg-12 fv-row">
+          <div class="d-flex align-items-center mt-3">
+            <label class="form-check form-check-inline form-check-solid me-5"><input class="form-check-input"
+                type="checkbox" checked readonly disabled /><span class="fw-bold ps-2 fs-6">on progress</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="col-lg-12 fv-row">
+          <div class="d-flex align-items-center justify-content-between mt-3">
+            <label class="form-check form-check-inline form-check-solid me-5"><input class="form-check-input"
+                type="checkbox" [(ngModel)]="statusModel.status" /><span class="fw-bold ps-2 fs-6">Attach a certificate
+                of completion</span>
+            </label>
+            <input type="text" class="form-control form-control-solid w-50" name="name" required minlength="4" />
+          </div>
+        </div>
+
+        <div class="col-lg-12 fv-row">
+          <div class="d-flex align-items-center justify-content-between mt-3">
+            <label class="form-check form-check-inline form-check-solid me-5"><input class="form-check-input"
+                type="checkbox" [(ngModel)]="statusModel.status" /><span class="fw-bold ps-2 fs-6">Clam check</span>
+            </label>
+            <input type="text" class="form-control form-control-solid w-50" name="name" required minlength="4" />
+          </div>
+        </div>
+
+        <div class="col-lg-12 fv-row">
+          <div class="d-flex align-items-center justify-content-between mt-3">
+            <label class="form-check form-check-inline form-check-solid me-5"><input class="form-check-input"
+                type="checkbox" [(ngModel)]="statusModel.status" /><span class="fw-bold ps-2 fs-6">Approved</span>
+            </label>
+            <input type="text" class="form-control form-control-solid w-50" name="name" required minlength="4" />
+          </div>
+        </div>
+
+        <div class="col-lg-12 fv-row">
+          <div class="d-flex align-items-center justify-content-between mt-3">
+            <label class="form-check form-check-inline form-check-solid me-5"><input class="form-check-input"
+                type="checkbox" [(ngModel)]="statusModel.status" /><span class="fw-bold ps-2 fs-6">Exchange order
+                reference number</span>
+            </label>
+            <input type="text" class="form-control form-control-solid w-50" name="name" required minlength="4" />
+          </div>
+        </div>
+
+        <div class="col-lg-12 fv-row">
+          <div class="d-flex align-items-center justify-content-between mt-3">
+            <label class="form-check form-check-inline form-check-solid me-5"><input class="form-check-input"
+                type="checkbox" [(ngModel)]="statusModel.status" /><span class="fw-bold ps-2 fs-6"> Payment order
+                reference number</span>
+            </label>
+            <input type="text" class="form-control form-control-solid w-50" name="name" required minlength="4" />
+          </div>
+        </div>
+
+        <div class="col-lg-12 fv-row">
+          <div class="d-flex align-items-center justify-content-between mt-3">
+            <label class="form-check form-check-inline form-check-solid me-5"><input class="form-check-input"
+                type="checkbox" [(ngModel)]="statusModel.status" /><span class="fw-bold ps-2 fs-6">Exchange order
+                Payment order </span>
+            </label>
+            <input type="text" class="form-control form-control-solid w-50" name="name" required minlength="4" />
+          </div>
+        </div>
+
+        <div class="col-lg-12 fv-row">
+          <div class="d-flex align-items-center mt-3">
+            <label class="form-check form-check-inline form-check-solid me-5"><input class="form-check-input"
+                type="checkbox" [(ngModel)]="statusModel.status" /><span class="fw-bold ps-2 fs-6">Completed</span>
+            </label>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+    <div class="modal-footer flex-center">
+      <!--begin::Button-->
+      <button type="reset" id="kt_modal_update_customer_cancel" class="btn btn-light me-3"
+        (click)="modal.dismiss('cancel')">
+        Discard
+      </button>
+      <!--end::Button-->
+
+      <!--begin::Button-->
+      <button type="submit" id="kt_modal_update_customer_submit" class="btn btn-primary"
+        [attr.data-kt-indicator]="isLoading ? 'on' : 'off'">
+        <span class="indicator-label">
+          Submit
+        </span>
+        <span class="indicator-progress">
+          Please wait... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+        </span>
+      </button>
+      <!--end::Button-->
+    </div>
+  </form>
+</ng-template>
+
+<ng-template #resetModal let-modal>
+  <form #addForm="ngForm" (ngSubmit)="onResetSubmit($event, addForm)">
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Claim registration and modification</h4>
+      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+      <div class="fv-row mb-7">
+        <!--begin::Label-->
+        <label class="required fw-semibold fs-6 mb-2">Date</label>
+        <!--end::Label-->
+        <!--begin::Input-->
+        <input type="date" class="form-control form-control-solid" name="name" [(ngModel)]="resetModel.date"
+          #name="ngModel" required minlength="4" />
+        <!-- <div *ngIf="addForm.submitted && addForm.invalid"
+          class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
+          <div *ngIf="name.errors?.['required']">Name is required</div>
+          <div *ngIf="name.errors?.['minlength']">Name must be at least 4 characters long</div>
+        </div> -->
+        <!--end::Input-->
+      </div>
+      <div class="fv-row mb-7">
+        <!--begin::Label-->
+        <label class="required fw-semibold fs-6 mb-2">Reason</label>
+        <!--end::Label-->
+        <!--begin::Input-->
+        <input type="text" class="form-control form-control-solid" name="name" [(ngModel)]="resetModel.reason"
+          #name="ngModel" required minlength="4" />
+        <!-- <div *ngIf="addForm.submitted && addForm.invalid"
+          class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
+          <div *ngIf="name.errors?.['required']">Name is required</div>
+          <div *ngIf="name.errors?.['minlength']">Name must be at least 4 characters long</div>
+        </div> -->
+        <!--end::Input-->
+      </div>
+    </div>
+    <div class="modal-footer flex-center">
+      <!--begin::Button-->
+      <button type="reset" id="kt_modal_update_customer_cancel" class="btn btn-light me-3"
+        (click)="modal.dismiss('cancel')">
+        Discard
+      </button>
+      <!--end::Button-->
+
+      <!--begin::Button-->
+      <button type="submit" id="kt_modal_update_customer_submit" class="btn btn-primary"
+        [attr.data-kt-indicator]="isLoading ? 'on' : 'off'">
+        <span class="indicator-label">
+          Submit
+        </span>
+        <span class="indicator-progress">
+          Please wait... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+        </span>
+      </button>
+      <!--end::Button-->
+    </div>
+  </form>
+</ng-template>

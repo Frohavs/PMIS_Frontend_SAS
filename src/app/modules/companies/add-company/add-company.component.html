@@ -111,8 +111,8 @@
           <label class="col-lg-4 col-form-label fw-bold fs-6"><span
               class="required">{{"VENDORS.TITLE" | translate}}</span></label>
           <div class="col-lg-8 fv-row">
-            <ng-multiselect-dropdown  [settings]="dropdownSettings"
-              [data]="vendorList" formControlName="vendorIds" (onSelect)="onItemSelect($event)" (onDeSelect)="onItemDeselect($event)"
+            <ng-multiselect-dropdown [settings]="dropdownSettings" [data]="vendorList" formControlName="vendorIds"
+              (onSelect)="onItemSelect($event)" (onDeSelect)="onItemDeselect($event)"
               (onSelectAll)="onSelectAll($event)">
             </ng-multiselect-dropdown>
             <div
@@ -129,8 +129,8 @@
             <div class="d-flex align-items-center mt-3">
               <label class="form-check form-check-inline form-check-solid me-5"><input class="form-check-input"
                   name="smsNotification" formControlName="smsNotification" type="checkbox" /><span
-                  class="fw-bold ps-2 fs-6">SMS</span></label><label
-                class="form-check form-check-inline form-check-solid"><input class="form-check-input"
+                  class="fw-bold ps-2 fs-6">SMS</span></label>
+              <label class="form-check form-check-inline form-check-solid"><input class="form-check-input"
                   name="mailNotification" formControlName="mailNotification" type="checkbox" /><span
                   class="fw-bold ps-2 fs-6">Email</span></label>
             </div>

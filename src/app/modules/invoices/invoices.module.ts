@@ -13,6 +13,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { NgxCurrencyDirective } from 'ngx-currency';
 import { ExpenditureComponent } from './expenditure/expenditure.component';
 import { NewInvoiceComponent } from './new-invoice/new-invoice.component';
+import { InvoiceDetailsComponent } from './invoice-details/invoice-details.component';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import { NewInvoiceComponent } from './new-invoice/new-invoice.component';
     InvoicesComponent,
     OverviewComponent,
     ExpenditureComponent,
-    NewInvoiceComponent
+    NewInvoiceComponent,
+    InvoiceDetailsComponent
   ],
   imports: [
     CommonModule,

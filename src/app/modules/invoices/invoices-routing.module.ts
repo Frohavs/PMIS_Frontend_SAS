@@ -4,6 +4,7 @@ import { InvoicesComponent } from './invoices.component';
 import { OverviewComponent } from './overview/overview.component';
 import { ExpenditureComponent } from './expenditure/expenditure.component';
 import { NewInvoiceComponent } from './new-invoice/new-invoice.component';
+import { InvoiceDetailsComponent } from './invoice-details/invoice-details.component';
 
 const routes: Routes = [
   {
@@ -21,6 +22,10 @@ const routes: Routes = [
       {
         path: 'add',
         component: NewInvoiceComponent,
+      },
+      {
+        path: 'details',
+        component: InvoiceDetailsComponent,
       },
       { path: '', redirectTo: 'overview', pathMatch: 'full' },
       { path: '**', redirectTo: 'overview', pathMatch: 'full' },
