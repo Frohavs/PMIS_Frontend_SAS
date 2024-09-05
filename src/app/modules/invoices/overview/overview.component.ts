@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
@@ -11,7 +11,7 @@ import { SweetAlertOptions } from 'sweetalert2';
   templateUrl: './overview.component.html',
   styleUrl: './overview.component.scss'
 })
-export class OverviewComponent implements OnInit, AfterViewInit {
+export class OverviewComponent implements OnInit, AfterViewInit, OnDestroy {
 
   activeTab: number = 0;
   etimadNumber: string = '190301099926';
@@ -53,7 +53,6 @@ export class OverviewComponent implements OnInit, AfterViewInit {
       distinctUntilChanged(),
     ).subscribe((event: any) => {
       const searchText = event.target.value;
-      // this.initializeProjectData(1, '')
     });
   }
   setActiveTab(index: number) {
@@ -61,7 +60,6 @@ export class OverviewComponent implements OnInit, AfterViewInit {
   }
 
   navigateExpenditure() {
-    this.router.navigateByUrl('invoices')
     this.router.navigate(['invoices/expenditure'], {
       queryParams: { id: this.etimadNumber }
     });
@@ -112,5 +110,11 @@ export class OverviewComponent implements OnInit, AfterViewInit {
     }, swalOptions);
     this.cdr.detectChanges();
     this.noticeSwal.fire();
+  }
+
+  ngOnDestroy(): void {
+    if (this.inputSubscription) {
+      this.inputSubscription.unsubscribe();
+    }
   }
 }

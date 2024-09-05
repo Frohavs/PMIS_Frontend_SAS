@@ -1,0 +1,104 @@
+<div class="card mb-5 mb-xl-10">
+  <div class="card-header border-0 cursor-pointer" role="button" data-bs-toggle="collapse"
+    data-bs-target="#kt_add_company" aria-expanded="true" aria-controls="kt_add_company">
+    <div class="card-title m-0">
+      <h3 class="fw-bolder m-0">Add Invoice</h3>
+    </div>
+    <div class="card-toolbar">
+      <a (click)="back()" class="btn btn-sm btn-danger d-flex">
+        <app-keenicon name="arrow-left" class="fs-3"></app-keenicon>
+        {{"ECOMMERCE.COMMON.BACK" | translate}}
+      </a>
+    </div>
+  </div>
+  <div id="kt_add_company" class="collapse show">
+    <form [formGroup]="addInvoiceForm" class="form">
+      <div class="card-body border-top p-9">
+
+        <div class="row mb-6">
+          <label class="col-lg-4 col-form-label fw-bold fs-6">Partially Paid</label>
+          <div class="col-lg-8 fv-row">
+            <div class="d-flex align-items-center mt-3">
+              <label class="form-check form-check-inline form-check-solid"><input class="form-check-input"
+                  name="mailNotification" formControlName="mailNotification" type="checkbox" /><span
+                  class="fw-bold ps-2 fs-6">&nbsp;</span></label>
+            </div>
+          </div>
+        </div>
+
+        <div class="row mb-6">
+          <label class="col-lg-4 col-form-label required fw-bold fs-6">Invoice Reference</label>
+          <div class="col-lg-8 fv-row">
+            <input type="text" class="form-control form-control-lg form-control-solid" placeholder="invoice reference"
+              formControlName="nameAr" />
+            <div
+              *ngIf="addInvoiceForm?.get('nameAr')?.invalid && (addInvoiceForm?.get('nameAr')?.dirty || addInvoiceForm?.get('nameAr')?.touched)"
+              class="fv-plugins-message-container">
+              <div class="fv-help-block">invoice reference is required</div>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="row mb-6">
+          <label class="col-lg-4 col-form-label fw-bold fs-6"><span
+            class="required">Invoice Type</span></label>
+            <div class="col-lg-8 fv-row">
+              <select class="form-select form-select-solid form-select-lg fw-bold" name="Type"
+              formControlName="companyType">
+              <option value="" disabled>{{"TRANSLATOR.SELECTION" | translate}}</option>
+              <!-- <ng-container *ngFor="let item of companyTypes">
+                <option [value]="item?.id">{{item?.name}}</option>
+              </ng-container> -->
+            </select>
+            <!-- <div
+              *ngIf="addInvoiceForm?.get('companyType')?.invalid && (addInvoiceForm?.get('companyType')?.dirty || addInvoiceForm?.get('companyType')?.touched)"
+              class="fv-plugins-message-container">
+              <div class="fv-help-block">Type is required</div>
+            </div> -->
+          </div>
+        </div>
+
+        <div class="row mb-6">
+          <label class="col-lg-4 col-form-label required fw-bold fs-6">MOF Number</label>
+          <div class="col-lg-8 fv-row">
+            <input type="text" class="form-control form-control-lg form-control-solid" placeholder="mof number"
+              name="name" formControlName="name" />
+            <div
+              *ngIf="addInvoiceForm?.get('name')?.invalid && (addInvoiceForm?.get('name')?.dirty || addInvoiceForm?.get('name')?.touched)"
+              class="fv-plugins-message-container">
+              <div class="fv-help-block">mof number is required</div>
+            </div>
+          </div>
+        </div>
+
+
+
+        <div class="row mb-6">
+          <label class="col-lg-4 col-form-label required fw-bold fs-6">Etimad submit date</label>
+          <div class="col-lg-8 fv-row">
+            <input type="date" class="form-control form-control-lg form-control-solid"
+              name="address" formControlName="address" />
+          </div>
+        </div>
+
+
+      </div>
+      <div class="card-footer d-flex justify-content-end py-6 px-9">
+        <button type="button" class="btn btn-primary" [disabled]="isLoading" (click)="saveSettings()">
+          <ng-container *ngIf="!isLoading">{{"TRANSLATOR.SAVE_CHANGES" | translate}}</ng-container>
+          <ng-container *ngIf="isLoading">
+            <span clas="indicator-progress" [style.display]="'block'">
+              Please wait...{{ " " }}
+              <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+            </span>
+          </ng-container>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- modal -->
+<swal #noticeSwal [swalOptions]="swalOptions">
+</swal>

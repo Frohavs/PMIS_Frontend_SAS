@@ -11,12 +11,16 @@ import { InvoicesComponent } from './invoices.component';
 import { OverviewComponent } from './overview/overview.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { NgxCurrencyDirective } from 'ngx-currency';
+import { ExpenditureComponent } from './expenditure/expenditure.component';
+import { NewInvoiceComponent } from './new-invoice/new-invoice.component';
 
 
 @NgModule({
   declarations: [
     InvoicesComponent,
-    OverviewComponent
+    OverviewComponent,
+    ExpenditureComponent,
+    NewInvoiceComponent
   ],
   imports: [
     CommonModule,
