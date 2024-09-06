@@ -1,0 +1,152 @@
+<div class="evaluation-form" style="direction: ltr;">
+  <h1>{{fullName}} - {{quarter}} | {{year}} Evaluation</h1>
+
+  <div class="employee-info">
+    <table>
+      <tr>
+        <td>Employee:</td>
+        <td>{{fullName}}</td>
+      </tr>
+      <tr>
+        <td>Department/unit:</td>
+        <td>---</td>
+      </tr>
+      <tr>
+        <td>Position:</td>
+        <td>---</td>
+      </tr>
+      <tr>
+        <td>Classification:</td>
+        <td>---</td>
+      </tr>
+      <tr>
+        <td>Level:</td>
+        <td>---</td>
+      </tr>
+      <tr>
+        <td>Start Date:</td>
+        <td>{{createdOn | date : 'dd-MM-yyyy'}}</td>
+      </tr>
+      <tr>
+        <td>Evaluation period:</td>
+        <td>{{quarter}} | {{year}}</td>
+      </tr>
+    </table>
+  </div>
+
+  <h2>No. | Evaluation Criteria | Weight | Score | Notes | ملاحظات</h2>
+  <table class="evaluation-table">
+    <thead>
+      <tr>
+        <th>No.</th>
+        <th>Evaluation Criteria</th>
+        <th class="one">1</th>
+        <th class="two">2</th>
+        <th class="three">3</th>
+        <th class="four">4</th>
+        <th class="five">5</th>
+        <th>Weight</th>
+        <th>Score</th>
+        <th>Notes | ملاحظات</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>1</td>
+        <td>Ability and commitment for delivering tasks on time | تقييم مدى قدرة الموظف على الالتزام بتسليم المخرجات
+        </td>
+        <td>1</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>25%</td>
+        <td>0.25</td>
+        <td>er</td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>Quality level of employee's deliverables | تقييم جودة المخرجات المسلمة</td>
+        <td>1</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>25%</td>
+        <td>0.25</td>
+        <td>ee</td>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td>Commitment of duty times | تقييم مدى التزام الموظف بمواعيد الحضور والانصراف</td>
+        <td></td>
+        <td>2</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>20%</td>
+        <td>0.4</td>
+        <td>ee</td>
+      </tr>
+      <tr>
+        <td>4</td>
+        <td>Commitment to being present during duty times | تقييم التزام الموظف بالتواجد في العمل</td>
+        <td></td>
+        <td></td>
+        <td>3</td>
+        <td></td>
+        <td></td>
+        <td>10%</td>
+        <td>0.3</td>
+        <td>ee</td>
+      </tr>
+      <tr>
+        <td>5</td>
+        <td>Speed of task achievement | تقييم سرعة إنجاز المهام</td>
+        <td></td>
+        <td></td>
+        <td>3</td>
+        <td></td>
+        <td></td>
+        <td>10%</td>
+        <td>0.3</td>
+        <td>edd</td>
+      </tr>
+      <tr>
+        <td>6</td>
+        <td>Employee seriousness at work | تقييم جدية الموظف في العمل</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>5</td>
+        <td>5%</td>
+        <td>0.25</td>
+        <td>dde</td>
+      </tr>
+      <tr>
+        <td>7</td>
+        <td>Quality of initiatives and creative solutions | تقييم جودة المبادرات والأفكار الإبداعية</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>5</td>
+        <td>5%</td>
+        <td>0.25</td>
+        <td>eded</td>
+      </tr>
+      <tr>
+        <td colspan="8">Total</td>
+        <td>100%</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td colspan="8">Final Score</td>
+        <td [class]="getClassName()">{{score}}</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>

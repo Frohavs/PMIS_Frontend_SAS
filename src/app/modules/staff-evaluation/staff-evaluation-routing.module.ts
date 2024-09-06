@@ -4,6 +4,7 @@ import { StaffEvaluationComponent } from './staff-evaluation.component';
 import { OverviewComponent } from './overview/overview.component';
 import { AddEvaluationComponent } from './add-evaluation/add-evaluation.component';
 import { EvaluationDetailsComponent } from './evaluation-details/evaluation-details.component';
+import { PrintEvaluationComponent } from './print-evaluation/print-evaluation.component';
 
 const routes: Routes = [
   {
@@ -21,6 +22,10 @@ const routes: Routes = [
       {
         path: 'details',
         component: EvaluationDetailsComponent,
+      },
+      {
+        path: 'print',
+        component: PrintEvaluationComponent,
       },
       { path: '', redirectTo: 'overview', pathMatch: 'full' },
       { path: '**', redirectTo: 'overview', pathMatch: 'full' },

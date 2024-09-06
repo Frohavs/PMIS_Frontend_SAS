@@ -210,7 +210,7 @@ export class AddSubContractorComponent implements OnInit {
       this.approveModelData.approval = 3;
     }
     delete this.approveModelData['accepted'];
-    debugger
+
     this.subContractorsService.approve(this.approveModelData).subscribe(res => {
       this.showAlert({ icon: 'success', title: 'Success!', text: 'Sub-Contractor approved successfully!' });
       this.modalService.dismissAll();

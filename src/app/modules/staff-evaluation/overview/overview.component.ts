@@ -94,6 +94,13 @@ export class OverviewComponent implements OnInit, AfterViewInit, OnDestroy {
 
   }
 
+  evalPrint(evalu: any) {
+    this.router.navigate([`staff-evaluation/print`], {
+      queryParams: {
+        evalId: evalu.id,
+       }
+    });
+  }
   evalDetails(evalu: any) {
     this.router.navigate([`staff-evaluation/details`], {
       queryParams: {

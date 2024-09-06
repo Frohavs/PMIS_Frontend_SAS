@@ -13,6 +13,7 @@ import { NgxCurrencyDirective } from 'ngx-currency';
 import { WidgetsModule } from 'src/app/_metronic/partials';
 import { SharedModule } from 'src/app/_metronic/shared/shared.module';
 import { EvaluationDetailsComponent } from './evaluation-details/evaluation-details.component';
+import { PrintEvaluationComponent } from './print-evaluation/print-evaluation.component';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import { EvaluationDetailsComponent } from './evaluation-details/evaluation-deta
     StaffEvaluationComponent,
     OverviewComponent,
     AddEvaluationComponent,
-    EvaluationDetailsComponent
+    EvaluationDetailsComponent,
+    PrintEvaluationComponent
   ],
   imports: [
     CommonModule,

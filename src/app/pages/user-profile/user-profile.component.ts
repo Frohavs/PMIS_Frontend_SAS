@@ -49,7 +49,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     this.authService.currentUser$.subscribe((res: any) => {
       this.userId = +res.id;
       this.newUserService.getUser(res.id).subscribe(res => {
-        debugger
+
         this.profileForm.patchValue({
           fullName: res?.data.fullName,
           email: res?.data?.email,

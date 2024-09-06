@@ -171,8 +171,8 @@ export class AddLetterComponent implements OnInit {
   }
 
   submitNewInspector() {
-    console.log(this.inspectorModelData);
-    debugger
+
+
     this.lettersService.update({ ...this.inspectorModelData, inspectorId: +this.inspectorModelData.inspectorId }).subscribe(res => {
 
       this.getLookups();

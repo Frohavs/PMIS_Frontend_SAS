@@ -107,7 +107,7 @@ export class AddDailyReportComponent implements OnInit {
     this.editPositionsForm(forms?.positions);
     this.editEquipmentForm(forms?.equipments);
     this.editWorkPerformedDailyForm(forms?.workPerformedToday);
-    debugger
+
     this.cdr.detectChanges()
   }
 

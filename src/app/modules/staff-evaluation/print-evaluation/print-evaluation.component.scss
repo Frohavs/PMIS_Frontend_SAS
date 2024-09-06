@@ -1,0 +1,70 @@
+.evaluation-form {
+  direction: rtl;
+  font-family: Arial, sans-serif;
+
+  h1,
+  h2 {
+    text-align: center;
+    margin: 20px 0;
+  }
+
+  .employee-info {
+    margin: 20px 0;
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+
+      td {
+        border: 1px solid #000;
+        padding: 8px;
+      }
+    }
+  }
+
+  .evaluation-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+
+    th,
+    td {
+      border: 1px solid #000;
+      padding: 10px;
+      text-align: center;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+
+    td[colspan] {
+      text-align: right;
+    }
+
+    tbody tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+  }
+}
+
+thead {
+  tr {
+    background-color: #BFBFBF;
+  }
+}
+.one {
+  background-color: #FF9999 !important;
+}
+.two {
+  background-color: #FFCCCC !important;
+}
+.three {
+  background-color: #FFF3CB !important;
+}
+.four {
+  background-color: #E2EFD9 !important;
+}
+.five {
+  background-color: #C5E0B2 !important;
+}

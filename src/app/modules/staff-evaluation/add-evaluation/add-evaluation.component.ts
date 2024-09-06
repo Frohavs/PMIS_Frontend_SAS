@@ -83,7 +83,7 @@ export class AddEvaluationComponent implements OnInit {
         justifications: control.get('reason').value,
         questionId: this.questions[index].id,
       }));
-      debugger
+
       this.staffEvaluationService.addEvaluation(payload).subscribe(res => {
         this.isLoading = false;
         console.log(res);

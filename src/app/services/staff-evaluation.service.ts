@@ -57,7 +57,7 @@ export class StaffEvaluationService {
     const httpHeaders = new HttpHeaders({
       Authorization: `Bearer ${this.token}`,
     });
-    const url = `${this.API_USERS_URL}/GetEvaluationItem?evaluationId=${id}`;
+    const url = `${this.API_USERS_URL}/GetEvaluationItem/${id}`;
     return this.http.get<any>(url, {
       headers: httpHeaders
     });
