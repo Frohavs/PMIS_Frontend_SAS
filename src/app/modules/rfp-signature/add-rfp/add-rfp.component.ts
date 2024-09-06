@@ -1,11 +1,10 @@
-import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
 import { BoqService } from 'src/app/services/boq.service';
 import { LookupService } from 'src/app/services/lookup/lookup.service';
-import { ProjectsService } from 'src/app/services/projects.service';
 import { SweetAlertOptions } from 'sweetalert2';
 
 
@@ -22,8 +21,6 @@ export class AddRfpComponent implements OnInit {
 
   vats: any[] = [];
   units: any[] = [];
-  private updating = false;
-  private updatingVat = false;
 
   swalOptions: SweetAlertOptions = {};
   @ViewChild('noticeSwal') noticeSwal!: SwalComponent;
@@ -36,7 +33,6 @@ export class AddRfpComponent implements OnInit {
     private formBuilder: FormBuilder,
     private lookupService: LookupService,
     private activatedRoute: ActivatedRoute,
-    private projectsService: ProjectsService,
   ) { }
 
   ngOnInit(): void {
@@ -66,7 +62,6 @@ export class AddRfpComponent implements OnInit {
 
   initAddBoqForm() {
     this.addRFPForm = this.formBuilder.group({
-      projectId: [''],
       itemNo: ['', Validators.required],
       title: ['', Validators.required],
       description: ['', Validators.required],
@@ -77,34 +72,6 @@ export class AddRfpComponent implements OnInit {
       totalPrice: ['', Validators.required],
     });
 
-    this.addRFPForm.valueChanges.subscribe(res => {
-      if (!this.updating && res.unitPrice) {
-        this.updating = true;
-        let totalPrice = 0;
-        if (+this.vatId.value != 0) {
-          console.log();
-
-          totalPrice = ((+this.vatId.value + 100) * this.unitPrice.value * this.quantity.value) / 100
-        } else {
-          totalPrice = (this.unitPrice.value * this.quantity.value)
-        }
-        this.addRFPForm.get('totalPrice')?.setValue(totalPrice);
-        this.updating = false;
-      }
-      if (!this.updatingVat && res.vatId) {
-        if (this.quantity.value && this.unitPrice.value) {
-          this.updatingVat = true;
-          let totalPrice = 0;
-          if (+this.vatId.value != 0) {
-            totalPrice = ((+this.vatId.value + 100) * this.unitPrice.value * this.quantity.value) / 100
-          } else {
-            totalPrice = (this.unitPrice.value * this.quantity.value)
-          }
-          this.addRFPForm.get('totalPrice')?.setValue(totalPrice);
-          this.updatingVat = false;
-        }
-      }
-    });
   }
 
   getLookups() {
@@ -127,34 +94,9 @@ export class AddRfpComponent implements OnInit {
       quantity: data?.quantity,
       unitPrice: data?.unitPrice,
       totalPrice: data?.totalPrice,
-      vatId: this.getVatValue(data.vatId),
       unitId: data?.unitId?.toString()
     });
     this.cdr.detectChanges()
-  }
-
-  getVatID(value: string) {
-    let id = 0;
-    if (value == '0') {
-      id = 1;
-    } else if (value == '5') {
-      id = 2;
-    } else if (value == '15') {
-      id = 3;
-    }
-    return id;
-  }
-  getVatValue(id: number) {
-    let value = '';
-    if (id == 1) {
-      value = '0';
-    } else if (id == 2) {
-      value = '5';
-    } else if (id == 3) {
-      value = '10';
-    }
-    return value;
-
   }
 
   saveChanges() {
@@ -162,50 +104,50 @@ export class AddRfpComponent implements OnInit {
       return;
     }
     this.isLoading = true;
-    if (!this.boqId) {
-      this.boqService.addBoq(
-        {
-          ...this.addRFPForm.value,
-          projectId: +this.projectId,
-          unitId: +this.addRFPForm.value.unitId,
-          vatId: this.getVatID(this.addRFPForm.value.vatId)
-        }
-      ).subscribe({
-        next: (res) => {
-          this.isLoading = false;
-          this.router.navigateByUrl(`projects/boq-list/${this.projectId}`);
-          this.showAlert({ icon: 'success', title: 'Success!', text: 'Boq Added successfully!' });
-          this.cdr.detectChanges();
-        },
-        error: (error) => {
-          this.showAlert({ icon: 'error', title: 'Error!', text: 'Please try again' });
-          this.isLoading = false;
-        }
-      });
+    // if (!this.boqId) {
+    //   this.boqService.addBoq(
+    //     {
+    //       ...this.addRFPForm.value,
+    //       projectId: +this.projectId,
+    //       unitId: +this.addRFPForm.value.unitId,
+    //       vatId: this.getVatID(this.addRFPForm.value.vatId)
+    //     }
+    //   ).subscribe({
+    //     next: (res) => {
+    //       this.isLoading = false;
+    //       this.router.navigateByUrl(`projects/boq-list/${this.projectId}`);
+    //       this.showAlert({ icon: 'success', title: 'Success!', text: 'Boq Added successfully!' });
+    //       this.cdr.detectChanges();
+    //     },
+    //     error: (error) => {
+    //       this.showAlert({ icon: 'error', title: 'Error!', text: 'Please try again' });
+    //       this.isLoading = false;
+    //     }
+    //   });
 
-    } else {
-      this.boqService.updateBoq(
-        {
-          ...this.addRFPForm.value,
-          id: this.boqId,
-          projectId: +this.projectId,
-          unitId: +this.addRFPForm.value.unitId,
-          vatId: this.getVatID(this.addRFPForm.value.vatId)
-        }
-      ).subscribe({
-        next: (res) => {
-          this.isLoading = false;
-          this.showAlert({ icon: 'success', title: 'Success!', text: 'Boq Updated successfully!' });
-          setTimeout(() => {
-            this.router.navigateByUrl(`projects/boq-list/${this.projectId}`);
-          }, 1000);
-        },
-        error: (error) => {
-          this.showAlert({ icon: 'error', title: 'Error!', text: 'Please try again' });
-          this.isLoading = false;
-        }
-      });
-    }
+    // } else {
+    //   this.boqService.updateBoq(
+    //     {
+    //       ...this.addRFPForm.value,
+    //       id: this.boqId,
+    //       projectId: +this.projectId,
+    //       unitId: +this.addRFPForm.value.unitId,
+    //       vatId: this.getVatID(this.addRFPForm.value.vatId)
+    //     }
+    //   ).subscribe({
+    //     next: (res) => {
+    //       this.isLoading = false;
+    //       this.showAlert({ icon: 'success', title: 'Success!', text: 'Boq Updated successfully!' });
+    //       setTimeout(() => {
+    //         this.router.navigateByUrl(`projects/boq-list/${this.projectId}`);
+    //       }, 1000);
+    //     },
+    //     error: (error) => {
+    //       this.showAlert({ icon: 'error', title: 'Error!', text: 'Please try again' });
+    //       this.isLoading = false;
+    //     }
+    //   });
+    // }
   }
 
   showAlert(swalOptions: SweetAlertOptions) {

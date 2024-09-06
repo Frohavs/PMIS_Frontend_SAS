@@ -1,0 +1,203 @@
+<!-- begin::Row -->
+<form [formGroup]="filterForm" class="form">
+  <div class="row g-5 g-xl-8 mb-5">
+    <div class="col-xl-4">
+      <div class="card bg-hover-light-success">
+        <div class="card-body">
+          <a class="card-title fw-bolder text-muted text-hover-primary fs-4 text-center w-100" style="display: block;">
+            Employee
+          </a>
+          <div class="row mb-6">
+            <div class="col-lg-12 fv-row">
+              <select class="form-select form-select-solid form-select-lg fw-bold" name="employee"
+                formControlName="employee">
+                <option value="" disabled selected>{{"TRANSLATOR.SELECTION" | translate}}</option>
+                <ng-container *ngFor="let user of users">
+                  <option [value]="user?.id">{{user?.name}}</option>
+                </ng-container>
+              </select>
+              <div
+                *ngIf="filterForm?.get('employee')?.invalid && (filterForm?.get('employee')?.dirty || filterForm?.get('employee')?.touched)"
+                class="fv-plugins-message-container">
+                <div class="fv-help-block">Employee is required</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-4">
+      <div class="card bg-hover-light-success">
+        <div class="card-body">
+          <a class="card-title fw-bolder text-muted text-hover-primary fs-4 text-center w-100" style="display: block;">
+            Year
+          </a>
+          <div class="row mb-6">
+            <div class="col-lg-12 fv-row">
+              <select class="form-select form-select-solid form-select-lg fw-bold" name="year" formControlName="year">
+                <option value="" disabled selected>{{"TRANSLATOR.SELECTION" | translate}}</option>
+                <ng-container *ngFor="let year of years">
+                  <option [value]="year?.id">{{year?.name}}</option>
+                </ng-container>
+              </select>
+              <div
+                *ngIf="filterForm?.get('year')?.invalid && (filterForm?.get('year')?.dirty || filterForm?.get('year')?.touched)"
+                class="fv-plugins-message-container">
+                <div class="fv-help-block">Year is required</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-4">
+      <div class="card bg-hover-light-success">
+        <div class="card-body">
+          <a class="card-title fw-bolder text-muted text-hover-primary fs-4 text-center w-100" style="display: block;">
+            Quarter
+          </a>
+          <div class="row mb-6">
+            <div class="col-lg-12 fv-row">
+              <select class="form-select form-select-solid form-select-lg fw-bold" name="quarter"
+                formControlName="quarter">
+                <option value="" disabled selected>{{"TRANSLATOR.SELECTION" | translate}}</option>
+                <ng-container *ngFor="let item of quarters">
+                  <option [value]="item">{{item}}</option>
+                </ng-container>
+              </select>
+              <div
+                *ngIf="filterForm?.get('quarter')?.invalid && (filterForm?.get('quarter')?.dirty || filterForm?.get('quarter')?.touched)"
+                class="fv-plugins-message-container">
+                <div class="fv-help-block">Quarter is required</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+<!-- end::Row -->
+
+<div class="card mb-5 mb-xl-8">
+
+  <div class="card-header border-0 pt-5">
+
+    <div class="card-title">
+      <!--begin::Search-->
+      <div class="d-flex align-items-center position-relative my-1">
+        <app-keenicon name="magnifier" class="fs-3 position-absolute ms-5"></app-keenicon>
+        <input type="text" data-action="filter" class="form-control form-control-solid w-250px ps-12">
+      </div>
+      <!--end::Search-->
+    </div>
+
+    <div class="card-toolbar" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-trigger="hover"
+      title="Click to add a user">
+      <a class="btn btn-sm btn-light-primary d-flex align-items-center" (click)="redirectToNew()">
+        <app-keenicon name="plus" class="fs-3"></app-keenicon>
+        create evaluation
+      </a>
+    </div>
+
+  </div>
+  <!-- end::Header -->
+  <!-- begin::Body -->
+  <div class="card-body py-3">
+    <!-- begin::Table container -->
+    <div class="table-responsive">
+      <!-- begin::Table -->
+      <table class="table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4">
+        <!-- begin::Table head -->
+        <thead>
+          <tr class="fw-bolder text-muted">
+
+            <th class="min-w-200px">Employee</th>
+            <th class="min-w-100px">Created by</th>
+            <th class="min-w-100px">Year</th>
+            <th class="min-w-100px">Quarter</th>
+            <th class="min-w-100px">Total Mark</th>
+            <th class="max-w-100px text-center">Actions</th>
+          </tr>
+        </thead>
+        <!-- end::Table head -->
+        <!-- begin::Table body -->
+        <tbody>
+          <tr *ngFor="let evaluation of dataList; index as i">
+
+            <td>
+              <a class="text-gray-900 fw-bolder text-hover-primary d-block fs-6">
+                {{evaluation?.fullName}}
+              </a>
+            </td>
+            <td>
+              <a class="text-gray-900 fw-bolder text-hover-primary d-block fs-6">
+                {{evaluation?.createdBy}}
+              </a>
+            </td>
+
+            <td>
+              <a class="text-gray-900 fw-bolder text-hover-primary d-block fs-6">
+                {{evaluation?.year}}
+              </a>
+            </td>
+            <td>
+              <a class="text-gray-900 fw-bolder text-hover-primary d-block fs-6">
+                {{evaluation?.quarter}}
+              </a>
+            </td>
+            <td>
+              <a class="text-gray-900 fw-bolder text-hover-primary d-block fs-6">
+                {{evaluation?.totalMark}}
+              </a>
+            </td>
+            <td>
+              <div class="d-flex justify-content-center flex-shrink-0">
+
+                <a class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
+                  <app-keenicon name="printer" class="fs-3"></app-keenicon>
+                </a>
+                <a class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm " (click)="evalDetails(evaluation)">
+                  <app-keenicon name="eye" class="fs-3"></app-keenicon>
+                </a>
+              </div>
+            </td>
+          </tr>
+          <tr *ngIf="!dataList?.length">
+            <td colspan="12" class="text-center fs-2 text-primary">
+              no items retrieved yet
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="d-flex flex-stack flex-wrap pt-10">
+        <div class="fs-6 fw-bold text-gray-700">Showing {{totalCount}} to 10 of {{totalCount}} entries</div>
+
+        <ul class="pagination">
+          <li class="page-item previous" (click)="navigateArrows(false)">
+            <a class="page-link cursor-pointer">
+              <i class="previous"></i>
+            </a>
+          </li>
+
+          <li class="page-item" [ngClass]="{'active': selected === i+1}" (click)="navigatePage(i+1)"
+            *ngFor="let page of pagesCount; index as i">
+            <a class="page-link cursor-pointer"> {{i+1}} </a>
+          </li>
+
+          <li class="page-item next" (click)="navigateArrows(true)">
+            <a class="page-link cursor-pointer">
+              <i class="next"></i>
+            </a>
+          </li>
+        </ul>
+        <!-- end::Table pagination -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- modal -->
+<swal #noticeSwal [swalOptions]="swalOptions">
+</swal>

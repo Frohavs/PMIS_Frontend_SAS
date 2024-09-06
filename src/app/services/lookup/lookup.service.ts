@@ -17,6 +17,15 @@ export class LookupService {
     this.token = JSON.parse(lsValue as any)?.token;
   }
 
+  getUsers(): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/GetUserType`;
+    return this.http.get<any>(url, {
+      headers: httpHeaders
+    });
+  }
   getManagerUsers(): Observable<any> {
     const httpHeaders = new HttpHeaders({
       Authorization: `Bearer ${this.token}`,
@@ -88,6 +97,15 @@ export class LookupService {
       Authorization: `Bearer ${this.token}`,
     });
     const url = `${this.API_USERS_URL}/GetSubContractors`;
+    return this.http.get<any>(url, {
+      headers: httpHeaders
+    });
+  }
+  getYears(): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/GetYears`;
     return this.http.get<any>(url, {
       headers: httpHeaders
     });

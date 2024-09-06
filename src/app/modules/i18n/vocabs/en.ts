@@ -20,6 +20,7 @@ export const locale = {
       GROUPS: 'Groups',
       PROJECTS: 'Projects',
       INVOICES: 'Invoices',
+      STAFF_EVAL: 'Staff Evaluation',
       RFP_SIGNATURE: 'RFP Signature',
       RFP_SIGNATURE_LIST: 'List',
       RFP_SIGNATURE_Category: 'Category',

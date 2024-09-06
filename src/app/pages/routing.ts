@@ -30,6 +30,11 @@ const Routing: Routes = [
     // data: { layout: 'light-sidebar' },
   },
   {
+    path: 'staff-evaluation',
+    loadChildren: () => import('../modules/staff-evaluation/staff-evaluation.module').then((m) => m.StaffEvaluationModule),
+    // data: { layout: 'light-sidebar' },
+  },
+  {
     path: 'rfp_signature',
     loadChildren: () => import('../modules/rfp-signature/rfp-signature.module').then((m) => m.RfpSignatureModule),
     // data: { layout: 'light-sidebar' },
