@@ -56,11 +56,11 @@
         <td>{{i+1}}</td>
         <td>{{eval.question}} | {{eval?.questionAr}}
         </td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td>{{eval?.scale === 1 ? 1 : ''}}</td>
+        <td>{{eval?.scale === 2 ? 2 : ''}}</td>
+        <td>{{eval?.scale === 3 ? 3 : ''}}</td>
+        <td>{{eval?.scale === 4 ? 4 : ''}}</td>
+        <td>{{eval?.scale === 5 ? 5 : ''}}</td>
         <td>{{eval?.weight}}%</td>
         <td>{{eval?.scale * (eval?.weight/100)}}</td>
         <td>{{eval?.justifications}}</td>
