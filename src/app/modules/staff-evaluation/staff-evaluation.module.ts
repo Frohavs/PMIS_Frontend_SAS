@@ -12,13 +12,15 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { NgxCurrencyDirective } from 'ngx-currency';
 import { WidgetsModule } from 'src/app/_metronic/partials';
 import { SharedModule } from 'src/app/_metronic/shared/shared.module';
+import { EvaluationDetailsComponent } from './evaluation-details/evaluation-details.component';
 
 
 @NgModule({
   declarations: [
     StaffEvaluationComponent,
     OverviewComponent,
-    AddEvaluationComponent
+    AddEvaluationComponent,
+    EvaluationDetailsComponent
   ],
   imports: [
     CommonModule,

@@ -109,6 +109,7 @@ export class CreateProjectComponent implements OnInit, AfterViewInit, OnDestroy 
       areaId: ['', Validators.required],
       districtId: ['', Validators.required],
       executionStartDate: ['', Validators.required],
+      etimadNumber: ['', Validators.required],
       originalFinishDate: ['']
     });
   }
@@ -144,6 +145,7 @@ export class CreateProjectComponent implements OnInit, AfterViewInit, OnDestroy 
       districtId: data?.districtId,
       executionStartDate: data?.executionStartDate?.slice(0, 10),
       originalFinishDate: data?.originalFinishDate?.slice(0, 10),
+      etimadNumber: data?.etimadNumber,
     });
   }
 
@@ -159,6 +161,7 @@ export class CreateProjectComponent implements OnInit, AfterViewInit, OnDestroy 
         executionStartDate: this.addProjectForm.value.executionStartDate,
         createdDate: new Date(),
         originalFinishDate: this.addProjectForm.value.originalFinishDate,
+        etimadNumber: this.addProjectForm.value.etimadNumber,
         originalValue: +this.addProjectForm.value.originalValue,
         consultantId: +this.addProjectForm.value.consultantId,
         contractorId: +this.addProjectForm.value.contractorId,
@@ -185,6 +188,7 @@ export class CreateProjectComponent implements OnInit, AfterViewInit, OnDestroy 
         executionStartDate: this.addProjectForm.value.executionStartDate,
         createdDate: new Date(),
         originalFinishDate: this.addProjectForm.value.originalFinishDate,
+        etimadNumber: this.addProjectForm.value.etimadNumber,
         originalValue: +this.addProjectForm.value.originalValue,
         consultantId: +this.addProjectForm.value.consultantId,
         contractorId: +this.addProjectForm.value.contractorId,

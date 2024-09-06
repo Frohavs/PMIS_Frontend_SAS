@@ -95,8 +95,11 @@ export class OverviewComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   evalDetails(evalu: any) {
-    console.log(evalu);
-
+    this.router.navigate([`staff-evaluation/details`], {
+      queryParams: {
+        evalId: evalu.id,
+       }
+    });
   }
 
   numbersOnly(event: any): boolean {

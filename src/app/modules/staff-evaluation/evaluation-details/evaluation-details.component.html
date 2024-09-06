@@ -1,0 +1,101 @@
+<div class="card mb-5 mb-xl-10">
+  <div class="card-header border-0 cursor-pointer" role="button" data-bs-toggle="collapse"
+    data-bs-target="#kt_add_company" aria-expanded="true" aria-controls="kt_add_company">
+    <div class="card-title m-0">
+      <h3 class="fw-bolder m-0">Evaluation Details</h3>
+
+    </div>
+    <div class="card-toolbar">
+      <a (click)="back()" class="btn btn-sm btn-danger d-flex">
+        <app-keenicon name="arrow-left" class="fs-3"></app-keenicon>
+        {{"ECOMMERCE.COMMON.BACK" | translate}}
+      </a>
+    </div>
+  </div>
+  <div id="kt_add_company" class="collapse show">
+    <div class="card-body py-3">
+      <div class="table-responsive">
+        <table class="table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4">
+          <thead>
+            <tr class="fw-bolder text-muted">
+              <th class="max-w-100px">No</th>
+              <th class="max-w-250px text-center">Evaluation criteria</th>
+              <th class="max-w-120px">scale</th>
+              <th class="max-w-120px">weight</th>
+              <th class="max-w-120px">score</th>
+              <th class="min-w-200px text-center">notes</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let eval of evalDetails; index as i">
+              <td>
+                <a class="text-gray-900 fw-bolder text-hover-primary d-block fs-6">
+                  {{i+1}}
+                </a>
+              </td>
+              <td>
+                <a class="text-gray-900 fw-bolder text-hover-primary d-block fs-6 text-center">
+                  {{eval?.question || '--'}}
+                </a>
+              </td>
+              <td>
+                <a class="text-gray-900 fw-bolder text-hover-primary d-block fs-6">
+                  {{eval?.scale || '--'}}
+                </a>
+              </td>
+              <td>
+                <a class="text-gray-900 fw-bolder text-hover-primary d-block fs-6">
+                  {{eval?.weight + '%' || '--'}}
+                </a>
+              </td>
+              <td>
+                <a class="text-gray-900 fw-bolder text-hover-primary d-block fs-6">
+                  {{eval?.scale * (eval?.weight/100)}}
+                </a>
+              </td>
+              <td>
+                <a class="text-gray-900 fw-bolder text-hover-primary d-block fs-6 text-center">
+                  {{eval?.justifications || '--'}}
+                </a>
+              </td>
+
+
+            </tr>
+            <tr>
+              <td colspan="4 text-center">
+                <a class="text-gray-900 fw-bolder text-hover-primary d-block fs-3 text-center">
+                  Total
+                </a>
+              </td>
+              <td >
+                <a class="text-gray-900 fw-bolder text-hover-primary d-block fs-3 text-center">
+                  100%
+                </a>
+              </td>
+
+            </tr>
+            <tr>
+              <td colspan="4 text-center">
+                <a class="text-gray-900 fw-bolder text-hover-primary d-block fs-3 text-center">
+                  Final Score
+                </a>
+              </td>
+              <td >
+                <a class="text-gray-900 fw-bolder text-hover-primary d-block fs-3 text-center">
+                  {{getFinalScore()}}
+                </a>
+              </td>
+
+            </tr>
+            <tr *ngIf="!evalDetails?.length">
+              <td colspan="8" class="text-center fs-2 text-primary">
+                evaluation not retrieved yet
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+      </div>
+    </div>
+  </div>
+</div>

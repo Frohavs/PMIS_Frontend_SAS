@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { StaffEvaluationComponent } from './staff-evaluation.component';
 import { OverviewComponent } from './overview/overview.component';
 import { AddEvaluationComponent } from './add-evaluation/add-evaluation.component';
+import { EvaluationDetailsComponent } from './evaluation-details/evaluation-details.component';
 
 const routes: Routes = [
   {
@@ -16,6 +17,10 @@ const routes: Routes = [
       {
         path: 'add',
         component: AddEvaluationComponent,
+      },
+      {
+        path: 'details',
+        component: EvaluationDetailsComponent,
       },
       { path: '', redirectTo: 'overview', pathMatch: 'full' },
       { path: '**', redirectTo: 'overview', pathMatch: 'full' },

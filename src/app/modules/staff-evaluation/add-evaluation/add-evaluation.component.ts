@@ -39,7 +39,7 @@ export class AddEvaluationComponent implements OnInit {
       this.yearId = +params['yearId'];
       this.quarter = +params['quarter'];
 
-    })
+    });
     this.QuestionForm = this.fb.group({
       questions: this.fb.array([])  // We'll add the questions dynamically
     });
@@ -60,8 +60,8 @@ export class AddEvaluationComponent implements OnInit {
   addQuestions(): void {
     this.questions.forEach((question) => {
       this.questionsFormArray.push(this.fb.group({
-        reason: ['', Validators.required],  // Add a control for reason
-        rate: [0, [Validators.required, Validators.min(0), Validators.max(5)]],  // Add a control for rate (0-5)
+        reason: [''],  // Add a control for reason
+        rate: [null, [Validators.required, Validators.min(0), Validators.max(5)]],  // Add a control for rate (0-5)
       }));
     });
   }
@@ -69,33 +69,33 @@ export class AddEvaluationComponent implements OnInit {
   // Submit handler
   onSubmit(): void {
     this.isLoading = true;
-    // if (!this.QuestionForm.valid) {
-    // if (false) {
-    //   this.isLoading = false;
-    //   alert('please complete all evaluation questions');
-    //   return
-    // } else {
-    // }
-    let payload: any = {};
-    payload.userId = this.userId;
-    payload.yearId = this.yearId;
-    payload.quarter = this.quarter;
-    payload.items = this.questionsFormArray.controls.map((control: any, index) => ({
-      scale: +control.get('rate').value,
-      justifications: control.get('reason').value,
-      questionId: this.questions[index].id,
-    }));
-    debugger
-    this.staffEvaluationService.addEvaluation(payload).subscribe(res => {
+    if (!this.QuestionForm.valid) {
       this.isLoading = false;
-      console.log(res);
-      this.router.navigateByUrl('staff-evaluation')
-      this.showAlert({ icon: 'success', title: 'Success!', text: 'Evaluation Added successfully!' });
+      alert('please complete all evaluation scale');
+      return
+    } else {
+      let payload: any = {};
+      payload.userId = this.userId;
+      payload.yearId = this.yearId;
+      payload.quarter = this.quarter;
+      payload.items = this.questionsFormArray.controls.map((control: any, index) => ({
+        scale: +control.get('rate').value,
+        justifications: control.get('reason').value,
+        questionId: this.questions[index].id,
+      }));
+      debugger
+      this.staffEvaluationService.addEvaluation(payload).subscribe(res => {
+        this.isLoading = false;
+        console.log(res);
+        this.router.navigateByUrl('staff-evaluation')
+        this.showAlert({ icon: 'success', title: 'Success!', text: 'Evaluation Added successfully!' });
 
-    }, (error) => {
-      this.isLoading = false;
-      this.showAlert({ icon: 'error', title: 'Error!', text: 'Please try again' });
-    });
+      }, (error) => {
+        this.isLoading = false;
+        console.log(error);
+        this.showAlert({ icon: 'error', title: 'Error!', text: 'Please try again' });
+      });
+    }
   }
 
   back() {
