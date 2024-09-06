@@ -1,1 +1,52 @@
-<p>add-evaluation works!</p>
+<div class="card mb-5 mb-xl-10">
+  <div class="card-body border-top p-9">
+    <form [formGroup]="QuestionForm" class="form_wrapper">
+      <div formArrayName="questions">
+        <div *ngFor="let question of questions; let i = index" [formGroupName]="i">
+          <h3 class="txt">{{i+1}} - {{ question.question }} (Weight: {{ question.weight }})</h3>
+
+          <div class="row">
+
+            <div class="row mb-6 col-xl-12">
+              <label class="col-lg-2 col-form-label fw-bold fs-6"><span class="required">Scale (0-5):</span></label>
+              <div class="col-md-2 fv-row">
+                <select class="form-select form-select-solid form-select-lg fw-bold" name="rate" formControlName="rate">
+                  <option value="" disabled selected>{{"TRANSLATOR.SELECTION" | translate}}</option>
+                  <ng-container *ngFor="let item of [1,2,3,4,5]">
+                    <option [value]="item">{{item}}</option>
+                  </ng-container>
+                </select>
+              </div>
+            </div>
+
+            <div class="row mb-6 col-xl-12">
+              <label class="col-lg-2 col-form-label fw-bold fs-6"><span class="required">Justifications</span></label>
+              <div class="col-lg-6 fv-row">
+                <textarea type="text" class="form-control form-control-lg form-control-solid" formControlName="reason"
+                  name="reason" cols="5"></textarea>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+      <div class="card-footer d-flex justify-content-end py-6 px-9">
+        <button type="button" class="btn btn-primary" [disabled]="isLoading" (click)="onSubmit()">
+          <ng-container *ngIf="!isLoading">{{"TRANSLATOR.SAVE_CHANGES" | translate}}</ng-container>
+          <ng-container *ngIf="isLoading">
+            <span clas="indicator-progress" [style.display]="'block'">
+              Please wait...{{ " " }}
+              <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+            </span>
+          </ng-container>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+<!-- modal -->
+<swal #noticeSwal [swalOptions]="swalOptions">
+</swal>

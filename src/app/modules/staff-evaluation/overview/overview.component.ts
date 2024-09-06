@@ -112,7 +112,13 @@ export class OverviewComponent implements OnInit, AfterViewInit, OnDestroy {
       this.filterForm.markAllAsTouched();
       return;
     }
-    this.router.navigate(['staff-evaluation/add']);
+    this.router.navigate([`staff-evaluation/add`], {
+      queryParams: {
+        userId: this.filterForm.get('employee')?.value,
+        yearId: this.filterForm.get('year')?.value,
+        quarter: this.filterForm.get('quarter')?.value,
+       }
+    });
   }
 
   navigatePage(pageIndex: number) {
