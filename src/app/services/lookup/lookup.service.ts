@@ -110,5 +110,23 @@ export class LookupService {
       headers: httpHeaders
     });
   }
+  getAdministrators(): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/GetRfpAdministrators`;
+    return this.http.get<any>(url, {
+      headers: httpHeaders
+    });
+  }
+  getRfpSignatureCategories(): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/GetRfpSignatureCategories`;
+    return this.http.get<any>(url, {
+      headers: httpHeaders
+    });
+  }
 
 }

@@ -6,6 +6,8 @@ import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
 import { BoqService } from 'src/app/services/boq.service';
 import { LookupService } from 'src/app/services/lookup/lookup.service';
 import { SweetAlertOptions } from 'sweetalert2';
+import { AttachmentService } from 'src/app/services/attachment/attachment.service';
+import { RfpService } from 'src/app/services/rfp.service';
 
 
 @Component({
@@ -19,6 +21,10 @@ export class AddRfpComponent implements OnInit {
   isLoading: boolean;
   addRFPForm: FormGroup;
 
+  users: any[] = [];
+  administrators: any[] = [];
+  selectedFile: any;
+
   swalOptions: SweetAlertOptions = {};
   @ViewChild('noticeSwal') noticeSwal!: SwalComponent;
 
@@ -26,10 +32,11 @@ export class AddRfpComponent implements OnInit {
     private router: Router,
     private _location: Location,
     private cdr: ChangeDetectorRef,
-    private boqService: BoqService,
+    private rfpService: RfpService,
     private formBuilder: FormBuilder,
     private lookupService: LookupService,
     private activatedRoute: ActivatedRoute,
+    private attachmentService: AttachmentService,
   ) { }
 
   ngOnInit(): void {
@@ -45,16 +52,6 @@ export class AddRfpComponent implements OnInit {
     this.activatedRoute.queryParams.subscribe(params => {
       this.boqId = params['boqId'];
     });
-    const queryParams = this.activatedRoute.snapshot.queryParams;
-    this.boqId = +queryParams?.boqId
-    if (this.boqId) {
-      this.boqService.getBoq(this.boqId).subscribe(res => {
-        setTimeout(() => {
-          this.editVendorForm(res.data);
-          this.cdr.detectChanges();
-        }, 1000);
-      });
-    }
   }
 
   initAddBoqForm() {
@@ -62,7 +59,7 @@ export class AddRfpComponent implements OnInit {
       nameAr: ['', Validators.required],
       name: ['', Validators.required],
       receivedDate: ['', Validators.required],
-      requestedWayDocument: ['', Validators.required],
+      requestedWayDocument: ['Scurve-1', Validators.required],
       administrator: [null, Validators.required],
       reviewerId: [null, Validators.required],
       approverId: [null, Validators.required],
@@ -71,80 +68,67 @@ export class AddRfpComponent implements OnInit {
   }
 
   getLookups() {
-    // this.lookupService.getUnits().subscribe(res => {
-    //   this.units = res.data;
-    //   this.cdr.detectChanges();
-    // });
-    // this.lookupService.getVats().subscribe(res => {
-    //   this.vats = res.data;
-    //   this.cdr.detectChanges();
-    // });
+    this.lookupService.getAdministrators().subscribe(res => {
+      this.administrators = res.data;
+      this.cdr.detectChanges();
+    });
+    this.lookupService.allUsers().subscribe(res => {
+      this.users = res.data;
+      this.cdr.detectChanges();
+    });
+  }
+
+  onFileSelected(event: any) {
+    this.selectedFile = <File>event.target.files[0];
+    const fd = new FormData();
+    fd.append('requestedWayDocument', this.selectedFile, this.selectedFile.name);
+    this.attachmentService.uploadAttachment(fd).subscribe(res => {
+      this.addRFPForm.patchValue({
+        requestedWayDocument: this.selectedFile.name
+      });
+    });
+
   }
 
   editVendorForm(data: any) {
     this.addRFPForm.patchValue({
-      projectId: data?.projectId,
-      itemNo: data?.itemNo,
-      title: data?.title,
-      description: data?.description,
-      quantity: data?.quantity,
-      unitPrice: data?.unitPrice,
-      totalPrice: data?.totalPrice,
-      unitId: data?.unitId?.toString()
+
+      nameAr: data?.nameAr,
+      name: data?.name,
+      receivedDate: data?.receivedDate,
+      requestedWayDocument: data?.requestedWayDocument?.slice(0, 10) || null,
+      administrator: data?.administrator,
+      reviewerId: data?.reviewerId,
+      approverId: data?.approverId,
     });
     this.cdr.detectChanges()
   }
 
   saveChanges() {
-    if (!this.addRFPForm.valid) {
-      this.addRFPForm.markAllAsTouched()
-      return;
-    }
-    this.isLoading = true;
-    // if (!this.boqId) {
-    //   this.boqService.addBoq(
-    //     {
-    //       ...this.addRFPForm.value,
-    //       projectId: +this.projectId,
-    //       unitId: +this.addRFPForm.value.unitId,
-    //       vatId: this.getVatID(this.addRFPForm.value.vatId)
-    //     }
-    //   ).subscribe({
-    //     next: (res) => {
-    //       this.isLoading = false;
-    //       this.router.navigateByUrl(`projects/boq-list/${this.projectId}`);
-    //       this.showAlert({ icon: 'success', title: 'Success!', text: 'Boq Added successfully!' });
-    //       this.cdr.detectChanges();
-    //     },
-    //     error: (error) => {
-    //       this.showAlert({ icon: 'error', title: 'Error!', text: 'Please try again' });
-    //       this.isLoading = false;
-    //     }
-    //   });
-
-    // } else {
-    //   this.boqService.updateBoq(
-    //     {
-    //       ...this.addRFPForm.value,
-    //       id: this.boqId,
-    //       projectId: +this.projectId,
-    //       unitId: +this.addRFPForm.value.unitId,
-    //       vatId: this.getVatID(this.addRFPForm.value.vatId)
-    //     }
-    //   ).subscribe({
-    //     next: (res) => {
-    //       this.isLoading = false;
-    //       this.showAlert({ icon: 'success', title: 'Success!', text: 'Boq Updated successfully!' });
-    //       setTimeout(() => {
-    //         this.router.navigateByUrl(`projects/boq-list/${this.projectId}`);
-    //       }, 1000);
-    //     },
-    //     error: (error) => {
-    //       this.showAlert({ icon: 'error', title: 'Error!', text: 'Please try again' });
-    //       this.isLoading = false;
-    //     }
-    //   });
+    // if (!this.addRFPForm.valid) {
+    //   this.addRFPForm.markAllAsTouched()
+    //   return;
     // }
+    this.isLoading = true;
+    const payload = {
+      ...this.addRFPForm.value,
+      administrator: +this.addRFPForm.value.administrator,
+      reviewerId: +this.addRFPForm.value.reviewerId,
+      approverId: +this.addRFPForm.value.approverId,
+    }
+    debugger
+    this.rfpService.addRFPSignature(payload).subscribe({
+      next: (res) => {
+        this.isLoading = false;
+        this.router.navigateByUrl(`rfp_signature`);
+        this.showAlert({ icon: 'success', title: 'Success!', text: 'RFP Added successfully!' });
+        this.cdr.detectChanges();
+      },
+      error: (error) => {
+        this.showAlert({ icon: 'error', title: 'Error!', text: 'Please try again' });
+        this.isLoading = false;
+      }
+    });
   }
 
   showAlert(swalOptions: SweetAlertOptions) {
