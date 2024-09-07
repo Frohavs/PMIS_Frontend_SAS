@@ -1,9 +1,11 @@
 import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
 import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
 import { debounceTime, distinctUntilChanged, fromEvent, Subscription } from 'rxjs';
+import { InvoiceService } from 'src/app/services/invoice.service';
+import { ProjectsService } from 'src/app/services/projects.service';
 import { SweetAlertOptions } from 'sweetalert2';
 
 @Component({
@@ -12,6 +14,10 @@ import { SweetAlertOptions } from 'sweetalert2';
   styleUrl: './expenditure.component.scss'
 })
 export class ExpenditureComponent implements OnInit, AfterViewInit, OnDestroy {
+
+  etimadNumber: any;
+  projectId: any;
+  projectDetails: any;
 
   Add_text: string;
   Search_text: string;
@@ -34,14 +40,39 @@ export class ExpenditureComponent implements OnInit, AfterViewInit, OnDestroy {
     private cdr: ChangeDetectorRef,
     private router: Router,
     private elRef: ElementRef,
-    private modalService: NgbModal,
-    private translate: TranslateService,
+    private activatedRoute: ActivatedRoute,
+    private invoiceService: InvoiceService,
+    private projectsService: ProjectsService,
   ) {
 
   }
 
   ngOnInit(): void {
+    this.activatedRoute.queryParams.subscribe(params => {
+      this.etimadNumber = params['etimadId'];
+      if (this.etimadNumber) {
+        this.initInvoicesList(this.etimadNumber, 1, '');
+      }
+    });
+  }
 
+  initInvoicesList(etimadNumber?: any, pageIndex?: number, search?: string) {
+    this.dataList = [];
+    this.invoiceService.getAll(etimadNumber, pageIndex, search).subscribe(res => {
+      this.dataList = res?.data?.items;
+      this.projectId = this.dataList[0]?.projectId;
+      this.getProjectDetails();
+      this.totalCount = res?.data?.totalcount;
+      this.pagesCount = Array.from({ length: Math.ceil(this.totalCount / 10) }, (_, index) => index + 1);
+      this.cdr.detectChanges();
+    });
+  }
+
+  getProjectDetails() {
+    this.projectsService.getByID(this.projectId).subscribe(res => {
+      this.projectDetails = res.data;
+      this.cdr.detectChanges();
+    });
   }
 
   ngAfterViewInit(): void {
@@ -56,12 +87,20 @@ export class ExpenditureComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   redirectToNew() {
-    this.router.navigateByUrl('invoices/add')
+    this.router.navigate(['invoices/add'], {
+      queryParams: { projectId: this.projectId, etimadNumber: this.etimadNumber }
+    });
+  }
+  editInvoice(id: number) {
+    this.router.navigate([`invoices/edit/${id}`], {
+      queryParams: { projectId: this.projectId, etimadNumber: this.etimadNumber }
+    });
   }
 
-  invoiceDetails() {
-    this.router.navigateByUrl('invoices/details')
-
+  navigateInvoiceDetails(id: number) {
+    this.router.navigate(['invoices/details'], {
+      queryParams: { invoiceId: id, etimadNumber: this.etimadNumber }
+    });
   }
 
   ngOnDestroy(): void {

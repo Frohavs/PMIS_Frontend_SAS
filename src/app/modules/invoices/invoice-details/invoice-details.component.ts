@@ -1,7 +1,9 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
+import { InvoiceService } from 'src/app/services/invoice.service';
 import { SweetAlertOptions } from 'sweetalert2';
 
 @Component({
@@ -11,6 +13,9 @@ import { SweetAlertOptions } from 'sweetalert2';
 })
 export class InvoiceDetailsComponent implements OnInit, OnDestroy {
 
+  etimadNumber: any;
+  invoiceId: any;
+  invoiceDetails: any;
   currentStep = 1;
 
   // modal configs
@@ -21,19 +26,36 @@ export class InvoiceDetailsComponent implements OnInit, OnDestroy {
   };
   statusModel: { status: boolean } = { status: true };
   @ViewChild('UpdateStatusModal') UpdateStatusModal!: any;
-  resetModel: { date: string, reason: string } = { date: '', reason: '' };
+  resetDataModel: { id: any, isClaimRegistration: boolean, claimRegistrationCheckDate: string } = { id: 0, isClaimRegistration: true, claimRegistrationCheckDate: '' };
   @ViewChild('resetModal') resetModal!: any;
   @ViewChild('noticeSwal') noticeSwal!: SwalComponent;
 
 
   constructor(
     private modalService: NgbModal,
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private invoiceService: InvoiceService,
     private cdr: ChangeDetectorRef,
   ) { }
 
 
   ngOnInit(): void {
+    this.activatedRoute.queryParams.subscribe(params => {
+      this.invoiceId = +params['invoiceId'];
+      this.etimadNumber = +params['etimadNumber'];
+      if (this.invoiceId) {
+        this.getInvoiceDetails();
+      }
+    });
+  }
 
+  getInvoiceDetails() {
+    this.invoiceService.getInvoiceById(this.invoiceId).subscribe(res => {
+      this.invoiceDetails = res.data;
+      this.resetDataModel.id = this.invoiceDetails.id;
+      debugger
+    })
   }
 
   openStatusModal() {
@@ -46,15 +68,33 @@ export class InvoiceDetailsComponent implements OnInit, OnDestroy {
 
   cancelInvoice() {
     if (confirm('Are you sure you want to cancel this?') == true) {
-      console.log('canceled');
-
+      debugger
+      this.invoiceService.cancelInvoice(this.invoiceDetails.id).subscribe(res => {
+        this.showAlert({ icon: 'success', title: 'Success!', text: 'Invoice Canceled successfully!' });
+        this.router.navigate(['invoices/expenditure'], {
+          queryParams: { etimadId: this.etimadNumber }
+        });
+      });
     }
   }
 
 
 
   onResetSubmit(event: Event, myForm: NgForm) {
-
+    if (!this.resetDataModel.claimRegistrationCheckDate) {
+      alert('Please select date');
+      return;
+    }
+    const payload = {
+      ...this.resetDataModel
+    }
+    debugger
+    this.invoiceService.UpdateInvoiceClamRegisteration(payload).subscribe(res => {
+      this.modalService.dismissAll();
+      this.showAlert({ icon: 'success', title: 'Success!', text: 'Invoice reset successfully!' });
+      this.resetDataModel = { id: 0, isClaimRegistration: true, claimRegistrationCheckDate: '' };
+      this.getInvoiceDetails();
+    });
   }
 
   onSubmit(event: Event, myForm: NgForm) {

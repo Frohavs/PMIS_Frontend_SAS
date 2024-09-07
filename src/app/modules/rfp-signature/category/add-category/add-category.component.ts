@@ -1,10 +1,9 @@
-import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { Location } from '@angular/common';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
-import { BoqService } from 'src/app/services/boq.service';
-import { LookupService } from 'src/app/services/lookup/lookup.service';
+import { RfpCategoryService } from 'src/app/services/rfp-category.service';
 import { SweetAlertOptions } from 'sweetalert2';
 
 @Component({
@@ -13,8 +12,8 @@ import { SweetAlertOptions } from 'sweetalert2';
   styleUrl: './add-category.component.scss'
 })
 export class AddCategoryComponent implements OnInit {
-  projectId: number;
-  boqId: number;
+  catId: number;
+
   isLoading: boolean;
   addRFPForm: FormGroup;
 
@@ -28,27 +27,25 @@ export class AddCategoryComponent implements OnInit {
     private router: Router,
     private _location: Location,
     private cdr: ChangeDetectorRef,
-    private boqService: BoqService,
     private formBuilder: FormBuilder,
-    private lookupService: LookupService,
+    private rfpCategoryService: RfpCategoryService,
     private activatedRoute: ActivatedRoute,
   ) { }
 
   ngOnInit(): void {
     this.initAddBoqForm();
     this.getBoqId();
-    this.getLookups();
   }
 
   getBoqId() {
     this.activatedRoute.params.subscribe(params => {
-      this.projectId = +params['id'];
+      this.catId = +params['id'];
+      if (this.catId) {
+        this.rfpCategoryService.getCategoryById(this.catId).subscribe(res => {
+          this.initEditForm(res.data);
+        })
+      }
     });
-    this.activatedRoute.queryParams.subscribe(params => {
-      this.boqId = params['boqId'];
-    });
-    const queryParams = this.activatedRoute.snapshot.queryParams;
-    this.boqId = +queryParams?.boqId
   }
 
   initAddBoqForm() {
@@ -56,17 +53,12 @@ export class AddCategoryComponent implements OnInit {
       name: ['', Validators.required],
       nameAr: ['', Validators.required],
     });
-
   }
-
-  getLookups() {
-    this.lookupService.getUnits().subscribe(res => {
-      this.units = res.data;
-      this.cdr.detectChanges();
-    });
-    this.lookupService.getVats().subscribe(res => {
-      this.vats = res.data;
-      this.cdr.detectChanges();
+  initEditForm(data: any) {
+    debugger
+    this.addRFPForm.patchValue({
+      name: data?.name,
+      nameAr: data?.nameAr,
     });
   }
 
@@ -76,50 +68,44 @@ export class AddCategoryComponent implements OnInit {
       return;
     }
     this.isLoading = true;
-    // if (!this.boqId) {
-    //   this.boqService.addBoq(
-    //     {
-    //       ...this.addRFPForm.value,
-    //       projectId: +this.projectId,
-    //       unitId: +this.addRFPForm.value.unitId,
-    //       vatId: this.getVatID(this.addRFPForm.value.vatId)
-    //     }
-    //   ).subscribe({
-    //     next: (res) => {
-    //       this.isLoading = false;
-    //       this.router.navigateByUrl(`projects/boq-list/${this.projectId}`);
-    //       this.showAlert({ icon: 'success', title: 'Success!', text: 'Boq Added successfully!' });
-    //       this.cdr.detectChanges();
-    //     },
-    //     error: (error) => {
-    //       this.showAlert({ icon: 'error', title: 'Error!', text: 'Please try again' });
-    //       this.isLoading = false;
-    //     }
-    //   });
+    if (!this.catId) {
+      this.rfpCategoryService.addRFPSignatureCategory(
+        {
+          ...this.addRFPForm.value,
+        }
+      ).subscribe({
+        next: (res) => {
+          this.isLoading = false;
+          this.router.navigateByUrl(`rfp_signature/category`);
+          this.showAlert({ icon: 'success', title: 'Success!', text: 'Category Added successfully!' });
+          this.cdr.detectChanges();
+        },
+        error: (error) => {
+          this.showAlert({ icon: 'error', title: 'Error!', text: 'Please try again' });
+          this.isLoading = false;
+        }
+      });
 
-    // } else {
-    //   this.boqService.updateBoq(
-    //     {
-    //       ...this.addRFPForm.value,
-    //       id: this.boqId,
-    //       projectId: +this.projectId,
-    //       unitId: +this.addRFPForm.value.unitId,
-    //       vatId: this.getVatID(this.addRFPForm.value.vatId)
-    //     }
-    //   ).subscribe({
-    //     next: (res) => {
-    //       this.isLoading = false;
-    //       this.showAlert({ icon: 'success', title: 'Success!', text: 'Boq Updated successfully!' });
-    //       setTimeout(() => {
-    //         this.router.navigateByUrl(`projects/boq-list/${this.projectId}`);
-    //       }, 1000);
-    //     },
-    //     error: (error) => {
-    //       this.showAlert({ icon: 'error', title: 'Error!', text: 'Please try again' });
-    //       this.isLoading = false;
-    //     }
-    //   });
-    // }
+    } else {
+      this.rfpCategoryService.UpdateRFPSignatureCategory(
+        {
+          ...this.addRFPForm.value,
+          id: this.catId,
+        }
+      ).subscribe({
+        next: (res) => {
+          this.isLoading = false;
+          this.showAlert({ icon: 'success', title: 'Success!', text: 'Category Updated successfully!' });
+          setTimeout(() => {
+            this.router.navigateByUrl(`rfp_signature/category`);
+          }, 1000);
+        },
+        error: (error) => {
+          this.showAlert({ icon: 'error', title: 'Error!', text: 'Please try again' });
+          this.isLoading = false;
+        }
+      });
+    }
   }
 
   showAlert(swalOptions: SweetAlertOptions) {
@@ -138,9 +124,6 @@ export class AddCategoryComponent implements OnInit {
     this.noticeSwal.fire();
   }
 
-  navigateBoqTable() {
-    this.router.navigateByUrl('projects/add-boq' + `/${this.projectId}`);
-  }
   back() {
     this._location.back();
   }

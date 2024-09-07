@@ -15,9 +15,21 @@ import { SweetAlertOptions } from 'sweetalert2';
 })
 export class NewInvoiceComponent implements OnInit, OnDestroy {
 
+  projectId: any;
+  invoiceId: any;
+  invoiceDetails: any;
+  etimadNumber: any;
+
   isLoading: boolean;
   addInvoiceForm: FormGroup;
   private unsubscribe: Subscription[] = [];
+
+  invoiceTypes: any[] = [
+    { id: 1, name: 'on going' },
+    { id: 2, name: 'final' },
+    { id: 3, name: 'supervision fine' },
+    { id: 4, name: 'advanced payment' }
+  ]
 
   swalOptions: SweetAlertOptions = {};
   @ViewChild('noticeSwal') noticeSwal!: SwalComponent;
@@ -33,39 +45,78 @@ export class NewInvoiceComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.initializeCompanyForm();
+    this.initAddForm();
+    this.activatedRoute.params.subscribe(params => {
+      this.invoiceId = +params['id'];
+      if (this.invoiceId) {
+        this.invoiceService.getInvoiceById(this.invoiceId).subscribe(res => {
+          this.invoiceDetails = res.data;
+          debugger
+          this.initEditForm(res.data);
+        })
+      }
+    });
+    this.activatedRoute.queryParams.subscribe(params => {
+      this.projectId = params['projectId'];
+      this.etimadNumber = params['etimadNumber'];
+    });
   }
 
-  initializeCompanyForm() {
+  initAddForm() {
     this.addInvoiceForm = this.formBuilder.group({
-      name: ['', Validators.required],
-      nameAr: ['', Validators.required],
-      crNumber: ['', Validators.required],
-      // usersNo: ['', Validators.required],
-      themeColor: ['#e66465', Validators.required],
-      address: ['', Validators.required],
-      description: ['', Validators.required],
-      phone: ['', Validators.required],
-      email: ['', Validators.required],
-      smsNotification: [true, Validators.required],
-      mailNotification: [false, Validators.required],
-      companyType: ['', Validators.required],
-      vendorIds: [[], Validators.required],
+      partiallyPaid: [false],
+      reference: ['', Validators.required],
+      value: [0],
+      type: [null, Validators.required],
+      mofNumber: ['', Validators.required],
+      etimadSubmitDate: ['', Validators.required]
+    });
+  }
+  initEditForm(data: any) {
+    debugger
+    this.addInvoiceForm.patchValue({
+      partiallyPaid: data?.partiallyPaid,
+      reference: data?.reference,
+      value: data?.value,
+      type: data?.type,
+      mofNumber: data?.mofNumber,
+      etimadSubmitDate: data?.etimadSubmitDate?.slice(0, 10)
     });
   }
 
   saveSettings() {
-    this.router.navigateByUrl('invoices/expenditure')
+    let payload = {
+      projectId: +this.projectId,
+      ...this.addInvoiceForm.value,
+      type: +this.addInvoiceForm.value.type
+    }
+    if (!this.invoiceId) {
+      this.invoiceService.createInvoice(payload).subscribe(res => {
+        this.router.navigate(['invoices/expenditure'], {
+          queryParams: { etimadId: this.etimadNumber }
+        });
+        this.showAlert({ icon: 'success', title: 'Success!', text: 'Invoice Added successfully!' });
+      })
+      setTimeout(() => {
+        this.isLoading = false;
+        this.cdr.detectChanges();
+      }, 500);
 
-    // const payload = { ...this.addInvoiceForm.value }
-    // this.invoiceService.addInvoice(payload).subscribe(res => {
-    //   this.router.navigateByUrl('invoices/expenditure')
-    //   this.showAlert({ icon: 'success', title: 'Success!', text: 'Company Updated successfully!' });
-    // })
-    // setTimeout(() => {
-    //   this.isLoading = false;
-    //   this.cdr.detectChanges();
-    // }, 500);
+    } else {
+      payload.id = this.invoiceDetails.id;
+      debugger
+      this.invoiceService.updateInvoice(payload).subscribe(res => {
+        this.router.navigate(['invoices/expenditure'], {
+          queryParams: { etimadId: this.etimadNumber }
+        });
+        this.showAlert({ icon: 'success', title: 'Success!', text: 'Invoice Updated successfully!' });
+      })
+      setTimeout(() => {
+        this.isLoading = false;
+        this.cdr.detectChanges();
+      }, 500);
+
+    }
   }
 
   back() {

@@ -9,7 +9,7 @@
             Change Status
           </a>
           <a class="btn btn-light-success font-weight-bolder font-size-sm cursor-pointer mx-2"
-          (click)="resetInvoiceModal()">
+            (click)="resetInvoiceModal()">
             Claim registration and modification
           </a>
           <a class="btn btn-light-danger font-weight-bolder font-size-sm cursor-pointer" (click)="cancelInvoice()">
@@ -236,7 +236,7 @@
 </ng-template>
 
 <ng-template #resetModal let-modal>
-  <form #addForm="ngForm" (ngSubmit)="onResetSubmit($event, addForm)">
+  <form #resetForm="ngForm" (ngSubmit)="onResetSubmit($event, resetForm)">
     <div class="modal-header">
       <h4 class="modal-title" id="modal-basic-title">Claim registration and modification</h4>
       <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
@@ -247,28 +247,16 @@
         <label class="required fw-semibold fs-6 mb-2">Date</label>
         <!--end::Label-->
         <!--begin::Input-->
-        <input type="date" class="form-control form-control-solid" name="name" [(ngModel)]="resetModel.date"
+        <input type="date" class="form-control form-control-solid" name="name" [(ngModel)]="resetDataModel.claimRegistrationCheckDate"
           #name="ngModel" required minlength="4" />
-        <!-- <div *ngIf="addForm.submitted && addForm.invalid"
-          class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
-          <div *ngIf="name.errors?.['required']">Name is required</div>
-          <div *ngIf="name.errors?.['minlength']">Name must be at least 4 characters long</div>
-        </div> -->
-        <!--end::Input-->
       </div>
       <div class="fv-row mb-7">
         <!--begin::Label-->
         <label class="required fw-semibold fs-6 mb-2">Reason</label>
         <!--end::Label-->
         <!--begin::Input-->
-        <input type="text" class="form-control form-control-solid" name="name" [(ngModel)]="resetModel.reason"
-          #name="ngModel" required minlength="4" />
-        <!-- <div *ngIf="addForm.submitted && addForm.invalid"
-          class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
-          <div *ngIf="name.errors?.['required']">Name is required</div>
-          <div *ngIf="name.errors?.['minlength']">Name must be at least 4 characters long</div>
-        </div> -->
-        <!--end::Input-->
+        <textarea class="form-control form-control-solid"
+          required cols="4"></textarea>
       </div>
     </div>
     <div class="modal-footer flex-center">
@@ -293,3 +281,7 @@
     </div>
   </form>
 </ng-template>
+
+<!-- modal -->
+<swal #noticeSwal [swalOptions]="swalOptions">
+</swal>

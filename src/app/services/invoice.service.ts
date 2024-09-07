@@ -18,21 +18,66 @@ export class InvoiceService {
   }
 
   // public methods
-  getAll(): Observable<any> {
+  getAll(etimadNumber: string, pageIndex?: number, search?: string): Observable<any> {
     const httpHeaders = new HttpHeaders({
       Authorization: `Bearer ${this.token}`,
     });
-    const url = `${this.API_USERS_URL}/GetCompanyType`;
+    const payload = {
+      etimadNumber: etimadNumber,
+      quickSearch: search,
+      pagedSearch: {
+        "pageIndex": pageIndex,
+        "pageSize": 10
+      }
+    }
+    const url = `${this.API_USERS_URL}/Get`;
+    return this.http.post<any>(url, payload, {
+      headers: httpHeaders
+    });
+  }
+  getInvoiceById(id: number): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/GetInvoice/${id}`;
     return this.http.get<any>(url, {
       headers: httpHeaders
     });
   }
-  addInvoice(invoice: any): Observable<any> {
+  createInvoice(invoice: any): Observable<any> {
     const httpHeaders = new HttpHeaders({
       Authorization: `Bearer ${this.token}`,
     });
     const url = `${this.API_USERS_URL}/Create`;
     return this.http.post<any>(url, invoice, {
+      headers: httpHeaders
+    });
+  }
+
+  updateInvoice(invoice: any): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/Update`;
+    return this.http.put<any>(url, invoice, {
+      headers: httpHeaders
+    });
+  }
+  UpdateInvoiceClamRegisteration(invoice: any): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/UpdateInvoiceClamRegisteration`;
+    return this.http.put<any>(url, invoice, {
+      headers: httpHeaders
+    });
+  }
+  cancelInvoice(id: any): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/Cancel/${id}`;
+    return this.http.put<any>(url, {}, {
       headers: httpHeaders
     });
   }

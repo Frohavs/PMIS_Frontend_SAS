@@ -4,6 +4,7 @@ import { NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
 import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
 import { fromEvent, debounceTime, distinctUntilChanged, Subscription } from 'rxjs';
+import { InvoiceService } from 'src/app/services/invoice.service';
 import { SweetAlertOptions } from 'sweetalert2';
 
 @Component({
@@ -38,11 +39,23 @@ export class OverviewComponent implements OnInit, AfterViewInit, OnDestroy {
     private router: Router,
     private elRef: ElementRef,
     private modalService: NgbModal,
+    private invoiceService: InvoiceService,
     private translate: TranslateService,
   ) { }
 
   ngOnInit(): void {
+    this.initInvoicesList();
 
+  }
+
+  initInvoicesList(etimadNumber?: string,pageIndex?: number, search?: string) {
+    this.dataList = [];
+    this.invoiceService.getAll(this.etimadNumber, pageIndex, search).subscribe(res => {
+      this.dataList = res?.data?.items;
+      this.totalCount = res?.data?.totalcount;
+      this.pagesCount = Array.from({ length: Math.ceil(this.totalCount / 10) }, (_, index) => index + 1);
+      this.cdr.detectChanges();
+    });
   }
 
   ngAfterViewInit(): void {
@@ -53,6 +66,8 @@ export class OverviewComponent implements OnInit, AfterViewInit, OnDestroy {
       distinctUntilChanged(),
     ).subscribe((event: any) => {
       const searchText = event.target.value;
+      this.initInvoicesList(this.etimadNumber, 1, searchText)
+
     });
   }
   setActiveTab(index: number) {
@@ -61,7 +76,13 @@ export class OverviewComponent implements OnInit, AfterViewInit, OnDestroy {
 
   navigateExpenditure() {
     this.router.navigate(['invoices/expenditure'], {
-      queryParams: { id: this.etimadNumber }
+      queryParams: { etimadId: this.etimadNumber }
+    });
+  }
+
+  navigateInvoiceDetails(id: number) {
+    this.router.navigate(['invoices/details'], {
+      queryParams: { invoiceId: id }
     });
   }
 

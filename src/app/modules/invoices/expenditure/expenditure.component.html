@@ -6,7 +6,7 @@
       <!-- begin::Header -->
       <div class="card-header align-items-center border-0 mt-4">
         <h3 class="card-title align-items-center justify-content-between w-100">
-          <span class="text-primary fw-bolder fs-4">Execution of King Abdullah International Gardens - Phase III</span>
+          <span class="text-primary fw-bolder fs-4">{{projectDetails?.name || '--'}}</span>
           <!-- <span class="text-muted mt-1 fw-bold fs-7">test</span> -->
           <a class="btn btn-light-primary font-weight-bolder font-size-sm cursor-pointer" (click)="redirectToNew()">
             Create Invoice
@@ -24,13 +24,13 @@
                 Contract No
 
               </a>
-              <span class="text-muted fw-bold d-block pt-1">106</span>
+              <span class="text-muted fw-bold d-block pt-1">{{projectDetails?.contractNo || '--'}}</span>
             </div>
             <div class="flex-grow-1 me-2">
               <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
                 Contract Date
               </a>
-              <span class="text-muted fw-bold d-block pt-1">2019-07-18</span>
+              <span class="text-muted fw-bold d-block pt-1">{{projectDetails?.createdDate | date}}</span>
             </div>
           </div>
         </div>
@@ -41,13 +41,13 @@
               <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
                 Contractor
               </a>
-              <span class="text-muted fw-bold d-block pt-1">Ahmed Motawea</span>
+              <span class="text-muted fw-bold d-block pt-1">{{projectDetails?.contractorName || '--'}}</span>
             </div>
             <div class="flex-grow-1 me-2">
               <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
                 Consultant
               </a>
-              <span class="text-muted fw-bold d-block pt-1">Dar Al-Handasah</span>
+              <span class="text-muted fw-bold d-block pt-1">{{projectDetails?.consultantName || '--'}}</span>
             </div>
           </div>
           <!-- end::Title -->
@@ -60,15 +60,15 @@
           <div class="d-flex flex-row-fluid flex-wrap align-items-center">
             <div class="w-50 me-2">
               <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
-                Administrator
+                Status
               </a>
-              <span class="text-muted fw-bold d-block pt-1">Abdullah International Gardens</span>
+              <span class="text-muted fw-bold d-block pt-1">{{projectDetails?.contractStatus || '--'}}</span>
             </div>
             <div class="flex-grow-1 me-2">
               <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
-                Department
+                Sector
               </a>
-              <span class="text-muted fw-bold d-block pt-1">--</span>
+              <span class="text-muted fw-bold d-block pt-1">{{projectDetails?.projectSector || '--'}}</span>
             </div>
           </div>
           <!-- end::Title -->
@@ -83,7 +83,7 @@
               <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
                 Spent value
               </a>
-              <span class="text-muted fw-bold d-block pt-1">290,857,001.49</span>
+              <span class="text-muted fw-bold d-block pt-1">{{projectDetails?.originalValue | number}}</span>
             </div>
 
           </div>
@@ -133,97 +133,62 @@
         <!-- end::Table head -->
         <!-- begin::Table body -->
         <tbody>
-          <tr>
+
+          <tr *ngFor="let invoice of dataList; index as i">
+
+
             <td>
-              <a class="text-gray-900 fw-bolder text-hover-primary fs-6">
-                20
+              <a class="text-gray-900 fw-bolder text-hover-primary d-block fs-6">
+                {{invoice?.reference}}
               </a>
             </td>
             <td>
-              <a class="text-gray-900 fw-bolder text-hover-primary fs-6">
-                9,621,358.59
+              <a class="text-gray-900 fw-bolder text-hover-primary d-block fs-6">
+                {{invoice?.type}}
+              </a>
+            </td>
+
+            <td>
+              <a class="text-gray-900 fw-bolder text-hover-primary d-block fs-6">
+                {{invoice?.value}}
               </a>
             </td>
             <td>
-              <a class="text-gray-900 fw-bolder text-hover-primary fs-6">
-                on going
+              <a class="text-gray-900 fw-bolder text-hover-primary d-block fs-6">
+                {{invoice?.mofNumber}}
               </a>
             </td>
             <td>
-              <a class="text-gray-900 fw-bolder text-hover-primary fs-6">
-                220202043198
+              <a class="text-gray-900 fw-bolder text-hover-primary d-block fs-6">
+                {{invoice?.etimadSubmitDate | date}}
               </a>
             </td>
             <td>
-              <a class="text-gray-900 fw-bolder text-hover-primary fs-6">
-                2022-10-28
-              </a>
-            </td>
-            <td>
-              <a class="text-gray-900 fw-bolder text-hover-primary fs-6">
-                On Progress
+              <a class="text-gray-900 fw-bolder text-hover-primary d-block fs-6">
+                --
               </a>
             </td>
             <td>
               <div class="d-flex justify-content-center flex-shrink-0">
+
                 <a class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1"
-                  (click)="invoiceDetails()">
+                  (click)="editInvoice(invoice.id)">
+                  <app-keenicon name="pencil" class="fs-3"></app-keenicon>
+                </a>
+
+                <a class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1"
+                  (click)="navigateInvoiceDetails(invoice.id)">
                   <app-keenicon name="eye" class="fs-3"></app-keenicon>
                 </a>
+
               </div>
             </td>
           </tr>
-          <!-- <tr *ngFor="let project of dataList; index as i">
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="d-flex justify-content-start flex-column">
-                  <a class="text-gray-900 fw-bolder text-hover-primary fs-6">
-                    {{project?.nameAr}}
-                  </a>
-                  <span class="text-muted fw-bold text-muted d-block fs-7">
-                    {{project?.name}}
-                  </span>
-                </div>
-              </div>
-            </td>
-
-            <td>
-              <a class="text-gray-900 fw-bolder text-hover-primary d-block fs-6">
-                {{project?.consultantName}}
-              </a>
-            </td>
-
-            <td>
-              <a class="text-gray-900 fw-bolder text-hover-primary d-block fs-6">
-                {{project?.executionStartDate | date: 'dd/MM/yyyy'}}
-              </a>
-            </td>
-            <td>
-              <a class="text-gray-900 fw-bolder text-hover-primary d-block fs-6">
-                {{project?.projectSectorName}}
-              </a>
-            </td>
-            <td>
-              <div class="d-flex justify-content-center flex-shrink-0" *ngIf="checkAdmin(project.userName)">
-                <a class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1"
-                  (click)="checkProject(project.id)">
-                  <app-keenicon name="setting-2" class="fs-3"></app-keenicon>
-                </a>
-                <a class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1"
-                  (click)="editProject(project)">
-                  <app-keenicon name="pencil" class="fs-3"></app-keenicon>
-                </a>
-                <a class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm" (click)="deleteProject(project)">
-                  <app-keenicon name="trash" class="fs-3"></app-keenicon>
-                </a>
-              </div>
-            </td>
-          </tr> -->
-          <!-- <tr *ngIf="!dataList?.length">
+          <tr *ngIf="!dataList?.length">
             <td colspan="12" class="text-center fs-2 text-primary">
               no items retrieved yet
             </td>
-          </tr> -->
+          </tr>
         </tbody>
       </table>
 

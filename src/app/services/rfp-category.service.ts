@@ -6,9 +6,9 @@ import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root'
 })
-export class RfpService {
+export class RfpCategoryService {
 
-  API_USERS_URL = `${environment.apiUrl}/RfpSignature`;
+  API_USERS_URL = `${environment.apiUrl}/RfpSignatureCategory`;
   token: string;
   private authLocalStorageToken = `${environment.appVersion}-${environment.USERDATA_KEY}`;
 
@@ -34,12 +34,30 @@ export class RfpService {
       headers: httpHeaders
     });
   }
-  addRFPSignature(invoice: any): Observable<any> {
+  getCategoryById(id: any): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/Get/${id}`;
+    return this.http.get<any>(url, {
+      headers: httpHeaders
+    });
+  }
+  addRFPSignatureCategory(rfp: any): Observable<any> {
     const httpHeaders = new HttpHeaders({
       Authorization: `Bearer ${this.token}`,
     });
     const url = `${this.API_USERS_URL}/Create`;
-    return this.http.post<any>(url, invoice, {
+    return this.http.post<any>(url, rfp, {
+      headers: httpHeaders
+    });
+  }
+  UpdateRFPSignatureCategory(invoice: any): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/Update`;
+    return this.http.put<any>(url, invoice, {
       headers: httpHeaders
     });
   }

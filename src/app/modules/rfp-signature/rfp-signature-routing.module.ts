@@ -30,6 +30,10 @@ const routes: Routes = [
         component: AddCategoryComponent,
       },
       {
+        path: 'edit-category/:id',
+        component: AddCategoryComponent,
+      },
+      {
         path: 'sub-category',
         component: SubCategoryComponent,
       },
