@@ -6,6 +6,8 @@ import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
 import { BoqService } from 'src/app/services/boq.service';
 import { LookupService } from 'src/app/services/lookup/lookup.service';
 import { SweetAlertOptions } from 'sweetalert2';
+import { RfpCategoryService } from 'src/app/services/rfp-category.service';
+import { RfpService } from 'src/app/services/rfp.service';
 
 @Component({
   selector: 'app-add-sub-category',
@@ -14,12 +16,12 @@ import { SweetAlertOptions } from 'sweetalert2';
 })
 export class AddSubCategoryComponent implements OnInit {
   projectId: number;
-  boqId: number;
+  subcatId: number;
   isLoading: boolean;
   addRFPForm: FormGroup;
 
-  vats: any[] = [];
-  units: any[] = [];
+  categories: any[] = [];
+  users: any[] = [];
 
   swalOptions: SweetAlertOptions = {};
   @ViewChild('noticeSwal') noticeSwal!: SwalComponent;
@@ -28,8 +30,9 @@ export class AddSubCategoryComponent implements OnInit {
     private router: Router,
     private _location: Location,
     private cdr: ChangeDetectorRef,
-    private boqService: BoqService,
     private formBuilder: FormBuilder,
+    private rfpService: RfpService,
+    private rfpCategoryService: RfpCategoryService,
     private lookupService: LookupService,
     private activatedRoute: ActivatedRoute,
   ) { }
@@ -44,110 +47,101 @@ export class AddSubCategoryComponent implements OnInit {
     this.activatedRoute.params.subscribe(params => {
       this.projectId = +params['id'];
     });
-    this.activatedRoute.queryParams.subscribe(params => {
-      this.boqId = params['boqId'];
+    this.activatedRoute.params.subscribe(params => {
+      this.subcatId = params['id'];
+      if (this.subcatId) {
+        // this.rfpService.addRFPSignature(this.subcatId).subscribe(res => {
+        //   setTimeout(() => {
+        //     this.editVendorForm(res.data);
+        //     this.cdr.detectChanges();
+        //   }, 1000);
+        // });
+      }
     });
-    const queryParams = this.activatedRoute.snapshot.queryParams;
-    this.boqId = +queryParams?.boqId
-    if (this.boqId) {
-      this.boqService.getBoq(this.boqId).subscribe(res => {
-        setTimeout(() => {
-          this.editVendorForm(res.data);
-          this.cdr.detectChanges();
-        }, 1000);
-      });
-    }
   }
 
   initAddBoqForm() {
     this.addRFPForm = this.formBuilder.group({
-      itemNo: ['', Validators.required],
-      title: ['', Validators.required],
-      description: ['', Validators.required],
-      quantity: ['', Validators.required],
-      vatId: ['', Validators.required],
-      unitId: ['', Validators.required],
-      unitPrice: ['', Validators.required],
-      totalPrice: ['', Validators.required],
+      name: ['', Validators.required],
+      nameAr: ['', Validators.required],
+      rfpSignatureId: [null],
+      categoryId: [null, Validators.required],
+      authorId: [null, Validators.required],
+      checkerId: [null, Validators.required],
     });
 
   }
 
   getLookups() {
-    this.lookupService.getUnits().subscribe(res => {
-      this.units = res.data;
+
+    this.rfpCategoryService.getAll().subscribe(res => {
+      this.categories = res.data.items;
       this.cdr.detectChanges();
     });
-    this.lookupService.getVats().subscribe(res => {
-      this.vats = res.data;
+    this.lookupService.allUsers().subscribe(res => {
+      this.users = res.data;
       this.cdr.detectChanges();
     });
   }
 
   editVendorForm(data: any) {
     this.addRFPForm.patchValue({
-      projectId: data?.projectId,
-      itemNo: data?.itemNo,
-      title: data?.title,
-      description: data?.description,
-      quantity: data?.quantity,
-      unitPrice: data?.unitPrice,
-      totalPrice: data?.totalPrice,
-      unitId: data?.unitId?.toString()
+      name: data?.name,
+      nameAr: data?.name,
+      rfpSignatureId: data?.rfpSignatureId,
+      categoryId: data?.rfpSignatureId,
+      authorId: data?.rfpSignatureId,
+      checkerId: data?.rfpSignatureId,
     });
     this.cdr.detectChanges()
   }
 
   saveChanges() {
+
     if (!this.addRFPForm.valid) {
       this.addRFPForm.markAllAsTouched()
       return;
     }
     this.isLoading = true;
-    // if (!this.boqId) {
-    //   this.boqService.addBoq(
-    //     {
-    //       ...this.addRFPForm.value,
-    //       projectId: +this.projectId,
-    //       unitId: +this.addRFPForm.value.unitId,
-    //       vatId: this.getVatID(this.addRFPForm.value.vatId)
-    //     }
-    //   ).subscribe({
-    //     next: (res) => {
-    //       this.isLoading = false;
-    //       this.router.navigateByUrl(`projects/boq-list/${this.projectId}`);
-    //       this.showAlert({ icon: 'success', title: 'Success!', text: 'Boq Added successfully!' });
-    //       this.cdr.detectChanges();
-    //     },
-    //     error: (error) => {
-    //       this.showAlert({ icon: 'error', title: 'Error!', text: 'Please try again' });
-    //       this.isLoading = false;
-    //     }
-    //   });
+    if (!this.subcatId) {
+      this.rfpService.addRFPSignature(
+        {
+          ...this.addRFPForm.value,
+        }
+      ).subscribe({
+        next: (res) => {
+          this.isLoading = false;
+          this.router.navigateByUrl(`rfp_signature/sub-category`);
+          this.showAlert({ icon: 'success', title: 'Success!', text: 'sub-category added successfully!' });
+          this.cdr.detectChanges();
+        },
+        error: (error) => {
+          this.showAlert({ icon: 'error', title: 'Error!', text: 'Please try again' });
+          this.isLoading = false;
+        }
+      });
 
-    // } else {
-    //   this.boqService.updateBoq(
-    //     {
-    //       ...this.addRFPForm.value,
-    //       id: this.boqId,
-    //       projectId: +this.projectId,
-    //       unitId: +this.addRFPForm.value.unitId,
-    //       vatId: this.getVatID(this.addRFPForm.value.vatId)
-    //     }
-    //   ).subscribe({
-    //     next: (res) => {
-    //       this.isLoading = false;
-    //       this.showAlert({ icon: 'success', title: 'Success!', text: 'Boq Updated successfully!' });
-    //       setTimeout(() => {
-    //         this.router.navigateByUrl(`projects/boq-list/${this.projectId}`);
-    //       }, 1000);
-    //     },
-    //     error: (error) => {
-    //       this.showAlert({ icon: 'error', title: 'Error!', text: 'Please try again' });
-    //       this.isLoading = false;
-    //     }
-    //   });
-    // }
+    } else {
+      this.rfpService.updateRFPSignature(
+        {
+          ...this.addRFPForm.value,
+          id: this.subcatId,
+
+        }
+      ).subscribe({
+        next: (res) => {
+          this.isLoading = false;
+          this.showAlert({ icon: 'success', title: 'Success!', text: 'sub-category updated successfully!' });
+          setTimeout(() => {
+            this.router.navigateByUrl(`rfp_signature/sub-category`);
+          }, 1000);
+        },
+        error: (error) => {
+          this.showAlert({ icon: 'error', title: 'Error!', text: 'Please try again' });
+          this.isLoading = false;
+        }
+      });
+    }
   }
 
   showAlert(swalOptions: SweetAlertOptions) {
