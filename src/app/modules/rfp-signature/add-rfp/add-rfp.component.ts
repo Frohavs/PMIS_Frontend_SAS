@@ -1,5 +1,5 @@
-import { Location } from '@angular/common';
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { Location } from '@angular/common';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
@@ -18,9 +18,6 @@ export class AddRfpComponent implements OnInit {
   boqId: number;
   isLoading: boolean;
   addRFPForm: FormGroup;
-
-  vats: any[] = [];
-  units: any[] = [];
 
   swalOptions: SweetAlertOptions = {};
   @ViewChild('noticeSwal') noticeSwal!: SwalComponent;
@@ -62,27 +59,26 @@ export class AddRfpComponent implements OnInit {
 
   initAddBoqForm() {
     this.addRFPForm = this.formBuilder.group({
-      itemNo: ['', Validators.required],
-      title: ['', Validators.required],
-      description: ['', Validators.required],
-      quantity: ['', Validators.required],
-      vatId: ['', Validators.required],
-      unitId: ['', Validators.required],
-      unitPrice: ['', Validators.required],
-      totalPrice: ['', Validators.required],
+      nameAr: ['', Validators.required],
+      name: ['', Validators.required],
+      receivedDate: ['', Validators.required],
+      requestedWayDocument: ['', Validators.required],
+      administrator: [null, Validators.required],
+      reviewerId: [null, Validators.required],
+      approverId: [null, Validators.required],
     });
 
   }
 
   getLookups() {
-    this.lookupService.getUnits().subscribe(res => {
-      this.units = res.data;
-      this.cdr.detectChanges();
-    });
-    this.lookupService.getVats().subscribe(res => {
-      this.vats = res.data;
-      this.cdr.detectChanges();
-    });
+    // this.lookupService.getUnits().subscribe(res => {
+    //   this.units = res.data;
+    //   this.cdr.detectChanges();
+    // });
+    // this.lookupService.getVats().subscribe(res => {
+    //   this.vats = res.data;
+    //   this.cdr.detectChanges();
+    // });
   }
 
   editVendorForm(data: any) {
@@ -101,6 +97,7 @@ export class AddRfpComponent implements OnInit {
 
   saveChanges() {
     if (!this.addRFPForm.valid) {
+      this.addRFPForm.markAllAsTouched()
       return;
     }
     this.isLoading = true;
@@ -164,18 +161,6 @@ export class AddRfpComponent implements OnInit {
     }, swalOptions);
     this.cdr.detectChanges();
     this.noticeSwal.fire();
-  }
-
-  get vatId(): FormControl {
-    return this.addRFPForm.get('vatId') as FormControl;
-  }
-
-  get quantity(): FormControl {
-    return this.addRFPForm.get('quantity') as FormControl;
-  }
-
-  get unitPrice(): FormControl {
-    return this.addRFPForm.get('unitPrice') as FormControl;
   }
 
   navigateBoqTable() {

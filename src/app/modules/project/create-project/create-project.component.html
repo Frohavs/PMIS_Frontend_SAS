@@ -257,9 +257,9 @@
           <label class="col-lg-4 col-form-label fw-bold fs-6"><span
               class="required">{{"PROJECTS.etimad_number" | translate}}</span></label>
           <div class="col-lg-8 fv-row">
-            <input type="date" class="form-control form-control-lg form-control-solid text-start"
+            <input type="text" class="form-control form-control-lg form-control-solid text-start"
               placeholder="{{'PROJECTS.etimad_number' | translate}}" name="etimadNumber"
-              formControlName="etimadNumber" readonly />
+              formControlName="etimadNumber" (keypress)="numbersOnly($event)" />
           </div>
         </div>
 

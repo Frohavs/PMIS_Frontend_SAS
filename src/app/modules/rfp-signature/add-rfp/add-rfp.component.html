@@ -25,95 +25,138 @@
               <div class="col-lg-6">
                 <label class="col-lg-12 col-form-label fw-bold fs-6">
                   <span>
-                    English Name
+                    AR Rfp signature name
                   </span>
                 </label>
                 <div class="col-lg-12 fv-row">
-                  <input type="text" class="form-control form-control-lg form-control-solid text-start" name="itemNo"
-                    formControlName="itemNo" placeholder="en name" />
+                  <input type="text" class="form-control form-control-lg form-control-solid text-start" name="nameAr"
+                    formControlName="nameAr" placeholder="arabic name" />
                   <div
-                    *ngIf="addRFPForm?.get('itemNo')?.invalid && (addRFPForm?.get('itemNo')?.dirty || addRFPForm?.get('itemNo')?.touched)"
+                    *ngIf="addRFPForm?.get('nameAr')?.invalid && (addRFPForm?.get('nameAr')?.dirty || addRFPForm?.get('nameAr')?.touched)"
                     class="fv-plugins-message-container">
-                    <div class="fv-help-block">No is required</div>
+                    <div class="fv-help-block">name is required</div>
                   </div>
                 </div>
               </div>
 
-              <div class="col-xl-6">
-                <label class="col-lg-4 col-form-label fw-bold fs-6"><span
-                    class="required">Signature Category</span></label>
-                <div class="col-lg-10 fv-row">
-                  <select class="form-select form-select-solid form-select-lg fw-bold" name="unitId"
-                    formControlName="unitId">
-                    <option value="" disabled selected>{{"TRANSLATOR.SELECTION" | translate}}</option>
-                    <!-- <ng-container *ngFor="let unit of units">
-                      <option [value]="unit?.id">{{unit?.name}}</option>
-                    </ng-container> -->
-                  </select>
-                  <!-- <div
-                    *ngIf="addRFPForm?.get('unitId')?.invalid && (addRFPForm?.get('unitId')?.dirty || addRFPForm?.get('unitId')?.touched)"
-                    class="fv-plugins-message-container">
-                    <div class="fv-help-block">unit is required</div>
-                  </div> -->
-                </div>
-              </div>
-            </div>
-            <div class="row mb-1">
               <div class="col-lg-6">
                 <label class="col-lg-12 col-form-label fw-bold fs-6">
                   <span>
-                    Arabic Name
+                    Rfp signature name
                   </span>
                 </label>
                 <div class="col-lg-12 fv-row">
-                  <input type="text" class="form-control form-control-lg form-control-solid text-start" name="itemNo"
-                    formControlName="itemNo" placeholder="ar name" />
+                  <input type="text" class="form-control form-control-lg form-control-solid text-start" name="name"
+                    formControlName="name" placeholder="english name" />
                   <div
-                    *ngIf="addRFPForm?.get('itemNo')?.invalid && (addRFPForm?.get('itemNo')?.dirty || addRFPForm?.get('itemNo')?.touched)"
+                    *ngIf="addRFPForm?.get('name')?.invalid && (addRFPForm?.get('name')?.dirty || addRFPForm?.get('name')?.touched)"
                     class="fv-plugins-message-container">
-                    <div class="fv-help-block">No is required</div>
+                    <div class="fv-help-block">name is required</div>
+                  </div>
+                </div>
+              </div>
+
+
+            </div>
+
+            <div class="row mb-1">
+
+              <div class="col-xl-6">
+                <label class="col-lg-4 col-form-label fw-bold fs-6"><span
+                    class="required">Administrator</span></label>
+                <div class="col-lg-10 fv-row">
+                  <select class="form-select form-select-solid form-select-lg fw-bold" name="administrator"
+                    formControlName="administrator">
+                    <option value="" disabled selected>{{"TRANSLATOR.SELECTION" | translate}}</option>
+                    <!-- <ng-container *ngFor="let unit of units">
+                      <option [value]="unit?.id">{{unit?.name}}</option>
+                    </ng-container> -->
+                  </select>
+                  <div
+                    *ngIf="addRFPForm?.get('administrator')?.invalid && (addRFPForm?.get('administrator')?.dirty || addRFPForm?.get('administrator')?.touched)"
+                    class="fv-plugins-message-container">
+                    <div class="fv-help-block">administrator is required</div>
                   </div>
                 </div>
               </div>
 
               <div class="col-xl-6">
                 <label class="col-lg-4 col-form-label fw-bold fs-6"><span
-                    class="required">Checker</span></label>
+                    class="required">Reviewer</span></label>
                 <div class="col-lg-10 fv-row">
-                  <select class="form-select form-select-solid form-select-lg fw-bold" name="unitId"
-                    formControlName="unitId">
+                  <select class="form-select form-select-solid form-select-lg fw-bold" name="reviewerId"
+                    formControlName="reviewerId">
                     <option value="" disabled selected>{{"TRANSLATOR.SELECTION" | translate}}</option>
                     <!-- <ng-container *ngFor="let unit of units">
                       <option [value]="unit?.id">{{unit?.name}}</option>
                     </ng-container> -->
                   </select>
-                  <!-- <div
-                    *ngIf="addRFPForm?.get('unitId')?.invalid && (addRFPForm?.get('unitId')?.dirty || addRFPForm?.get('unitId')?.touched)"
+                  <div
+                    *ngIf="addRFPForm?.get('reviewerId')?.invalid && (addRFPForm?.get('reviewerId')?.dirty || addRFPForm?.get('reviewerId')?.touched)"
                     class="fv-plugins-message-container">
-                    <div class="fv-help-block">unit is required</div>
-                  </div> -->
+                    <div class="fv-help-block">reviewer is required</div>
+                  </div>
                 </div>
               </div>
+
             </div>
             <div class="row mb-1">
               <div class="col-xl-6">
                 <label class="col-lg-4 col-form-label fw-bold fs-6"><span
-                    class="required">Author</span></label>
+                    class="required">Approver</span></label>
                 <div class="col-lg-10 fv-row">
-                  <select class="form-select form-select-solid form-select-lg fw-bold" name="unitId"
-                    formControlName="unitId">
+                  <select class="form-select form-select-solid form-select-lg fw-bold" name="approverId"
+                    formControlName="approverId">
                     <option value="" disabled selected>{{"TRANSLATOR.SELECTION" | translate}}</option>
                     <!-- <ng-container *ngFor="let unit of units">
                       <option [value]="unit?.id">{{unit?.name}}</option>
                     </ng-container> -->
                   </select>
-                  <!-- <div
-                    *ngIf="addRFPForm?.get('unitId')?.invalid && (addRFPForm?.get('unitId')?.dirty || addRFPForm?.get('unitId')?.touched)"
+                  <div
+                    *ngIf="addRFPForm?.get('approverId')?.invalid && (addRFPForm?.get('approverId')?.dirty || addRFPForm?.get('approverId')?.touched)"
                     class="fv-plugins-message-container">
-                    <div class="fv-help-block">unit is required</div>
-                  </div> -->
+                    <div class="fv-help-block">approver is required</div>
+                  </div>
                 </div>
               </div>
+
+              <div class="col-lg-6">
+                <label class="col-lg-12 col-form-label fw-bold fs-6">
+                  <span>
+                    received date
+                  </span>
+                </label>
+                <div class="col-lg-12 fv-row">
+                  <input type="date" class="form-control form-control-lg form-control-solid text-start" name="receivedDate"
+                    formControlName="receivedDate" />
+                  <div
+                    *ngIf="addRFPForm?.get('receivedDate')?.invalid && (addRFPForm?.get('receivedDate')?.dirty || addRFPForm?.get('receivedDate')?.touched)"
+                    class="fv-plugins-message-container">
+                    <div class="fv-help-block">date is required</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row mb-1">
+
+              <div class="col-lg-6">
+                <label class="col-lg-12 col-form-label fw-bold fs-6">
+                  <span>
+                    Requested Way Document
+                  </span>
+                </label>
+                <div class="col-lg-12 fv-row">
+                  <input type="file" class="form-control form-control-lg form-control-solid text-start" name="requestedWayDocument"
+                    formControlName="requestedWayDocument" />
+                  <div
+                    *ngIf="addRFPForm?.get('requestedWayDocument')?.invalid && (addRFPForm?.get('requestedWayDocument')?.dirty || addRFPForm?.get('requestedWayDocument')?.touched)"
+                    class="fv-plugins-message-container">
+                    <div class="fv-help-block">file is required</div>
+                  </div>
+                </div>
+              </div>
+
             </div>
 
 
