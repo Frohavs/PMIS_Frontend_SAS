@@ -34,6 +34,15 @@ export class RfpService {
       headers: httpHeaders
     });
   }
+  getRFPSignatureById(id: any): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/Get/${id}`;
+    return this.http.get<any>(url, {
+      headers: httpHeaders
+    });
+  }
   addRFPSignature(invoice: any): Observable<any> {
     const httpHeaders = new HttpHeaders({
       Authorization: `Bearer ${this.token}`,
