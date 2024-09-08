@@ -165,13 +165,13 @@
             </td>
             <td>
               <a class="text-gray-900 fw-bolder text-hover-primary d-block fs-6">
-                --
+                {{invoice?.status}}
               </a>
             </td>
             <td>
               <div class="d-flex justify-content-center flex-shrink-0">
 
-                <a class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1"
+                <a class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1" *ngIf="invoice.statusId !== 4"
                   (click)="editInvoice(invoice.id)">
                   <app-keenicon name="pencil" class="fs-3"></app-keenicon>
                 </a>

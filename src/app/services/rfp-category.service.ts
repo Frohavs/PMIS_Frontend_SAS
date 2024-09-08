@@ -34,6 +34,22 @@ export class RfpCategoryService {
       headers: httpHeaders
     });
   }
+  getAllSub(pageIndex?: number, search?: string): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const body = {
+      quickSearch: search,
+      pagedSearch: {
+        "pageIndex": pageIndex,
+        "pageSize": 10
+      }
+    }
+    const url = `${this.API_USERS_URL}/GetSubCategories`;
+    return this.http.post<any>(url, body, {
+      headers: httpHeaders
+    });
+  }
   getCategoryById(id: any): Observable<any> {
     const httpHeaders = new HttpHeaders({
       Authorization: `Bearer ${this.token}`,
@@ -48,6 +64,15 @@ export class RfpCategoryService {
       Authorization: `Bearer ${this.token}`,
     });
     const url = `${this.API_USERS_URL}/Create`;
+    return this.http.post<any>(url, rfp, {
+      headers: httpHeaders
+    });
+  }
+  addRFPSignatureSubCategory(rfp: any): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/CreateSubCategories`;
     return this.http.post<any>(url, rfp, {
       headers: httpHeaders
     });

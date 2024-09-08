@@ -64,7 +64,6 @@ export class AddSubCategoryComponent implements OnInit {
     this.addRFPForm = this.formBuilder.group({
       name: ['', Validators.required],
       nameAr: ['', Validators.required],
-      rfpSignatureId: [null],
       categoryId: [null, Validators.required],
       authorId: [null, Validators.required],
       checkerId: [null, Validators.required],
@@ -88,10 +87,9 @@ export class AddSubCategoryComponent implements OnInit {
     this.addRFPForm.patchValue({
       name: data?.name,
       nameAr: data?.name,
-      rfpSignatureId: data?.rfpSignatureId,
-      categoryId: data?.rfpSignatureId,
-      authorId: data?.rfpSignatureId,
-      checkerId: data?.rfpSignatureId,
+      categoryId: data?.categoryId,
+      authorId: data?.authorId,
+      checkerId: data?.checkerId,
     });
     this.cdr.detectChanges()
   }
@@ -103,45 +101,48 @@ export class AddSubCategoryComponent implements OnInit {
       return;
     }
     this.isLoading = true;
-    if (!this.subcatId) {
-      this.rfpService.addRFPSignature(
-        {
-          ...this.addRFPForm.value,
-        }
-      ).subscribe({
-        next: (res) => {
-          this.isLoading = false;
-          this.router.navigateByUrl(`rfp_signature/sub-category`);
-          this.showAlert({ icon: 'success', title: 'Success!', text: 'sub-category added successfully!' });
-          this.cdr.detectChanges();
-        },
-        error: (error) => {
-          this.showAlert({ icon: 'error', title: 'Error!', text: 'Please try again' });
-          this.isLoading = false;
-        }
-      });
+    this.rfpCategoryService.addRFPSignatureSubCategory(
+      {
+        ...this.addRFPForm.value,
+        authorId: +this.addRFPForm.value.authorId,
+        categoryId: +this.addRFPForm.value.categoryId,
+        checkerId: +this.addRFPForm.value.checkerId,
+      }
+    ).subscribe({
+      next: (res) => {
+        this.isLoading = false;
+        this.router.navigateByUrl(`rfp_signature/sub-category`);
+        this.showAlert({ icon: 'success', title: 'Success!', text: 'sub-category added successfully!' });
+        this.cdr.detectChanges();
+      },
+      error: (error) => {
+        this.showAlert({ icon: 'error', title: 'Error!', text: 'Please try again' });
+        this.isLoading = false;
+      }
+    });
+    // if (!this.subcatId) {
 
-    } else {
-      this.rfpService.updateRFPSignature(
-        {
-          ...this.addRFPForm.value,
-          id: this.subcatId,
+    // } else {
+    //   this.rfpCategoryService.up(
+    //     {
+    //       ...this.addRFPForm.value,
+    //       id: this.subcatId,
 
-        }
-      ).subscribe({
-        next: (res) => {
-          this.isLoading = false;
-          this.showAlert({ icon: 'success', title: 'Success!', text: 'sub-category updated successfully!' });
-          setTimeout(() => {
-            this.router.navigateByUrl(`rfp_signature/sub-category`);
-          }, 1000);
-        },
-        error: (error) => {
-          this.showAlert({ icon: 'error', title: 'Error!', text: 'Please try again' });
-          this.isLoading = false;
-        }
-      });
-    }
+    //     }
+    //   ).subscribe({
+    //     next: (res) => {
+    //       this.isLoading = false;
+    //       this.showAlert({ icon: 'success', title: 'Success!', text: 'sub-category updated successfully!' });
+    //       setTimeout(() => {
+    //         this.router.navigateByUrl(`rfp_signature/sub-category`);
+    //       }, 1000);
+    //     },
+    //     error: (error) => {
+    //       this.showAlert({ icon: 'error', title: 'Error!', text: 'Please try again' });
+    //       this.isLoading = false;
+    //     }
+    //   });
+    // }
   }
 
   showAlert(swalOptions: SweetAlertOptions) {

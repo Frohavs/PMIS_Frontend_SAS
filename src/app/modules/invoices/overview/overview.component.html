@@ -85,10 +85,7 @@
           <tr class="fw-bolder text-muted">
             <th class="max-w-100px">Etimad Number</th>
             <th class="max-w-100px">MOF Number</th>
-            <th class="max-w-100px">Project Name</th>
             <th class="max-w-100px">Type</th>
-            <th class="max-w-100px">Door</th>
-            <th class="max-w-100px">Partners</th>
             <th class="max-w-100px">Submit Date</th>
             <th class="max-w-100px">Invoice Value</th>
             <th class="max-w-100px">Status</th>
@@ -111,26 +108,13 @@
                 {{invoice?.mofNumber}}
               </a>
             </td>
-            <td>
-              <a class="text-gray-900 fw-bolder text-hover-primary d-block fs-6">
-                {{invoice?.projectId}}
-              </a>
-            </td>
+
             <td>
               <a class="text-gray-900 fw-bolder text-hover-primary d-block fs-6">
                 {{invoice?.type}}
               </a>
             </td>
-            <td>
-              <a class="text-gray-900 fw-bolder text-hover-primary d-block fs-6">
-                --
-              </a>
-            </td>
-            <td>
-              <a class="text-gray-900 fw-bolder text-hover-primary d-block fs-6">
-                --
-              </a>
-            </td>
+
             <td>
               <a class="text-gray-900 fw-bolder text-hover-primary d-block fs-6">
                 {{invoice?.etimadSubmitDate | date}}
@@ -145,8 +129,7 @@
             </td>
             <td>
               <a class="text-gray-900 fw-bolder text-hover-primary d-block fs-6">
-                --
-
+                {{invoice?.status}}
               </a>
             </td>
             <td>

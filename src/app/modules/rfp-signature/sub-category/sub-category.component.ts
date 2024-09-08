@@ -4,6 +4,7 @@ import { NgbModalOptions, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
 import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
 import { Subscription, fromEvent, debounceTime, distinctUntilChanged } from 'rxjs';
+import { RfpCategoryService } from 'src/app/services/rfp-category.service';
 import { SweetAlertOptions } from 'sweetalert2';
 
 @Component({
@@ -34,12 +35,22 @@ export class SubCategoryComponent implements OnInit, AfterViewInit, OnDestroy {
     private cdr: ChangeDetectorRef,
     private router: Router,
     private elRef: ElementRef,
-    private modalService: NgbModal,
+    private rfpCategoryService: RfpCategoryService,
     private translate: TranslateService,
   ) { }
 
   ngOnInit(): void {
+    this.initRfpList();
+  }
 
+  initRfpList(pageIndex?: number, search?: string) {
+    this.dataList = [];
+    this.rfpCategoryService.getAllSub(pageIndex, search).subscribe(res => {
+      this.dataList = res?.data?.items;
+      this.totalCount = res?.data?.totalcount;
+      this.pagesCount = Array.from({ length: Math.ceil(this.totalCount / 10) }, (_, index) => index + 1);
+      this.cdr.detectChanges();
+    });
   }
 
   ngAfterViewInit(): void {
@@ -64,6 +75,10 @@ export class SubCategoryComponent implements OnInit, AfterViewInit, OnDestroy {
 
   redirectToNew() {
     this.router.navigate(['rfp_signature/add-sub-category']);
+
+  }
+  editSub(id: number) {
+    this.router.navigate([`rfp_signature/edit-sub-category/${id}`]);
 
   }
 

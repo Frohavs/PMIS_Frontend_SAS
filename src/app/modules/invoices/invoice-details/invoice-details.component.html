@@ -12,7 +12,7 @@
             (click)="resetInvoiceModal()">
             Claim registration and modification
           </a>
-          <a class="btn btn-light-danger font-weight-bolder font-size-sm cursor-pointer" (click)="cancelInvoice()">
+          <a *ngIf="invoiceDetails?.statusId !== 4" class="btn btn-light-danger font-weight-bolder font-size-sm cursor-pointer" (click)="cancelInvoice()">
             Cancel
           </a>
         </h3>
