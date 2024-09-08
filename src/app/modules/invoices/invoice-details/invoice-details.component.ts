@@ -45,21 +45,21 @@ export class InvoiceDetailsComponent implements OnInit, OnDestroy {
 
 
   ngOnInit(): void {
+    this.initStatusForm();
     this.activatedRoute.queryParams.subscribe(params => {
       this.invoiceId = +params['invoiceId'];
       this.etimadNumber = +params['etimadNumber'];
       if (this.invoiceId) {
         this.getInvoiceDetails();
       }
-      this.initStatusForm();
     });
   }
 
   initStatusForm() {
     this.updateForm = this.fb.group({
       id: this.invoiceId,
-      certificateCompletion: [false],
-      certificateCompletionDate: ['', [Validators.required, Validators.minLength(4)]],
+      isClaimRegistration: [{value: false, disabled: true}],
+      claimRegistrationCheckDate: ['', [Validators.required, Validators.minLength(4)]],
       clamCheck: [false],
       clamCheckDate: ['', [Validators.required, Validators.minLength(4)]],
       approved: [false],
@@ -76,9 +76,24 @@ export class InvoiceDetailsComponent implements OnInit, OnDestroy {
   getInvoiceDetails() {
     this.invoiceService.getInvoiceById(this.invoiceId).subscribe(res => {
       this.invoiceDetails = res.data;
+      this.updateForm.patchValue({
+        isClaimRegistration: true,
+        claimRegistrationCheckDate: this.invoiceDetails.etimadSubmitDate?.slice(0, 10) || null,
+        clamCheck: this.invoiceDetails.clamCheck,
+        clamCheckDate: this.invoiceDetails.clamCheckDate?.slice(0, 10) || null,
+        approved: this.invoiceDetails.approved,
+        approvedDate: this.invoiceDetails.approvedDate?.slice(0, 10) || null,
+        isExchangeorder: this.invoiceDetails.isExchangeorder,
+        exchangeOrderReferenceNumber: this.invoiceDetails.exchangeOrderReferenceNumber,
+        isPaymentOrderRef: this.invoiceDetails.isPaymentOrderRef,
+        paymentOrderReferenceNumber: this.invoiceDetails.paymentOrderReferenceNumber,
+        isPaymentOrder: this.invoiceDetails.isPaymentOrder,
+        paymentOrder: this.invoiceDetails.paymentOrder,
+        completed: this.invoiceDetails.completed
+      })
+      this.cdr.detectChanges();
       debugger
       this.resetDataModel.id = this.invoiceDetails.id;
-      this.cdr.detectChanges();
     })
   }
 
@@ -126,14 +141,15 @@ export class InvoiceDetailsComponent implements OnInit, OnDestroy {
     const payload = {
       ...this.updateForm.value
     }
-    delete payload.certificateCompletion
-    delete payload.certificateCompletionDate
-    debugger
+    delete payload.isClaimRegistration
+    delete payload.claimRegistrationCheckDate
     this.invoiceService.UpdateInvoiceStatus(payload).subscribe(res => {
+      debugger
       // this.modalService.dismissAll();
       this.showAlert({ icon: 'success', title: 'Success!', text: 'Status Updated successfully!' });
       this.getInvoiceDetails();
     }, error => {
+      debugger
       this.modalService.dismissAll()
       this.showAlert({ icon: 'error', title: 'Error!', text: 'Please try again' });
 
