@@ -6,13 +6,21 @@
   align-items: center;
   width: 90%;
   margin: 0 auto;
-  margin-bottom: 50px;}
+  margin-bottom: 150px;
+}
 
 .step {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
+
+  .dates {
+    position: absolute;
+    top: 75px;
+    width: 300px;
+  }
 }
 
 .circle {
@@ -26,6 +34,12 @@
   font-size: 16px;
   font-weight: bold;
   margin-bottom: 5px;
+}
+
+.step.cancelled .circle {
+  background-color: #be2525 !important;
+  /* Active step color */
+  color: white;
 }
 
 .step.active .circle {

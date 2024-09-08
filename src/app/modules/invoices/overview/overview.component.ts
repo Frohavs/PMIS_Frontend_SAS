@@ -48,9 +48,9 @@ export class OverviewComponent implements OnInit, AfterViewInit, OnDestroy {
 
   }
 
-  initInvoicesList(etimadNumber?: string,pageIndex?: number, search?: string) {
+  initInvoicesList(pageIndex?: number, search?: string) {
     this.dataList = [];
-    this.invoiceService.getAll(this.etimadNumber, pageIndex, search).subscribe(res => {
+    this.invoiceService.getAll(null, pageIndex, search).subscribe(res => {
       this.dataList = res?.data?.items;
       this.totalCount = res?.data?.totalcount;
       this.pagesCount = Array.from({ length: Math.ceil(this.totalCount / 10) }, (_, index) => index + 1);
@@ -66,7 +66,7 @@ export class OverviewComponent implements OnInit, AfterViewInit, OnDestroy {
       distinctUntilChanged(),
     ).subscribe((event: any) => {
       const searchText = event.target.value;
-      this.initInvoicesList(this.etimadNumber, 1, searchText)
+      this.initInvoicesList(1, searchText)
 
     });
   }

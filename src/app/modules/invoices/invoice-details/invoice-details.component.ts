@@ -1,5 +1,6 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { Location } from '@angular/common';
+import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
@@ -17,6 +18,7 @@ export class InvoiceDetailsComponent implements OnInit, OnDestroy {
   invoiceId: any;
   invoiceDetails: any;
   currentStep = 1;
+  updateForm: FormGroup;
 
   // modal configs
   isLoading = false;
@@ -34,6 +36,8 @@ export class InvoiceDetailsComponent implements OnInit, OnDestroy {
   constructor(
     private modalService: NgbModal,
     private router: Router,
+    private _location: Location,
+    private fb: FormBuilder,
     private activatedRoute: ActivatedRoute,
     private invoiceService: InvoiceService,
     private cdr: ChangeDetectorRef,
@@ -47,14 +51,34 @@ export class InvoiceDetailsComponent implements OnInit, OnDestroy {
       if (this.invoiceId) {
         this.getInvoiceDetails();
       }
+      this.initStatusForm();
     });
   }
 
+  initStatusForm() {
+    this.updateForm = this.fb.group({
+      id: this.invoiceId,
+      certificateCompletion: [false],
+      certificateCompletionDate: ['', [Validators.required, Validators.minLength(4)]],
+      clamCheck: [false],
+      clamCheckDate: ['', [Validators.required, Validators.minLength(4)]],
+      approved: [false],
+      approvedDate: ['', [Validators.required, Validators.minLength(4)]],
+      isExchangeorder: [false],
+      exchangeOrderReferenceNumber: ['', [Validators.required, Validators.minLength(4)]],
+      isPaymentOrderRef: [false],
+      paymentOrderReferenceNumber: ['', [Validators.required, Validators.minLength(4)]],
+      isPaymentOrder: [false],
+      paymentOrder: ['', [Validators.required, Validators.minLength(4)]],
+      completed: [false],
+    });
+  }
   getInvoiceDetails() {
     this.invoiceService.getInvoiceById(this.invoiceId).subscribe(res => {
       this.invoiceDetails = res.data;
-      this.resetDataModel.id = this.invoiceDetails.id;
       debugger
+      this.resetDataModel.id = this.invoiceDetails.id;
+      this.cdr.detectChanges();
     })
   }
 
@@ -97,8 +121,27 @@ export class InvoiceDetailsComponent implements OnInit, OnDestroy {
     });
   }
 
-  onSubmit(event: Event, myForm: NgForm) {
+  onSubmitStatus() {
+    // const val = this.updateForm.value
+    const payload = {
+      ...this.updateForm.value
+    }
+    delete payload.certificateCompletion
+    delete payload.certificateCompletionDate
+    debugger
+    this.invoiceService.UpdateInvoiceStatus(payload).subscribe(res => {
+      // this.modalService.dismissAll();
+      this.showAlert({ icon: 'success', title: 'Success!', text: 'Status Updated successfully!' });
+      this.getInvoiceDetails();
+    }, error => {
+      this.modalService.dismissAll()
+      this.showAlert({ icon: 'error', title: 'Error!', text: 'Please try again' });
 
+    });
+  }
+
+  back() {
+    this._location.back();
   }
 
   showAlert(swalOptions: SweetAlertOptions) {

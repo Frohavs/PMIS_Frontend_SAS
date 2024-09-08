@@ -18,7 +18,7 @@ export class InvoiceService {
   }
 
   // public methods
-  getAll(etimadNumber: string, pageIndex?: number, search?: string): Observable<any> {
+  getAll(etimadNumber: string | null, pageIndex?: number, search?: string): Observable<any> {
     const httpHeaders = new HttpHeaders({
       Authorization: `Bearer ${this.token}`,
     });
@@ -72,6 +72,16 @@ export class InvoiceService {
       headers: httpHeaders
     });
   }
+  UpdateInvoiceStatus(payload: any): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/UpdateStatus`;
+    return this.http.put<any>(url, payload, {
+      headers: httpHeaders
+    });
+  }
+
   cancelInvoice(id: any): Observable<any> {
     const httpHeaders = new HttpHeaders({
       Authorization: `Bearer ${this.token}`,

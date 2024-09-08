@@ -3,19 +3,29 @@
   <div class="col-xl-12">
 
     <div class="card mb-5 mb-xl-8">
-      <div class="card-header align-items-center border-0 mt-4">
-        <h3 class="card-title align-items-center justify-content-start w-100">
-          <a class="btn btn-light-success font-weight-bolder font-size-sm cursor-pointer" (click)="openStatusModal()">
+      <div class="card-header align-items-center border-0 mt-4 justify-content-between w-100">
+        <h3 class="card-title align-items-center justify-content-start">
+          <button class="btn btn-light-success font-weight-bolder font-size-sm cursor-pointer"
+            (click)="openStatusModal()" [disabled]="invoiceDetails?.statusId === 4">
             Change Status
-          </a>
-          <a class="btn btn-light-success font-weight-bolder font-size-sm cursor-pointer mx-2"
-            (click)="resetInvoiceModal()">
+          </button>
+          <button class="btn btn-light-success font-weight-bolder font-size-sm cursor-pointer mx-2"
+            (click)="resetInvoiceModal()" [disabled]="invoiceDetails?.statusId === 4">
             Claim registration and modification
-          </a>
-          <a *ngIf="invoiceDetails?.statusId !== 4" class="btn btn-light-danger font-weight-bolder font-size-sm cursor-pointer" (click)="cancelInvoice()">
+          </button>
+          <a *ngIf="invoiceDetails?.statusId !== 4"
+            class="btn btn-light-danger font-weight-bolder font-size-sm cursor-pointer" (click)="cancelInvoice()">
             Cancel
           </a>
+          <button *ngIf="invoiceDetails?.statusId === 4" class="btn btn-danger font-weight-bolder font-size-sm">
+            Cancelled
+          </button>
         </h3>
+
+        <a class="btn btn-danger font-weight-bolder font-size-sm cursor-pointer" (click)="back()">
+          <app-keenicon name="arrow-left" class="fs-3"></app-keenicon>
+          {{"ECOMMERCE.COMMON.BACK" | translate}}
+        </a>
       </div>
       <div class="card-body pt-3">
         <div class="d-flex align-items-sm-center mb-7">
@@ -105,17 +115,22 @@
       </div>
 
       <div class="stepper-container">
-        <div class="step" [class.active]="currentStep === 1">
+        <div class="step" [class.active]="currentStep === 1" [class.cancelled]="invoiceDetails?.statusId === 4">
           <div class="circle">1</div>
           <p>On Progress</p>
+          <div class="dates" *ngIf="invoiceDetails?.claimRegistrationCheckDate">
+            <h3> Claim registration and modification </h3>
+            <h6>{{invoiceDetails?.claimRegistrationCheckDate | date: 'dd-MM-yyyy'}}</h6>
+          </div>
         </div>
+
         <div class="line"></div>
-        <div class="step" [class.active]="currentStep === 2">
+        <div class="step" [class.active]="currentStep === 2" [class.cancelled]="invoiceDetails?.statusId === 4">
           <div class="circle">2</div>
           <p>Approved</p>
         </div>
         <div class="line"></div>
-        <div class="step" [class.active]="currentStep === 3">
+        <div class="step" [class.active]="currentStep === 3" [class.cancelled]="invoiceDetails?.statusId === 4">
           <div class="circle">3</div>
           <p>Completed</p>
         </div>
@@ -127,7 +142,7 @@
 </div>
 
 <ng-template #UpdateStatusModal let-modal>
-  <form #updateForm="ngForm" (ngSubmit)="onSubmit($event, updateForm)">
+  <form [formGroup]="updateForm" (ngSubmit)="onSubmitStatus()">
     <div class="modal-header">
       <h4 class="modal-title" id="modal-basic-title">Invoice Status</h4>
       <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
@@ -137,80 +152,86 @@
       <div class="row mb-6">
         <div class="col-lg-12 fv-row">
           <div class="d-flex align-items-center mt-3">
-            <label class="form-check form-check-inline form-check-solid me-5"><input class="form-check-input"
-                type="checkbox" checked readonly disabled /><span class="fw-bold ps-2 fs-6">on progress</span>
+            <label class="form-check form-check-inline form-check-solid me-5">
+              <input class="form-check-input" type="checkbox" checked readonly disabled />
+              <span class="fw-bold ps-2 fs-6">on progress</span>
             </label>
           </div>
         </div>
 
         <div class="col-lg-12 fv-row">
           <div class="d-flex align-items-center justify-content-between mt-3">
-            <label class="form-check form-check-inline form-check-solid me-5"><input class="form-check-input"
-                type="checkbox" [(ngModel)]="statusModel.status" /><span class="fw-bold ps-2 fs-6">Attach a certificate
-                of completion</span>
+            <label class="form-check form-check-inline form-check-solid me-5">
+              <input class="form-check-input" type="checkbox" formControlName="certificateCompletion" />
+              <span class="fw-bold ps-2 fs-6">Attach a certificate of completion</span>
             </label>
-            <input type="text" class="form-control form-control-solid w-50" name="name" required minlength="4" />
+            <input type="date" class="form-control form-control-solid w-50"
+              formControlName="certificateCompletionDate" />
           </div>
         </div>
 
         <div class="col-lg-12 fv-row">
           <div class="d-flex align-items-center justify-content-between mt-3">
-            <label class="form-check form-check-inline form-check-solid me-5"><input class="form-check-input"
-                type="checkbox" [(ngModel)]="statusModel.status" /><span class="fw-bold ps-2 fs-6">Clam check</span>
+            <label class="form-check form-check-inline form-check-solid me-5">
+              <input class="form-check-input" type="checkbox" formControlName="clamCheck"
+                [disabled]="!updateForm.get('certificateCompletion')?.value" />
+              <span class="fw-bold ps-2 fs-6">Clam check</span>
             </label>
-            <input type="text" class="form-control form-control-solid w-50" name="name" required minlength="4" />
+            <input type="date" class="form-control form-control-solid w-50" formControlName="clamCheckDate" />
           </div>
         </div>
 
         <div class="col-lg-12 fv-row">
           <div class="d-flex align-items-center justify-content-between mt-3">
-            <label class="form-check form-check-inline form-check-solid me-5"><input class="form-check-input"
-                type="checkbox" [(ngModel)]="statusModel.status" /><span class="fw-bold ps-2 fs-6">Approved</span>
+            <label class="form-check form-check-inline form-check-solid me-5">
+              <input class="form-check-input" type="checkbox" formControlName="approved" />
+              <span class="fw-bold ps-2 fs-6">Approved</span>
             </label>
-            <input type="text" class="form-control form-control-solid w-50" name="name" required minlength="4" />
+            <input type="date" class="form-control form-control-solid w-50" formControlName="approvedDate" />
           </div>
         </div>
 
         <div class="col-lg-12 fv-row">
           <div class="d-flex align-items-center justify-content-between mt-3">
-            <label class="form-check form-check-inline form-check-solid me-5"><input class="form-check-input"
-                type="checkbox" [(ngModel)]="statusModel.status" /><span class="fw-bold ps-2 fs-6">Exchange order
-                reference number</span>
+            <label class="form-check form-check-inline form-check-solid me-5">
+              <input class="form-check-input" type="checkbox" formControlName="isExchangeorder" />
+              <span class="fw-bold ps-2 fs-6">Exchange order reference number</span>
             </label>
-            <input type="text" class="form-control form-control-solid w-50" name="name" required minlength="4" />
+            <input type="text" class="form-control form-control-solid w-50"
+              formControlName="exchangeOrderReferenceNumber" />
           </div>
         </div>
 
         <div class="col-lg-12 fv-row">
           <div class="d-flex align-items-center justify-content-between mt-3">
-            <label class="form-check form-check-inline form-check-solid me-5"><input class="form-check-input"
-                type="checkbox" [(ngModel)]="statusModel.status" /><span class="fw-bold ps-2 fs-6"> Payment order
-                reference number</span>
+            <label class="form-check form-check-inline form-check-solid me-5">
+              <input class="form-check-input" type="checkbox" formControlName="isPaymentOrderRef" />
+              <span class="fw-bold ps-2 fs-6">Payment order reference number</span>
             </label>
-            <input type="text" class="form-control form-control-solid w-50" name="name" required minlength="4" />
+            <input type="text" class="form-control form-control-solid w-50"
+              formControlName="paymentOrderReferenceNumber" />
           </div>
         </div>
 
         <div class="col-lg-12 fv-row">
           <div class="d-flex align-items-center justify-content-between mt-3">
-            <label class="form-check form-check-inline form-check-solid me-5"><input class="form-check-input"
-                type="checkbox" [(ngModel)]="statusModel.status" /><span class="fw-bold ps-2 fs-6">Exchange order
-                Payment order </span>
+            <label class="form-check form-check-inline form-check-solid me-5">
+              <input class="form-check-input" type="checkbox" formControlName="isPaymentOrder" />
+              <span class="fw-bold ps-2 fs-6">Exchange order Payment order</span>
             </label>
-            <input type="text" class="form-control form-control-solid w-50" name="name" required minlength="4" />
+            <input type="text" class="form-control form-control-solid w-50" formControlName="paymentOrder" />
           </div>
         </div>
 
         <div class="col-lg-12 fv-row">
           <div class="d-flex align-items-center mt-3">
-            <label class="form-check form-check-inline form-check-solid me-5"><input class="form-check-input"
-                type="checkbox" [(ngModel)]="statusModel.status" /><span class="fw-bold ps-2 fs-6">Completed</span>
+            <label class="form-check form-check-inline form-check-solid me-5">
+              <input class="form-check-input" type="checkbox" formControlName="completed" />
+              <span class="fw-bold ps-2 fs-6">Completed</span>
             </label>
           </div>
         </div>
-
       </div>
-
     </div>
     <div class="modal-footer flex-center">
       <!--begin::Button-->
@@ -233,6 +254,7 @@
       <!--end::Button-->
     </div>
   </form>
+
 </ng-template>
 
 <ng-template #resetModal let-modal>
@@ -247,16 +269,15 @@
         <label class="required fw-semibold fs-6 mb-2">Date</label>
         <!--end::Label-->
         <!--begin::Input-->
-        <input type="date" class="form-control form-control-solid" name="name" [(ngModel)]="resetDataModel.claimRegistrationCheckDate"
-          #name="ngModel" required minlength="4" />
+        <input type="date" class="form-control form-control-solid" name="name"
+          [(ngModel)]="resetDataModel.claimRegistrationCheckDate" #name="ngModel" required minlength="4" />
       </div>
       <div class="fv-row mb-7">
         <!--begin::Label-->
         <label class="required fw-semibold fs-6 mb-2">Reason</label>
         <!--end::Label-->
         <!--begin::Input-->
-        <textarea class="form-control form-control-solid"
-          required cols="4"></textarea>
+        <textarea class="form-control form-control-solid" required cols="4"></textarea>
       </div>
     </div>
     <div class="modal-footer flex-center">
