@@ -7,6 +7,7 @@ import { SubCategoryComponent } from './sub-category/sub-category.component';
 import { AddRfpComponent } from './add-rfp/add-rfp.component';
 import { AddCategoryComponent } from './category/add-category/add-category.component';
 import { AddSubCategoryComponent } from './sub-category/add-sub-category/add-sub-category.component';
+import { RfpDetailsComponent } from './rfp-details/rfp-details.component';
 
 const routes: Routes = [
   {
@@ -20,6 +21,10 @@ const routes: Routes = [
       {
         path: 'add',
         component: AddRfpComponent,
+      },
+      {
+        path: 'details/:id',
+        component: RfpDetailsComponent,
       },
       {
         path: 'category',

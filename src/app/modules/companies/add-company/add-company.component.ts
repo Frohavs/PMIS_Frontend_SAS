@@ -54,7 +54,7 @@ export class AddCompanyComponent implements OnInit, OnDestroy {
       // console.log('vendorService', res.data.items);
       this.vendorList = res.data.items;
       this.cdr.detectChanges();
-    })
+    });
   }
 
   onItemSelect(item: any) {

@@ -19,7 +19,7 @@ export class OverviewComponent implements OnInit, AfterViewInit, OnDestroy {
   filterForm: FormGroup;
   users: any[] = []
   years: any[] = []
-  quarters: any[] = [1,2,3,4]
+  quarters: any[] = [1, 2, 3, 4]
   Add_text: string;
   Search_text: string;
   dataList: any[] = []
@@ -77,7 +77,7 @@ export class OverviewComponent implements OnInit, AfterViewInit, OnDestroy {
     this.staffEvaluationService.getAll(pageIndex, search).subscribe(res => {
       this.totalCount = res?.data?.totalcount;
       this.dataList = res.data.items;
-      this.pagesCount = Array.from({ length: Math.ceil(this.totalCount / 10) }, (_, index) => index + 1) ;
+      this.pagesCount = Array.from({ length: Math.ceil(this.totalCount / 10) }, (_, index) => index + 1);
       this.cdr.detectChanges();
     });
   }
@@ -98,14 +98,14 @@ export class OverviewComponent implements OnInit, AfterViewInit, OnDestroy {
     this.router.navigate([`staff-evaluation/print`], {
       queryParams: {
         evalId: evalu.id,
-       }
+      }
     });
   }
   evalDetails(evalu: any) {
     this.router.navigate([`staff-evaluation/details`], {
       queryParams: {
         evalId: evalu.id,
-       }
+      }
     });
   }
 
@@ -118,16 +118,27 @@ export class OverviewComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   redirectToNew() {
-    if(this.filterForm.invalid) {
+    if (this.filterForm.invalid) {
       this.filterForm.markAllAsTouched();
       return;
     }
-    this.router.navigate([`staff-evaluation/add`], {
-      queryParams: {
-        userId: this.filterForm.get('employee')?.value,
-        yearId: this.filterForm.get('year')?.value,
-        quarter: this.filterForm.get('quarter')?.value,
-       }
+    const payload = {
+      userId: +this.filterForm.get('employee')?.value,
+      yearId: +this.filterForm.get('year')?.value,
+      quarter: +this.filterForm.get('quarter')?.value
+    }
+    this.staffEvaluationService.canCreate(payload).subscribe(res => {
+      if (res.data === true) {
+        this.router.navigate([`staff-evaluation/add`], {
+          queryParams: {
+            userId: this.filterForm.get('employee')?.value,
+            yearId: this.filterForm.get('year')?.value,
+            quarter: this.filterForm.get('quarter')?.value,
+          }
+        });
+      } else {
+        this.showAlert({ icon: 'error', title: 'Error!', text: 'Evaluation Already Created For this selection!' });
+      }
     });
   }
 

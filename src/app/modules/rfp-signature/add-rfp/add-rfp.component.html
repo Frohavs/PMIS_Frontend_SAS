@@ -62,8 +62,7 @@
             <div class="row mb-1">
 
               <div class="col-xl-6">
-                <label class="col-lg-4 col-form-label fw-bold fs-6"><span
-                    class="required">Administrator</span></label>
+                <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="required">Administrator</span></label>
                 <div class="col-lg-10 fv-row">
                   <select class="form-select form-select-solid form-select-lg fw-bold" name="administrator"
                     formControlName="administrator">
@@ -81,8 +80,7 @@
               </div>
 
               <div class="col-xl-6">
-                <label class="col-lg-4 col-form-label fw-bold fs-6"><span
-                    class="required">Reviewer</span></label>
+                <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="required">Reviewer</span></label>
                 <div class="col-lg-10 fv-row">
                   <select class="form-select form-select-solid form-select-lg fw-bold" name="reviewerId"
                     formControlName="reviewerId">
@@ -102,8 +100,7 @@
             </div>
             <div class="row mb-1">
               <div class="col-xl-6">
-                <label class="col-lg-4 col-form-label fw-bold fs-6"><span
-                    class="required">Approver</span></label>
+                <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="required">Approver</span></label>
                 <div class="col-lg-10 fv-row">
                   <select class="form-select form-select-solid form-select-lg fw-bold" name="approverId"
                     formControlName="approverId">
@@ -127,8 +124,8 @@
                   </span>
                 </label>
                 <div class="col-lg-12 fv-row">
-                  <input type="date" class="form-control form-control-lg form-control-solid text-start" name="receivedDate"
-                    formControlName="receivedDate" />
+                  <input type="date" class="form-control form-control-lg form-control-solid text-start"
+                    name="receivedDate" formControlName="receivedDate" />
                   <div
                     *ngIf="addRFPForm?.get('receivedDate')?.invalid && (addRFPForm?.get('receivedDate')?.dirty || addRFPForm?.get('receivedDate')?.touched)"
                     class="fv-plugins-message-container">
@@ -147,8 +144,9 @@
                   </span>
                 </label>
                 <div class="col-lg-12 fv-row">
-                  <input type="file" class="form-control form-control-lg form-control-solid text-start" name="requestedWayDocument"
-                    formControlName="requestedWayDocument" (change)="onFileSelected($event)" />
+                  <input type="file" class="form-control form-control-lg form-control-solid text-start"
+                    name="requestedWayDocument" formControlName="requestedWayDocument"
+                    (change)="onFileSelected($event)" />
                   <div
                     *ngIf="addRFPForm?.get('requestedWayDocument')?.invalid && (addRFPForm?.get('requestedWayDocument')?.dirty || addRFPForm?.get('requestedWayDocument')?.touched)"
                     class="fv-plugins-message-container">
@@ -157,8 +155,24 @@
                 </div>
               </div>
 
-            </div>
+              <div class="col-lg-6">
+                <label class="col-lg-12 col-form-label fw-bold fs-6"><span class="required">sub
+                    categories</span>
+                </label>
 
+                <div class="col-lg-12 fv-row">
+                  <ng-multiselect-dropdown [settings]="dropdownSettings" [data]="subCategoryList"
+                    formControlName="subCategoryIds">
+                  </ng-multiselect-dropdown>
+                  <div
+                    *ngIf="addRFPForm?.get('subCategoryIds')?.invalid && (addRFPForm?.get('subCategoryIds')?.dirty || addRFPForm?.get('subCategoryIds')?.touched)"
+                    class="fv-plugins-message-container">
+                    <div class="fv-help-block">sub category is required</div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
 
           </div>
           <div class="card-footer d-flex justify-content-end py-6 px-9">
@@ -180,6 +194,6 @@
   </div>
 </div>
 
- <!-- modal -->
- <swal #noticeSwal [swalOptions]="swalOptions">
+<!-- modal -->
+<swal #noticeSwal [swalOptions]="swalOptions">
 </swal>

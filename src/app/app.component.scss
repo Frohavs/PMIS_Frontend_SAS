@@ -2,3 +2,15 @@
   height: 100%;
   margin: 0;
 }
+
+::ng-deep .multiselect-dropdown {
+  .dropdown-btn {
+    min-height: 42px;
+    background-color: #f9f9f9;
+    border-color: #f9f9f9 !important;
+
+    .selected-item {
+      max-width: 130px !important;
+    }
+  }
+}

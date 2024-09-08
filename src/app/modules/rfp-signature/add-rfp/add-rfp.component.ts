@@ -28,6 +28,17 @@ export class AddRfpComponent implements OnInit {
   swalOptions: SweetAlertOptions = {};
   @ViewChild('noticeSwal') noticeSwal!: SwalComponent;
 
+  subCategoryList: any = [];
+  dropdownSettings: any = {
+    singleSelection: false,
+    idField: 'id',
+    textField: 'name',
+    selectAllText: 'Select All',
+    unSelectAllText: 'UnSelect All',
+    itemsShowLimit: 8,
+    allowSearchFilter: true,
+  };
+
   constructor(
     private router: Router,
     private _location: Location,
@@ -63,6 +74,7 @@ export class AddRfpComponent implements OnInit {
       administrator: [null, Validators.required],
       reviewerId: [null, Validators.required],
       approverId: [null, Validators.required],
+      subCategoryIds: [null, Validators.required],
     });
 
   }
@@ -74,6 +86,10 @@ export class AddRfpComponent implements OnInit {
     });
     this.lookupService.allUsers().subscribe(res => {
       this.users = res.data;
+      this.cdr.detectChanges();
+    });
+    this.lookupService.getRfpSignatureSubCategories().subscribe(res => {
+      this.subCategoryList = res.data;
       this.cdr.detectChanges();
     });
   }
@@ -100,18 +116,20 @@ export class AddRfpComponent implements OnInit {
       administrator: data?.administrator,
       reviewerId: data?.reviewerId,
       approverId: data?.approverId,
+      subCategoryIds: data?.subCategoryIds,
     });
     this.cdr.detectChanges()
   }
 
   saveChanges() {
-    // if (!this.addRFPForm.valid) {
-    //   this.addRFPForm.markAllAsTouched()
-    //   return;
-    // }
+    if (!this.addRFPForm.valid) {
+      this.addRFPForm.markAllAsTouched()
+      return;
+    }
     this.isLoading = true;
     const payload = {
       ...this.addRFPForm.value,
+      subCategoryIds: this.addRFPForm.value.subCategoryIds.map((item: any) => item.id),
       administrator: +this.addRFPForm.value.administrator,
       reviewerId: +this.addRFPForm.value.reviewerId,
       approverId: +this.addRFPForm.value.approverId,
