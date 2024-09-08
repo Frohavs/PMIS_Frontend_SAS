@@ -129,6 +129,8 @@ export class OverviewComponent implements OnInit, AfterViewInit, OnDestroy {
     }
     this.staffEvaluationService.canCreate(payload).subscribe(res => {
       if (res.data === true) {
+        this.showAlert({ icon: 'error', title: 'Error!', text: 'Evaluation Already Created For this selection!' });
+      } else {
         this.router.navigate([`staff-evaluation/add`], {
           queryParams: {
             userId: this.filterForm.get('employee')?.value,
@@ -136,8 +138,6 @@ export class OverviewComponent implements OnInit, AfterViewInit, OnDestroy {
             quarter: this.filterForm.get('quarter')?.value,
           }
         });
-      } else {
-        this.showAlert({ icon: 'error', title: 'Error!', text: 'Evaluation Already Created For this selection!' });
       }
     });
   }
