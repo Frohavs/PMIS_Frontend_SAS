@@ -1,3 +1,6 @@
+<div class="w-100">
+  <h2 class="title text-primary mx-auto text-center mb-5">{{rfpDetails?.name}}</h2>
+</div>
 <div class="table-container">
   <table>
     <thead>
@@ -12,73 +15,53 @@
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td rowspan="2">08-09-2024</td>
-        <td rowspan="2">Eslam</td>
-        <td>test1</td>
+      <tr *ngFor="let item of signatureSubCategories; let i=index">
+        <td>{{item?.createdOn | date: 'dd-MM-yyyy'}}</td>
+        <td>{{item?.categoryName}}</td>
+        <td>{{item?.name}}</td>
         <td>
           <div class="signature">
-            <span class="sign text-primary">Signature</span><br />
-            <span>Vanessa Cánovas</span><br />
-            <span>Author has not signed yet</span>
+            <span class="sign text-primary" *ngIf="!item?.authorSignature"
+              (click)="signAuthor(item)">Signature</span><br />
+              <img src="../../../../assets/media/icons/signature.svg" alt="sign" *ngIf="item?.authorSignature">
+            <span>{{item?.author}}</span><br />
           </div>
         </td>
         <td>
           <div class="signature">
-            <span>سارة محمد القاضي</span><br />
-            <span>Waiting for all checkers to sign</span>
+            <span class="sign text-primary" *ngIf="item?.authorSignature && !item?.checkerSignature"
+              (click)="signChecker(item)">Signature</span><br />
+            <span *ngIf="!item?.authorSignature">Author has not signed yet</span>
+            <img src="../../../../assets/media/icons/signature.svg" alt="sign" *ngIf="item?.checkerSignature">
+
+            <span>{{item?.checker}}</span><br />
           </div>
         </td>
-        <td rowspan="3">
+        <td>
           <div class="signature">
-            <span>Vanessa Cánovas</span><br />
-            <span>Waiting for all reviewers to sign</span>
+            <span class="sign text-primary" *ngIf="item?.checkerSignature && !item?.reviewerSignature"
+              (click)="signReviewer(item)">Signature</span><br />
+            <span *ngIf="!item?.checkerSignature">Waiting for all checkers to sign </span><br />
+            <img src="../../../../assets/media/icons/signature.svg" alt="sign" *ngIf="item?.reviewerSignature">
+            <span>{{item?.reviewer}}</span><br />
           </div>
+
         </td>
-        <td rowspan="3">
+        <td>
           <div class="signature">
-            <span>سارة محمد القاضي</span><br />
-            <span>Waiting for all reviewers to sign</span>
+            <span class="sign text-primary" *ngIf="item?.reviewerSignature && !item?.approverSignature"
+              (click)="signApprover(item)">Signature</span><br />
+            <span *ngIf="!item?.reviewerSignature">Waiting for all checkers to sign </span><br />
+            <img src="../../../../assets/media/icons/signature.svg" alt="sign" *ngIf="item?.approverSignature">
+            <span>{{item?.approver}}</span><br />
           </div>
         </td>
       </tr>
 
-      <tr>
-        <td>test2</td>
-        <td>
-          <div class="signature">
-            <span class="sign text-primary">Signature</span><br />
-            <span>نايف قناديلي</span><br />
-            <span>Author has not signed yet</span>
-          </div>
-        </td>
-        <td>
-          <div class="signature">
-            <span>نايف قناديلي</span>
-          </div>
-        </td>
-
-      </tr>
-
-      <tr>
-        <td>08-09-2024</td>
-        <td>motawea</td>
-        <td>test3</td>
-        <td>
-          <div class="signature">
-            <span class="sign text-primary">Signature</span><br />
-            <span>سارة محمد القاضي</span><br />
-            <span>Author has not signed yet</span>
-          </div>
-        </td>
-        <td>
-          <div class="signature">
-            <span>يوسف عائد الروقي</span>
-          </div>
-        </td>
-
-      </tr>
 
     </tbody>
   </table>
 </div>
+
+
+<!-- <app-signature-pad></app-signature-pad> -->

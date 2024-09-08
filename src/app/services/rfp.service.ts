@@ -61,4 +61,13 @@ export class RfpService {
       headers: httpHeaders
     });
   }
+  updateRFPSignatureSigns(invoice: any): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/UpdateSubCategory`;
+    return this.http.put<any>(url, invoice, {
+      headers: httpHeaders
+    });
+  }
 }

@@ -12,6 +12,7 @@ export class RfpDetailsComponent implements OnInit {
 
   rfpId: any;
   rfpDetails: any;
+  signatureSubCategories: any;
 
   constructor(
     private cdr: ChangeDetectorRef,
@@ -29,15 +30,65 @@ export class RfpDetailsComponent implements OnInit {
     this.activatedRoute.params.subscribe(params => {
       this.rfpId = +params['id'];
       if (this.rfpId) {
-        this.rfpService.getRFPSignatureById(this.rfpId).subscribe(res => {
-          debugger
-          this.rfpDetails = res;
-        })
+        this.refreshData();
       }
     });
   }
 
-  signAuthor() {
+  refreshData() {
+    this.rfpService.getRFPSignatureById(this.rfpId).subscribe(res => {
+      this.rfpDetails = res.data;
+      this.signatureSubCategories = res.data.signatureSubCategories;
+      this.cdr.detectChanges()
+
+    });
+  }
+
+  signAuthor(rfpSignature: any) {
+    const payload = {
+      id: rfpSignature?.id,
+      signatureStage: rfpSignature?.signatureStageId,
+      signature: "test123.pdf"
+    }
+    this.rfpService.updateRFPSignatureSigns(payload).subscribe(res => {
+      debugger
+      this.refreshData()
+    });
+  }
+  signChecker(rfpSignature: any) {
+
+    const payload = {
+      id: rfpSignature?.id,
+      signatureStage: rfpSignature?.signatureStageId,
+      signature: "test123.pdf"
+    }
+    this.rfpService.updateRFPSignatureSigns(payload).subscribe(res => {
+      debugger
+      this.refreshData()
+    });
+  }
+  signReviewer(rfpSignature: any) {
+
+    const payload = {
+      id: rfpSignature?.id,
+      signatureStage: rfpSignature?.signatureStageId,
+      signature: "test123.pdf"
+    }
+    this.rfpService.updateRFPSignatureSigns(payload).subscribe(res => {
+      debugger
+      this.refreshData()
+    });
+  }
+  signApprover(rfpSignature: any) {
+    const payload = {
+      id: rfpSignature?.id,
+      signatureStage: rfpSignature?.signatureStageId,
+      signature: "test123.pdf"
+    }
+    this.rfpService.updateRFPSignatureSigns(payload).subscribe(res => {
+      debugger
+      this.refreshData()
+    });
 
   }
 }
