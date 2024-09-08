@@ -115,7 +115,7 @@
       </div>
 
       <div class="stepper-container">
-        <div class="step" [class.active]="currentStep === 1" [class.cancelled]="invoiceDetails?.statusId === 4">
+        <div class="step" [class.active]="invoiceDetails?.statusId === 1 || invoiceDetails?.statusId === 2" [class.cancelled]="invoiceDetails?.statusId === 4">
           <div class="circle">1</div>
           <p>On Progress</p>
           <div class="dates" *ngIf="invoiceDetails?.claimRegistrationCheckDate">
@@ -125,12 +125,14 @@
         </div>
 
         <div class="line"></div>
-        <div class="step" [class.active]="currentStep === 2" [class.cancelled]="invoiceDetails?.statusId === 4">
+        <div class="step" [class.active]="invoiceDetails?.statusId === 2 || invoiceDetails?.statusId === 3"
+          [class.cancelled]="invoiceDetails?.statusId === 4">
           <div class="circle">2</div>
           <p>Approved</p>
         </div>
         <div class="line"></div>
-        <div class="step" [class.active]="currentStep === 3" [class.cancelled]="invoiceDetails?.statusId === 4">
+        <div class="step" [class.active]="invoiceDetails?.statusId === 3"
+          [class.cancelled]="invoiceDetails?.statusId === 4">
           <div class="circle">3</div>
           <p>Completed</p>
         </div>
