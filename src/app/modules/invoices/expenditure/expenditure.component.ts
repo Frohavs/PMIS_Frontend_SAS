@@ -49,14 +49,15 @@ export class ExpenditureComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnInit(): void {
     this.activatedRoute.queryParams.subscribe(params => {
-      this.etimadNumber = params['etimadId'];
+      this.etimadNumber = +params['etimadId'];
       if (this.etimadNumber) {
+        debugger
         this.initInvoicesList(this.etimadNumber, 1, '');
       }
     });
   }
 
-  initInvoicesList(etimadNumber?: any, pageIndex?: number, search?: string) {
+  initInvoicesList(etimadNumber?: number, pageIndex?: number, search?: string) {
     this.dataList = [];
     this.invoiceService.getAll(etimadNumber, pageIndex, search).subscribe(res => {
       this.dataList = res?.data?.items;

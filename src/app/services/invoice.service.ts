@@ -18,7 +18,7 @@ export class InvoiceService {
   }
 
   // public methods
-  getAll(etimadNumber: string | null, pageIndex?: number, search?: string): Observable<any> {
+  getAll(etimadNumber: any, pageIndex?: number, search?: string): Observable<any> {
     const httpHeaders = new HttpHeaders({
       Authorization: `Bearer ${this.token}`,
     });
