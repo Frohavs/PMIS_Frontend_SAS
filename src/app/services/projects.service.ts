@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -34,13 +34,21 @@ export class ProjectsService {
       headers: httpHeaders
     });
   }
-  getByID(id: number | null): Observable<any> {
+  getByID(id?: number, etimadNumber?: number): Observable<any> {
     const httpHeaders = new HttpHeaders({
       Authorization: `Bearer ${this.token}`,
     });
-    const url = `${this.API_USERS_URL}/Get/${id}`;
+    const url = `${this.API_USERS_URL}/Get`;
+    let params;
+    if(id) {
+      params = new HttpParams().set('id', id);
+    }
+    if(etimadNumber) {
+      params = new HttpParams().set('etimadNumber', etimadNumber);
+    }
     return this.http.get<any>(url, {
-      headers: httpHeaders
+      headers: httpHeaders,
+      params
     });
   }
   addProject(project: any): Observable<any> {

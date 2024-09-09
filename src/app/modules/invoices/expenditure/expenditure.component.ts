@@ -53,6 +53,7 @@ export class ExpenditureComponent implements OnInit, AfterViewInit, OnDestroy {
       if (this.etimadNumber) {
         debugger
         this.initInvoicesList(this.etimadNumber, 1, '');
+        this.getProjectDetails();
       }
     });
   }
@@ -61,8 +62,6 @@ export class ExpenditureComponent implements OnInit, AfterViewInit, OnDestroy {
     this.dataList = [];
     this.invoiceService.getAll(etimadNumber, pageIndex, search).subscribe(res => {
       this.dataList = res?.data?.items;
-      this.projectId = this.dataList[0]?.projectId;
-      this.getProjectDetails();
       this.totalCount = res?.data?.totalcount;
       this.pagesCount = Array.from({ length: Math.ceil(this.totalCount / 10) }, (_, index) => index + 1);
       this.cdr.detectChanges();
@@ -70,8 +69,9 @@ export class ExpenditureComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   getProjectDetails() {
-    this.projectsService.getByID(this.projectId).subscribe(res => {
+    this.projectsService.getByID(0,this.etimadNumber).subscribe(res => {
       this.projectDetails = res.data;
+      this.projectId = this.projectDetails?.id;
       this.cdr.detectChanges();
     });
   }
