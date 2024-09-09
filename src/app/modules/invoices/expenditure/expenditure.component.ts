@@ -51,7 +51,6 @@ export class ExpenditureComponent implements OnInit, AfterViewInit, OnDestroy {
     this.activatedRoute.queryParams.subscribe(params => {
       this.etimadNumber = +params['etimadId'];
       if (this.etimadNumber) {
-        debugger
         this.initInvoicesList(this.etimadNumber, 1, '');
         this.getProjectDetails();
       }

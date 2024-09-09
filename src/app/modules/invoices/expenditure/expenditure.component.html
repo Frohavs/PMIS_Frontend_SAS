@@ -8,7 +8,7 @@
         <h3 class="card-title align-items-center justify-content-between w-100">
           <span class="text-primary fw-bolder fs-4">{{projectDetails?.name || '--'}}</span>
           <!-- <span class="text-muted mt-1 fw-bold fs-7">test</span> -->
-          <a class="btn btn-light-primary font-weight-bolder font-size-sm cursor-pointer" (click)="redirectToNew()">
+          <a class="btn btn-light-primary font-weight-bolder font-size-sm cursor-pointer" (click)="redirectToNew()" *ngIf="projectDetails">
             Create Invoice
           </a>
         </h3>
@@ -83,7 +83,8 @@
               <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
                 Spent value
               </a>
-              <span class="text-muted fw-bold d-block pt-1">{{projectDetails?.originalValue | number}}</span>
+              <span class="text-muted fw-bold d-block pt-1">0</span>
+              <!-- <span class="text-muted fw-bold d-block pt-1">{{projectDetails?.originalValue | number}}</span> -->
             </div>
 
           </div>
