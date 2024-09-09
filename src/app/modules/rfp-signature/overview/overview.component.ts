@@ -62,6 +62,7 @@ export class OverviewComponent implements OnInit, AfterViewInit, OnDestroy {
       distinctUntilChanged(),
     ).subscribe((event: any) => {
       const searchText = event.target.value;
+      this.initRfpList(1, searchText)
     });
   }
 
