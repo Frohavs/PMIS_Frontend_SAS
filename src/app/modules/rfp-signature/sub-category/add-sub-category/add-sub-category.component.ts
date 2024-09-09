@@ -102,12 +102,14 @@ export class AddSubCategoryComponent implements OnInit {
     }
     this.isLoading = true;
     this.rfpCategoryService.addRFPSignatureSubCategory(
-      {
-        ...this.addRFPForm.value,
-        authorId: +this.addRFPForm.value.authorId,
-        categoryId: +this.addRFPForm.value.categoryId,
-        checkerId: +this.addRFPForm.value.checkerId,
-      }
+      [
+        {
+          ...this.addRFPForm.value,
+          authorId: +this.addRFPForm.value.authorId,
+          categoryId: +this.addRFPForm.value.categoryId,
+          checkerId: +this.addRFPForm.value.checkerId,
+        }
+      ]
     ).subscribe({
       next: (res) => {
         this.isLoading = false;
