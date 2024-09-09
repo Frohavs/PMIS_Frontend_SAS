@@ -1,22 +1,28 @@
-import { ChangeDetectorRef, Component, ElementRef, OnInit } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { TranslateService } from '@ngx-translate/core';
 import { RfpService } from 'src/app/services/rfp.service';
+import { Location } from '@angular/common';
+import { NgSignaturePadOptions } from '@almothafar/angular-signature-pad';
+import { SignaturePadComponent } from '@almothafar/angular-signature-pad';
 
 @Component({
   selector: 'app-rfp-details',
   templateUrl: './rfp-details.component.html',
   styleUrl: './rfp-details.component.scss'
 })
-export class RfpDetailsComponent implements OnInit {
+export class RfpDetailsComponent implements OnInit, AfterViewInit {
 
   rfpId: any;
   rfpDetails: any;
   signatureSubCategories: any;
 
+  currentId: number;
+  signatureStage: number;
+
   constructor(
     private cdr: ChangeDetectorRef,
     private router: Router,
+    private _location: Location,
     private elRef: ElementRef,
     private rfpService: RfpService,
     private activatedRoute: ActivatedRoute,
@@ -25,6 +31,12 @@ export class RfpDetailsComponent implements OnInit {
   ngOnInit(): void {
     this.getBoqId();
   }
+
+  ngAfterViewInit() {
+    // this.signaturePad.set('minWidth', 5);
+    // this.signaturePad.clear();
+  }
+
 
   getBoqId() {
     this.activatedRoute.params.subscribe(params => {
@@ -45,50 +57,80 @@ export class RfpDetailsComponent implements OnInit {
   }
 
   signAuthor(rfpSignature: any) {
-    const payload = {
-      id: rfpSignature?.id,
-      signatureStage: rfpSignature?.signatureStageId,
-      signature: "test123.pdf"
-    }
-    this.rfpService.updateRFPSignatureSigns(payload).subscribe(res => {
-      debugger
-      this.refreshData()
-    });
+    this.currentId = rfpSignature?.id;
+    this.signatureStage = rfpSignature?.signatureStageId;
+    this.toggleSignaturePad()
   }
   signChecker(rfpSignature: any) {
-
-    const payload = {
-      id: rfpSignature?.id,
-      signatureStage: rfpSignature?.signatureStageId,
-      signature: "test123.pdf"
-    }
-    this.rfpService.updateRFPSignatureSigns(payload).subscribe(res => {
-      debugger
-      this.refreshData()
-    });
+    this.currentId = rfpSignature?.id;
+    this.signatureStage = rfpSignature?.signatureStageId;
+    this.toggleSignaturePad()
   }
   signReviewer(rfpSignature: any) {
-
-    const payload = {
-      id: rfpSignature?.id,
-      signatureStage: rfpSignature?.signatureStageId,
-      signature: "test123.pdf"
-    }
-    this.rfpService.updateRFPSignatureSigns(payload).subscribe(res => {
-      debugger
-      this.refreshData()
-    });
+    this.currentId = rfpSignature?.id;
+    this.signatureStage = rfpSignature?.signatureStageId;
+    this.toggleSignaturePad()
   }
   signApprover(rfpSignature: any) {
+    this.currentId = rfpSignature?.id;
+    this.signatureStage = rfpSignature?.signatureStageId;
+    this.toggleSignaturePad()
+  }
+
+  back() {
+    this._location.back();
+  }
+
+
+  //////////////////////////////////////////////////////////////
+
+  @ViewChild('signature')
+  public signaturePad: SignaturePadComponent;
+  showSignaturePad: boolean = false;
+
+  signaturePadOptions: NgSignaturePadOptions = { // passed through to szimek/signature_pad constructor
+    minWidth: 5,
+    canvasWidth: 250,
+    canvasHeight: 150,
+    backgroundColor: 'rgba(0,0,0,0)',  // Ensures transparent background
+    penColor: 'black'
+  };
+
+  // Method to toggle the signature pad visibility
+  toggleSignaturePad() {
+    this.showSignaturePad = !this.showSignaturePad;
+
+    // If hiding, clear the signature
+    if (!this.showSignaturePad) {
+      this.clearSignature();
+    }
+  }
+
+  drawComplete(event: MouseEvent | Touch) {
+    // will be notified of szimek/signature_pad's onEnd event
+    console.log('Completed drawing', event);
+  }
+
+  drawStart(event: MouseEvent | Touch) {
+    console.log('Start drawing', event);
+  }
+  // Method to clear the signature
+  clearSignature() {
+    if (this.signaturePad) {
+      this.signaturePad.clear();
+    }
+  }
+
+  // Method to save the signature as an image
+  saveSignature() {
     const payload = {
-      id: rfpSignature?.id,
-      signatureStage: rfpSignature?.signatureStageId,
-      signature: "test123.pdf"
+      id: this.currentId,
+      signatureStage: this.signatureStage,
+      signature: this.signaturePad.toDataURL('image/png')
     }
     this.rfpService.updateRFPSignatureSigns(payload).subscribe(res => {
-      debugger
       this.refreshData()
+      this.toggleSignaturePad()
     });
-
   }
 }

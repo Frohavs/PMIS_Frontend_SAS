@@ -55,7 +55,7 @@ export class AddCategoryComponent implements OnInit {
     });
   }
   initEditForm(data: any) {
-    debugger
+
     this.addRFPForm.patchValue({
       name: data?.name,
       nameAr: data?.nameAr,

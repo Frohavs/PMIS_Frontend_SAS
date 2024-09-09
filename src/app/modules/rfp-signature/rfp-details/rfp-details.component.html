@@ -1,5 +1,9 @@
-<div class="w-100">
+<div class="w-100 d-flex mb-4 align-items-center">
   <h2 class="title text-primary mx-auto text-center mb-5">{{rfpDetails?.name}}</h2>
+  <a (click)="back()" class="btn btn-sm btn-danger d-flex">
+    <app-keenicon name="arrow-left" class="fs-3"></app-keenicon>
+    {{"ECOMMERCE.COMMON.BACK" | translate}}
+  </a>
 </div>
 <div class="table-container">
   <table>
@@ -23,7 +27,7 @@
           <div class="signature">
             <span class="sign text-primary" *ngIf="!item?.authorSignature"
               (click)="signAuthor(item)">Signature</span><br />
-              <img src="../../../../assets/media/icons/signature.svg" alt="sign" *ngIf="item?.authorSignature">
+              <img [src]="item.authorSignature || '../../../../assets/media/icons/signature.svg'" alt="sign" *ngIf="item?.authorSignature">
             <span>{{item?.author}}</span><br />
           </div>
         </td>
@@ -32,7 +36,7 @@
             <span class="sign text-primary" *ngIf="item?.authorSignature && !item?.checkerSignature"
               (click)="signChecker(item)">Signature</span><br />
             <span *ngIf="!item?.authorSignature">Author has not signed yet</span>
-            <img src="../../../../assets/media/icons/signature.svg" alt="sign" *ngIf="item?.checkerSignature">
+            <img [src]="item.checkerSignature || '../../../../assets/media/icons/signature.svg'" alt="sign" *ngIf="item?.checkerSignature">
 
             <span>{{item?.checker}}</span><br />
           </div>
@@ -42,7 +46,7 @@
             <span class="sign text-primary" *ngIf="item?.checkerSignature && !item?.reviewerSignature"
               (click)="signReviewer(item)">Signature</span><br />
             <span *ngIf="!item?.checkerSignature">Waiting for all checkers to sign </span><br />
-            <img src="../../../../assets/media/icons/signature.svg" alt="sign" *ngIf="item?.reviewerSignature">
+            <img [src]="item.reviewerSignature || '../../../../assets/media/icons/signature.svg'" alt="sign" *ngIf="item?.reviewerSignature">
             <span>{{item?.reviewer}}</span><br />
           </div>
 
@@ -52,7 +56,7 @@
             <span class="sign text-primary" *ngIf="item?.reviewerSignature && !item?.approverSignature"
               (click)="signApprover(item)">Signature</span><br />
             <span *ngIf="!item?.reviewerSignature">Waiting for all checkers to sign </span><br />
-            <img src="../../../../assets/media/icons/signature.svg" alt="sign" *ngIf="item?.approverSignature">
+            <img [src]="item.approverSignature || '../../../../assets/media/icons/signature.svg'" alt="sign" *ngIf="item?.approverSignature">
             <span>{{item?.approver}}</span><br />
           </div>
         </td>
@@ -64,4 +68,20 @@
 </div>
 
 
-<!-- <app-signature-pad></app-signature-pad> -->
+<div class="signature_container" *ngIf="showSignaturePad">
+
+  <signature-pad #signature [options]="signaturePadOptions" (drawStart)="drawStart($event)"
+    (drawEnd)="drawComplete($event)"></signature-pad>
+  <div class="btn_wrapper">
+    <a class="btn btn-light-danger font-weight-bolder font-size-sm cursor-pointer" (click)="toggleSignaturePad()">
+      discard
+    </a>
+    <a class="btn btn-secondary font-weight-bolder font-size-sm cursor-pointer" (click)="clearSignature()">
+      clear
+    </a>
+    <a class="btn btn-light-primary font-weight-bolder font-size-sm cursor-pointer" (click)="saveSignature()">
+      save
+    </a>
+  </div>
+</div>
+

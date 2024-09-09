@@ -58,7 +58,7 @@ export class InvoiceDetailsComponent implements OnInit, OnDestroy {
   initStatusForm() {
     this.updateForm = this.fb.group({
       id: this.invoiceId,
-      isClaimRegistration: [{value: false, disabled: true}],
+      isClaimRegistration: [{ value: false, disabled: true }],
       claimRegistrationCheckDate: ['', [Validators.required, Validators.minLength(4)]],
       clamCheck: [false],
       clamCheckDate: ['', [Validators.required, Validators.minLength(4)]],
@@ -92,7 +92,8 @@ export class InvoiceDetailsComponent implements OnInit, OnDestroy {
         completed: this.invoiceDetails.completed
       })
       this.cdr.detectChanges();
-      debugger
+
+
       this.resetDataModel.id = this.invoiceDetails.id;
     })
   }
@@ -107,7 +108,8 @@ export class InvoiceDetailsComponent implements OnInit, OnDestroy {
 
   cancelInvoice() {
     if (confirm('Are you sure you want to cancel this?') == true) {
-      debugger
+
+
       this.invoiceService.cancelInvoice(this.invoiceDetails.id).subscribe(res => {
         this.showAlert({ icon: 'success', title: 'Success!', text: 'Invoice Canceled successfully!' });
         this.router.navigate(['invoices/expenditure'], {
@@ -127,7 +129,8 @@ export class InvoiceDetailsComponent implements OnInit, OnDestroy {
     const payload = {
       ...this.resetDataModel
     }
-    debugger
+
+
     this.invoiceService.UpdateInvoiceClamRegisteration(payload).subscribe(res => {
       this.modalService.dismissAll();
       this.showAlert({ icon: 'success', title: 'Success!', text: 'Invoice reset successfully!' });
@@ -144,12 +147,14 @@ export class InvoiceDetailsComponent implements OnInit, OnDestroy {
     delete payload.isClaimRegistration
     delete payload.claimRegistrationCheckDate
     this.invoiceService.UpdateInvoiceStatus(payload).subscribe(res => {
-      debugger
+
+
       // this.modalService.dismissAll();
       this.showAlert({ icon: 'success', title: 'Success!', text: 'Status Updated successfully!' });
       this.getInvoiceDetails();
     }, error => {
-      debugger
+
+
       this.modalService.dismissAll()
       this.showAlert({ icon: 'error', title: 'Error!', text: 'Please try again' });
 

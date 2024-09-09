@@ -97,7 +97,7 @@ export class AddRfpComponent implements OnInit {
   onFileSelected(event: any) {
     this.selectedFile = <File>event.target.files[0];
     const fd = new FormData();
-    fd.append('requestedWayDocument', this.selectedFile, this.selectedFile.name);
+    fd.append('Attachment', this.selectedFile, this.selectedFile.name);
     this.attachmentService.uploadAttachment(fd).subscribe(res => {
       this.addRFPForm.patchValue({
         requestedWayDocument: this.selectedFile.name
@@ -134,7 +134,7 @@ export class AddRfpComponent implements OnInit {
       reviewerId: +this.addRFPForm.value.reviewerId,
       approverId: +this.addRFPForm.value.approverId,
     }
-    debugger
+
     this.rfpService.addRFPSignature(payload).subscribe({
       next: (res) => {
         this.isLoading = false;

@@ -18,6 +18,7 @@ import { AddCategoryComponent } from './category/add-category/add-category.compo
 import { AddSubCategoryComponent } from './sub-category/add-sub-category/add-sub-category.component';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { RfpDetailsComponent } from './rfp-details/rfp-details.component';
+import { AngularSignaturePadModule } from '@almothafar/angular-signature-pad';
 
 
 @NgModule({
@@ -44,7 +45,8 @@ import { RfpDetailsComponent } from './rfp-details/rfp-details.component';
     NgMultiSelectDropDownModule.forRoot(),
     SweetAlert2Module.forChild(),
     SharedModule,
-    NgxCurrencyDirective
+    NgxCurrencyDirective,
+    AngularSignaturePadModule
   ]
 })
 export class RfpSignatureModule { }

@@ -51,7 +51,7 @@ export class NewInvoiceComponent implements OnInit, OnDestroy {
       if (this.invoiceId) {
         this.invoiceService.getInvoiceById(this.invoiceId).subscribe(res => {
           this.invoiceDetails = res.data;
-          debugger
+
           this.initEditForm(res.data);
         })
       }
@@ -73,7 +73,7 @@ export class NewInvoiceComponent implements OnInit, OnDestroy {
     });
   }
   initEditForm(data: any) {
-    debugger
+
     this.addInvoiceForm.patchValue({
       partiallyPaid: data?.partiallyPaid,
       reference: data?.reference,
@@ -104,7 +104,7 @@ export class NewInvoiceComponent implements OnInit, OnDestroy {
 
     } else {
       payload.id = this.invoiceDetails.id;
-      debugger
+
       this.invoiceService.updateInvoice(payload).subscribe(res => {
         this.router.navigate(['invoices/expenditure'], {
           queryParams: { etimadId: this.etimadNumber }
