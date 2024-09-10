@@ -66,7 +66,6 @@ export class NewInvoiceComponent implements OnInit, OnDestroy {
     this.addInvoiceForm = this.formBuilder.group({
       partiallyPaid: [false],
       reference: ['', Validators.required],
-      value: [0],
       type: [null, Validators.required],
       mofNumber: ['', Validators.required],
       etimadSubmitDate: ['', Validators.required]
