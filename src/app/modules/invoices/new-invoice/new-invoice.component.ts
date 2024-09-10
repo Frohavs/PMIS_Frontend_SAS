@@ -66,6 +66,7 @@ export class NewInvoiceComponent implements OnInit, OnDestroy {
     this.addInvoiceForm = this.formBuilder.group({
       partiallyPaid: [false],
       reference: ['', Validators.required],
+      value: ['', Validators.required],
       type: [null, Validators.required],
       mofNumber: ['', Validators.required],
       etimadSubmitDate: ['', Validators.required]
@@ -87,6 +88,7 @@ export class NewInvoiceComponent implements OnInit, OnDestroy {
     let payload = {
       projectId: +this.projectId,
       ...this.addInvoiceForm.value,
+      value: +this.addInvoiceForm.value.value,
       type: +this.addInvoiceForm.value.type
     }
     if (!this.invoiceId) {
@@ -120,6 +122,14 @@ export class NewInvoiceComponent implements OnInit, OnDestroy {
 
   back() {
     this._location.back();
+  }
+
+  numbersOnly(event: any): boolean {
+    const charCode = (event.which) ? event.which : event.keyCode;
+    if ((charCode > 31 && charCode != 43) && (charCode < 48 || charCode > 57)) {
+      return false;
+    }
+    return true;
   }
 
   showAlert(swalOptions: SweetAlertOptions) {

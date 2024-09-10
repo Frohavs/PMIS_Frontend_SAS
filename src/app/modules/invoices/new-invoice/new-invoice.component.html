@@ -40,6 +40,19 @@
           </div>
         </div>
 
+        <div class="row mb-6">
+          <label class="col-lg-4 col-form-label required fw-bold fs-6">Invoice Value</label>
+          <div class="col-lg-8 fv-row">
+            <input type="text" class="form-control form-control-lg form-control-solid" placeholder="invoice value"
+              formControlName="value" (keypress)="numbersOnly($event)" />
+            <div
+              *ngIf="addInvoiceForm?.get('value')?.invalid && (addInvoiceForm?.get('value')?.dirty || addInvoiceForm?.get('value')?.touched)"
+              class="fv-plugins-message-container">
+              <div class="fv-help-block">invoice value is required</div>
+            </div>
+          </div>
+        </div>
+
 
         <div class="row mb-6">
           <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="required">Invoice Type</span></label>
