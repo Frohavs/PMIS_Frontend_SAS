@@ -48,11 +48,12 @@ export class InvoiceDetailsComponent implements OnInit, OnDestroy {
     this.initStatusForm();
     this.activatedRoute.queryParams.subscribe(params => {
       this.invoiceId = +params['invoiceId'];
-      this.etimadNumber = +params['etimadNumber'];
       if (this.invoiceId) {
         this.getInvoiceDetails();
       }
     });
+
+    this.valueChangesListener();
   }
 
   initStatusForm() {
@@ -73,10 +74,67 @@ export class InvoiceDetailsComponent implements OnInit, OnDestroy {
       completed: [false],
     });
   }
+
+  valueChangesListener() {
+    this.updateForm.get('claimCheck')?.valueChanges.subscribe((value) => {
+      if (!value) {
+        this.updateForm.get('approved')?.disable();
+        this.updateForm.get('approved')?.setValue(false);
+        this.updateForm.get('approvedDate')?.disable();
+        this.updateForm.get('approvedDate')?.setValue(null);
+      } else {
+        this.updateForm.get('approved')?.enable();
+        this.updateForm.get('approvedDate')?.enable();
+      }
+    });
+    this.updateForm.get('approved')?.valueChanges.subscribe((value) => {
+      if (!value) {
+        this.updateForm.get('isExchangeorder')?.disable();
+        this.updateForm.get('isExchangeorder')?.setValue(false);
+        this.updateForm.get('exchangeOrderReferenceNumber')?.disable();
+        this.updateForm.get('exchangeOrderReferenceNumber')?.setValue(null);
+      } else {
+        this.updateForm.get('isExchangeorder')?.enable();
+        this.updateForm.get('exchangeOrderReferenceNumber')?.enable();
+      }
+    });
+    this.updateForm.get('isExchangeorder')?.valueChanges.subscribe((value) => {
+      if (!value) {
+        this.updateForm.get('isPaymentOrderRef')?.disable();
+        this.updateForm.get('isPaymentOrderRef')?.setValue(false);
+        this.updateForm.get('paymentOrderReferenceNumber')?.disable();
+        this.updateForm.get('paymentOrderReferenceNumber')?.setValue(null);
+      } else {
+        this.updateForm.get('isPaymentOrderRef')?.enable();
+        this.updateForm.get('paymentOrderReferenceNumber')?.enable();
+      }
+    });
+    this.updateForm.get('isPaymentOrderRef')?.valueChanges.subscribe((value) => {
+      if (!value) {
+        this.updateForm.get('isPaymentOrder')?.disable();
+        this.updateForm.get('isPaymentOrder')?.setValue(false);
+        this.updateForm.get('paymentOrder')?.disable();
+        this.updateForm.get('paymentOrder')?.setValue(null);
+      } else {
+        this.updateForm.get('isPaymentOrder')?.enable();
+        this.updateForm.get('paymentOrder')?.enable();
+      }
+    });
+    this.updateForm.get('isPaymentOrder')?.valueChanges.subscribe((value) => {
+      if (!value) {
+        this.updateForm.get('completed')?.disable();
+        this.updateForm.get('completed')?.setValue(false);
+      } else {
+        this.updateForm.get('completed')?.enable();
+      }
+    });
+  }
   getInvoiceDetails() {
     this.invoiceService.getInvoiceById(this.invoiceId).subscribe(res => {
       this.invoiceDetails = res.data;
+
       this.updateForm.patchValue({
+        id: this.invoiceId,
         isClaimRegistration: true,
         claimRegistrationCheckDate: this.invoiceDetails.etimadSubmitDate?.slice(0, 10) || null,
         claimCheck: this.invoiceDetails.claimCheck,
@@ -92,8 +150,6 @@ export class InvoiceDetailsComponent implements OnInit, OnDestroy {
         completed: this.invoiceDetails.completed
       })
       this.cdr.detectChanges();
-
-
       this.resetDataModel.id = this.invoiceDetails.id;
     })
   }
@@ -112,8 +168,9 @@ export class InvoiceDetailsComponent implements OnInit, OnDestroy {
 
       this.invoiceService.cancelInvoice(this.invoiceDetails.id).subscribe(res => {
         this.showAlert({ icon: 'success', title: 'Success!', text: 'Invoice Canceled successfully!' });
+        this.modalService.dismissAll();
         this.router.navigate(['invoices/expenditure'], {
-          queryParams: { etimadId: this.etimadNumber }
+          queryParams: { etimadId: this.invoiceDetails.etimadNumber }
         });
       });
     }
@@ -136,6 +193,7 @@ export class InvoiceDetailsComponent implements OnInit, OnDestroy {
       this.showAlert({ icon: 'success', title: 'Success!', text: 'Invoice reset successfully!' });
       this.resetDataModel = { id: 0, isClaimRegistration: true, claimRegistrationCheckDate: '' };
       this.getInvoiceDetails();
+      this.cdr.detectChanges()
     });
   }
 
@@ -147,17 +205,14 @@ export class InvoiceDetailsComponent implements OnInit, OnDestroy {
     delete payload.isClaimRegistration
     delete payload.claimRegistrationCheckDate
     this.invoiceService.UpdateInvoiceStatus(payload).subscribe(res => {
-
-
-      // this.modalService.dismissAll();
+      debugger
+      this.modalService.dismissAll();
       this.showAlert({ icon: 'success', title: 'Success!', text: 'Status Updated successfully!' });
       this.getInvoiceDetails();
-    }, error => {
-
-
+      this.cdr.detectChanges();
+    }, (error) => {
       this.modalService.dismissAll()
       this.showAlert({ icon: 'error', title: 'Error!', text: 'Please try again' });
-
     });
   }
 

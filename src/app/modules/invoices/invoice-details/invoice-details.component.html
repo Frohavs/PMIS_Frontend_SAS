@@ -6,18 +6,18 @@
       <div class="card-header align-items-center border-0 mt-4 justify-content-between w-100">
         <h3 class="card-title align-items-center justify-content-start">
           <button class="btn btn-light-success font-weight-bolder font-size-sm cursor-pointer"
-            (click)="openStatusModal()" [disabled]="invoiceDetails?.statusId === 4">
+            (click)="openStatusModal()" [disabled]="invoiceDetails?.statusId === 4 || invoiceDetails?.status === 'Approved'">
             Change Status
           </button>
           <button class="btn btn-light-success font-weight-bolder font-size-sm cursor-pointer mx-2"
-            (click)="resetInvoiceModal()" [disabled]="invoiceDetails?.statusId === 4">
+            (click)="resetInvoiceModal()" [disabled]="invoiceDetails?.statusId === 4 || invoiceDetails?.status === 'Approved'">
             Claim registration and modification
           </button>
-          <a *ngIf="invoiceDetails?.statusId !== 4"
+          <a *ngIf="invoiceDetails?.statusId !== 4 && invoiceDetails?.status !== 'Approved'"
             class="btn btn-light-danger font-weight-bolder font-size-sm cursor-pointer" (click)="cancelInvoice()">
             Cancel
           </a>
-          <button *ngIf="invoiceDetails?.statusId === 4" class="btn btn-danger font-weight-bolder font-size-sm">
+          <button *ngIf="invoiceDetails?.statusId === 4 && invoiceDetails?.status !== 'Approved'" class="btn btn-danger font-weight-bolder font-size-sm">
             Cancelled
           </button>
         </h3>
@@ -131,7 +131,7 @@
           <p>Approved</p>
         </div>
         <div class="line"></div>
-        <div class="step" [class.active]="invoiceDetails?.statusId === 3"
+        <div class="step" [class.active]="invoiceDetails?.status === 'Approved'"
           [class.cancelled]="invoiceDetails?.statusId === 4">
           <div class="circle">3</div>
           <p>Completed</p>

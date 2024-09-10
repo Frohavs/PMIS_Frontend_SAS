@@ -78,7 +78,7 @@ export class NewInvoiceComponent implements OnInit, OnDestroy {
       partiallyPaid: data?.partiallyPaid,
       reference: data?.reference,
       value: data?.value,
-      type: data?.type,
+      type: data?.statusId,
       mofNumber: data?.mofNumber,
       etimadSubmitDate: data?.etimadSubmitDate?.slice(0, 10)
     });
