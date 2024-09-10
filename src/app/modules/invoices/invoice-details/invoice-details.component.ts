@@ -28,7 +28,7 @@ export class InvoiceDetailsComponent implements OnInit, OnDestroy {
   };
   statusModel: { status: boolean } = { status: true };
   @ViewChild('UpdateStatusModal') UpdateStatusModal!: any;
-  resetDataModel: { id: any, isClaimRegistration: boolean, claimRegistrationCheckDate: string } = { id: 0, isClaimRegistration: true, claimRegistrationCheckDate: '' };
+  resetDataModel: { id: any, isClaimRegistration: boolean, claimRegistrationCheckDate: string, claimRegistrationCheckReason: string } = { id: 0, isClaimRegistration: true, claimRegistrationCheckDate: '', claimRegistrationCheckReason: '' };
   @ViewChild('resetModal') resetModal!: any;
   @ViewChild('noticeSwal') noticeSwal!: SwalComponent;
 
@@ -81,6 +81,7 @@ export class InvoiceDetailsComponent implements OnInit, OnDestroy {
         this.updateForm.get('approved')?.disable();
         this.updateForm.get('approved')?.setValue(false);
         this.updateForm.get('approvedDate')?.disable();
+        this.updateForm.get('claimCheckDate')?.setValue(null);
         this.updateForm.get('approvedDate')?.setValue(null);
       } else {
         this.updateForm.get('approved')?.enable();
@@ -96,6 +97,7 @@ export class InvoiceDetailsComponent implements OnInit, OnDestroy {
       } else {
         this.updateForm.get('isExchangeorder')?.enable();
         this.updateForm.get('exchangeOrderReferenceNumber')?.enable();
+        this.updateForm.get('exchangeOrderReferenceNumber')?.setValue(null);
       }
     });
     this.updateForm.get('isExchangeorder')?.valueChanges.subscribe((value) => {
@@ -107,6 +109,7 @@ export class InvoiceDetailsComponent implements OnInit, OnDestroy {
       } else {
         this.updateForm.get('isPaymentOrderRef')?.enable();
         this.updateForm.get('paymentOrderReferenceNumber')?.enable();
+        this.updateForm.get('paymentOrderReferenceNumber')?.setValue(null);
       }
     });
     this.updateForm.get('isPaymentOrderRef')?.valueChanges.subscribe((value) => {
@@ -118,6 +121,7 @@ export class InvoiceDetailsComponent implements OnInit, OnDestroy {
       } else {
         this.updateForm.get('isPaymentOrder')?.enable();
         this.updateForm.get('paymentOrder')?.enable();
+        this.updateForm.get('paymentOrder')?.setValue(null);
       }
     });
     this.updateForm.get('isPaymentOrder')?.valueChanges.subscribe((value) => {
@@ -126,6 +130,7 @@ export class InvoiceDetailsComponent implements OnInit, OnDestroy {
         this.updateForm.get('completed')?.setValue(false);
       } else {
         this.updateForm.get('completed')?.enable();
+        this.updateForm.get('completed')?.setValue(false);
       }
     });
   }
@@ -137,12 +142,16 @@ export class InvoiceDetailsComponent implements OnInit, OnDestroy {
         id: this.invoiceId,
         isClaimRegistration: true,
         claimRegistrationCheckDate: this.invoiceDetails.etimadSubmitDate?.slice(0, 10) || null,
+
         claimCheck: this.invoiceDetails.claimCheck,
         claimCheckDate: this.invoiceDetails.claimCheckDate?.slice(0, 10) || null,
+
         approved: this.invoiceDetails.approved,
         approvedDate: this.invoiceDetails.approvedDate?.slice(0, 10) || null,
+
         isExchangeorder: this.invoiceDetails.isExchangeorder,
         exchangeOrderReferenceNumber: this.invoiceDetails.exchangeOrderReferenceNumber,
+
         isPaymentOrderRef: this.invoiceDetails.isPaymentOrderRef,
         paymentOrderReferenceNumber: this.invoiceDetails.paymentOrderReferenceNumber,
         isPaymentOrder: this.invoiceDetails.isPaymentOrder,
@@ -191,7 +200,7 @@ export class InvoiceDetailsComponent implements OnInit, OnDestroy {
     this.invoiceService.UpdateInvoiceClamRegisteration(payload).subscribe(res => {
       this.modalService.dismissAll();
       this.showAlert({ icon: 'success', title: 'Success!', text: 'Invoice reset successfully!' });
-      this.resetDataModel = { id: 0, isClaimRegistration: true, claimRegistrationCheckDate: '' };
+      this.resetDataModel = { id: 0, isClaimRegistration: true, claimRegistrationCheckDate: '', claimRegistrationCheckReason: '' };
       this.getInvoiceDetails();
       this.cdr.detectChanges()
     });
@@ -205,7 +214,7 @@ export class InvoiceDetailsComponent implements OnInit, OnDestroy {
     delete payload.isClaimRegistration
     delete payload.claimRegistrationCheckDate
     this.invoiceService.UpdateInvoiceStatus(payload).subscribe(res => {
-      debugger
+
       this.modalService.dismissAll();
       this.showAlert({ icon: 'success', title: 'Success!', text: 'Status Updated successfully!' });
       this.getInvoiceDetails();
