@@ -12,10 +12,9 @@ import { NgxCurrencyDirective } from 'ngx-currency';
 import { WidgetsModule } from 'src/app/_metronic/partials';
 import { SharedModule } from 'src/app/_metronic/shared/shared.module';
 import { CategoryComponent } from './category/category.component';
-import { SubCategoryComponent } from './sub-category/sub-category.component';
 import { AddRfpComponent } from './add-rfp/add-rfp.component';
 import { AddCategoryComponent } from './category/add-category/add-category.component';
-import { AddSubCategoryComponent } from './sub-category/add-sub-category/add-sub-category.component';
+import { AddSubCategoryComponent } from './add-rfp/add-sub-category/add-sub-category.component';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { RfpDetailsComponent } from './rfp-details/rfp-details.component';
 import { AngularSignaturePadModule } from '@almothafar/angular-signature-pad';
@@ -29,7 +28,6 @@ import { AngularSignaturePadModule } from '@almothafar/angular-signature-pad';
     RfpDetailsComponent,
     CategoryComponent,
     AddCategoryComponent,
-    SubCategoryComponent,
     AddSubCategoryComponent
   ],
   imports: [

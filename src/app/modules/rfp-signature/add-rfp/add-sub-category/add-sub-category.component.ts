@@ -1,9 +1,8 @@
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
-import { BoqService } from 'src/app/services/boq.service';
 import { LookupService } from 'src/app/services/lookup/lookup.service';
 import { SweetAlertOptions } from 'sweetalert2';
 import { RfpCategoryService } from 'src/app/services/rfp-category.service';
@@ -15,8 +14,7 @@ import { RfpService } from 'src/app/services/rfp.service';
   styleUrl: './add-sub-category.component.scss'
 })
 export class AddSubCategoryComponent implements OnInit {
-  projectId: number;
-  subcatId: number;
+  rfpSignatureId: number;
   isLoading: boolean;
   addRFPForm: FormGroup;
 
@@ -39,36 +37,46 @@ export class AddSubCategoryComponent implements OnInit {
 
   ngOnInit(): void {
     this.initAddBoqForm();
-    this.getBoqId();
+    this.getSignatureId();
     this.getLookups();
   }
 
-  getBoqId() {
+  getSignatureId() {
     this.activatedRoute.params.subscribe(params => {
-      this.projectId = +params['id'];
-    });
-    this.activatedRoute.params.subscribe(params => {
-      this.subcatId = params['id'];
-      if (this.subcatId) {
-        // this.rfpService.addRFPSignature(this.subcatId).subscribe(res => {
-        //   setTimeout(() => {
-        //     this.editVendorForm(res.data);
-        //     this.cdr.detectChanges();
-        //   }, 1000);
-        // });
-      }
+      this.rfpSignatureId = +params['id'];
     });
   }
 
+  // Initialize the form with a FormArray
   initAddBoqForm() {
     this.addRFPForm = this.formBuilder.group({
+      signatures: this.formBuilder.array([this.createSignatureGroup()]) // Initialize with one group
+    });
+  }
+
+  // Create a single form group for a signature entry
+  createSignatureGroup(): FormGroup {
+    return this.formBuilder.group({
       name: ['', Validators.required],
       nameAr: ['', Validators.required],
       categoryId: [null, Validators.required],
       authorId: [null, Validators.required],
       checkerId: [null, Validators.required],
     });
+  }
 
+  // Getter for the FormArray
+  get signatures(): FormArray {
+    return this.addRFPForm.get('signatures') as FormArray;
+  }
+
+  // Method to add a new signature entry to the FormArray
+  addSignature() {
+    this.signatures.push(this.createSignatureGroup());
+  }
+  // Method to remove a signature entry
+  removeSignature(index: number) {
+    this.signatures.removeAt(index);
   }
 
   getLookups() {
@@ -101,16 +109,14 @@ export class AddSubCategoryComponent implements OnInit {
       return;
     }
     this.isLoading = true;
-    this.rfpCategoryService.addRFPSignatureSubCategory(
-      [
-        {
-          ...this.addRFPForm.value,
-          authorId: +this.addRFPForm.value.authorId,
-          categoryId: +this.addRFPForm.value.categoryId,
-          checkerId: +this.addRFPForm.value.checkerId,
-        }
-      ]
-    ).subscribe({
+    this.addRFPForm.value?.signatures?.forEach((element: any) => {
+      element.authorId = +element.authorId;
+      element.categoryId = +element.categoryId;
+      element.checkerId = +element.checkerId;
+      element.rfpSignatureId = this.rfpSignatureId;
+    });
+    const payload = this.addRFPForm.value?.signatures
+    this.rfpCategoryService.addRFPSignatureSubCategory(payload).subscribe({
       next: (res) => {
         this.isLoading = false;
         this.router.navigateByUrl(`rfp_signature/sub-category`);
@@ -163,9 +169,6 @@ export class AddSubCategoryComponent implements OnInit {
     this.noticeSwal.fire();
   }
 
-  navigateBoqTable() {
-    this.router.navigateByUrl('projects/add-boq' + `/${this.projectId}`);
-  }
   back() {
     this._location.back();
   }

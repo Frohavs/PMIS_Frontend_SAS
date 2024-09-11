@@ -75,7 +75,6 @@ export class AddRfpComponent implements OnInit {
       administrator: [null, Validators.required],
       reviewerIds: [null, Validators.required],
       approverId: [null, Validators.required],
-      subCategoryIds: [null, Validators.required],
     });
 
   }
@@ -117,7 +116,6 @@ export class AddRfpComponent implements OnInit {
       administrator: data?.administrator,
       reviewerIds: data?.reviewerIds,
       approverId: data?.approverId,
-      subCategoryIds: data?.subCategoryIds,
     });
     this.cdr.detectChanges()
   }
@@ -129,17 +127,16 @@ export class AddRfpComponent implements OnInit {
     }
     this.isLoading = true;
     const payload = {
-      ...this.addRFPForm.value,
-      subCategoryIds: this.addRFPForm.value.subCategoryIds?.map((item: any) => item.id),
-      administrator: +this.addRFPForm.value.administrator,
-      reviewerIds: this.addRFPForm.value.reviewerIds?.map((item: any) => +item.id),
-      approverId: +this.addRFPForm.value.approverId,
+      ...this.addRFPForm?.value,
+      administrator: +this.addRFPForm?.value.administrator,
+      reviewerIds: this.addRFPForm?.value.reviewerIds?.map((item: any) => +item.id),
+      approverId: +this.addRFPForm?.value.approverId,
     }
     this.rfpService.addRFPSignature(payload).subscribe({
       next: (res) => {
+        debugger
         this.isLoading = false;
-        this.router.navigateByUrl(`rfp_signature`);
-        this.showAlert({ icon: 'success', title: 'Success!', text: 'RFP Added successfully!' });
+        this.router.navigate([`rfp_signature/add-sub-category/${res.data}`]);
         this.cdr.detectChanges();
       },
       error: (error) => {

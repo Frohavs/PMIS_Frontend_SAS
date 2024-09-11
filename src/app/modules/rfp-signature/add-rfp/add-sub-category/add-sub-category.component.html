@@ -1,0 +1,157 @@
+<div class="row g-5 g-xl-8 justify-content-between">
+  <div class="col-xl-12">
+    <div class="card mb-5 mb-xl-8">
+      <!-- begin::Header -->
+      <div class="card-header align-items-center border-0 mt-4">
+        <h3 class="card-title align-items-start flex-column">
+          <span class="fw-bolder text-gray-900">Add Sub-Category</span>
+          <!-- <span class="text-muted mt-1 fw-bold fs-7">test</span> -->
+        </h3>
+        <div class="card-toolbar">
+          <a (click)="back()" class="btn btn-sm btn-danger d-flex">
+            <app-keenicon name="arrow-left" class="fs-3"></app-keenicon>
+            {{"ECOMMERCE.COMMON.BACK" | translate}}
+          </a>
+        </div>
+      </div>
+
+
+      <div class="card-body pt-3">
+
+        <form [formGroup]="addRFPForm" class="form">
+          <div class="card-body border-top p-9">
+
+            <div formArrayName="signatures">
+              <div *ngFor="let signature of signatures.controls; let i = index" [formGroupName]="i" class="row mb-1">
+                <!-- English Name -->
+                <div class="col-lg-6">
+                  <label class="col-lg-12 col-form-label fw-bold fs-6">
+                    <span>English Name</span>
+                  </label>
+                  <div class="col-lg-12 fv-row">
+                    <input type="text" class="form-control form-control-lg form-control-solid text-start" name="name"
+                      formControlName="name" placeholder="en name" />
+                    <div
+                      *ngIf="signature.get('name')?.invalid && (signature.get('name')?.dirty || signature.get('name')?.touched)"
+                      class="fv-plugins-message-container">
+                      <div class="fv-help-block">Name is required</div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Signature Category -->
+                <div class="col-xl-6">
+                  <label class="col-lg-4 col-form-label fw-bold fs-6">
+                    <span class="required">Signature Category</span>
+                  </label>
+                  <div class="col-lg-10 fv-row">
+                    <select class="form-select form-select-solid form-select-lg fw-bold" formControlName="categoryId">
+                      <option value="" disabled selected>{{"TRANSLATOR.SELECTION" | translate}}</option>
+                      <ng-container *ngFor="let cat of categories">
+                        <option [value]="cat?.id">{{cat?.name}}</option>
+                      </ng-container>
+                    </select>
+                    <div
+                      *ngIf="signature.get('categoryId')?.invalid && (signature.get('categoryId')?.dirty || signature.get('categoryId')?.touched)"
+                      class="fv-plugins-message-container">
+                      <div class="fv-help-block">Category is required</div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Arabic Name -->
+                <div class="col-lg-6">
+                  <label class="col-lg-12 col-form-label fw-bold fs-6">
+                    <span>Arabic Name</span>
+                  </label>
+                  <div class="col-lg-12 fv-row">
+                    <input type="text" class="form-control form-control-lg form-control-solid text-start" name="nameAr"
+                      formControlName="nameAr" placeholder="ar name" />
+                    <div
+                      *ngIf="signature.get('nameAr')?.invalid && (signature.get('nameAr')?.dirty || signature.get('nameAr')?.touched)"
+                      class="fv-plugins-message-container">
+                      <div class="fv-help-block">Arabic Name is required</div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Checker -->
+                <div class="col-xl-6">
+                  <label class="col-lg-4 col-form-label fw-bold fs-6">
+                    <span class="required">Checker</span>
+                  </label>
+                  <div class="col-lg-10 fv-row">
+                    <select class="form-select form-select-solid form-select-lg fw-bold" formControlName="checkerId">
+                      <option value="" disabled selected>{{"TRANSLATOR.SELECTION" | translate}}</option>
+                      <ng-container *ngFor="let user of users">
+                        <option [value]="user?.id">{{user?.name}}</option>
+                      </ng-container>
+                    </select>
+                    <div
+                      *ngIf="signature.get('checkerId')?.invalid && (signature.get('checkerId')?.dirty || signature.get('checkerId')?.touched)"
+                      class="fv-plugins-message-container">
+                      <div class="fv-help-block">Checker is required</div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Author -->
+                <div class="col-xl-6">
+                  <label class="col-lg-4 col-form-label fw-bold fs-6">
+                    <span class="required">Author</span>
+                  </label>
+                  <div class="col-lg-10 fv-row">
+                    <select class="form-select form-select-solid form-select-lg fw-bold" formControlName="authorId">
+                      <option value="" disabled selected>{{"TRANSLATOR.SELECTION" | translate}}</option>
+                      <ng-container *ngFor="let user of users">
+                        <option [value]="user?.id">{{user?.name}}</option>
+                      </ng-container>
+                    </select>
+                    <div
+                      *ngIf="signature.get('authorId')?.invalid && (signature.get('authorId')?.dirty || signature.get('authorId')?.touched)"
+                      class="fv-plugins-message-container">
+                      <div class="fv-help-block">Author is required</div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Remove signature button -->
+                <div class="col-lg-12 text-right mt-3">
+                  <button type="button" class="btn btn-danger" (click)="removeSignature(i)" *ngIf="i !== 0">Remove</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Add new signature button -->
+            <div class="row mb-3 mt-4">
+              <div class="col-lg-12 text-right">
+                <button type="button" class="btn btn-success" (click)="addSignature()">Add New Sub Category</button>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Submit button -->
+          <div class="card-footer d-flex justify-content-end py-6 px-9">
+            <button type="button" class="btn btn-primary" [disabled]="isLoading" (click)="saveChanges()">
+              <ng-container *ngIf="!isLoading">{{"TRANSLATOR.ADD" | translate}}</ng-container>
+              <ng-container *ngIf="isLoading">
+                <span class="indicator-progress" [style.display]="'block'">
+                  Please wait...{{ " " }}
+                  <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                </span>
+              </ng-container>
+            </button>
+          </div>
+        </form>
+
+
+      </div>
+      <!-- end::Body -->
+    </div>
+  </div>
+</div>
+
+<!-- modal -->
+<swal #noticeSwal [swalOptions]="swalOptions">
+</swal>

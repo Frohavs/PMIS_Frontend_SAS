@@ -3,10 +3,9 @@ import { RouterModule, Routes } from '@angular/router';
 import { RfpSignatureComponent } from './rfp-signature.component';
 import { OverviewComponent } from './overview/overview.component';
 import { CategoryComponent } from './category/category.component';
-import { SubCategoryComponent } from './sub-category/sub-category.component';
 import { AddRfpComponent } from './add-rfp/add-rfp.component';
 import { AddCategoryComponent } from './category/add-category/add-category.component';
-import { AddSubCategoryComponent } from './sub-category/add-sub-category/add-sub-category.component';
+import { AddSubCategoryComponent } from './add-rfp/add-sub-category/add-sub-category.component';
 import { RfpDetailsComponent } from './rfp-details/rfp-details.component';
 
 const routes: Routes = [
@@ -39,11 +38,7 @@ const routes: Routes = [
         component: AddCategoryComponent,
       },
       {
-        path: 'sub-category',
-        component: SubCategoryComponent,
-      },
-      {
-        path: 'add-sub-category',
+        path: 'add-sub-category/:id',
         component: AddSubCategoryComponent,
       },
       { path: '', redirectTo: 'overview', pathMatch: 'full' },
