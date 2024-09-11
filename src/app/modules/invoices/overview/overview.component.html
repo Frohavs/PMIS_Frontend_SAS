@@ -28,7 +28,7 @@
   <div class="col-xl-4 mx-5">
     <app-stats-widget5 imgIcon="../../../../assets/media/icons/staff.png"
       class="card bg-primary hoverable card-xl-stretch mb-xl-8" color="primary" iconColor="white"
-      title="Total Spent Value" description="0.00"></app-stats-widget5>
+      title="Total Spent Value" [description]="invoiceStatistics?.totalSpentValue"></app-stats-widget5>
   </div>
 </div>
 
@@ -36,23 +36,23 @@
 
   <div class="col-xl-3">
     <app-stats-widget6 class="card bg-light-warning card-xl-stretch mb-xl-8" color="warning"
-      title="{{'PROJECTS.TITLE' | translate}}" description="OnProgress" progress="20%">
+      title="{{'PROJECTS.TITLE' | translate}}" description="OnProgress" [progress]="invoiceStatistics?.onProgress">
     </app-stats-widget6>
   </div>
   <div class="col-xl-3">
     <app-stats-widget6 class="card bg-light-success card-xl-stretch mb-xl-8" color="success"
-      title="{{'PROJECTS.TITLE' | translate}}" description="Approved" [progress]="'40%'"></app-stats-widget6>
+      title="{{'PROJECTS.TITLE' | translate}}" description="Approved" [progress]="invoiceStatistics?.approved"></app-stats-widget6>
   </div>
   <div class="col-xl-3">
     <app-stats-widget6 class="card bg-light-primary card-xl-stretch mb-xl-8" color="primary"
-      title="{{'PROJECTS.TITLE' | translate}}" description="Completed" progress="30%">
+      title="{{'PROJECTS.TITLE' | translate}}" description="Completed" [progress]="invoiceStatistics?.completed">
     </app-stats-widget6>
   </div>
 
 
   <div class="col-xl-3">
     <app-stats-widget6 class="card bg-light-danger card-xl-stretch mb-xl-8" color="danger"
-      title="{{'PROJECTS.TITLE' | translate}}" description="Canceled" progress="10%">
+      title="{{'PROJECTS.TITLE' | translate}}" description="Canceled" [progress]="invoiceStatistics?.cancelled">
     </app-stats-widget6>
   </div>
 

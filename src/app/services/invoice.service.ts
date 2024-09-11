@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -42,6 +42,20 @@ export class InvoiceService {
     const url = `${this.API_USERS_URL}/GetInvoice/${id}`;
     return this.http.get<any>(url, {
       headers: httpHeaders
+    });
+  }
+  getInvoiceStatistics(etimadNumber?: number): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    let params;
+    if (etimadNumber) {
+      params = new HttpParams().set('etimadNumber', etimadNumber);
+    }
+    const url = `${this.API_USERS_URL}/GetInvoicesStatistics`;
+    return this.http.get<any>(url, {
+      headers: httpHeaders,
+      params
     });
   }
   createInvoice(invoice: any): Observable<any> {

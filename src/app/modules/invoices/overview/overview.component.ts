@@ -22,6 +22,7 @@ export class OverviewComponent implements OnInit, AfterViewInit, OnDestroy {
   totalCount: number;
   pagesCount: number[] = [];
   selected = 1;
+  invoiceStatistics: any;
 
   // modal configs
   isLoading = false;
@@ -45,7 +46,15 @@ export class OverviewComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnInit(): void {
     this.initInvoicesList();
+    this.getInvoiceStatistics();
 
+  }
+
+  getInvoiceStatistics() {
+    this.invoiceService.getInvoiceStatistics().subscribe(res => {
+      this.invoiceStatistics = res.data;
+      this.cdr.detectChanges();
+    });
   }
 
   initInvoicesList(pageIndex?: number, search?: string) {
@@ -67,7 +76,6 @@ export class OverviewComponent implements OnInit, AfterViewInit, OnDestroy {
     ).subscribe((event: any) => {
       const searchText = event.target.value;
       this.initInvoicesList(1, searchText)
-
     });
   }
   setActiveTab(index: number) {

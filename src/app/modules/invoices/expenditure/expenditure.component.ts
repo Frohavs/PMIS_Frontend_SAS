@@ -25,6 +25,7 @@ export class ExpenditureComponent implements OnInit, AfterViewInit, OnDestroy {
   totalCount: number;
   pagesCount: number[] = [];
   selected = 1;
+  invoiceStatistics: any;
 
   // modal configs
   isLoading = false;
@@ -53,10 +54,18 @@ export class ExpenditureComponent implements OnInit, AfterViewInit, OnDestroy {
       if (this.etimadNumber) {
         this.initInvoicesList(this.etimadNumber, 1, '');
         this.getProjectDetails();
+        this.getInvoiceStatistics(this.etimadNumber);
       }
     });
+
   }
 
+  getInvoiceStatistics(etimadNumber: number) {
+    this.invoiceService.getInvoiceStatistics(etimadNumber).subscribe(res => {
+      this.invoiceStatistics = res.data;
+      this.cdr.detectChanges();
+    });
+  }
   initInvoicesList(etimadNumber?: number, pageIndex?: number, search?: string) {
     this.dataList = [];
     this.invoiceService.getAll(etimadNumber, pageIndex, search).subscribe(res => {
