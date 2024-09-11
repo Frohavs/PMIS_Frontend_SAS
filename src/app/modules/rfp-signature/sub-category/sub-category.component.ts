@@ -85,7 +85,7 @@ export class SubCategoryComponent implements OnInit, AfterViewInit, OnDestroy {
 
   navigatePage(pageIndex: number) {
     this.selected = pageIndex;
-    // this.initializeProjectData(pageIndex, '');
+    this.initRfpList(pageIndex, '');
   }
 
   navigateArrows(next: boolean) {
@@ -94,14 +94,14 @@ export class SubCategoryComponent implements OnInit, AfterViewInit, OnDestroy {
         return;
       } else {
         this.selected += 1;
-        // this.initializeProjectData(this.selected);
+        this.initRfpList(this.selected);
       }
     } else {
       if (this.selected === 1) {
         return;
       } else {
         this.selected -= 1;
-        // this.initializeProjectData(this.selected);
+        this.initRfpList(this.selected);
       }
     }
   }

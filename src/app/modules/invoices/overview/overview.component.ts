@@ -104,7 +104,7 @@ export class OverviewComponent implements OnInit, AfterViewInit, OnDestroy {
 
   navigatePage(pageIndex: number) {
     this.selected = pageIndex;
-    // this.initializeProjectData(pageIndex, '');
+    this.initInvoicesList(pageIndex, '');
   }
 
   navigateArrows(next: boolean) {
@@ -113,14 +113,14 @@ export class OverviewComponent implements OnInit, AfterViewInit, OnDestroy {
         return;
       } else {
         this.selected += 1;
-        // this.initializeProjectData(this.selected);
+        this.initInvoicesList(this.selected);
       }
     } else {
       if (this.selected === 1) {
         return;
       } else {
         this.selected -= 1;
-        // this.initializeProjectData(this.selected);
+        this.initInvoicesList(this.selected);
       }
     }
   }
