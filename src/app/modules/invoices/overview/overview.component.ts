@@ -15,7 +15,7 @@ import { SweetAlertOptions } from 'sweetalert2';
 export class OverviewComponent implements OnInit, AfterViewInit, OnDestroy {
 
   activeTab: number = 0;
-  etimadNumber: string = '190301099926';
+  etimadNumber: string = '';
   Add_text: string;
   Search_text: string;
   dataList: any[] = []
