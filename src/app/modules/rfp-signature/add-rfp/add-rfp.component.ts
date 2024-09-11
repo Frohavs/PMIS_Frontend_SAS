@@ -22,13 +22,6 @@ export class AddRfpComponent implements OnInit {
   addRFPForm: FormGroup;
 
   users: any[] = [];
-  administrators: any[] = [];
-  selectedFile: any;
-
-  swalOptions: SweetAlertOptions = {};
-  @ViewChild('noticeSwal') noticeSwal!: SwalComponent;
-
-  subCategoryList: any = [];
   dropdownSettings: any = {
     singleSelection: false,
     idField: 'id',
@@ -38,6 +31,14 @@ export class AddRfpComponent implements OnInit {
     itemsShowLimit: 8,
     allowSearchFilter: true,
   };
+
+  administrators: any[] = [];
+  selectedFile: any;
+
+  swalOptions: SweetAlertOptions = {};
+  @ViewChild('noticeSwal') noticeSwal!: SwalComponent;
+
+  subCategoryList: any = [];
 
   constructor(
     private router: Router,
@@ -72,7 +73,7 @@ export class AddRfpComponent implements OnInit {
       receivedDate: ['', Validators.required],
       requestedWayDocument: ['Scurve-1', Validators.required],
       administrator: [null, Validators.required],
-      reviewerId: [null, Validators.required],
+      reviewerIds: [null, Validators.required],
       approverId: [null, Validators.required],
       subCategoryIds: [null, Validators.required],
     });
@@ -114,7 +115,7 @@ export class AddRfpComponent implements OnInit {
       receivedDate: data?.receivedDate,
       requestedWayDocument: data?.requestedWayDocument?.slice(0, 10) || null,
       administrator: data?.administrator,
-      reviewerId: data?.reviewerId,
+      reviewerIds: data?.reviewerIds,
       approverId: data?.approverId,
       subCategoryIds: data?.subCategoryIds,
     });
@@ -129,12 +130,11 @@ export class AddRfpComponent implements OnInit {
     this.isLoading = true;
     const payload = {
       ...this.addRFPForm.value,
-      subCategoryIds: this.addRFPForm.value.subCategoryIds.map((item: any) => item.id),
+      subCategoryIds: this.addRFPForm.value.subCategoryIds?.map((item: any) => item.id),
       administrator: +this.addRFPForm.value.administrator,
-      reviewerId: +this.addRFPForm.value.reviewerId,
+      reviewerIds: this.addRFPForm.value.reviewerIds?.map((item: any) => +item.id),
       approverId: +this.addRFPForm.value.approverId,
     }
-
     this.rfpService.addRFPSignature(payload).subscribe({
       next: (res) => {
         this.isLoading = false;
