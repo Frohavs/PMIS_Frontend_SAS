@@ -28,7 +28,7 @@
   <div class="col-xl-4 mx-5">
     <app-stats-widget5 imgIcon="../../../../assets/media/icons/staff.png"
       class="card bg-primary hoverable card-xl-stretch mb-xl-8" color="primary" iconColor="white"
-      title="Total Spent Value" [description]="invoiceStatistics?.totalSpentValue + ' SAR'"></app-stats-widget5>
+      title="Total Spent Value" [description]="invoiceStatistics?.totalSpentValue"></app-stats-widget5>
   </div>
 </div>
 
@@ -123,7 +123,7 @@
             </td>
             <td>
               <a class="text-gray-900 fw-bolder text-hover-primary d-block fs-6">
-                {{invoice?.value}}
+                {{invoice?.value | number}}
 
               </a>
             </td>

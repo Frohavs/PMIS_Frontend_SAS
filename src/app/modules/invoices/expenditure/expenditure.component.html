@@ -8,7 +8,8 @@
         <h3 class="card-title align-items-center justify-content-between w-100">
           <span class="text-primary fw-bolder fs-4">{{projectDetails?.name || '--'}}</span>
           <!-- <span class="text-muted mt-1 fw-bold fs-7">test</span> -->
-          <a class="btn btn-light-primary font-weight-bolder font-size-sm cursor-pointer" (click)="redirectToNew()" *ngIf="projectDetails">
+          <a class="btn btn-light-primary font-weight-bolder font-size-sm cursor-pointer" (click)="redirectToNew()"
+            *ngIf="projectDetails">
             Create Invoice
           </a>
         </h3>
@@ -83,7 +84,7 @@
               <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
                 Spent value
               </a>
-              <span class="text-muted fw-bold d-block pt-1">{{invoiceStatistics?.totalSpentValue}}</span>
+              <span class="text-muted fw-bold d-block pt-1">{{invoiceStatistics?.totalSpentValue | number}}</span>
               <!-- <span class="text-muted fw-bold d-block pt-1">{{projectDetails?.originalValue | number}}</span> -->
             </div>
 
@@ -151,7 +152,7 @@
 
             <td>
               <a class="text-gray-900 fw-bolder text-hover-primary d-block fs-6">
-                {{invoice?.value}}
+                {{invoice?.value | number}}
               </a>
             </td>
             <td>
@@ -172,7 +173,8 @@
             <td>
               <div class="d-flex justify-content-center flex-shrink-0">
 
-                <a class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1" *ngIf="invoice.statusId !== 4"
+                <a class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1"
+                  *ngIf="invoice.status !== 'Cancelled' && invoice.status !== 'Approved'"
                   (click)="editInvoice(invoice.id)">
                   <app-keenicon name="pencil" class="fs-3"></app-keenicon>
                 </a>
