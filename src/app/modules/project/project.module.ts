@@ -40,6 +40,7 @@ import { AddSubContractorComponent } from './sub-contractors/add-sub-contractor/
 import { TimeScheduleManagementComponent } from './time-schedule-management/time-schedule-management.component';
 import { AddFloodComponent } from './time-schedule-management/add-flood/add-flood.component';
 import { FloodDetailsComponent } from './time-schedule-management/flood-details/flood-details.component';
+import { ProjectSiteLocationComponent } from './project-site-location/project-site-location.component';
 
 
 @NgModule({
@@ -83,7 +84,9 @@ import { FloodDetailsComponent } from './time-schedule-management/flood-details/
 
     TimeScheduleManagementComponent,
     FloodDetailsComponent,
-    AddFloodComponent
+    AddFloodComponent,
+
+    ProjectSiteLocationComponent
   ],
   imports: [
     CommonModule,

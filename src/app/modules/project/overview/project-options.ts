@@ -43,4 +43,8 @@ export const PROJECT_OPTIONS = [
     name: 'Time Schedule Management',
     route: 'projects/flood-management'
   },
+  // {
+  //   name: 'Open Site Listing',
+  //   route: 'projects/project-site-location'
+  // },
 ]
