@@ -8,7 +8,7 @@ import { environment } from 'src/environments/environment';
 })
 export class TimeScheduleService {
 
-  API_USERS_URL = `${environment.apiUrl}/Boq`;
+  API_USERS_URL = `${environment.apiUrl}/TimeSchedule`;
   token: string;
   private authLocalStorageToken = `${environment.appVersion}-${environment.USERDATA_KEY}`;
 

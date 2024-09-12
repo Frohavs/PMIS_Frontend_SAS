@@ -85,9 +85,14 @@ export class TimeScheduleManagementComponent implements OnInit, AfterViewInit, O
   redirectToNew() {
     this.router.navigateByUrl('projects/add-flood/' + this.projectId)
   }
+  editRecord(id: number) {
+    this.router.navigate([`projects/edit-flood/${this.projectId}`], {
+      queryParams: { floodId: id }
+    });
+  }
 
   contractorDetails(letter: any) {
-    this.router.navigate(['projects/edit-flood/' + this.projectId]);
+    this.router.navigate(['projects/flood-details/' + this.projectId]);
   }
 
   deleteContractor(user: any) {
