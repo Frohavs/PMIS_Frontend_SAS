@@ -39,4 +39,8 @@ export const PROJECT_OPTIONS = [
     name: 'Sub Contractors',
     route: 'projects/sub-contractors'
   },
+  {
+    name: 'Time Schedule Management',
+    route: 'projects/flood-management'
+  },
 ]

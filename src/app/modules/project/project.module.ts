@@ -37,6 +37,9 @@ import { ProjectLettersComponent } from './project-letters/project-letters.compo
 import { AddLetterComponent } from './project-letters/add-letter/add-letter.component';
 import { SubContractorsComponent } from './sub-contractors/sub-contractors.component';
 import { AddSubContractorComponent } from './sub-contractors/add-sub-contractor/add-sub-contractor.component';
+import { TimeScheduleManagementComponent } from './time-schedule-management/time-schedule-management.component';
+import { AddFloodComponent } from './time-schedule-management/add-flood/add-flood.component';
+import { FloodDetailsComponent } from './time-schedule-management/flood-details/flood-details.component';
 
 
 @NgModule({
@@ -76,7 +79,11 @@ import { AddSubContractorComponent } from './sub-contractors/add-sub-contractor/
     AddLetterComponent,
 
     SubContractorsComponent,
-    AddSubContractorComponent
+    AddSubContractorComponent,
+
+    TimeScheduleManagementComponent,
+    FloodDetailsComponent,
+    AddFloodComponent
   ],
   imports: [
     CommonModule,

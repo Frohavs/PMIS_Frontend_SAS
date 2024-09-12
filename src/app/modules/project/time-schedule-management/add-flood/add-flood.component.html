@@ -1,0 +1,180 @@
+<div class="row g-5 g-xl-8 justify-content-between">
+  <div class="col-xl-12">
+    <div class="card mb-5 mb-xl-8">
+      <!-- begin::Header -->
+      <div class="card-header align-items-center border-0 mt-4">
+        <h3 class="card-title align-items-start flex-column">
+          <span class="fw-bolder text-gray-900">Add Flood</span>
+          <!-- <span class="text-muted mt-1 fw-bold fs-7">test</span> -->
+        </h3>
+        <div class="card-toolbar">
+          <a (click)="back()" class="btn btn-sm btn-danger d-flex">
+            <app-keenicon name="arrow-left" class="fs-3"></app-keenicon>
+            {{"ECOMMERCE.COMMON.BACK" | translate}}
+          </a>
+        </div>
+      </div>
+
+
+      <div class="card-body pt-3">
+
+        <form [formGroup]="addBoqForm" class="form">
+          <div class="card-body border-top p-9">
+
+            <div class="row mb-1">
+              <div class="col-lg-6">
+                <label class="col-lg-12 col-form-label fw-bold fs-6">
+                  <span>
+                    Type
+                  </span>
+                </label>
+                <div class="col-lg-12 fv-row">
+                  <select class="form-select form-select-solid form-select-lg fw-bold" name="typeId"
+                    formControlName="typeId">
+                    <option value="" disabled selected>{{"TRANSLATOR.SELECTION" | translate}}</option>
+                    <ng-container *ngFor="let type of types">
+                      <option [value]="type?.id">{{type?.name}}</option>
+                    </ng-container>
+                  </select>
+                  <div
+                    *ngIf="addBoqForm?.get('typeId')?.invalid && (addBoqForm?.get('typeId')?.dirty || addBoqForm?.get('typeId')?.touched)"
+                    class="fv-plugins-message-container">
+                    <div class="fv-help-block">type is required</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-lg-6">
+                <label class="col-lg-12 col-form-label fw-bold fs-6">
+                  <span>
+                    Revision
+                  </span>
+                </label>
+                <div class="col-lg-12 fv-row">
+                  <input type="text" class="form-control form-control-lg form-control-solid text-start" name="revision"
+                    formControlName="revision" placeholder="revision" (keypress)="numbersOnly($event)" />
+                  <div
+                    *ngIf="addBoqForm?.get('revision')?.invalid && (addBoqForm?.get('revision')?.dirty || addBoqForm?.get('revision')?.touched)"
+                    class="fv-plugins-message-container">
+                    <div class="fv-help-block">revision is required</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row mb-1">
+
+              <div class="col-lg-6">
+                <label class="col-lg-12 col-form-label fw-bold fs-6">
+                  <span>
+                    Scheduling File
+                  </span>
+                </label>
+                <div class="col-lg-12 fv-row">
+                  <input type="file" class="form-control form-control-lg form-control-solid text-start"
+                    name="scheduleFile" formControlName="scheduleFile" accept=".xer" />
+                  <div
+                    *ngIf="addBoqForm?.get('scheduleFile')?.invalid && (addBoqForm?.get('scheduleFile')?.dirty || addBoqForm?.get('scheduleFile')?.touched)"
+                    class="fv-plugins-message-container">
+                    <div class="fv-help-block">file is required</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-lg-6">
+                <label class="col-lg-12 col-form-label fw-bold fs-6">
+                  <span>
+                    Base pdf
+                  </span>
+                </label>
+                <div class="col-lg-12 fv-row">
+                  <input type="file" class="form-control form-control-lg form-control-solid text-start" name="basePDF"
+                    formControlName="basePDF" />
+                  <div
+                    *ngIf="addBoqForm?.get('basePDF')?.invalid && (addBoqForm?.get('basePDF')?.dirty || addBoqForm?.get('basePDF')?.touched)"
+                    class="fv-plugins-message-container">
+                    <div class="fv-help-block">file is required</div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            <div class="row mb-1">
+
+              <div class="col-lg-6">
+                <label class="col-lg-12 col-form-label fw-bold fs-6">
+                  <span>
+                    narrative pdf
+                  </span>
+                </label>
+                <div class="col-lg-12 fv-row">
+                  <input type="file" class="form-control form-control-lg form-control-solid text-start"
+                    name="narrativePDF" formControlName="narrativePDF" />
+                  <div
+                    *ngIf="addBoqForm?.get('narrativePDF')?.invalid && (addBoqForm?.get('narrativePDF')?.dirty || addBoqForm?.get('narrativePDF')?.touched)"
+                    class="fv-plugins-message-container">
+                    <div class="fv-help-block">file is required</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-lg-6">
+                <label class="col-lg-12 col-form-label fw-bold fs-6">
+                  <span>
+                    physical status pdf
+                  </span>
+                </label>
+                <div class="col-lg-12 fv-row">
+                  <input type="file" class="form-control form-control-lg form-control-solid text-start"
+                    name="physicalStatusPDF" formControlName="physicalStatusPDF" />
+                  <div
+                    *ngIf="addBoqForm?.get('physicalStatusPDF')?.invalid && (addBoqForm?.get('physicalStatusPDF')?.dirty || addBoqForm?.get('physicalStatusPDF')?.touched)"
+                    class="fv-plugins-message-container">
+                    <div class="fv-help-block">file is required</div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            <div class="row mb-1">
+
+              <div class="col-lg-6">
+                <label class="col-lg-12 col-form-label fw-bold fs-6">
+                  <span>
+                    date
+                  </span>
+                </label>
+                <div class="col-lg-12 fv-row">
+                  <input type="date" class="form-control form-control-lg form-control-solid text-start" name="date"
+                    formControlName="date" />
+                  <div
+                    *ngIf="addBoqForm?.get('date')?.invalid && (addBoqForm?.get('date')?.dirty || addBoqForm?.get('date')?.touched)"
+                    class="fv-plugins-message-container">
+                    <div class="fv-help-block">date is required</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <div class="card-footer d-flex justify-content-end py-6 px-9">
+            <button type="button" class="btn btn-primary" [disabled]="isLoading" (click)="saveChanges()">
+              <ng-container *ngIf="!isLoading">{{"TRANSLATOR.ADD" | translate}}</ng-container>
+              <ng-container *ngIf="isLoading">
+                <span clas="indicator-progress" [style.display]="'block'">
+                  Please wait...{{ " " }}
+                  <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                </span>
+              </ng-container>
+            </button>
+          </div>
+        </form>
+
+      </div>
+      <!-- end::Body -->
+    </div>
+  </div>
+</div>
+
+<!-- modal -->
+<swal #noticeSwal [swalOptions]="swalOptions">
+</swal>

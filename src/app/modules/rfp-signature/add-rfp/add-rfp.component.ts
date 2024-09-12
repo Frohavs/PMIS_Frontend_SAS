@@ -134,7 +134,7 @@ export class AddRfpComponent implements OnInit {
     }
     this.rfpService.addRFPSignature(payload).subscribe({
       next: (res) => {
-        debugger
+
         this.isLoading = false;
         this.router.navigate([`rfp_signature/add-sub-category/${res.data}`]);
         this.cdr.detectChanges();

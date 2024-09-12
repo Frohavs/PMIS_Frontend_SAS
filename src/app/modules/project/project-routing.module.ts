@@ -27,6 +27,9 @@ import { ProjectLettersComponent } from './project-letters/project-letters.compo
 import { AddLetterComponent } from './project-letters/add-letter/add-letter.component';
 import { SubContractorsComponent } from './sub-contractors/sub-contractors.component';
 import { AddSubContractorComponent } from './sub-contractors/add-sub-contractor/add-sub-contractor.component';
+import { TimeScheduleManagementComponent } from './time-schedule-management/time-schedule-management.component';
+import { AddFloodComponent } from './time-schedule-management/add-flood/add-flood.component';
+import { FloodDetailsComponent } from './time-schedule-management/flood-details/flood-details.component';
 
 const routes: Routes = [
   {
@@ -166,6 +169,23 @@ const routes: Routes = [
       {
         path: 'sub-contractor-details/:id',
         component: AddSubContractorComponent,
+      },
+
+      {
+        path: 'flood-management/:id',
+        component: TimeScheduleManagementComponent,
+      },
+      {
+        path: 'flood-details/:id',
+        component: FloodDetailsComponent,
+      },
+      {
+        path: 'add-flood/:id',
+        component: AddFloodComponent,
+      },
+      {
+        path: 'edit-flood/:id',
+        component: AddFloodComponent,
       },
 
       { path: '', redirectTo: 'overview', pathMatch: 'full' },
