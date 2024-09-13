@@ -78,7 +78,7 @@ export class TimeScheduleManagementComponent implements OnInit, AfterViewInit, O
       distinctUntilChanged(),
     ).subscribe((event: any) => {
       const searchText = event.target.value;
-      this.initScheduleList(1, searchText)
+      this.initScheduleList(this.projectId, 1, searchText)
     });
   }
 
@@ -107,7 +107,7 @@ export class TimeScheduleManagementComponent implements OnInit, AfterViewInit, O
             setTimeout(() => {
               this.isLoading = false;
               this.dataList = [];
-              this.initScheduleList(this.projectId,);
+              this.initScheduleList(this.projectId);
             }, 500);
           },
           error: (error) => {

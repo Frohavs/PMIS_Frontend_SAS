@@ -1,1 +1,177 @@
-<p>add-obs works!</p>
+<div class="row g-5 g-xl-8 justify-content-between">
+  <div class="col-xl-12">
+    <div class="card mb-5 mb-xl-8">
+      <!-- begin::Header -->
+      <div class="card-header align-items-center border-0 mt-4">
+        <h3 class="card-title align-items-start flex-column">
+          <span class="fw-bolder text-gray-900" *ngIf="!obsId">Add Obs</span>
+          <span class="fw-bolder text-gray-900" *ngIf="obsId">Edit Obs</span>
+          <!-- <span class="text-muted mt-1 fw-bold fs-7">test</span> -->
+        </h3>
+        <div class="card-toolbar">
+          <a (click)="back()" class="btn btn-sm btn-danger d-flex">
+            <app-keenicon name="arrow-left" class="fs-3"></app-keenicon>
+            {{"ECOMMERCE.COMMON.BACK" | translate}}
+          </a>
+        </div>
+      </div>
+
+
+      <div class="card-body pt-3">
+
+        <form [formGroup]="addObsForm" class="form">
+          <div class="card-body border-top p-9">
+
+            <div class="row mb-1">
+              <div class="col-lg-6">
+                <label class="col-lg-12 col-form-label fw-bold fs-6">
+                  <span>
+                    Assigned Date
+                  </span>
+                </label>
+                <div class="col-lg-12 fv-row">
+                  <input type="date" class="form-control form-control-lg form-control-solid text-start"
+                    name="assignedDate" formControlName="assignedDate" />
+                  <div
+                    *ngIf="addObsForm?.get('assignedDate')?.invalid && (addObsForm?.get('assignedDate')?.dirty || addObsForm?.get('assignedDate')?.touched)"
+                    class="fv-plugins-message-container">
+                    <div class="fv-help-block">date is required</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-lg-6">
+                <label class="col-lg-12 col-form-label fw-bold fs-6">
+                  <span>
+                    Happen Time
+                  </span>
+                </label>
+                <div class="col-lg-12 fv-row">
+                  <input type="date" class="form-control form-control-lg form-control-solid text-start"
+                    name="happennedDate" formControlName="happennedDate" />
+                  <div
+                    *ngIf="addObsForm?.get('happennedDate')?.invalid && (addObsForm?.get('happennedDate')?.dirty || addObsForm?.get('happennedDate')?.touched)"
+                    class="fv-plugins-message-container">
+                    <div class="fv-help-block">date is required</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row mb-1">
+              <div class="col-lg-12">
+                <label class="col-lg-12 col-form-label fw-bold fs-6">
+                  <span>
+                    Description
+                  </span>
+                </label>
+                <div class="col-lg-12 fv-row">
+                  <textarea class="form-control form-control-lg form-control-solid text-start" name="description"
+                    formControlName="description" placeholder="description" cols="5"></textarea>
+                  <div
+                    *ngIf="addObsForm?.get('description')?.invalid && (addObsForm?.get('description')?.dirty || addObsForm?.get('description')?.touched)"
+                    class="fv-plugins-message-container">
+                    <div class="fv-help-block">description is required</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row mb-1">
+              <div class="col-lg-12">
+                <label class="col-lg-12 col-form-label fw-bold fs-6">
+                  <span>
+                    Action
+                  </span>
+                </label>
+                <div class="col-lg-12 fv-row">
+                  <textarea class="form-control form-control-lg form-control-solid text-start" name="action"
+                    formControlName="action" placeholder="action" cols="5"></textarea>
+                  <div
+                    *ngIf="addObsForm?.get('action')?.invalid && (addObsForm?.get('action')?.dirty || addObsForm?.get('action')?.touched)"
+                    class="fv-plugins-message-container">
+                    <div class="fv-help-block">action is required</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div formArrayName="obsBoqs">
+              <div *ngFor="let item of obsBoqs.controls; let i = index" [formGroupName]="i" class="row mb-1">
+                <!-- BOQ Field -->
+                <div class="col-lg-6">
+                  <label class="col-lg-12 col-form-label fw-bold fs-6">
+                    <span>BOQ</span>
+                  </label>
+                  <div class="col-lg-12 fv-row">
+                    <select class="form-select form-select-solid form-select-lg fw-bold" formControlName="boqId">
+                      <option value="" disabled selected>{{"TRANSLATOR.SELECTION" | translate}}</option>
+                      <ng-container *ngFor="let boq of boqList">
+                        <option [value]="boq?.id">{{boq?.name}}</option>
+                      </ng-container>
+                      <!-- Populate with BOQ options -->
+                    </select>
+                    <div *ngIf="item.get('boqId')?.invalid && (item.get('boqId')?.dirty || item.get('boqId')?.touched)"
+                      class="fv-plugins-message-container">
+                      <div class="fv-help-block">BOQ is required</div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Quantity Field -->
+                <div class="col-lg-6">
+                  <label class="col-lg-12 col-form-label fw-bold fs-6">
+                    <span>Quantity</span>
+                  </label>
+                  <div class="col-lg-12 fv-row">
+                    <input type="number" class="form-control form-control-lg form-control-solid"
+                      formControlName="quantity" />
+                    <div
+                      *ngIf="item.get('quantity')?.invalid && (item.get('quantity')?.dirty || item.get('quantity')?.touched)"
+                      class="fv-plugins-message-container">
+                      <div class="fv-help-block">Quantity is required</div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Remove Button -->
+                <div class="col-lg-12" *ngIf="i !== 0">
+                  <button type="button" class="btn btn-danger" (click)="removeBoqItem(i)">
+                    -
+                  </button>
+                </div>
+              </div>
+              <!-- Add BOQ and Quantity Button -->
+              <div class="row mb-1 mt-2">
+                <div class="col-lg-12">
+                  <button type="button" class="btn btn-success" (click)="addBoqItem()">
+                    + BOQ and Quantity
+                  </button>
+                </div>
+              </div>
+            </div>
+
+
+
+          </div>
+          <div class="card-footer d-flex justify-content-end py-6 px-9">
+            <button type="button" class="btn btn-primary" [disabled]="isLoading" (click)="saveChanges()">
+              <ng-container *ngIf="!isLoading">{{"TRANSLATOR.ADD" | translate}}</ng-container>
+              <ng-container *ngIf="isLoading">
+                <span clas="indicator-progress" [style.display]="'block'">
+                  Please wait...{{ " " }}
+                  <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                </span>
+              </ng-container>
+            </button>
+          </div>
+        </form>
+
+      </div>
+      <!-- end::Body -->
+    </div>
+  </div>
+</div>
+
+<!-- modal -->
+<swal #noticeSwal [swalOptions]="swalOptions">
+</swal>

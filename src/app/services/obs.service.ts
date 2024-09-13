@@ -6,9 +6,9 @@ import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root'
 })
-export class TimeScheduleService {
+export class ObsService {
 
-  API_USERS_URL = `${environment.apiUrl}/TimeSchedule`;
+  API_USERS_URL = `${environment.apiUrl}/Obs`;
   token: string;
   private authLocalStorageToken = `${environment.appVersion}-${environment.USERDATA_KEY}`;
 
@@ -35,7 +35,7 @@ export class TimeScheduleService {
       headers: httpHeaders
     });
   }
-  getFlood(id: number | null): Observable<any> {
+  getOBS(id: number | null): Observable<any> {
     const httpHeaders = new HttpHeaders({
       Authorization: `Bearer ${this.token}`,
     });
@@ -44,7 +44,7 @@ export class TimeScheduleService {
       headers: httpHeaders
     });
   }
-  addFlood(payload: any): Observable<any> {
+  addOBS(payload: any): Observable<any> {
     const httpHeaders = new HttpHeaders({
       Authorization: `Bearer ${this.token}`,
     });
@@ -53,7 +53,7 @@ export class TimeScheduleService {
       headers: httpHeaders
     });
   }
-  updateFlood(payload: any): Observable<any> {
+  updateOBS(payload: any): Observable<any> {
     const httpHeaders = new HttpHeaders({
       Authorization: `Bearer ${this.token}`,
     });
@@ -62,7 +62,7 @@ export class TimeScheduleService {
       headers: httpHeaders
     });
   }
-  deleteFlood(id: number): Observable<any> {
+  deleteOBS(id: number): Observable<any> {
     const httpHeaders = new HttpHeaders({
       Authorization: `Bearer ${this.token}`,
     });
@@ -71,7 +71,7 @@ export class TimeScheduleService {
       headers: httpHeaders
     });
   }
-  floodApproval(payload: any) {
+  OBSApproval(payload: any) {
     const httpHeaders = new HttpHeaders({
       Authorization: `Bearer ${this.token}`,
     });
@@ -80,5 +80,4 @@ export class TimeScheduleService {
       headers: httpHeaders
     });
   }
-
 }
