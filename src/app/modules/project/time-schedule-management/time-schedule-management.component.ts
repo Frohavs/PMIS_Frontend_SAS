@@ -91,8 +91,10 @@ export class TimeScheduleManagementComponent implements OnInit, AfterViewInit, O
     });
   }
 
-  contractorDetails(letter: any) {
-    this.router.navigate(['projects/flood-details/' + this.projectId]);
+  contractorDetails(id: any) {
+    this.router.navigate(['projects/flood-details/' + this.projectId], {
+      queryParams: { floodId: id }
+    });
   }
 
   deleteContractor(user: any) {

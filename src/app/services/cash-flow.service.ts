@@ -73,6 +73,5 @@ export class CashFlowService {
     return this.http.post<any>(url, payload, {
       headers: httpHeaders
     });
-
   }
 }
