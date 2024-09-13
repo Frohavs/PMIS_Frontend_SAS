@@ -53,7 +53,16 @@ export class ObsService {
       headers: httpHeaders
     });
   }
-  updateOBS(payload: any): Observable<any> {
+  createNote(payload: any): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/CreateNote`;
+    return this.http.post<any>(url, payload, {
+      headers: httpHeaders
+    });
+  }
+  updateOBSStatus(payload: any): Observable<any> {
     const httpHeaders = new HttpHeaders({
       Authorization: `Bearer ${this.token}`,
     });
@@ -71,13 +80,5 @@ export class ObsService {
       headers: httpHeaders
     });
   }
-  OBSApproval(payload: any) {
-    const httpHeaders = new HttpHeaders({
-      Authorization: `Bearer ${this.token}`,
-    });
-    const url = `${this.API_USERS_URL}/CreateApproval`;
-    return this.http.post<any>(url, payload, {
-      headers: httpHeaders
-    });
-  }
+
 }

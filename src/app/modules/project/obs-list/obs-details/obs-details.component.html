@@ -1,1 +1,178 @@
-<p>obs-details works!</p>
+<div class="row g-5 g-xl-8 justify-content-between">
+  <div class="col-xl-6">
+    <div class="row">
+      <div class="card mb-5 mb-xl-8">
+        <div class="card-header align-items-center border-0 mt-4">
+          <h3 class="card-title align-items-start flex-column">
+            <span class="fw-bolder text-gray-900">Flood Details</span>
+          </h3>
+          <a *ngIf="ObsDetails?.statusId === 2" class="btn btn-sm btn-info my-3">
+            Approved
+          </a>
+          <a *ngIf="ObsDetails?.statusId === 1" class="btn btn-sm btn-success my-3" (click)="onApprove()">
+            Approve
+          </a>
+        </div>
+
+        <div class="card-body pt-3">
+
+
+          <div class="d-flex align-items-sm-center mb-7">
+
+            <div class="d-flex flex-row-fluid flex-wrap align-items-center">
+              <div class="w-50 me-2">
+                <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
+                  Project Name
+                </a>
+                <span class="text-muted fw-bold d-block pt-1">{{projectDetails?.nameAr  ||  '--'}}</span>
+              </div>
+              <div class="flex-grow-1 me-2">
+                <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
+                  Status
+                </a>
+                <span class="text-muted fw-bold d-block pt-1">{{ObsDetails?.status  ||  '--'}}</span>
+              </div>
+            </div>
+            <!-- end::Title -->
+          </div>
+          <div class="d-flex align-items-sm-center mb-7">
+
+            <div class="d-flex flex-row-fluid flex-wrap align-items-center">
+              <div class="w-50 me-2">
+                <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
+                  assignedDate
+                </a>
+                <span class="text-muted fw-bold d-block pt-1">{{ObsDetails?.assignedDate?.slice(0, 10)  ||  '--'}}</span>
+              </div>
+              <div class="flex-grow-1 me-2">
+                <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
+                  happennedDate
+                </a>
+                <span class="text-muted fw-bold d-block pt-1">{{ObsDetails?.happennedDate?.slice(0, 10) ||  '--'}}</span>
+              </div>
+            </div>
+            <!-- end::Title -->
+          </div>
+
+
+          <div class="d-flex align-items-sm-center mb-7">
+
+            <!-- begin::Title -->
+            <div class="d-flex flex-row-fluid flex-wrap align-items-center">
+              <div class="flex-grow-1 me-2">
+                <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
+                  Action
+                </a>
+                <span class="text-muted fw-bold d-block pt-1">{{(ObsDetails?.action) ||  '--'}}</span>
+              </div>
+              <div class="flex-grow-1 me-2">
+                <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
+                  Description
+                </a>
+                <span class="text-muted fw-bold d-block pt-1">{{(ObsDetails?.description) ||  '--'}}</span>
+              </div>
+
+            </div>
+            <!-- end::Title -->
+          </div>
+        </div>
+      </div>
+      <div class="card mb-5 mb-xl-8">
+        <div class="card-header align-items-center border-0 mt-4">
+          <h3 class="card-title align-items-start flex-column">
+            <span class="fw-bolder text-gray-900">BOQs</span>
+          </h3>
+        </div>
+        <div class="card-body py-3">
+          <!-- begin::Table container -->
+          <div class="table-responsive">
+            <!-- begin::Table -->
+            <table class="table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4">
+              <!-- begin::Table head -->
+              <thead>
+                <tr class="fw-bolder text-muted">
+
+                  <th class="min-w-140px">BOQ</th>
+                  <th class="min-w-140px">Quantity</th>
+
+                </tr>
+              </thead>
+              <!-- end::Table head -->
+              <!-- begin::Table body -->
+              <tbody>
+                <tr *ngFor="let item of ObsDetails?.obsBoqs; index as i">
+
+                  <td>
+                    <a class="text-gray-900 fw-bolder text-hover-primary" style="font-size: 12px;">
+                      {{item.boqName || '--'}}
+                    </a>
+                  </td>
+                  <td>
+                    <a class="text-gray-900 fw-bolder text-hover-primary" style="font-size: 12px;">
+                      {{item.quantity || '--'}}
+                    </a>
+                  </td>
+
+                </tr>
+              </tbody>
+              <!-- end::Table body -->
+            </table>
+            <!-- end::Table -->
+          </div>
+          <!-- end::Table container -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-xl-6">
+    <div class="card mb-5 mb-xl-8">
+      <div class="card-header align-items-center border-0 mt-4">
+        <h3 class="card-title align-items-start flex-column">
+          <span class="fw-bolder text-gray-900">Notes</span>
+        </h3>
+      </div>
+      <div class="card-body py-3">
+        <!-- begin::Table container -->
+        <div class="row mb-6 d-flex flex-column">
+          <label class="col-lg-4 col-form-label required fw-bold fs-6">Notes</label>
+          <div class="col-lg-12 fv-row">
+            <textarea class="form-control form-control-lg form-control-solid" cols="3" name="noteText"
+              [(ngModel)]="noteText"></textarea>
+          </div>
+        </div>
+
+        <ng-container *ngIf="ObsDetails?.notes?.length">
+          <div class="d-flex align-items-center mb-4" *ngFor="let item of ObsDetails?.notes">
+            <div class="symbol symbol-45px me-5">
+              <img src="../../../../../assets/media/icons/user-icon-2400.png" alt="img" />
+            </div>
+            <div class="d-flex justify-content-start flex-column">
+              <a class="text-gray-900 fw-bolder text-hover-primary fs-4">
+                {{item?.createdBy}}
+              </a>
+              <a class="text-gray-900 fw-bolder text-hover-primary fs-6">
+                {{item?.note}}
+              </a>
+              <span class="text-muted fw-bold text-muted d-block fs-7">
+                {{item?.createdOn | date: 'dd-MM-yyyy'}}
+              </span>
+            </div>
+          </div>
+        </ng-container>
+
+
+        <button type="button" class="btn btn-primary float-end" (click)="addNewNote()"
+          *ngIf="ObsDetails?.statusId !== 2">
+          Add
+        </button>
+        <!-- end::Table container -->
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<swal #noticeSwal [swalOptions]="swalOptions">
+</swal>

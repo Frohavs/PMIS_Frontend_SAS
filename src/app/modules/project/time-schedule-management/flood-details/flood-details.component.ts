@@ -55,7 +55,6 @@ export class FloodDetailsComponent implements OnInit, OnDestroy {
     this.activatedRoute.params.subscribe(res => {
       this.projectId = +res['id'];
       this.projectService.getByID(this.projectId).subscribe(res => {
-        console.log(res);
         this.projectDetails = res.data;
       });
     });

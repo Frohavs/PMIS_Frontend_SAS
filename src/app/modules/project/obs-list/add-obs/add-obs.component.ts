@@ -86,8 +86,8 @@ export class AddObsComponent implements OnInit {
   editVendorForm(data: any) {
     this.addObsForm.patchValue({
       projectId: data?.projectId,
-      assignedDate: data?.assignedDate,
-      happennedDate: data?.happennedDate,
+      assignedDate: data?.assignedDate?.slice(0, 10) || null,
+      happennedDate: data?.happennedDate?.slice(0, 10) || null,
       description: data?.description,
       action: data?.action,
       quantity: data?.quantity,
@@ -96,15 +96,16 @@ export class AddObsComponent implements OnInit {
     this.obsBoqs.clear();
 
     // Populate FormArray with obsBoqs from the response
-    if (data.obsBoqs && data.obsBoqs.length > 0) {
+    if (data.obsBoqs && data.obsBoqs.length > 0 && this.boqList.length) {
       data.obsBoqs.forEach((boq: any) => {
         this.obsBoqs.push(this.formBuilder.group({
           boqId: [boq.boqId, Validators.required],
           quantity: [boq.quantity, Validators.required]
         }));
+        debugger
       });
+      this.cdr.detectChanges()
     }
-    this.cdr.detectChanges()
   }
 
   get obsBoqs(): FormArray {
@@ -149,24 +150,24 @@ export class AddObsComponent implements OnInit {
       });
 
     } else {
-      const payload = {
-        ...this.addObsForm.value,
-        id: this.obsId,
-        projectId: +this.projectId,
-      }
-      this.obsService.updateOBS(payload).subscribe({
-        next: (res) => {
-          this.isLoading = false;
-          this.showAlert({ icon: 'success', title: 'Success!', text: 'Obs Updated successfully!' });
-          setTimeout(() => {
-            this.router.navigateByUrl(`projects/obs-list/${this.projectId}`);
-          }, 500);
-        },
-        error: (error) => {
-          this.showAlert({ icon: 'error', title: 'Error!', text: 'Please try again' });
-          this.isLoading = false;
-        }
-      });
+      // const payload = {
+      //   ...this.addObsForm.value,
+      //   id: this.obsId,
+      //   projectId: +this.projectId,
+      // }
+      // this.obsService.updateOBS(payload).subscribe({
+      //   next: (res) => {
+      //     this.isLoading = false;
+      //     this.showAlert({ icon: 'success', title: 'Success!', text: 'Obs Updated successfully!' });
+      //     setTimeout(() => {
+      //       this.router.navigateByUrl(`projects/obs-list/${this.projectId}`);
+      //     }, 500);
+      //   },
+      //   error: (error) => {
+      //     this.showAlert({ icon: 'error', title: 'Error!', text: 'Please try again' });
+      //     this.isLoading = false;
+      //   }
+      // });
     }
   }
 
