@@ -41,6 +41,9 @@ import { TimeScheduleManagementComponent } from './time-schedule-management/time
 import { AddFloodComponent } from './time-schedule-management/add-flood/add-flood.component';
 import { FloodDetailsComponent } from './time-schedule-management/flood-details/flood-details.component';
 import { ProjectSiteLocationComponent } from './project-site-location/project-site-location.component';
+import { ObsListComponent } from './obs-list/obs-list.component';
+import { AddObsComponent } from './obs-list/add-obs/add-obs.component';
+import { ObsDetailsComponent } from './obs-list/obs-details/obs-details.component';
 
 
 @NgModule({
@@ -86,7 +89,11 @@ import { ProjectSiteLocationComponent } from './project-site-location/project-si
     FloodDetailsComponent,
     AddFloodComponent,
 
-    ProjectSiteLocationComponent
+    ProjectSiteLocationComponent,
+
+    ObsListComponent,
+    AddObsComponent,
+    ObsDetailsComponent
   ],
   imports: [
     CommonModule,

@@ -44,7 +44,11 @@ export const PROJECT_OPTIONS = [
     route: 'projects/flood-management'
   },
   // {
-  //   name: 'Open Site Listing',
-  //   route: 'projects/project-site-location'
-  // },
+    //   name: 'Open Site Listing',
+    //   route: 'projects/project-site-location'
+    // },
+    {
+      name: 'OBS List',
+      route: 'projects/obs-list'
+    },
 ]

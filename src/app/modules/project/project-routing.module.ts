@@ -31,6 +31,9 @@ import { TimeScheduleManagementComponent } from './time-schedule-management/time
 import { AddFloodComponent } from './time-schedule-management/add-flood/add-flood.component';
 import { FloodDetailsComponent } from './time-schedule-management/flood-details/flood-details.component';
 import { ProjectSiteLocationComponent } from './project-site-location/project-site-location.component';
+import { ObsListComponent } from './obs-list/obs-list.component';
+import { AddObsComponent } from './obs-list/add-obs/add-obs.component';
+import { ObsDetailsComponent } from './obs-list/obs-details/obs-details.component';
 
 const routes: Routes = [
   {
@@ -192,6 +195,23 @@ const routes: Routes = [
       {
         path: 'project-site-location/:id',
         component: ProjectSiteLocationComponent,
+      },
+
+      {
+        path: 'obs-list/:id',
+        component: ObsListComponent,
+      },
+      {
+        path: 'obs-details/:id',
+        component: ObsDetailsComponent,
+      },
+      {
+        path: 'add-obs/:id',
+        component: AddObsComponent,
+      },
+      {
+        path: 'edit-obs/:id',
+        component: AddObsComponent,
       },
 
       { path: '', redirectTo: 'overview', pathMatch: 'full' },
