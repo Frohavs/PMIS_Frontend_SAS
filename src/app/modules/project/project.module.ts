@@ -44,6 +44,8 @@ import { ProjectSiteLocationComponent } from './project-site-location/project-si
 import { ObsListComponent } from './obs-list/obs-list.component';
 import { AddObsComponent } from './obs-list/add-obs/add-obs.component';
 import { ObsDetailsComponent } from './obs-list/obs-details/obs-details.component';
+import { ContractorEvaluationComponent } from './partner-evaluation/contractor-evaluation/contractor-evaluation.component';
+import { ConsultantEvaluationComponent } from './partner-evaluation/consultant-evaluation/consultant-evaluation.component';
 
 
 @NgModule({
@@ -93,7 +95,10 @@ import { ObsDetailsComponent } from './obs-list/obs-details/obs-details.componen
 
     ObsListComponent,
     AddObsComponent,
-    ObsDetailsComponent
+    ObsDetailsComponent,
+
+    ConsultantEvaluationComponent,
+    ContractorEvaluationComponent
   ],
   imports: [
     CommonModule,

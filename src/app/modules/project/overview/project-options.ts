@@ -51,4 +51,12 @@ export const PROJECT_OPTIONS = [
       name: 'OBS List',
       route: 'projects/obs-list'
     },
+    {
+      name: 'Consultant Evaluation',
+      route: 'projects/consultant-evaluation'
+    },
+    {
+      name: 'Contractor Evaluation',
+      route: 'projects/contractor-evaluation'
+    },
 ]

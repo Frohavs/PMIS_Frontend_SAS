@@ -34,6 +34,8 @@ import { ProjectSiteLocationComponent } from './project-site-location/project-si
 import { ObsListComponent } from './obs-list/obs-list.component';
 import { AddObsComponent } from './obs-list/add-obs/add-obs.component';
 import { ObsDetailsComponent } from './obs-list/obs-details/obs-details.component';
+import { ConsultantEvaluationComponent } from './partner-evaluation/consultant-evaluation/consultant-evaluation.component';
+import { ContractorEvaluationComponent } from './partner-evaluation/contractor-evaluation/contractor-evaluation.component';
 
 const routes: Routes = [
   {
@@ -213,6 +215,15 @@ const routes: Routes = [
         path: 'edit-obs/:id',
         component: AddObsComponent,
       },
+
+      {
+        path: 'consultant-evaluation/:id',
+        component: ConsultantEvaluationComponent,
+      },
+      // {
+      //   path: 'contractor-evaluation/:id',
+      //   component: ContractorEvaluationComponent,
+      // },
 
       { path: '', redirectTo: 'overview', pathMatch: 'full' },
       { path: '**', redirectTo: 'overview', pathMatch: 'full' },
