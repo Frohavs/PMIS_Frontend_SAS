@@ -8,9 +8,9 @@
 
     <div class="card-toolbar" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-trigger="hover"
       title="Click to add a user">
-      <a class="btn btn-sm btn-light-primary" (click)="redirectToNew()">
-        <app-keenicon name="plus" class="fs-3"></app-keenicon>
-        add
+      <a class="btn btn-danger font-weight-bolder font-size-sm cursor-pointer" (click)="back()">
+        <app-keenicon name="arrow-left" class="fs-3"></app-keenicon>
+        {{"ECOMMERCE.COMMON.BACK" | translate}}
       </a>
     </div>
 
@@ -28,9 +28,7 @@
 
             <th class="min-w-100px">ID</th>
             <th class="min-w-100px">Description</th>
-            <th class="min-w-100px">Points</th>
-            <th class="min-w-100px">Weight</th>
-            <th class="max-w-100px text-center">Actions</th>
+            <th class="min-w-200px text-start">created On</th>
           </tr>
         </thead>
         <!-- end::Table head -->
@@ -39,7 +37,7 @@
           <tr *ngFor="let eval of dataList; index as i">
             <td>
               <a class="text-gray-900 fw-bolder text-hover-primary d-block fs-6">
-                {{i + 1}}
+                {{eval.id || '--'}}
               </a>
             </td>
             <td>
@@ -49,21 +47,8 @@
             </td>
             <td>
               <a class="text-gray-900 fw-bolder text-hover-primary d-block fs-6">
-                {{eval?.points || '--'}}
+                {{eval?.createdOn?.slice(0, 10) || '--'}}
               </a>
-            </td>
-            <td>
-              <a class="text-gray-900 fw-bolder text-hover-primary d-block fs-6">
-                {{eval?.weight || '--'}}
-              </a>
-            </td>
-            <td>
-              <div class="d-flex justify-content-center flex-shrink-0">
-                <a class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm"
-                  (click)="redirectToDetails(eval?.id)">
-                  <app-keenicon name="eye" class="fs-3"></app-keenicon>
-                </a>
-              </div>
             </td>
           </tr>
 
@@ -101,7 +86,3 @@
     </div>
   </div>
 </div>
-
-<!-- modal -->
-<swal #noticeSwal [swalOptions]="swalOptions">
-</swal>

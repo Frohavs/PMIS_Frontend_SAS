@@ -22,6 +22,8 @@ export const locale = {
       INVOICES: 'Invoices',
       STAFF_EVAL: 'Staff Evaluation',
       Category_EVAL: 'Evaluation Category',
+      Consultant_EVAL: 'Consultant',
+      Contractor_EVAL: 'Contractor',
       RFP_SIGNATURE: 'RFP Signature',
       RFP_SIGNATURE_LIST: 'List',
       RFP_SIGNATURE_Category: 'Category',

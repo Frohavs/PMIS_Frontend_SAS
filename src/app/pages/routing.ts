@@ -40,7 +40,12 @@ const Routing: Routes = [
     // data: { layout: 'light-sidebar' },
   },
   {
-    path: 'evaluation-category',
+    path: 'consultant-evaluation',
+    loadChildren: () => import('../modules/evaluation-category/evaluation-category.module').then((m) => m.EvaluationCategoryModule),
+    // data: { layout: 'light-sidebar' },
+  },
+  {
+    path: 'contractor-evaluation',
     loadChildren: () => import('../modules/evaluation-category/evaluation-category.module').then((m) => m.EvaluationCategoryModule),
     // data: { layout: 'light-sidebar' },
   },

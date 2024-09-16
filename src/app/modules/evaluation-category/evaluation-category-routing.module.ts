@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AddEvalCategoryComponent } from './add-eval-category/add-eval-category.component';
 import { OverviewComponent } from './overview/overview.component';
 import { EvaluationCategoryComponent } from './evaluation-category.component';
+import { EvalCategoryDetailsComponent } from './eval-category-details/eval-category-details.component';
 
 const routes: Routes = [
   {
@@ -16,6 +17,10 @@ const routes: Routes = [
       {
         path: 'add',
         component: AddEvalCategoryComponent,
+      },
+      {
+        path: 'details/:id',
+        component: EvalCategoryDetailsComponent,
       },
       { path: '', redirectTo: 'overview', pathMatch: 'full' },
       { path: '**', redirectTo: 'overview', pathMatch: 'full' },

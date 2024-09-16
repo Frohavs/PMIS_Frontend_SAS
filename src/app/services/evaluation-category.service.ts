@@ -35,6 +35,24 @@ export class EvaluationCategoryService {
       headers: httpHeaders
     });
   }
+  // public methods
+  getAllSubCategory(categoryId: number, pageIndex?: number, search?: string): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const body = {
+      categoryId: categoryId,
+      quickSearch: search,
+      pagedSearch: {
+        "pageIndex": pageIndex,
+        "pageSize": 10
+      }
+    }
+    const url = `${this.API_USERS_URL}/GetSubCategories`;
+    return this.http.post<any>(url, body, {
+      headers: httpHeaders
+    });
+  }
   getEvalCategoryById(id: any): Observable<any> {
     const httpHeaders = new HttpHeaders({
       Authorization: `Bearer ${this.token}`,
