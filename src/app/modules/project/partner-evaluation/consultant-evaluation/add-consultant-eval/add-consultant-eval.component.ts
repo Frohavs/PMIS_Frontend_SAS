@@ -1,7 +1,8 @@
-import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Location } from '@angular/common';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { EvaluationCategoryService } from 'src/app/services/evaluation-category.service';
+import { LookupService } from 'src/app/services/lookup/lookup.service';
 
 @Component({
   selector: 'app-add-consultant-eval',
@@ -9,16 +10,25 @@ import { EvaluationCategoryService } from 'src/app/services/evaluation-category.
   styleUrl: './add-consultant-eval.component.scss'
 })
 export class AddConsultantEvalComponent implements OnInit {
+
   form: FormGroup;
   categoriesData: any[] = [];
+  scales: any[] = [];
+  isLoading: boolean;
 
   constructor(
     private fb: FormBuilder,
-    private http: HttpClient,
+    private _location: Location,
+    private cdr: ChangeDetectorRef,
+    private lookupService: LookupService,
     private evaluationService: EvaluationCategoryService,
   ) { }
 
   ngOnInit(): void {
+    this.lookupService.getEvaluationScales().subscribe((response: any) => {
+      this.scales = response.data;
+      this.cdr.detectChanges()
+    })
     // Simulating API call to get categories data
     this.evaluationService.getAll(2).subscribe((response: any) => {
       // debugger
@@ -67,5 +77,9 @@ export class AddConsultantEvalComponent implements OnInit {
     if (this.form.valid) {
       // Submit the form data here
     }
+  }
+
+  back() {
+    this._location.back();
   }
 }
