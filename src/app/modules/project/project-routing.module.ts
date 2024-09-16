@@ -36,6 +36,8 @@ import { AddObsComponent } from './obs-list/add-obs/add-obs.component';
 import { ObsDetailsComponent } from './obs-list/obs-details/obs-details.component';
 import { ConsultantEvaluationComponent } from './partner-evaluation/consultant-evaluation/consultant-evaluation.component';
 import { ContractorEvaluationComponent } from './partner-evaluation/contractor-evaluation/contractor-evaluation.component';
+import { AddConsultantEvalComponent } from './partner-evaluation/consultant-evaluation/add-consultant-eval/add-consultant-eval.component';
+import { AddContractorEvalComponent } from './partner-evaluation/contractor-evaluation/add-contractor-eval/add-contractor-eval.component';
 
 const routes: Routes = [
   {
@@ -220,10 +222,18 @@ const routes: Routes = [
         path: 'consultant-evaluation/:id',
         component: ConsultantEvaluationComponent,
       },
+      {
+        path: 'add-consultant-evaluation/:id',
+        component: AddConsultantEvalComponent,
+      },
       // {
-      //   path: 'contractor-evaluation/:id',
-      //   component: ContractorEvaluationComponent,
-      // },
+        //   path: 'contractor-evaluation/:id',
+        //   component: ContractorEvaluationComponent,
+        // },
+        // {
+        //   path: 'add-contractor-evaluation/:id',
+        //   component: AddContractorEvalComponent,
+        // },
 
       { path: '', redirectTo: 'overview', pathMatch: 'full' },
       { path: '**', redirectTo: 'overview', pathMatch: 'full' },

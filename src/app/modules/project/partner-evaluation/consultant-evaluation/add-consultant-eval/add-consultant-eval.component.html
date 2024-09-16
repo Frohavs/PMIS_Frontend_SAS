@@ -1,0 +1,46 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div formArrayName="categories">
+    <div *ngFor="let categoryControl of categoriesFormArray.controls; let i = index" [formGroupName]="i">
+
+      <!-- Display category name -->
+      <h2 class="d-flex justify-content-center">{{ categoryControl.get('name')?.value }}</h2>
+
+      <!-- Iterate over subcategories -->
+      <div formArrayName="subCategories">
+        <div *ngFor="let subCategoryControl of getSubCategoriesFormArray(i)?.controls; let j = index"
+          [formGroupName]="j">
+
+          <!-- SubCategory fields -->
+          <h3>{{ categoriesData[i]?.subCategories[j]?.name }}</h3>
+
+          <!-- Scale -->
+          <label for="scale">Scale:</label>
+          <input id="scale" formControlName="scale" type="number">
+          <div *ngIf="subCategoryControl.get('scale')?.invalid && subCategoryControl.get('scale')?.touched">
+            Scale is required and should be a number.
+          </div>
+
+          <!-- Justifications -->
+          <label for="justifications">Justifications:</label>
+          <textarea id="justifications" formControlName="justifications"></textarea>
+          <div
+            *ngIf="subCategoryControl.get('justifications')?.invalid && subCategoryControl.get('justifications')?.touched">
+            Justifications are required.
+          </div>
+
+          <!-- Attachment -->
+          <label for="attachment">Attachment:</label>
+          <input id="attachment" formControlName="attachment" type="text">
+          <div *ngIf="subCategoryControl.get('attachment')?.invalid && subCategoryControl.get('attachment')?.touched">
+            Attachment is required.
+          </div>
+
+          <hr>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <button type="submit">Submit</button>
+</form>
