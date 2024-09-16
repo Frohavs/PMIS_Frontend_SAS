@@ -21,6 +21,7 @@ export const locale = {
       PROJECTS: 'المشاريع',
       INVOICES: 'بوابة المطالبات المالية',
       STAFF_EVAL: 'تقييم الموظفين',
+      Category_EVAL: 'فئة التقييم',
       RFP_SIGNATURE: 'ضمان جودة الكراسات',
       RFP_SIGNATURE_LIST: 'القائمة',
       RFP_SIGNATURE_Category: 'Category',
