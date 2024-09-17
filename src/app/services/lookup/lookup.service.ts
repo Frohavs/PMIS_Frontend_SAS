@@ -110,6 +110,15 @@ export class LookupService {
       headers: httpHeaders
     });
   }
+  getMonths(): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/GetMonths`;
+    return this.http.get<any>(url, {
+      headers: httpHeaders
+    });
+  }
   getAdministrators(): Observable<any> {
     const httpHeaders = new HttpHeaders({
       Authorization: `Bearer ${this.token}`,
