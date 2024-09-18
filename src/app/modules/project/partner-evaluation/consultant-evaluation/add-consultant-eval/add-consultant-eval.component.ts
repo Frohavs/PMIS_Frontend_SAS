@@ -96,14 +96,17 @@ export class AddConsultantEvalComponent implements OnInit {
     let result = []
     for (const element of this.form.value.categories) {
       for (const element2 of element.subCategories) {
-        element2.scale = +element2.scale
-        result.push(element2)
+        element2.scale = +element2.scale;
+        if (element2.scale !== 0) {
+          result.push(element2)
+        }
       }
     }
     this.evaluationService.CreateEvaluation(result).subscribe((response: any) => {
-      console.log(response);
-      this.back();
       this.showAlert({ icon: 'success', title: 'Success!', text: 'Evaluation Created successfully!' });
+      setTimeout(() => {
+        this.back();
+      }, 2000);
 
     }, (error) => {
       this.showAlert({ icon: 'error', title: 'Error!', text: 'Please try again' });

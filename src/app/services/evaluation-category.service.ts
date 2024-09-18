@@ -53,6 +53,15 @@ export class EvaluationCategoryService {
       headers: httpHeaders
     });
   }
+  getCategoriesByProjectId(id: number): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL2}/Get/${id}`;
+    return this.http.get<any>(url, {
+      headers: httpHeaders
+    });
+  }
   canCreateEvaluation(monthId: number, yearId: number, userId: number, projectId: number): Observable<any> {
     const httpHeaders = new HttpHeaders({
       Authorization: `Bearer ${this.token}`,

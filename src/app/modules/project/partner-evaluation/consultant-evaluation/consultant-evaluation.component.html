@@ -40,9 +40,12 @@
         <tbody>
           <tr *ngFor="let eval of dataList; index as i">
             <td>
-              <a class="text-gray-900 fw-bolder text-hover-primary d-block fs-6">
+              <!-- <a class="text-gray-900 fw-bolder text-hover-primary d-block fs-6">
                 {{eval.score || '--'}}
-              </a>
+              </a> -->
+              <span class="badge-info badge fs-7 fw-bold my-2">
+                {{eval.score || '--'}}
+              </span>
             </td>
             <td>
               <a class="text-gray-900 fw-bolder text-hover-primary d-block fs-6">
@@ -71,7 +74,8 @@
             </td>
             <td>
               <div class="d-flex justify-content-center flex-shrink-0">
-                <a class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1" title="details">
+                <a class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1" title="details"
+                (click)="redirectToDetails(eval)">
                   <app-keenicon name="eye" class="fs-3"></app-keenicon>
                 </a>
               </div>

@@ -38,6 +38,7 @@ import { ConsultantEvaluationComponent } from './partner-evaluation/consultant-e
 import { ContractorEvaluationComponent } from './partner-evaluation/contractor-evaluation/contractor-evaluation.component';
 import { AddConsultantEvalComponent } from './partner-evaluation/consultant-evaluation/add-consultant-eval/add-consultant-eval.component';
 import { AddContractorEvalComponent } from './partner-evaluation/contractor-evaluation/add-contractor-eval/add-contractor-eval.component';
+import { ConsultantEvalDetailsComponent } from './partner-evaluation/consultant-evaluation/consultant-eval-details/consultant-eval-details.component';
 
 const routes: Routes = [
   {
@@ -225,6 +226,10 @@ const routes: Routes = [
       {
         path: 'add-consultant-evaluation/:id',
         component: AddConsultantEvalComponent,
+      },
+      {
+        path: 'consultant-eval-details/:id',
+        component: ConsultantEvalDetailsComponent,
       },
       // {
         //   path: 'contractor-evaluation/:id',

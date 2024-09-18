@@ -94,6 +94,12 @@ export class ConsultantEvaluationComponent implements OnInit {
     this.modalService.open(this.fileModal, this.modalConfig)
   }
 
+  redirectToDetails(evalu: any) {
+    this.router.navigate([`projects/consultant-eval-details/${this.projectId}`], {
+      queryParams: { evaluationId: evalu.id }
+    });
+  }
+
   back() {
     this._location.back()
   }
