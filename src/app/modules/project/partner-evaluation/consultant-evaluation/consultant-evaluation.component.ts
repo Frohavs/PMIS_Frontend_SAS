@@ -63,7 +63,7 @@ export class ConsultantEvaluationComponent implements OnInit {
 
   getConsultantData(pageIndex?: number, search?: string) {
     this.dataList = [];
-    this.evaluationService.getById(this.projectId, pageIndex, search).subscribe(res => {
+    this.evaluationService.getById(2, this.projectId, pageIndex, search).subscribe(res => {
       this.dataList = res?.data?.items;
       this.totalCount = res?.data?.totalcount;
       this.pagesCount = Array.from({ length: Math.ceil(this.totalCount / 10) }, (_, index) => index + 1);
@@ -133,9 +133,9 @@ export class ConsultantEvaluationComponent implements OnInit {
   }
 
   onCheckEval(event: Event, myForm: NgForm) {
-    this.evaluationService.canCreateEvaluation(this.selectedMonth, 1, this.projectDetails.consultantId, this.projectId).subscribe(res => {
+    this.evaluationService.canCreateEvaluation(2, this.selectedMonth, 1, this.projectDetails.consultantId, this.projectId).subscribe(res => {
       if (res.data) {
-        this.evaluationService.CreateMonthEvaluation(this.selectedMonth, 1, this.projectDetails.consultantId, this.projectId).subscribe(response => {
+        this.evaluationService.CreateMonthEvaluation(2, this.selectedMonth, 1, this.projectDetails.consultantId, this.projectId).subscribe(response => {
           this.modalService.dismissAll();
           this.router.navigate([`projects/add-consultant-evaluation/${this.projectId}`], {
             queryParams: { evaluationId: response.data }

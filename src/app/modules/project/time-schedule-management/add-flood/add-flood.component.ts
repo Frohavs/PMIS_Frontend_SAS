@@ -60,7 +60,6 @@ export class AddFloodComponent implements OnInit {
     this.floodId = +queryParams?.floodId
     if (this.floodId) {
       this.timeScheduleService.getFlood(this.floodId).subscribe(res => {
-        debugger
         this.editVendorForm(res.data);
         this.cdr.detectChanges();
       });

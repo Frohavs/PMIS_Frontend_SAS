@@ -14,20 +14,24 @@
   <div class="card-body border-top p-9">
     <form [formGroup]="form">
       <div formArrayName="categories">
-        <div *ngFor="let categoryControl of categoriesFormArray.controls; let i = index" [formGroupName]="i">
+
+        <!-- Display current category based on the step -->
+        <div *ngIf="currentStep < categoriesFormArray.length" [formGroupName]="currentStep">
 
           <!-- Display category name -->
-          <h2 class="d-flex justify-content-center text-primary my-10">{{ categoryControl?.get('name')?.value }}</h2>
+          <h2 class="d-flex justify-content-center text-primary my-10">
+            {{ categoriesFormArray.at(currentStep).get('name')?.value }}</h2>
 
           <!-- Iterate over subcategories -->
           <div formArrayName="subCategories">
-            <div *ngFor="let subCategoryControl of getSubCategoriesFormArray(i)?.controls; let j = index"
+            <div *ngFor="let subCategoryControl of getSubCategoriesFormArray(currentStep)?.controls; let j = index"
               [formGroupName]="j">
 
               <!-- SubCategory fields -->
-              <h3 class="sub_title">{{ categoriesData[i]?.subCategories[j]?.name }}</h3>
+              <h3 class="sub_title">{{ categoriesData[currentStep]?.subCategories[j]?.name }}</h3>
 
               <div class="row">
+                <!-- Scale -->
                 <div class="row mb-6 col-xl-3">
                   <label class="col-lg-12 col-form-label fw-bold fs-6"><span class="required">Scale:</span></label>
                   <div class="col-md-12 fv-row">
@@ -41,6 +45,7 @@
                   </div>
                 </div>
 
+                <!-- Justifications -->
                 <div class="col-xl-4">
                   <label class="col-lg-12 col-form-label fw-bold fs-6"><span
                       class="required">Justifications</span></label>
@@ -55,16 +60,16 @@
                   </div>
                 </div>
 
+                <!-- Attachment -->
                 <div class="col-xl-5">
                   <label class="col-lg-12 col-form-label fw-bold fs-6"><span class="required">Attachment</span></label>
                   <div class="col-lg-12 fv-row">
                     <input type="file" class="form-control form-control-lg form-control-solid"
-                      formControlName="attachment" name="attachment" (change)="onFileSelect($event, i, j)" />
-
+                      formControlName="attachment" name="attachment" (change)="onFileSelect($event, currentStep, j)" />
 
                     <div
                       *ngIf="subCategoryControl?.get('attachment')?.invalid && subCategoryControl?.get('attachment')?.touched">
-                      attachment are required.
+                      Attachment is required.
                     </div>
                   </div>
                 </div>
@@ -75,20 +80,25 @@
           </div>
 
         </div>
-      </div>
 
-      <div class="card-footer d-flex justify-content-end py-6 px-9">
-        <button type="button" class="btn btn-primary" [disabled]="isLoading" (click)="onSubmit()">
-          <ng-container *ngIf="!isLoading">{{"TRANSLATOR.SAVE_CHANGES" | translate}}</ng-container>
-          <ng-container *ngIf="isLoading">
-            <span clas="indicator-progress" [style.display]="'block'">
-              Please wait...{{ " " }}
-              <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
-            </span>
-          </ng-container>
-        </button>
+        <!-- Navigation Buttons -->
+        <div class="d-flex justify-content-end">
+          <button type="button" class="btn btn-secondary mx-4" (click)="previousStep()" [disabled]="currentStep === 0">
+            Back
+          </button>
+          <button type="button" class="btn btn-primary" (click)="nextStep()"
+            *ngIf="currentStep < categoriesFormArray.length - 1" [disabled]="!isCurrentStepValid()">
+            Next
+          </button>
+          <button type="button" class="btn btn-success" (click)="onSubmit()"
+            *ngIf="currentStep === categoriesFormArray.length - 1" [disabled]="!isCurrentStepValid()">
+            Submit
+          </button>
+        </div>
+
       </div>
     </form>
+
   </div>
 </div>
 

@@ -39,6 +39,7 @@ import { ContractorEvaluationComponent } from './partner-evaluation/contractor-e
 import { AddConsultantEvalComponent } from './partner-evaluation/consultant-evaluation/add-consultant-eval/add-consultant-eval.component';
 import { AddContractorEvalComponent } from './partner-evaluation/contractor-evaluation/add-contractor-eval/add-contractor-eval.component';
 import { ConsultantEvalDetailsComponent } from './partner-evaluation/consultant-evaluation/consultant-eval-details/consultant-eval-details.component';
+import { ContractorEvalDetailsComponent } from './partner-evaluation/contractor-evaluation/contractor-eval-details/contractor-eval-details.component';
 
 const routes: Routes = [
   {
@@ -231,14 +232,18 @@ const routes: Routes = [
         path: 'consultant-eval-details/:id',
         component: ConsultantEvalDetailsComponent,
       },
-      // {
-        //   path: 'contractor-evaluation/:id',
-        //   component: ContractorEvaluationComponent,
-        // },
-        // {
-        //   path: 'add-contractor-evaluation/:id',
-        //   component: AddContractorEvalComponent,
-        // },
+      {
+        path: 'contractor-evaluation/:id',
+        component: ContractorEvaluationComponent,
+      },
+      {
+        path: 'add-contractor-evaluation/:id',
+        component: AddContractorEvalComponent,
+      },
+      {
+        path: 'contractor-eval-details/:id',
+        component: ContractorEvalDetailsComponent,
+      },
 
       { path: '', redirectTo: 'overview', pathMatch: 'full' },
       { path: '**', redirectTo: 'overview', pathMatch: 'full' },

@@ -49,6 +49,7 @@ import { ConsultantEvaluationComponent } from './partner-evaluation/consultant-e
 import { AddConsultantEvalComponent } from './partner-evaluation/consultant-evaluation/add-consultant-eval/add-consultant-eval.component';
 import { AddContractorEvalComponent } from './partner-evaluation/contractor-evaluation/add-contractor-eval/add-contractor-eval.component';
 import { ConsultantEvalDetailsComponent } from './partner-evaluation/consultant-evaluation/consultant-eval-details/consultant-eval-details.component';
+import { ContractorEvalDetailsComponent } from './partner-evaluation/contractor-evaluation/contractor-eval-details/contractor-eval-details.component';
 
 
 @NgModule({
@@ -106,6 +107,7 @@ import { ConsultantEvalDetailsComponent } from './partner-evaluation/consultant-
 
     ContractorEvaluationComponent,
     AddContractorEvalComponent,
+    ContractorEvalDetailsComponent
   ],
   imports: [
     CommonModule,

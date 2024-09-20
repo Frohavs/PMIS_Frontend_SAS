@@ -10,11 +10,11 @@ import { SweetAlertOptions } from 'sweetalert2';
 import { NgForm } from '@angular/forms';
 
 @Component({
-  selector: 'app-consultant-eval-details',
-  templateUrl: './consultant-eval-details.component.html',
-  styleUrl: './consultant-eval-details.component.scss'
+  selector: 'app-contractor-eval-details',
+  templateUrl: './contractor-eval-details.component.html',
+  styleUrl: './contractor-eval-details.component.scss'
 })
-export class ConsultantEvalDetailsComponent implements OnInit {
+export class ContractorEvalDetailsComponent implements OnInit {
 
   evaluationId: number;
   projectId: number;
@@ -33,7 +33,6 @@ export class ConsultantEvalDetailsComponent implements OnInit {
     modalDialogClass: 'modal-dialog modal-dialog-centered mw-600px',
   };
 
-  editSubCategoryId: number;
   editScaledId: number;
   editScaledJustification: string;
   editScaledAttachment: any;
@@ -59,7 +58,7 @@ export class ConsultantEvalDetailsComponent implements OnInit {
     this.activatedRoute.queryParams.subscribe(params => {
       this.evaluationId = +params['evaluationId'];
       if (this.evaluationId) {
-        this.getConsultantData();
+        this.getContractorData();
         this.getAllSubCategory();
       }
     });
@@ -70,9 +69,9 @@ export class ConsultantEvalDetailsComponent implements OnInit {
     });
   }
 
-  getConsultantData(pageIndex?: number, search?: string) {
+  getContractorData(pageIndex?: number, search?: string) {
     this.dataList = [];
-    this.evaluationService.getById(2, this.projectId, pageIndex, search).subscribe(res => {
+    this.evaluationService.getById(1, this.projectId, pageIndex, search).subscribe(res => {
       this.dataList = res?.data?.items;
       this.cdr.detectChanges();
     });
@@ -104,7 +103,6 @@ export class ConsultantEvalDetailsComponent implements OnInit {
   }
 
   editEval(evalu: any) {
-    this.editSubCategoryId = evalu.subCategoryId;
     this.editScaledId = evalu.scaleId;
     this.editScaledJustification = evalu.justifications;
     this.editScaledAttachment = null;
@@ -117,21 +115,18 @@ export class ConsultantEvalDetailsComponent implements OnInit {
   }
 
   onEditEval(event: Event, myForm: NgForm) {
-    const payload = {
-      "id": +this.editSubCategoryId,
-      "scale": +this.editScaledId,
-      "justifications": this.editScaledJustification,
-      "attachment": this.editScaledAttachment
-    }
-    this.evaluationService.updateEvaluationCategory(payload).subscribe(res => {
-      if (res) {
-        this.modalService.dismissAll();
-        this.showAlert({ icon: 'success', title: 'Success!', text: 'Evaluation Updated successfully!' });
-      } else {
-        this.modalService.dismissAll();
-        this.showAlert({ icon: 'error', title: 'Error!', text: 'Evaluation is already created for this month' });
-      }
-    })
+    // this.evaluationService.canCreateEvaluation(this.selectedMonth, 1, this.projectDetails.consultantId, this.projectId).subscribe(res => {
+    //   if (res.data) {
+    //     this.evaluationService.CreateMonthEvaluation(this.selectedMonth, 1, this.projectDetails.consultantId, this.projectId).subscribe(response => {
+    //       this.modalService.dismissAll();
+    //       this.router.navigate([`projects/add-consultant-evaluation/${this.projectId}`], {
+    //         queryParams: { evaluationId: response.data }
+    //       });
+    //     });
+    //   } else {
+    //     this.showAlert({ icon: 'error', title: 'Error!', text: 'Evaluation is already created for this month' });
+    //   }
+    // })
   }
 
   handleDecision() {
@@ -140,21 +135,5 @@ export class ConsultantEvalDetailsComponent implements OnInit {
 
   back() {
     this._location.back()
-  }
-
-  showAlert(swalOptions: SweetAlertOptions) {
-    let style = swalOptions.icon?.toString() || 'success';
-    if (swalOptions.icon === 'error') {
-      style = 'danger';
-    }
-    this.swalOptions = Object.assign({
-      buttonsStyling: false,
-      confirmButtonText: "Ok, got it!",
-      customClass: {
-        confirmButton: "btn btn-" + style
-      }
-    }, swalOptions);
-    this.cdr.detectChanges();
-    this.noticeSwal.fire();
   }
 }

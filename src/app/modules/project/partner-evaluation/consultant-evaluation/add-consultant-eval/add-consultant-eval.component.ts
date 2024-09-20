@@ -17,9 +17,10 @@ export class AddConsultantEvalComponent implements OnInit {
 
   evaluationId: number;
   form: FormGroup;
-  categoriesData: any[] = [];
   scales: any[] = [];
   isLoading: boolean;
+  categoriesData: any[] = [];
+  currentStep = 0; // Track the current step
 
   swalOptions: SweetAlertOptions = { buttonsStyling: false };
   @ViewChild('noticeSwal') noticeSwal!: SwalComponent;
@@ -72,7 +73,7 @@ export class AddConsultantEvalComponent implements OnInit {
       subCategoryId: [subCategory.id],  // Hidden or stored field for subCategory ID
       scale: [0, [Validators.required, Validators.min(0)]],  // Initial value for scale
       justifications: ['', Validators.required],  // Justifications field
-      attachment: ['', Validators.required]  // Attachment field
+      attachment: ['']  // Attachment field
     });
   }
 
@@ -90,6 +91,52 @@ export class AddConsultantEvalComponent implements OnInit {
     const file = event.target.files[0];
     const subCategoryControl = this.getSubCategoriesFormArray(categoryIndex).at(subCategoryIndex) as any;
     subCategoryControl.get('attachment').setValue(file);
+  }
+
+  // Check if the current step (category form group) is valid
+  isCurrentStepValid(): boolean {
+    const categoryGroup = this.categoriesFormArray.at(this.currentStep) as FormGroup;
+    return categoryGroup.valid; // Returns true if the current step form is valid
+  }
+
+  // Navigate to the next step
+  nextStep() {
+    // Get the current step's category and subcategories
+    const currentCategory = this.categoriesFormArray.at(this.currentStep).value;
+    const currentSubCategories = currentCategory.subCategories;
+
+    // Prepare data for submission
+    let result = [];
+    for (const subCategory of currentSubCategories) {
+      subCategory.scale = +subCategory.scale; // Ensure the scale is a number
+      if (subCategory.scale !== 0) {
+        result.push(subCategory);
+      }
+    }
+
+    // Submit the current step's data
+    if (result.length > 0) {
+      this.evaluationService.CreateEvaluation(result).subscribe(
+        (response: any) => {
+          this.showAlert({ icon: 'success', title: 'Success!', text: 'Step evaluation submitted successfully!' });
+
+          // Move to the next step only after successful submission
+          if (this.currentStep < this.categoriesFormArray.length - 1) {
+            this.currentStep++;
+          }
+
+        },
+        (error) => {
+          this.showAlert({ icon: 'error', title: 'Error!', text: 'Please try again' });
+        }
+      );
+    }
+  }
+
+  previousStep() {
+    if (this.currentStep > 0) {
+      this.currentStep--;
+    }
   }
 
   onSubmit() {

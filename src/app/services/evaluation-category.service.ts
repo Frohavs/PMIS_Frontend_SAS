@@ -36,12 +36,13 @@ export class EvaluationCategoryService {
       headers: httpHeaders
     });
   }
-  getById(id: number, pageIndex?: number, search?: string): Observable<any> {
+  getById(typeId: number, id: number, pageIndex?: number, search?: string): Observable<any> {
     const httpHeaders = new HttpHeaders({
       Authorization: `Bearer ${this.token}`,
     });
     const evaluation = {
       projectId: id,
+      typeId: typeId,
       quickSearch: search,
       pagedSearch: {
         "pageIndex": pageIndex,
@@ -62,12 +63,13 @@ export class EvaluationCategoryService {
       headers: httpHeaders
     });
   }
-  canCreateEvaluation(monthId: number, yearId: number, userId: number, projectId: number): Observable<any> {
+  canCreateEvaluation(typeId: number, monthId: number, yearId: number, userId: number, projectId: number): Observable<any> {
     const httpHeaders = new HttpHeaders({
       Authorization: `Bearer ${this.token}`,
     });
     const evaluation = {
       "monthId": monthId,
+      "typeId": typeId,
       "yearId": yearId,
       "userId": userId,
       "projectId": projectId
@@ -77,12 +79,22 @@ export class EvaluationCategoryService {
       headers: httpHeaders
     });
   }
-  CreateMonthEvaluation(monthId: number, yearId: number, userId: number, projectId: number): Observable<any> {
+  updateEvaluationCategory(payload: any): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL2}/Update`;
+    return this.http.put<any>(url, payload, {
+      headers: httpHeaders
+    });
+  }
+  CreateMonthEvaluation(typeId: number, monthId: number, yearId: number, userId: number, projectId: number): Observable<any> {
     const httpHeaders = new HttpHeaders({
       Authorization: `Bearer ${this.token}`,
     });
     const evaluation = {
       "monthId": monthId,
+      "typeId": typeId,
       "yearId": yearId,
       "userId": userId,
       "projectId": projectId

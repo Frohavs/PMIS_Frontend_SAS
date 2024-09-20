@@ -1,46 +1,107 @@
-<form [formGroup]="form" (ngSubmit)="onSubmit()">
-  <div formArrayName="categories">
-    <div *ngFor="let categoryControl of categoriesFormArray.controls; let i = index" [formGroupName]="i">
-
-      <!-- Display category name -->
-      <h2 class="d-flex justify-content-center">{{ categoryControl.get('name')?.value }}</h2>
-
-      <!-- Iterate over subcategories -->
-      <div formArrayName="subCategories">
-        <div *ngFor="let subCategoryControl of getSubCategoriesFormArray(i)?.controls; let j = index"
-          [formGroupName]="j">
-
-          <!-- SubCategory fields -->
-          <h3>{{ categoriesData[i]?.subCategories[j]?.name }}</h3>
-
-          <!-- Scale -->
-          <label for="scale">Scale:</label>
-          <input id="scale" formControlName="scale" type="number">
-          <div *ngIf="subCategoryControl.get('scale')?.invalid && subCategoryControl.get('scale')?.touched">
-            Scale is required and should be a number.
-          </div>
-
-          <!-- Justifications -->
-          <label for="justifications">Justifications:</label>
-          <textarea id="justifications" formControlName="justifications"></textarea>
-          <div
-            *ngIf="subCategoryControl.get('justifications')?.invalid && subCategoryControl.get('justifications')?.touched">
-            Justifications are required.
-          </div>
-
-          <!-- Attachment -->
-          <label for="attachment">Attachment:</label>
-          <input id="attachment" formControlName="attachment" type="text">
-          <div *ngIf="subCategoryControl.get('attachment')?.invalid && subCategoryControl.get('attachment')?.touched">
-            Attachment is required.
-          </div>
-
-          <hr>
-        </div>
-      </div>
-
+<div class="card mb-5 mb-xl-10">
+  <div class="card-header border-0 cursor-pointer" role="button" data-bs-toggle="collapse"
+    data-bs-target="#kt_add_company" aria-expanded="true" aria-controls="kt_add_company">
+    <div class="card-title m-0">
+      <h3 class="fw-bolder m-0">create evaluation</h3>
+    </div>
+    <div class="card-toolbar">
+      <a (click)="back()" class="btn btn-sm btn-danger d-flex">
+        <app-keenicon name="arrow-left" class="fs-3"></app-keenicon>
+        {{"ECOMMERCE.COMMON.BACK" | translate}}
+      </a>
     </div>
   </div>
+  <div class="card-body border-top p-9">
+    <form [formGroup]="form">
+      <div formArrayName="categories">
 
-  <button type="submit">Submit</button>
-</form>
+        <!-- Display current category based on the step -->
+        <div *ngIf="currentStep < categoriesFormArray.length" [formGroupName]="currentStep">
+
+          <!-- Display category name -->
+          <h2 class="d-flex justify-content-center text-primary my-10">
+            {{ categoriesFormArray.at(currentStep).get('name')?.value }}</h2>
+
+          <!-- Iterate over subcategories -->
+          <div formArrayName="subCategories">
+            <div *ngFor="let subCategoryControl of getSubCategoriesFormArray(currentStep)?.controls; let j = index"
+              [formGroupName]="j">
+
+              <!-- SubCategory fields -->
+              <h3 class="sub_title">{{ categoriesData[currentStep]?.subCategories[j]?.name }}</h3>
+
+              <div class="row">
+                <!-- Scale -->
+                <div class="row mb-6 col-xl-3">
+                  <label class="col-lg-12 col-form-label fw-bold fs-6"><span class="required">Scale:</span></label>
+                  <div class="col-md-12 fv-row">
+                    <select class="form-select form-select-solid form-select-lg fw-bold" name="rate"
+                      formControlName="scale">
+                      <option value="" disabled selected>{{"TRANSLATOR.SELECTION" | translate}}</option>
+                      <ng-container *ngFor="let scale of scales">
+                        <option [value]="scale.id">{{scale.name}}</option>
+                      </ng-container>
+                    </select>
+                  </div>
+                </div>
+
+                <!-- Justifications -->
+                <div class="col-xl-4">
+                  <label class="col-lg-12 col-form-label fw-bold fs-6"><span
+                      class="required">Justifications</span></label>
+                  <div class="col-lg-12 fv-row">
+                    <textarea class="form-control form-control-lg form-control-solid" formControlName="justifications"
+                      name="justifications" cols="5">
+                    </textarea>
+                    <div
+                      *ngIf="subCategoryControl?.get('justifications')?.invalid && subCategoryControl?.get('justifications')?.touched">
+                      Justifications are required.
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Attachment -->
+                <div class="col-xl-5">
+                  <label class="col-lg-12 col-form-label fw-bold fs-6"><span class="required">Attachment</span></label>
+                  <div class="col-lg-12 fv-row">
+                    <input type="file" class="form-control form-control-lg form-control-solid"
+                      formControlName="attachment" name="attachment" (change)="onFileSelect($event, currentStep, j)" />
+
+                    <div
+                      *ngIf="subCategoryControl?.get('attachment')?.invalid && subCategoryControl?.get('attachment')?.touched">
+                      Attachment is required.
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+              <hr>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Navigation Buttons -->
+        <div class="d-flex justify-content-end">
+          <button type="button" class="btn btn-secondary mx-4" (click)="previousStep()" [disabled]="currentStep === 0">
+            Back
+          </button>
+          <button type="button" class="btn btn-primary" (click)="nextStep()"
+            *ngIf="currentStep < categoriesFormArray.length - 1" [disabled]="!isCurrentStepValid()">
+            Next
+          </button>
+          <button type="button" class="btn btn-success" (click)="onSubmit()"
+            *ngIf="currentStep === categoriesFormArray.length - 1" [disabled]="!isCurrentStepValid()">
+            Submit
+          </button>
+        </div>
+
+      </div>
+    </form>
+
+  </div>
+</div>
+
+<!-- modal -->
+<swal #noticeSwal [swalOptions]="swalOptions">
+</swal>

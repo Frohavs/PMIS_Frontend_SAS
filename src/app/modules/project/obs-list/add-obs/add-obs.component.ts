@@ -102,7 +102,7 @@ export class AddObsComponent implements OnInit {
           boqId: [boq.boqId, Validators.required],
           quantity: [boq.quantity, Validators.required]
         }));
-        debugger
+
       });
       this.cdr.detectChanges()
     }
@@ -135,7 +135,7 @@ export class AddObsComponent implements OnInit {
         projectId: +this.projectId,
 
       }
-      debugger
+
       this.obsService.addOBS(payload).subscribe({
         next: (res) => {
           this.isLoading = false;

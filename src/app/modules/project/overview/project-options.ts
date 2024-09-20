@@ -55,8 +55,8 @@ export const PROJECT_OPTIONS = [
       name: 'Consultant Evaluation',
       route: 'projects/consultant-evaluation'
     },
-    // {
-    //   name: 'Contractor Evaluation',
-    //   route: 'projects/contractor-evaluation'
-    // },
+    {
+      name: 'Contractor Evaluation',
+      route: 'projects/contractor-evaluation'
+    },
 ]
