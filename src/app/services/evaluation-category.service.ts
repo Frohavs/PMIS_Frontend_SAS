@@ -140,12 +140,21 @@ export class EvaluationCategoryService {
       headers: httpHeaders
     });
   }
-  addEvalCategory(invoice: any): Observable<any> {
+  addEvalCategory(payload: any): Observable<any> {
     const httpHeaders = new HttpHeaders({
       Authorization: `Bearer ${this.token}`,
     });
     const url = `${this.API_USERS_URL}/Create`;
-    return this.http.post<any>(url, invoice, {
+    return this.http.post<any>(url, payload, {
+      headers: httpHeaders
+    });
+  }
+  addEvalSubCategory(payload: any): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/CreateSubCategory`;
+    return this.http.post<any>(url, payload, {
       headers: httpHeaders
     });
   }

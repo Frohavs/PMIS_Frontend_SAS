@@ -1,6 +1,7 @@
-import { ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
 import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
 import { Subscription } from 'rxjs';
@@ -20,11 +21,17 @@ export class OverviewComponent implements OnInit {
   totalCount: number;
   pagesCount: number[] = [];
   selected = 1;
-  showacc = true
+  showacc = true;
+
+  CatNameEn: string;
+  CatNameAr: string;
+  CatWeight: string;
+  CatTypeId: number;
 
   // modal configs
   isLoading = false;
   isCollapsed1 = false;
+  @ViewChild('fileModal') fileModal: TemplateRef<any>;
   swalOptions: SweetAlertOptions = { buttonsStyling: false };
   @ViewChild('noticeSwal') noticeSwal!: SwalComponent;
 
@@ -37,19 +44,20 @@ export class OverviewComponent implements OnInit {
     private cdr: ChangeDetectorRef,
     private router: Router,
     private evaluationService: EvaluationCategoryService,
-    private translate: TranslateService,
+    private modalService: NgbModal,
   ) { }
 
   ngOnInit(): void {
     if (this.router.url.includes('consultant-evaluation')) {
       this.getConsultantData();
+      this.CatTypeId = 2;
     } else {
       this.getContractorData();
+      this.CatTypeId = 1;
     }
   }
 
   getConsultantData(pageIndex?: number, search?: string) {
-    console.log('getConsultantData');
     this.dataList = [];
     this.evaluationService.getAll(2, pageIndex, search).subscribe(res => {
       this.dataList = res?.data?.items;
@@ -59,7 +67,6 @@ export class OverviewComponent implements OnInit {
     });
   }
   getContractorData(pageIndex?: number, search?: string) {
-    console.log('getContractorData');
     this.dataList = [];
     this.evaluationService.getAll(1, pageIndex, search).subscribe(res => {
       this.dataList = res?.data?.items;
@@ -70,7 +77,26 @@ export class OverviewComponent implements OnInit {
   }
 
   redirectToNew() {
-    this.router.navigate(['consultant-evaluation/add']);
+    this.modalService.open(this.fileModal, this.modalConfig)
+  }
+
+  onAddCat(event: Event, myForm: NgForm) {
+    const payload = {
+      weight: +this.CatWeight,
+      name: this.CatNameEn,
+      nameAr: this.CatNameAr,
+      typeId: this.CatTypeId
+    }
+    this.evaluationService.addEvalCategory(payload).subscribe(res => {
+      this.modalService.dismissAll();
+      this.router.navigate([`consultant-evaluation/add/${this.CatTypeId}`], {
+        queryParams: {
+          categoryId: res.data
+        }
+      });
+    }, (err) => {
+      this.showAlert({ icon: 'error', title: 'Error!', text: 'Weight can not be greater than 100' });
+    })
   }
 
   redirectToDetails(id: number) {
@@ -98,6 +124,14 @@ export class OverviewComponent implements OnInit {
         this.getConsultantData(this.selected, '');
       }
     }
+  }
+
+  numbersOnly(event: any): boolean {
+    const charCode = (event.which) ? event.which : event.keyCode;
+    if ((charCode > 31 && charCode != 43) && (charCode < 48 || charCode > 57)) {
+      return false;
+    }
+    return true;
   }
 
   showAlert(swalOptions: SweetAlertOptions) {

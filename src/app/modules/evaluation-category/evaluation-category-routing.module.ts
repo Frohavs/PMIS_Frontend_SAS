@@ -15,7 +15,7 @@ const routes: Routes = [
         component: OverviewComponent,
       },
       {
-        path: 'add',
+        path: 'add/:type',
         component: AddEvalCategoryComponent,
       },
       {
