@@ -59,9 +59,13 @@
             </td>
             <td>
               <div class="d-flex justify-content-center flex-shrink-0">
-                <a class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm"
+
+                <a class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm mx-2"
                   (click)="redirectToDetails(eval?.id)">
                   <app-keenicon name="eye" class="fs-3"></app-keenicon>
+                </a>
+                <a class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm" (click)="deleteCat(eval)">
+                  <app-keenicon name="trash" class="fs-3"></app-keenicon>
                 </a>
               </div>
             </td>
@@ -153,3 +157,9 @@
     </div>
   </form>
 </ng-template>
+
+
+<swal #deleteSwal [swalOptions]="swalOptions" title="Are you sure to delete?" text="This can't be undone" icon="warning"
+  [showCancelButton]="true" [focusCancel]="true"
+  [customClass]="{confirmButton: 'btn btn-danger', cancelButton: 'btn btn-active-light'}">
+</swal>

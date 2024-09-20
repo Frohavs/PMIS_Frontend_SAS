@@ -21,6 +21,10 @@ export class EvalCategoryDetailsComponent implements OnInit {
   totalCount: number;
   pagesCount: number[] = [];
   selected = 1;
+  CatTypeId: number;
+  isLoading = false;
+  swalOptions: SweetAlertOptions = { buttonsStyling: false };
+  @ViewChild('deleteSwal') public readonly deleteSwal!: SwalComponent;
 
   constructor(
     private cdr: ChangeDetectorRef,
@@ -31,6 +35,11 @@ export class EvalCategoryDetailsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    if (this.router.url.includes('consultant-evaluation')) {
+      this.CatTypeId = 2;
+    } else {
+      this.CatTypeId = 1;
+    }
     this.activatedRoute.params.subscribe(params => {
       this.categoryId = +params['id'];
       if (this.categoryId) {
@@ -40,8 +49,6 @@ export class EvalCategoryDetailsComponent implements OnInit {
   }
 
   getConsultantData(pageIndex?: number, search?: string) {
-    console.log('getConsultantData');
-    this.dataList = [];
     this.evaluationService.getAllSubCategory(this.categoryId, pageIndex, search).subscribe(res => {
       this.dataList = res?.data?.items;
       this.totalCount = res?.data?.totalcount;
@@ -52,6 +59,60 @@ export class EvalCategoryDetailsComponent implements OnInit {
 
   back() {
     this._location.back()
+  }
+
+  redirectToNew() {
+    if (this.CatTypeId === 2) {
+      this.router.navigate([`consultant-evaluation/add/${this.CatTypeId}`], {
+        queryParams: {
+          categoryId: this.categoryId
+        }
+      });
+    } else {
+      this.router.navigate([`contractor-evaluation/add/${this.CatTypeId}`], {
+        queryParams: {
+          categoryId: this.categoryId
+        }
+      });
+    }
+  }
+
+
+  editSubCat(evalu: any) {
+    if (this.CatTypeId === 2) {
+      this.router.navigate([`consultant-evaluation/add/${this.CatTypeId}`], {
+        queryParams: {
+          categoryId: this.categoryId,
+          subCategoryId: evalu.id,
+          name: evalu.name
+        }
+      });
+    } else {
+      this.router.navigate([`contractor-evaluation/add/${this.CatTypeId}`], {
+        queryParams: {
+          categoryId: this.categoryId,
+          subCategoryId: evalu.id,
+          name: evalu.name
+        }
+      });
+    }
+  }
+  deleteSubCat(evalu: any) {
+    this.deleteSwal.fire().then((clicked) => {
+      if (clicked.isConfirmed) {
+        this.isLoading = true;
+        this.evaluationService.deleteSubCategory(evalu.id).subscribe({
+          next: (res) => {
+            this.isLoading = false;
+            this.getConsultantData();
+            this.cdr.detectChanges();
+          },
+          error: (error) => {
+            this.isLoading = false;
+          }
+        });
+      }
+    });
   }
 
   navigatePage(pageIndex: number) {

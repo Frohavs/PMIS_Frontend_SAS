@@ -1,1 +1,61 @@
-<p>add-eval-category works!</p>
+<div class="card mb-5 mb-xl-10">
+  <div class="card-header border-0 cursor-pointer" role="button" data-bs-toggle="collapse"
+    data-bs-target="#kt_add_company" aria-expanded="true" aria-controls="kt_add_company">
+    <div class="card-title m-0">
+      <h3 class="fw-bolder m-0" *ngIf="!subCategoryId">Add Sub-Categories</h3>
+      <h3 class="fw-bolder m-0" *ngIf="subCategoryId">Edit Sub-Categories</h3>
+    </div>
+    <div class="card-toolbar">
+      <a (click)="back()" class="btn btn-sm btn-danger d-flex">
+        <app-keenicon name="arrow-left" class="fs-3"></app-keenicon>
+        {{"ECOMMERCE.COMMON.BACK" | translate}}
+      </a>
+    </div>
+  </div>
+  <div id="kt_add_company" class="collapse show">
+    <form [formGroup]="addSubCatForm" class="form">
+      <div class="card-body border-top p-9">
+        <div class="row mb-6">
+          <label class="col-lg-4 col-form-label required fw-bold fs-6">English Name</label>
+          <div class="col-lg-8 fv-row">
+            <input type="text" class="form-control form-control-lg form-control-solid"
+              formControlName="name" />
+            <div
+              *ngIf="addSubCatForm?.get('name')?.invalid && (addSubCatForm?.get('name')?.dirty || addSubCatForm?.get('name')?.touched)"
+              class="fv-plugins-message-container">
+              <div class="fv-help-block">name is required</div>
+            </div>
+          </div>
+        </div>
+        <div class="row mb-6">
+          <label class="col-lg-4 col-form-label required fw-bold fs-6">Arabic Name</label>
+          <div class="col-lg-8 fv-row">
+            <input type="text" class="form-control form-control-lg form-control-solid"
+              name="nameAr" formControlName="nameAr" />
+            <div
+              *ngIf="addSubCatForm?.get('nameAr')?.invalid && (addSubCatForm?.get('nameAr')?.dirty || addSubCatForm?.get('nameAr')?.touched)"
+              class="fv-plugins-message-container">
+              <div class="fv-help-block">Ar name is required</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="card-footer d-flex justify-content-end py-6 px-9">
+        <button type="button" class="btn btn-primary" [disabled]="isLoading" (click)="saveSettings()">
+          <ng-container *ngIf="!isLoading">{{"TRANSLATOR.SAVE_CHANGES" | translate}}</ng-container>
+          <ng-container *ngIf="isLoading">
+            <span clas="indicator-progress" [style.display]="'block'">
+              Please wait...{{ " " }}
+              <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+            </span>
+          </ng-container>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- modal -->
+<swal #noticeSwal [swalOptions]="swalOptions">
+</swal>

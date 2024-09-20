@@ -28,7 +28,7 @@ export class EvaluationCategoryService {
       quickSearch: search,
       pagedSearch: {
         "pageIndex": pageIndex,
-        "pageSize": 10
+        "pageSize": 20
       }
     }
     const url = `${this.API_USERS_URL}/Get`;
@@ -155,6 +155,33 @@ export class EvaluationCategoryService {
     });
     const url = `${this.API_USERS_URL}/CreateSubCategory`;
     return this.http.post<any>(url, payload, {
+      headers: httpHeaders
+    });
+  }
+  updateSubCategory(payload: any): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/UpdateSubCategory`;
+    return this.http.put<any>(url, payload, {
+      headers: httpHeaders
+    });
+  }
+  deleteCategory(id: any): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/Delete/${id}`;
+    return this.http.delete<any>(url, {
+      headers: httpHeaders
+    });
+  }
+  deleteSubCategory(id: any): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/DeleteSubCategory/${id}`;
+    return this.http.delete<any>(url, {
       headers: httpHeaders
     });
   }

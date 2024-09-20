@@ -8,9 +8,13 @@
 
     <div class="card-toolbar" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-trigger="hover"
       title="Click to add a user">
-      <a class="btn btn-danger font-weight-bolder font-size-sm cursor-pointer" (click)="back()">
+      <a class="btn btn-sm btn-danger cursor-pointer mx-2" (click)="back()">
         <app-keenicon name="arrow-left" class="fs-3"></app-keenicon>
         {{"ECOMMERCE.COMMON.BACK" | translate}}
+      </a>
+      <a class="btn btn-sm btn-primary" (click)="redirectToNew()">
+        <app-keenicon name="plus" class="fs-3"></app-keenicon>
+        Add
       </a>
     </div>
 
@@ -50,6 +54,16 @@
                 {{eval?.createdOn?.slice(0, 10) || '--'}}
               </a>
             </td>
+            <td>
+              <div class="d-flex justify-content-end flex-shrink-0">
+                <a class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1" (click)="editSubCat(eval)">
+                  <app-keenicon name="pencil" class="fs-3"></app-keenicon>
+                </a>
+                <a class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm" (click)="deleteSubCat(eval)">
+                  <app-keenicon name="trash" class="fs-3"></app-keenicon>
+                </a>
+              </div>
+            </td>
           </tr>
 
           <tr *ngIf="!dataList?.length">
@@ -86,3 +100,9 @@
     </div>
   </div>
 </div>
+
+
+<swal #deleteSwal [swalOptions]="swalOptions" title="Are you sure to delete?" text="This can't be undone" icon="warning"
+  [showCancelButton]="true" [focusCancel]="true"
+  [customClass]="{confirmButton: 'btn btn-danger', cancelButton: 'btn btn-active-light'}">
+</swal>

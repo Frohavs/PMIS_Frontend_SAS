@@ -34,6 +34,7 @@ export class OverviewComponent implements OnInit {
   @ViewChild('fileModal') fileModal: TemplateRef<any>;
   swalOptions: SweetAlertOptions = { buttonsStyling: false };
   @ViewChild('noticeSwal') noticeSwal!: SwalComponent;
+  @ViewChild('deleteSwal') public readonly deleteSwal!: SwalComponent;
 
   modalConfig: NgbModalOptions = {
     modalDialogClass: 'modal-dialog modal-dialog-centered mw-650px',
@@ -58,7 +59,6 @@ export class OverviewComponent implements OnInit {
   }
 
   getConsultantData(pageIndex?: number, search?: string) {
-    this.dataList = [];
     this.evaluationService.getAll(2, pageIndex, search).subscribe(res => {
       this.dataList = res?.data?.items;
       this.totalCount = res?.data?.totalcount;
@@ -67,7 +67,6 @@ export class OverviewComponent implements OnInit {
     });
   }
   getContractorData(pageIndex?: number, search?: string) {
-    this.dataList = [];
     this.evaluationService.getAll(1, pageIndex, search).subscribe(res => {
       this.dataList = res?.data?.items;
       this.totalCount = res?.data?.totalcount;
@@ -89,23 +88,55 @@ export class OverviewComponent implements OnInit {
     }
     this.evaluationService.addEvalCategory(payload).subscribe(res => {
       this.modalService.dismissAll();
-      this.router.navigate([`consultant-evaluation/add/${this.CatTypeId}`], {
-        queryParams: {
-          categoryId: res.data
-        }
-      });
+      if (this.CatTypeId === 2) {
+
+        this.router.navigate([`consultant-evaluation/add/${this.CatTypeId}`], {
+          queryParams: {
+            categoryId: res.data
+          }
+        });
+      } else {
+        this.router.navigate([`contractor-evaluation/add/${this.CatTypeId}`], {
+          queryParams: {
+            categoryId: res.data
+          }
+        });
+
+      }
     }, (err) => {
       this.showAlert({ icon: 'error', title: 'Error!', text: 'Weight can not be greater than 100' });
     })
   }
 
   redirectToDetails(id: number) {
-    this.router.navigate([`consultant-evaluation/details/${id}`]);
+    if (this.CatTypeId === 2) {
+
+      this.router.navigate([`consultant-evaluation/details/${id}`]);
+    } else {
+      this.router.navigate([`contractor-evaluation/details/${id}`]);
+    }
+  }
+
+  deleteCat(evalu: any) {
+    this.deleteSwal.fire().then((clicked) => {
+      if (clicked.isConfirmed) {
+        this.isLoading = true;
+        this.evaluationService.deleteCategory(evalu.id).subscribe({
+          next: (res) => {
+            this.isLoading = false;
+            this.CatTypeId === 2 ? this.getConsultantData() : this.getContractorData();
+          },
+          error: (error) => {
+            this.isLoading = false;
+          }
+        });
+      }
+    });
   }
 
   navigatePage(pageIndex: number) {
     this.selected = pageIndex;
-    this.getConsultantData(pageIndex, '');
+    this.CatTypeId === 2 ? this.getConsultantData(pageIndex, '') : this.getContractorData(pageIndex, '');
   }
 
   navigateArrows(next: boolean) {
@@ -114,6 +145,7 @@ export class OverviewComponent implements OnInit {
         return;
       } else {
         this.selected += 1;
+        this.CatTypeId === 2 ? this.getConsultantData(this.selected, '') : this.getContractorData(this.selected, '');
         this.getConsultantData(this.selected, '');
       }
     } else {
@@ -121,7 +153,7 @@ export class OverviewComponent implements OnInit {
         return;
       } else {
         this.selected -= 1;
-        this.getConsultantData(this.selected, '');
+        this.CatTypeId === 2 ? this.getConsultantData(this.selected, '') : this.getContractorData(this.selected, '');
       }
     }
   }
