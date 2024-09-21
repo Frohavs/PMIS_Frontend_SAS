@@ -85,7 +85,7 @@ export class ContractorEvaluationComponent implements OnInit {
   getProjectDetails() {
     this.projectsService.getByID(this.projectId).subscribe(res => {
       this.projectDetails = res.data;
-      this.currentConsultant = this.projectDetails.consultantName || '--';
+      this.currentConsultant = this.projectDetails.contractorName || '--';
       this.cdr.detectChanges();
     });
   }
