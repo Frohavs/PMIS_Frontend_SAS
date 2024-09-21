@@ -59,4 +59,8 @@ export const PROJECT_OPTIONS = [
       name: 'Contractor Evaluation',
       route: 'projects/contractor-evaluation'
     },
+    {
+      name: 'Project Risks',
+      route: 'projects/risk-management'
+    },
 ]

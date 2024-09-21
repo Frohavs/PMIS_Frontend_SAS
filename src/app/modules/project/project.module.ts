@@ -50,6 +50,9 @@ import { AddConsultantEvalComponent } from './partner-evaluation/consultant-eval
 import { AddContractorEvalComponent } from './partner-evaluation/contractor-evaluation/add-contractor-eval/add-contractor-eval.component';
 import { ConsultantEvalDetailsComponent } from './partner-evaluation/consultant-evaluation/consultant-eval-details/consultant-eval-details.component';
 import { ContractorEvalDetailsComponent } from './partner-evaluation/contractor-evaluation/contractor-eval-details/contractor-eval-details.component';
+import { RiskManagementComponent } from './risk-management/risk-management.component';
+import { AddRiskComponent } from './risk-management/add-risk/add-risk.component';
+import { RiskDetailsComponent } from './risk-management/risk-details/risk-details.component';
 
 
 @NgModule({
@@ -107,7 +110,11 @@ import { ContractorEvalDetailsComponent } from './partner-evaluation/contractor-
 
     ContractorEvaluationComponent,
     AddContractorEvalComponent,
-    ContractorEvalDetailsComponent
+    ContractorEvalDetailsComponent,
+
+    RiskManagementComponent,
+    AddRiskComponent,
+    RiskDetailsComponent
   ],
   imports: [
     CommonModule,

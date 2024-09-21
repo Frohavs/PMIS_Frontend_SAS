@@ -40,6 +40,9 @@ import { AddConsultantEvalComponent } from './partner-evaluation/consultant-eval
 import { AddContractorEvalComponent } from './partner-evaluation/contractor-evaluation/add-contractor-eval/add-contractor-eval.component';
 import { ConsultantEvalDetailsComponent } from './partner-evaluation/consultant-evaluation/consultant-eval-details/consultant-eval-details.component';
 import { ContractorEvalDetailsComponent } from './partner-evaluation/contractor-evaluation/contractor-eval-details/contractor-eval-details.component';
+import { RiskManagementComponent } from './risk-management/risk-management.component';
+import { AddRiskComponent } from './risk-management/add-risk/add-risk.component';
+import { RiskDetailsComponent } from './risk-management/risk-details/risk-details.component';
 
 const routes: Routes = [
   {
@@ -243,6 +246,19 @@ const routes: Routes = [
       {
         path: 'contractor-eval-details/:id',
         component: ContractorEvalDetailsComponent,
+      },
+
+      {
+        path: 'risk-management/:id',
+        component: RiskManagementComponent,
+      },
+      {
+        path: 'add-risk/:id',
+        component: AddRiskComponent,
+      },
+      {
+        path: 'risk-management-details/:id',
+        component: RiskDetailsComponent,
       },
 
       { path: '', redirectTo: 'overview', pathMatch: 'full' },
