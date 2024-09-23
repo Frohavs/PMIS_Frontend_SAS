@@ -173,5 +173,42 @@ export class LookupService {
       headers: httpHeaders
     });
   }
+  getRiskCategories(): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/GetRiskCategories`;
+    return this.http.get<any>(url, {
+      headers: httpHeaders
+    });
+  }
+  getRiskConsequences(): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/GetRiskConsequences`;
+    return this.http.get<any>(url, {
+      headers: httpHeaders
+    });
+  }
+  getRiskEffectiveParties(): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/GetRiskEffectiveParties`;
+    return this.http.get<any>(url, {
+      headers: httpHeaders
+    });
+  }
+  getRiskTypes(): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/GetRiskEffectiveParties`;
+    return this.http.get<any>(url, {
+      headers: httpHeaders
+    });
+  }
+
 
 }
