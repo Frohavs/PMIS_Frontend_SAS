@@ -204,7 +204,7 @@ export class LookupService {
     const httpHeaders = new HttpHeaders({
       Authorization: `Bearer ${this.token}`,
     });
-    const url = `${this.API_USERS_URL}/GetRiskEffectiveParties`;
+    const url = `${this.API_USERS_URL}/GetRiskTypes`;
     return this.http.get<any>(url, {
       headers: httpHeaders
     });

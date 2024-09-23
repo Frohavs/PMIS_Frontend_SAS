@@ -1,1 +1,328 @@
-<p>add-risk works!</p>
+<div class="row g-5 g-xl-8 justify-content-between">
+  <div class="col-xl-12">
+    <div class="card mb-5 mb-xl-8">
+      <!-- begin::Header -->
+      <div class="card-header align-items-center border-0 mt-4">
+        <h3 class="card-title align-items-start flex-column">
+          <span class="fw-bolder text-gray-900">Add Risk</span>
+          <!-- <span class="text-muted mt-1 fw-bold fs-7">test</span> -->
+        </h3>
+        <div class="card-toolbar">
+          <a (click)="back()" class="btn btn-sm btn-danger d-flex">
+            <app-keenicon name="arrow-left" class="fs-3"></app-keenicon>
+            {{"ECOMMERCE.COMMON.BACK" | translate}}
+          </a>
+        </div>
+      </div>
+
+      <div class="card-body pt-3">
+
+        <div class="stepper stepper-links d-flex flex-column pt-15" id="kt_create_account_stepper">
+          <div class="stepper-nav mb-5 w-50" style="justify-content: space-evenly !important;">
+            <div class="stepper-item" [ngClass]="{
+                current: currentStep === 0,
+                completed: currentStep > 0
+              }">
+              <h3 class="stepper-title">Registration</h3>
+            </div>
+
+            <div class="stepper-item" [ngClass]="{
+                current: currentStep === 1,
+                completed: currentStep > 1
+              }">
+              <h3 class="stepper-title">Submit</h3>
+            </div>
+
+          </div>
+
+          <form class="mx-auto mw-950px w-100 pt-15 pb-10" [formGroup]="addRiskForm" id="kt_create_account_form">
+            <div class="current">
+              <ng-container *ngIf="currentStep === 0">
+
+                <div class="row mb-1">
+                  <div class="col-md-6 mb-6">
+                    <label class="col-lg-8 col-form-label fw-bold fs-6"><span>Type</span></label>
+                    <div class="col-lg-11 fv-row">
+                      <select class="form-select form-select-solid form-select-lg fw-bold" name="type"
+                        formControlName="type">
+                        <option value="" disabled>{{"TRANSLATOR.SELECTION" | translate}}</option>
+                        <ng-container *ngFor="let item of riskTypes">
+                          <option [value]="item?.id">{{item?.name}}</option>
+                        </ng-container>
+                      </select>
+                      <div
+                        *ngIf="addRiskForm?.get('type')?.invalid && (addRiskForm?.get('type')?.dirty || addRiskForm?.get('type')?.touched)"
+                        class="fv-plugins-message-container">
+                        <div class="fv-help-block">type is required</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6 mb-6">
+                    <label class="col-lg-8 col-form-label fw-bold fs-6"><span>Consequences</span></label>
+                    <div class="col-lg-11 fv-row">
+                      <select class="form-select form-select-solid form-select-lg fw-bold" name="consequenceId"
+                        formControlName="consequenceId">
+                        <option value="" disabled>{{"TRANSLATOR.SELECTION" | translate}}</option>
+                        <ng-container *ngFor="let item of riskConsequences">
+                          <option [value]="item?.id">{{item?.name}}</option>
+                        </ng-container>
+                      </select>
+                      <div
+                        *ngIf="addRiskForm?.get('consequenceId')?.invalid && (addRiskForm?.get('consequenceId')?.dirty || addRiskForm?.get('consequenceId')?.touched)"
+                        class="fv-plugins-message-container">
+                        <div class="fv-help-block">consequence is required</div>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+
+                <div class="row mb-1">
+                  <div class="col-md-6 mb-6">
+                    <label class="col-lg-8 col-form-label fw-bold fs-6"><span>EFFECTIVE PARTY</span></label>
+                    <div class="col-lg-11 fv-row">
+                      <select class="form-select form-select-solid form-select-lg fw-bold" name="effectivePartyId"
+                        formControlName="effectivePartyId">
+                        <option value="" disabled>{{"TRANSLATOR.SELECTION" | translate}}</option>
+                        <ng-container *ngFor="let item of riskEffectiveParties">
+                          <option [value]="item?.id">{{item?.name}}</option>
+                        </ng-container>
+                      </select>
+                      <div
+                        *ngIf="addRiskForm?.get('effectivePartyId')?.invalid && (addRiskForm?.get('effectivePartyId')?.dirty || addRiskForm?.get('effectivePartyId')?.touched)"
+                        class="fv-plugins-message-container">
+                        <div class="fv-help-block">effective party is required</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6 mb-6">
+                    <label class="col-lg-8 col-form-label fw-bold fs-6"><span>Category</span></label>
+                    <div class="col-lg-11 fv-row">
+                      <select class="form-select form-select-solid form-select-lg fw-bold" name="categoryId"
+                        formControlName="categoryId">
+                        <option value="" disabled>{{"TRANSLATOR.SELECTION" | translate}}</option>
+                        <ng-container *ngFor="let item of riskCategories">
+                          <option [value]="item?.id">{{item?.name}}</option>
+                        </ng-container>
+                      </select>
+                      <div
+                        *ngIf="addRiskForm?.get('categoryId')?.invalid && (addRiskForm?.get('categoryId')?.dirty || addRiskForm?.get('categoryId')?.touched)"
+                        class="fv-plugins-message-container">
+                        <div class="fv-help-block">category is required</div>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+                <div class="row mb-1">
+                  <div class="col-md-6 mb-6">
+                    <label class="col-lg-8 col-form-label fw-bold fs-6"><span>Description</span></label>
+                    <div class="col-lg-11 fv-row">
+                      <textarea class="form-control form-control-lg form-control-solid text-start" name="description"
+                        formControlName="description" rows="3"></textarea>
+                      <div
+                        *ngIf="addRiskForm?.get('description')?.invalid && (addRiskForm?.get('description')?.dirty || addRiskForm?.get('description')?.touched)"
+                        class="fv-plugins-message-container">
+                        <div class="fv-help-block">description is required</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6 mb-6">
+                    <label class="col-lg-8 col-form-label fw-bold fs-6"><span>Causes</span></label>
+                    <div class="col-lg-11 fv-row">
+                      <textarea class="form-control form-control-lg form-control-solid text-start" name="causes"
+                        formControlName="causes" rows="3"></textarea>
+                      <div
+                        *ngIf="addRiskForm?.get('causes')?.invalid && (addRiskForm?.get('causes')?.dirty || addRiskForm?.get('causes')?.touched)"
+                        class="fv-plugins-message-container">
+                        <div class="fv-help-block">cause is required</div>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+                <div class="row mb-1">
+                  <div class="col-md-6 mb-6">
+                    <label class="col-lg-8 col-form-label fw-bold fs-6"><span>Risk Owner</span></label>
+                    <div class="col-lg-11 fv-row">
+                      <input type="text" class="form-control form-control-lg form-control-solid text-start my-2"
+                        name="owner" formControlName="owner" />
+                      <div
+                        *ngIf="addRiskForm?.get('owner')?.invalid && (addRiskForm?.get('owner')?.dirty || addRiskForm?.get('owner')?.touched)"
+                        class="fv-plugins-message-container">
+                        <div class="fv-help-block">owner is required</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </ng-container>
+
+              <ng-container *ngIf="currentStep === 1">
+
+                <div class="row mb-1">
+                  <div class="col-md-12 mb-6">
+                    <label class="col-lg-8 col-form-label fw-bold fs-6"><span>Likelihood</span></label>
+                    <div class="col-lg-11 fv-row">
+                      <select class="form-select form-select-solid form-select-lg fw-bold" name="likelihood"
+                        formControlName="likelihood">
+                        <option value="" disabled>{{"TRANSLATOR.SELECTION" | translate}}</option>
+                        <ng-container *ngFor="let sco of scores">
+                          <option [value]="sco">{{sco}}</option>
+                        </ng-container>
+                      </select>
+                      <div
+                        *ngIf="addRiskForm?.get('likelihood')?.invalid && (addRiskForm?.get('likelihood')?.dirty || addRiskForm?.get('likelihood')?.touched)"
+                        class="fv-plugins-message-container">
+                        <div class="fv-help-block">likelihood is required</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row mb-1">
+                  <div class="col-md-6 mb-6">
+                    <label class="col-lg-8 col-form-label fw-bold fs-6"><span>consequence time</span></label>
+                    <div class="col-lg-11 fv-row">
+                      <select class="form-select form-select-solid form-select-lg fw-bold" name="time"
+                        formControlName="time">
+                        <option value="" disabled>{{"TRANSLATOR.SELECTION" | translate}}</option>
+                        <ng-container *ngFor="let sco of scores">
+                          <option [value]="sco">{{sco}}</option>
+                        </ng-container>
+                      </select>
+                      <div
+                        *ngIf="addRiskForm?.get('time')?.invalid && (addRiskForm?.get('time')?.dirty || addRiskForm?.get('time')?.touched)"
+                        class="fv-plugins-message-container">
+                        <div class="fv-help-block">time is required</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6 mb-6">
+                    <label class="col-lg-8 col-form-label fw-bold fs-6"><span>consequence reputation</span></label>
+                    <div class="col-lg-11 fv-row">
+                      <select class="form-select form-select-solid form-select-lg fw-bold" name="reputation"
+                        formControlName="reputation">
+                        <option value="" disabled>{{"TRANSLATOR.SELECTION" | translate}}</option>
+                        <ng-container *ngFor="let sco of scores">
+                          <option [value]="sco">{{sco}}</option>
+                        </ng-container>
+                      </select>
+                      <div
+                        *ngIf="addRiskForm?.get('reputation')?.invalid && (addRiskForm?.get('reputation')?.dirty || addRiskForm?.get('reputation')?.touched)"
+                        class="fv-plugins-message-container">
+                        <div class="fv-help-block">reputation is required</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row mb-1">
+                  <div class="col-md-6 mb-6">
+                    <label class="col-lg-8 col-form-label fw-bold fs-6"><span>consequence community</span></label>
+                    <div class="col-lg-11 fv-row">
+                      <select class="form-select form-select-solid form-select-lg fw-bold" name="community"
+                        formControlName="community">
+                        <option value="" disabled>{{"TRANSLATOR.SELECTION" | translate}}</option>
+                        <ng-container *ngFor="let sco of scores">
+                          <option [value]="sco">{{sco}}</option>
+                        </ng-container>
+                      </select>
+                      <div
+                        *ngIf="addRiskForm?.get('community')?.invalid && (addRiskForm?.get('community')?.dirty || addRiskForm?.get('community')?.touched)"
+                        class="fv-plugins-message-container">
+                        <div class="fv-help-block">community is required</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6 mb-6">
+                    <label class="col-lg-8 col-form-label fw-bold fs-6"><span>consequence Performance</span></label>
+                    <div class="col-lg-11 fv-row">
+                      <select class="form-select form-select-solid form-select-lg fw-bold" name="performance"
+                        formControlName="performance">
+                        <option value="" disabled>{{"TRANSLATOR.SELECTION" | translate}}</option>
+                        <ng-container *ngFor="let sco of scores">
+                          <option [value]="sco">{{sco}}</option>
+                        </ng-container>
+                      </select>
+                      <div
+                        *ngIf="addRiskForm?.get('performance')?.invalid && (addRiskForm?.get('performance')?.dirty || addRiskForm?.get('performance')?.touched)"
+                        class="fv-plugins-message-container">
+                        <div class="fv-help-block">performance is required</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row mb-1">
+                  <div class="col-md-6 mb-6">
+                    <label class="col-lg-8 col-form-label fw-bold fs-6"><span>consequence cost</span></label>
+                    <div class="col-lg-11 fv-row">
+                      <select class="form-select form-select-solid form-select-lg fw-bold" name="cost"
+                        formControlName="cost">
+                        <option value="" disabled>{{"TRANSLATOR.SELECTION" | translate}}</option>
+                        <ng-container *ngFor="let sco of scores">
+                          <option [value]="sco">{{sco}}</option>
+                        </ng-container>
+                      </select>
+                      <div
+                        *ngIf="addRiskForm?.get('cost')?.invalid && (addRiskForm?.get('cost')?.dirty || addRiskForm?.get('cost')?.touched)"
+                        class="fv-plugins-message-container">
+                        <div class="fv-help-block">cost is required</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6 mb-6">
+                    <label class="col-lg-8 col-form-label fw-bold fs-6"><span>Risk Score</span></label>
+                    <div class="col-lg-11 fv-row">
+                      <input type="text" class="form-control form-control-lg form-control-solid text-start my-2" [ngClass]="{'bg-light-success': addRiskForm.get('cost')?.value}"
+                        name="score" formControlName="score" readonly />
+                    </div>
+                  </div>
+                </div>
+
+              </ng-container>
+
+            </div>
+
+            <div class="d-flex flex-stack pt-15 mx-auto w-50">
+              <div class="mr-2">
+                <ng-container *ngIf="currentStep !== 0">
+                  <button type="button" class="btn btn-lg btn-light-primary me-3" (click)="prevStep()">
+                    <app-keenicon name="arrow-left" class="fs-3 ms-4 me-1"></app-keenicon>
+                    Back
+                  </button>
+                </ng-container>
+              </div>
+
+              <ng-container *ngIf="currentStep !== formsCount">
+                <div>
+                  <button type="button" class="btn btn-lg btn-primary me-3" (click)="nextStep()"
+                    *ngIf="currentStep < formsCount - 1">
+                    <span class="indicator-label">
+                      <ng-container>
+                        Continue {{ " " }}
+                        <app-keenicon name="arrow-right" class="fs-3 ms-2 me-0"></app-keenicon>
+                      </ng-container>
+                    </span>
+                  </button>
+                  <button type="button" class="btn btn-lg btn-primary me-3" (click)="saveChanges()"
+                    *ngIf="currentStep === formsCount - 1">
+                    <span class="indicator-label">
+                      <ng-container>
+                        Submit
+                      </ng-container>
+                    </span>
+                  </button>
+                </div>
+              </ng-container>
+            </div>
+          </form>
+        </div>
+
+      </div>
+      <!-- end::Body -->
+    </div>
+  </div>
+</div>
+
+<!-- modal -->
+<swal #noticeSwal [swalOptions]="swalOptions">
+</swal>

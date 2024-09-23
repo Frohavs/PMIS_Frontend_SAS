@@ -25,7 +25,7 @@
         <thead>
           <tr class="fw-bolder text-muted">
             <th class="max-w-100px">Type</th>
-            <th class="max-w-100px">Source</th>
+            <th class="max-w-100px">Effective Party</th>
             <th class="max-w-100px">Category</th>
             <th class="min-w-100px">Registry Causes</th>
             <th class="min-w-100px">Date</th>
@@ -36,13 +36,19 @@
           <tr *ngFor="let item of dataList; index as i">
 
             <td>
-              <a class="text-gray-900 fw-bolder text-hover-primary d-block fs-6">
+              <span class="badge-primary badge fs-7 fw-bold my-2" *ngIf="item?.type === 'Opportunity'">
                 {{item?.type}}
-              </a>
+              </span>
+              <span class="badge-warning badge fs-7 fw-bold my-2" *ngIf="item?.type === 'Threat'">
+                {{item?.type}}
+              </span>
+              <span class="badge-info badge fs-7 fw-bold my-2" *ngIf="item?.type === 'Issue'">
+                {{item?.type}}
+              </span>
             </td>
             <td>
               <a class="text-gray-900 fw-bolder text-hover-primary d-block fs-6">
-                {{item?.source}}
+                {{item?.effectiveParty}}
               </a>
             </td>
             <td>
@@ -52,12 +58,12 @@
             </td>
             <td>
               <a class="text-gray-900 fw-bolder text-hover-primary d-block fs-6">
-                {{item?.registry || '--'}}
+                {{item?.causes || '--'}}
               </a>
             </td>
             <td>
               <a class="text-gray-900 fw-bolder text-hover-primary d-block fs-6">
-                {{item?.assignedDate | date: 'dd/MM/yyyy'}}
+                {{item?.createdOn | date: 'dd/MM/yyyy'}}
               </a>
             </td>
 
