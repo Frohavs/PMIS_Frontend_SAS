@@ -82,7 +82,7 @@ export class AddCompanyComponent implements OnInit, OnDestroy {
       email: ['', Validators.required],
       smsNotification: [true, Validators.required],
       mailNotification: [false, Validators.required],
-      companyType: ['', Validators.required],
+      typeId: ['', Validators.required],
       vendorIds: [[], Validators.required],
     });
   }
@@ -99,7 +99,7 @@ export class AddCompanyComponent implements OnInit, OnDestroy {
       email: data?.email,
       smsNotification: data?.smsNotification,
       mailNotification: data?.mailNotification,
-      companyType: data?.companyTypeId,
+      typeId: data?.typeId,
 
     });
   }
@@ -133,7 +133,7 @@ export class AddCompanyComponent implements OnInit, OnDestroy {
         formatVendors.push(iterator.id)
       }
       const payload =
-        { ...this.addCompanyForm.value, companyType: Number(this.addCompanyForm.value.companyType), vendorIds: formatVendors }
+        { ...this.addCompanyForm.value, typeId: Number(this.addCompanyForm.value.typeId), vendorIds: formatVendors }
       this.companyService.addCompany(payload).subscribe(res => {
         this.router.navigateByUrl('companies')
         this.showAlert({ icon: 'success', title: 'Success!', text: 'Company Added successfully!' });
