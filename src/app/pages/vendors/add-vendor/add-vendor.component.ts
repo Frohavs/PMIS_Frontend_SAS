@@ -46,7 +46,7 @@ export class AddVendorComponent implements OnInit {
       address: ['', Validators.required],
       description: ['', Validators.required],
       phone: ['', Validators.required],
-      vendorTypeId: ['', Validators.required],
+      typeId: ['', Validators.required],
     });
   }
 
@@ -73,13 +73,13 @@ export class AddVendorComponent implements OnInit {
       address: data?.address,
       description: data?.description,
       phone: data?.phone,
-      vendorTypeId: data?.vendorTypeId,
+      typeId: data?.typeId,
     });
   }
 
   saveChanges() {
     if (!this.vendorId) {
-      const payload = { ...this.addVendorForm.value, vendorTypeId: +this.addVendorForm.value.vendorTypeId };
+      const payload = { ...this.addVendorForm.value, typeId: +this.addVendorForm.value.typeId };
       this.vendorService.addVendor(payload).subscribe(res => {
         this.router.navigateByUrl('vendors');
         this.showAlert({ icon: 'success', title: 'Success!', text: 'Vendor Added successfully!' });
@@ -87,7 +87,7 @@ export class AddVendorComponent implements OnInit {
         this.showAlert({ icon: 'error', title: 'Error!', text: 'please try again!' })
       });
     } else {
-      const payload = { id: this.vendorId, ...this.addVendorForm.value, vendorTypeId: +this.addVendorForm.value.vendorTypeId };
+      const payload = { id: this.vendorId, ...this.addVendorForm.value, typeId: +this.addVendorForm.value.typeId };
       this.vendorService.updateVendor(payload).subscribe(res => {
         this.router.navigateByUrl('vendors');
         this.showAlert({ icon: 'success', title: 'Success!', text: 'Vendor Updated successfully!' });
