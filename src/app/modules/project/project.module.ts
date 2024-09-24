@@ -53,6 +53,8 @@ import { ContractorEvalDetailsComponent } from './partner-evaluation/contractor-
 import { RiskManagementComponent } from './risk-management/risk-management.component';
 import { AddRiskComponent } from './risk-management/add-risk/add-risk.component';
 import { RiskDetailsComponent } from './risk-management/risk-details/risk-details.component';
+import { InitialDeliveryListComponent } from './initial-delivery-list/initial-delivery-list.component';
+import { AddDeliveryListComponent } from './initial-delivery-list/add-delivery-list/add-delivery-list.component';
 
 
 @NgModule({
@@ -114,7 +116,10 @@ import { RiskDetailsComponent } from './risk-management/risk-details/risk-detail
 
     RiskManagementComponent,
     AddRiskComponent,
-    RiskDetailsComponent
+    RiskDetailsComponent,
+
+    InitialDeliveryListComponent,
+    AddDeliveryListComponent
   ],
   imports: [
     CommonModule,

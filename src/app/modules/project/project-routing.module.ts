@@ -43,6 +43,8 @@ import { ContractorEvalDetailsComponent } from './partner-evaluation/contractor-
 import { RiskManagementComponent } from './risk-management/risk-management.component';
 import { AddRiskComponent } from './risk-management/add-risk/add-risk.component';
 import { RiskDetailsComponent } from './risk-management/risk-details/risk-details.component';
+import { InitialDeliveryListComponent } from './initial-delivery-list/initial-delivery-list.component';
+import { AddDeliveryListComponent } from './initial-delivery-list/add-delivery-list/add-delivery-list.component';
 
 const routes: Routes = [
   {
@@ -259,6 +261,15 @@ const routes: Routes = [
       {
         path: 'risk-management-details/:id',
         component: RiskDetailsComponent,
+      },
+
+      {
+        path: 'initial-delivery-list/:id',
+        component: InitialDeliveryListComponent,
+      },
+      {
+        path: 'add-delivery-list/:id',
+        component: AddDeliveryListComponent,
       },
 
       { path: '', redirectTo: 'overview', pathMatch: 'full' },

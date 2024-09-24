@@ -63,4 +63,8 @@ export const PROJECT_OPTIONS = [
       name: 'Project Risks',
       route: 'projects/risk-management'
     },
+    {
+      name: 'Initial Delivery List',
+      route: 'projects/initial-delivery-list'
+    },
 ]
