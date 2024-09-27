@@ -109,4 +109,23 @@ export class ProjectsService {
     });
   }
 
+  GetProgressInfo(id: any): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/GetrogressInfo?projectId=${id}`;
+    return this.http.get<any>(url, {
+      headers: httpHeaders
+    });
+  }
+  updateProgressInfo(progress: any): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/CreateProgressInfo`;
+    return this.http.post<any>(url, progress, {
+      headers: httpHeaders
+    });
+  }
+
 }
