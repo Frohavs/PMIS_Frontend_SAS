@@ -152,7 +152,7 @@ export class UpdateProgressInfoComponent implements OnInit {
       actualPercentage: +this.UpdateProgressForm.get('actualPercentage')?.value,
       projectId: this.projectId
     }
-    debugger
+
     this.projectsService.updateProgressInfo(payload).subscribe({
       next: (res) => {
         this.isLoading = false;

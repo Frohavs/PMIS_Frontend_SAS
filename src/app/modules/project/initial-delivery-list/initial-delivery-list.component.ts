@@ -87,33 +87,11 @@ export class InitialDeliveryListComponent implements OnInit, AfterViewInit, OnDe
     this.router.navigateByUrl('projects/add-delivery-list/' + this.projectId)
   }
 
-  // contractorDetails(id: any) {
-  //   this.router.navigate(['projects/risk-management-details/' + this.projectId], {
-  //     queryParams: { riskId: id }
-  //   });
-  // }
-
-  // deleteContractor(user: any) {
-  //   this.deleteSwal.fire().then((clicked) => {
-  //     if (clicked.isConfirmed) {
-  //       this.isLoading = true;
-  //       this.initialDeliveryService.delete(user.id).subscribe({
-  //         next: (res) => {
-  //           this.showAlert({ icon: 'success', title: 'Success!', text: 'Risk Deleted successfully!' });
-  //           setTimeout(() => {
-  //             this.isLoading = false;
-  //             this.dataList = [];
-  //             this.initDeliveryList(this.projectId);
-  //           }, 500);
-  //         },
-  //         error: (error) => {
-  //           this.isLoading = false;
-  //           this.showAlert({ icon: 'error', title: 'Error!', text: 'Please try again' });
-  //         }
-  //       });
-  //     }
-  //   });
-  // }
+  listDetails(id: any) {
+    this.router.navigate(['projects/edit-delivery-list/' + this.projectId], {
+      queryParams: { listId: id }
+    });
+  }
 
   navigatePage(pageIndex: number) {
     this.selected = pageIndex;

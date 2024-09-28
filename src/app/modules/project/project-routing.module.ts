@@ -271,6 +271,10 @@ const routes: Routes = [
         path: 'add-delivery-list/:id',
         component: AddDeliveryListComponent,
       },
+      {
+        path: 'edit-delivery-list/:id',
+        component: AddDeliveryListComponent,
+      },
 
       { path: '', redirectTo: 'overview', pathMatch: 'full' },
       { path: '**', redirectTo: 'overview', pathMatch: 'full' },

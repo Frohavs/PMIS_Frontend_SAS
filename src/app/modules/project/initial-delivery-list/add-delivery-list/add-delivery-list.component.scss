@@ -1,0 +1,115 @@
+.wrapper {
+  width: 90%;
+  margin: 0 auto;
+  font-family: 'Arial', sans-serif;
+  line-height: 1.8;
+  direction: rtl;
+  text-align: right;
+
+  header {
+    text-align: center;
+    margin-bottom: 2rem;
+
+    h1,
+    h2,
+    h3 {
+      margin: 0.5rem 0;
+    }
+  }
+
+  .contract-table {
+    margin: 2rem 0;
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 1.5rem;
+
+      td {
+        padding: 0.75rem;
+        border: 1px solid #ddd;
+      }
+
+      tr:nth-child(even) {
+        background-color: #f9f9f9;
+      }
+
+      strong {
+        font-weight: bold;
+      }
+
+      input[type="checkbox"] {
+        margin-right: 10px;
+      }
+
+      label {
+        margin-left: 20px;
+      }
+    }
+  }
+
+  .committee-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    direction: rtl;
+
+    th,
+    td {
+      border: 1px solid #333;
+      padding: 12px 15px;
+      text-align: center;
+      font-size: 16px;
+    }
+
+    th {
+      background-color: #f4f4f4;
+      font-weight: bold;
+      color: #333;
+    }
+
+    td {
+      background-color: #fff;
+    }
+
+    tbody tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+
+    tbody tr:hover {
+      background-color: #ececec;
+    }
+
+    /* Styling the full-width header cell */
+    .full-width {
+      font-weight: bold;
+      background-color: #f4f4f4;
+      text-align: center;
+      font-size: 18px;
+    }
+  }
+
+  .final-approval {
+    margin-top: 20px;
+    font-size: 16px;
+    text-align: right;
+    /* Align text to the right for RTL */
+    color: #333;
+
+    p {
+      margin: 5px 0;
+      /* Add margin for spacing between paragraphs */
+      line-height: 1.5;
+      /* Increase line height for readability */
+    }
+  }
+
+
+
+  footer {
+    text-align: center;
+    margin-top: 3rem;
+    font-size: 0.9rem;
+    color: #666;
+  }
+}

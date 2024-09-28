@@ -8,7 +8,7 @@ import { environment } from 'src/environments/environment';
 })
 export class InitialDeliveryService {
 
-  API_USERS_URL = `${environment.apiUrl}/InitialDelivery`;
+  API_USERS_URL = `${environment.apiUrl}/InitiallyDelivery`;
   token: string;
   private authLocalStorageToken = `${environment.appVersion}-${environment.USERDATA_KEY}`;
 
@@ -39,7 +39,7 @@ export class InitialDeliveryService {
     const httpHeaders = new HttpHeaders({
       Authorization: `Bearer ${this.token}`,
     });
-    const url = `${this.API_USERS_URL}/Get/${id}`;
+    const url = `${this.API_USERS_URL}/GetIntialDelivery/${id}`;
     return this.http.get<any>(url, {
       headers: httpHeaders
     });

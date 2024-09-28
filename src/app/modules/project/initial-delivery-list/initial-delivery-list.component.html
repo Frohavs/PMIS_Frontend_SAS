@@ -27,7 +27,6 @@
             <th class="max-w-100px">#</th>
             <th class="max-w-100px">Delivery Type</th>
             <th class="max-w-100px">Code</th>
-            <th class="max-w-100px">Register Number</th>
             <th class="min-w-100px">Format Date</th>
             <th class="min-w-100px">Decision number</th>
             <th class="min-w-100px">Decision Date</th>
@@ -38,47 +37,52 @@
         </thead>
         <tbody>
           <tr *ngFor="let item of dataList; index as i">
-
-            <td>
-              <span class="badge-primary badge fs-7 fw-bold my-2" *ngIf="item?.type === 'Opportunity'">
-                {{item?.type}}
-              </span>
-              <span class="badge-warning badge fs-7 fw-bold my-2" *ngIf="item?.type === 'Threat'">
-                {{item?.type}}
-              </span>
-              <span class="badge-info badge fs-7 fw-bold my-2" *ngIf="item?.type === 'Issue'">
-                {{item?.type}}
-              </span>
-            </td>
             <td>
               <a class="text-gray-900 fw-bolder text-hover-primary d-block fs-6">
-                {{item?.effectiveParty}}
+                {{item?.id}}
               </a>
             </td>
             <td>
               <a class="text-gray-900 fw-bolder text-hover-primary d-block fs-6">
-                {{item?.category}}
+                {{item?.type || '--'}}
+              </a>
+            </td>
+            <td>
+              <span class="badge-info badge fs-7 fw-bold my-2">
+                {{item?.certificateCode}}
+              </span>
+            </td>
+            <td>
+              <a class="text-gray-900 fw-bolder text-hover-primary d-block fs-6">
+                {{item?.createdOn | date: 'dd/MM/yyyy' || '--'}}
               </a>
             </td>
             <td>
               <a class="text-gray-900 fw-bolder text-hover-primary d-block fs-6">
-                {{item?.causes || '--'}}
+                {{item?.registeredDecisionNumber}}
               </a>
             </td>
             <td>
               <a class="text-gray-900 fw-bolder text-hover-primary d-block fs-6">
-                {{item?.createdOn | date: 'dd/MM/yyyy'}}
+                {{item?.registeredDecisionDate | date: 'dd/MM/yyyy' || '--'}}
+              </a>
+            </td>
+            <td>
+              <a class="text-gray-900 fw-bolder text-hover-primary d-block fs-6">
+                {{item?.imagePlanCopies}}
+              </a>
+            </td>
+            <td>
+              <a class="text-gray-900 fw-bolder text-hover-primary d-block fs-6">
+                {{item?.manger}}
               </a>
             </td>
 
             <td>
               <div class="d-flex justify-content-center flex-shrink-0">
-                <!-- <a class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1" (click)="contractorDetails(item.id)">
+                <a class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1" (click)="listDetails(item.id)">
                   <app-keenicon name="eye" class="fs-3"></app-keenicon>
-                </a> -->
-                <!-- <a class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm" (click)="deleteContractor(item)">
-                  <app-keenicon name="trash" class="fs-3"></app-keenicon>
-                </a> -->
+                </a>
               </div>
             </td>
 
@@ -96,12 +100,13 @@
 
         <ul class="pagination">
           <li class="page-item previous" (click)="navigateArrows(false)">
-            <a class="page-link cursor-pointer" >
+            <a class="page-link cursor-pointer">
               <i class="previous"></i>
             </a>
           </li>
 
-          <li class="page-item" [ngClass]="{'active': selected === i+1}" (click)="navigatePage(i+1)" *ngFor="let page of pagesCount; index as i">
+          <li class="page-item" [ngClass]="{'active': selected === i+1}" (click)="navigatePage(i+1)"
+            *ngFor="let page of pagesCount; index as i">
             <a class="page-link cursor-pointer"> {{i+1}} </a>
           </li>
 
