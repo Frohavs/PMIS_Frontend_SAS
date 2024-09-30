@@ -45,7 +45,6 @@ export class InitialDeliveryListComponent implements OnInit, AfterViewInit, OnDe
     private _location: Location,
     private activatedRoute: ActivatedRoute,
     private cdr: ChangeDetectorRef,
-    private subContractorsService: SubContractorsService,
     private initialDeliveryService: InitialDeliveryService,
   ) {
   }

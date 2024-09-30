@@ -2,7 +2,7 @@
 <a routerLink="/dashboard">
   <div class="d-flex align-items-center justify-content-center" *ngIf="currentLayoutType === 'dark-sidebar'">
     <img alt="Logo" src="./assets/media/logos/froha_logo.png" class="h-45px app-sidebar-logo-default" />
-    <h3 class="text-white mx-4 mt-2">FROHAVS</h3>
+    <h3 class="text-white mx-4 mt-2 app-sidebar-logo-default">FROHAVS</h3>
   </div>
   <ng-container *ngIf="currentLayoutType !== 'dark-sidebar'">
     <img alt="Logo" src="./assets/media/logos/default.svg" class="h-25px app-sidebar-logo-default theme-light-show" />
@@ -10,7 +10,7 @@
       class="h-25px app-sidebar-logo-default theme-dark-show" />
   </ng-container>
 
-  <img alt="Logo" src="./assets/media/logos/froha_logo.png" class="h-20px app-sidebar-logo-minimize" />
+  <img alt="Logo" src="./assets/media/logos/froha_logo.png" class="h-30px app-sidebar-logo-minimize" />
 </a>
 <!--end::Logo image-->
 

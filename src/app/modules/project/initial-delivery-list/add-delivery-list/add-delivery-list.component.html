@@ -9,228 +9,308 @@
     <h2>شهادة استلام ابتدائي</h2>
   </section>
 
-  <section class="contract-table">
-    <table>
-      <tbody>
-        <tr>
-          <td><strong>رقم العقد</strong></td>
-          <td>6</td>
-          <td><strong>تاريخ العقد</strong></td>
-          <td>02-09-2019</td>
-        </tr>
-        <tr>
-          <td><strong>اسم المشروع</strong></td>
-          <td colspan="3">تحسين المشهد الحضري بمحاور الطرق بشمال مدينة الرياض</td>
-        </tr>
-        <tr>
-          <td><strong>المقاول المنفذ</strong></td>
-          <td>شركه يوكسيل انشاءات المساهمه</td>
-          <td><strong>الاستشاري المشرف</strong></td>
-          <td>شركة مشاري ناصر الشثري وشريكه للاستشارات الهندسية (مهنية)</td>
-        </tr>
-        <tr>
-          <td><strong>الإدارة المشرفة</strong></td>
-          <td>إدارة الإشراف والتنفيذ للطرق</td>
-          <td><strong>تاريخ تسليم الموقع</strong></td>
-          <td>2019-10-17</td>
-        </tr>
-        <tr>
-          <td><strong>مدة المشروع شامل التمديد (باليوم)</strong></td>
-          <td>731</td>
-          <td><strong>تاريخ المقرر للاستلام الابتدائي</strong></td>
-          <td>2022-10-22</td>
-        </tr>
-        <tr>
-          <td colspan="2"><strong>نوع الاستلام:</strong></td>
-          <td colspan="2">
-            <label><input type="checkbox" checked> استلام كلي</label>
-            <label><input type="checkbox"> استلام جزئي</label>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </section>
+  <form [formGroup]="deliveryForm" class="form">
 
-  <!-- Short Description Section -->
-  <section class="work-scope">
-    <h3>1- وصف مختصر لنطاق الأعمال محل الاستلام:</h3>
-    <p style="background-color: #A8D6FF; cursor: pointer;">وصف مختصر لنطاق الأعمال محل الاستلام</p>
-  </section>
 
-  <!-- Committee Information Section -->
-  <section class="committee-info">
-    <h3>2- لجنة الاستلام الابتدائي:</h3>
-    <p>بناء على الاشعار المقدم من المتعاقد المنفذ للمشروع أعلاه بتاريخ
-      <span style="background-color: #A8D6FF; cursor: pointer;">&nbsp;&nbsp;&nbsp;</span> م، والمسجل لدى أمانة منطقة
-      الرياض برقم
-      <span style="background-color: #A8D6FF; cursor: pointer;">&nbsp;&nbsp;&nbsp;</span>
-      ، تم
-      تشكيل
-      لجنة الاستلام الابتدائي " اللجنة " بتاريخ
-      <span style="background-color: #A8D6FF; cursor: pointer;">&nbsp;&nbsp;&nbsp;</span>
-      م، لاستلام الأعمال وفق نطاق
-      عمل
-      المشروع الموضح اعلاه، وذلك بموجب القرار
-      الإداري المسجل برقم وتاريخ م، وتتكون اللجنة من التالية أسماؤهم:</p>
+    <section class="contract-table">
+      <table>
+        <tbody>
+          <tr>
+            <td><strong>رقم العقد</strong></td>
+            <td>6</td>
+            <td><strong>تاريخ العقد</strong></td>
+            <td>02-09-2019</td>
+          </tr>
+          <tr>
+            <td><strong>اسم المشروع</strong></td>
+            <td colspan="3">تحسين المشهد الحضري بمحاور الطرق بشمال مدينة الرياض</td>
+          </tr>
+          <tr>
+            <td><strong>المقاول المنفذ</strong></td>
+            <td>شركه يوكسيل انشاءات المساهمه</td>
+            <td><strong>الاستشاري المشرف</strong></td>
+            <td>شركة مشاري ناصر الشثري وشريكه للاستشارات الهندسية (مهنية)</td>
+          </tr>
+          <tr>
+            <td><strong>الإدارة المشرفة</strong></td>
+            <td>إدارة الإشراف والتنفيذ للطرق</td>
+            <td><strong>تاريخ تسليم الموقع</strong></td>
+            <td>2019-10-17</td>
+          </tr>
+          <tr>
+            <td><strong>مدة المشروع شامل التمديد (باليوم)</strong></td>
+            <td>731</td>
+            <td><strong>تاريخ المقرر للاستلام الابتدائي</strong></td>
+            <td>2022-10-22</td>
+          </tr>
+          <tr>
+            <td colspan="2"><strong>نوع الاستلام:</strong></td>
+            <td colspan="2">
+              <label>
+                <input type="radio" formControlName="isPartially" value="1"> استلام كلي
+              </label>
+              <label>
+                <input type="radio" formControlName="isPartially" value="2"> استلام جزئي
+              </label>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
 
-    <ul>
-      <li><strong>رئيس اللجنة:</strong> <span
-          style="background-color: #A8D6FF; cursor: pointer; width: 200px;display: inline-flex;">&nbsp;&nbsp;&nbsp;</span>
-        رئيساً
-      </li>
-      <br>
-      <li><strong>أعضاء اللجنة:</strong> <span
-          style="background-color: #A8D6FF; cursor: pointer; width: 200px;display: inline-flex;">&nbsp;&nbsp;&nbsp;</span>
-        عضواً
-      </li>
-    </ul>
+    <!-- Short Description Section -->
+    <section class="work-scope">
+      <h3>1- وصف مختصر لنطاق الأعمال محل الاستلام:</h3>
+      <p style="background-color: #A8D6FF; cursor: pointer;" (click)="openBriefModal()">
+        <span *ngIf="deliveryForm?.get('brief')?.value">{{deliveryForm.get('brief')?.value}}</span>
+        <span *ngIf="!deliveryForm?.get('brief')?.value">وصف مختصر لنطاق الأعمال محل الاستلام</span>
+      </p>
+      <!-- modal -->
+      <ng-template #briefModal let-modal>
+        <div class=" modal-header">
+          <h4 class="modal-title mx-auto" id="modal-basic-title">وصف مختصر لنطاق الأعمال محل الاستلام</h4>
+          <button type="button" class="btn-close mx-0" aria-label="Close"
+            (click)="modal.dismiss('Cross click')"></button>
+        </div>
+        <div class="modal-body">
+          <div class="collapse show">
 
-    <p>وقامت اللجنة بمراجعة مواصفات ورسومات العقد، كما عاينت الأعمال في الموقع وأجرت الاختبارات والفحوصات المتعلقة
-      بالأعمال التي تم تنفيذها بواسطة المتعاقد، وأعدت اللجنة بناءً على أعمال المراجعة والمعاينة والاختبارات الخاصة
-      بالأعمال المنجزة، المحاضر المرتبطة بتلك الأعمال.</p>
-  </section>
+            <div class="fv-row mb-7">
+              <textarea class="form-control form-control-lg form-control-solid" formControlName="brief" name="brief"
+                cols="4"></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer flex-center">
+          <button type="reset" id="kt_modal_update_customer_cancel" class="btn btn-light me-3"
+            (click)="modal.dismiss('cancel')">
+            Discard
+          </button>
 
-  <!-- Contract Documents Section -->
-  <section class="contract-documents">
-    <h3>3- مستندات العقد:</h3>
-    <p>تختص هذه الشهادة بالأعمال التي تم تنفيذها بموجب عقد مشروع ( تحسين المشهد الحضري بمحاور الطرق بشمال مدينة
-      الرياض)رقم (6) والمؤرخ في (02-09-2019) بين أمانة منطقة الرياض "المالك" وبين ( شركه يوكسيل انشاءات المساهمه )
-      "المتعاقد".</p>
+          <button type="button" class="btn btn-primary" (click)="addBrief()">
+            <span class="indicator-label">
+              add
+            </span>
+          </button>
+        </div>
+      </ng-template>
+    </section>
 
-    <p>كما تختص هذه الشهادة بجميع الإضافات والملاحق المرفقة بالعقد وأوامر التغيير والأعمال الأخرى التي تم إصدار تعليمات
-      بشأنها إلى المتعاقد لتنفيذها، وجميع الوثائق والمستندات السابقة والتي يشار إليها مجتمعة بـ " العقد ".</p>
-  </section>
+    <!-- Committee Information Section -->
+    <section class="committee-info">
+      <h3>2- لجنة الاستلام الابتدائي:</h3>
+      <p>بناء على الاشعار المقدم من المتعاقد المنفذ للمشروع أعلاه بتاريخ
+        <span style="background-color: #A8D6FF; cursor: pointer;">&nbsp;&nbsp;&nbsp;</span> م، والمسجل لدى أمانة منطقة
+        الرياض برقم
+        <span style="background-color: #A8D6FF; cursor: pointer;">&nbsp;&nbsp;&nbsp;</span>
+        ، تم
+        تشكيل
+        لجنة الاستلام الابتدائي " اللجنة " بتاريخ
+        <span style="background-color: #A8D6FF; cursor: pointer;">&nbsp;&nbsp;&nbsp;</span>
+        م، لاستلام الأعمال وفق نطاق
+        عمل
+        المشروع الموضح اعلاه، وذلك بموجب القرار
+        الإداري المسجل برقم وتاريخ م، وتتكون اللجنة من التالية أسماؤهم:</p>
 
-  <!-- Completion Date Section -->
-  <section class="completion-date">
-    <h3>4- تاريخ الإنجاز:</h3>
-    <p>تنص مستندات العقد على ان مدة المشروع هي ( 0 ) يوم فقط من تاريخ تسليم الموقع المؤرخ في 2019-10-17 م، تم تمديدها
-      لفترات مختلفة بلغ مجموعها ( 455 ) أيام بموجب أوامر التغيير والتمديد المعتمدة، وفترة مسؤولية عن العيوب لمدة لا تقل
-      عن (سنة) تلي تاريخ الاستلام الابتدائي وتبدأ بعد اعتماد هذه الشهادة.</p>
-    <p>وبموجب هذه الشهادة فإن أعمال المشروع قد تم إنجازها إنجازًا جوهرياً واستلامها ابتدائياً ضمن الفترة المحددة في
-      العقد.</p>
-    <p>ويعتبر تاريخ
-      <span style="background-color: #A8D6FF; cursor: pointer;">&nbsp;&nbsp;&nbsp;</span> م بموجب هذه
-      الشهادة هو تاريخ إنجاز أعمال المشروع إنجازًا جوهرياً واستلامها ابتدائياً حسب شروط هذه
-      الشهادة.</p>
-  </section>
+      <ul>
+        <li><strong>رئيس اللجنة:</strong> <span
+            style="background-color: #A8D6FF; cursor: pointer; width: 200px;display: inline-flex;">&nbsp;&nbsp;&nbsp;</span>
+          رئيساً
+        </li>
+        <br>
+        <li><strong>أعضاء اللجنة:</strong> <span
+            style="background-color: #A8D6FF; cursor: pointer; width: 200px;display: inline-flex;">&nbsp;&nbsp;&nbsp;</span>
+          عضواً
+        </li>
+      </ul>
 
-  <!-- Final Payment Section -->
-  <section class="final-payment">
-    <h3>5- الدفعة النهائية:</h3>
-    <p>يتم إعداد المستخلص الختامي للأعمال المنفذة طبقا للفقرة (ثانياً) من المادة رقم (5) من الشروط المالية للعقد بدون
-      أية حسومات تتعلق بتأخير العمل. الدفعة النهائية يجب أن يتم أداؤها طبقا لما ورد في الفقرة (ثالثاً) من المادة رقم (5)
-      من الشروط المالية للعقد.</p>
-  </section>
+      <p>وقامت اللجنة بمراجعة مواصفات ورسومات العقد، كما عاينت الأعمال في الموقع وأجرت الاختبارات والفحوصات المتعلقة
+        بالأعمال التي تم تنفيذها بواسطة المتعاقد، وأعدت اللجنة بناءً على أعمال المراجعة والمعاينة والاختبارات الخاصة
+        بالأعمال المنجزة، المحاضر المرتبطة بتلك الأعمال.</p>
+    </section>
 
-  <!-- Contractor Obligations Section -->
-  <section class="contractor-obligations">
-    <h3>6- التزامات المتعاقد المستمرة:</h3>
-    <p>في حال لاحظت اللجنة بعض العيوب والنواقص التي (لا) تمنع من التشغيل والانتفاع من الأعمال التي تم إنجازها، وهذه
-      العيوب والنواقص قد تم تسجيلها في محاضر اللجنة المشار إليها في الفقرة (2) آنفاً وفي الملحق المرفق رقم ( يتم إرفاق
-      جميع محاضر أعمال المراجعة والمعاينة التي أعدتها اللجنة للأعمال المنجزة )</p>
-    <p>، فيجب على المتعاقد إصلاحها وإكمالها على الوجه المطلوب خلال مدة ( ) وفقاً ما حدّدته اللجنة.</p>
-    <p>إن الإخفاق في ذكر أية عيوب أو نواقص أو التزامات في هذه الشهادة يجب ألا يغير أو يقلل من مسئولية والتزام المتعاقد
-      في تنفيذ جميع الأعمال وإنجازها بما يتوافق مع شروط و مواصفات العقد، ويظل المتعاقد مسئولاً وملزماً بتنفيذ الأعمال
-      أثناء فترة المسئولية عن العيوب تنفيذاً سليماً.</p>
-  </section>
+    <!-- Contract Documents Section -->
+    <section class="contract-documents">
+      <h3>3- مستندات العقد:</h3>
+      <p>تختص هذه الشهادة بالأعمال التي تم تنفيذها بموجب عقد مشروع ( تحسين المشهد الحضري بمحاور الطرق بشمال مدينة
+        الرياض)رقم (6) والمؤرخ في (02-09-2019) بين أمانة منطقة الرياض "المالك" وبين ( شركه يوكسيل انشاءات المساهمه )
+        "المتعاقد".</p>
 
-  <!-- Defect Liability Period Section -->
-  <section class="defect-liability">
-    <h3>7- فترة المسئولية عن العيوب:</h3>
-    <p>يحدد تاريخ سريان شهادة الاستلام الابتدائي المتقدم ذكره بداية فترة المسئولية عن العيوب المنصوص عليها في المادة رقم
-      (66) والمادة رقم (67) من شروط العقد الموحد لوزارة المالية أو وفقا لاشتراطات عقد المقاول تمتد فترة المسئولية عن
-      العيوب لمدة سنة بعد تاريخ سريان شهادة الاستلام الابتدائي.</p>
-  </section>
+      <p>كما تختص هذه الشهادة بجميع الإضافات والملاحق المرفقة بالعقد وأوامر التغيير والأعمال الأخرى التي تم إصدار
+        تعليمات
+        بشأنها إلى المتعاقد لتنفيذها، وجميع الوثائق والمستندات السابقة والتي يشار إليها مجتمعة بـ " العقد ".</p>
+    </section>
 
-  <!-- Operation and Maintenance Manuals Section -->
-  <section class="operation-maintenance">
-    <h3>8- كتيبات التشغيل والصيانة:</h3>
-    <p>يقرّ المتعاقد بأن نسخ كتيبات التشغيل والصيانة المسلّمة للمالك وعددها (3) هي نسخ نهائية، كما يقر بأنها تتضمن
-      تعليمات التشغيل المبسطة، الرسومات التوضيحية الضرورية مع الكتالوجات المقابلة لها من المصنع، قائمة قطع الغيار،
-      ضمانات التشغيل.</p>
-  </section>
+    <!-- Completion Date Section -->
+    <section class="completion-date">
+      <h3>4- تاريخ الإنجاز:</h3>
+      <p>تنص مستندات العقد على ان مدة المشروع هي ( 0 ) يوم فقط من تاريخ تسليم الموقع المؤرخ في 2019-10-17 م، تم تمديدها
+        لفترات مختلفة بلغ مجموعها ( 455 ) أيام بموجب أوامر التغيير والتمديد المعتمدة، وفترة مسؤولية عن العيوب لمدة لا
+        تقل
+        عن (سنة) تلي تاريخ الاستلام الابتدائي وتبدأ بعد اعتماد هذه الشهادة.</p>
+      <p>وبموجب هذه الشهادة فإن أعمال المشروع قد تم إنجازها إنجازًا جوهرياً واستلامها ابتدائياً ضمن الفترة المحددة في
+        العقد.</p>
+      <p>ويعتبر تاريخ
+        <span style="background-color: #A8D6FF; cursor: pointer;">&nbsp;&nbsp;&nbsp;</span> م بموجب هذه
+        الشهادة هو تاريخ إنجاز أعمال المشروع إنجازًا جوهرياً واستلامها ابتدائياً حسب شروط هذه
+        الشهادة.</p>
+    </section>
 
-  <!-- Guarantees Section -->
-  <section class="guarantees">
-    <h3>9- الضمانات:</h3>
-    <p>يتعين على المتعاقد مباشرةً أن يقدم للمالك مايثبت استمرار التزامه بتطبيق ماورد في القسم السادس من شروط العقد
-      (الضمانات).</p>
-  </section>
+    <!-- Final Payment Section -->
+    <section class="final-payment">
+      <h3>5- الدفعة النهائية:</h3>
+      <p>يتم إعداد المستخلص الختامي للأعمال المنفذة طبقا للفقرة (ثانياً) من المادة رقم (5) من الشروط المالية للعقد بدون
+        أية حسومات تتعلق بتأخير العمل. الدفعة النهائية يجب أن يتم أداؤها طبقا لما ورد في الفقرة (ثالثاً) من المادة رقم
+        (5)
+        من الشروط المالية للعقد.</p>
+    </section>
 
-  <!-- Spare Parts Section -->
-  <section class="spare-parts">
-    <h3>10- قطع الغيار (إن وجدت):</h3>
-    <p>يتعين على المتعاقد أن يقوم بتسليم المالك خلال يوم من تاريخ إصدار هذه الشهادة قائمة مسعرة بقطع الغيار اللازمة
-      لأعمال التشغيل والصيانة المعتادة لجميع الأجزاء والأنظمة الرئيسية والفرعية للأعمال.</p>
-  </section>
+    <!-- Contractor Obligations Section -->
+    <section class="contractor-obligations">
+      <h3>6- التزامات المتعاقد المستمرة:</h3>
+      <p>في حال لاحظت اللجنة بعض العيوب والنواقص التي (لا) تمنع من التشغيل والانتفاع من الأعمال التي تم إنجازها، وهذه
+        العيوب والنواقص قد تم تسجيلها في محاضر اللجنة المشار إليها في الفقرة (2) آنفاً وفي الملحق المرفق رقم ( يتم إرفاق
+        جميع محاضر أعمال المراجعة والمعاينة التي أعدتها اللجنة للأعمال المنجزة )</p>
+      <p>، فيجب على المتعاقد إصلاحها وإكمالها على الوجه المطلوب خلال مدة ( ) وفقاً ما حدّدته اللجنة.</p>
+      <p>إن الإخفاق في ذكر أية عيوب أو نواقص أو التزامات في هذه الشهادة يجب ألا يغير أو يقلل من مسئولية والتزام المتعاقد
+        في تنفيذ جميع الأعمال وإنجازها بما يتوافق مع شروط و مواصفات العقد، ويظل المتعاقد مسئولاً وملزماً بتنفيذ الأعمال
+        أثناء فترة المسئولية عن العيوب تنفيذاً سليماً.</p>
+    </section>
 
-  <!-- As-Built Drawings Section -->
-  <section class="as-built">
-    <h3>11- المخططات النهائية للأعمال المنفذة (As Built Drawing):</h3>
-    <p>طبقاً لما نصّت عليه شروط ووثائق العقد، يتعين على المتعاقد إعداد وتسليم المخططات النهائية للأعمال المنفذة في صورة
-      مخططات قابلة للاستنساخ مع عدد ( ) نسخ إضافة إلى عدد ( ) من هذه المخططات بصيغة ملفات أوتوكاد على أقراص صلبة.، أو أي
-      وسيلة أخرى يراها المالك مناسبة.</p>
-    <p>إثباتا لما سبق، يشهد المتعاقد ويقر بموجبه على أن الأعمال الدائمة الموضحة هنا قد تم تنفيذها وإنجازها بما يتوافق مع
-      شروط وأحكام ومواصفات العقد ويعتبر هذا الإقرار السبب الدافع لدى المالك لإصدار هذه الشهادة.
-    </p>
-  </section>
+    <!-- Defect Liability Period Section -->
+    <section class="defect-liability">
+      <h3>7- فترة المسئولية عن العيوب:</h3>
+      <p>يحدد تاريخ سريان شهادة الاستلام الابتدائي المتقدم ذكره بداية فترة المسئولية عن العيوب المنصوص عليها في المادة
+        رقم
+        (66) والمادة رقم (67) من شروط العقد الموحد لوزارة المالية أو وفقا لاشتراطات عقد المقاول تمتد فترة المسئولية عن
+        العيوب لمدة سنة بعد تاريخ سريان شهادة الاستلام الابتدائي.</p>
+    </section>
 
-  <!-- Contractor and Consultant Signatures Section -->
-  <section class="signatures">
-    <h3>المتعاقد:</h3>
-    <p>شركه يوكسيل انشاءات المساهمه</p>
-    <p><strong>اسم المفوض:</strong> م/مصطفي نبيل محمد</p>
-    <p><strong>الصــــــــــــفة:</strong> مدير مشروع مقاول</p>
-    <p><strong>التوقيــــــــع:</strong> _____________</p>
-    <p><strong>الختـــــــــــم:</strong> _____________</p>
+    <!-- Operation and Maintenance Manuals Section -->
+    <section class="operation-maintenance">
+      <h3>8- كتيبات التشغيل والصيانة:</h3>
+      <p>يقرّ المتعاقد بأن نسخ كتيبات التشغيل والصيانة المسلّمة للمالك وعددها (3) هي نسخ نهائية، كما يقر بأنها تتضمن
+        تعليمات التشغيل المبسطة، الرسومات التوضيحية الضرورية مع الكتالوجات المقابلة لها من المصنع، قائمة قطع الغيار،
+        ضمانات التشغيل.</p>
+    </section>
 
-    <h3>الاستشاري:</h3>
-    <p>شركة مشاري ناصر الشثري وشريكه للاستشارات الهندسية (مهنية)</p>
-    <p><strong>اسم المفوض:</strong> م. مصطفى حلمي</p>
-    <p><strong>الصــــــــــــفة:</strong> مدير مشروع إستشاري</p>
-    <p><strong>التوقيــــــــع:</strong> _____________</p>
-    <p><strong>الختـــــــــــم:</strong> _____________</p>
-  </section>
+    <!-- Guarantees Section -->
+    <section class="guarantees">
+      <h3>9- الضمانات:</h3>
+      <p>يتعين على المتعاقد مباشرةً أن يقدم للمالك مايثبت استمرار التزامه بتطبيق ماورد في القسم السادس من شروط العقد
+        (الضمانات).</p>
+    </section>
 
-  <!-- Acceptance Committee Section -->
-  <section class="acceptance-committee">
+    <!-- Spare Parts Section -->
+    <section class="spare-parts">
+      <h3>10- قطع الغيار (إن وجدت):</h3>
+      <p>يتعين على المتعاقد أن يقوم بتسليم المالك خلال يوم من تاريخ إصدار هذه الشهادة قائمة مسعرة بقطع الغيار اللازمة
+        لأعمال التشغيل والصيانة المعتادة لجميع الأجزاء والأنظمة الرئيسية والفرعية للأعمال.</p>
+    </section>
 
-    <table class="committee-table">
-      <thead>
-        <tr>
-          <td colspan="4" class="full-width">مصادقة لجنة الإستلام الإبتدائي</td>
-        </tr>
-        <tr>
-          <th>الاسم</th>
-          <th>الصفة</th>
-          <th>التاريخ</th>
-          <th>التوقيع</th>
-        </tr>
-      </thead>
-      <tbody>
-        <!-- <tr>
+    <!-- As-Built Drawings Section -->
+    <section class="as-built">
+      <h3>11- المخططات النهائية للأعمال المنفذة (As Built Drawing):</h3>
+      <p>طبقاً لما نصّت عليه شروط ووثائق العقد، يتعين على المتعاقد إعداد وتسليم المخططات النهائية للأعمال المنفذة في
+        صورة
+        مخططات قابلة للاستنساخ مع عدد ( ) نسخ إضافة إلى عدد ( ) من هذه المخططات بصيغة ملفات أوتوكاد على أقراص صلبة.، أو
+        أي
+        وسيلة أخرى يراها المالك مناسبة.</p>
+      <p>إثباتا لما سبق، يشهد المتعاقد ويقر بموجبه على أن الأعمال الدائمة الموضحة هنا قد تم تنفيذها وإنجازها بما يتوافق
+        مع
+        شروط وأحكام ومواصفات العقد ويعتبر هذا الإقرار السبب الدافع لدى المالك لإصدار هذه الشهادة.
+      </p>
+    </section>
+
+    <!-- Contractor and Consultant Signatures Section -->
+    <section class="signatures">
+      <h3>المتعاقد:</h3>
+      <p>شركه يوكسيل انشاءات المساهمه</p>
+      <p><strong>اسم المفوض:</strong> م/مصطفي نبيل محمد</p>
+      <p><strong>الصــــــــــــفة:</strong> مدير مشروع مقاول</p>
+      <p><strong>التوقيــــــــع:</strong> _____________</p>
+      <p><strong>الختـــــــــــم:</strong> _____________</p>
+
+      <h3>الاستشاري:</h3>
+      <p>شركة مشاري ناصر الشثري وشريكه للاستشارات الهندسية (مهنية)</p>
+      <p><strong>اسم المفوض:</strong> م. مصطفى حلمي</p>
+      <p><strong>الصــــــــــــفة:</strong> مدير مشروع إستشاري</p>
+      <p><strong>التوقيــــــــع:</strong> _____________</p>
+      <p><strong>الختـــــــــــم:</strong> _____________</p>
+    </section>
+
+    <!-- Acceptance Committee Section -->
+    <section class="acceptance-committee">
+
+      <table class="committee-table">
+        <thead>
+          <tr>
+            <td colspan="4" class="full-width">مصادقة لجنة الإستلام الإبتدائي</td>
+          </tr>
+          <tr>
+            <th>الاسم</th>
+            <th>الصفة</th>
+            <th>التاريخ</th>
+            <th>التوقيع</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- <tr>
           <td>__________</td>
           <td>__________</td>
           <td>__________</td>
           <td>__________</td>
         </tr> -->
-      </tbody>
-    </table>
-  </section>
+        </tbody>
+      </table>
+    </section>
 
-  <!-- Final Approval Section -->
-  <section class="final-approval">
-    <p>تاريخ الانشاء: 28/09/2024</p>
-    <p>بواسطة: Admin</p>
-    <a class="btn btn-sm btn-success" (click)="approve()">
-      الإعتماد النهائي
-    </a>
-    <p>رقم العقد: (6)</p>
-  </section>
+    <!-- Final Approval Section -->
+    <section class="final-approval">
+      <p>تاريخ الانشاء: 28/09/2024</p>
+      <p>بواسطة: Admin</p>
+      <a class="btn btn-sm btn-success" (click)="approve();onSubmit()">
+        الإعتماد النهائي
+      </a>
+      <p>رقم العقد: (6)</p>
+    </section>
+
+  </form>
 
   <footer>
     <p>تاريخ الإنشاء: 28/09/2024</p>
     <p>بواسطة: Admin</p>
   </footer>
 </div>
+
+<ng-template #briefModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Cash Flow File</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+    <div class="collapse show">
+
+      <div class="fv-row mb-7">
+        <label class="required fw-semibold fs-6 mb-2">Arabic Name</label>
+        <input type="text" class="form-control form-control-solid" formControlName="brief" name="brief" required />
+      </div>
+
+    </div>
+  </div>
+  <div class="modal-footer flex-center">
+    <button type="reset" id="kt_modal_update_customer_cancel" class="btn btn-light me-3"
+      (click)="modal.dismiss('cancel')">
+      Discard
+    </button>
+    <!--end::Button-->
+
+    <!--begin::Button-->
+    <button type="button" class="btn btn-primary">
+      <span class="indicator-label">
+        add
+      </span>
+    </button>
+    <!--end::Button-->
+  </div>
+</ng-template>
