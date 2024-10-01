@@ -3,6 +3,14 @@
     <h1>وزارة الشؤون البلدية والقروية والإسكان</h1>
     <h2>أمانة منطقة الرياض</h2>
     <h3>وكالة المشاريع</h3>
+    <div class="btn_wrapper">
+      <a class="btn btn-sm btn-success" (click)="print()">
+        طباعة
+      </a>
+      <a class="btn btn-sm btn-light-danger mx-3" (click)="back()">
+        العودة
+      </a>
+    </div>
   </header>
 
   <section class="certificate-title">
@@ -109,7 +117,7 @@
           </ng-container>
 
         </span>
-         م، والمسجل لدى أمانة منطقة
+        م، والمسجل لدى أمانة منطقة
         الرياض برقم
         <span style="background-color: #A8D6FF; cursor: pointer;" (click)="openReferenceNumberModal()">
           <ng-container *ngIf="!deliveryForm?.get('referenceNumber')?.value">
@@ -180,8 +188,8 @@
           <div class="collapse show">
 
             <div class="fv-row mb-7">
-              <input type="date" class="form-control form-control-lg form-control-solid" formControlName="noticeDate" name="noticeDate"
-                />
+              <input type="date" class="form-control form-control-lg form-control-solid" formControlName="noticeDate"
+                name="noticeDate" />
             </div>
           </div>
         </div>
@@ -209,8 +217,8 @@
           <div class="collapse show">
 
             <div class="fv-row mb-7">
-              <input type="number" class="form-control form-control-lg form-control-solid" formControlName="referenceNumber" name="referenceNumber"
-                />
+              <input type="number" class="form-control form-control-lg form-control-solid"
+                formControlName="referenceNumber" name="referenceNumber" />
             </div>
           </div>
         </div>
@@ -238,8 +246,8 @@
           <div class="collapse show">
 
             <div class="fv-row mb-7">
-              <input type="date" class="form-control form-control-lg form-control-solid" formControlName="deliveryDate" name="deliveryDate"
-                />
+              <input type="date" class="form-control form-control-lg form-control-solid" formControlName="deliveryDate"
+                name="deliveryDate" />
             </div>
           </div>
         </div>
@@ -267,8 +275,8 @@
           <div class="collapse show">
 
             <div class="fv-row mb-7">
-              <input type="number" class="form-control form-control-lg form-control-solid" formControlName="registeredDecisionNumber" name="registeredDecisionNumber"
-                />
+              <input type="number" class="form-control form-control-lg form-control-solid"
+                formControlName="registeredDecisionNumber" name="registeredDecisionNumber" />
             </div>
           </div>
         </div>
@@ -296,8 +304,8 @@
           <div class="collapse show">
 
             <div class="fv-row mb-7">
-              <input type="date" class="form-control form-control-lg form-control-solid" formControlName="registeredDecisionDate" name="registeredDecisionDate"
-                />
+              <input type="date" class="form-control form-control-lg form-control-solid"
+                formControlName="registeredDecisionDate" name="registeredDecisionDate" />
             </div>
           </div>
         </div>
@@ -319,8 +327,24 @@
     <!-- Contract Documents Section -->
     <section class="contract-documents">
       <h3>3- مستندات العقد:</h3>
-      <p>تختص هذه الشهادة بالأعمال التي تم تنفيذها بموجب عقد مشروع ( تحسين المشهد الحضري بمحاور الطرق بشمال مدينة
-        الرياض)رقم (6) والمؤرخ في (02-09-2019) بين أمانة منطقة الرياض "المالك" وبين ( شركه يوكسيل انشاءات المساهمه )
+      <p>تختص هذه الشهادة بالأعمال التي تم تنفيذها بموجب عقد مشروع (
+        <span class="focus">
+          تحسين المشهد الحضري بمحاور الطرق بشمال مدينة
+          الرياض
+        </span>
+        )رقم (
+        <span class="focus">
+          6
+        </span>
+        ) والمؤرخ في (
+        <span class="focus">
+          02-09-2019
+        </span>
+        ) بين أمانة منطقة الرياض "المالك" وبين (
+        <span class="focus">
+          شركه يوكسيل انشاءات المساهمه
+        </span>
+        )
         "المتعاقد".</p>
 
       <p>كما تختص هذه الشهادة بجميع الإضافات والملاحق المرفقة بالعقد وأوامر التغيير والأعمال الأخرى التي تم إصدار
@@ -331,16 +355,64 @@
     <!-- Completion Date Section -->
     <section class="completion-date">
       <h3>4- تاريخ الإنجاز:</h3>
-      <p>تنص مستندات العقد على ان مدة المشروع هي ( 0 ) يوم فقط من تاريخ تسليم الموقع المؤرخ في 2019-10-17 م، تم تمديدها
-        لفترات مختلفة بلغ مجموعها ( 455 ) أيام بموجب أوامر التغيير والتمديد المعتمدة، وفترة مسؤولية عن العيوب لمدة لا
+      <p>تنص مستندات العقد على ان مدة المشروع هي (
+        <span class="focus">
+          0
+        </span>
+        ) يوم فقط من تاريخ تسليم الموقع المؤرخ في
+        <span class="focus">
+          2019-10-17
+        </span>
+        م، تم تمديدها
+        لفترات مختلفة بلغ مجموعها (
+        <span class="focus">
+          455
+        </span>
+        ) أيام بموجب أوامر التغيير والتمديد المعتمدة، وفترة مسؤولية عن العيوب لمدة لا
         تقل
         عن (سنة) تلي تاريخ الاستلام الابتدائي وتبدأ بعد اعتماد هذه الشهادة.</p>
       <p>وبموجب هذه الشهادة فإن أعمال المشروع قد تم إنجازها إنجازًا جوهرياً واستلامها ابتدائياً ضمن الفترة المحددة في
         العقد.</p>
       <p>ويعتبر تاريخ
-        <span style="background-color: #A8D6FF; cursor: pointer;">&nbsp;&nbsp;&nbsp;</span> م بموجب هذه
+        <span style="background-color: #A8D6FF; cursor: pointer;" (click)="openAchieveDateModal()">
+          <ng-container *ngIf="!deliveryForm?.get('achievementDate')?.value">
+            &nbsp;&nbsp;&nbsp;
+          </ng-container>
+          <ng-container *ngIf="deliveryForm?.get('achievementDate')?.value">
+            {{deliveryForm.get('achievementDate')?.value}}
+          </ng-container>
+        </span>
+        م بموجب هذه
         الشهادة هو تاريخ إنجاز أعمال المشروع إنجازًا جوهرياً واستلامها ابتدائياً حسب شروط هذه
         الشهادة.</p>
+      <ng-template #achieveDateModal let-modal>
+        <div class=" modal-header">
+          <h4 class="modal-title mx-auto" id="modal-basic-title">التاريخ المعتمد للاستلام الابتدائي</h4>
+          <button type="button" class="btn-close mx-0" aria-label="Close"
+            (click)="modal.dismiss('Cross click')"></button>
+        </div>
+        <div class="modal-body">
+          <div class="collapse show">
+
+            <div class="fv-row mb-7">
+              <input type="date" class="form-control form-control-lg form-control-solid"
+                formControlName="achievementDate" name="achievementDate" />
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer flex-center">
+          <button type="reset" id="kt_modal_update_customer_cancel" class="btn btn-light me-3"
+            (click)="modal.dismiss('cancel')">
+            Discard
+          </button>
+
+          <button type="button" class="btn btn-primary" (click)="addAchieveDate()">
+            <span class="indicator-label">
+              add
+            </span>
+          </button>
+        </div>
+      </ng-template>
     </section>
 
     <!-- Final Payment Section -->
@@ -356,12 +428,57 @@
     <section class="contractor-obligations">
       <h3>6- التزامات المتعاقد المستمرة:</h3>
       <p>في حال لاحظت اللجنة بعض العيوب والنواقص التي (لا) تمنع من التشغيل والانتفاع من الأعمال التي تم إنجازها، وهذه
-        العيوب والنواقص قد تم تسجيلها في محاضر اللجنة المشار إليها في الفقرة (2) آنفاً وفي الملحق المرفق رقم ( يتم إرفاق
-        جميع محاضر أعمال المراجعة والمعاينة التي أعدتها اللجنة للأعمال المنجزة )</p>
-      <p>، فيجب على المتعاقد إصلاحها وإكمالها على الوجه المطلوب خلال مدة ( ) وفقاً ما حدّدته اللجنة.</p>
+        العيوب والنواقص قد تم تسجيلها في محاضر اللجنة المشار إليها في الفقرة (2) آنفاً وفي الملحق المرفق رقم
+        <br>
+        (<span style="background-color: #A8D6FF; cursor: pointer;" (click)="attachmentInput.click()"
+          [ngStyle]="{ 'color': (deliveryForm.get('attachment')?.value ? '#0000ee' : 'red') }">
+          يتم إرفاق جميع محاضر أعمال المراجعة والمعاينة التي أعدتها اللجنة للأعمال المنجزة
+        </span>
+        <input type="file" name="attachment" (change)="onFileSelected($event)" #attachmentInput style="display: none;"
+          accept="application/pdf">
+        )</p>
+      <p>، فيجب على المتعاقد إصلاحها وإكمالها على الوجه المطلوب خلال مدة (
+        <span style="background-color: #A8D6FF; cursor: pointer;" (click)="openFixingDuration()">
+          <ng-container *ngIf="!deliveryForm?.get('fixingDuration')?.value">
+            &nbsp;&nbsp;&nbsp;
+          </ng-container>
+          <ng-container *ngIf="deliveryForm?.get('fixingDuration')?.value">
+            {{deliveryForm.get('fixingDuration')?.value}}
+          </ng-container>
+        </span>&nbsp;) وفقاً ما حدّدته اللجنة.
+      </p>
       <p>إن الإخفاق في ذكر أية عيوب أو نواقص أو التزامات في هذه الشهادة يجب ألا يغير أو يقلل من مسئولية والتزام المتعاقد
         في تنفيذ جميع الأعمال وإنجازها بما يتوافق مع شروط و مواصفات العقد، ويظل المتعاقد مسئولاً وملزماً بتنفيذ الأعمال
         أثناء فترة المسئولية عن العيوب تنفيذاً سليماً.</p>
+
+      <ng-template #fixingDurationModal let-modal>
+        <div class=" modal-header">
+          <h4 class="modal-title mx-auto" id="modal-basic-title">مدة إصلاح النواقص والعيوب بالأيام</h4>
+          <button type="button" class="btn-close mx-0" aria-label="Close"
+            (click)="modal.dismiss('Cross click')"></button>
+        </div>
+        <div class="modal-body">
+          <div class="collapse show">
+
+            <div class="fv-row mb-7">
+              <input type="number" class="form-control form-control-lg form-control-solid"
+                formControlName="fixingDuration" name="fixingDuration" />
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer flex-center">
+          <button type="reset" id="kt_modal_update_customer_cancel" class="btn btn-light me-3"
+            (click)="modal.dismiss('cancel')">
+            Discard
+          </button>
+
+          <button type="button" class="btn btn-primary" (click)="addFixingDuration()">
+            <span class="indicator-label">
+              add
+            </span>
+          </button>
+        </div>
+      </ng-template>
     </section>
 
     <!-- Defect Liability Period Section -->
@@ -391,8 +508,45 @@
     <!-- Spare Parts Section -->
     <section class="spare-parts">
       <h3>10- قطع الغيار (إن وجدت):</h3>
-      <p>يتعين على المتعاقد أن يقوم بتسليم المالك خلال يوم من تاريخ إصدار هذه الشهادة قائمة مسعرة بقطع الغيار اللازمة
+      <p>يتعين على المتعاقد أن يقوم بتسليم المالك خلال
+        <span style="background-color: #A8D6FF; cursor: pointer;" (click)="openDeliveryDuration()">
+          <ng-container *ngIf="!deliveryForm?.get('deliveryDuration')?.value">
+            &nbsp;&nbsp;&nbsp;
+          </ng-container>
+          <ng-container *ngIf="deliveryForm?.get('deliveryDuration')?.value">
+            {{deliveryForm.get('deliveryDuration')?.value}}
+          </ng-container>
+        </span>&nbsp;
+        يوم من تاريخ إصدار هذه الشهادة قائمة مسعرة بقطع الغيار اللازمة
         لأعمال التشغيل والصيانة المعتادة لجميع الأجزاء والأنظمة الرئيسية والفرعية للأعمال.</p>
+      <ng-template #deliveryDurationModal let-modal>
+        <div class=" modal-header">
+          <h4 class="modal-title mx-auto" id="modal-basic-title">مدة تسليم قائمة قطع الغيار</h4>
+          <button type="button" class="btn-close mx-0" aria-label="Close"
+            (click)="modal.dismiss('Cross click')"></button>
+        </div>
+        <div class="modal-body">
+          <div class="collapse show">
+
+            <div class="fv-row mb-7">
+              <input type="number" class="form-control form-control-lg form-control-solid"
+                formControlName="deliveryDuration" name="deliveryDuration" />
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer flex-center">
+          <button type="reset" id="kt_modal_update_customer_cancel" class="btn btn-light me-3"
+            (click)="modal.dismiss('cancel')">
+            Discard
+          </button>
+
+          <button type="button" class="btn btn-primary" (click)="addDeliveryDuration()">
+            <span class="indicator-label">
+              add
+            </span>
+          </button>
+        </div>
+      </ng-template>
     </section>
 
     <!-- As-Built Drawings Section -->
@@ -400,13 +554,88 @@
       <h3>11- المخططات النهائية للأعمال المنفذة (As Built Drawing):</h3>
       <p>طبقاً لما نصّت عليه شروط ووثائق العقد، يتعين على المتعاقد إعداد وتسليم المخططات النهائية للأعمال المنفذة في
         صورة
-        مخططات قابلة للاستنساخ مع عدد ( ) نسخ إضافة إلى عدد ( ) من هذه المخططات بصيغة ملفات أوتوكاد على أقراص صلبة.، أو
+        مخططات قابلة للاستنساخ مع عدد (
+        <span style="background-color: #A8D6FF; cursor: pointer;" (click)="openImagePlan()">
+          <ng-container *ngIf="!deliveryForm?.get('imagePlan')?.value">
+            &nbsp;&nbsp;&nbsp;
+          </ng-container>
+          <ng-container *ngIf="deliveryForm?.get('imagePlan')?.value">
+            {{deliveryForm.get('imagePlan')?.value}}
+          </ng-container>
+        </span>&nbsp;
+        ) نسخ إضافة إلى عدد (
+        <span style="background-color: #A8D6FF; cursor: pointer;" (click)="openImagePlanCopies()">
+          <ng-container *ngIf="!deliveryForm?.get('imagePlanCopies')?.value">
+            &nbsp;&nbsp;&nbsp;
+          </ng-container>
+          <ng-container *ngIf="deliveryForm?.get('imagePlanCopies')?.value">
+            {{deliveryForm.get('imagePlanCopies')?.value}}
+          </ng-container>
+        </span>&nbsp;
+        ) من هذه المخططات بصيغة ملفات أوتوكاد على أقراص صلبة.، أو
         أي
         وسيلة أخرى يراها المالك مناسبة.</p>
       <p>إثباتا لما سبق، يشهد المتعاقد ويقر بموجبه على أن الأعمال الدائمة الموضحة هنا قد تم تنفيذها وإنجازها بما يتوافق
         مع
         شروط وأحكام ومواصفات العقد ويعتبر هذا الإقرار السبب الدافع لدى المالك لإصدار هذه الشهادة.
       </p>
+      <ng-template #imagePlanModal let-modal>
+        <div class=" modal-header">
+          <h4 class="modal-title mx-auto" id="modal-basic-title">عدد النسخ المطبوعة</h4>
+          <button type="button" class="btn-close mx-0" aria-label="Close"
+            (click)="modal.dismiss('Cross click')"></button>
+        </div>
+        <div class="modal-body">
+          <div class="collapse show">
+
+            <div class="fv-row mb-7">
+              <input type="number" class="form-control form-control-lg form-control-solid" formControlName="imagePlan"
+                name="imagePlan" />
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer flex-center">
+          <button type="reset" id="kt_modal_update_customer_cancel" class="btn btn-light me-3"
+            (click)="modal.dismiss('cancel')">
+            Discard
+          </button>
+
+          <button type="button" class="btn btn-primary" (click)="addImagePlan()">
+            <span class="indicator-label">
+              add
+            </span>
+          </button>
+        </div>
+      </ng-template>
+
+      <ng-template #imagePlanCopiesModal let-modal>
+        <div class=" modal-header">
+          <h4 class="modal-title mx-auto" id="modal-basic-title">عدد النسخ الإلكترونية</h4>
+          <button type="button" class="btn-close mx-0" aria-label="Close"
+            (click)="modal.dismiss('Cross click')"></button>
+        </div>
+        <div class="modal-body">
+          <div class="collapse show">
+
+            <div class="fv-row mb-7">
+              <input type="number" class="form-control form-control-lg form-control-solid"
+                formControlName="imagePlanCopies" name="imagePlanCopies" />
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer flex-center">
+          <button type="reset" id="kt_modal_update_customer_cancel" class="btn btn-light me-3"
+            (click)="modal.dismiss('cancel')">
+            Discard
+          </button>
+
+          <button type="button" class="btn btn-primary" (click)="addImagePlanCopies()">
+            <span class="indicator-label">
+              add
+            </span>
+          </button>
+        </div>
+      </ng-template>
     </section>
 
     <!-- Contractor and Consultant Signatures Section -->
@@ -501,3 +730,7 @@
     <!--end::Button-->
   </div>
 </ng-template>
+
+
+<swal #noticeSwal [swalOptions]="swalOptions">
+</swal>

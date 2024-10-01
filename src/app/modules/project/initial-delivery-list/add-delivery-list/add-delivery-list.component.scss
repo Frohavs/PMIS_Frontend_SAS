@@ -9,11 +9,17 @@
   header {
     text-align: center;
     margin-bottom: 2rem;
+    position: relative;
 
     h1,
     h2,
     h3 {
       margin: 0.5rem 0;
+    }
+
+    .btn_wrapper {
+      position: absolute;
+      top: 0;
     }
   }
 
@@ -111,5 +117,16 @@
     margin-top: 3rem;
     font-size: 0.9rem;
     color: #666;
+  }
+}
+
+.focus {
+  color: red;
+}
+
+
+@media print {
+  .btn_wrapper, footer {
+    display: none !important;
   }
 }
