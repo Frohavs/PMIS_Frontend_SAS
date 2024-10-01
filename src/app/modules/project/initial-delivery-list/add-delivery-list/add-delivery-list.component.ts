@@ -15,6 +15,7 @@ export class AddDeliveryListComponent implements OnInit {
 
   deliveryForm: FormGroup;
   projectId!: any;
+  listId!: any;
   projectDeliveryDetails: ProjectDeliverListDetails = {
     id: null,
     brief: "",
@@ -32,18 +33,23 @@ export class AddDeliveryListComponent implements OnInit {
     imagePlanCopies: null,
     projectId: null,
     managerId: null,
-    approved: true,
+    approved: false,
     committeeMangers: [
-      // {
-      //   id: 1,
-      //   name: "John Doe",
-      //   email: "johndoe@example.com",
-      //   position: "Project Manager"
-      // }
+      {
+        id: 6,
+        name: "kmadkour",
+        email: "karim.madkour.da@gmail.com",
+        position: "Manager"
+      }
     ]
   };
 
   @ViewChild('briefModal') briefModal: TemplateRef<any>;
+  @ViewChild('noticeModal') noticeModal: TemplateRef<any>;
+  @ViewChild('refNumberModal') refNumberModal: TemplateRef<any>;
+  @ViewChild('deliveryDateModal') deliveryDateModal: TemplateRef<any>;
+  @ViewChild('registeredDecisionNumberModal') registeredDecisionNumberModal: TemplateRef<any>;
+  @ViewChild('registeredDecisionDateModal') registeredDecisionDateModal: TemplateRef<any>;
 
   modalConfig: NgbModalOptions = {
     modalDialogClass: 'modal-dialog modal-dialog-centered mw-650px',
@@ -62,16 +68,36 @@ export class AddDeliveryListComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.initDeliverForm();
     this.getProjectId();
+  }
 
+  getProjectId() {
+    this.activatedRoute.params.subscribe(params => {
+      this.projectId = +params['id'];
+      this.projectDeliveryDetails.projectId = this.projectId;
+    });
+    this.activatedRoute.queryParams.subscribe(params => {
+      this.listId = +params['listId'];
+      if (this.listId) {
+        this.projectDeliveryDetails.id = this.listId;
+        this.initialDeliveryService.getDeliveryList(this.listId).subscribe(res => {
+          this.editDeliverForm(res.data);
+        });
+      }
+    });
+  }
+
+
+  initDeliverForm() {
     this.deliveryForm = this.fb.group({
       isPartially: ['1', [Validators.required]],
       brief: ['', Validators.required],
-      registeredDecisionDate: ['', Validators.required],
-      registeredDecisionNumber: [0, Validators.required],
-      deliveryDate: ['', Validators.required],
-      referenceNumber: ['', Validators.required],
       noticeDate: ['', Validators.required],
+      referenceNumber: ['', Validators.required],
+      deliveryDate: ['', Validators.required],
+      registeredDecisionNumber: [0, Validators.required],
+      registeredDecisionDate: ['', Validators.required],
       // committeeMangers: [null, Validators.required],
       achievementDate: ['', Validators.required],
       attachment: ['', Validators.required],
@@ -81,19 +107,30 @@ export class AddDeliveryListComponent implements OnInit {
       imagePlan: [0, Validators.required],
     });
   }
-
-  getProjectId() {
-    this.activatedRoute.params.subscribe(params => {
-      this.projectId = +params['id'];
-      this.projectDeliveryDetails.projectId = this.projectId;
+  editDeliverForm(res: any) {
+    this.deliveryForm.patchValue({
+      isPartially: res.isPartially ? '1' : '2',
+      brief: res.brief,
+      registeredDecisionDate: res.registeredDecisionDate.slice(0, 10) || '',
+      registeredDecisionNumber: res.registeredDecisionNumber,
+      deliveryDate: res.deliveryDate.slice(0, 10) || '',
+      referenceNumber: res.referenceNumber,
+      noticeDate: res.noticeDate.slice(0, 10) || '',
+      // committeeMangers: res.asdasdsad,
+      achievementDate: res.achievementDate.slice(0, 10) || '',
+      attachment: res.attachment,
+      fixingDuration: res.fixingDuration,
+      deliveryDuration: res.deliveryDuration,
+      imagePlanCopies: res.imagePlanCopies,
+      imagePlan: res.imagePlan,
     });
+    this.cdr.detectChanges();
   }
 
   // Optional method to handle form submission or changes
   onSubmit() {
     console.log(this.deliveryForm.value);
   }
-
   openBriefModal() {
     this.modalService.open(this.briefModal, this.modalConfig)
   }
@@ -101,8 +138,58 @@ export class AddDeliveryListComponent implements OnInit {
   addBrief() {
     this.projectDeliveryDetails.brief = this.deliveryForm.value.brief;
     this.initialDeliveryService.addDeliveryList(this.projectDeliveryDetails).subscribe(res => {
-      debugger
-      console.log(res);
+      this.projectDeliveryDetails.id = res.data || null;
+      this.modalService.dismissAll();
+    });
+  }
+  openNoticeModal() {
+    this.modalService.open(this.noticeModal, this.modalConfig)
+  }
+
+  addNotice() {
+    this.projectDeliveryDetails.noticeDate = this.deliveryForm.value.noticeDate;
+    this.initialDeliveryService.addDeliveryList(this.projectDeliveryDetails).subscribe(res => {
+      this.projectDeliveryDetails.id = res.data || null;
+      this.modalService.dismissAll();
+    });
+  }
+  openReferenceNumberModal() {
+    this.modalService.open(this.refNumberModal, this.modalConfig)
+  }
+  addRefNumber() {
+    this.projectDeliveryDetails.referenceNumber = this.deliveryForm.value.referenceNumber;
+    this.initialDeliveryService.addDeliveryList(this.projectDeliveryDetails).subscribe(res => {
+      this.projectDeliveryDetails.id = res.data || null;
+      this.modalService.dismissAll();
+    });
+  }
+  openDeliveryDateModal() {
+    this.modalService.open(this.deliveryDateModal, this.modalConfig)
+  }
+  addDeliveryDate() {
+    this.projectDeliveryDetails.deliveryDate = this.deliveryForm.value.deliveryDate;
+    this.initialDeliveryService.addDeliveryList(this.projectDeliveryDetails).subscribe(res => {
+      this.projectDeliveryDetails.id = res.data || null;
+      this.modalService.dismissAll();
+    });
+  }
+  openRegisteredDecisionNumberModal() {
+    this.modalService.open(this.registeredDecisionNumberModal, this.modalConfig)
+  }
+  addRegisteredDecisionNumber() {
+    this.projectDeliveryDetails.referenceNumber = this.deliveryForm.value.referenceNumber;
+    this.initialDeliveryService.addDeliveryList(this.projectDeliveryDetails).subscribe(res => {
+      this.projectDeliveryDetails.id = res.data || null;
+      this.modalService.dismissAll();
+    });
+  }
+  openRegisteredDecisionDateModal() {
+    this.modalService.open(this.registeredDecisionDateModal, this.modalConfig)
+  }
+  addRegisteredDecisionDate() {
+    this.projectDeliveryDetails.deliveryDate = this.deliveryForm.value.deliveryDate;
+    this.initialDeliveryService.addDeliveryList(this.projectDeliveryDetails).subscribe(res => {
+      this.projectDeliveryDetails.id = res.data || null;
       this.modalService.dismissAll();
     });
   }

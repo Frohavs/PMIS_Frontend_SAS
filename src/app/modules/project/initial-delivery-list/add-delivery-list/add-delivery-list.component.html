@@ -100,26 +100,67 @@
     <section class="committee-info">
       <h3>2- لجنة الاستلام الابتدائي:</h3>
       <p>بناء على الاشعار المقدم من المتعاقد المنفذ للمشروع أعلاه بتاريخ
-        <span style="background-color: #A8D6FF; cursor: pointer;">&nbsp;&nbsp;&nbsp;</span> م، والمسجل لدى أمانة منطقة
+        <span style="background-color: #A8D6FF; cursor: pointer;" (click)="openNoticeModal()">
+          <ng-container *ngIf="!deliveryForm?.get('noticeDate')?.value">
+            &nbsp;&nbsp;&nbsp;
+          </ng-container>
+          <ng-container *ngIf="deliveryForm?.get('noticeDate')?.value">
+            {{deliveryForm.get('noticeDate')?.value}}
+          </ng-container>
+
+        </span>
+         م، والمسجل لدى أمانة منطقة
         الرياض برقم
-        <span style="background-color: #A8D6FF; cursor: pointer;">&nbsp;&nbsp;&nbsp;</span>
+        <span style="background-color: #A8D6FF; cursor: pointer;" (click)="openReferenceNumberModal()">
+          <ng-container *ngIf="!deliveryForm?.get('referenceNumber')?.value">
+            &nbsp;&nbsp;&nbsp;
+          </ng-container>
+          <ng-container *ngIf="deliveryForm?.get('referenceNumber')?.value">
+            {{deliveryForm.get('referenceNumber')?.value}}
+          </ng-container>
+        </span>
         ، تم
         تشكيل
         لجنة الاستلام الابتدائي " اللجنة " بتاريخ
-        <span style="background-color: #A8D6FF; cursor: pointer;">&nbsp;&nbsp;&nbsp;</span>
+        <span style="background-color: #A8D6FF; cursor: pointer;" (click)="openDeliveryDateModal()">
+          <ng-container *ngIf="!deliveryForm?.get('deliveryDate')?.value">
+            &nbsp;&nbsp;&nbsp;
+          </ng-container>
+          <ng-container *ngIf="deliveryForm?.get('deliveryDate')?.value">
+            {{deliveryForm.get('deliveryDate')?.value}}
+          </ng-container>
+        </span>
         م، لاستلام الأعمال وفق نطاق
         عمل
         المشروع الموضح اعلاه، وذلك بموجب القرار
-        الإداري المسجل برقم وتاريخ م، وتتكون اللجنة من التالية أسماؤهم:</p>
+        الإداري المسجل برقم
+        <span style="background-color: #A8D6FF; cursor: pointer;" (click)="openRegisteredDecisionNumberModal()">
+          <ng-container *ngIf="!deliveryForm?.get('registeredDecisionNumber')?.value">
+            &nbsp;&nbsp;&nbsp;
+          </ng-container>
+          <ng-container *ngIf="deliveryForm?.get('registeredDecisionNumber')?.value">
+            {{deliveryForm.get('registeredDecisionNumber')?.value}}
+          </ng-container>
+        </span>
+        وتاريخ
+        <span style="background-color: #A8D6FF; cursor: pointer;" (click)="openRegisteredDecisionDateModal()">
+          <ng-container *ngIf="!deliveryForm?.get('registeredDecisionDate')?.value">
+            &nbsp;&nbsp;&nbsp;
+          </ng-container>
+          <ng-container *ngIf="deliveryForm?.get('registeredDecisionDate')?.value">
+            {{deliveryForm.get('registeredDecisionDate')?.value}}
+          </ng-container>
+        </span>
+        م، وتتكون اللجنة من التالية أسماؤهم:</p>
 
       <ul>
         <li><strong>رئيس اللجنة:</strong> <span
-            style="background-color: #A8D6FF; cursor: pointer; width: 200px;display: inline-flex;">&nbsp;&nbsp;&nbsp;</span>
+            style="background-color: #A8D6FF; cursor: pointer; width: 300px;display: inline-flex;">&nbsp;&nbsp;&nbsp;</span>
           رئيساً
         </li>
         <br>
         <li><strong>أعضاء اللجنة:</strong> <span
-            style="background-color: #A8D6FF; cursor: pointer; width: 200px;display: inline-flex;">&nbsp;&nbsp;&nbsp;</span>
+            style="background-color: #A8D6FF; cursor: pointer; width: 300px;display: inline-flex;">&nbsp;&nbsp;&nbsp;</span>
           عضواً
         </li>
       </ul>
@@ -127,6 +168,152 @@
       <p>وقامت اللجنة بمراجعة مواصفات ورسومات العقد، كما عاينت الأعمال في الموقع وأجرت الاختبارات والفحوصات المتعلقة
         بالأعمال التي تم تنفيذها بواسطة المتعاقد، وأعدت اللجنة بناءً على أعمال المراجعة والمعاينة والاختبارات الخاصة
         بالأعمال المنجزة، المحاضر المرتبطة بتلك الأعمال.</p>
+
+      <!-- modal -->
+      <ng-template #noticeModal let-modal>
+        <div class=" modal-header">
+          <h4 class="modal-title mx-auto" id="modal-basic-title">تاريخ إشعار المتعاقد</h4>
+          <button type="button" class="btn-close mx-0" aria-label="Close"
+            (click)="modal.dismiss('Cross click')"></button>
+        </div>
+        <div class="modal-body">
+          <div class="collapse show">
+
+            <div class="fv-row mb-7">
+              <input type="date" class="form-control form-control-lg form-control-solid" formControlName="noticeDate" name="noticeDate"
+                />
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer flex-center">
+          <button type="reset" id="kt_modal_update_customer_cancel" class="btn btn-light me-3"
+            (click)="modal.dismiss('cancel')">
+            Discard
+          </button>
+
+          <button type="button" class="btn btn-primary" (click)="addNotice()">
+            <span class="indicator-label">
+              add
+            </span>
+          </button>
+        </div>
+      </ng-template>
+
+      <ng-template #refNumberModal let-modal>
+        <div class=" modal-header">
+          <h4 class="modal-title mx-auto" id="modal-basic-title">رقم التسجيل في الأمانة</h4>
+          <button type="button" class="btn-close mx-0" aria-label="Close"
+            (click)="modal.dismiss('Cross click')"></button>
+        </div>
+        <div class="modal-body">
+          <div class="collapse show">
+
+            <div class="fv-row mb-7">
+              <input type="number" class="form-control form-control-lg form-control-solid" formControlName="referenceNumber" name="referenceNumber"
+                />
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer flex-center">
+          <button type="reset" id="kt_modal_update_customer_cancel" class="btn btn-light me-3"
+            (click)="modal.dismiss('cancel')">
+            Discard
+          </button>
+
+          <button type="button" class="btn btn-primary" (click)="addRefNumber()">
+            <span class="indicator-label">
+              add
+            </span>
+          </button>
+        </div>
+      </ng-template>
+
+      <ng-template #deliveryDateModal let-modal>
+        <div class=" modal-header">
+          <h4 class="modal-title mx-auto" id="modal-basic-title">تاريخ تشكيل اللجنة</h4>
+          <button type="button" class="btn-close mx-0" aria-label="Close"
+            (click)="modal.dismiss('Cross click')"></button>
+        </div>
+        <div class="modal-body">
+          <div class="collapse show">
+
+            <div class="fv-row mb-7">
+              <input type="date" class="form-control form-control-lg form-control-solid" formControlName="deliveryDate" name="deliveryDate"
+                />
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer flex-center">
+          <button type="reset" id="kt_modal_update_customer_cancel" class="btn btn-light me-3"
+            (click)="modal.dismiss('cancel')">
+            Discard
+          </button>
+
+          <button type="button" class="btn btn-primary" (click)="addDeliveryDate()">
+            <span class="indicator-label">
+              add
+            </span>
+          </button>
+        </div>
+      </ng-template>
+
+      <ng-template #registeredDecisionNumberModal let-modal>
+        <div class=" modal-header">
+          <h4 class="modal-title mx-auto" id="modal-basic-title">رقم قرار تشكيل اللجنة</h4>
+          <button type="button" class="btn-close mx-0" aria-label="Close"
+            (click)="modal.dismiss('Cross click')"></button>
+        </div>
+        <div class="modal-body">
+          <div class="collapse show">
+
+            <div class="fv-row mb-7">
+              <input type="number" class="form-control form-control-lg form-control-solid" formControlName="registeredDecisionNumber" name="registeredDecisionNumber"
+                />
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer flex-center">
+          <button type="reset" id="kt_modal_update_customer_cancel" class="btn btn-light me-3"
+            (click)="modal.dismiss('cancel')">
+            Discard
+          </button>
+
+          <button type="button" class="btn btn-primary" (click)="addRegisteredDecisionNumber()">
+            <span class="indicator-label">
+              add
+            </span>
+          </button>
+        </div>
+      </ng-template>
+
+      <ng-template #registeredDecisionDateModal let-modal>
+        <div class=" modal-header">
+          <h4 class="modal-title mx-auto" id="modal-basic-title">تاريخ قرار تشكيل اللجنة</h4>
+          <button type="button" class="btn-close mx-0" aria-label="Close"
+            (click)="modal.dismiss('Cross click')"></button>
+        </div>
+        <div class="modal-body">
+          <div class="collapse show">
+
+            <div class="fv-row mb-7">
+              <input type="date" class="form-control form-control-lg form-control-solid" formControlName="registeredDecisionDate" name="registeredDecisionDate"
+                />
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer flex-center">
+          <button type="reset" id="kt_modal_update_customer_cancel" class="btn btn-light me-3"
+            (click)="modal.dismiss('cancel')">
+            Discard
+          </button>
+
+          <button type="button" class="btn btn-primary" (click)="addRegisteredDecisionDate()">
+            <span class="indicator-label">
+              add
+            </span>
+          </button>
+        </div>
+      </ng-template>
     </section>
 
     <!-- Contract Documents Section -->
