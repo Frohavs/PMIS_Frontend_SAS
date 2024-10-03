@@ -8,6 +8,7 @@ import { ProjectDeliverListDetails } from './add-modal';
 import { SweetAlertOptions } from 'sweetalert2';
 import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
 import { AttachmentService } from 'src/app/services/attachment/attachment.service';
+import { LookupService } from 'src/app/services/lookup/lookup.service';
 
 @Component({
   selector: 'app-add-delivery-list',
@@ -22,7 +23,7 @@ export class AddDeliveryListComponent implements OnInit {
   projectDeliveryDetails: ProjectDeliverListDetails = {
     id: null,
     brief: "",
-    isPartially: true,
+    status: 2,
     noticeDate: new Date().toISOString(),  // Set to current date/time
     referenceNumber: "",
     deliveryDate: new Date().toISOString(),  // Set to current date/time
@@ -35,21 +36,29 @@ export class AddDeliveryListComponent implements OnInit {
     imagePlan: null,
     imagePlanCopies: null,
     projectId: null,
-    managerId: null,
+    mangerId: null,
     approved: false,
     committeeMangers: [
-      {
-        id: 6,
-        name: "kmadkour",
-        email: "karim.madkour.da@gmail.com",
-        position: "Manager"
-      }
+      // {
+      //   id: 0,
+      //   name: "kmadkour",
+      //   email: "karim.madkour.da@gmail.com",
+      //   position: "Manager"
+      // },
+      // {
+      //   id: 0,
+      //   name: "motawea",
+      //   email: "karim.madkour.da@gmail.com",
+      //   position: "Manager"
+      // }
     ]
   };
-
+  managers: any[] = [];
   selectedFile: any;
   @ViewChild('attachmentInput') attachmentInput: ElementRef;
 
+  @ViewChild('managerModal') managerModal: TemplateRef<any>;
+  @ViewChild('committeeModal') committeeModal: TemplateRef<any>;
   @ViewChild('briefModal') briefModal: TemplateRef<any>;
   @ViewChild('noticeModal') noticeModal: TemplateRef<any>;
   @ViewChild('refNumberModal') refNumberModal: TemplateRef<any>;
@@ -69,13 +78,13 @@ export class AddDeliveryListComponent implements OnInit {
     modalDialogClass: 'modal-dialog modal-dialog-centered mw-650px',
   };
 
-
   constructor(
     private fb: FormBuilder,
     private router: Router,
     private _location: Location,
     private activatedRoute: ActivatedRoute,
     private cdr: ChangeDetectorRef,
+    private lookupService: LookupService,
     private modalService: NgbModal,
     private attachmentService: AttachmentService,
     private initialDeliveryService: InitialDeliveryService,
@@ -85,6 +94,7 @@ export class AddDeliveryListComponent implements OnInit {
   ngOnInit(): void {
     this.initDeliverForm();
     this.getProjectId();
+    this.getLookups()
   }
 
   getProjectId() {
@@ -103,35 +113,44 @@ export class AddDeliveryListComponent implements OnInit {
     });
   }
 
-
+  getLookups() {
+    this.lookupService.getManagerUsers().subscribe(res => {
+      this.managers = res.data;
+      this.cdr.detectChanges()
+    });
+  }
   initDeliverForm() {
     this.deliveryForm = this.fb.group({
-      isPartially: ['1', [Validators.required]],
+      status: ['1', [Validators.required]],
       brief: ['', Validators.required],
       noticeDate: ['', Validators.required],
       referenceNumber: ['', Validators.required],
       deliveryDate: ['', Validators.required],
       registeredDecisionNumber: [0, Validators.required],
       registeredDecisionDate: ['', Validators.required],
-      // committeeMangers: [null, Validators.required],
+      mangerId: [null, Validators.required],
       achievementDate: ['', Validators.required],
       attachment: ['', Validators.required],
       fixingDuration: [0, Validators.required],
       deliveryDuration: [0, Validators.required],
       imagePlanCopies: [0, Validators.required],
       imagePlan: [0, Validators.required],
+      committeeId: [0, Validators.required],
+      committeeName: ['', Validators.required],
+      committeeEmail: ['', Validators.required],
+      committeePosition: ['', Validators.required],
     });
   }
   editDeliverForm(res: any) {
     this.deliveryForm.patchValue({
-      isPartially: res.isPartially ? '1' : '2',
+      status: res.status,
       brief: res.brief,
       registeredDecisionDate: res.registeredDecisionDate.slice(0, 10) || '',
       registeredDecisionNumber: res.registeredDecisionNumber,
       deliveryDate: res.deliveryDate.slice(0, 10) || '',
       referenceNumber: res.referenceNumber,
       noticeDate: res.noticeDate.slice(0, 10) || '',
-      // committeeMangers: res.asdasdsad,
+      mangerId: res.mangerId.toString(),
       achievementDate: res.achievementDate.slice(0, 10) || '',
       attachment: res.attachment,
       fixingDuration: res.fixingDuration,
@@ -163,13 +182,56 @@ export class AddDeliveryListComponent implements OnInit {
   onSubmit() {
     console.log(this.deliveryForm.value);
   }
+
+  openManagerModal() {
+    this.modalService.open(this.managerModal, this.modalConfig)
+  }
+  addManager() {
+    this.projectDeliveryDetails.mangerId = +this.deliveryForm.value.mangerId;
+    this.initialDeliveryService.addDeliveryList(this.projectDeliveryDetails).subscribe(res => {
+      this.projectDeliveryDetails.id = res.data || null;
+      this.modalService.dismissAll();
+    });
+  }
+  getManagerName(id: number) {
+    if (id) {
+      return this.managers.find(m => m.id === id)?.name;
+    }
+  }
+  openCommitteeModal() {
+    this.modalService.open(this.committeeModal, this.modalConfig)
+  }
+  addCommittee() {
+    if (!this.deliveryForm.value.committeeName || !this.deliveryForm.value.committeeEmail || !this.deliveryForm.value.committeePosition) {
+      this.showAlert({ icon: 'error', title: 'Error!', text: 'All fields are required' });
+      return;
+    }
+    this.projectDeliveryDetails.committeeMangers.push({
+      id: this.deliveryForm.value.committeeId,
+      name: this.deliveryForm.value.committeeName,
+      email: this.deliveryForm.value.committeeEmail,
+      position: this.deliveryForm.value.committeePosition
+    });
+    delete this.deliveryForm.value.committeeId;
+    delete this.deliveryForm.value.committeeName;
+    delete this.deliveryForm.value.committeeEmail;
+    delete this.deliveryForm.value.committeePosition;
+    this.initialDeliveryService.addDeliveryList(this.projectDeliveryDetails).subscribe(res => {
+      this.projectDeliveryDetails.id = res.data || null;
+      this.modalService.dismissAll();
+    }, (error) => {
+      // this line will remove the index entered above
+      this.projectDeliveryDetails.committeeMangers.pop();
+      this.showAlert({ icon: 'error', title: 'Error!', text: 'Please try again' });
+    });
+  }
   openBriefModal() {
     this.modalService.open(this.briefModal, this.modalConfig)
   }
 
   addBrief() {
     this.projectDeliveryDetails.brief = this.deliveryForm.value.brief;
-    this.projectDeliveryDetails.isPartially = (this.deliveryForm.value.isPartially === '2' ? false : true);
+    this.projectDeliveryDetails.status = +this.deliveryForm.value.status;
     this.initialDeliveryService.addDeliveryList(this.projectDeliveryDetails).subscribe(res => {
       this.projectDeliveryDetails.id = res.data || null;
       this.modalService.dismissAll();
@@ -181,7 +243,7 @@ export class AddDeliveryListComponent implements OnInit {
 
   addNotice() {
     this.projectDeliveryDetails.noticeDate = this.deliveryForm.value.noticeDate;
-    this.projectDeliveryDetails.isPartially = (this.deliveryForm.value.isPartially === '2' ? false : true);
+    this.projectDeliveryDetails.status = +this.deliveryForm.value.status;
     this.initialDeliveryService.addDeliveryList(this.projectDeliveryDetails).subscribe(res => {
       this.projectDeliveryDetails.id = res.data || null;
       this.modalService.dismissAll();
@@ -192,7 +254,7 @@ export class AddDeliveryListComponent implements OnInit {
   }
   addRefNumber() {
     this.projectDeliveryDetails.referenceNumber = this.deliveryForm.value.referenceNumber;
-    this.projectDeliveryDetails.isPartially = (this.deliveryForm.value.isPartially === '2' ? false : true);
+    this.projectDeliveryDetails.status = +this.deliveryForm.value.status;
     this.initialDeliveryService.addDeliveryList(this.projectDeliveryDetails).subscribe(res => {
       this.projectDeliveryDetails.id = res.data || null;
       this.modalService.dismissAll();
@@ -203,7 +265,7 @@ export class AddDeliveryListComponent implements OnInit {
   }
   addDeliveryDate() {
     this.projectDeliveryDetails.deliveryDate = this.deliveryForm.value.deliveryDate;
-    this.projectDeliveryDetails.isPartially = (this.deliveryForm.value.isPartially === '2' ? false : true);
+    this.projectDeliveryDetails.status = +this.deliveryForm.value.status;
     this.initialDeliveryService.addDeliveryList(this.projectDeliveryDetails).subscribe(res => {
       this.projectDeliveryDetails.id = res.data || null;
       this.modalService.dismissAll();
@@ -214,7 +276,7 @@ export class AddDeliveryListComponent implements OnInit {
   }
   addRegisteredDecisionNumber() {
     this.projectDeliveryDetails.referenceNumber = this.deliveryForm.value.referenceNumber;
-    this.projectDeliveryDetails.isPartially = (this.deliveryForm.value.isPartially === '2' ? false : true);
+    this.projectDeliveryDetails.status = +this.deliveryForm.value.status;
     this.initialDeliveryService.addDeliveryList(this.projectDeliveryDetails).subscribe(res => {
       this.projectDeliveryDetails.id = res.data || null;
       this.modalService.dismissAll();
@@ -225,7 +287,7 @@ export class AddDeliveryListComponent implements OnInit {
   }
   addRegisteredDecisionDate() {
     this.projectDeliveryDetails.deliveryDate = this.deliveryForm.value.deliveryDate;
-    this.projectDeliveryDetails.isPartially = (this.deliveryForm.value.isPartially === '2' ? false : true);
+    this.projectDeliveryDetails.status = +this.deliveryForm.value.status;
     this.initialDeliveryService.addDeliveryList(this.projectDeliveryDetails).subscribe(res => {
       this.projectDeliveryDetails.id = res.data || null;
       this.modalService.dismissAll();
@@ -236,7 +298,7 @@ export class AddDeliveryListComponent implements OnInit {
   }
   addAchieveDate() {
     this.projectDeliveryDetails.achievementDate = this.deliveryForm.value.achievementDate;
-    this.projectDeliveryDetails.isPartially = (this.deliveryForm.value.isPartially === '2' ? false : true);
+    this.projectDeliveryDetails.status = +this.deliveryForm.value.status;
     this.initialDeliveryService.addDeliveryList(this.projectDeliveryDetails).subscribe(res => {
       this.projectDeliveryDetails.id = res.data || null;
       this.modalService.dismissAll();
@@ -248,7 +310,7 @@ export class AddDeliveryListComponent implements OnInit {
   }
   addFixingDuration() {
     this.projectDeliveryDetails.fixingDuration = this.deliveryForm.value.fixingDuration;
-    this.projectDeliveryDetails.isPartially = (this.deliveryForm.value.isPartially === '2' ? false : true);
+    this.projectDeliveryDetails.status = +this.deliveryForm.value.status;
     this.initialDeliveryService.addDeliveryList(this.projectDeliveryDetails).subscribe(res => {
       this.projectDeliveryDetails.id = res.data || null;
       this.modalService.dismissAll();
@@ -259,7 +321,7 @@ export class AddDeliveryListComponent implements OnInit {
   }
   addDeliveryDuration() {
     this.projectDeliveryDetails.deliveryDuration = this.deliveryForm.value.deliveryDuration;
-    this.projectDeliveryDetails.isPartially = (this.deliveryForm.value.isPartially === '2' ? false : true);
+    this.projectDeliveryDetails.status = +this.deliveryForm.value.status;
     this.initialDeliveryService.addDeliveryList(this.projectDeliveryDetails).subscribe(res => {
       this.projectDeliveryDetails.id = res.data || null;
       this.modalService.dismissAll();
@@ -270,7 +332,7 @@ export class AddDeliveryListComponent implements OnInit {
   }
   addImagePlan() {
     this.projectDeliveryDetails.imagePlan = this.deliveryForm.value.imagePlan;
-    this.projectDeliveryDetails.isPartially = (this.deliveryForm.value.isPartially === '2' ? false : true);
+    this.projectDeliveryDetails.status = +this.deliveryForm.value.status;
     this.initialDeliveryService.addDeliveryList(this.projectDeliveryDetails).subscribe(res => {
       this.projectDeliveryDetails.id = res.data || null;
       this.modalService.dismissAll();
@@ -281,7 +343,7 @@ export class AddDeliveryListComponent implements OnInit {
   }
   addImagePlanCopies() {
     this.projectDeliveryDetails.imagePlanCopies = this.deliveryForm.value.imagePlanCopies;
-    this.projectDeliveryDetails.isPartially = (this.deliveryForm.value.isPartially === '2' ? false : true);
+    this.projectDeliveryDetails.status = +this.deliveryForm.value.status;
     this.initialDeliveryService.addDeliveryList(this.projectDeliveryDetails).subscribe(res => {
       this.projectDeliveryDetails.id = res.data || null;
       this.modalService.dismissAll();
@@ -289,7 +351,7 @@ export class AddDeliveryListComponent implements OnInit {
   }
 
   approve() {
-    this.projectDeliveryDetails.isPartially = (this.deliveryForm.value.isPartially == '2' ? false : true);
+    this.projectDeliveryDetails.status = +this.deliveryForm.value.status;
     if (this.deliveryForm.invalid) {
       this.deliveryForm.markAllAsTouched();
       this.showAlert({ icon: 'error', title: 'Error!', text: 'all data must be filled before approve' });

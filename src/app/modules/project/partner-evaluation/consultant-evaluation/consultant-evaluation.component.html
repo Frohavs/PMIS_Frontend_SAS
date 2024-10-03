@@ -138,7 +138,7 @@
 
         <div class="fv-row mb-7">
           <label class="col-lg-12 col-form-label fw-bold fs-6">month</label>
-          <select class="form-select form-select-solid form-select-lg fw-bold" name="Type"
+          <select class="form-select form-select-solid form-select-lg fw-bold" name="selectedMonth"
             (change)="onMonthChange($event)" formControlName="selectedMonth">
             <option value="" disabled>select year...</option>
             <ng-container *ngFor="let month of months">

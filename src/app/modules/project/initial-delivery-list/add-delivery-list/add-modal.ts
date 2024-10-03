@@ -7,22 +7,21 @@ export interface CommitteeManager {
 
 export interface ProjectDeliverListDetails {
   id: number | null;
-  isPartially: boolean;
+  status: any;
   brief: string;
-  registeredDecisionDate: string; // `Date` type is an option too
-  registeredDecisionNumber: number | null;
-  deliveryDate: string; // Similarly, you can use `Date` type
+  noticeDate: string;  // Use `Date` type if you plan to work with Date objects
   referenceNumber: string;
-  noticeDate: string; // You could also use `Date` here if you plan to handle it as a Date object
-  committeeMangers: CommitteeManager[];
-  achievementDate: string; // `Date` type is an option
+  deliveryDate: string;  // Use `Date` if required
+  registeredDecisionNumber: number | null;
+  registeredDecisionDate: string;  // Use `Date` if required
+  achievementDate: string;  // Use `Date` if required
   attachment: string;
   fixingDuration: number | null;
   deliveryDuration: number | null;
-  imagePlanCopies: number | null;
   imagePlan: number | null;
-
+  imagePlanCopies: number | null;
   projectId: number | null;
-  managerId: number | null;
+  mangerId: number | null;
   approved: boolean;
+  committeeMangers: CommitteeManager[];
 }

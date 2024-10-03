@@ -55,10 +55,10 @@
             <td colspan="2"><strong>نوع الاستلام:</strong></td>
             <td colspan="2">
               <label>
-                <input type="radio" formControlName="isPartially" value="1"> استلام كلي
+                <input type="radio" formControlName="status" value="1"> استلام جزئي
               </label>
               <label>
-                <input type="radio" formControlName="isPartially" value="2"> استلام جزئي
+                <input type="radio" formControlName="status" value="2"> استلام كلي
               </label>
             </td>
           </tr>
@@ -162,15 +162,109 @@
         م، وتتكون اللجنة من التالية أسماؤهم:</p>
 
       <ul>
-        <li><strong>رئيس اللجنة:</strong> <span
-            style="background-color: #A8D6FF; cursor: pointer; width: 300px;display: inline-flex;">&nbsp;&nbsp;&nbsp;</span>
+        <li><strong>رئيس اللجنة:</strong>
+          <span style="background-color: #A8D6FF; cursor: pointer;width: 300px;display: inline-flex;"
+            (click)="openManagerModal()">
+            <ng-container *ngIf="!deliveryForm?.get('mangerId')?.value">
+              &nbsp;&nbsp;&nbsp;
+            </ng-container>
+            <ng-container *ngIf="deliveryForm?.get('mangerId')?.value">
+              &nbsp;&nbsp;&nbsp;{{getManagerName(deliveryForm.get('mangerId')?.value)}}
+            </ng-container>
+          </span>
           رئيساً
         </li>
+        <ng-template #managerModal let-modal>
+          <div class=" modal-header">
+            <h4 class="modal-title mx-auto" id="modal-basic-title">رئيس اللجنة</h4>
+            <button type="button" class="btn-close mx-0" aria-label="Close"
+              (click)="modal.dismiss('Cross click')"></button>
+          </div>
+          <div class="modal-body">
+            <div class="collapse show">
+
+              <div class="fv-row mb-7">
+                <select class="form-select form-select-solid form-select-lg fw-bold" name="mangerId"
+                  formControlName="mangerId">
+                  <option value="" disabled>select ...</option>
+                  <ng-container *ngFor="let manager of managers">
+                    <option [value]="manager.id">{{manager?.name}}</option>
+                  </ng-container>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer flex-center">
+            <button type="reset" id="kt_modal_update_customer_cancel" class="btn btn-light me-3"
+              (click)="modal.dismiss('cancel')">
+              Discard
+            </button>
+
+            <button type="button" class="btn btn-primary" (click)="addManager()">
+              <span class="indicator-label">
+                add
+              </span>
+            </button>
+          </div>
+        </ng-template>
         <br>
-        <li><strong>أعضاء اللجنة:</strong> <span
-            style="background-color: #A8D6FF; cursor: pointer; width: 300px;display: inline-flex;">&nbsp;&nbsp;&nbsp;</span>
-          عضواً
+        <li><strong>أعضاء اللجنة:</strong>
+          <div class="d-flex flex-column">
+            <span
+              style="background-color: #A8D6FF; cursor: pointer;width: 300px;display: inline-flex;margin-bottom: 5px;"
+              (click)="openCommitteeModal()">
+              <ng-container *ngIf="!projectDeliveryDetails.committeeMangers.length">
+                &nbsp;&nbsp;&nbsp;
+              </ng-container>
+            </span>
+            <span
+              style="background-color: #A8D6FF; cursor: pointer;width: 300px;display: inline-flex;margin-bottom: 5px;"
+              (click)="openCommitteeModal()" *ngFor="let item of projectDeliveryDetails?.committeeMangers">
+              <ng-container *ngIf="projectDeliveryDetails.committeeMangers.length">
+                <span>
+                  &nbsp;{{item.name}}&nbsp;
+                </span>
+              </ng-container>
+            </span>
+          </div>
         </li>
+        <ng-template #committeeModal let-modal>
+          <div class=" modal-header">
+            <h4 class="modal-title mx-auto" id="modal-basic-title">member Details</h4>
+            <button type="button" class="btn-close mx-0" aria-label="Close"
+              (click)="modal.dismiss('Cross click')"></button>
+          </div>
+          <div class="modal-body">
+            <div class="collapse show">
+
+              <div class="fv-row mb-7">
+                <input type="text" class="form-control form-control-lg form-control-solid"
+                  formControlName="committeeName" name="committeeName" placeholder="name" />
+              </div>
+              <div class="fv-row mb-7">
+                <input type="text" class="form-control form-control-lg form-control-solid"
+                  formControlName="committeeEmail" name="committeeEmail" placeholder="email" />
+              </div>
+              <div class="fv-row mb-7">
+                <input type="text" class="form-control form-control-lg form-control-solid"
+                  formControlName="committeePosition" name="committeePosition" placeholder="position" />
+              </div>
+
+            </div>
+          </div>
+          <div class="modal-footer flex-center">
+            <button type="reset" id="kt_modal_update_customer_cancel" class="btn btn-light me-3"
+              (click)="modal.dismiss('cancel')">
+              Discard
+            </button>
+
+            <button type="button" class="btn btn-primary" (click)="addCommittee()">
+              <span class="indicator-label">
+                add
+              </span>
+            </button>
+          </div>
+        </ng-template>
       </ul>
 
       <p>وقامت اللجنة بمراجعة مواصفات ورسومات العقد، كما عاينت الأعمال في الموقع وأجرت الاختبارات والفحوصات المتعلقة
