@@ -25,31 +25,31 @@
         <tbody>
           <tr>
             <td><strong>رقم العقد</strong></td>
-            <td>6</td>
+            <td>{{projectDetails?.contractNo}}</td>
             <td><strong>تاريخ العقد</strong></td>
-            <td>02-09-2019</td>
+            <td>{{projectDetails?.createdDate | date:'yyyy-MM-dd'}}</td>
           </tr>
           <tr>
             <td><strong>اسم المشروع</strong></td>
-            <td colspan="3">تحسين المشهد الحضري بمحاور الطرق بشمال مدينة الرياض</td>
+            <td colspan="3">{{projectDetails?.nameAr}}</td>
           </tr>
           <tr>
             <td><strong>المقاول المنفذ</strong></td>
-            <td>شركه يوكسيل انشاءات المساهمه</td>
+            <td>{{projectDetails?.contractorName}}</td>
             <td><strong>الاستشاري المشرف</strong></td>
-            <td>شركة مشاري ناصر الشثري وشريكه للاستشارات الهندسية (مهنية)</td>
+            <td>{{projectDetails?.consultantName}}</td>
           </tr>
           <tr>
             <td><strong>الإدارة المشرفة</strong></td>
             <td>إدارة الإشراف والتنفيذ للطرق</td>
             <td><strong>تاريخ تسليم الموقع</strong></td>
-            <td>2019-10-17</td>
+            <td>{{projectDetails?.expectedFinishDate |  date:'yyyy-MM-dd' || '--'}}</td>
           </tr>
           <tr>
             <td><strong>مدة المشروع شامل التمديد (باليوم)</strong></td>
-            <td>731</td>
+            <td>{{projectDetails?.originalDuration}}</td>
             <td><strong>تاريخ المقرر للاستلام الابتدائي</strong></td>
-            <td>2022-10-22</td>
+            <td>{{projectDetails?.originalFinishDate |  date:'yyyy-MM-dd' || '--'}}</td>
           </tr>
           <tr>
             <td colspan="2"><strong>نوع الاستلام:</strong></td>

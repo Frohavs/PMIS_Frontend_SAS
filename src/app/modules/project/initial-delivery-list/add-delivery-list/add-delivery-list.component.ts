@@ -9,6 +9,7 @@ import { SweetAlertOptions } from 'sweetalert2';
 import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
 import { AttachmentService } from 'src/app/services/attachment/attachment.service';
 import { LookupService } from 'src/app/services/lookup/lookup.service';
+import { ProjectsService } from 'src/app/services/projects.service';
 
 @Component({
   selector: 'app-add-delivery-list',
@@ -57,6 +58,7 @@ export class AddDeliveryListComponent implements OnInit {
   selectedFile: any;
   @ViewChild('attachmentInput') attachmentInput: ElementRef;
 
+  projectDetails: any;
   @ViewChild('managerModal') managerModal: TemplateRef<any>;
   @ViewChild('committeeModal') committeeModal: TemplateRef<any>;
   @ViewChild('briefModal') briefModal: TemplateRef<any>;
@@ -87,6 +89,7 @@ export class AddDeliveryListComponent implements OnInit {
     private lookupService: LookupService,
     private modalService: NgbModal,
     private attachmentService: AttachmentService,
+    private projectsService: ProjectsService,
     private initialDeliveryService: InitialDeliveryService,
 
   ) { }
@@ -101,6 +104,7 @@ export class AddDeliveryListComponent implements OnInit {
     this.activatedRoute.params.subscribe(params => {
       this.projectId = +params['id'];
       this.projectDeliveryDetails.projectId = this.projectId;
+      this.getProjectDetails();
     });
     this.activatedRoute.queryParams.subscribe(params => {
       this.listId = +params['listId'];
@@ -110,6 +114,13 @@ export class AddDeliveryListComponent implements OnInit {
           this.editDeliverForm(res.data);
         });
       }
+    });
+  }
+
+  getProjectDetails() {
+    this.projectsService.getByID(this.projectId).subscribe(res => {
+      this.projectDetails = res.data;
+      this.cdr.detectChanges();
     });
   }
 
