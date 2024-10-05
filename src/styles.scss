@@ -10,3 +10,9 @@
 @import "./assets/plugins/keenicons/outline/style.css";
 @import "./assets/plugins/keenicons/solid/style.css";
 
+
+@media print {
+   #kt_app_header {
+    display: none !important;
+  }
+}
