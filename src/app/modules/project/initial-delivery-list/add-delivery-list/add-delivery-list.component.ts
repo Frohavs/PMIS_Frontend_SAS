@@ -143,7 +143,7 @@ export class AddDeliveryListComponent implements OnInit {
   }
   editDeliverForm(res: any) {
     this.deliveryForm.patchValue({
-      status: res.status,
+      status: res.status.toString(),
       brief: res.brief,
       registeredDecisionDate: res.registeredDecisionDate.slice(0, 10) || '',
       registeredDecisionNumber: res.registeredDecisionNumber,
