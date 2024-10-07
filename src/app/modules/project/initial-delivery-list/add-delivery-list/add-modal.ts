@@ -9,17 +9,19 @@ export interface ProjectDeliverListDetails {
   id: number | null;
   status: any;
   brief: string;
-  noticeDate: string;  // Use `Date` type if you plan to work with Date objects
-  referenceNumber: string;
-  deliveryDate: string;  // Use `Date` if required
+  noticeDate: string | null;  // Use `Date` type if you plan to work with Date objects
+  referenceNumber: string | null;
+  deliveryDate: string | null;  // Use `Date` if required
   registeredDecisionNumber: number | null;
-  registeredDecisionDate: string;  // Use `Date` if required
-  achievementDate: string;  // Use `Date` if required
+  registeredDecisionDate: string | null;  // Use `Date` if required
+  achievementDate: string | null;  // Use `Date` if required
   attachment: string;
   fixingDuration: number | null;
   deliveryDuration: number | null;
   imagePlan: number | null;
   imagePlanCopies: number | null;
+  contractorSignature: string | null;
+  consultantSignature: string | null;
   projectId: number | null;
   mangerId: number | null;
   approved: boolean;

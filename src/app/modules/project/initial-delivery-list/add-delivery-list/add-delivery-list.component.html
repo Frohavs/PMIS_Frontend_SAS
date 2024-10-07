@@ -213,14 +213,14 @@
             <span
               style="background-color: #A8D6FF; cursor: pointer;width: 300px;display: inline-flex;margin-bottom: 5px;"
               (click)="openCommitteeModal()">
-              <ng-container *ngIf="!projectDeliveryDetails.committeeMangers.length">
+              <ng-container *ngIf="!projectDeliveryDetails.committeeMangers?.length">
                 &nbsp;&nbsp;&nbsp;
               </ng-container>
             </span>
             <span
               style="background-color: #A8D6FF; cursor: pointer;width: 300px;display: inline-flex;margin-bottom: 5px;"
               (click)="openCommitteeModal()" *ngFor="let item of projectDeliveryDetails?.committeeMangers">
-              <ng-container *ngIf="projectDeliveryDetails.committeeMangers.length">
+              <ng-container *ngIf="projectDeliveryDetails.committeeMangers?.length">
                 <span>
                   &nbsp;{{item.name}}&nbsp;
                 </span>
@@ -738,24 +738,32 @@
       <p><strong>اسم المفوض:</strong> م/مصطفي نبيل محمد</p>
       <p><strong>الصــــــــــــفة:</strong> مدير مشروع مقاول</p>
       <p><strong>التوقيــــــــع:</strong>
-        <span (click)="signContractor()"
+        <span (click)="signContractor()" *ngIf="!projectDeliveryDetails.contractorSignature"
           style="background-color: #A8D6FF; cursor: pointer;width: fit-content;display: inline-flex;margin-bottom: 5px;">
           _____________
         </span>
+        <ng-container *ngIf="projectDeliveryDetails.contractorSignature">
+          <img [src]="projectDeliveryDetails.contractorSignature" alt="sign">
+        </ng-container>
+
       </p>
-      <p><strong>الختـــــــــــم:</strong> _____________</p>
+      <p><strong>الختـــــــــــم:</strong>  </p>
 
       <h3>الاستشاري:</h3>
       <p>شركة مشاري ناصر الشثري وشريكه للاستشارات الهندسية (مهنية)</p>
       <p><strong>اسم المفوض:</strong> م. مصطفى حلمي</p>
       <p><strong>الصــــــــــــفة:</strong> مدير مشروع إستشاري</p>
       <p><strong>التوقيــــــــع:</strong>
-        <span (click)="signConsultant()"
+        <span (click)="signConsultant()" *ngIf="!projectDeliveryDetails.consultantSignature"
           style="background-color: #A8D6FF; cursor: pointer;width: fit-content;display: inline-flex;margin-bottom: 5px;">
           _____________
         </span>
+        <ng-container *ngIf="projectDeliveryDetails.consultantSignature">
+          <img [src]="projectDeliveryDetails.consultantSignature" alt="sign">
+        </ng-container>
+
       </p>
-      <p><strong>الختـــــــــــم:</strong> _____________</p>
+      <p><strong>الختـــــــــــم:</strong>  </p>
     </section>
 
     <!-- Acceptance Committee Section -->
@@ -788,8 +796,14 @@
     <section class="final-approval">
       <p>تاريخ الانشاء: 28/09/2024</p>
       <p>بواسطة: Admin</p>
-      <a class="btn btn-sm btn-success" (click)="approve();onSubmit()">
-        الإعتماد النهائي
+      <a class="btn btn-sm"
+      [ngClass]="{
+        'btn-success': !projectDeliveryDetails.approved,
+        'btn-info': projectDeliveryDetails.approved
+      }"
+        (click)="approve()">
+        {{!projectDeliveryDetails.approved ? 'الإعتماد النهائي' : 'معتمد'}}
+
       </a>
       <p>رقم العقد: (6)</p>
     </section>
@@ -855,4 +869,3 @@
     </a>
   </div>
 </div>
-

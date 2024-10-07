@@ -26,17 +26,19 @@ export class AddDeliveryListComponent implements OnInit {
     id: null,
     brief: "",
     status: 2,
-    noticeDate: new Date().toISOString(),  // Set to current date/time
-    referenceNumber: "",
-    deliveryDate: new Date().toISOString(),  // Set to current date/time
+    noticeDate: null,  // Set to current date/time
+    referenceNumber: null,
+    deliveryDate: null,  // Set to current date/time
     registeredDecisionNumber: null,
-    registeredDecisionDate: new Date().toISOString(),  // Set to current date/time
-    achievementDate: new Date().toISOString(),  // Set to current date/time
+    registeredDecisionDate: null,  // Set to current date/time
+    achievementDate: null,  // Set to current date/time
     attachment: "",
     fixingDuration: null,
     deliveryDuration: null,
     imagePlan: null,
     imagePlanCopies: null,
+    contractorSignature: null,
+    consultantSignature: null,
     projectId: null,
     mangerId: null,
     approved: false,
@@ -84,7 +86,7 @@ export class AddDeliveryListComponent implements OnInit {
   @ViewChild('signature')
   public signaturePad: SignaturePadComponent;
   showSignaturePad: boolean = false;
-
+  activeSignContractor = false;
   signaturePadOptions: NgSignaturePadOptions = { // passed through to szimek/signature_pad constructor
     minWidth: 5,
     canvasWidth: 250,
@@ -148,8 +150,8 @@ export class AddDeliveryListComponent implements OnInit {
       status: ['1', [Validators.required]],
       brief: ['', Validators.required],
       noticeDate: ['', Validators.required],
-      referenceNumber: ['', Validators.required],
-      deliveryDate: ['', Validators.required],
+      referenceNumber: [0, Validators.required],
+      deliveryDate: [null, Validators.required],
       registeredDecisionNumber: [0, Validators.required],
       registeredDecisionDate: ['', Validators.required],
       mangerId: [null, Validators.required],
@@ -158,6 +160,8 @@ export class AddDeliveryListComponent implements OnInit {
       fixingDuration: [0, Validators.required],
       deliveryDuration: [0, Validators.required],
       imagePlanCopies: [0, Validators.required],
+      contractorSignature: ['', Validators.required],
+      consultantSignature: ['', Validators.required],
       imagePlan: [0, Validators.required],
       committeeId: [0, Validators.required],
       committeeName: ['', Validators.required],
@@ -167,21 +171,40 @@ export class AddDeliveryListComponent implements OnInit {
   }
   editDeliverForm(res: any) {
     this.deliveryForm.patchValue({
-      status: res.status.toString(),
+      status: res.status?.toString(),
       brief: res.brief,
-      registeredDecisionDate: res.registeredDecisionDate.slice(0, 10) || '',
+      registeredDecisionDate: res.registeredDecisionDate?.slice(0, 10) || '',
       registeredDecisionNumber: res.registeredDecisionNumber,
-      deliveryDate: res.deliveryDate.slice(0, 10) || '',
+      deliveryDate: res.deliveryDate?.slice(0, 10) || '',
       referenceNumber: res.referenceNumber,
-      noticeDate: res.noticeDate.slice(0, 10) || '',
-      mangerId: res.mangerId.toString(),
-      achievementDate: res.achievementDate.slice(0, 10) || '',
+      noticeDate: res.noticeDate?.slice(0, 10) || '',
+      mangerId: res.mangerId?.toString(),
+      committeeMangers: res.committeeMangers ? res.committeeMangers : [],
+      achievementDate: res.achievementDate?.slice(0, 10) || '',
       attachment: res.attachment,
       fixingDuration: res.fixingDuration,
       deliveryDuration: res.deliveryDuration,
       imagePlanCopies: res.imagePlanCopies,
+      contractorSignature: res.contractorSignature,
+      consultantSignature: res.consultantSignature,
       imagePlan: res.imagePlan,
     });
+    this.projectDeliveryDetails.brief = res.brief
+    this.projectDeliveryDetails.registeredDecisionDate = res.registeredDecisionDate
+    this.projectDeliveryDetails.registeredDecisionNumber = res.registeredDecisionNumber
+    this.projectDeliveryDetails.deliveryDate = res.deliveryDate
+    this.projectDeliveryDetails.referenceNumber = res.referenceNumber
+    this.projectDeliveryDetails.noticeDate = res.noticeDate
+    this.projectDeliveryDetails.mangerId = res.mangerId
+    this.projectDeliveryDetails.committeeMangers = res.committeeMangers ? res.committeeMangers : [];
+    this.projectDeliveryDetails.achievementDate = res.achievementDate
+    this.projectDeliveryDetails.fixingDuration = res.fixingDuration
+    this.projectDeliveryDetails.deliveryDuration = res.deliveryDuration
+    this.projectDeliveryDetails.imagePlanCopies = res.imagePlanCopies
+    this.projectDeliveryDetails.consultantSignature = res.consultantSignature
+    this.projectDeliveryDetails.contractorSignature = res.contractorSignature
+    this.projectDeliveryDetails.imagePlan = res.imagePlan
+    this.projectDeliveryDetails.approved = res.approved
     this.cdr.detectChanges();
   }
 
@@ -200,11 +223,6 @@ export class AddDeliveryListComponent implements OnInit {
       this.attachmentInput.nativeElement.value = '';
       this.showAlert({ icon: 'error', title: 'Error!', text: 'Please try upload again' });
     });
-  }
-
-  // Optional method to handle form submission or changes
-  onSubmit() {
-    console.log(this.deliveryForm.value);
   }
 
   openManagerModal() {
@@ -299,7 +317,7 @@ export class AddDeliveryListComponent implements OnInit {
     this.modalService.open(this.registeredDecisionNumberModal, this.modalConfig)
   }
   addRegisteredDecisionNumber() {
-    this.projectDeliveryDetails.referenceNumber = this.deliveryForm.value.referenceNumber;
+    this.projectDeliveryDetails.registeredDecisionNumber = this.deliveryForm.value.registeredDecisionNumber;
     this.projectDeliveryDetails.status = +this.deliveryForm.value.status;
     this.initialDeliveryService.addDeliveryList(this.projectDeliveryDetails).subscribe(res => {
       this.projectDeliveryDetails.id = res.data || null;
@@ -310,7 +328,7 @@ export class AddDeliveryListComponent implements OnInit {
     this.modalService.open(this.registeredDecisionDateModal, this.modalConfig)
   }
   addRegisteredDecisionDate() {
-    this.projectDeliveryDetails.deliveryDate = this.deliveryForm.value.deliveryDate;
+    this.projectDeliveryDetails.registeredDecisionDate = this.deliveryForm.value.registeredDecisionDate;
     this.projectDeliveryDetails.status = +this.deliveryForm.value.status;
     this.initialDeliveryService.addDeliveryList(this.projectDeliveryDetails).subscribe(res => {
       this.projectDeliveryDetails.id = res.data || null;
@@ -375,10 +393,12 @@ export class AddDeliveryListComponent implements OnInit {
   }
 
   signContractor() {
+    this.activeSignContractor = true;
     // this.signatureStage = rfpSignature?.signatureStageId;
     this.toggleSignaturePad()
   }
   signConsultant() {
+    this.activeSignContractor = false;
     // this.signatureStage = rfpSignature?.signatureStageId;
     this.toggleSignaturePad()
   }
@@ -395,11 +415,11 @@ export class AddDeliveryListComponent implements OnInit {
 
   drawComplete(event: MouseEvent | Touch) {
     // will be notified of szimek/signature_pad's onEnd event
-    console.log('Completed drawing', event);
+    // console.log('Completed drawing', event);
   }
 
   drawStart(event: MouseEvent | Touch) {
-    console.log('Start drawing', event);
+    // console.log('Start drawing', event);
   }
   // Method to clear the signature
   clearSignature() {
@@ -412,10 +432,18 @@ export class AddDeliveryListComponent implements OnInit {
     const payload = {
       signature: this.signaturePad.toDataURL('image/png')
     }
-    // this.initialDeliveryService.updateRFPSignatureSigns(payload).subscribe(res => {
-    //   this.refreshData()
-    //   this.toggleSignaturePad()
-    // });
+    if (this.activeSignContractor) {
+      this.projectDeliveryDetails.contractorSignature = payload.signature;
+      this.deliveryForm.value.contractorSignature = payload.signature;
+    } else {
+      this.projectDeliveryDetails.consultantSignature = payload.signature;
+      this.deliveryForm.value.consultantSignature = payload.signature;
+    }
+    this.initialDeliveryService.addDeliveryList(this.projectDeliveryDetails).subscribe(res => {
+      this.projectDeliveryDetails.id = res.data || null;
+    });
+    this.cdr.detectChanges();
+    this.toggleSignaturePad();
   }
 
   approve() {
@@ -428,7 +456,7 @@ export class AddDeliveryListComponent implements OnInit {
     this.projectDeliveryDetails.approved = true;
     this.initialDeliveryService.addDeliveryList(this.projectDeliveryDetails).subscribe(res => {
       this.showAlert({ icon: 'success', title: 'Success!', text: 'Approved successfully!' });
-
+      this.back();
     }, (error) => {
       this.showAlert({ icon: 'error', title: 'Error!', text: 'Please try again' });
     });

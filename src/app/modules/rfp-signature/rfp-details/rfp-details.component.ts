@@ -107,11 +107,11 @@ export class RfpDetailsComponent implements OnInit, AfterViewInit {
 
   drawComplete(event: MouseEvent | Touch) {
     // will be notified of szimek/signature_pad's onEnd event
-    console.log('Completed drawing', event);
+    // console.log('Completed drawing', event);
   }
 
   drawStart(event: MouseEvent | Touch) {
-    console.log('Start drawing', event);
+    // console.log('Start drawing', event);
   }
   // Method to clear the signature
   clearSignature() {
