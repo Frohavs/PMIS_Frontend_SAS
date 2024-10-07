@@ -55,6 +55,7 @@ import { AddRiskComponent } from './risk-management/add-risk/add-risk.component'
 import { RiskDetailsComponent } from './risk-management/risk-details/risk-details.component';
 import { InitialDeliveryListComponent } from './initial-delivery-list/initial-delivery-list.component';
 import { AddDeliveryListComponent } from './initial-delivery-list/add-delivery-list/add-delivery-list.component';
+import { AngularSignaturePadModule } from '@almothafar/angular-signature-pad';
 
 
 @NgModule({
@@ -135,7 +136,8 @@ import { AddDeliveryListComponent } from './initial-delivery-list/add-delivery-l
     DropdownMenusModule,
     SweetAlert2Module.forChild(),
     SharedModule,
-    NgxCurrencyDirective
+    NgxCurrencyDirective,
+    AngularSignaturePadModule
   ]
 })
 export class ProjectModule { }

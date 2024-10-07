@@ -71,12 +71,18 @@ export class UpdateProgressInfoComponent implements OnInit {
   }
 
   getFormValues() {
-    this.projectsService.GetProgressInfo(this.projectId).subscribe(res => {
+    this.projectsService.GetProgressInfo(this.projectId).subscribe((res: any) => {
+      const actualPercentageControl = this.UpdateProgressForm.get('actualPercentage');
+      if (actualPercentageControl && !res) {
+        this.UpdateProgressForm.get('actualPercentage')?.disable();
+        this.cdr.detectChanges();
+        return;
+      }
       this.UpdateProgressForm.patchValue({
-        plannedProgress: res.data.plannedProgress,
-        actualPercentage: res.data.actualPercentage,
-        difference: res.data.difference,
-        status: res.data.status,
+        plannedProgress: res?.data.plannedProgress,
+        actualPercentage: res?.data.actualPercentage,
+        difference: res?.data.difference,
+        status: res?.data.status,
         // attachment: res.data.attachment
       });
     });

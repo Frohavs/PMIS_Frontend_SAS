@@ -10,6 +10,7 @@ import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
 import { AttachmentService } from 'src/app/services/attachment/attachment.service';
 import { LookupService } from 'src/app/services/lookup/lookup.service';
 import { ProjectsService } from 'src/app/services/projects.service';
+import { NgSignaturePadOptions, SignaturePadComponent } from '@almothafar/angular-signature-pad';
 
 @Component({
   selector: 'app-add-delivery-list',
@@ -78,6 +79,18 @@ export class AddDeliveryListComponent implements OnInit {
 
   modalConfig: NgbModalOptions = {
     modalDialogClass: 'modal-dialog modal-dialog-centered mw-650px',
+  };
+
+  @ViewChild('signature')
+  public signaturePad: SignaturePadComponent;
+  showSignaturePad: boolean = false;
+
+  signaturePadOptions: NgSignaturePadOptions = { // passed through to szimek/signature_pad constructor
+    minWidth: 5,
+    canvasWidth: 250,
+    canvasHeight: 150,
+    backgroundColor: 'rgba(0,0,0,0)',  // Ensures transparent background
+    penColor: 'black'
   };
 
   constructor(
@@ -361,6 +374,50 @@ export class AddDeliveryListComponent implements OnInit {
     });
   }
 
+  signContractor() {
+    // this.signatureStage = rfpSignature?.signatureStageId;
+    this.toggleSignaturePad()
+  }
+  signConsultant() {
+    // this.signatureStage = rfpSignature?.signatureStageId;
+    this.toggleSignaturePad()
+  }
+
+  // Method to toggle the signature pad visibility
+  toggleSignaturePad() {
+    this.showSignaturePad = !this.showSignaturePad;
+
+    // If hiding, clear the signature
+    if (!this.showSignaturePad) {
+      this.clearSignature();
+    }
+  }
+
+  drawComplete(event: MouseEvent | Touch) {
+    // will be notified of szimek/signature_pad's onEnd event
+    console.log('Completed drawing', event);
+  }
+
+  drawStart(event: MouseEvent | Touch) {
+    console.log('Start drawing', event);
+  }
+  // Method to clear the signature
+  clearSignature() {
+    if (this.signaturePad) {
+      this.signaturePad.clear();
+    }
+  }
+
+  saveSignature() {
+    const payload = {
+      signature: this.signaturePad.toDataURL('image/png')
+    }
+    // this.initialDeliveryService.updateRFPSignatureSigns(payload).subscribe(res => {
+    //   this.refreshData()
+    //   this.toggleSignaturePad()
+    // });
+  }
+
   approve() {
     this.projectDeliveryDetails.status = +this.deliveryForm.value.status;
     if (this.deliveryForm.invalid) {
@@ -372,6 +429,8 @@ export class AddDeliveryListComponent implements OnInit {
     this.initialDeliveryService.addDeliveryList(this.projectDeliveryDetails).subscribe(res => {
       this.showAlert({ icon: 'success', title: 'Success!', text: 'Approved successfully!' });
 
+    }, (error) => {
+      this.showAlert({ icon: 'error', title: 'Error!', text: 'Please try again' });
     });
   }
 

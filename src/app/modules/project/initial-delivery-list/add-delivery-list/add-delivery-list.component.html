@@ -423,20 +423,19 @@
       <h3>3- مستندات العقد:</h3>
       <p>تختص هذه الشهادة بالأعمال التي تم تنفيذها بموجب عقد مشروع (
         <span class="focus">
-          تحسين المشهد الحضري بمحاور الطرق بشمال مدينة
-          الرياض
+          {{projectDetails?.nameAr}}
         </span>
         )رقم (
         <span class="focus">
-          6
+          {{projectDetails?.contractNo}}
         </span>
         ) والمؤرخ في (
         <span class="focus">
-          02-09-2019
+          {{projectDetails?.createdOn |  date:'yyyy-MM-dd' || '--'}}
         </span>
         ) بين أمانة منطقة الرياض "المالك" وبين (
         <span class="focus">
-          شركه يوكسيل انشاءات المساهمه
+          {{projectDetails?.contractorName}}
         </span>
         )
         "المتعاقد".</p>
@@ -451,16 +450,16 @@
       <h3>4- تاريخ الإنجاز:</h3>
       <p>تنص مستندات العقد على ان مدة المشروع هي (
         <span class="focus">
-          0
+          {{projectDetails?.originalDuration}}
         </span>
         ) يوم فقط من تاريخ تسليم الموقع المؤرخ في
         <span class="focus">
-          2019-10-17
+          {{projectDetails?.originalFinishDate |  date:'yyyy-MM-dd' || '--'}}
         </span>
         م، تم تمديدها
         لفترات مختلفة بلغ مجموعها (
         <span class="focus">
-          455
+          {{projectDetails?.originalDuration}}
         </span>
         ) أيام بموجب أوامر التغيير والتمديد المعتمدة، وفترة مسؤولية عن العيوب لمدة لا
         تقل
@@ -738,14 +737,24 @@
       <p>شركه يوكسيل انشاءات المساهمه</p>
       <p><strong>اسم المفوض:</strong> م/مصطفي نبيل محمد</p>
       <p><strong>الصــــــــــــفة:</strong> مدير مشروع مقاول</p>
-      <p><strong>التوقيــــــــع:</strong> _____________</p>
+      <p><strong>التوقيــــــــع:</strong>
+        <span (click)="signContractor()"
+          style="background-color: #A8D6FF; cursor: pointer;width: fit-content;display: inline-flex;margin-bottom: 5px;">
+          _____________
+        </span>
+      </p>
       <p><strong>الختـــــــــــم:</strong> _____________</p>
 
       <h3>الاستشاري:</h3>
       <p>شركة مشاري ناصر الشثري وشريكه للاستشارات الهندسية (مهنية)</p>
       <p><strong>اسم المفوض:</strong> م. مصطفى حلمي</p>
       <p><strong>الصــــــــــــفة:</strong> مدير مشروع إستشاري</p>
-      <p><strong>التوقيــــــــع:</strong> _____________</p>
+      <p><strong>التوقيــــــــع:</strong>
+        <span (click)="signConsultant()"
+          style="background-color: #A8D6FF; cursor: pointer;width: fit-content;display: inline-flex;margin-bottom: 5px;">
+          _____________
+        </span>
+      </p>
       <p><strong>الختـــــــــــم:</strong> _____________</p>
     </section>
 
@@ -828,3 +837,22 @@
 
 <swal #noticeSwal [swalOptions]="swalOptions">
 </swal>
+
+
+<div class="signature_container" *ngIf="showSignaturePad">
+
+  <signature-pad #signature [options]="signaturePadOptions" (drawStart)="drawStart($event)"
+    (drawEnd)="drawComplete($event)"></signature-pad>
+  <div class="btn_wrapper">
+    <a class="btn btn-light-danger font-weight-bolder font-size-sm cursor-pointer" (click)="toggleSignaturePad()">
+      discard
+    </a>
+    <a class="btn btn-secondary font-weight-bolder font-size-sm cursor-pointer" (click)="clearSignature()">
+      clear
+    </a>
+    <a class="btn btn-light-primary font-weight-bolder font-size-sm cursor-pointer" (click)="saveSignature()">
+      save
+    </a>
+  </div>
+</div>
+

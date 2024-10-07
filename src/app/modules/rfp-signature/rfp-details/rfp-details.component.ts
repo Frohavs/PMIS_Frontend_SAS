@@ -2,8 +2,7 @@ import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnInit, ViewCh
 import { ActivatedRoute, Router } from '@angular/router';
 import { RfpService } from 'src/app/services/rfp.service';
 import { Location } from '@angular/common';
-import { NgSignaturePadOptions } from '@almothafar/angular-signature-pad';
-import { SignaturePadComponent } from '@almothafar/angular-signature-pad';
+import { NgSignaturePadOptions, SignaturePadComponent } from '@almothafar/angular-signature-pad';
 
 @Component({
   selector: 'app-rfp-details',
@@ -59,12 +58,12 @@ export class RfpDetailsComponent implements OnInit, AfterViewInit {
   signAuthor(rfpSignature: any) {
     this.currentId = rfpSignature?.id;
     this.signatureStage = rfpSignature?.signatureStageId;
-    this.toggleSignaturePad()
+    this.toggleSignaturePad();
   }
   signChecker(rfpSignature: any) {
     this.currentId = rfpSignature?.id;
     this.signatureStage = rfpSignature?.signatureStageId;
-    this.toggleSignaturePad()
+    this.toggleSignaturePad();
   }
   signReviewer(rfpSignature: any) {
     this.currentId = rfpSignature?.id;
