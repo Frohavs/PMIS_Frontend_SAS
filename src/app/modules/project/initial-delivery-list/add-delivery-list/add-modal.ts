@@ -3,6 +3,8 @@ export interface CommitteeManager {
   name: string;
   email: string;
   position: string;
+  signature?: string;
+  date?: string;
 }
 
 export interface ProjectDeliverListDetails {

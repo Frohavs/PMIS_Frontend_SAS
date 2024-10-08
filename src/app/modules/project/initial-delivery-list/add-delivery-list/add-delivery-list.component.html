@@ -782,12 +782,12 @@
           </tr>
         </thead>
         <tbody>
-          <!-- <tr>
-          <td>__________</td>
-          <td>__________</td>
-          <td>__________</td>
-          <td>__________</td>
-        </tr> -->
+          <tr *ngFor="let item of projectDeliveryDetails?.committeeMangers">
+          <td>{{item?.name}}</td>
+          <td>{{item?.position}}</td>
+          <td>{{item?.date || '--'}}</td>
+          <td>{{item?.signature || '--'}}</td>
+        </tr>
         </tbody>
       </table>
     </section>

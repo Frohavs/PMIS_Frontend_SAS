@@ -112,7 +112,7 @@ export class AddDeliveryListComponent implements OnInit {
   ngOnInit(): void {
     this.initDeliverForm();
     this.getProjectId();
-    this.getLookups()
+    this.getLookups();
   }
 
   getProjectId() {
@@ -163,10 +163,10 @@ export class AddDeliveryListComponent implements OnInit {
       contractorSignature: ['', Validators.required],
       consultantSignature: ['', Validators.required],
       imagePlan: [0, Validators.required],
-      committeeId: [0, Validators.required],
-      committeeName: ['', Validators.required],
-      committeeEmail: ['', Validators.required],
-      committeePosition: ['', Validators.required],
+      committeeId: [0],
+      committeeName: [''],
+      committeeEmail: [''],
+      committeePosition: [''],
     });
   }
   editDeliverForm(res: any) {
@@ -434,10 +434,14 @@ export class AddDeliveryListComponent implements OnInit {
     }
     if (this.activeSignContractor) {
       this.projectDeliveryDetails.contractorSignature = payload.signature;
-      this.deliveryForm.value.contractorSignature = payload.signature;
+      this.deliveryForm.patchValue({
+        contractorSignature: payload.signature
+      });
     } else {
       this.projectDeliveryDetails.consultantSignature = payload.signature;
-      this.deliveryForm.value.consultantSignature = payload.signature;
+      this.deliveryForm.patchValue({
+        consultantSignature: payload.signature
+      });
     }
     this.initialDeliveryService.addDeliveryList(this.projectDeliveryDetails).subscribe(res => {
       this.projectDeliveryDetails.id = res.data || null;
@@ -456,7 +460,7 @@ export class AddDeliveryListComponent implements OnInit {
     this.projectDeliveryDetails.approved = true;
     this.initialDeliveryService.addDeliveryList(this.projectDeliveryDetails).subscribe(res => {
       this.showAlert({ icon: 'success', title: 'Success!', text: 'Approved successfully!' });
-      this.back();
+      this.router.navigateByUrl(`projects/initial-delivery-list/${this.projectId}`);
     }, (error) => {
       this.showAlert({ icon: 'error', title: 'Error!', text: 'Please try again' });
     });
