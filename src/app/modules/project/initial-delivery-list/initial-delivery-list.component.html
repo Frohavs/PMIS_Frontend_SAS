@@ -48,7 +48,7 @@
               </a>
             </td>
             <td>
-              <span class="badge-info badge fs-7 fw-bold my-2">
+              <span class="badge fs-7 fw-bold my-2" [ngClass]="{'badge-info': item?.approved, 'badge-success': !item?.approved}">
                 {{item?.certificateCode}}
               </span>
             </td>
