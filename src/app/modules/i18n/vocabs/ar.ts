@@ -141,6 +141,14 @@ export const locale = {
       Status: 'الحالة',
       Search: 'بحث عن مخرجات...',
     },
+    FACTORY: {
+      ID: 'رقم',
+      TITLE: 'المصانع المعتمدة',
+      Add_Factory: 'إضافة مصنع',
+      EN_NAME: 'الأسم بالأنجليزية',
+      Status: 'الحالة',
+      Search: 'بحث ...',
+    },
     DAILYREPORT: {
       ID: 'رقم',
       TITLE: 'التقرير اليومي',

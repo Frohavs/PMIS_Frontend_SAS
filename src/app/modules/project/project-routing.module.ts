@@ -45,6 +45,9 @@ import { AddRiskComponent } from './risk-management/add-risk/add-risk.component'
 import { RiskDetailsComponent } from './risk-management/risk-details/risk-details.component';
 import { InitialDeliveryListComponent } from './initial-delivery-list/initial-delivery-list.component';
 import { AddDeliveryListComponent } from './initial-delivery-list/add-delivery-list/add-delivery-list.component';
+import { FactoryComponent } from './factory/factory.component';
+import { AddFactoryComponent } from './factory/add-factory/add-factory.component';
+import { FactoryDetailsComponent } from './factory/factory-details/factory-details.component';
 
 const routes: Routes = [
   {
@@ -274,6 +277,19 @@ const routes: Routes = [
       {
         path: 'edit-delivery-list/:id',
         component: AddDeliveryListComponent,
+      },
+
+      {
+        path: 'factory-list/:id',
+        component: FactoryComponent,
+      },
+      {
+        path: 'add-factory/:id',
+        component: AddFactoryComponent,
+      },
+      {
+        path: 'factory-details/:id',
+        component: FactoryDetailsComponent,
       },
 
       { path: '', redirectTo: 'overview', pathMatch: 'full' },

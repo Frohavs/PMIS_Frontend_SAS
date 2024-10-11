@@ -56,6 +56,9 @@ import { RiskDetailsComponent } from './risk-management/risk-details/risk-detail
 import { InitialDeliveryListComponent } from './initial-delivery-list/initial-delivery-list.component';
 import { AddDeliveryListComponent } from './initial-delivery-list/add-delivery-list/add-delivery-list.component';
 import { AngularSignaturePadModule } from '@almothafar/angular-signature-pad';
+import { FactoryComponent } from './factory/factory.component';
+import { AddFactoryComponent } from './factory/add-factory/add-factory.component';
+import { FactoryDetailsComponent } from './factory/factory-details/factory-details.component';
 
 
 @NgModule({
@@ -120,7 +123,11 @@ import { AngularSignaturePadModule } from '@almothafar/angular-signature-pad';
     RiskDetailsComponent,
 
     InitialDeliveryListComponent,
-    AddDeliveryListComponent
+    AddDeliveryListComponent,
+
+    FactoryComponent,
+    AddFactoryComponent,
+    FactoryDetailsComponent
   ],
   imports: [
     CommonModule,

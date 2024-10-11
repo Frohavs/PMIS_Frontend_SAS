@@ -67,4 +67,8 @@ export const PROJECT_OPTIONS = [
       name: 'Initial Delivery List',
       route: 'projects/initial-delivery-list'
     },
+    {
+      name: 'factory',
+      route: 'projects/factory-list'
+    },
 ]

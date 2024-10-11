@@ -141,6 +141,14 @@ export const locale = {
       Status: 'Status',
       Search: 'Search Milestone...',
     },
+    FACTORY: {
+      ID: 'ID',
+      TITLE: 'Factory',
+      Add_Factory: 'Create Factory',
+      EN_NAME: 'English Name',
+      Status: 'Status',
+      Search: 'Search...',
+    },
     DAILYREPORT: {
       ID: 'ID',
       TITLE: 'Daily Report',
