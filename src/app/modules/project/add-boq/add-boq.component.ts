@@ -158,6 +158,7 @@ export class AddBoqComponent implements OnInit {
 
   saveChanges() {
     if (!this.addBoqForm.valid) {
+      this.addBoqForm.markAllAsTouched();
       return;
     }
     this.isLoading = true;
@@ -230,6 +231,7 @@ export class AddBoqComponent implements OnInit {
   get quantity(): FormControl {
     return this.addBoqForm.get('quantity') as FormControl;
   }
+
 
   get unitPrice(): FormControl {
     return this.addBoqForm.get('unitPrice') as FormControl;

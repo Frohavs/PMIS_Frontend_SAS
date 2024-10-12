@@ -1,1 +1,302 @@
-<p>add-factory works!</p>
+<div class="row g-5 g-xl-8 justify-content-between">
+  <div class="col-xl-12">
+    <div class="card mb-5 mb-xl-8">
+      <!-- begin::Header -->
+      <div class="card-header align-items-center border-0 mt-4">
+        <h3 class="card-title align-items-start flex-column">
+          <span class="fw-bolder text-gray-900">{{"BOQ.Add_Boq" | translate}}</span>
+          <!-- <span class="text-muted mt-1 fw-bold fs-7">test</span> -->
+        </h3>
+        <div class="card-toolbar">
+          <a (click)="back()" class="btn btn-sm btn-danger d-flex">
+            <app-keenicon name="arrow-left" class="fs-3"></app-keenicon>
+            {{"ECOMMERCE.COMMON.BACK" | translate}}
+          </a>
+        </div>
+      </div>
+
+
+      <div class="card-body pt-3">
+
+        <form [formGroup]="addFactoryForm" class="form">
+          <div class="card-body border-top p-9">
+
+            <div class="row mb-2">
+              <div class="col-lg-6">
+                <label class="col-lg-12 col-form-label fw-bold fs-6">
+                  <span>
+                    Factory CR
+                  </span>
+                </label>
+                <div class="col-lg-12 fv-row">
+                  <select class="form-select form-select-solid form-select-lg fw-bold" name="factoryCRId"
+                    formControlName="factoryCRId">
+                    <option value="" disabled>{{"TRANSLATOR.SELECTION" | translate}}</option>
+                    <ng-container *ngFor="let item of factoriesCR">
+                      <option [value]="item?.id">{{item?.name}}</option>
+                    </ng-container>
+                  </select>
+                  <div
+                    *ngIf="addFactoryForm?.get('factoryCRId')?.invalid && (addFactoryForm?.get('factoryCRId')?.dirty || addFactoryForm?.get('factoryCRId')?.touched)"
+                    class="fv-plugins-message-container">
+                    <div class="fv-help-block">cr is required</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <label class="col-lg-12 col-form-label fw-bold fs-6">
+                  <span>
+                    Factory Fields
+                  </span>
+                </label>
+                <div class="col-lg-12 fv-row">
+                  <select class="form-select form-select-solid form-select-lg fw-bold" name="factoryFieldId"
+                    formControlName="factoryFieldId">
+                    <option value="" disabled>{{"TRANSLATOR.SELECTION" | translate}}</option>
+                    <ng-container *ngFor="let item of factoryFields">
+                      <option [value]="item?.id">{{item?.name}}</option>
+                    </ng-container>
+                  </select>
+                  <div
+                    *ngIf="addFactoryForm?.get('factoryFieldId')?.invalid && (addFactoryForm?.get('factoryFieldId')?.dirty || addFactoryForm?.get('factoryFieldId')?.touched)"
+                    class="fv-plugins-message-container">
+                    <div class="fv-help-block">field is required</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row mb-2">
+              <div class="col-lg-6">
+                <label class="col-lg-12 col-form-label fw-bold fs-6">
+                  <span>
+                    Description
+                  </span>
+                </label>
+                <div class="col-lg-12 fv-row">
+                  <input type="text" class="form-control form-control-lg form-control-solid text-start"
+                    name="description" formControlName="description" />
+                  <div
+                    *ngIf="addFactoryForm?.get('description')?.invalid && (addFactoryForm?.get('description')?.dirty || addFactoryForm?.get('description')?.touched)"
+                    class="fv-plugins-message-container">
+                    <div class="fv-help-block">description is required</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <label class="col-lg-12 col-form-label fw-bold fs-6">
+                  <span>
+                    Ex Year
+                  </span>
+                </label>
+                <div class="col-lg-12 fv-row">
+                  <input type="text" class="form-control form-control-lg form-control-solid text-start" name="year"
+                    formControlName="year" />
+                  <div
+                    *ngIf="addFactoryForm?.get('year')?.invalid && (addFactoryForm?.get('year')?.dirty || addFactoryForm?.get('year')?.touched)"
+                    class="fv-plugins-message-container">
+                    <div class="fv-help-block">year is required</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row mb-2">
+              <div class="col-lg-6">
+                <label class="col-lg-12 col-form-label fw-bold fs-6">
+                  <span>
+                    Latitude
+                  </span>
+                </label>
+                <div class="col-lg-12 fv-row">
+                  <input type="text" class="form-control form-control-lg form-control-solid text-start" name="latitude"
+                    formControlName="latitude" />
+                  <div
+                    *ngIf="addFactoryForm?.get('latitude')?.invalid && (addFactoryForm?.get('latitude')?.dirty || addFactoryForm?.get('latitude')?.touched)"
+                    class="fv-plugins-message-container">
+                    <div class="fv-help-block">latitude is required</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <label class="col-lg-12 col-form-label fw-bold fs-6">
+                  <span>
+                    Longitude
+                  </span>
+                </label>
+                <div class="col-lg-12 fv-row">
+                  <input type="text" class="form-control form-control-lg form-control-solid text-start" name="longitude"
+                    formControlName="longitude" />
+                  <div
+                    *ngIf="addFactoryForm?.get('longitude')?.invalid && (addFactoryForm?.get('longitude')?.dirty || addFactoryForm?.get('longitude')?.touched)"
+                    class="fv-plugins-message-container">
+                    <div class="fv-help-block">longitude is required</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row mb-2">
+              <div class="col-lg-6">
+                <label class="col-lg-12 col-form-label fw-bold fs-6">
+                  <span>
+                    Repre name
+                  </span>
+                </label>
+                <div class="col-lg-12 fv-row">
+                  <input type="text" class="form-control form-control-lg form-control-solid text-start" name="repreName"
+                    formControlName="repreName" />
+                  <div
+                    *ngIf="addFactoryForm?.get('repreName')?.invalid && (addFactoryForm?.get('repreName')?.dirty || addFactoryForm?.get('repreName')?.touched)"
+                    class="fv-plugins-message-container">
+                    <div class="fv-help-block">repre name is required</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <label class="col-lg-12 col-form-label fw-bold fs-6">
+                  <span>
+                    Repre phone
+                  </span>
+                </label>
+                <div class="col-lg-12 fv-row">
+                  <input type="text" class="form-control form-control-lg form-control-solid text-start"
+                    name="reprePhone" formControlName="reprePhone" />
+                  <div
+                    *ngIf="addFactoryForm?.get('reprePhone')?.invalid && (addFactoryForm?.get('reprePhone')?.dirty || addFactoryForm?.get('reprePhone')?.touched)"
+                    class="fv-plugins-message-container">
+                    <div class="fv-help-block">repre phone is required</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row mb-2">
+              <div class="col-lg-6">
+                <label class="col-lg-12 col-form-label fw-bold fs-6">
+                  <span>
+                    Repre email
+                  </span>
+                </label>
+                <div class="col-lg-12 fv-row">
+                  <input type="text" class="form-control form-control-lg form-control-solid text-start" name="reprEmail"
+                    formControlName="reprEmail" />
+                  <div
+                    *ngIf="addFactoryForm?.get('reprEmail')?.invalid && (addFactoryForm?.get('reprEmail')?.dirty || addFactoryForm?.get('reprEmail')?.touched)"
+                    class="fv-plugins-message-container">
+                    <div class="fv-help-block">repre email is required</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <label class="col-lg-12 col-form-label fw-bold fs-6">
+                  <span>
+                    Profile attach
+                  </span>
+                </label>
+                <div class="col-lg-12 fv-row">
+                  <input type="file" class="form-control form-control-lg form-control-solid text-start"
+                    name="profileAttachment" formControlName="profileAttachment" />
+                  <div
+                    *ngIf="addFactoryForm?.get('profileAttachment')?.invalid && (addFactoryForm?.get('profileAttachment')?.dirty || addFactoryForm?.get('profileAttachment')?.touched)"
+                    class="fv-plugins-message-container">
+                    <div class="fv-help-block">attachment is required</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row mb-2">
+              <div class="col-lg-6">
+                <label class="col-lg-12 col-form-label fw-bold fs-6">
+                  <span>
+                    Project size
+                  </span>
+                </label>
+                <div class="col-lg-12 fv-row">
+                  <input type="text" class="form-control form-control-lg form-control-solid text-start" name="projectSize"
+                    formControlName="projectSize" />
+                  <div
+                    *ngIf="addFactoryForm?.get('projectSize')?.invalid && (addFactoryForm?.get('projectSize')?.dirty || addFactoryForm?.get('projectSize')?.touched)"
+                    class="fv-plugins-message-container">
+                    <div class="fv-help-block">size is required</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <label class="col-lg-12 col-form-label fw-bold fs-6">
+                  <span>
+                    No of employees
+                  </span>
+                </label>
+                <div class="col-lg-12 fv-row">
+                  <input type="text" class="form-control form-control-lg form-control-solid text-start"
+                    name="numOfEmployess" formControlName="numOfEmployess" />
+                  <div
+                    *ngIf="addFactoryForm?.get('numOfEmployess')?.invalid && (addFactoryForm?.get('numOfEmployess')?.dirty || addFactoryForm?.get('numOfEmployess')?.touched)"
+                    class="fv-plugins-message-container">
+                    <div class="fv-help-block">number is required</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row mb-2">
+
+              <div class="col-lg-6">
+                <label class="col-lg-12 col-form-label fw-bold fs-6">
+                  <span>
+                    Last financial attachments
+                  </span>
+                </label>
+                <div class="col-lg-12 fv-row">
+                  <input type="file" class="form-control form-control-lg form-control-solid text-start"
+                    name="profileAttachment" formControlName="profileAttachment" />
+                  <div
+                    *ngIf="addFactoryForm?.get('profileAttachment')?.invalid && (addFactoryForm?.get('profileAttachment')?.dirty || addFactoryForm?.get('profileAttachment')?.touched)"
+                    class="fv-plugins-message-container">
+                    <div class="fv-help-block">attachment is required</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <label class="col-lg-12 col-form-label fw-bold fs-6">
+                  <span>
+                    approve letter attachment
+                  </span>
+                </label>
+                <div class="col-lg-12 fv-row">
+                  <input type="file" class="form-control form-control-lg form-control-solid text-start"
+                    name="profileAttachment" formControlName="profileAttachment" />
+                  <div
+                    *ngIf="addFactoryForm?.get('profileAttachment')?.invalid && (addFactoryForm?.get('profileAttachment')?.dirty || addFactoryForm?.get('profileAttachment')?.touched)"
+                    class="fv-plugins-message-container">
+                    <div class="fv-help-block">attachment is required</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <div class="card-footer d-flex justify-content-end py-6 px-9">
+            <button type="button" class="btn btn-primary" [disabled]="isLoading" (click)="saveChanges()">
+              <ng-container *ngIf="!isLoading">{{"TRANSLATOR.ADD" | translate}}</ng-container>
+              <ng-container *ngIf="isLoading">
+                <span clas="indicator-progress" [style.display]="'block'">
+                  Please wait...{{ " " }}
+                  <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                </span>
+              </ng-container>
+            </button>
+          </div>
+        </form>
+
+      </div>
+      <!-- end::Body -->
+    </div>
+  </div>
+</div>
+
+<!-- modal -->
+<swal #noticeSwal [swalOptions]="swalOptions">
+</swal>
