@@ -113,7 +113,7 @@ export class ProjectsService {
     const httpHeaders = new HttpHeaders({
       Authorization: `Bearer ${this.token}`,
     });
-    const url = `${this.API_USERS_URL}/GetrogressInfo?projectId=${id}`;
+    const url = `${this.API_USERS_URL}/GetProgressInfo?projectId=${id}`;
     return this.http.get<any>(url, {
       headers: httpHeaders
     });
