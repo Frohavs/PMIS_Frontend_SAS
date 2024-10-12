@@ -21,6 +21,21 @@ export class AddFactoryComponent implements OnInit {
   isLoading: boolean;
   addFactoryForm: FormGroup;
 
+  options: google.maps.MapOptions = {
+    center: { lat: 24.774265, lng: 46.738586 },
+    zoom: 7
+  };
+
+  markerOptions: google.maps.MarkerOptions = {
+    draggable: true // Enable marker dragging
+  };
+
+  markerPosition: google.maps.LatLngLiteral = { lat: 24.66911551123412, lng: 46.690065163710585 };
+
+  lat: number = this.markerPosition.lat;
+  lng: number = this.markerPosition.lng;
+
+
   factoriesCR: any[] = [];
   factoryFields: any[] = [];
   units: any[] = [];
@@ -47,6 +62,21 @@ export class AddFactoryComponent implements OnInit {
     this.getLookups();
   }
 
+  // Event handler for map click to set marker
+  onMapClick(event: google.maps.MapMouseEvent) {
+    if (event.latLng) {
+      this.markerPosition = {
+        lat: event.latLng.lat(),
+        lng: event.latLng.lng()
+      };
+      this.lat = event.latLng.lat();
+      this.lng = event.latLng.lng();
+      console.log(`Marker set at: Latitude: ${this.lat}, Longitude: ${this.lng}`);
+      this.addFactoryForm.patchValue({ latitude: this.lat, longitude: this.lng });
+      this.cdr.detectChanges();
+    }
+  }
+
   getBoqId() {
     this.activatedRoute.params.subscribe(params => {
       this.projectId = +params['id'];
@@ -64,8 +94,8 @@ export class AddFactoryComponent implements OnInit {
       factoryFieldId: ['', Validators.required],
       description: ['', Validators.required],
       year: ['', Validators.required],
-      latitude: ['', Validators.required],
-      longitude: ['', Validators.required],
+      latitude: ['24.66911551123412', Validators.required],
+      longitude: ['46.690065163710585', Validators.required],
       repreName: ['', Validators.required],
       reprePhone: ['', Validators.required],
       repreEmail: ['', Validators.required],

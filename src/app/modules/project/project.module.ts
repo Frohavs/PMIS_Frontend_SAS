@@ -59,6 +59,7 @@ import { AngularSignaturePadModule } from '@almothafar/angular-signature-pad';
 import { FactoryComponent } from './factory/factory.component';
 import { AddFactoryComponent } from './factory/add-factory/add-factory.component';
 import { FactoryDetailsComponent } from './factory/factory-details/factory-details.component';
+import { GoogleMapsModule } from '@angular/google-maps';
 
 
 @NgModule({
@@ -144,7 +145,9 @@ import { FactoryDetailsComponent } from './factory/factory-details/factory-detai
     SweetAlert2Module.forChild(),
     SharedModule,
     NgxCurrencyDirective,
-    AngularSignaturePadModule
+    AngularSignaturePadModule,
+    GoogleMapsModule
+
   ]
 })
 export class ProjectModule { }
