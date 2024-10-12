@@ -209,6 +209,24 @@ export class LookupService {
       headers: httpHeaders
     });
   }
+  getFactoryCRS(): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/GetFactoryCRS`;
+    return this.http.get<any>(url, {
+      headers: httpHeaders
+    });
+  }
+  getFactoryFields(): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/GetFactoryFields`;
+    return this.http.get<any>(url, {
+      headers: httpHeaders
+    });
+  }
 
 
 }

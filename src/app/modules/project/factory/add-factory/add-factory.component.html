@@ -23,6 +23,14 @@
 
             <div class="row mb-2">
               <div class="col-lg-6">
+                <button type="button" class="btn btn-success" (click)="openPopup()">
+                  <ng-container>+ add cr</ng-container>
+                </button>
+              </div>
+
+            </div>
+            <div class="row mb-2">
+              <div class="col-lg-6">
                 <label class="col-lg-12 col-form-label fw-bold fs-6">
                   <span>
                     Factory CR
@@ -91,7 +99,7 @@
                 </label>
                 <div class="col-lg-12 fv-row">
                   <input type="text" class="form-control form-control-lg form-control-solid text-start" name="year"
-                    formControlName="year" />
+                    formControlName="year" (keypress)="numbersOnly($event)" />
                   <div
                     *ngIf="addFactoryForm?.get('year')?.invalid && (addFactoryForm?.get('year')?.dirty || addFactoryForm?.get('year')?.touched)"
                     class="fv-plugins-message-container">
@@ -169,7 +177,7 @@
                 </label>
                 <div class="col-lg-12 fv-row">
                   <input type="text" class="form-control form-control-lg form-control-solid text-start"
-                    name="reprePhone" formControlName="reprePhone" />
+                    name="reprePhone" formControlName="reprePhone" (keypress)="numbersOnly($event)" />
                   <div
                     *ngIf="addFactoryForm?.get('reprePhone')?.invalid && (addFactoryForm?.get('reprePhone')?.dirty || addFactoryForm?.get('reprePhone')?.touched)"
                     class="fv-plugins-message-container">
@@ -223,7 +231,7 @@
                 </label>
                 <div class="col-lg-12 fv-row">
                   <input type="text" class="form-control form-control-lg form-control-solid text-start"
-                    name="projectSize" formControlName="projectSize" />
+                    name="projectSize" formControlName="projectSize" (keypress)="numbersOnly($event)" />
                   <div
                     *ngIf="addFactoryForm?.get('projectSize')?.invalid && (addFactoryForm?.get('projectSize')?.dirty || addFactoryForm?.get('projectSize')?.touched)"
                     class="fv-plugins-message-container">
@@ -239,7 +247,7 @@
                 </label>
                 <div class="col-lg-12 fv-row">
                   <input type="text" class="form-control form-control-lg form-control-solid text-start"
-                    name="numOfEmployess" formControlName="numOfEmployess" />
+                    name="numOfEmployess" formControlName="numOfEmployess" (keypress)="numbersOnly($event)" />
                   <div
                     *ngIf="addFactoryForm?.get('numOfEmployess')?.invalid && (addFactoryForm?.get('numOfEmployess')?.dirty || addFactoryForm?.get('numOfEmployess')?.touched)"
                     class="fv-plugins-message-container">
@@ -309,3 +317,55 @@
 <!-- modal -->
 <swal #noticeSwal [swalOptions]="swalOptions">
 </swal>
+
+
+<ng-template #crModal let-modal>
+  <form #myForm="ngForm" (ngSubmit)="onAddFactoryCR($event, myForm)">
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">add Evaluation Category</h4>
+      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+      <div class="collapse show">
+
+        <div class="fv-row mb-7">
+          <label class="col-lg-12 col-form-label fw-bold fs-6">CR Number</label>
+          <input type="text" class="form-control form-control-lg form-control-solid text-start" name="crNumber" [(ngModel)]="crNumber" />
+        </div>
+        <div class="fv-row mb-7">
+          <label class="col-lg-12 col-form-label fw-bold fs-6">Name En</label>
+          <input type="text" class="form-control form-control-lg form-control-solid text-start" name="CrNameEn" [(ngModel)]="crNameEn" />
+        </div>
+        <div class="fv-row mb-7">
+          <label class="col-lg-12 col-form-label fw-bold fs-6">Name Ar</label>
+          <input type="text" class="form-control form-control-lg form-control-solid text-start" name="CrNameAr" [(ngModel)]="crNameAr" />
+        </div>
+        <div class="fv-row mb-7">
+          <label class="col-lg-12 col-form-label fw-bold fs-6">Weight</label>
+          <input type="file" class="form-control form-control-lg form-control-solid text-start" name="crAttachment" [(ngModel)]="crAttachment"
+            (change)="onFileChange($event)" />
+        </div>
+
+      </div>
+    </div>
+    <div class="modal-footer flex-center">
+      <button type="reset" id="kt_modal_update_customer_cancel" class="btn btn-light me-3"
+        (click)="modal.dismiss('cancel')">
+        Discard
+      </button>
+      <!--end::Button-->
+
+      <!--begin::Button-->
+      <button type="submit" id="kt_modal_update_customer_submit" class="btn btn-primary"
+        [attr.data-kt-indicator]="isLoading ? 'on' : 'off'" [disabled]="!crNumber || !crNameEn || !crNameAr || !crAttachment">
+        <span class="indicator-label">
+          {{"TRANSLATOR.ADD" | translate}}
+        </span>
+        <span class="indicator-progress">
+          Please wait... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+        </span>
+      </button>
+      <!--end::Button-->
+    </div>
+  </form>
+</ng-template>
