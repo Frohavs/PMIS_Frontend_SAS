@@ -21,9 +21,7 @@ export class FactoryDetailsComponent implements OnInit {
   constructor(
     private router: Router,
     private cdr: ChangeDetectorRef,
-    private translate: TranslateService,
     private activatedRoute: ActivatedRoute,
-    private projectsService: ProjectsService,
     private factoryService: FactoryService,
   ) { }
 
@@ -35,7 +33,7 @@ export class FactoryDetailsComponent implements OnInit {
     this.activatedRoute.queryParams.subscribe(params => {
       this.factoryId = +params['factoryId'];
       if (this.factoryId) {
-        this.factoryService.getById(this.projectId).subscribe(res => {
+        this.factoryService.getById(this.factoryId).subscribe(res => {
           this.factoryDetails = res.data;
           this.cdr.detectChanges();
         });

@@ -110,7 +110,7 @@ export class AddFactoryComponent implements OnInit {
       longitude: ['46.690065163710585', Validators.required],
       repreName: ['', Validators.required],
       reprePhone: ['', Validators.required],
-      repreEmail: ['', Validators.required],
+      reprEmail: ['', Validators.required],
       profileAttachment: ['test123.pdf', Validators.required],
       projectSize: ['', Validators.required],
       numOfEmployess: ['', Validators.required],
@@ -174,7 +174,7 @@ export class AddFactoryComponent implements OnInit {
       this.factoryService.addFactory(payload).subscribe({
         next: (res) => {
           this.isLoading = false;
-          this.router.navigateByUrl(`projects/boq-list/${this.projectId}`);
+          this.router.navigateByUrl(`projects/factory-list/${this.projectId}`);
           this.showAlert({ icon: 'success', title: 'Success!', text: 'Boq Added successfully!' });
           this.cdr.detectChanges();
         },
@@ -196,7 +196,7 @@ export class AddFactoryComponent implements OnInit {
       name: this.crNameEn,
       nameAr: this.crNameAr,
       attachment: this.crAttachment,
-      crNumber: +this.crNumber,
+      crNumber: this.crNumber,
     }
     this.factoryService.addFactoryCR(payload).subscribe(res => {
       this.modalService.dismissAll();
@@ -208,7 +208,7 @@ export class AddFactoryComponent implements OnInit {
       this.cdr.detectChanges();
       this.getLookups();
     }, (err) => {
-      this.showAlert({ icon: 'error', title: 'Error!', text: 'Weight can not be greater than 100' });
+      this.showAlert({ icon: 'error', title: 'Error!', text: 'error adding CR' });
     })
   }
 
