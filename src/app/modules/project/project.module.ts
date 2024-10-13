@@ -60,6 +60,8 @@ import { FactoryComponent } from './factory/factory.component';
 import { AddFactoryComponent } from './factory/add-factory/add-factory.component';
 import { FactoryDetailsComponent } from './factory/factory-details/factory-details.component';
 import { GoogleMapsModule } from '@angular/google-maps';
+import { StageGateManagementComponent } from './stage-gate-managment/stage-gate-managment.component';
+import { CreateCommitteeComponent } from './stage-gate-managment/create-commitee/create-commitee.component';
 
 
 @NgModule({
@@ -128,7 +130,10 @@ import { GoogleMapsModule } from '@angular/google-maps';
 
     FactoryComponent,
     AddFactoryComponent,
-    FactoryDetailsComponent
+    FactoryDetailsComponent,
+
+    StageGateManagementComponent,
+    CreateCommitteeComponent,
   ],
   imports: [
     CommonModule,

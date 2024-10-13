@@ -48,6 +48,8 @@ import { AddDeliveryListComponent } from './initial-delivery-list/add-delivery-l
 import { FactoryComponent } from './factory/factory.component';
 import { AddFactoryComponent } from './factory/add-factory/add-factory.component';
 import { FactoryDetailsComponent } from './factory/factory-details/factory-details.component';
+import { StageGateManagementComponent } from './stage-gate-managment/stage-gate-managment.component';
+import { CreateCommitteeComponent } from './stage-gate-managment/create-commitee/create-commitee.component';
 
 const routes: Routes = [
   {
@@ -291,6 +293,16 @@ const routes: Routes = [
         path: 'factory-details/:id',
         component: FactoryDetailsComponent,
       },
+
+      {
+        path: 'stage-gate-management/:id',
+        component: StageGateManagementComponent,
+      },
+      {
+        path: 'stage-gate-commitee/:id',
+        component: CreateCommitteeComponent,
+      },
+
 
       { path: '', redirectTo: 'overview', pathMatch: 'full' },
       { path: '**', redirectTo: 'overview', pathMatch: 'full' },
