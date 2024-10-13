@@ -1,1 +1,236 @@
-<p>stage-gate-managment works!</p>
+<div class="row g-5 g-xl-8 justify-content-between">
+  <div class="col-xl-4">
+
+    <!-- <ng-container *ngIf="updateInfo">
+      <div class="mb-10 bg-light-success p-8 rounded">
+        <div class="text-danger fs-5 fw-bold">
+          You must click on final submit after updating basic Info to confirm the update
+        </div>
+      </div>
+    </ng-container> -->
+
+
+    <div class="card mb-5 mb-xl-8">
+      <!-- begin::Header -->
+      <div class="card-header align-items-center border-0 mt-4">
+        <h3 class="card-title align-items-start flex-column">
+          <span class="fw-bolder text-gray-900">Project Information</span>
+          <!-- <span class="text-muted mt-1 fw-bold fs-7">test</span> -->
+        </h3>
+      </div>
+      <!-- end::Header -->
+      <!-- begin::Body -->
+      <div class="card-body pt-3">
+        <!-- begin::Item -->
+        <div class="d-flex align-items-sm-center mb-7">
+
+          <!-- begin::Title -->
+          <div class="d-flex flex-row-fluid flex-wrap align-items-center">
+            <div class="w-50 me-2">
+              <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
+                Project name
+              </a>
+              <span class="text-muted fw-bold d-block pt-1">{{projectDetails?.nameAr  ||  '--'}}</span>
+            </div>
+            <div class="flex-grow-1 me-2">
+              <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
+                Contract Date
+              </a>
+              <span
+                class="text-muted fw-bold d-block pt-1">{{projectDetails?.createdDate?.slice(0, 10)  ||  '--'}}</span>
+            </div>
+          </div>
+          <!-- end::Title -->
+        </div>
+        <!-- end::Item -->
+        <!-- begin::Item -->
+        <div class="d-flex align-items-sm-center mb-7">
+
+          <!-- begin::Title -->
+          <div class="d-flex flex-row-fluid flex-wrap align-items-center">
+            <div class="w-50 me-2">
+              <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
+                Contract No
+              </a>
+              <span class="text-muted fw-bold d-block pt-1">{{projectDetails?.contractNo  ||  '--'}}</span>
+            </div>
+            <div class="flex-grow-1 me-2">
+              <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
+                Consultant
+              </a>
+              <span class="text-muted fw-bold d-block pt-1">{{projectDetails?.consultantName ||  '--'}}</span>
+            </div>
+          </div>
+          <!-- end::Title -->
+        </div>
+        <!-- end::Item -->
+        <!-- begin::Item -->
+        <div class="d-flex align-items-sm-center mb-7">
+
+          <!-- begin::Title -->
+          <div class="d-flex flex-row-fluid flex-wrap align-items-center">
+            <div class="w-50 me-2">
+              <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
+                Contractor
+              </a>
+              <span class="text-muted fw-bold d-block pt-1">{{projectDetails?.contractorName || '--'}}</span>
+            </div>
+            <div class="flex-grow-1 me-2">
+              <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
+                Finish date after extension
+              </a>
+              <span
+                class="text-muted fw-bold d-block pt-1">{{projectDetails?.originalFinishDate?.slice(0, 10)  ||  '--'}}</span>
+            </div>
+          </div>
+          <!-- end::Title -->
+        </div>
+        <!-- end::Item -->
+        <!-- begin::Item -->
+        <div class="d-flex align-items-sm-center">
+
+          <!-- begin::Title -->
+          <div class="d-flex flex-row-fluid flex-wrap align-items-center">
+            <div class="w-50 me-2">
+              <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
+                Contract Status
+              </a>
+              <span class="text-muted fw-bold d-block pt-1">{{projectDetails?.contractStatus || '--'}}</span>
+            </div>
+
+          </div>
+          <!-- end::Title -->
+        </div>
+        <!-- end::Item -->
+      </div>
+      <!-- end::Body -->
+    </div>
+  </div>
+  <div class="col-xl-8">
+    <div class="card mb-5 mb-xl-8">
+      <!-- begin::Header -->
+      <div class="card-header align-items-center border-0 mt-4">
+        <h3 class="card-title align-items-start flex-column">
+          <span class="fw-bolder text-gray-900">Stage Gate Deliverables Progress</span>
+        </h3>
+        <div class="card-toolbar">
+          <!-- begin::Menu -->
+          <button type="button" class="btn btn-sm btn-icon btn-color-primary btn-active-light-primary"
+            data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end" data-kt-menu-flip="top-end">
+          </button>
+          <!-- end::Menu -->
+        </div>
+      </div>
+      <div class="card-body pt-3">
+        <div class="wizard-container">
+          <div *ngFor="let step of steps; let i = index" class="wizard-step" [class.active]="isStepActive(i + 1)">
+            <div class="step-number">{{ i + 1 }}</div>
+            <div class="step-title">{{ step }}</div>
+          </div>
+        </div>
+
+        <!-- in here can i create horizontal wizard have number and title below html scss
+         every step will have un-active bg-color and active if has condition  -->
+        <!-- and titles will be from below
+        1. Create Committees
+        2. Deliverable Checklist
+        3. Kickoff Meeting
+        4. Kickoff Meeting Submit
+        5. Upload Deliverable Checklist
+        6. Review Meeting
+        7. Final Review -->
+      </div>
+      <!-- end::Body -->
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-xl-12">
+    <div class="card mb-5 mb-xl-8">
+
+      <div class="card-body">
+        <!-- begin::Item -->
+        <div class="d-flex align-items-sm-center">
+
+          <!-- begin::Title -->
+          <div class="d-flex flex-row-fluid flex-wrap justify-content-center align-items-center">
+            <div class=" me-2 mb-3">
+              <div class="card-toolbar">
+                <a class="btn btn-sm btn-success" (click)="navigateCreateCommittee()">
+                  Create Committees
+                </a>
+              </div>
+            </div>
+
+            <div class=" me-2 mb-3">
+              <div class="card-toolbar">
+                <a class="btn btn-sm btn-light-success" (click)="navigateDeliverableChecklist()">
+                  Deliverable Checklist
+                </a>
+              </div>
+            </div>
+
+            <div class=" me-2 mb-3">
+              <div class="card-toolbar">
+                <a class="btn btn-sm btn-light-success" (click)="navigateKickOffMeeting()">
+                  Kickoff Meeting
+                </a>
+              </div>
+            </div>
+
+            <div class=" me-2 mb-3">
+              <div class="card-toolbar">
+                <a class="btn btn-sm btn-light-success" (click)="navigateKickoffMeetingSubmit()">
+                  Kickoff Meeting Submit
+                </a>
+              </div>
+            </div>
+
+            <div class=" me-2 mb-3">
+              <div class="card-toolbar">
+                <a class="btn btn-sm btn-light-success" (click)="navigateUploadDeliverableChecklist()">
+                  Upload Deliverable Checklist
+                </a>
+              </div>
+            </div>
+            <div class=" me-2 mb-3">
+              <div class="card-toolbar">
+                <a class="btn btn-sm btn-light-success" (click)="navigateReview()">
+                  Review Meeting
+                </a>
+              </div>
+            </div>
+            <div class=" me-2 mb-3">
+              <div class="card-toolbar">
+                <a class="btn btn-sm btn-light-success" (click)="navigateFinalReview()">
+                  Final Review
+                </a>
+              </div>
+            </div>
+
+            <!-- <div class=" me-2">
+              <div class="card-toolbar">
+                <a class="btn btn-sm btn-success" (click)="navigateProjectStage()">
+                  Project Stage Update
+                </a>
+              </div>
+              <br>
+              <span class="text-success d-block pt-1 fs-4">last update date</span>
+              <br>
+              <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
+                2023-08-17
+              </a>
+              <br>
+              <span class="text-muted fw-bold d-block pt-1">وليد عبد الجليل عبد الرحمن عبد الغني</span>
+            </div> -->
+          </div>
+          <!-- end::Title -->
+        </div>
+
+        <!-- end::Item -->
+      </div>
+      <!-- end::Body -->
+    </div>
+  </div>
+</div>

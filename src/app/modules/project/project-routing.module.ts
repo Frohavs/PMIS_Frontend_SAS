@@ -50,6 +50,9 @@ import { AddFactoryComponent } from './factory/add-factory/add-factory.component
 import { FactoryDetailsComponent } from './factory/factory-details/factory-details.component';
 import { StageGateManagementComponent } from './stage-gate-managment/stage-gate-managment.component';
 import { CreateCommitteeComponent } from './stage-gate-managment/create-commitee/create-commitee.component';
+import { DeliverableChecklistComponent } from './stage-gate-managment/deliverable-checklist/deliverable-checklist.component';
+import { KickoffMeetingComponent } from './stage-gate-managment/kickoff-meeting/kickoff-meeting.component';
+import { KickoffMeetingSubmitComponent } from './stage-gate-managment/kickoff-meeting-submit/kickoff-meeting-submit.component';
 
 const routes: Routes = [
   {
@@ -299,8 +302,32 @@ const routes: Routes = [
         component: StageGateManagementComponent,
       },
       {
-        path: 'stage-gate-commitee/:id',
+        path: 'stage-gate-committees/:id',
         component: CreateCommitteeComponent,
+      },
+      {
+        path: 'stage-deliverable-checklist/:id',
+        component: DeliverableChecklistComponent,
+      },
+      {
+        path: 'stage-kickoff/:id',
+        component: KickoffMeetingComponent,
+      },
+      {
+        path: 'stage-kickoff-submit/:id',
+        component: KickoffMeetingSubmitComponent,
+      },
+      {
+        path: 'stage-upload-deliverable-checklist/:id',
+        component: DeliverableChecklistComponent,
+      },
+      {
+        path: 'stage-review/:id',
+        component: DeliverableChecklistComponent,
+      },
+      {
+        path: 'stage-final-review/:id',
+        component: DeliverableChecklistComponent,
       },
 
 

@@ -1,0 +1,75 @@
+.wizard-container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+  padding: 10px;
+  position: relative;
+  width: 100%;
+
+  .wizard-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    position: relative;
+    z-index: 1;
+
+    .step-number {
+      background-color: #ddd;
+      color: #fff;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 18px;
+      margin-bottom: 5px;
+      transition: background-color 0.3s;
+      z-index: 2;
+    }
+
+    .step-title {
+      font-size: 12px;
+      color: #888;
+      z-index: 2;
+    }
+
+    &.active .step-number {
+      background-color: #17C653;
+    }
+
+    &.active .step-title {
+      color: #1abc9c;
+    }
+
+    // Line between steps
+    &::after {
+      content: '';
+      position: absolute;
+      top: 16%;
+      left: 0;
+      transform: translateX(50%);
+      width: 100%;
+      height: 5px;
+      background-color: #ddd;
+      z-index: -1;
+    }
+
+    // Line between active steps
+    &.active::after {
+      background-color: #17C653;
+    }
+
+    // Remove the line after the last step
+    &:last-child::after {
+      content: none;
+    }
+  }
+
+  // Ensure that the line before an active step is also colored
+  .wizard-step.active ~ .wizard-step::after {
+    background-color: #ddd;
+  }
+}
