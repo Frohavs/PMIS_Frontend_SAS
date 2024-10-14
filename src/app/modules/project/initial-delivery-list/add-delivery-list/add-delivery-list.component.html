@@ -212,18 +212,18 @@
           <div class="d-flex flex-column">
             <span
               style="background-color: #A8D6FF; cursor: pointer;width: 300px;display: inline-flex;margin-bottom: 5px;"
-              (click)="openCommitteeModal()">
-              <ng-container *ngIf="!projectDeliveryDetails.committeeMangers?.length">
-                &nbsp;&nbsp;&nbsp;
-              </ng-container>
-            </span>
-            <span
-              style="background-color: #A8D6FF; cursor: pointer;width: 300px;display: inline-flex;margin-bottom: 5px;"
-              (click)="openCommitteeModal()" *ngFor="let item of projectDeliveryDetails?.committeeMangers">
-              <ng-container *ngIf="projectDeliveryDetails.committeeMangers?.length">
+              *ngFor="let item of projectDeliveryDetails?.committeeMangers; let i = index" (click)="editMemberField(item, i)">
+              <ng-container>
                 <span>
                   &nbsp;{{item.name}}&nbsp;
                 </span>
+              </ng-container>
+            </span>
+            <span *ngIf="(projectDeliveryDetails.committeeMangers?.length || 0) < 5"
+              style="background-color: #A8D6FF; cursor: pointer;width: 300px;display: inline-flex;margin-bottom: 5px;"
+              (click)="openCommitteeModal()">
+              <ng-container>
+                &nbsp;&nbsp;&nbsp;
               </ng-container>
             </span>
           </div>
@@ -254,7 +254,7 @@
           </div>
           <div class="modal-footer flex-center">
             <button type="reset" id="kt_modal_update_customer_cancel" class="btn btn-light me-3"
-              (click)="modal.dismiss('cancel')">
+              (click)="dismissCommitteeModal()">
               Discard
             </button>
 
@@ -747,7 +747,7 @@
         </ng-container>
 
       </p>
-      <p><strong>الختـــــــــــم:</strong>  </p>
+      <p><strong>الختـــــــــــم:</strong> </p>
 
       <h3>الاستشاري:</h3>
       <p>شركة مشاري ناصر الشثري وشريكه للاستشارات الهندسية (مهنية)</p>
@@ -763,7 +763,7 @@
         </ng-container>
 
       </p>
-      <p><strong>الختـــــــــــم:</strong>  </p>
+      <p><strong>الختـــــــــــم:</strong> </p>
     </section>
 
     <!-- Acceptance Committee Section -->
@@ -783,11 +783,11 @@
         </thead>
         <tbody>
           <tr *ngFor="let item of projectDeliveryDetails?.committeeMangers">
-          <td>{{item?.name}}</td>
-          <td>{{item?.position}}</td>
-          <td>{{item?.date || '--'}}</td>
-          <td>{{item?.signature || '--'}}</td>
-        </tr>
+            <td>{{item?.name}}</td>
+            <td>{{item?.position}}</td>
+            <td>{{item?.date || '--'}}</td>
+            <td>{{item?.signature || '--'}}</td>
+          </tr>
         </tbody>
       </table>
     </section>
@@ -796,12 +796,10 @@
     <section class="final-approval">
       <p>تاريخ الانشاء: 28/09/2024</p>
       <p>بواسطة: Admin</p>
-      <a class="btn btn-sm"
-      [ngClass]="{
+      <a class="btn btn-sm" [ngClass]="{
         'btn-success': !projectDeliveryDetails.approved,
         'btn-info': projectDeliveryDetails.approved
-      }"
-        (click)="approve()">
+      }" (click)="approve()">
         {{!projectDeliveryDetails.approved ? 'الإعتماد النهائي' : 'معتمد'}}
 
       </a>

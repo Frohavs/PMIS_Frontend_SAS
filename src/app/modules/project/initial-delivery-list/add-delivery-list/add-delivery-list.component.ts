@@ -75,6 +75,7 @@ export class AddDeliveryListComponent implements OnInit {
   @ViewChild('deliveryDurationModal') deliveryDurationModal: TemplateRef<any>;
   @ViewChild('imagePlanModal') imagePlanModal: TemplateRef<any>;
   @ViewChild('imagePlanCopiesModal') imagePlanCopiesModal: TemplateRef<any>;
+  editIndex!: number;
 
   swalOptions: SweetAlertOptions = { buttonsStyling: false };
   @ViewChild('noticeSwal') noticeSwal!: SwalComponent;
@@ -248,12 +249,32 @@ export class AddDeliveryListComponent implements OnInit {
       this.showAlert({ icon: 'error', title: 'Error!', text: 'All fields are required' });
       return;
     }
-    this.projectDeliveryDetails.committeeMangers.push({
-      id: this.deliveryForm.value.committeeId,
-      name: this.deliveryForm.value.committeeName,
-      email: this.deliveryForm.value.committeeEmail,
-      position: this.deliveryForm.value.committeePosition
-    });
+    if (!/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/.test(this.deliveryForm.value.committeeEmail)) {
+      this.showAlert({ icon: 'error', title: 'Error!', text: 'Please enter a valid email' });
+      return;
+    }
+    debugger
+    if (this.editIndex >= 0) {
+      for (const key in this.projectDeliveryDetails.committeeMangers) {
+        if (Object.prototype.hasOwnProperty.call(this.projectDeliveryDetails.committeeMangers, key)) {
+          const element = this.projectDeliveryDetails.committeeMangers[key];
+          debugger
+          if (+key === this.editIndex) {
+            element.name = this.deliveryForm.value.committeeName;
+            element.email = this.deliveryForm.value.committeeEmail;
+            element.position = this.deliveryForm.value.committeePosition;
+            break;
+          }
+        }
+      }
+    } else {
+      this.projectDeliveryDetails.committeeMangers.push({
+        id: this.deliveryForm.value.committeeId,
+        name: this.deliveryForm.value.committeeName,
+        email: this.deliveryForm.value.committeeEmail,
+        position: this.deliveryForm.value.committeePosition
+      });
+    }
     delete this.deliveryForm.value.committeeId;
     delete this.deliveryForm.value.committeeName;
     delete this.deliveryForm.value.committeeEmail;
@@ -261,11 +282,29 @@ export class AddDeliveryListComponent implements OnInit {
     this.initialDeliveryService.addDeliveryList(this.projectDeliveryDetails).subscribe(res => {
       this.projectDeliveryDetails.id = res.data || null;
       this.modalService.dismissAll();
+      this.deliveryForm.patchValue({
+        committeeId: 0,
+        committeeName: '',
+        committeeEmail: '',
+        committeePosition: ''
+      });
+      this.editIndex = -1;
     }, (error) => {
-      // this line will remove the index entered above
+      this.editIndex = -1;
+      this.modalService.dismissAll();
       this.projectDeliveryDetails.committeeMangers.pop();
       this.showAlert({ icon: 'error', title: 'Error!', text: 'Please try again' });
     });
+  }
+  dismissCommitteeModal() {
+    this.editIndex = -1;
+    this.modalService.dismissAll();
+    this.deliveryForm.patchValue({
+      committeeId: 0,
+      committeeName: '',
+      committeeEmail: '',
+      committeePosition: ''
+    })
   }
   openBriefModal() {
     this.modalService.open(this.briefModal, this.modalConfig)
@@ -426,6 +465,19 @@ export class AddDeliveryListComponent implements OnInit {
     if (this.signaturePad) {
       this.signaturePad.clear();
     }
+  }
+
+  editMemberField(item: any, editIndex: number) {
+    this.editIndex = editIndex;
+    // Remove the committee manager at the given index
+    // this.projectDeliveryDetails.committeeMangers.splice(editIndex, 1);
+    this.deliveryForm.patchValue({
+      id: 0,
+      committeeName: item.name,
+      committeeEmail: item.email,
+      committeePosition: item.position,
+    });
+    this.openCommitteeModal();
   }
 
   saveSignature() {
