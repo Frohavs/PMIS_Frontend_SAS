@@ -107,14 +107,18 @@ export class DeliverableChecklistComponent implements OnInit {
       alert('Please select all required fields in the form and comment if no');
       return;
     }
-    const payload = this.questionsFormArray.controls.map(question => {
+    const answers = this.questionsFormArray.controls.map(question => {
       return {
         required: question.get('required')?.value === 'yes',
         comments: question.get('comments')?.value || '',
-        gateDeliverableId: this.stageId,
         initialDeliverableId: 2
       };
     });
+
+    const payload = {
+      "gateDeliverableId": this.stageId,
+      "answers": answers
+    }
 
     console.log(payload);
     this.stageGateManagementService.createDeliverableChecklist(payload).subscribe({
