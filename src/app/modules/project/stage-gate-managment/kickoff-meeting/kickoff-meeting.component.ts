@@ -109,10 +109,10 @@ export class KickoffMeetingComponent implements OnInit {
     }
     const payload = this.questionsFormArray.controls.map(question => {
       return {
-        required: question.get('required')?.value === 'yes', // Convert to boolean
-        comments: question.get('comments')?.value || '', // Empty string if no comments
-        gateDeliverableId: this.stageId, // Use the `stageId` from the component
-        initialDeliverableId: 2 // Static value as per your example
+        required: question.get('required')?.value === 'yes',
+        comments: question.get('comments')?.value || '',
+        gateDeliverableId: this.stageId,
+        initialDeliverableId: 3
       };
     });
 
