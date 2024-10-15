@@ -90,7 +90,6 @@ export class OverviewComponent implements OnInit {
       // Remove ID from array if present
       this.permissionModelValue.permissionIds = this.permissionModelValue.permissionIds.filter((permissionId: any) => permissionId !== permission.id);
     }
-    // console.log(this.permissionModelValue);
   }
 
   onSubmit(event: Event, myForm: NgForm) {

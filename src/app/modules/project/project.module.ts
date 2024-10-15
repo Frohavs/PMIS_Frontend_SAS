@@ -62,6 +62,7 @@ import { FactoryDetailsComponent } from './factory/factory-details/factory-detai
 import { GoogleMapsModule } from '@angular/google-maps';
 import { StageGateManagementComponent } from './stage-gate-managment/stage-gate-managment.component';
 import { CreateCommitteeComponent } from './stage-gate-managment/create-commitee/create-commitee.component';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 
 
 @NgModule({
@@ -151,7 +152,8 @@ import { CreateCommitteeComponent } from './stage-gate-managment/create-commitee
     SharedModule,
     NgxCurrencyDirective,
     AngularSignaturePadModule,
-    GoogleMapsModule
+    GoogleMapsModule,
+    NgMultiSelectDropDownModule.forRoot()
 
   ]
 })

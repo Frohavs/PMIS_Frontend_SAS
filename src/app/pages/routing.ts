@@ -35,6 +35,11 @@ const Routing: Routes = [
     // data: { layout: 'light-sidebar' },
   },
   {
+    path: 'stage-gate-management',
+    loadChildren: () => import('../modules/stage-gate-management/stage-gate-management.module').then((m) => m.StageGateManagementModule),
+    // data: { layout: 'light-sidebar' },
+  },
+  {
     path: 'rfp_signature',
     loadChildren: () => import('../modules/rfp-signature/rfp-signature.module').then((m) => m.RfpSignatureModule),
     // data: { layout: 'light-sidebar' },

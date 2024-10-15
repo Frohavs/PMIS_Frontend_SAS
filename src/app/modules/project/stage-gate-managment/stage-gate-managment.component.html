@@ -1,5 +1,5 @@
 <div class="row g-5 g-xl-8 justify-content-between">
-  <div class="col-xl-4">
+  <div class="col-xl-5">
 
     <!-- <ng-container *ngIf="updateInfo">
       <div class="mb-10 bg-light-success p-8 rounded">
@@ -30,14 +30,14 @@
               <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
                 Project name
               </a>
-              <span class="text-muted fw-bold d-block pt-1">{{projectDetails?.nameAr  ||  '--'}}</span>
+              <span class="text-muted fw-bold d-block pt-1">{{projectDetails?.projectName  ||  '--'}}</span>
             </div>
             <div class="flex-grow-1 me-2">
               <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
-                Contract Date
+                Status
               </a>
               <span
-                class="text-muted fw-bold d-block pt-1">{{projectDetails?.createdDate?.slice(0, 10)  ||  '--'}}</span>
+                class="text-muted fw-bold d-block pt-1">{{projectDetails?.status  ||  '--'}}</span>
             </div>
           </div>
           <!-- end::Title -->
@@ -58,7 +58,7 @@
               <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
                 Consultant
               </a>
-              <span class="text-muted fw-bold d-block pt-1">{{projectDetails?.consultantName ||  '--'}}</span>
+              <span class="text-muted fw-bold d-block pt-1">{{projectDetails?.consultant ||  '--'}}</span>
             </div>
           </div>
           <!-- end::Title -->
@@ -73,14 +73,34 @@
               <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
                 Contractor
               </a>
-              <span class="text-muted fw-bold d-block pt-1">{{projectDetails?.contractorName || '--'}}</span>
+              <span class="text-muted fw-bold d-block pt-1">{{projectDetails?.contractor || '--'}}</span>
             </div>
             <div class="flex-grow-1 me-2">
               <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
                 Finish date after extension
               </a>
               <span
-                class="text-muted fw-bold d-block pt-1">{{projectDetails?.originalFinishDate?.slice(0, 10)  ||  '--'}}</span>
+                class="text-muted fw-bold d-block pt-1">{{projectDetails?.finishDateAfterExtension?.slice(0, 10)  ||  '--'}}</span>
+            </div>
+          </div>
+          <!-- end::Title -->
+        </div>
+        <div class="d-flex align-items-sm-center mb-7">
+
+          <!-- begin::Title -->
+          <div class="d-flex flex-row-fluid flex-wrap align-items-center">
+            <div class="w-50 me-2">
+              <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
+                Committee Coordinator
+              </a>
+              <span class="text-muted fw-bold d-block pt-1">{{projectDetails?.coordinator || '--'}}</span>
+            </div>
+            <div class="flex-grow-1 me-2">
+              <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
+                Committee Members
+              </a>
+              <span
+                class="text-muted fw-bold d-block pt-1">{{projectDetails?.committeeMembers  ||  '--'}}</span>
             </div>
           </div>
           <!-- end::Title -->
@@ -106,7 +126,7 @@
       <!-- end::Body -->
     </div>
   </div>
-  <div class="col-xl-8">
+  <div class="col-xl-7">
     <div class="card mb-5 mb-xl-8">
       <!-- begin::Header -->
       <div class="card-header align-items-center border-0 mt-4">

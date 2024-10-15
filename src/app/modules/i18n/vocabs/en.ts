@@ -21,6 +21,7 @@ export const locale = {
       PROJECTS: 'Projects',
       INVOICES: 'Invoices',
       STAFF_EVAL: 'Staff Evaluation',
+      STAGE_GATE: 'Stage Gate Management',
       Category_EVAL: 'Evaluation Category',
       Consultant_EVAL: 'Consultant',
       Contractor_EVAL: 'Contractor',

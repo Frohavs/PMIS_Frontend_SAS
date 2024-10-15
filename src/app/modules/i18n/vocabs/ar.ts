@@ -21,6 +21,7 @@ export const locale = {
       PROJECTS: 'المشاريع',
       INVOICES: 'بوابة المطالبات المالية',
       STAFF_EVAL: 'تقييم الموظفين',
+      STAGE_GATE: 'إدارة البوابات المرحلية',
       Category_EVAL: 'تقييم الفئة',
       Consultant_EVAL: 'الإستشاري',
       Contractor_EVAL: 'المقاول',
