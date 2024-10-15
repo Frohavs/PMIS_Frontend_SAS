@@ -109,20 +109,15 @@
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td>Gate Committee Member #1 Approval</td>
-        <td>الصديق اسماعيل</td>
+
+      <tr *ngFor="let item of printDetails?.committeeMembers; let i = index">
+        <td>Gate Committee Member #{{i+1}} Approval</td>
+        <td>{{item?.name}}</td>
         <td>----</td>
         <td>----</td>
         <td>----</td>
       </tr>
-      <tr>
-        <td>Gate Committee Member #2 Approval</td>
-        <td>د.فيصل العصيمي</td>
-        <td>----</td>
-        <td>----</td>
-        <td>----</td>
-      </tr>
+
       <tr>
         <td>موافقة مدير المشروع<br>Project Manager Approval</td>
         <td>نايف قناديلي</td>
@@ -130,6 +125,7 @@
         <td>----</td>
         <td>----</td>
       </tr>
+
     </tbody>
   </table>
 
