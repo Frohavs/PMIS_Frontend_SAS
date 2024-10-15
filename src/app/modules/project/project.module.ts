@@ -64,6 +64,7 @@ import { StageGateManagementComponent } from './stage-gate-managment/stage-gate-
 import { CreateCommitteeComponent } from './stage-gate-managment/create-commitee/create-commitee.component';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { DeliverableChecklistComponent } from './stage-gate-managment/deliverable-checklist/deliverable-checklist.component';
+import { KickoffMeetingComponent } from './stage-gate-managment/kickoff-meeting/kickoff-meeting.component';
 
 
 @NgModule({
@@ -136,7 +137,8 @@ import { DeliverableChecklistComponent } from './stage-gate-managment/deliverabl
 
     StageGateManagementComponent,
     CreateCommitteeComponent,
-    DeliverableChecklistComponent
+    DeliverableChecklistComponent,
+    KickoffMeetingComponent
   ],
   imports: [
     CommonModule,

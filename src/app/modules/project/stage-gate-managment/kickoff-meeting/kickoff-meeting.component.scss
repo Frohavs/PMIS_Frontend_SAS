@@ -1,0 +1,50 @@
+.form-container {
+  .table {
+    th, td {
+      vertical-align: middle;
+      text-align: center;
+    }
+
+    th {
+      background-color: #DFFFEA;
+      color: #17C653 !important;
+      color: white;
+      font-weight: bold;
+    }
+
+    tbody tr {
+      transition: background-color 0.3s ease;
+      height: 60px;
+    }
+
+    tbody tr:hover {
+      background-color: #f1f1f1; // Highlight row on hover
+    }
+
+    textarea {
+      resize: none;
+    }
+
+    input[type="radio"] {
+      margin-right: 5px;
+    }
+  }
+
+  .form-check-input {
+    margin-right: 10px;
+  }
+}
+
+::ng-deep {
+  .form-check-input:checked {
+    background-color: #1abc9c;
+    border-color: #1abc9c;
+  }
+}
+
+
+.text-danger {
+  color: #dc3545; /* Bootstrap danger color */
+  font-size: 12px;
+  margin-top: 5px;
+}
