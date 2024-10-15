@@ -53,6 +53,7 @@ import { CreateCommitteeComponent } from './stage-gate-managment/create-commitee
 import { DeliverableChecklistComponent } from './stage-gate-managment/deliverable-checklist/deliverable-checklist.component';
 import { KickoffMeetingComponent } from './stage-gate-managment/kickoff-meeting/kickoff-meeting.component';
 import { KickoffMeetingSubmitComponent } from './stage-gate-managment/kickoff-meeting-submit/kickoff-meeting-submit.component';
+import { KickoffPrintComponent } from './stage-gate-managment/kickoff-meeting/kickoff-print/kickoff-print.component';
 
 const routes: Routes = [
   {
@@ -312,6 +313,10 @@ const routes: Routes = [
       {
         path: 'stage-kickoff/:id',
         component: KickoffMeetingComponent,
+      },
+      {
+        path: 'stage-kickoff-print/:id',
+        component: KickoffPrintComponent,
       },
       {
         path: 'stage-kickoff-submit/:id',

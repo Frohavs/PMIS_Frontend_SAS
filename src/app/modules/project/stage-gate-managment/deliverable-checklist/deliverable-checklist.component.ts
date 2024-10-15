@@ -119,7 +119,7 @@ export class DeliverableChecklistComponent implements OnInit {
       "gateDeliverableId": this.stageId,
       "answers": answers
     }
-
+    debugger
     console.log(payload);
     this.stageGateManagementService.createDeliverableChecklist(payload).subscribe({
       next: (res) => {

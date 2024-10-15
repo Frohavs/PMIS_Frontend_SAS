@@ -1,10 +1,11 @@
 import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
 import { Subscription, fromEvent, debounceTime, distinctUntilChanged } from 'rxjs';
 import { LookupService } from 'src/app/services/lookup/lookup.service';
+import { ProjectsService } from 'src/app/services/projects.service';
 import { StageGateManagementService } from 'src/app/services/stage-gate-management.service';
 import { SweetAlertOptions } from 'sweetalert2';
 
@@ -21,13 +22,15 @@ export class OverviewComponent implements OnInit, AfterViewInit, OnDestroy {
   totalCount: number;
   pagesCount: number[] = [];
   selected = 1;
+  projects: any[] = [];
 
   // modal configs
   isLoading = false;
   isCollapsed1 = false;
   swalOptions: SweetAlertOptions = { buttonsStyling: false };
   @ViewChild('noticeSwal') noticeSwal!: SwalComponent;
-
+  @ViewChild('addGateModal') addGateModal!: any;
+  addGateProjectInput: any;
   modalConfig: NgbModalOptions = {
     modalDialogClass: 'modal-dialog modal-dialog-centered mw-650px',
   };
@@ -37,13 +40,14 @@ export class OverviewComponent implements OnInit, AfterViewInit, OnDestroy {
     private cdr: ChangeDetectorRef,
     private router: Router,
     private elRef: ElementRef,
-    private fb: FormBuilder,
-    private lookupService: LookupService,
+    private modalService: NgbModal,
+    private projectsService: ProjectsService,
     private stageGateManagementService: StageGateManagementService,
   ) { }
 
   ngOnInit(): void {
     this.initStageData();
+    this.getLookups();
   }
 
   ngAfterViewInit(): void {
@@ -68,6 +72,13 @@ export class OverviewComponent implements OnInit, AfterViewInit, OnDestroy {
     });
   }
 
+  getLookups() {
+    this.projectsService.getAll().subscribe(res => {
+      this.projects = res.data.items;
+      debugger
+    })
+  }
+
   stageDetails(stage: any) {
     this.router.navigate([`projects/stage-gate-management/${stage.projectId}`], {
       queryParams: {
@@ -85,7 +96,8 @@ export class OverviewComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   redirectToNew() {
-    this.router.navigate([`staff-evaluation/add`]);
+    // this.router.navigate([`staff-evaluation/add`]);
+    this.modalService.open(this.addGateModal, this.modalConfig);
   }
 
   navigatePage(pageIndex: number) {
@@ -125,6 +137,23 @@ export class OverviewComponent implements OnInit, AfterViewInit, OnDestroy {
     }, swalOptions);
     this.cdr.detectChanges();
     this.noticeSwal.fire();
+  }
+
+  onAddGateSubmit(event: Event, myForm: NgForm) {
+    if (myForm && myForm.invalid) {
+      myForm.controls['id'].markAsTouched();
+      return;
+    }
+    this.isLoading = true;
+    this.stageGateManagementService.createGateDeliverable(+this.addGateProjectInput).subscribe((res) => {
+      this.isLoading = false;
+      this.modalService.dismissAll();
+      this.initStageData();
+      this.showAlert({ icon: 'success', title: 'Success!', text: 'Gate Added successfully!' });
+    }, () => {
+      this.isLoading = false;
+      this.showAlert({ icon: 'error', title: 'Error!', text: 'Please try again' });
+    });
   }
 
   ngOnDestroy(): void {

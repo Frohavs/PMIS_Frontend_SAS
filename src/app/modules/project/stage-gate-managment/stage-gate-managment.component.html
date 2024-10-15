@@ -175,7 +175,8 @@
           <div class="d-flex flex-row-fluid flex-wrap justify-content-center align-items-center">
             <div class=" me-2 mb-3">
               <div class="card-toolbar">
-                <a class="btn btn-sm btn-success" (click)="navigateCreateCommittee()">
+                <a class="btn btn-sm btn-light-success" [ngClass]="{'active': activeStep > 0}"
+                  (click)="navigateCreateCommittee()">
                   Create Committees
                 </a>
               </div>
@@ -183,7 +184,8 @@
 
             <div class=" me-2 mb-3">
               <div class="card-toolbar">
-                <a class="btn btn-sm btn-light-success" (click)="navigateDeliverableChecklist()">
+                <a class="btn btn-sm btn-light-success" [ngClass]="{'active': activeStep > 1}"
+                  (click)="navigateDeliverableChecklist()">
                   Deliverable Checklist
                 </a>
               </div>
@@ -191,15 +193,22 @@
 
             <div class=" me-2 mb-3">
               <div class="card-toolbar">
-                <a class="btn btn-sm btn-light-success" (click)="navigateKickOffMeeting()">
-                  Kickoff Meeting
-                </a>
+                <div class="d-flex flex-column">
+                  <a class="btn btn-sm btn-info mb-2" *ngIf="activeStep > 2" (click)="navigateKickOffStepPrint()">
+                    print
+                  </a>
+                  <a class="btn btn-sm btn-light-success" [ngClass]="{'active': activeStep > 2}"
+                    (click)="navigateKickOffMeeting()">
+                    Kickoff Meeting
+                  </a>
+                </div>
               </div>
             </div>
 
             <div class=" me-2 mb-3">
               <div class="card-toolbar">
-                <a class="btn btn-sm btn-light-success" (click)="navigateKickoffMeetingSubmit()">
+                <a class="btn btn-sm btn-light-success" [ngClass]="{'active': activeStep > 3}"
+                  (click)="navigateKickoffMeetingSubmit()">
                   Kickoff Meeting Submit
                 </a>
               </div>
@@ -207,21 +216,24 @@
 
             <div class=" me-2 mb-3">
               <div class="card-toolbar">
-                <a class="btn btn-sm btn-light-success" (click)="navigateUploadDeliverableChecklist()">
+                <a class="btn btn-sm btn-light-success" [ngClass]="{'active': activeStep > 4}"
+                  (click)="navigateUploadDeliverableChecklist()">
                   Upload Deliverable Checklist
                 </a>
               </div>
             </div>
             <div class=" me-2 mb-3">
               <div class="card-toolbar">
-                <a class="btn btn-sm btn-light-success" (click)="navigateReview()">
+                <a class="btn btn-sm btn-light-success" [ngClass]="{'active': activeStep > 5}"
+                  (click)="navigateReview()">
                   Review Meeting
                 </a>
               </div>
             </div>
             <div class=" me-2 mb-3">
               <div class="card-toolbar">
-                <a class="btn btn-sm btn-light-success" (click)="navigateFinalReview()">
+                <a class="btn btn-sm btn-light-success" [ngClass]="{'active': activeStep > 6}"
+                  (click)="navigateFinalReview()">
                   Final Review
                 </a>
               </div>
@@ -270,7 +282,7 @@
         <!--end::Label-->
         <!--begin::Input-->
         <textarea type="text" class="form-control form-control-solid" name="notes" [(ngModel)]="kickOffModel.notes"
-          #name="ngModel" cols="4"></textarea>
+          #name="ngModel" cols="4" required></textarea>
         <div *ngIf="addForm.submitted && addForm.invalid"
           class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
           <div *ngIf="name.errors?.['required']">notes is required</div>

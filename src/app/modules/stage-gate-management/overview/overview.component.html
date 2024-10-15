@@ -7,7 +7,7 @@
       <div class="d-flex align-items-center position-relative my-1">
         <app-keenicon name="magnifier" class="fs-3 position-absolute ms-5"></app-keenicon>
         <input type="text" data-action="filter" class="form-control form-control-solid w-250px ps-12"
-        placeholder="search stages">
+          placeholder="search stages">
       </div>
       <!--end::Search-->
     </div>
@@ -112,3 +112,52 @@
 <!-- modal -->
 <swal #noticeSwal [swalOptions]="swalOptions">
 </swal>
+
+<ng-template #addGateModal let-modal>
+  <form #addForm="ngForm" (ngSubmit)="onAddGateSubmit($event, addForm)">
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Create Project Stage Gate</h4>
+      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+
+      <div class="fv-row mb-7">
+        <!--begin::Label-->
+        <label class="required fw-semibold fs-6 mb-2">projects</label>
+        <select class="form-select form-select-solid form-select-lg fw-bold" name="typeId" [(ngModel)]="addGateProjectInput"
+          #name="ngModel" required>
+          <option value="" disabled>{{"TRANSLATOR.SELECTION" | translate}}</option>
+          <ng-container *ngFor="let project of projects">
+            <option [value]="project?.id">{{project?.name}}</option>
+          </ng-container>
+        </select>
+        <div *ngIf="addForm.submitted && addForm.invalid"
+          class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
+          <div *ngIf="name.errors?.['required']">project is required</div>
+        </div>
+        <!--end::Input-->
+      </div>
+
+    </div>
+    <div class="modal-footer flex-center">
+      <!--begin::Button-->
+      <button type="reset" id="kt_modal_update_customer_cancel" class="btn btn-light me-3"
+        (click)="modal.dismiss('cancel')">
+        Discard
+      </button>
+      <!--end::Button-->
+
+      <!--begin::Button-->
+      <button type="submit" id="kt_modal_update_customer_submit" class="btn btn-primary"
+        [attr.data-kt-indicator]="isLoading ? 'on' : 'off'">
+        <span class="indicator-label">
+          Submit
+        </span>
+        <span class="indicator-progress">
+          Please wait... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+        </span>
+      </button>
+      <!--end::Button-->
+    </div>
+  </form>
+</ng-template>

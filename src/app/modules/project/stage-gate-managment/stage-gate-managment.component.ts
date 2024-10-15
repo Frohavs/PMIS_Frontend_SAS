@@ -2,9 +2,7 @@ import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
-import { TranslateService } from '@ngx-translate/core';
 import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
-import { ProjectsService } from 'src/app/services/projects.service';
 import { StageGateManagementService } from 'src/app/services/stage-gate-management.service';
 import { SweetAlertOptions } from 'sweetalert2';
 
@@ -21,10 +19,7 @@ export class StageGateManagementComponent implements OnInit {
   projectDetails: any;
   isLoading: boolean;
 
-  // Current active step (for example, step 3 is active)
   activeStep: number = 0;
-
-  // Define your steps
   steps: string[] = [
     'Create Committees',
     'Deliverable Checklist',
@@ -43,17 +38,6 @@ export class StageGateManagementComponent implements OnInit {
     modalDialogClass: 'modal-dialog modal-dialog-centered mw-650px',
   };
 
-  /*************  ✨ Codeium Command ⭐  *************/
-  /**
-   * @constructor
-   *
-   * @param {Router} router - Angular's Router to navigate between pages
-   * @param {ChangeDetectorRef} cdr - Angular's ChangeDetectorRef to detect changes and update the component
-   * @param {NgbModal} modalService - Angular's NgbModal service to open modals
-   * @param {ActivatedRoute} activatedRoute - Angular's ActivatedRoute to get route parameters and query params
-   * @param {StageGateManagementService} stageGateManagementService - Service to interact with the stage gate management API
-   */
-  /******  ebc4ca84-2223-4707-8876-24b46d8d35c3  *******/
   constructor(
     private router: Router,
     private cdr: ChangeDetectorRef,
@@ -75,11 +59,33 @@ export class StageGateManagementComponent implements OnInit {
   }
 
   getByID() {
-    this.stageGateManagementService.getByID(this.projectId).subscribe(res => {
+    this.stageGateManagementService.getByID(this.stageId).subscribe(res => {
       this.projectDetails = res.data;
       if (this.projectDetails?.status == 'DeliverableChecklist') {
         this.activeStep = 1;
       }
+      switch (this.projectDetails?.status) {
+        case 'CreateCommittees':
+          this.activeStep = 0;
+          break;
+        case 'DeliverableChecklist':
+          this.activeStep = 1;
+          break;
+        case 'KickoffMeeting':
+          this.activeStep = 2;
+          break;
+        case 'KickoffMeetingSubmit':
+          this.activeStep = 3;
+          break;
+        case 'UploadDeliverableChecklist':
+          this.activeStep = 4;
+          break;
+
+
+        default:
+          break;
+      }
+      debugger
       this.cdr.detectChanges();
     });
   }
@@ -102,10 +108,12 @@ export class StageGateManagementComponent implements OnInit {
       queryParams: { stageId: this.stageId }
     });
   }
+  navigateKickOffStepPrint() {
+    this.router.navigate(['projects/stage-kickoff-print' + `/${this.projectId}`], {
+      queryParams: { stageId: this.stageId }
+    });
+  }
   navigateKickoffMeetingSubmit() {
-    // this.router.navigate(['projects/stage-kickoff-submit' + `/${this.projectId}`],{
-    //   queryParams: { stageId: this.stageId }
-    // });
     this.modalService.open(this.kickOffSubmitModal, this.modalConfig);
   }
   navigateUploadDeliverableChecklist() {
@@ -133,10 +141,12 @@ export class StageGateManagementComponent implements OnInit {
       myForm.controls['notes'].markAsTouched();
       return;
     }
-
-    this.stageGateManagementService.submitKickOff({ notes: this.kickOffModel.notes }).subscribe((res) => {
+    debugger
+    this.isLoading = true;
+    this.stageGateManagementService.submitKickOff({ id: this.stageId,note: this.kickOffModel.notes }).subscribe((res) => {
       this.isLoading = false;
       this.modalService.dismissAll();
+      this.getByID();
       this.showAlert({ icon: 'success', title: 'Success!', text: 'Submitted successfully!' });
     }, () => {
       this.isLoading = false;

@@ -42,6 +42,16 @@ export class StageGateManagementService {
     return this.http.get<any>(url, { headers: httpHeaders });
   }
 
+  createGateDeliverable(id: number): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/Create/${id}`;
+    return this.http.post<any>(url, {}, {
+      headers: httpHeaders
+    });
+  }
+
   createCommitte(payload: any): Observable<any> {
     const httpHeaders = new HttpHeaders({
       Authorization: `Bearer ${this.token}`,
@@ -60,11 +70,20 @@ export class StageGateManagementService {
       headers: httpHeaders
     });
   }
+  getKickOffPrint(id: any): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/Print/${id}`;
+    return this.http.get<any>(url, {
+      headers: httpHeaders
+    });
+  }
   submitKickOff(payload: any): Observable<any> {
     const httpHeaders = new HttpHeaders({
       Authorization: `Bearer ${this.token}`,
     });
-    const url = `${this.API_USERS_URL}/CreateDeliverableChecklist`;
+    const url = `${this.API_USERS_URL}/CreateKickoffMeetingSubmitNote`;
     return this.http.post<any>(url, payload, {
       headers: httpHeaders
     });

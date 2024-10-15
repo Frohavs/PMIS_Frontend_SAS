@@ -1,3 +1,4 @@
+import { UploadDeliverableChecklistComponent } from './stage-gate-managment/upload-deliverable-checklist/upload-deliverable-checklist.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -65,6 +66,8 @@ import { CreateCommitteeComponent } from './stage-gate-managment/create-commitee
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { DeliverableChecklistComponent } from './stage-gate-managment/deliverable-checklist/deliverable-checklist.component';
 import { KickoffMeetingComponent } from './stage-gate-managment/kickoff-meeting/kickoff-meeting.component';
+import { KickoffMeetingSubmitComponent } from './stage-gate-managment/kickoff-meeting-submit/kickoff-meeting-submit.component';
+import { KickoffPrintComponent } from './stage-gate-managment/kickoff-meeting/kickoff-print/kickoff-print.component';
 
 
 @NgModule({
@@ -138,7 +141,10 @@ import { KickoffMeetingComponent } from './stage-gate-managment/kickoff-meeting/
     StageGateManagementComponent,
     CreateCommitteeComponent,
     DeliverableChecklistComponent,
-    KickoffMeetingComponent
+    KickoffMeetingComponent,
+    KickoffPrintComponent,
+    KickoffMeetingSubmitComponent,
+    UploadDeliverableChecklistComponent,
   ],
   imports: [
     CommonModule,
