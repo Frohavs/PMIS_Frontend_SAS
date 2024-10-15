@@ -60,4 +60,13 @@ export class StageGateManagementService {
       headers: httpHeaders
     });
   }
+  submitKickOff(payload: any): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/CreateDeliverableChecklist`;
+    return this.http.post<any>(url, payload, {
+      headers: httpHeaders
+    });
+  }
 }

@@ -36,8 +36,7 @@
               <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
                 Status
               </a>
-              <span
-                class="text-muted fw-bold d-block pt-1">{{projectDetails?.status  ||  '--'}}</span>
+              <span class="text-muted fw-bold d-block pt-1">{{projectDetails?.status  ||  '--'}}</span>
             </div>
           </div>
           <!-- end::Title -->
@@ -99,8 +98,7 @@
               <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
                 Committee Members
               </a>
-              <span
-                class="text-muted fw-bold d-block pt-1">{{projectDetails?.committeeMembers  ||  '--'}}</span>
+              <span class="text-muted fw-bold d-block pt-1">{{projectDetails?.committeeMembers  ||  '--'}}</span>
             </div>
           </div>
           <!-- end::Title -->
@@ -254,3 +252,52 @@
     </div>
   </div>
 </div>
+
+<swal #noticeSwal [swalOptions]="swalOptions">
+</swal>
+
+<ng-template #kickOffSubmitModal let-modal>
+  <form #addForm="ngForm" (ngSubmit)="onKickOffSubmit($event, addForm)">
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Kickoff Meeting Submit</h4>
+      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+
+      <div class="fv-row mb-7">
+        <!--begin::Label-->
+        <label class="required fw-semibold fs-6 mb-2">notes</label>
+        <!--end::Label-->
+        <!--begin::Input-->
+        <textarea type="text" class="form-control form-control-solid" name="notes" [(ngModel)]="kickOffModel.notes"
+          #name="ngModel" cols="4"></textarea>
+        <div *ngIf="addForm.submitted && addForm.invalid"
+          class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
+          <div *ngIf="name.errors?.['required']">notes is required</div>
+        </div>
+        <!--end::Input-->
+      </div>
+
+    </div>
+    <div class="modal-footer flex-center">
+      <!--begin::Button-->
+      <button type="reset" id="kt_modal_update_customer_cancel" class="btn btn-light me-3"
+        (click)="modal.dismiss('cancel')">
+        Discard
+      </button>
+      <!--end::Button-->
+
+      <!--begin::Button-->
+      <button type="submit" id="kt_modal_update_customer_submit" class="btn btn-primary"
+        [attr.data-kt-indicator]="isLoading ? 'on' : 'off'">
+        <span class="indicator-label">
+          Submit
+        </span>
+        <span class="indicator-progress">
+          Please wait... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+        </span>
+      </button>
+      <!--end::Button-->
+    </div>
+  </form>
+</ng-template>
