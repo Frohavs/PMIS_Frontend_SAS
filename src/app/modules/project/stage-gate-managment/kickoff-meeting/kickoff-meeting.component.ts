@@ -111,7 +111,7 @@ export class KickoffMeetingComponent implements OnInit {
       return {
         required: question.get('required')?.value === 'yes',
         comments: question.get('comments')?.value || '',
-        initialDeliverableId: 2
+        initialDeliverableId: question.get('id')?.value
       };
     });
 
