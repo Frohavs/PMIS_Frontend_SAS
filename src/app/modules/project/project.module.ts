@@ -63,6 +63,7 @@ import { GoogleMapsModule } from '@angular/google-maps';
 import { StageGateManagementComponent } from './stage-gate-managment/stage-gate-managment.component';
 import { CreateCommitteeComponent } from './stage-gate-managment/create-commitee/create-commitee.component';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import { DeliverableChecklistComponent } from './stage-gate-managment/deliverable-checklist/deliverable-checklist.component';
 
 
 @NgModule({
@@ -135,6 +136,7 @@ import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 
     StageGateManagementComponent,
     CreateCommitteeComponent,
+    DeliverableChecklistComponent
   ],
   imports: [
     CommonModule,

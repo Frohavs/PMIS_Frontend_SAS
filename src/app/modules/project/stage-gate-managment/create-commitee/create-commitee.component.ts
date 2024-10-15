@@ -49,11 +49,11 @@ export class CreateCommitteeComponent implements OnInit {
 
   ngOnInit(): void {
     this.initAddCommitteeForm();
-    this.getBoqId();
+    this.getStageId();
     this.getLookups();
   }
 
-  getBoqId() {
+  getStageId() {
     this.activatedRoute.params.subscribe(params => {
       this.projectId = +params['id'];
     });

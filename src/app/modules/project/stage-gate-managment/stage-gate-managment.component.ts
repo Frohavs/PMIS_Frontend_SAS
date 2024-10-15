@@ -34,7 +34,6 @@ export class StageGateManagementComponent implements OnInit {
   constructor(
     private router: Router,
     private cdr: ChangeDetectorRef,
-    private translate: TranslateService,
     private activatedRoute: ActivatedRoute,
     private stageGateManagementService: StageGateManagementService,
   ) { }
