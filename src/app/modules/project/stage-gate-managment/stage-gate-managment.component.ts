@@ -117,19 +117,19 @@ export class StageGateManagementComponent implements OnInit {
     this.modalService.open(this.kickOffSubmitModal, this.modalConfig);
   }
   navigateUploadDeliverableChecklist() {
-    this.router.navigate(['projects/stage-upload-deliverable-checklist' + `/${this.projectId}`], {
-      queryParams: { stageId: this.stageId }
-    });
+    // this.router.navigate(['projects/stage-upload-deliverable-checklist' + `/${this.projectId}`], {
+    //   queryParams: { stageId: this.stageId }
+    // });
   }
   navigateReview() {
-    this.router.navigate(['projects/stage-review' + `/${this.projectId}`], {
-      queryParams: { stageId: this.stageId }
-    });
+    // this.router.navigate(['projects/stage-review' + `/${this.projectId}`], {
+    //   queryParams: { stageId: this.stageId }
+    // });
   }
   navigateFinalReview() {
-    this.router.navigate(['projects/stage-final-review' + `/${this.projectId}`], {
-      queryParams: { stageId: this.stageId }
-    });
+    // this.router.navigate(['projects/stage-final-review' + `/${this.projectId}`], {
+    //   queryParams: { stageId: this.stageId }
+    // });
   }
   // Method to check if a step is active
   isStepActive(stepNumber: number): boolean {
