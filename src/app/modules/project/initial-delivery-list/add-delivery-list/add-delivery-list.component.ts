@@ -164,7 +164,7 @@ export class AddDeliveryListComponent implements OnInit {
       contractorSignature: ['', Validators.required],
       consultantSignature: ['', Validators.required],
       imagePlan: [0, Validators.required],
-      committeeId: [0],
+      committeeId: [null],
       committeeName: [''],
       committeeEmail: [''],
       committeePosition: [''],
@@ -283,7 +283,7 @@ export class AddDeliveryListComponent implements OnInit {
       this.projectDeliveryDetails.id = res.data || null;
       this.modalService.dismissAll();
       this.deliveryForm.patchValue({
-        committeeId: 0,
+        committeeId: null,
         committeeName: '',
         committeeEmail: '',
         committeePosition: ''
@@ -300,7 +300,7 @@ export class AddDeliveryListComponent implements OnInit {
     this.editIndex = -1;
     this.modalService.dismissAll();
     this.deliveryForm.patchValue({
-      committeeId: 0,
+      committeeId: null,
       committeeName: '',
       committeeEmail: '',
       committeePosition: ''

@@ -25,9 +25,9 @@
         <thead>
           <tr class="fw-bolder text-muted">
             <th class="max-w-100px">#</th>
-            <th class="max-w-100px">Delivery Type</th>
+            <th class="max-w-100px">Status</th>
             <th class="max-w-100px">Code</th>
-            <th class="min-w-100px">Format Date</th>
+            <th class="min-w-100px">Delivery Date</th>
             <th class="min-w-100px">Decision number</th>
             <th class="min-w-100px">Decision Date</th>
             <th class="min-w-100px">Copies</th>
@@ -44,7 +44,7 @@
             </td>
             <td>
               <a class="text-gray-900 fw-bolder text-hover-primary d-block fs-6">
-                {{item?.type || '--'}}
+                {{item?.statusName || '--'}}
               </a>
             </td>
             <td>
@@ -54,7 +54,7 @@
             </td>
             <td>
               <a class="text-gray-900 fw-bolder text-hover-primary d-block fs-6">
-                {{item?.createdOn | date: 'dd/MM/yyyy' || '--'}}
+                {{(item?.deliveryDate | date: 'dd/MM/yyyy') || '--'}}
               </a>
             </td>
             <td>
