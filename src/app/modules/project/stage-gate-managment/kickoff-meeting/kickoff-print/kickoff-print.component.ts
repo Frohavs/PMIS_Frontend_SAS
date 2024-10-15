@@ -15,6 +15,7 @@ export class KickoffPrintComponent implements OnInit {
   stageId: number;
   projectDetails: any;
   isLoading: boolean;
+  printDetails: any;
 
   constructor(
     private router: Router,
@@ -43,7 +44,9 @@ export class KickoffPrintComponent implements OnInit {
   handlePrint() {
     this.stageGateManagementService.getKickOffPrint(this.stageId).subscribe(res => {
       console.log(res.data);
+      this.printDetails = res.data
 
+      this.cdr.detectChanges();
     });
   }
 }

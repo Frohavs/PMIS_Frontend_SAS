@@ -128,7 +128,7 @@
           #name="ngModel" required>
           <option value="" disabled>{{"TRANSLATOR.SELECTION" | translate}}</option>
           <ng-container *ngFor="let project of projects">
-            <option [value]="project?.id">{{project?.name}}</option>
+            <option [value]="project?.id">{{project?.nameAr}}</option>
           </ng-container>
         </select>
         <div *ngIf="addForm.submitted && addForm.invalid"
