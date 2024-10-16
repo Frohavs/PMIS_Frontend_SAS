@@ -3,6 +3,7 @@ import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
+import { LookupService } from 'src/app/services/lookup/lookup.service';
 import { StageGateManagementService } from 'src/app/services/stage-gate-management.service';
 import { SweetAlertOptions } from 'sweetalert2';
 
@@ -17,17 +18,18 @@ export class StageGateManagementComponent implements OnInit {
   projectId: number;
   stageId: number;
   projectDetails: any;
+  subPhaseId: number;
   isLoading: boolean;
 
   activeStep: number = 0;
-  steps: string[] = [
-    'Create Committees',
-    'Deliverable Checklist',
-    'Kickoff Meeting',
-    'Kickoff Meeting Submit',
-    'Upload Deliverable Checklist',
-    'Review Meeting',
-    'Final Review'
+  steps: any[] = [
+    // 'Create Committees',
+    // 'Deliverable Checklist',
+    // 'Kickoff Meeting',
+    // 'Kickoff Meeting Submit',
+    // 'Upload Deliverable Checklist',
+    // 'Review Meeting',
+    // 'Final Review'
   ];
 
   kickOffModel: { notes: string } = { notes: '' };
@@ -43,10 +45,14 @@ export class StageGateManagementComponent implements OnInit {
     private cdr: ChangeDetectorRef,
     private modalService: NgbModal,
     private activatedRoute: ActivatedRoute,
+    private lookupService: LookupService,
     private stageGateManagementService: StageGateManagementService,
   ) { }
 
   ngOnInit(): void {
+    this.lookupService.getInitialDeliverableSteps().subscribe(res => {
+      this.steps = res.data;
+    })
     this.activatedRoute.params.subscribe(params => {
       this.projectId = +params['id'];
     });
@@ -61,6 +67,7 @@ export class StageGateManagementComponent implements OnInit {
   getByID() {
     this.stageGateManagementService.getByID(this.stageId).subscribe(res => {
       this.projectDetails = res.data;
+      this.subPhaseId = this.projectDetails?.subPhaseId;
       if (this.projectDetails?.status == 'DeliverableChecklist') {
         this.activeStep = 1;
       }
@@ -85,9 +92,35 @@ export class StageGateManagementComponent implements OnInit {
         default:
           break;
       }
-      debugger
       this.cdr.detectChanges();
     });
+  }
+
+  getActiveClass(step: any) {
+    console.log(step, this.activeStep);
+    if (this.activeStep >= step.id) {
+      return 'active'
+
+    }
+    return '';
+  }
+
+  navigateTo(step: any) {
+    if (this.activeStep < step.id) {
+      if (step.id == 1) {
+        this.navigateCreateCommittee();
+      } else if (step.id == 2) {
+        this.navigateDeliverableChecklist();
+      } else if (step.id == 3) {
+        this.navigateKickOffMeeting();
+      } else if (step.id == 4) {
+        this.navigateKickoffMeetingSubmit();
+      } else if (step.id == 5) {
+        this.navigateUploadDeliverableChecklist();
+      } else if (step.id == 6) {
+        this.navigateReview();
+      }
+    }
   }
 
   updateProjectInfo() {
@@ -100,12 +133,12 @@ export class StageGateManagementComponent implements OnInit {
   }
   navigateDeliverableChecklist() {
     this.router.navigate(['projects/stage-deliverable-checklist' + `/${this.projectId}`], {
-      queryParams: { stageId: this.stageId }
+      queryParams: { stageId: this.stageId, subPhaseId: this.subPhaseId }
     });
   }
   navigateKickOffMeeting() {
     this.router.navigate(['projects/stage-kickoff' + `/${this.projectId}`], {
-      queryParams: { stageId: this.stageId }
+      queryParams: { stageId: this.stageId, subPhaseId: this.subPhaseId, coordinatorId: this.projectDetails?.coordinatorId }
     });
   }
   navigateKickOffStepPrint() {
@@ -143,7 +176,7 @@ export class StageGateManagementComponent implements OnInit {
     }
     debugger
     this.isLoading = true;
-    this.stageGateManagementService.submitKickOff({ id: this.stageId,note: this.kickOffModel.notes }).subscribe((res) => {
+    this.stageGateManagementService.submitKickOff({ id: this.stageId, note: this.kickOffModel.notes }).subscribe((res) => {
       this.isLoading = false;
       this.modalService.dismissAll();
       this.getByID();

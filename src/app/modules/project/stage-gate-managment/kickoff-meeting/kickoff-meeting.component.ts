@@ -17,6 +17,7 @@ export class KickoffMeetingComponent implements OnInit {
 
   projectId: number;
   stageId: number;
+  subPhaseId: number;
   isLoading: boolean = false;
   deliverableQuestions: any[] = [];
   kickoffForm: FormGroup;
@@ -41,7 +42,6 @@ export class KickoffMeetingComponent implements OnInit {
   ngOnInit(): void {
     this.initKickOffForm();
     this.getStageId();
-    this.getLookups();
   }
 
   initKickOffForm() {
@@ -84,13 +84,16 @@ export class KickoffMeetingComponent implements OnInit {
     });
     this.activatedRoute.queryParams.subscribe(params => {
       this.stageId = params['stageId'];
+      this.subPhaseId = params['subPhaseId'];
+
+      this.getQuestions();
     });
     const queryParams = this.activatedRoute.snapshot.queryParams;
     this.stageId = +queryParams?.stageId;
   }
 
-  getLookups() {
-    this.lookupService.getInitialDeliverables(3).subscribe(res => {
+  getQuestions() {
+    this.lookupService.getInitialDeliverables(this.subPhaseId).subscribe(res => {
       this.deliverableQuestions = res.data;
       // Add deliverable questions to the form
       this.deliverableQuestions.forEach(question => {

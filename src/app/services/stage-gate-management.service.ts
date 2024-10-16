@@ -52,6 +52,15 @@ export class StageGateManagementService {
     });
   }
 
+  getCommitteeMembersByGateId(id: number): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/GetCommitteMembers/${id}`;
+    return this.http.get<any>(url, {
+      headers: httpHeaders
+    });
+  }
   createCommitte(payload: any): Observable<any> {
     const httpHeaders = new HttpHeaders({
       Authorization: `Bearer ${this.token}`,
@@ -69,6 +78,14 @@ export class StageGateManagementService {
     return this.http.post<any>(url, payload, {
       headers: httpHeaders
     });
+  }
+
+  getDeliverableAnswers(gateId?: number, stepId?: number): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/Get/${gateId}/${stepId}`;
+    return this.http.get<any>(url, { headers: httpHeaders });
   }
   getKickOffPrint(id: any): Observable<any> {
     const httpHeaders = new HttpHeaders({

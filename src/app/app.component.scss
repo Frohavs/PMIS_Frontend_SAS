@@ -10,7 +10,21 @@
     border-color: #f9f9f9 !important;
 
     .selected-item {
-      max-width: 130px !important;
+      max-width: 180px !important;
     }
+  }
+}
+
+
+::ng-deep .nav-tabs .nav-link {
+  font-weight: bold;
+  color: #000 !important;
+  font-size: 16px;
+  cursor: pointer;
+
+  &.active {
+
+    color: #17C653 !important;
+    font-weight: bold;
   }
 }

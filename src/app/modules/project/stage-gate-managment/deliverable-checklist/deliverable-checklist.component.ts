@@ -1,3 +1,4 @@
+import { CommitteeManager } from './../../initial-delivery-list/add-delivery-list/add-modal';
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -15,11 +16,17 @@ import { SweetAlertOptions } from 'sweetalert2';
 })
 export class DeliverableChecklistComponent implements OnInit {
 
+  activeTab: number = 0;
   projectId: number;
   stageId: number;
+  subPhaseId: number;
   isLoading: boolean = false;
+  hideSubmit: boolean = false;
+  committeeId: number;
+  committeeMembers: any[] = [];
   deliverableQuestions: any[] = [];
   deliverableForm: FormGroup;
+  currentAnswersArray: any[] = [];
 
   swalOptions: SweetAlertOptions = {};
   @ViewChild('noticeSwal') noticeSwal!: SwalComponent;
@@ -41,7 +48,6 @@ export class DeliverableChecklistComponent implements OnInit {
   ngOnInit(): void {
     this.initDeliverableForm();
     this.getStageId();
-    this.getLookups();
   }
 
   initDeliverableForm() {
@@ -84,13 +90,15 @@ export class DeliverableChecklistComponent implements OnInit {
     });
     this.activatedRoute.queryParams.subscribe(params => {
       this.stageId = params['stageId'];
+      this.subPhaseId = params['subPhaseId'];
+      this.getQuestions();
+      this.getCommitteesMembers();
     });
     const queryParams = this.activatedRoute.snapshot.queryParams;
     this.stageId = +queryParams?.stageId;
   }
-
-  getLookups() {
-    this.lookupService.getInitialDeliverables(2).subscribe(res => {
+  getQuestions() {
+    this.lookupService.getInitialDeliverables(this.subPhaseId).subscribe(res => {
       this.deliverableQuestions = res.data;
       // Add deliverable questions to the form
       this.deliverableQuestions.forEach(question => {
@@ -99,6 +107,77 @@ export class DeliverableChecklistComponent implements OnInit {
 
       this.cdr.detectChanges();
     });
+  }
+
+  getCommitteesMembers() {
+    this.stageGateManagementService.getCommitteeMembersByGateId(this.stageId).subscribe(res => {
+      this.committeeMembers = res.data;
+      this.committeeId = this.committeeMembers[0].id;
+      this.checkForAnswers();
+      this.cdr.detectChanges();
+    })
+  }
+
+  checkForAnswers() {
+    this.stageGateManagementService.getDeliverableAnswers(this.stageId, 2).subscribe(res => {
+      console.log(res.data);
+      debugger
+      this.currentAnswersArray = [];
+      for (const answer of res.data?.answers) {
+        if (answer.committeeMemberId === this.committeeId)
+          this.currentAnswersArray.push(answer);
+      }
+      if (this.currentAnswersArray.length > 0) {
+        this.hideSubmit = true;
+        this.patchFormValues(this.currentAnswersArray);
+      } else {
+        this.hideSubmit = false;
+        this.currentAnswersArray = [];
+        this.resetFormToInitialState();
+      }
+      console.log('currentAnswersArray', this.currentAnswersArray);
+      this.patchFormValues(this.currentAnswersArray);
+    });
+  }
+
+  patchFormValues(currentAnswersArray: any[]) {
+    const questionsFormArray = this.questionsFormArray; // Reference to the form array
+
+    currentAnswersArray.forEach((answer, index) => {
+      const formGroup = questionsFormArray.at(index) as FormGroup;
+      formGroup.patchValue({
+        id: answer.id,
+        name: answer.initialDeliverableName,
+        required: answer.required ? 'yes' : 'no',
+        comments: answer.comments
+      });
+
+      this.cdr.detectChanges();
+    });
+  }
+
+  resetFormToInitialState() {
+    const questionsFormArray = this.questionsFormArray;
+
+    questionsFormArray.controls.forEach((control, index) => {
+      const id = control.get('id')?.value;
+      const name = control.get('name')?.value;
+
+      control.reset({
+        id: id,
+        name: name,
+        required: '',
+        comments: ''
+      });
+    });
+
+    this.cdr.detectChanges();
+  }
+
+  setActiveTab(index: number, committeeId: number) {
+    this.committeeId = committeeId;
+    this.activeTab = index;
+    this.checkForAnswers();
   }
 
   onSubmit() {
@@ -111,16 +190,16 @@ export class DeliverableChecklistComponent implements OnInit {
       return {
         required: question.get('required')?.value === 'yes',
         comments: question.get('comments')?.value || '',
-        initialDeliverableId: question.get('id')?.value
+        initialDeliverableId: question.get('id')?.value,
+        committeeMemberId: this.committeeId
       };
     });
 
     const payload = {
-      "gateDeliverableId": this.stageId,
+      "gateId": this.stageId,
       "answers": answers
     }
     debugger
-    console.log(payload);
     this.stageGateManagementService.createDeliverableChecklist(payload).subscribe({
       next: (res) => {
         this.isLoading = false;

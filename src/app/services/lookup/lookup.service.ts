@@ -227,6 +227,15 @@ export class LookupService {
       headers: httpHeaders
     });
   }
+  getInitialDeliverableSteps(): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/GetInitialDeliverableSteps`;
+    return this.http.get<any>(url, {
+      headers: httpHeaders
+    });
+  }
   getInitialDeliverables(phaseId: number): Observable<any> {
     const httpHeaders = new HttpHeaders({
       Authorization: `Bearer ${this.token}`,
