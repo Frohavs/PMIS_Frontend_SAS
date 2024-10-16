@@ -18,6 +18,7 @@ export class KickoffMeetingComponent implements OnInit {
   projectId: number;
   stageId: number;
   subPhaseId: number;
+  coordinatorId: number;
   isLoading: boolean = false;
   deliverableQuestions: any[] = [];
   kickoffForm: FormGroup;
@@ -85,6 +86,7 @@ export class KickoffMeetingComponent implements OnInit {
     this.activatedRoute.queryParams.subscribe(params => {
       this.stageId = params['stageId'];
       this.subPhaseId = params['subPhaseId'];
+      this.coordinatorId = params['coordinatorId'];
 
       this.getQuestions();
     });
@@ -114,18 +116,19 @@ export class KickoffMeetingComponent implements OnInit {
       return {
         required: question.get('required')?.value === 'yes',
         comments: question.get('comments')?.value || '',
-        initialDeliverableId: question.get('id')?.value
+        initialDeliverableId: question.get('id')?.value,
+        committeeMemberId: this.coordinatorId
       };
     });
 
     const payload = {
-      "gateDeliverableId": this.stageId,
+      "gateId": this.stageId,
       "answers": answers
     }
     debugger
 
     console.log(payload);
-    this.stageGateManagementService.createDeliverableChecklist(payload).subscribe({
+    this.stageGateManagementService.postKickoffSubmitMeeting(payload).subscribe({
       next: (res) => {
         this.isLoading = false;
         this.router.navigate([`projects/stage-gate-management/${this.projectId}`], {

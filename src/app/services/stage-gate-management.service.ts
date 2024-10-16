@@ -79,6 +79,15 @@ export class StageGateManagementService {
       headers: httpHeaders
     });
   }
+  postKickoffSubmitMeeting(payload: any): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/CreateKickoffMeeting`;
+    return this.http.post<any>(url, payload, {
+      headers: httpHeaders
+    });
+  }
 
   getDeliverableAnswers(gateId?: number, stepId?: number): Observable<any> {
     const httpHeaders = new HttpHeaders({

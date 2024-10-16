@@ -52,6 +52,7 @@ export class StageGateManagementComponent implements OnInit {
   ngOnInit(): void {
     this.lookupService.getInitialDeliverableSteps().subscribe(res => {
       this.steps = res.data;
+      this.cdr.detectChanges();
     })
     this.activatedRoute.params.subscribe(params => {
       this.projectId = +params['id'];
@@ -97,7 +98,6 @@ export class StageGateManagementComponent implements OnInit {
   }
 
   getActiveClass(step: any) {
-    console.log(step, this.activeStep);
     if (this.activeStep >= step.id) {
       return 'active'
 
