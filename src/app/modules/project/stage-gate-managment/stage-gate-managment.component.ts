@@ -127,16 +127,25 @@ export class StageGateManagementComponent implements OnInit {
     this.updateInfo = !this.updateInfo;
   }
   navigateCreateCommittee() {
+    if (this.activeStep !== 0) {
+      return
+    }
     this.router.navigate([`projects/stage-gate-committees/${this.projectId}`], {
       queryParams: { stageId: this.stageId }
     });
   }
   navigateDeliverableChecklist() {
+    if (this.activeStep !== 1) {
+      return
+    }
     this.router.navigate(['projects/stage-deliverable-checklist' + `/${this.projectId}`], {
       queryParams: { stageId: this.stageId, subPhaseId: this.subPhaseId }
     });
   }
   navigateKickOffMeeting() {
+    if (this.activeStep !== 2) {
+      return
+    }
     this.router.navigate(['projects/stage-kickoff' + `/${this.projectId}`], {
       queryParams: { stageId: this.stageId, subPhaseId: this.subPhaseId, coordinatorId: this.projectDetails?.coordinatorId }
     });
@@ -147,6 +156,10 @@ export class StageGateManagementComponent implements OnInit {
     });
   }
   navigateKickoffMeetingSubmit() {
+    debugger
+    if (this.activeStep !== 3) {
+      return
+    }
     this.modalService.open(this.kickOffSubmitModal, this.modalConfig);
   }
   navigateUploadDeliverableChecklist() {
