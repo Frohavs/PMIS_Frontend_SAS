@@ -142,11 +142,12 @@ export class DeliverableChecklistComponent implements OnInit {
 
   patchFormValues(currentAnswersArray: any[]) {
     const questionsFormArray = this.questionsFormArray; // Reference to the form array
-
     currentAnswersArray.forEach((answer, index) => {
       const formGroup = questionsFormArray.at(index) as FormGroup;
+      const originalQuestion = this.deliverableQuestions[index];
+
       formGroup.patchValue({
-        id: answer.id,
+        id: originalQuestion.id,
         name: answer.initialDeliverableName,
         required: answer.required ? 'yes' : 'no',
         comments: answer.comments
@@ -162,10 +163,10 @@ export class DeliverableChecklistComponent implements OnInit {
     questionsFormArray.controls.forEach((control, index) => {
       const id = control.get('id')?.value;
       const name = control.get('name')?.value;
-
+      const originalQuestion = this.deliverableQuestions[index];
       control.reset({
-        id: id,
-        name: name,
+        id: originalQuestion.id,
+        name: originalQuestion.name,
         required: '',
         comments: ''
       });
