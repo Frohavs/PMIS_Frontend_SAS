@@ -109,8 +109,8 @@
         <td>موافقة مدير المشروع<br>Project Manager Approval</td>
         <td>{{printDetails?.coordinator}}</td>
         <td>----</td>
-        <td>----</td>
-        <td>----</td>
+        <td>{{printDetails?.approvedDate | date : 'dd-MM-yyyy' || '----'}}</td>
+        <td>{{printDetails?.note || '----'}}</td>
       </tr>
 
     </tbody>

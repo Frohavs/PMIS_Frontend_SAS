@@ -19,6 +19,9 @@
           <div *ngFor="let step of steps; let i = index" class="wizard-step" [class.active]="isStepActive(i + 1)">
             <div class="step-number">{{ i + 1 }}</div>
             <div class="step-title">{{ step.name }}</div>
+            <a class="btn btn-sm btn-info mb-5" *ngIf="step.name === 'Kickoff Meeting' && isStepActive(i + 1)" (click)="navigateKickOffStepPrint()">
+              print
+            </a>
           </div>
         </div>
 
@@ -51,10 +54,15 @@
 
             <div class=" me-2 mb-3" *ngFor="let step of steps">
               <div class="card-toolbar">
-                <a class="btn btn-sm btn-light-success" [ngClass]="getActiveClass(step)"
-                  (click)="navigateTo(step)">
-                  {{step.name}}
-                </a>
+                <div class="d-flex" [ngClass]="{' flex-column': step.name === 'Kickoff Meeting'}">
+                  <!-- <a class="btn btn-sm btn-info mb-2" *ngIf="step.name === 'Kickoff Meeting'" (click)="navigateKickOffStepPrint()">
+                    print
+                  </a> -->
+                  <a class="btn btn-sm btn-light-success" [ngClass]="getActiveClass(step)"
+                    (click)="navigateTo(step)">
+                    {{step.name}}
+                  </a>
+                </div>
               </div>
             </div>
 
