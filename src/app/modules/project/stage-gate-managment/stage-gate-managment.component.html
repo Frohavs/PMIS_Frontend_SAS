@@ -30,6 +30,11 @@
               (click)="navigateReviewPrint()">
               print
             </a>
+            <!-- Review Meeting print -->
+            <a class="btn btn-sm btn-primary mt-5" *ngIf="step.name === 'Final Review' && isStepActive(i + 1)"
+              (click)="navigateFinalReviewPrint()">
+              print
+            </a>
 
           </div>
         </div>

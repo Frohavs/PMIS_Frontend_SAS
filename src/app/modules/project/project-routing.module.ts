@@ -58,6 +58,8 @@ import { UploadDeliverableChecklistComponent } from './stage-gate-managment/uplo
 import { ReviewMeetingComponent } from './stage-gate-managment/review-meeting/review-meeting.component';
 import { PrintReviewComponent } from './stage-gate-managment/review-meeting/print-review/print-review.component';
 import { FinalReviewComponent } from './stage-gate-managment/final-review/final-review.component';
+import { CommitAcknowledgementComponent } from './stage-gate-managment/commit-acknowledgement/commit-acknowledgement.component';
+import { FinalReviewPrintComponent } from './stage-gate-managment/final-review/final-review-print/final-review-print.component';
 
 const routes: Routes = [
   {
@@ -341,6 +343,14 @@ const routes: Routes = [
       {
         path: 'stage-final-review/:id',
         component: FinalReviewComponent,
+      },
+      {
+        path: 'stage-final-review-print/:id',
+        component: FinalReviewPrintComponent,
+      },
+      {
+        path: 'stage-commit-acknowledgement/:id',
+        component: CommitAcknowledgementComponent,
       },
 
 

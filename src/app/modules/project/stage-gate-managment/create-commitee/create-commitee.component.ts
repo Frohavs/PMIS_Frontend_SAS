@@ -58,7 +58,7 @@ export class CreateCommitteeComponent implements OnInit {
       this.projectId = +params['id'];
     });
     this.activatedRoute.queryParams.subscribe(params => {
-      this.stageId = params['stageId'];
+      this.stageId = +params['stageId'];
     });
     const queryParams = this.activatedRoute.snapshot.queryParams;
     this.stageId = +queryParams?.stageId;

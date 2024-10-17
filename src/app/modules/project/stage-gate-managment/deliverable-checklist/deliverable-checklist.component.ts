@@ -89,7 +89,7 @@ export class DeliverableChecklistComponent implements OnInit {
       this.projectId = +params['id'];
     });
     this.activatedRoute.queryParams.subscribe(params => {
-      this.stageId = params['stageId'];
+      this.stageId = +params['stageId'];
       this.subPhaseId = params['subPhaseId'];
       this.getQuestions();
       this.getCommitteesMembers();

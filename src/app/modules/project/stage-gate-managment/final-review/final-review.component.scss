@@ -1,0 +1,98 @@
+.form-container {
+  padding: 20px;
+
+  .form-group {
+    margin-bottom: 20px;
+
+    label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+
+    input[type="text"],
+    textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 16px;
+    }
+
+    textarea {
+      min-height: 100px;
+    }
+  }
+
+  /* Radio button styles */
+  .form-group div {
+    display: flex;
+    flex-direction: column;
+  }
+
+  label {
+    font-size: 16px;
+    margin-bottom: 10px;
+    display: block;
+  }
+
+  /* Style for radio button containers */
+  .form-group div label {
+    display: flex;
+    align-items: center;
+    padding: 12px;
+    margin-bottom: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .form-group div label:hover {
+    background-color: #f1f1f1;
+  }
+
+  /* Custom radio button */
+  .form-group div input[type="radio"] {
+    margin-right: 10px;
+    transform: scale(1.2);
+    /* Make the radio button larger */
+  }
+
+  /* Style the add/remove buttons */
+  button {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    background-color: #007bff;
+    color: white;
+    transition: background-color 0.3s ease;
+  }
+
+  button:hover {
+    background-color: #0056b3;
+  }
+
+  /* Remove button style */
+  button[type="button"] {
+    background-color: #dc3545;
+    margin-top: 10px;
+  }
+
+  button[type="button"]:hover {
+    background-color: #c82333;
+  }
+
+  /* Submit button styles */
+  .btn-primary {
+    background-color: #28a745;
+  }
+
+  .btn-primary:hover {
+    background-color: #218838;
+  }
+}

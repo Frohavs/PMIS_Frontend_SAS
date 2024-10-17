@@ -1,1 +1,60 @@
-<p>final-review works!</p>
+<form [formGroup]="noteForm" (ngSubmit)="onSubmit()" class="form-container">
+  <!-- Notes Form Array -->
+  <div formArrayName="notes">
+    <div *ngFor="let note of notesArray.controls; let i = index" [formGroupName]="i">
+      <div class="form-group row">
+        <div class="col-7">
+          <textarea placeholder="add note" class="form-control" formControlName="note" rows="4"></textarea>
+          <div *ngIf="note.get('note')?.invalid && (note.get('note')?.touched || note.get('note')?.dirty)" class="text-danger">
+            Note is required.
+          </div>
+        </div>
+        <div class="col-5">
+          <input type="date" class="form-control" formControlName="createdOn" />
+          <div *ngIf="note.get('createdOn')?.invalid && (note.get('createdOn')?.touched || note.get('createdOn')?.dirty)" class="text-danger">
+            Date is required.
+          </div>
+        </div>
+      </div>
+
+      <!-- Add/Remove Notes -->
+      <a type="button" class="btn btn-danger mb-2" (click)="removeNote(i)" *ngIf="i > 0">Remove Note</a>
+    </div>
+  </div>
+
+  <a type="button" class="btn btn-primary mb-3" (click)="addNote()">Add Another Note</a>
+
+  <div class="form-group">
+    <label>Final Review:</label>
+    <div>
+      <label>
+        <input type="radio" formControlName="noteStatues" value="1">
+        <div class="d-flex flex-column">
+          <span style="font-weight: 400px; font-size: 14px; color: #4fae4f;">All required Deliverable that are not completed present tolerable residual risks to the project and the gate may be passed as long as the incomplete deliverable are finally completed, ( Attach approved stage Deliverables Checklist to the document )</span>
+          <span>مجتاز</span>
+        </div>
+      </label>
+      <label>
+        <input type="radio" formControlName="noteStatues" value="3">
+        <div class="d-flex flex-column">
+          <span style="font-weight: 400px; font-size: 14px; color: #8686fc;">All required deliverable have been completed to the satisfaction of the Gate Committee, ( Attach approved stage Deliverables Checklist to the document )</span>
+          <span>مجتاز بملاحظات</span>
+        </div>
+      </label>
+      <label>
+        <input type="radio" formControlName="noteStatues" value="2">
+        <div class="d-flex flex-column">
+          <span style="font-weight: 400px; font-size: 14px; color: #ec8181;">All required deliverable that are not complete present intolerable residual risks to the project and the gate may not be passed until deliverable are completed</span>
+          <span>غير مجتاز</span>
+        </div>
+      </label>
+    </div>
+  </div>
+
+  <!-- Submit Button -->
+  <button type="submit" class="btn btn-success">Submit</button>
+</form>
+
+<!-- modal -->
+<swal #noticeSwal [swalOptions]="swalOptions">
+</swal>

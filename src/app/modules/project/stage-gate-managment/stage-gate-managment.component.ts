@@ -94,6 +94,9 @@ export class StageGateManagementComponent implements OnInit {
         case 'FinalReview':
           this.activeStep = 6;
           break;
+        case 'CommitAcknowledgement':
+          this.activeStep = 7;
+          break;
 
 
         default:
@@ -127,6 +130,8 @@ export class StageGateManagementComponent implements OnInit {
         this.navigateReview();
       } else if (step.id == 7) {
         this.navigateFinalReview();
+      } else if (step.id == 8) {
+        this.navigateCommitAcknowledgement();
       }
     }
   }
@@ -189,6 +194,16 @@ export class StageGateManagementComponent implements OnInit {
   }
   navigateFinalReview() {
     this.router.navigate(['projects/stage-final-review' + `/${this.projectId}`], {
+      queryParams: { stageId: this.stageId, subPhaseId: this.subPhaseId }
+    });
+  }
+  navigateFinalReviewPrint() {
+    this.router.navigate(['projects/stage-final-review-print' + `/${this.projectId}`], {
+      queryParams: { stageId: this.stageId, subPhaseId: this.subPhaseId }
+    });
+  }
+  navigateCommitAcknowledgement() {
+    this.router.navigate(['projects/stage-commit-acknowledgement' + `/${this.projectId}`], {
       queryParams: { stageId: this.stageId, subPhaseId: this.subPhaseId }
     });
   }

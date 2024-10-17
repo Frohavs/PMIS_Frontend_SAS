@@ -84,9 +84,9 @@ export class KickoffMeetingComponent implements OnInit {
       this.projectId = +params['id'];
     });
     this.activatedRoute.queryParams.subscribe(params => {
-      this.stageId = params['stageId'];
-      this.subPhaseId = params['subPhaseId'];
-      this.coordinatorId = params['coordinatorId'];
+      this.stageId = +params['stageId'];
+      this.subPhaseId = +params['subPhaseId'];
+      this.coordinatorId = +params['coordinatorId'];
 
       this.getQuestions();
     });
@@ -122,7 +122,7 @@ export class KickoffMeetingComponent implements OnInit {
     });
 
     const payload = {
-      "gateId": this.stageId,
+      "gateId": +this.stageId,
       "answers": answers
     }
 

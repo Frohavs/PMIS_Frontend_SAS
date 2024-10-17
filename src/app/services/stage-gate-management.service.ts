@@ -132,4 +132,13 @@ export class StageGateManagementService {
       headers: httpHeaders
     });
   }
+  postFinalReview(payload: any): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/CreateFinalReview`;
+    return this.http.post<any>(url, payload, {
+      headers: httpHeaders
+    });
+  }
 }

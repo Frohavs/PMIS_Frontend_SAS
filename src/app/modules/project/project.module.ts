@@ -70,6 +70,9 @@ import { KickoffMeetingSubmitComponent } from './stage-gate-managment/kickoff-me
 import { KickoffPrintComponent } from './stage-gate-managment/kickoff-meeting/kickoff-print/kickoff-print.component';
 import { ReviewMeetingComponent } from './stage-gate-managment/review-meeting/review-meeting.component';
 import { PrintReviewComponent } from './stage-gate-managment/review-meeting/print-review/print-review.component';
+import { FinalReviewComponent } from './stage-gate-managment/final-review/final-review.component';
+import { CommitAcknowledgementComponent } from './stage-gate-managment/commit-acknowledgement/commit-acknowledgement.component';
+import { FinalReviewPrintComponent } from './stage-gate-managment/final-review/final-review-print/final-review-print.component';
 
 
 @NgModule({
@@ -148,7 +151,10 @@ import { PrintReviewComponent } from './stage-gate-managment/review-meeting/prin
     KickoffMeetingSubmitComponent,
     UploadDeliverableChecklistComponent,
     ReviewMeetingComponent,
-    PrintReviewComponent
+    PrintReviewComponent,
+    FinalReviewComponent,
+    FinalReviewPrintComponent,
+    CommitAcknowledgementComponent
   ],
   imports: [
     CommonModule,
