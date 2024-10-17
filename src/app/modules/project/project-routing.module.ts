@@ -54,6 +54,7 @@ import { DeliverableChecklistComponent } from './stage-gate-managment/deliverabl
 import { KickoffMeetingComponent } from './stage-gate-managment/kickoff-meeting/kickoff-meeting.component';
 import { KickoffMeetingSubmitComponent } from './stage-gate-managment/kickoff-meeting-submit/kickoff-meeting-submit.component';
 import { KickoffPrintComponent } from './stage-gate-managment/kickoff-meeting/kickoff-print/kickoff-print.component';
+import { UploadDeliverableChecklistComponent } from './stage-gate-managment/upload-deliverable-checklist/upload-deliverable-checklist.component';
 
 const routes: Routes = [
   {
@@ -324,16 +325,16 @@ const routes: Routes = [
       },
       {
         path: 'stage-upload-deliverable-checklist/:id',
-        component: DeliverableChecklistComponent,
+        component: UploadDeliverableChecklistComponent,
       },
-      {
-        path: 'stage-review/:id',
-        component: DeliverableChecklistComponent,
-      },
-      {
-        path: 'stage-final-review/:id',
-        component: DeliverableChecklistComponent,
-      },
+      // {
+      //   path: 'stage-review/:id',
+      //   component: DeliverableChecklistComponent,
+      // },
+      // {
+      //   path: 'stage-final-review/:id',
+      //   component: DeliverableChecklistComponent,
+      // },
 
 
       { path: '', redirectTo: 'overview', pathMatch: 'full' },

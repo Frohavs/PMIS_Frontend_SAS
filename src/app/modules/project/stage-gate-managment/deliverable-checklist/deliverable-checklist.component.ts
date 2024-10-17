@@ -120,8 +120,6 @@ export class DeliverableChecklistComponent implements OnInit {
 
   checkForAnswers() {
     this.stageGateManagementService.getDeliverableAnswers(this.stageId, 2).subscribe(res => {
-      console.log(res.data);
-      debugger
       this.currentAnswersArray = [];
       for (const answer of res.data?.answers) {
         if (answer.committeeMemberId === this.committeeId)

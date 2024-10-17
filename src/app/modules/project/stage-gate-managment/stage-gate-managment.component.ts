@@ -156,16 +156,18 @@ export class StageGateManagementComponent implements OnInit {
     });
   }
   navigateKickoffMeetingSubmit() {
-    debugger
     if (this.activeStep !== 3) {
       return
     }
     this.modalService.open(this.kickOffSubmitModal, this.modalConfig);
   }
   navigateUploadDeliverableChecklist() {
-    // this.router.navigate(['projects/stage-upload-deliverable-checklist' + `/${this.projectId}`], {
-    //   queryParams: { stageId: this.stageId }
-    // });
+    if (this.activeStep !== 4) {
+      return
+    }
+    this.router.navigate(['projects/stage-upload-deliverable-checklist' + `/${this.projectId}`], {
+      queryParams: { stageId: this.stageId, subPhaseId: this.subPhaseId, coordinatorId: this.projectDetails?.coordinatorId }
+    });
   }
   navigateReview() {
     // this.router.navigate(['projects/stage-review' + `/${this.projectId}`], {
