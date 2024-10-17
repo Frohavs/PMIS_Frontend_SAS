@@ -1,0 +1,65 @@
+.print-container {
+  direction: rtl;
+  padding: 20px;
+  font-family: 'Arial', sans-serif;
+  color: #333;
+
+  .title {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 10px;
+  }
+
+  .subtitle,
+  .section-title,
+  .section-subtitle {
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .project-info,
+  .deliverables-table,
+  .signature-approval,
+  .gate-completion {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 30px;
+
+    td,
+    th {
+      padding: 8px 10px;
+      border: 1px solid #ddd;
+      text-align: center;
+    }
+
+    th {
+      background-color: #16A48D;
+      color: #fff;
+    }
+
+    td:nth-child(odd) {
+      background-color: #f9f9f9;
+    }
+
+    tbody tr:nth-child(odd) {
+      background-color: #f9f9f9;
+    }
+  }
+
+  .section-title {
+    margin-top: 40px;
+  }
+
+  .section-subtitle {
+    margin-bottom: 10px;
+  }
+}
+
+
+.colored {
+  background-color: #16A48D !important;
+  color: #fff !important;
+}

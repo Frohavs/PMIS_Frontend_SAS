@@ -35,16 +35,15 @@ export class KickoffPrintComponent implements OnInit {
         this.handlePrint();
       }
     });
-
-    setTimeout(() => {
-      window.print();
-    }, 1000);
   }
 
   handlePrint() {
     this.stageGateManagementService.getKickOffPrint(this.stageId, 3).subscribe(res => {
-      console.log(res.data);
-      this.printDetails = res.data
+      this.printDetails = res.data;
+      setTimeout(() => {
+
+        window.print();
+      }, 500);
 
       this.cdr.detectChanges();
     });
