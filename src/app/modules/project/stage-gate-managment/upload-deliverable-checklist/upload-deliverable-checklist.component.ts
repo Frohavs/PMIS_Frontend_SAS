@@ -21,6 +21,7 @@ export class UploadDeliverableChecklistComponent implements OnInit {
   deliverableQuestions: any[] = [];
   deliverableForm: FormGroup;
   fileData: { [key: number]: string[] } = {}; // Store uploaded file names
+  requiredDeliverables: any[] = [];
 
   swalOptions: SweetAlertOptions = {};
   @ViewChild('noticeSwal') noticeSwal!: SwalComponent;
@@ -32,7 +33,7 @@ export class UploadDeliverableChecklistComponent implements OnInit {
     private cdr: ChangeDetectorRef,
     private lookupService: LookupService,
     private stageGateManagementService: StageGateManagementService,
-    private attachmentService: AttachmentService // Assuming this exists
+    private attachmentService: AttachmentService
   ) { }
 
   ngOnInit(): void {
@@ -53,13 +54,14 @@ export class UploadDeliverableChecklistComponent implements OnInit {
   addDeliverableQuestion(question: any) {
     const questionFormGroup = this.fb.group({
       id: [question.id],
-      name: [question.name],
-      required: ['', Validators.required], // Yes or No radio
-      fileName: [question.name], // Pre-filled with record name
+      name: [question.initialDeliverableName],
+      required: [{ value: 'yes', disabled: true }, Validators.required], // Yes or No radio
+      fileName: [{ value: question.initialDeliverableName, disabled: true }], // Pre-filled with record name
       file: ['', Validators.required] // File input control (required)
     });
 
     this.questionsFormArray.push(questionFormGroup);
+    this.cdr.detectChanges();
   }
 
   // Update onFileChange to handle file uploads
@@ -99,21 +101,26 @@ export class UploadDeliverableChecklistComponent implements OnInit {
   }
 
   getQuestions() {
-    this.lookupService.getInitialDeliverables(this.subPhaseId).subscribe(res => {
-      this.deliverableQuestions = res.data;
-      this.deliverableQuestions.forEach(question => {
+    this.stageGateManagementService.getKickOffPrint(this.stageId, 3).subscribe(res => {
+      const allDeliverables = res.data.deliverableChecklists;
+
+      // Filter deliverables where required is true
+      this.requiredDeliverables = allDeliverables.filter((deliverable: any) => deliverable.required === true);
+
+      // Add only required deliverables to the form
+      this.requiredDeliverables.forEach(question => {
         this.addDeliverableQuestion(question);
       });
+
       this.cdr.detectChanges();
     });
   }
 
   onSubmit() {
-    if (!this.deliverableForm.valid) {
-      this.deliverableForm.markAllAsTouched();
-      alert('Please fill in all required fields.');
-      return;
-    }
+    // if (!this.deliverableForm.valid) {
+    //   this.deliverableForm.markAllAsTouched();
+    //   return;
+    // }
 
     this.isLoading = true;
 
@@ -125,10 +132,9 @@ export class UploadDeliverableChecklistComponent implements OnInit {
     });
 
     const payload = {
-      gateId: this.stageId,
+      gateId: +this.stageId,
       attachments: attachments
     };
-
 
     this.stageGateManagementService.uploadDeliverableChecklist(payload).subscribe({
       next: (res) => {

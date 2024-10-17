@@ -68,6 +68,8 @@ import { DeliverableChecklistComponent } from './stage-gate-managment/deliverabl
 import { KickoffMeetingComponent } from './stage-gate-managment/kickoff-meeting/kickoff-meeting.component';
 import { KickoffMeetingSubmitComponent } from './stage-gate-managment/kickoff-meeting-submit/kickoff-meeting-submit.component';
 import { KickoffPrintComponent } from './stage-gate-managment/kickoff-meeting/kickoff-print/kickoff-print.component';
+import { ReviewMeetingComponent } from './stage-gate-managment/review-meeting/review-meeting.component';
+import { PrintReviewComponent } from './stage-gate-managment/review-meeting/print-review/print-review.component';
 
 
 @NgModule({
@@ -145,6 +147,8 @@ import { KickoffPrintComponent } from './stage-gate-managment/kickoff-meeting/ki
     KickoffPrintComponent,
     KickoffMeetingSubmitComponent,
     UploadDeliverableChecklistComponent,
+    ReviewMeetingComponent,
+    PrintReviewComponent
   ],
   imports: [
     CommonModule,

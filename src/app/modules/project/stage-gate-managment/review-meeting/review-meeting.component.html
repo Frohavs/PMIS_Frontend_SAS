@@ -1,1 +1,69 @@
-<p>review-meeting works!</p>
+<form [formGroup]="reviewForm" (ngSubmit)="onSubmit()" class="form-container">
+  <div class="table-responsive">
+    <table class="table table-bordered table-striped">
+      <thead class="table-primary">
+        <tr>
+          <th style="width: 10%">ID</th>
+          <th style="width: 30%">Deliverable Name</th>
+          <th style="width: 20%">Required</th>
+          <th style="width: 15%">Date</th>
+          <th style="width: 25%">Comments</th>
+        </tr>
+      </thead>
+      <tbody formArrayName="questions" *ngFor="let question of questionsFormArray.controls; let i = index">
+        <tr [formGroupName]="i">
+          <!-- ID -->
+          <td class="text-center align-middle">{{ question.get('id')?.value }}</td>
+
+          <!-- Name -->
+          <td class="align-middle">{{ question.get('name')?.value }}</td>
+
+          <!-- Yes/No Radio buttons with validation -->
+          <td class="align-middle">
+            <label class="me-3">
+              <input type="radio" formControlName="decision" value="yes" class="form-check-input"
+                (change)="onRadioChange(i, 'yes')"> Yes
+            </label>
+            <label>
+              <input type="radio" formControlName="decision" value="no" class="form-check-input"
+                (change)="onRadioChange(i, 'no')"> No
+            </label>
+
+            <!-- Error hint for required radio buttons -->
+            <div *ngIf="question.get('decision')?.invalid && question.get('decision')?.touched" class="text-danger">
+              Please select "Yes" or "No".
+            </div>
+          </td>
+
+          <!-- Date input -->
+          <td class="align-middle">
+            <input type="date" formControlName="date" class="form-control" />
+
+            <!-- Error hint for date input -->
+            <div *ngIf="question.get('date')?.invalid && question.get('date')?.touched" class="text-danger">
+              Please provide a date.
+            </div>
+          </td>
+
+          <!-- Comments input (required if "No") -->
+          <td class="align-middle">
+            <textarea formControlName="comments" class="form-control" placeholder="Comments"></textarea>
+
+            <!-- Error hint for comments -->
+            <div *ngIf="question.get('comments')?.invalid && question.get('comments')?.touched" class="text-danger">
+              Comments are required if you select "No".
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Submit Button -->
+  <div class="mt-3 text-end">
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </div>
+</form>
+
+<!-- modal -->
+<swal #noticeSwal [swalOptions]="swalOptions"></swal>

@@ -75,7 +75,6 @@ export class OverviewComponent implements OnInit, AfterViewInit, OnDestroy {
   getLookups() {
     this.projectsService.getAll().subscribe(res => {
       this.projects = res.data.items;
-      debugger
     })
   }
 

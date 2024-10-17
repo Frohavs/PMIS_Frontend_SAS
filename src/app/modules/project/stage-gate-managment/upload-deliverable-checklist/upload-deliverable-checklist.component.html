@@ -14,27 +14,22 @@
           <!-- ID -->
           <td class="text-center align-middle">{{ question.get('id')?.value }}</td>
 
-          <!-- Name -->
+          <!-- Deliverable Name -->
           <td class="align-middle">{{ question.get('name')?.value }}</td>
 
-          <!-- Yes/No Radio buttons with validation -->
+          <!-- Yes/No Radio buttons (disabled) -->
           <td class="align-middle">
             <label class="me-3">
-              <input type="radio" formControlName="required" value="yes" class="form-check-input"> Yes
+              <input type="radio" formControlName="required" value="yes" class="form-check-input" > Yes
             </label>
             <label>
-              <input type="radio" formControlName="required" value="no" class="form-check-input"> No
+              <input type="radio" formControlName="required" value="no" class="form-check-input" > No
             </label>
-
-            <!-- Error hint for required radio buttons -->
-            <div *ngIf="question.get('required')?.invalid && question.get('required')?.touched" class="text-danger">
-              Please select "Yes" or "No".
-            </div>
           </td>
 
           <!-- File Upload -->
           <td class="align-middle">
-            <!-- File Name Input -->
+            <!-- Deliverable Name Input above the file input (pre-filled with the deliverable name) -->
             <input type="text" formControlName="fileName" class="form-control" placeholder="File Name" />
 
             <!-- File input for multiple files -->
@@ -47,6 +42,7 @@
           </td>
         </tr>
       </tbody>
+
     </table>
   </div>
 

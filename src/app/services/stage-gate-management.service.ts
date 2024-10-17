@@ -96,11 +96,11 @@ export class StageGateManagementService {
     const url = `${this.API_USERS_URL}/Get/${gateId}/${stepId}`;
     return this.http.get<any>(url, { headers: httpHeaders });
   }
-  getKickOffPrint(id: any): Observable<any> {
+  getKickOffPrint(id: any, stepId: any): Observable<any> {
     const httpHeaders = new HttpHeaders({
       Authorization: `Bearer ${this.token}`,
     });
-    const url = `${this.API_USERS_URL}/PrintKickoffMeeting/${id}`;
+    const url = `${this.API_USERS_URL}/PrintKickoff/${id}/${stepId}`;
     return this.http.get<any>(url, {
       headers: httpHeaders
     });
@@ -119,6 +119,15 @@ export class StageGateManagementService {
       Authorization: `Bearer ${this.token}`,
     });
     const url = `${this.API_USERS_URL}/UploadDeliverableChecklist`;
+    return this.http.post<any>(url, payload, {
+      headers: httpHeaders
+    });
+  }
+  createReviewMeeting(payload: any): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/CreateReviewMeeting`;
     return this.http.post<any>(url, payload, {
       headers: httpHeaders
     });

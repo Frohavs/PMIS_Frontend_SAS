@@ -17,11 +17,20 @@
       <div class="card-body pt-3">
         <div class="wizard-container">
           <div *ngFor="let step of steps; let i = index" class="wizard-step" [class.active]="isStepActive(i + 1)">
+
             <div class="step-number">{{ i + 1 }}</div>
             <div class="step-title">{{ step.name }}</div>
-            <a class="btn btn-sm btn-info mb-5" *ngIf="step.name === 'Kickoff Meeting' && isStepActive(i + 1)" (click)="navigateKickOffStepPrint()">
+            <!-- Kickoff Meeting print -->
+            <a class="btn btn-sm btn-primary mt-5" *ngIf="step.name === 'Kickoff Meeting' && isStepActive(i + 1)"
+              (click)="navigateKickOffStepPrint()">
               print
             </a>
+            <!-- Review Meeting print -->
+            <a class="btn btn-sm btn-primary mt-5" *ngIf="step.name === 'Review Meeting' && isStepActive(i + 1)"
+              (click)="navigateReviewPrint()">
+              print
+            </a>
+
           </div>
         </div>
       </div>
@@ -41,14 +50,13 @@
           <!-- begin::Title -->
           <div class="d-flex flex-row-fluid flex-wrap justify-content-center align-items-center">
 
-            <div class=" me-2 mb-3" *ngFor="let step of steps">
+            <div class=" me-2 mb-3" *ngFor="let step of steps; index as i">
               <div class="card-toolbar">
                 <div class="d-flex" [ngClass]="{' flex-column': step.name === 'Kickoff Meeting'}">
                   <!-- <a class="btn btn-sm btn-info mb-2" *ngIf="step.name === 'Kickoff Meeting'" (click)="navigateKickOffStepPrint()">
                     print
                   </a> -->
-                  <a class="btn btn-sm btn-light-success" [ngClass]="getActiveClass(step)"
-                    (click)="navigateTo(step)">
+                  <a class="btn btn-sm btn-light-success" [ngClass]="getActiveClass(step)" (click)="navigateTo(step)">
                     {{step.name}}
                   </a>
                 </div>
@@ -226,8 +234,7 @@
               <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
                 Classification
               </a>
-              <span
-                class="text-muted fw-bold d-block pt-1">{{projectDetails?.subPhase  ||  '--'}}</span>
+              <span class="text-muted fw-bold d-block pt-1">{{projectDetails?.subPhase  ||  '--'}}</span>
             </div>
           </div>
           <!-- end::Title -->

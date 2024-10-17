@@ -42,7 +42,7 @@ export class KickoffPrintComponent implements OnInit {
   }
 
   handlePrint() {
-    this.stageGateManagementService.getKickOffPrint(this.stageId).subscribe(res => {
+    this.stageGateManagementService.getKickOffPrint(this.stageId, 3).subscribe(res => {
       console.log(res.data);
       this.printDetails = res.data
 

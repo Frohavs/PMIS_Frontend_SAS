@@ -55,6 +55,9 @@ import { KickoffMeetingComponent } from './stage-gate-managment/kickoff-meeting/
 import { KickoffMeetingSubmitComponent } from './stage-gate-managment/kickoff-meeting-submit/kickoff-meeting-submit.component';
 import { KickoffPrintComponent } from './stage-gate-managment/kickoff-meeting/kickoff-print/kickoff-print.component';
 import { UploadDeliverableChecklistComponent } from './stage-gate-managment/upload-deliverable-checklist/upload-deliverable-checklist.component';
+import { ReviewMeetingComponent } from './stage-gate-managment/review-meeting/review-meeting.component';
+import { PrintReviewComponent } from './stage-gate-managment/review-meeting/print-review/print-review.component';
+import { FinalReviewComponent } from './stage-gate-managment/final-review/final-review.component';
 
 const routes: Routes = [
   {
@@ -327,14 +330,18 @@ const routes: Routes = [
         path: 'stage-upload-deliverable-checklist/:id',
         component: UploadDeliverableChecklistComponent,
       },
-      // {
-      //   path: 'stage-review/:id',
-      //   component: DeliverableChecklistComponent,
-      // },
-      // {
-      //   path: 'stage-final-review/:id',
-      //   component: DeliverableChecklistComponent,
-      // },
+      {
+        path: 'stage-review-meeting/:id',
+        component: ReviewMeetingComponent,
+      },
+      {
+        path: 'stage-review-meeting-print/:id',
+        component: PrintReviewComponent,
+      },
+      {
+        path: 'stage-final-review/:id',
+        component: FinalReviewComponent,
+      },
 
 
       { path: '', redirectTo: 'overview', pathMatch: 'full' },

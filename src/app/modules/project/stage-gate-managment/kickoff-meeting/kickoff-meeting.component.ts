@@ -125,9 +125,7 @@ export class KickoffMeetingComponent implements OnInit {
       "gateId": this.stageId,
       "answers": answers
     }
-    debugger
 
-    console.log(payload);
     this.stageGateManagementService.postKickoffSubmitMeeting(payload).subscribe({
       next: (res) => {
         this.isLoading = false;

@@ -88,6 +88,12 @@ export class StageGateManagementComponent implements OnInit {
         case 'UploadDeliverableChecklist':
           this.activeStep = 4;
           break;
+        case 'ReviewMeeting':
+          this.activeStep = 5;
+          break;
+        case 'FinalReview':
+          this.activeStep = 6;
+          break;
 
 
         default:
@@ -119,6 +125,8 @@ export class StageGateManagementComponent implements OnInit {
         this.navigateUploadDeliverableChecklist();
       } else if (step.id == 6) {
         this.navigateReview();
+      } else if (step.id == 7) {
+        this.navigateFinalReview();
       }
     }
   }
@@ -170,14 +178,19 @@ export class StageGateManagementComponent implements OnInit {
     });
   }
   navigateReview() {
-    // this.router.navigate(['projects/stage-review' + `/${this.projectId}`], {
-    //   queryParams: { stageId: this.stageId }
-    // });
+    this.router.navigate(['projects/stage-review-meeting' + `/${this.projectId}`], {
+      queryParams: { stageId: this.stageId, subPhaseId: this.subPhaseId }
+    });
+  }
+  navigateReviewPrint() {
+    this.router.navigate(['projects/stage-review-meeting-print' + `/${this.projectId}`], {
+      queryParams: { stageId: this.stageId, subPhaseId: this.subPhaseId }
+    });
   }
   navigateFinalReview() {
-    // this.router.navigate(['projects/stage-final-review' + `/${this.projectId}`], {
-    //   queryParams: { stageId: this.stageId }
-    // });
+    this.router.navigate(['projects/stage-final-review' + `/${this.projectId}`], {
+      queryParams: { stageId: this.stageId, subPhaseId: this.subPhaseId }
+    });
   }
   // Method to check if a step is active
   isStepActive(stepNumber: number): boolean {
@@ -189,7 +202,6 @@ export class StageGateManagementComponent implements OnInit {
       myForm.controls['notes'].markAsTouched();
       return;
     }
-    debugger
     this.isLoading = true;
     this.stageGateManagementService.submitKickOff({ id: this.stageId, note: this.kickOffModel.notes }).subscribe((res) => {
       this.isLoading = false;

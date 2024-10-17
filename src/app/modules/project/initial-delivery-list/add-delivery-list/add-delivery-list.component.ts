@@ -253,12 +253,12 @@ export class AddDeliveryListComponent implements OnInit {
       this.showAlert({ icon: 'error', title: 'Error!', text: 'Please enter a valid email' });
       return;
     }
-    debugger
+
     if (this.editIndex >= 0) {
       for (const key in this.projectDeliveryDetails.committeeMangers) {
         if (Object.prototype.hasOwnProperty.call(this.projectDeliveryDetails.committeeMangers, key)) {
           const element = this.projectDeliveryDetails.committeeMangers[key];
-          debugger
+
           if (+key === this.editIndex) {
             element.name = this.deliveryForm.value.committeeName;
             element.email = this.deliveryForm.value.committeeEmail;
