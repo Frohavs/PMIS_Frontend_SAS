@@ -141,4 +141,13 @@ export class StageGateManagementService {
       headers: httpHeaders
     });
   }
+  getFinalReviewPrint(id: any): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/PrintFinalReview/${id}`;
+    return this.http.get<any>(url, {
+      headers: httpHeaders
+    });
+  }
 }

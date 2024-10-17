@@ -1,1 +1,81 @@
-<p>final-review-print works!</p>
+<div class="print-container">
+  <div class="d-flex justify-content-between align-items-center">
+    <h2 class="title" style="flex: 0.7;">Gate Review Summary</h2>
+
+    <div class="project-info" style="flex: 0.5;">
+      <div class="d-flex">
+        <span><strong>اسم المشروع</strong></span>
+        <span class="mx-3">{{printDetails?.projectName}}</span>
+      </div>
+      <div class="d-flex">
+        <span><strong>Etimad Project #:</strong></span>
+        <span class="mx-3">{{printDetails?.etimadNumber}}</span>
+      </div>
+      <div class="d-flex">
+        <span><strong>Etimad Contract #:</strong></span>
+        <span class="mx-3">{{printDetails?.contractNo}}</span>
+      </div>
+      <div class="d-flex">
+        <span><strong>Stage # (1-8):</strong></span>
+        <span class="mx-3">Final Review</span>
+      </div>
+      <div class="d-flex">
+        <span><strong>Revision #:</strong></span>
+        <span class="mx-3">----</span>
+      </div>
+      <div class="d-flex">
+        <span><strong>Date:</strong></span>
+        <span class="mx-3">----</span>
+      </div>
+    </div>
+  </div>
+
+  <table class="deliverables-table">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>During the Gate Review of this Project, all required deliverables were validated as being complete with the exception of the following:</th>
+        <th>تاريخ الأنتهاء المتوقع</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of printDetails?.notes; index as i">
+        <td>{{i+1}}</td>
+        <td>{{item?.note || '----'}}</td>
+        <td>{{item?.createdOn | date : 'dd-MM-yyyy' || '----'}}</td>
+      </tr>
+    </tbody>
+  </table>
+  <table class="deliverables-table">
+    <thead>
+      <tr>
+        <th colspan="3">Based on the risk assessment of the incomplete deliverables above, check one of the following outcome</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>1</td>
+        <td>All required deliverables that are not complete present tolerable residual risks to the project and the Gate may be passed as long as the incomplete deliverables are finally completed. (Attach approved Stage Deliverables Checklist to this document)</td>
+        <td>مجتاز <input *ngIf="printDetails?.status === 'Passed'" type="checkbox" readonly disabled [checked]="printDetails?.status === 'Passed'"></td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>All required deliverables have been completed to the satisfaction of the Gate Committee. (Attach approved Stage Deliverables Checklist to this document)</td>
+        <td>مجتاز بملاحظات <input *ngIf="printDetails?.status === 'Passed With Notes'" type="checkbox" readonly disabled [checked]="printDetails?.status === 'Passed With Notes'"></td>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td>All required deliverables that are not complete present intolerable residual risks to the project and the Gate may not be passed until deliverables are complete.</td>
+        <td>غير مجتاز <input *ngIf="printDetails?.status === 'Not Passed'" type="checkbox" readonly disabled [checked]="printDetails?.status === 'Not Passed'"></td>
+      </tr>
+      <tr>
+        <td colspan="2" style="text-align: start;">توقيع مدير المشروع : نايف قناديلي	</td>
+        <td>----</td>
+      </tr>
+      <tr>
+        <td colspan="2" style="text-align: start;">توقيع مدير الادارة:</td>
+        <td>----</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
