@@ -42,20 +42,7 @@ export class AddDeliveryListComponent implements OnInit {
     projectId: null,
     mangerId: null,
     approved: false,
-    committeeMangers: [
-      // {
-      //   id: 0,
-      //   name: "kmadkour",
-      //   email: "karim.madkour.da@gmail.com",
-      //   position: "Manager"
-      // },
-      // {
-      //   id: 0,
-      //   name: "motawea",
-      //   email: "karim.madkour.da@gmail.com",
-      //   position: "Manager"
-      // }
-    ]
+    committeeMangers: []
   };
   managers: any[] = [];
   selectedFile: any;
@@ -232,7 +219,7 @@ export class AddDeliveryListComponent implements OnInit {
   addManager() {
     this.projectDeliveryDetails.mangerId = +this.deliveryForm.value.mangerId;
     this.initialDeliveryService.addDeliveryList(this.projectDeliveryDetails).subscribe(res => {
-      this.projectDeliveryDetails.id = res.data || null;
+      this.projectDeliveryDetails.id = res.data.id || null;
       this.modalService.dismissAll();
     });
   }
@@ -280,8 +267,11 @@ export class AddDeliveryListComponent implements OnInit {
     delete this.deliveryForm.value.committeeEmail;
     delete this.deliveryForm.value.committeePosition;
     this.initialDeliveryService.addDeliveryList(this.projectDeliveryDetails).subscribe(res => {
-      this.projectDeliveryDetails.id = res.data || null;
       this.modalService.dismissAll();
+
+      this.projectDeliveryDetails.id = res.data.id || null;
+      this.projectDeliveryDetails.committeeMangers = res.data.committeeMangers;
+      debugger
       this.deliveryForm.patchValue({
         committeeId: null,
         committeeName: '',
@@ -314,7 +304,7 @@ export class AddDeliveryListComponent implements OnInit {
     this.projectDeliveryDetails.brief = this.deliveryForm.value.brief;
     this.projectDeliveryDetails.status = +this.deliveryForm.value.status;
     this.initialDeliveryService.addDeliveryList(this.projectDeliveryDetails).subscribe(res => {
-      this.projectDeliveryDetails.id = res.data || null;
+      this.projectDeliveryDetails.id = res.data.id || null;
       this.modalService.dismissAll();
     });
   }
@@ -326,7 +316,7 @@ export class AddDeliveryListComponent implements OnInit {
     this.projectDeliveryDetails.noticeDate = this.deliveryForm.value.noticeDate;
     this.projectDeliveryDetails.status = +this.deliveryForm.value.status;
     this.initialDeliveryService.addDeliveryList(this.projectDeliveryDetails).subscribe(res => {
-      this.projectDeliveryDetails.id = res.data || null;
+      this.projectDeliveryDetails.id = res.data.id || null;
       this.modalService.dismissAll();
     });
   }
@@ -337,7 +327,7 @@ export class AddDeliveryListComponent implements OnInit {
     this.projectDeliveryDetails.referenceNumber = this.deliveryForm.value.referenceNumber;
     this.projectDeliveryDetails.status = +this.deliveryForm.value.status;
     this.initialDeliveryService.addDeliveryList(this.projectDeliveryDetails).subscribe(res => {
-      this.projectDeliveryDetails.id = res.data || null;
+      this.projectDeliveryDetails.id = res.data.id || null;
       this.modalService.dismissAll();
     });
   }
@@ -348,7 +338,7 @@ export class AddDeliveryListComponent implements OnInit {
     this.projectDeliveryDetails.deliveryDate = this.deliveryForm.value.deliveryDate;
     this.projectDeliveryDetails.status = +this.deliveryForm.value.status;
     this.initialDeliveryService.addDeliveryList(this.projectDeliveryDetails).subscribe(res => {
-      this.projectDeliveryDetails.id = res.data || null;
+      this.projectDeliveryDetails.id = res.data.id || null;
       this.modalService.dismissAll();
     });
   }
@@ -359,7 +349,7 @@ export class AddDeliveryListComponent implements OnInit {
     this.projectDeliveryDetails.registeredDecisionNumber = this.deliveryForm.value.registeredDecisionNumber;
     this.projectDeliveryDetails.status = +this.deliveryForm.value.status;
     this.initialDeliveryService.addDeliveryList(this.projectDeliveryDetails).subscribe(res => {
-      this.projectDeliveryDetails.id = res.data || null;
+      this.projectDeliveryDetails.id = res.data.id || null;
       this.modalService.dismissAll();
     });
   }
@@ -370,7 +360,7 @@ export class AddDeliveryListComponent implements OnInit {
     this.projectDeliveryDetails.registeredDecisionDate = this.deliveryForm.value.registeredDecisionDate;
     this.projectDeliveryDetails.status = +this.deliveryForm.value.status;
     this.initialDeliveryService.addDeliveryList(this.projectDeliveryDetails).subscribe(res => {
-      this.projectDeliveryDetails.id = res.data || null;
+      this.projectDeliveryDetails.id = res.data.id || null;
       this.modalService.dismissAll();
     });
   }
@@ -381,7 +371,7 @@ export class AddDeliveryListComponent implements OnInit {
     this.projectDeliveryDetails.achievementDate = this.deliveryForm.value.achievementDate;
     this.projectDeliveryDetails.status = +this.deliveryForm.value.status;
     this.initialDeliveryService.addDeliveryList(this.projectDeliveryDetails).subscribe(res => {
-      this.projectDeliveryDetails.id = res.data || null;
+      this.projectDeliveryDetails.id = res.data.id || null;
       this.modalService.dismissAll();
     });
   }
@@ -393,7 +383,7 @@ export class AddDeliveryListComponent implements OnInit {
     this.projectDeliveryDetails.fixingDuration = this.deliveryForm.value.fixingDuration;
     this.projectDeliveryDetails.status = +this.deliveryForm.value.status;
     this.initialDeliveryService.addDeliveryList(this.projectDeliveryDetails).subscribe(res => {
-      this.projectDeliveryDetails.id = res.data || null;
+      this.projectDeliveryDetails.id = res.data.id || null;
       this.modalService.dismissAll();
     });
   }
@@ -404,7 +394,7 @@ export class AddDeliveryListComponent implements OnInit {
     this.projectDeliveryDetails.deliveryDuration = this.deliveryForm.value.deliveryDuration;
     this.projectDeliveryDetails.status = +this.deliveryForm.value.status;
     this.initialDeliveryService.addDeliveryList(this.projectDeliveryDetails).subscribe(res => {
-      this.projectDeliveryDetails.id = res.data || null;
+      this.projectDeliveryDetails.id = res.data.id || null;
       this.modalService.dismissAll();
     });
   }
@@ -415,7 +405,7 @@ export class AddDeliveryListComponent implements OnInit {
     this.projectDeliveryDetails.imagePlan = this.deliveryForm.value.imagePlan;
     this.projectDeliveryDetails.status = +this.deliveryForm.value.status;
     this.initialDeliveryService.addDeliveryList(this.projectDeliveryDetails).subscribe(res => {
-      this.projectDeliveryDetails.id = res.data || null;
+      this.projectDeliveryDetails.id = res.data.id || null;
       this.modalService.dismissAll();
     });
   }
@@ -426,7 +416,7 @@ export class AddDeliveryListComponent implements OnInit {
     this.projectDeliveryDetails.imagePlanCopies = this.deliveryForm.value.imagePlanCopies;
     this.projectDeliveryDetails.status = +this.deliveryForm.value.status;
     this.initialDeliveryService.addDeliveryList(this.projectDeliveryDetails).subscribe(res => {
-      this.projectDeliveryDetails.id = res.data || null;
+      this.projectDeliveryDetails.id = res.data.id || null;
       this.modalService.dismissAll();
     });
   }
@@ -496,7 +486,7 @@ export class AddDeliveryListComponent implements OnInit {
       });
     }
     this.initialDeliveryService.addDeliveryList(this.projectDeliveryDetails).subscribe(res => {
-      this.projectDeliveryDetails.id = res.data || null;
+      this.projectDeliveryDetails.id = res.data.id || null;
     });
     this.cdr.detectChanges();
     this.toggleSignaturePad();
