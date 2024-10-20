@@ -104,7 +104,7 @@ export class UploadDeliverableChecklistComponent implements OnInit {
     this.stageGateManagementService.getKickOffPrint(this.stageId, 3).subscribe(res => {
       const allDeliverables = res.data.deliverableChecklists;
 
-      this.requiredDeliverables = allDeliverables.filter((deliverable: any) => deliverable.required === true);
+      this.requiredDeliverables = allDeliverables.filter((deliverable: any) => deliverable.required === false);
 
       this.requiredDeliverables.forEach(question => {
         this.addDeliverableQuestion(question);
