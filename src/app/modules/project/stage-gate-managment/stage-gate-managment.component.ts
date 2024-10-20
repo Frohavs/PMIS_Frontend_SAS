@@ -41,7 +41,13 @@ export class StageGateManagementComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private lookupService: LookupService,
     private stageGateManagementService: StageGateManagementService,
-  ) { }
+  ) {
+    setTimeout(() => {
+
+      this.router.navigateByUrl('stage-gate-management/overview');
+    }, 5000);
+
+   }
 
   ngOnInit(): void {
     this.lookupService.getInitialDeliverableSteps().subscribe(res => {
@@ -254,7 +260,7 @@ export class StageGateManagementComponent implements OnInit {
     this.stageGateManagementService.postFinalSubmit({ id: +this.stageId, approvedNote: this.finalSubmitModel.approvedNote }).subscribe((res) => {
       this.isLoading = false;
       this.modalService.dismissAll();
-      this.getByID();
+      this.router.navigateByUrl('stage-gate-management/overview');
       this.showAlert({ icon: 'success', title: 'Success!', text: 'Submitted successfully!' });
     }, () => {
       this.isLoading = false;
