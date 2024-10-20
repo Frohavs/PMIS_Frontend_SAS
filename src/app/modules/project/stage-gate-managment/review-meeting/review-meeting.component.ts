@@ -65,7 +65,7 @@ export class ReviewMeetingComponent implements OnInit {
     const questionFormGroup = this.fb.group({
       id: [question.id],
       name: [question.initialDeliverableName], // Get the name
-      required: [question.required], // To maintain required info
+      completed: [question.required], // To maintain required info
       decision: ['', Validators.required], // Yes or No
       date: ['', Validators.required], // Date input
       comments: ['', question.required === false ? Validators.required : null] // Comments required only if "No" selected
@@ -109,9 +109,9 @@ export class ReviewMeetingComponent implements OnInit {
     const payload = {
       gateId: +this.stageId,
       answers: this.questionsFormArray.controls.map((question) => ({
-        required: question.get('decision')?.value === 'yes', // 'required' is based on the decision ("Yes" or "No")
+        completed: question.get('decision')?.value === 'yes', // 'required' is based on the decision ("Yes" or "No")
         comments: question.get('comments')?.value,
-        initialDeliverableId: question.get('id')?.value,
+        deliverableChecklistId: question.get('id')?.value,
         reviewMeetingDate: question.get('date')?.value,
       }))
     };

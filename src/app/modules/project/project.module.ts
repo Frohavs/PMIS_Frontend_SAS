@@ -73,7 +73,6 @@ import { PrintReviewComponent } from './stage-gate-managment/review-meeting/prin
 import { FinalReviewComponent } from './stage-gate-managment/final-review/final-review.component';
 import { CommitAcknowledgementComponent } from './stage-gate-managment/commit-acknowledgement/commit-acknowledgement.component';
 import { FinalReviewPrintComponent } from './stage-gate-managment/final-review/final-review-print/final-review-print.component';
-import { FinalSubmitComponent } from './stage-gate-managment/final-submit/final-submit.component';
 
 
 @NgModule({
@@ -155,8 +154,7 @@ import { FinalSubmitComponent } from './stage-gate-managment/final-submit/final-
     PrintReviewComponent,
     FinalReviewComponent,
     FinalReviewPrintComponent,
-    CommitAcknowledgementComponent,
-    FinalSubmitComponent
+    CommitAcknowledgementComponent
   ],
   imports: [
     CommonModule,

@@ -22,15 +22,7 @@ export class StageGateManagementComponent implements OnInit {
   isLoading: boolean;
 
   activeStep: number = 0;
-  steps: any[] = [
-    // 'Create Committees',
-    // 'Deliverable Checklist',
-    // 'Kickoff Meeting',
-    // 'Kickoff Meeting Submit',
-    // 'Upload Deliverable Checklist',
-    // 'Review Meeting',
-    // 'Final Review'
-  ];
+  steps: any[] = [];
 
   kickOffModel: { notes: string } = { notes: '' };
   @ViewChild('kickOffSubmitModal') kickOffSubmitModal!: any;
@@ -120,6 +112,7 @@ export class StageGateManagementComponent implements OnInit {
   }
 
   navigateTo(step: any) {
+    debugger
     if (this.activeStep < step.id) {
       if (step.id == 1) {
         this.navigateCreateCommittee();
@@ -258,7 +251,7 @@ export class StageGateManagementComponent implements OnInit {
       return;
     }
     this.isLoading = true;
-    this.stageGateManagementService.postFinalSubmit({ id: +this.stageId, note: this.finalSubmitModel.approvedNote }).subscribe((res) => {
+    this.stageGateManagementService.postFinalSubmit({ id: +this.stageId, approvedNote: this.finalSubmitModel.approvedNote }).subscribe((res) => {
       this.isLoading = false;
       this.modalService.dismissAll();
       this.getByID();
