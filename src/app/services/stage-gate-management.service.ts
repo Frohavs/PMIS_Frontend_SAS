@@ -150,4 +150,22 @@ export class StageGateManagementService {
       headers: httpHeaders
     });
   }
+  createCommitAcknowledgement(id: any): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/CreateCommitAcknowledgement/${id}`;
+    return this.http.post<any>(url, {}, {
+      headers: httpHeaders
+    });
+  }
+  postFinalSubmit(payload: any): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/CreateFinalSubmit`;
+    return this.http.post<any>(url, payload, {
+      headers: httpHeaders
+    });
+  }
 }

@@ -64,7 +64,7 @@ export class ReviewMeetingComponent implements OnInit {
   addDeliverableQuestion(question: any) {
     const questionFormGroup = this.fb.group({
       id: [question.id],
-      name: [question.name], // Get the name
+      name: [question.initialDeliverableName], // Get the name
       required: [question.required], // To maintain required info
       decision: ['', Validators.required], // Yes or No
       date: ['', Validators.required], // Date input
@@ -75,9 +75,11 @@ export class ReviewMeetingComponent implements OnInit {
   }
 
   getQuestions() {
-    this.lookupService.getInitialDeliverables(this.subPhaseId).subscribe(res => {
-      this.requiredDeliverables = res.data;
-      // Add deliverable questions to the form
+    this.stageGateManagementService.getKickOffPrint(this.stageId,3).subscribe(res => {
+      const allDeliverables = res.data.deliverableChecklists;
+
+      this.requiredDeliverables = allDeliverables.filter((deliverable: any) => deliverable.required === true);
+
       this.requiredDeliverables.forEach(question => {
         this.addDeliverableQuestion(question);
       });

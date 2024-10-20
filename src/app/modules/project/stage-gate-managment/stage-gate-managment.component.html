@@ -334,3 +334,48 @@
     </div>
   </form>
 </ng-template>
+<ng-template #finalSubmitModal let-modal>
+  <form #addForm="ngForm" (ngSubmit)="onFinalSubmit($event, addForm)">
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Final Submit</h4>
+      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+
+      <div class="fv-row mb-7">
+        <!--begin::Label-->
+        <label class="required fw-semibold fs-6 mb-2">notes</label>
+        <!--end::Label-->
+        <!--begin::Input-->
+        <textarea type="text" class="form-control form-control-solid" name="approvedNote" [(ngModel)]="finalSubmitModel.approvedNote"
+          #approvedNote="ngModel" cols="4" required></textarea>
+        <div *ngIf="addForm.submitted && addForm.invalid"
+          class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
+          <div *ngIf="approvedNote.errors?.['required']">note is required</div>
+        </div>
+        <!--end::Input-->
+      </div>
+
+    </div>
+    <div class="modal-footer flex-center">
+      <!--begin::Button-->
+      <button type="reset" id="kt_modal_update_customer_cancel" class="btn btn-light me-3"
+        (click)="modal.dismiss('cancel')">
+        Discard
+      </button>
+      <!--end::Button-->
+
+      <!--begin::Button-->
+      <button type="submit" id="kt_modal_update_customer_submit" class="btn btn-primary"
+        [attr.data-kt-indicator]="isLoading ? 'on' : 'off'">
+        <span class="indicator-label">
+          Submit
+        </span>
+        <span class="indicator-progress">
+          Please wait... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+        </span>
+      </button>
+      <!--end::Button-->
+    </div>
+  </form>
+</ng-template>

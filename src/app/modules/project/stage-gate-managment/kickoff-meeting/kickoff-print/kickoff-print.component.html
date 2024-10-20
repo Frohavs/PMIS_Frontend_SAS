@@ -105,13 +105,7 @@
         <td>----</td>
       </tr>
 
-      <tr>
-        <td>موافقة مدير المشروع<br>Project Manager Approval</td>
-        <td>{{printDetails?.coordinator}}</td>
-        <td>----</td>
-        <td>{{printDetails?.approvedDate | date : 'dd-MM-yyyy' || '----'}}</td>
-        <td>{{printDetails?.note || '----'}}</td>
-      </tr>
+
 
     </tbody>
   </table>
@@ -127,7 +121,7 @@
         </th>
       </tr>
       <tr>
-        <th>اسم أمين البوابة<br>Gate Keeper Name</th>
+        <th>موافقة مدير المشروع<br>Project Manager Approval</th>
         <th>التوقيع<br>Signature</th>
         <th>تاريخ الاعتماد<br>Date Approved</th>
         <th>ملاحظات النهائية<br>Final Comments</th>
@@ -135,10 +129,10 @@
     </thead>
     <tbody>
       <tr>
-        <td>----</td>
-        <td>----</td>
-        <td>----</td>
-        <td>----</td>
+        <td>{{printDetails?.approver}}</td>
+        <td>&nbsp;</td>
+        <td>{{printDetails?.approvedDate | date : 'dd-MM-yyyy' || '----'}}</td>
+        <td>{{printDetails?.note || '----'}}</td>
       </tr>
     </tbody>
   </table>

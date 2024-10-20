@@ -1,0 +1,26 @@
+.approval-section {
+  margin-bottom: 20px;
+
+  h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+
+  .radio-group {
+    display: flex;
+    justify-content: space-between;
+    label {
+      margin-right: 20px;
+    }
+  }
+
+  .error {
+    color: red;
+    font-size: 12px;
+    margin-top: 5px;
+  }
+}
+
+.btn {
+  margin-top: 20px;
+}

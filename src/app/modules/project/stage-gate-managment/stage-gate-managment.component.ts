@@ -33,9 +33,11 @@ export class StageGateManagementComponent implements OnInit {
   ];
 
   kickOffModel: { notes: string } = { notes: '' };
+  @ViewChild('kickOffSubmitModal') kickOffSubmitModal!: any;
+  finalSubmitModel: { id: number, approvedNote: string } = { id: 0, approvedNote: '' };
+  @ViewChild('finalSubmitModal') finalSubmitModal!: any;
   swalOptions: SweetAlertOptions = { buttonsStyling: false };
   @ViewChild('noticeSwal') noticeSwal!: SwalComponent;
-  @ViewChild('kickOffSubmitModal') kickOffSubmitModal!: any;
   modalConfig: NgbModalOptions = {
     modalDialogClass: 'modal-dialog modal-dialog-centered mw-650px',
   };
@@ -97,6 +99,9 @@ export class StageGateManagementComponent implements OnInit {
         case 'CommitAcknowledgement':
           this.activeStep = 7;
           break;
+        case 'FinalSubmit':
+          this.activeStep = 8;
+          break;
 
 
         default:
@@ -132,6 +137,8 @@ export class StageGateManagementComponent implements OnInit {
         this.navigateFinalReview();
       } else if (step.id == 8) {
         this.navigateCommitAcknowledgement();
+      } else if (step.id == 9) {
+        this.navigateFinalSubmit();
       }
     }
   }
@@ -183,6 +190,9 @@ export class StageGateManagementComponent implements OnInit {
     });
   }
   navigateReview() {
+    if (this.activeStep !== 5) {
+      return
+    }
     this.router.navigate(['projects/stage-review-meeting' + `/${this.projectId}`], {
       queryParams: { stageId: this.stageId, subPhaseId: this.subPhaseId }
     });
@@ -193,6 +203,9 @@ export class StageGateManagementComponent implements OnInit {
     });
   }
   navigateFinalReview() {
+    if (this.activeStep !== 6) {
+      return
+    }
     this.router.navigate(['projects/stage-final-review' + `/${this.projectId}`], {
       queryParams: { stageId: this.stageId, subPhaseId: this.subPhaseId }
     });
@@ -203,9 +216,19 @@ export class StageGateManagementComponent implements OnInit {
     });
   }
   navigateCommitAcknowledgement() {
+    if (this.activeStep !== 7) {
+      return
+    }
     this.router.navigate(['projects/stage-commit-acknowledgement' + `/${this.projectId}`], {
       queryParams: { stageId: this.stageId, subPhaseId: this.subPhaseId }
     });
+  }
+  navigateFinalSubmit() {
+    if (this.activeStep !== 8) {
+      return
+    }
+    this.modalService.open(this.finalSubmitModal, this.modalConfig);
+
   }
   // Method to check if a step is active
   isStepActive(stepNumber: number): boolean {
@@ -219,6 +242,23 @@ export class StageGateManagementComponent implements OnInit {
     }
     this.isLoading = true;
     this.stageGateManagementService.submitKickOff({ id: this.stageId, note: this.kickOffModel.notes }).subscribe((res) => {
+      this.isLoading = false;
+      this.modalService.dismissAll();
+      this.getByID();
+      this.showAlert({ icon: 'success', title: 'Success!', text: 'Submitted successfully!' });
+    }, () => {
+      this.isLoading = false;
+      this.showAlert({ icon: 'error', title: 'Error!', text: 'Please try again' });
+    });
+  }
+
+  onFinalSubmit(event: Event, myForm: NgForm) {
+    if (myForm && myForm.invalid) {
+      myForm.controls['approvedNote'].markAsTouched();
+      return;
+    }
+    this.isLoading = true;
+    this.stageGateManagementService.postFinalSubmit({ id: +this.stageId, note: this.finalSubmitModel.approvedNote }).subscribe((res) => {
       this.isLoading = false;
       this.modalService.dismissAll();
       this.getByID();

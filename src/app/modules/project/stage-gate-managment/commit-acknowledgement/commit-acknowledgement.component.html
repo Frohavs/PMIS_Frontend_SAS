@@ -1,1 +1,55 @@
-<p>commit-acknowledgement works!</p>
+<form [formGroup]="commitForm">
+  <div formArrayName="committeeApprovals">
+    <div *ngFor="let member of committeeApprovals.controls; let i = index" [formGroupName]="i" class="member-row">
+      <!-- Check if the current user is authorized to see the form -->
+      <div *ngIf="member.get('id')?.value === userId; else notAuthorized">
+        <h4>{{ member.get('name')?.value }}</h4>
+        <div class="radio-group mt-3">
+          <label>
+            <input type="radio" formControlName="approvalStatus" value="approved" /> Approved
+          </label>
+
+        </div>
+      </div>
+
+      <!-- Display message if the user is not authorized -->
+      <ng-template #notAuthorized>
+        <div class="mb-10 bg-light-primary p-8 rounded mt-5">
+          <div class="text-primary fs-5 fw-bold">
+            waiting for other approvals
+          </div>
+        </div>
+      </ng-template>
+    </div>
+  </div>
+
+  <!-- <div class="table-responsive">
+    <table class="table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4">
+      <thead>
+        <tr class="fw-bolder text-muted">
+
+          <th class="min-w-140px">#</th>
+          <th class="min-w-140px">user</th>
+          <th class="min-w-140px">Date</th>
+          <th class="min-w-140px">Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let log of logs; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ log.user.name }}</td>
+          <td>{{ log.date | date: 'dd/MM/yyyy' }}</td>
+          <td>{{ log.status }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div> -->
+
+  <button class="btn btn-success mt-3" (click)="onSubmit()" [disabled]="commitForm.invalid">Submit</button>
+</form>
+
+
+
+<!-- modal -->
+<swal #noticeSwal [swalOptions]="swalOptions">
+</swal>

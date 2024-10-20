@@ -60,6 +60,7 @@ import { PrintReviewComponent } from './stage-gate-managment/review-meeting/prin
 import { FinalReviewComponent } from './stage-gate-managment/final-review/final-review.component';
 import { CommitAcknowledgementComponent } from './stage-gate-managment/commit-acknowledgement/commit-acknowledgement.component';
 import { FinalReviewPrintComponent } from './stage-gate-managment/final-review/final-review-print/final-review-print.component';
+import { FinalSubmitComponent } from './stage-gate-managment/final-submit/final-submit.component';
 
 const routes: Routes = [
   {
@@ -351,6 +352,10 @@ const routes: Routes = [
       {
         path: 'stage-commit-acknowledgement/:id',
         component: CommitAcknowledgementComponent,
+      },
+      {
+        path: 'stage-final-submit/:id',
+        component: FinalSubmitComponent,
       },
 
 

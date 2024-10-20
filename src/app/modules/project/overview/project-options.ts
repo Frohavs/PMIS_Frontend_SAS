@@ -71,8 +71,8 @@ export const PROJECT_OPTIONS = [
       name: 'factory',
       route: 'projects/factory-list'
     },
-    {
-      name: 'stage gate management',
-      route: 'projects/stage-gate-management'
-    },
+    // {
+    //   name: 'stage gate management',
+    //   route: 'projects/stage-gate-management'
+    // },
 ]

@@ -104,10 +104,8 @@ export class UploadDeliverableChecklistComponent implements OnInit {
     this.stageGateManagementService.getKickOffPrint(this.stageId, 3).subscribe(res => {
       const allDeliverables = res.data.deliverableChecklists;
 
-      // Filter deliverables where required is true
       this.requiredDeliverables = allDeliverables.filter((deliverable: any) => deliverable.required === true);
 
-      // Add only required deliverables to the form
       this.requiredDeliverables.forEach(question => {
         this.addDeliverableQuestion(question);
       });
@@ -117,10 +115,10 @@ export class UploadDeliverableChecklistComponent implements OnInit {
   }
 
   onSubmit() {
-    // if (!this.deliverableForm.valid) {
-    //   this.deliverableForm.markAllAsTouched();
-    //   return;
-    // }
+    if (!this.deliverableForm.valid) {
+      this.deliverableForm.markAllAsTouched();
+      return;
+    }
 
     this.isLoading = true;
 
