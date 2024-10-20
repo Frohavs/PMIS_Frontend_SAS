@@ -41,13 +41,7 @@ export class StageGateManagementComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private lookupService: LookupService,
     private stageGateManagementService: StageGateManagementService,
-  ) {
-    setTimeout(() => {
-
-      this.router.navigateByUrl('stage-gate-management/overview');
-    }, 5000);
-
-   }
+  ) { }
 
   ngOnInit(): void {
     this.lookupService.getInitialDeliverableSteps().subscribe(res => {
