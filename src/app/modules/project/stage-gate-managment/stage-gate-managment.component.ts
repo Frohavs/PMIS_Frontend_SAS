@@ -94,6 +94,9 @@ export class StageGateManagementComponent implements OnInit {
         case 'FinalSubmit':
           this.activeStep = 8;
           break;
+        case 'Completed':
+          this.activeStep = 9;
+          break;
 
 
         default:
@@ -254,7 +257,7 @@ export class StageGateManagementComponent implements OnInit {
     this.stageGateManagementService.postFinalSubmit({ id: +this.stageId, approvedNote: this.finalSubmitModel.approvedNote }).subscribe((res) => {
       this.isLoading = false;
       this.modalService.dismissAll();
-      this.router.navigateByUrl('stage-gate-management/overview');
+      this.getByID();
       this.showAlert({ icon: 'success', title: 'Success!', text: 'Submitted successfully!' });
     }, () => {
       this.isLoading = false;
