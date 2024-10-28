@@ -100,7 +100,7 @@ export class StageGateManagementService {
     const httpHeaders = new HttpHeaders({
       Authorization: `Bearer ${this.token}`,
     });
-    const url = `${this.API_USERS_URL}/PrintKickoff/${id}/${stepId}`;
+    const url = `${this.API_USERS_URL}/PrintKickoff/${id}`;
     return this.http.get<any>(url, {
       headers: httpHeaders
     });
