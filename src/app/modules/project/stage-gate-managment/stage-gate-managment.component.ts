@@ -115,7 +115,6 @@ export class StageGateManagementComponent implements OnInit {
   }
 
   navigateTo(step: any) {
-    debugger
     if (this.activeStep < step.id) {
       if (step.id == 1) {
         this.navigateCreateCommittee();

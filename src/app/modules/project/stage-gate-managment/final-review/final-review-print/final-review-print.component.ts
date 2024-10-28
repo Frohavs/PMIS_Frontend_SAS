@@ -41,9 +41,6 @@ export class FinalReviewPrintComponent implements OnInit {
   handlePrint() {
     this.stageGateManagementService.getFinalReviewPrint(this.stageId).subscribe(res => {
       this.printDetails = res.data;
-      console.log(this.printDetails);
-
-      debugger
       setTimeout(() => {
 
         window.print();

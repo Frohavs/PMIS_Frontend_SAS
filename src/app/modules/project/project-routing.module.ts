@@ -60,6 +60,7 @@ import { PrintReviewComponent } from './stage-gate-managment/review-meeting/prin
 import { FinalReviewComponent } from './stage-gate-managment/final-review/final-review.component';
 import { CommitAcknowledgementComponent } from './stage-gate-managment/commit-acknowledgement/commit-acknowledgement.component';
 import { FinalReviewPrintComponent } from './stage-gate-managment/final-review/final-review-print/final-review-print.component';
+import { ProjectStatusReportComponent } from './update-project-info/project-status-report/project-status-report.component';
 
 const routes: Routes = [
   {
@@ -105,6 +106,10 @@ const routes: Routes = [
       {
         path: 'project-stage-update/:id',
         component: ProjectStageUpdateComponent,
+      },
+      {
+        path: 'project-status-report/:id',
+        component: ProjectStatusReportComponent,
       },
       {
         path: 'update-eot/:id',

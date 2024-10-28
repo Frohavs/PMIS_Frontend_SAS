@@ -2,11 +2,11 @@
   <div formArrayName="committeeApprovals">
     <div *ngFor="let member of committeeApprovals.controls; let i = index" [formGroupName]="i" class="member-row">
       <!-- Check if the current user is authorized to see the form -->
-      <div class="mt-5">
-        <h4>{{ member.get('name')?.value }}</h4>
+      <div class="mt-5 mb-5" *ngIf="member.get('id')?.value === userId">
+        <h2>{{ member.get('name')?.value }}</h2>
         <div class="radio-group mt-3">
           <label>
-            <input type="radio" formControlName="approvalStatus" value="approved" /> Approved
+            <input type="radio" formControlName="approvalStatus" value="approved" /> Approve
           </label>
 
         </div>
@@ -23,29 +23,29 @@
     </div>
   </div>
 
-  <!-- <div class="table-responsive">
-    <table class="table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4">
-      <thead>
+  <div class="table-responsive">
+    <table class="table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4 w-75 mx-auto">
+      <thead class="table-success">
         <tr class="fw-bolder text-muted">
 
-          <th class="min-w-140px">#</th>
-          <th class="min-w-140px">user</th>
-          <th class="min-w-140px">Date</th>
+          <th class="min-w-190px">#</th>
+          <th class="max-w-100px">user</th>
+          <th class="max-w-100px">Date</th>
           <th class="min-w-140px">Status</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let log of logs; let i = index">
+        <tr *ngFor="let user of approveUsers; let i = index">
           <td>{{ i + 1 }}</td>
-          <td>{{ log.user.name }}</td>
-          <td>{{ log.date | date: 'dd/MM/yyyy' }}</td>
-          <td>{{ log.status }}</td>
+          <td>{{ user.name }}</td>
+          <td>{{ user.approvedDate | date: 'dd/MM/yyyy' }}</td>
+          <td>{{ user.status || '--' }}</td>
         </tr>
       </tbody>
     </table>
-  </div> -->
+  </div>
 
-  <button class="btn btn-success mt-3" (click)="onSubmit()" [disabled]="commitForm.invalid">Submit</button>
+  <button class="btn btn-primary mt-5" (click)="onSubmit()" [disabled]="commitForm.invalid">Submit</button>
 </form>
 
 

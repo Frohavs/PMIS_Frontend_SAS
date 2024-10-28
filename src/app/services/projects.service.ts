@@ -118,6 +118,15 @@ export class ProjectsService {
       headers: httpHeaders
     });
   }
+  getProjectReportStatusReport(id: any): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/GetProjectReportStatusReport/${id}`;
+    return this.http.get<any>(url, {
+      headers: httpHeaders
+    });
+  }
   updateProgressInfo(progress: any): Observable<any> {
     const httpHeaders = new HttpHeaders({
       Authorization: `Bearer ${this.token}`,

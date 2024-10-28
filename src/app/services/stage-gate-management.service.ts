@@ -159,6 +159,15 @@ export class StageGateManagementService {
       headers: httpHeaders
     });
   }
+  getCommitAcknowledgementCommittees(id: any): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/GetCommitAcknowledgementCommittes/${id}`;
+    return this.http.get<any>(url, {
+      headers: httpHeaders
+    });
+  }
   postFinalSubmit(payload: any): Observable<any> {
     const httpHeaders = new HttpHeaders({
       Authorization: `Bearer ${this.token}`,

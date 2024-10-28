@@ -20,7 +20,7 @@ export class CommitAcknowledgementComponent implements OnInit {
   projectId: number;
   stageId: number;
   isLoading: boolean;
-
+  approveUsers: any[] = []
   swalOptions: SweetAlertOptions = {};
   @ViewChild('noticeSwal') noticeSwal!: SwalComponent;
   modalConfig: NgbModalOptions = {
@@ -62,9 +62,14 @@ export class CommitAcknowledgementComponent implements OnInit {
     });
     this.activatedRoute.queryParams.subscribe(params => {
       this.stageId = +params['stageId'];
+      this.stageGateManagementService.getCommitAcknowledgementCommittees(this.stageId).subscribe(res => {
+        this.approveUsers = res.data;
+        this.cdr.detectChanges();
+      });
     });
     const queryParams = this.activatedRoute.snapshot.queryParams;
     this.stageId = +queryParams?.stageId;
+
   }
 
   initForm() {

@@ -1,0 +1,698 @@
+<a class="btn btn-sm btn-dark" (click)="printReport()">
+  print
+</a>
+
+<section>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+
+        <div class="mb-10 mt-5 bg-light-primary p-8 rounded  mx-auto">
+          <h2 class="text-primary">Status Report</h2>
+          <div class="text-primary fs-5 fw-bold">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. At doloremque vitae, adipisci, perspiciatis hic
+            facilis
+            rerum, sequi reiciendis amet eaque recusandae laborum cumque? Quis unde ipsa molestiae voluptas fugiat
+            cumque.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="mt-5">
+
+  <div class="container px-2 border rounded full-w">
+    <h1 class="mb-3 text-underline px-2 py-2">Basic Information</h1>
+    <div class="row px-2 mt-1">
+      <div class="col-md-12">
+
+        <div class="col mt-12">
+          <h5 class="mb-3 text-underline">Project name</h5>
+          <div class="card text-center bg-light">
+            <div class="card-body">
+              <h2>{{reportDetails?.name}}</h2>
+            </div>
+          </div>
+        </div>
+        <div class="col mt-12">
+          <h5 class="mb-3 text-underline">Contractor</h5>
+          <div class="card bg-light text-center">
+            <div class="card-body">
+              <h2>{{reportDetails?.contractor}}</h2>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="col mt-12">
+          <h5 class="mb-3 text-underline">Consultant</h5>
+          <div class="card text-center bg-light">
+            <div class="card-body">
+              <h2>{{reportDetails?.consultant}}</h2>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="col mt-4">
+          <h5 class="mb-3 text-underline">Contract No</h5>
+          <div class="card bg-light text-center">
+            <div class="card-body">
+              <h2>{{reportDetails?.contractNo}}</h2>
+              <div class="d-flex justify-content-center mt-3"> </div>
+            </div>
+
+
+
+          </div>
+
+        </div>
+        <div class="col mt-4">
+          <h5 class="mb-3 text-underline">Contract Date</h5>
+          <div class="card bg-light text-center">
+            <div class="card-body">
+              <h2>{{reportDetails?.createdDate | date: 'yyyy-MM-dd'}}</h2>
+            </div>
+          </div>
+        </div>
+        <div class="col mt-4">
+          <h5 class="mb-3 text-underline">Administartor</h5>
+          <div class="card bg-light text-center">
+            <div class="card-body">
+              <h2>{{reportDetails?.manager || '--'}}</h2>
+            </div>
+          </div>
+        </div>
+        <div class="col mt-4">
+          <h5 class="mb-3 text-underline">Department</h5>
+          <div class="card bg-light text-center">
+            <div class="card-body">
+              <h2>--</h2>
+            </div>
+          </div>
+        </div>
+        <div class="col mt-4">
+          <h5 class="mb-3 text-underline"></h5>
+          <div class="card bg-light text-center">
+            <div class="card-body">
+              <h2>--</h2>
+            </div>
+          </div>
+        </div>
+        <div class="col mt-4">
+          <h5 class="mb-3 text-underline">Door</h5>
+          <div class="card bg-light text-center">
+            <div class="card-body">
+              <h2>--</h2>
+            </div>
+          </div>
+        </div>
+        <div class="col mt-4">
+          <h5 class="mb-3 text-underline">Project Stage Update</h5>
+          <div class="card bg-light text-center">
+            <div class="card-body">
+              <h2>{{reportDetails?.contractStatus || '--'}}</h2>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="col mt-4">
+          <h5 class="mb-3 text-underline">Sub Stage</h5>
+          <div class="card bg-light text-center">
+            <div class="card-body">
+              <h2>
+              </h2>
+            </div>
+          </div>
+        </div>
+
+        <h1 class="mb-3 text-underline">Staff</h1>
+        <div class="col mt-4">
+          <h5 class="mb-3 text-underline">Project Amana Manager</h5>
+          <div class="card bg-light text-center">
+            <div class="card-body">
+              <h2>{{'--'}}</h2>
+            </div>
+          </div>
+        </div>
+        <div class="col mt-4">
+          <h5 class="mb-3 text-underline">Project Contractor Manager</h5>
+          <div class="card bg-light text-center">
+            <div class="card-body">
+              <h2>
+              </h2>
+              <h2>{{'--'}}</h2>
+            </div>
+          </div>
+        </div>
+
+        <div class="col mt-4">
+          <h5 class="mb-3 text-underline">Project Consultant Manager</h5>
+          <div class="card bg-light text-center">
+            <div class="card-body">
+              <h2>{{'--'}}</h2>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="mt-5">
+
+  <div class="container px-2 border rounded full-w">
+    <div class="row">
+      <div class="col-md-6">
+        <h1 class="mb-3 text-underline px-2 py-2">Finnancial Information</h1>
+      </div>
+      <div class="col-md-6">
+        <h5 class="mb-3 text-underline px-2 py-3" style="float:left;">Submitted date
+          {{reportDetails?.lastUpdatedVo.approvedLetterDate | date: 'yyyy-MM-dd'}}</h5>
+      </div>
+    </div>
+
+    <div class="row px-2 mt-1">
+      <div class="col-md-6">
+        <div class="col mt-4">
+          <h5 class="mb-3 text-underline">Project Value</h5>
+          <div class="card text-center bg-light">
+            <div class="card-body">
+              <h2>{{reportDetails?.lastUpdatedVo?.voValue || '--'}}</h2>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="col-md-6">
+
+        <div class="col mt-4">
+          <h5 class="mb-3 text-underline">Project Value After Reduction</h5>
+          <div class="card text-center bg-light">
+            <div class="card-body">
+              <h2>{{reportDetails?.lastUpdatedVo?.updatedValue - reportDetails?.lastUpdatedVo?.voValue || '--'}}</h2>
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+      <div class="col-md-12">
+
+        <div class="col mt-4">
+          <h5 class="mb-3 text-underline">Updated contract value</h5>
+          <div class="card text-center bg-light">
+            <div class="card-body">
+              <h2>{{reportDetails?.lastUpdatedVo?.updatedValue || '--'}}</h2>
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+      <div class="col-md-6">
+
+        <div class="col mt-4">
+          <h5 class="mb-3 text-underline"> Spent value current year</h5>
+          <div class="card text-center bg-light">
+            <div class="card-body">
+              <h2>--</h2>
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+      <div class="col-md-6">
+
+        <div class="col mt-4">
+          <h5 class="mb-3 text-underline"> Planned to spend till now</h5>
+          <div class="card text-center bg-light">
+            <div class="card-body">
+              <h2>--</h2>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12">
+
+        <div class="col mt-4">
+          <h5 class="mb-3 text-underline"> Total Spent Value</h5>
+          <div class="card text-center bg-light">
+            <div class="card-body">
+              <h2>--</h2>
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- @evil@ ----------------- -->
+<section class="mt-5">
+  <div class="container px-0 mt-4 border rounded">
+    <h5 class="mb-2 py-3 text-underline px-4">Project Invoice</h5>
+    <div class="card border-0 rounded-0  bg-light mb-0">
+      <div class="card-body p-0">
+        <table class="table table-striped text-center">
+          <thead>
+            <tr>
+              <th scope="col">Invoice Reference</th>
+              <th scope="col">Invoice Value</th>
+              <th scope="col">Invoice Type</th>
+              <th scope="col">MOF Number</th>
+              <th scope="col">Etimad submit date</th>
+              <th scope="col">Status</th>
+
+            </tr>
+          </thead>
+          <tbody>
+            <!-- <tr>
+              <td>29</td>
+              <td>5,752,370.33</td>
+              <td>
+                on going </td>
+              <td>220102016829</td>
+              <td>2022-10-28</td>
+              <td>
+                Completed </td>
+            </tr> -->
+            <ng-container *ngIf="reportDetails?.invoices?.length">
+
+              <tr *ngFor="let item of reportDetails?.invoices">
+                <td>30</td>
+                <td>5,050,596.89</td>
+                <td>
+                  on going </td>
+                <td>220102016833</td>
+                <td>2022-10-28</td>
+                <td>
+                  Completed </td>
+              </tr>
+            </ng-container>
+            <ng-container *ngIf="!reportDetails?.invoices?.length">
+              <tr>
+                <td colspan="6" class="text-center fs-2 text-primary">No Invoices retrieved yet</td>
+              </tr>
+            </ng-container>
+
+
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- @evil@ ----------------- -->
+
+<section>
+
+  <div class="container px-0 mt-4 border rounded">
+    <h5 class="mb-2 py-3 text-underline px-4"> Variation Orders</h5>
+    <div class="card border-0 rounded-0  bg-light mb-0">
+      <div class="card-body p-0">
+        <table class="table table-striped text-center">
+          <thead>
+            <tr>
+              <th scope="col">Reason</th>
+              <th scope="col">Value</th>
+              <th scope="col">Updated Value</th>
+              <th scope="col">approved Letter Number</th>
+              <th scope="col">Approved Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            <ng-container *ngIf="reportDetails?.vos?.length">
+
+              <tr *ngFor="let item of reportDetails?.vos">
+                <td>{{item?.voReason}}</td>
+                <td>{{item?.updatedValue}}</td>
+                <td> {{item?.updatedValue}} </td>
+                <td>{{item?.approvedLetterNumber}}</td>
+                <td>{{item?.approvedLetterDate | date: 'dd-MM-yyyy'}}</td>
+              </tr>
+            </ng-container>
+            <ng-container *ngIf="!reportDetails?.vos?.length">
+              <tr>
+                <td colspan="5" class="text-center fs-2 text-primary">No VOs retrieved yet</td>
+              </tr>
+            </ng-container>
+
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+<section class="mt-5">
+
+  <div class="container px-2 border rounded full-w">
+
+    <div class="row">
+      <div class="col-md-6">
+        <h1 class="mb-3 text-underline px-2 py-2">Timing Information</h1>
+      </div>
+      <div class="col-md-6">
+        <h5 class="mb-3 text-underline px-2 py-3" style="float: left;">Submitted date
+          {{reportDetails?.eoTs[0]?.approvedLetterDate | date: 'dd-MM-yyyy'}}</h5>
+      </div>
+    </div>
+    <div class="row px-2 mt-1">
+      <div class="col-md-6">
+
+        <div class="col mt-4">
+          <h5 class="mb-3 text-underline">Project Start Date</h5>
+          <div class="card text-center bg-light">
+            <div class="card-body">
+              <h2>{{reportDetails?.eoTs[0]?.approvedLetterDate | date: 'dd-MM-yyyy'}}</h2>
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+      <div class="col-md-6">
+        <div class="col mt-4">
+          <h5 class="mb-3 text-underline">Project Duration</h5>
+          <div class="card text-center bg-light">
+            <div class="card-body">
+              <h2>{{reportDetails?.eoTs[0]?.duration || '--'}}</h2>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="col-md-12">
+
+        <div class="col mt-4">
+          <h5 class="mb-3 text-underline">Original Finish Date</h5>
+          <div class="card text-center bg-light">
+            <div class="card-body">
+              <h2>{{reportDetails?.eoTs[0]?.expectedFinishDate | date: 'dd-MM-yyyy'}}</h2>
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+      <div class="col-md-6">
+
+        <div class="col mt-4">
+          <h5 class="mb-3 text-underline">EOT Approved Days</h5>
+          <div class="card text-center bg-light">
+            <div class="card-body">
+              <h2>{{reportDetails?.eoTs[0]?.eotDays}}</h2>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+
+        <div class="col mt-4">
+          <h5 class="mb-3 text-underline">Eot Finish Date</h5>
+          <div class="card text-center bg-light">
+            <div class="card-body">
+              <h2>{{reportDetails?.eoTs[0]?.expectedFinishDate | date: 'dd-MM-yyyy'}}</h2>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="mt-5">
+  <div class="container px-0 mt-4 border rounded">
+    <h5 class="mb-2 py-3 text-underline px-4">EOT</h5>
+    <div class="card border-0 rounded-0  bg-light mb-0">
+      <div class="card-body p-0">
+        <table class="table table-striped text-center">
+          <thead>
+            <tr>
+              <th scope="col">Reason</th>
+              <th scope="col">Extension Durations</th>
+              <th scope="col">Status</th>
+              <th scope="col">Attachments</th>
+              <th scope="col">Approved Date</th>
+            </tr>
+          </thead>
+          <tbody>
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="mt-5">
+  <div class="container px-2 py-3 mt-4 border rounded">
+    <div class="row">
+      <div class="col-md-6">
+        <h1 class="mb-3 text-underline px-3">progress Information</h1>
+      </div>
+      <div class="col-md-6">
+        <h5 class="mb-3 text-underline px-2 py-1" style="float:left;">Submitted date 2024-03-27</h5>
+        <h5 class="mb-3 text-underline px-2 py-1" style="float:left;">
+        </h5>
+      </div>
+    </div>
+
+
+
+    <div class="row px-2 mt-1 vcenter-item">
+      <div class="col-md-4">
+        <div class="col mt-2">
+
+          <div class="card text-center bg-light border-0 rounded-top"
+            style="border-bottom-left-radius:0; border-bottom-right-radius:0;">
+            <div class="card-body">
+              <h1>Project Stage</h1>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card b-bx-dark-green text-center border-0 rounded-bottom"
+            style="border-top-left-radius:0; border-top-right-radius:0;">
+            <div class="card-body">
+              <h1 class="text-white">
+
+                Regular
+              </h1>
+            </div>
+
+          </div>
+          <span class="d-flex justify-content-center" style="color:black; text-align: center;"> </span>
+        </div>
+
+      </div>
+      <div class="col-md-8">
+
+
+
+        <div class="card border-0 mb-0">
+
+          <div class="card-body mb-0">
+            <div>
+              <div class="col mb-3">
+                <h6>Planned Progress %</h6>
+                <div class="progress">
+
+                  <div class="progress-bar bg-green" role="progressbar" style="width: 100%" aria-valuenow="50"
+                    aria-valuemin="0" aria-valuemax="100">
+                    100%</div>
+
+
+                </div>
+              </div>
+              <div class="col mb-3">
+                <h6>Actual Elapsed Percentage</h6>
+                <div class="progress">
+
+                  <div class="progress-bar bg-green" role="progressbar" style="width: 99%" aria-valuenow="30"
+                    aria-valuemin="0" aria-valuemax="100">
+                    99%</div>
+                </div>
+              </div>
+
+              <div class="col mb-3">
+                <h6>Elapsed Duration </h6>
+                <div class="progress">
+
+                  <div class="progress-bar bg-green" role="progressbar" style="width: 16%" aria-valuenow="30"
+                    aria-valuemin="0" aria-valuemax="100">16%</div>
+                </div>
+              </div>
+              <div class="col mb-3">
+                <h6></h6>
+                <div class="progress">
+
+                  <div class="progress-bar bg-green" role="progressbar" style="width: 23%" aria-valuenow="30"
+                    aria-valuemin="0" aria-valuemax="100">23%</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+</section>
+
+<!-- <section class="mt-5">
+  <div class="container px-0 mt-4 border rounded">
+    <h5 class="mb-2 py-3 text-underline px-4">Susspension Details</h5>
+    <div class="card border-0 rounded-0  bg-light mb-0">
+      <div class="card-body p-0">
+        <table class="table table-striped text-center">
+          <thead>
+            <tr>
+              <th scope="col">Resume Date</th>
+              <th scope="col">Date</th>
+              <th scope="col">Percentage</th>
+            </tr>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section> -->
+
+<section class="mt-5">
+  <div class="container px-0 mt-4 border rounded">
+    <h5 class="mb-2 py-3 text-underline px-4">Milestone Details</h5>
+    <div class="card border-0 rounded-0  bg-light mb-0">
+      <div class="card-body p-0">
+        <table class="table table-striped text-center">
+          <thead>
+            <tr>
+              <th class="width-md">Title</th>
+              <th class="width-md">Description</th>
+              <th class="width-md">Actual Start Date</th>
+              <th class="width-md">Actual End Date</th>
+              <th class="width-md">Planned Start Date</th>
+              <th class="width-md">Planned End Date</th>
+              <th class="width-md">Weight</th>
+            </tr>
+          </thead>
+          <tbody>
+            <ng-container *ngIf="reportDetails?.milestones">
+              <tr *ngFor="let milestone of reportDetails?.milestones; let i = index">
+                <td>{{milestone?.title}}</td>
+                <td>{{milestone?.description}}</td>
+                <td>{{milestone?.actualStartDate | date: 'dd-MM-yyyy'}}</td>
+                <td>{{milestone?.actualEndDate | date: 'dd-MM-yyyy'}}</td>
+                <td>{{milestone?.startDate | date: 'dd-MM-yyyy'}}</td>
+                <td>{{milestone?.endDate | date: 'dd-MM-yyyy'}}</td>
+                <td>{{milestone?.weight || '--'}}</td>
+              </tr>
+            </ng-container>
+            <ng-container *ngIf="!reportDetails?.milestones">
+              <tr>
+                <td colspan="7">No milestones found</td>
+              </tr>
+            </ng-container>
+
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- <section class="mt-5">
+  <div class="container px-0 mt-4 border rounded">
+    <h5 class="mb-2 py-3 text-underline px-4">Rfi Details</h5>
+    <div class="card border-0 rounded-0  bg-light mb-0">
+      <div class="card-body p-0">
+        <table class="table table-striped text-center">
+          <thead>
+            <tr>
+              <th class="width-sm all">Order Number</th>
+              <th class="width-md none">Examination Date</th>
+              <th class="width-md none">Milestone</th>
+
+              <th class="width-md none">Code</th>
+              <th class="width-md none">Status</th>
+
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td colspan="5">No records found</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section> -->
+
+<section class="mt-5">
+
+  <div class="container px-2 border rounded full-w">
+    <h1 class="mb-3 text-underline px-2 py-2">Partners Evaluation</h1>
+    <div class="row px-2 mt-1">
+
+      <div class="col-md-6">
+        <div class="col mt-4">
+          <h5 class="mb-3 text-underline">Contractor</h5>
+          <div class="card text-center bg-light">
+            <div class="card-body">
+              <div class="chartjs-size-monitor">
+                <div class="chartjs-size-monitor-expand">
+                  <div class=""></div>
+                </div>
+                <div class="chartjs-size-monitor-shrink">
+                  <div class=""></div>
+                </div>
+              </div>
+              chart here
+
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="col mt-4">
+          <h5 class="mb-3 text-underline">Consultant</h5>
+          <div class="card bg-light text-center">
+            <div class="card-body">
+              <div class="chartjs-size-monitor">
+                <div class="chartjs-size-monitor-expand">
+                  <div class=""></div>
+                </div>
+                <div class="chartjs-size-monitor-shrink">
+                  <div class=""></div>
+                </div>
+              </div>
+              chart here
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- </section> -->

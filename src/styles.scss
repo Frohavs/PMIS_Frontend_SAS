@@ -12,7 +12,8 @@
 
 
 @media print {
-   #kt_app_header {
+   #kt_app_header,
+   .btn.btn-sm.btn-success {
     display: none !important;
   }
 }
