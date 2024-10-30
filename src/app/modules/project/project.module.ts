@@ -74,6 +74,7 @@ import { FinalReviewComponent } from './stage-gate-managment/final-review/final-
 import { CommitAcknowledgementComponent } from './stage-gate-managment/commit-acknowledgement/commit-acknowledgement.component';
 import { FinalReviewPrintComponent } from './stage-gate-managment/final-review/final-review-print/final-review-print.component';
 import { ProjectStatusReportComponent } from './update-project-info/project-status-report/project-status-report.component';
+import { SiteStudiesDesignsDashboardComponent } from './site-studies-designs-dashboard/site-studies-designs-dashboard.component';
 
 
 @NgModule({
@@ -156,7 +157,9 @@ import { ProjectStatusReportComponent } from './update-project-info/project-stat
     PrintReviewComponent,
     FinalReviewComponent,
     FinalReviewPrintComponent,
-    CommitAcknowledgementComponent
+    CommitAcknowledgementComponent,
+
+    SiteStudiesDesignsDashboardComponent
   ],
   imports: [
     CommonModule,

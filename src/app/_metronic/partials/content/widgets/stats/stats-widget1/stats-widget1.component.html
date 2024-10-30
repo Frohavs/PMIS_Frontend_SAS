@@ -1,11 +1,11 @@
 <div class="card-body">
-  <a href="#" class="card-title fw-bolder text-muted text-hover-primary fs-4">
-    {{ title }}
+  <a class="card-title fw-bolder text-muted fs-4">
+    {{ time }}
   </a>
 
-  <div class="fw-bolder text-primary my-6">{{ time }}</div>
+  <div class="fw-bolder text-success my-6 fs-3">{{ title }}</div>
 
-  <p class="text-gray-900-75 fw-bold fs-5 m-0">
+  <p class="text-gray-900-75 fw-bold fs-5 m-0" *ngIf="description">
     {{description}}
     <ng-content select="description"></ng-content>
   </p>
