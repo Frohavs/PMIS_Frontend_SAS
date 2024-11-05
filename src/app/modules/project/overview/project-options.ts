@@ -72,8 +72,8 @@ export const PROJECT_OPTIONS = [
       route: 'projects/factory-list'
     },
     {
-      name: 'Site Studies Designs Dashboard',
-      route: 'projects/site_studies_designs_dashboard'
+      name: 'Project Status Report',
+      route: 'projects/project-status-report'
     },
     // {
     //   name: 'stage gate management',

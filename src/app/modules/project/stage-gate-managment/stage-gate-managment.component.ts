@@ -17,6 +17,7 @@ export class StageGateManagementComponent implements OnInit {
   updateInfo: boolean;
   projectId: number;
   stageId: number;
+  currentPhases: any[] = [];
   projectDetails: any;
   subPhaseId: number;
   isLoading: boolean;
@@ -44,10 +45,11 @@ export class StageGateManagementComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.lookupService.getInitialDeliverableSteps().subscribe(res => {
-      this.steps = res.data;
-      this.cdr.detectChanges();
-    })
+    this.getInitialData();
+  }
+
+  getInitialData() {
+    this.getInitialDeliverableSteps();
     this.activatedRoute.params.subscribe(params => {
       this.projectId = +params['id'];
     });
@@ -55,19 +57,29 @@ export class StageGateManagementComponent implements OnInit {
       this.stageId = +params['stageId'];
       if (this.projectId) {
         this.getByID();
+        this.getSubPhases();
       }
+    });
+  }
+
+
+  getInitialDeliverableSteps() {
+    this.lookupService.getInitialDeliverableSteps().subscribe(res => {
+      this.steps = res.data;
+      this.cdr.detectChanges();
     });
   }
 
   getByID() {
     this.stageGateManagementService.getByID(this.stageId).subscribe(res => {
+      debugger
       this.projectDetails = res.data;
       this.subPhaseId = this.projectDetails?.subPhaseId;
       if (this.projectDetails?.status == 'DeliverableChecklist') {
         this.activeStep = 1;
       }
       switch (this.projectDetails?.status) {
-        case 'CreateCommittees':
+        case 'CreateCommittee':
           this.activeStep = 0;
           break;
         case 'DeliverableChecklist':
@@ -102,6 +114,14 @@ export class StageGateManagementComponent implements OnInit {
         default:
           break;
       }
+      this.cdr.detectChanges();
+    });
+  }
+
+  getSubPhases() {
+    if(this.currentPhases.length) return;
+    this.stageGateManagementService.getSubPhases(this.projectId).subscribe(res => {
+      this.currentPhases = res.data;
       this.cdr.detectChanges();
     });
   }
@@ -230,6 +250,11 @@ export class StageGateManagementComponent implements OnInit {
     return stepNumber <= this.activeStep;
   }
 
+  navigatePhase(id: number) {
+    const url = `projects/stage-gate-management/${this.projectId}?stageId=${id}`;
+    this.router.navigateByUrl(url);
+  }
+
   onKickOffSubmit(event: Event, myForm: NgForm) {
     if (myForm && myForm.invalid) {
       myForm.controls['notes'].markAsTouched();
@@ -258,6 +283,11 @@ export class StageGateManagementComponent implements OnInit {
       this.modalService.dismissAll();
       this.getByID();
       this.showAlert({ icon: 'success', title: 'Success!', text: 'Submitted successfully!' });
+      setTimeout(() => {
+        this.router.navigate(['stage-gate-management/overview']);
+      }, 1500);
+      setTimeout(() => {
+      }, 1000);
     }, () => {
       this.isLoading = false;
       this.showAlert({ icon: 'error', title: 'Error!', text: 'Please try again' });

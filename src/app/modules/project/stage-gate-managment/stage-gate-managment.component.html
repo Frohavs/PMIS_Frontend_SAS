@@ -3,14 +3,17 @@
     <div class="card mb-5 mb-xl-8">
       <!-- begin::Header -->
       <div class="card-header align-items-center border-0 mt-4">
+
         <h3 class="card-title align-items-start flex-column">
           <span class="fw-bolder text-gray-900">Stage Gate Deliverables Progress</span>
         </h3>
-        <div class="card-toolbar">
+        <div class="card-toolbar" *ngIf="currentPhases.length">
           <!-- begin::Menu -->
-          <button type="button" class="btn btn-sm btn-icon btn-color-primary btn-active-light-primary"
-            data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end" data-kt-menu-flip="top-end">
-          </button>
+          <a class="btn btn-sm mx-3" *ngFor="let phase of currentPhases; index as i"
+            [ngClass]="{'btn-light-info': i === currentPhases.length - 1, 'btn-info': i !== currentPhases.length - 1}"
+          (click)="navigatePhase(phase?.id)">
+            {{phase?.subPhase}}
+          </a>
           <!-- end::Menu -->
         </div>
       </div>

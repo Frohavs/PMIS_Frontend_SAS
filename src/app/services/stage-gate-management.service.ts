@@ -168,6 +168,15 @@ export class StageGateManagementService {
       headers: httpHeaders
     });
   }
+  getSubPhases(id: any): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/GetSubphases/${id}`;
+    return this.http.get<any>(url, {
+      headers: httpHeaders
+    });
+  }
   postFinalSubmit(payload: any): Observable<any> {
     const httpHeaders = new HttpHeaders({
       Authorization: `Bearer ${this.token}`,

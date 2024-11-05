@@ -59,7 +59,7 @@
 
     // Line between active steps
     &.active::after {
-      background-color: #17C653;
+      background-color: #17C653 !important;
     }
 
     // Remove the line after the last step
