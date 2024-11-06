@@ -9,12 +9,12 @@
 
         <div class="mb-10 mt-5 bg-light-primary p-8 rounded  mx-auto">
           <h2 class="text-primary">Status Report</h2>
-          <div class="text-primary fs-5 fw-bold">
+          <!-- <div class="text-primary fs-5 fw-bold">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. At doloremque vitae, adipisci, perspiciatis hic
             facilis
             rerum, sequi reiciendis amet eaque recusandae laborum cumque? Quis unde ipsa molestiae voluptas fugiat
             cumque.
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
@@ -86,30 +86,6 @@
           </div>
         </div>
         <div class="col mt-4">
-          <h5 class="mb-3 text-underline">Department</h5>
-          <div class="card bg-light text-center">
-            <div class="card-body">
-              <h2>--</h2>
-            </div>
-          </div>
-        </div>
-        <div class="col mt-4">
-          <h5 class="mb-3 text-underline"></h5>
-          <div class="card bg-light text-center">
-            <div class="card-body">
-              <h2>--</h2>
-            </div>
-          </div>
-        </div>
-        <div class="col mt-4">
-          <h5 class="mb-3 text-underline">Door</h5>
-          <div class="card bg-light text-center">
-            <div class="card-body">
-              <h2>--</h2>
-            </div>
-          </div>
-        </div>
-        <div class="col mt-4">
           <h5 class="mb-3 text-underline">Project Stage Update</h5>
           <div class="card bg-light text-center">
             <div class="card-body">
@@ -119,7 +95,7 @@
         </div>
 
 
-        <div class="col mt-4">
+        <!-- <div class="col mt-4">
           <h5 class="mb-3 text-underline">Sub Stage</h5>
           <div class="card bg-light text-center">
             <div class="card-body">
@@ -127,14 +103,15 @@
               </h2>
             </div>
           </div>
-        </div>
+        </div> -->
+        <br>
 
         <h1 class="mb-3 text-underline">Staff</h1>
         <div class="col mt-4">
           <h5 class="mb-3 text-underline">Project Amana Manager</h5>
           <div class="card bg-light text-center">
             <div class="card-body">
-              <h2>{{'--'}}</h2>
+              <h2>{{reportDetails?.staff[0]?.name|| '--'}}</h2>
             </div>
           </div>
         </div>
@@ -142,9 +119,7 @@
           <h5 class="mb-3 text-underline">Project Contractor Manager</h5>
           <div class="card bg-light text-center">
             <div class="card-body">
-              <h2>
-              </h2>
-              <h2>{{'--'}}</h2>
+              <h2>{{reportDetails?.staff[2]?.name|| '--'}}</h2>
             </div>
           </div>
         </div>
@@ -153,7 +128,7 @@
           <h5 class="mb-3 text-underline">Project Consultant Manager</h5>
           <div class="card bg-light text-center">
             <div class="card-body">
-              <h2>{{'--'}}</h2>
+              <h2>{{reportDetails?.staff[1]?.name|| '--'}}</h2>
             </div>
           </div>
         </div>
@@ -181,7 +156,7 @@
           <h5 class="mb-3 text-underline">Project Value</h5>
           <div class="card text-center bg-light">
             <div class="card-body">
-              <h2>{{reportDetails?.lastUpdatedVo?.voValue || '--'}}</h2>
+              <h2>{{reportDetails?.originalValue || '--'}}</h2>
             </div>
           </div>
         </div>
@@ -194,7 +169,7 @@
           <h5 class="mb-3 text-underline">Project Value After Reduction</h5>
           <div class="card text-center bg-light">
             <div class="card-body">
-              <h2>{{reportDetails?.lastUpdatedVo?.updatedValue - reportDetails?.lastUpdatedVo?.voValue || '--'}}</h2>
+              <h2>{{'--'}}</h2>
             </div>
           </div>
         </div>
@@ -207,7 +182,7 @@
           <h5 class="mb-3 text-underline">Updated contract value</h5>
           <div class="card text-center bg-light">
             <div class="card-body">
-              <h2>{{reportDetails?.lastUpdatedVo?.updatedValue || '--'}}</h2>
+              <h2>{{reportDetails?.finalValue}}</h2>
             </div>
           </div>
         </div>
@@ -220,7 +195,7 @@
           <h5 class="mb-3 text-underline"> Spent value current year</h5>
           <div class="card text-center bg-light">
             <div class="card-body">
-              <h2>--</h2>
+              <h2>{{reportDetails?.totalInvoiceValueForCurrentYear}}</h2>
             </div>
           </div>
         </div>
@@ -233,7 +208,7 @@
           <h5 class="mb-3 text-underline"> Planned to spend till now</h5>
           <div class="card text-center bg-light">
             <div class="card-body">
-              <h2>--</h2>
+              <h2>{{reportDetails?.plannedSpentValue}}</h2>
             </div>
           </div>
         </div>
@@ -244,7 +219,7 @@
           <h5 class="mb-3 text-underline"> Total Spent Value</h5>
           <div class="card text-center bg-light">
             <div class="card-body">
-              <h2>--</h2>
+              <h2>{{reportDetails?.totalInvoiceValue}}</h2>
             </div>
           </div>
         </div>
@@ -368,7 +343,7 @@
       </div>
       <div class="col-md-6">
         <h5 class="mb-3 text-underline px-2 py-3" style="float: left;">Submitted date
-          {{reportDetails?.eoTs[0]?.approvedLetterDate | date: 'dd-MM-yyyy'}}</h5>
+          {{reportDetails?.createdDate | date: 'dd-MM-yyyy'}}</h5>
       </div>
     </div>
     <div class="row px-2 mt-1">
@@ -378,7 +353,7 @@
           <h5 class="mb-3 text-underline">Project Start Date</h5>
           <div class="card text-center bg-light">
             <div class="card-body">
-              <h2>{{reportDetails?.eoTs[0]?.approvedLetterDate | date: 'dd-MM-yyyy'}}</h2>
+              <h2>{{reportDetails?.createdDate | date: 'dd-MM-yyyy'}}</h2>
             </div>
           </div>
         </div>
@@ -390,7 +365,7 @@
           <h5 class="mb-3 text-underline">Project Duration</h5>
           <div class="card text-center bg-light">
             <div class="card-body">
-              <h2>{{reportDetails?.eoTs[0]?.duration || '--'}}</h2>
+              <h2>{{reportDetails?.originalDuration || '--'}}</h2>
             </div>
           </div>
         </div>
@@ -403,7 +378,7 @@
           <h5 class="mb-3 text-underline">Original Finish Date</h5>
           <div class="card text-center bg-light">
             <div class="card-body">
-              <h2>{{reportDetails?.eoTs[0]?.expectedFinishDate | date: 'dd-MM-yyyy'}}</h2>
+              <h2>{{reportDetails?.originalFinishDate | date: 'dd-MM-yyyy'}}</h2>
             </div>
           </div>
         </div>
@@ -427,7 +402,7 @@
           <h5 class="mb-3 text-underline">Eot Finish Date</h5>
           <div class="card text-center bg-light">
             <div class="card-body">
-              <h2>{{reportDetails?.eoTs[0]?.expectedFinishDate | date: 'dd-MM-yyyy'}}</h2>
+              <h2>{{reportDetails?.finishDateAfterEot | date: 'dd-MM-yyyy'}}</h2>
             </div>
           </div>
         </div>
@@ -446,13 +421,24 @@
             <tr>
               <th scope="col">Reason</th>
               <th scope="col">Extension Durations</th>
-              <th scope="col">Status</th>
-              <th scope="col">Attachments</th>
+              <th scope="col">Eot Days</th>
+              <th scope="col">approved letter number</th>
+              <th scope="col">expected finish date</th>
               <th scope="col">Approved Date</th>
             </tr>
           </thead>
           <tbody>
 
+            <ng-container *ngIf="reportDetails?.eoTs?.length">
+              <tr *ngFor="let item of reportDetails?.eoTs">
+                <td>{{item?.eotReason || '--'}}</td>
+                <td>{{item?.eotDays || '--'}}</td>
+                <td>{{item?.duration || '--'}}</td>
+                <td>{{item?.approvedLetterNumber || '--'}}</td>
+                <td>{{item?.expectedFinishDate | date: 'dd-MM-yyyy'}}</td>
+
+              </tr>
+            </ng-container>
           </tbody>
         </table>
       </div>
@@ -656,37 +642,24 @@
 
       <div class="col-md-6">
         <div class="col mt-4">
-          <h5 class="mb-3 text-underline">Contractor</h5>
           <div class="card text-center bg-light">
             <div class="card-body">
               <div class="chartjs-size-monitor">
-                <div class="chartjs-size-monitor-expand">
-                  <div class=""></div>
-                </div>
-                <div class="chartjs-size-monitor-shrink">
-                  <div class=""></div>
-                </div>
+                <app-charts-widget3 [title]="'Contractor'" class="card card-xl-stretch mb-xl-8">
+                </app-charts-widget3>
               </div>
-              chart here
-
             </div>
           </div>
         </div>
       </div>
       <div class="col-md-6">
         <div class="col mt-4">
-          <h5 class="mb-3 text-underline">Consultant</h5>
           <div class="card bg-light text-center">
             <div class="card-body">
               <div class="chartjs-size-monitor">
-                <div class="chartjs-size-monitor-expand">
-                  <div class=""></div>
-                </div>
-                <div class="chartjs-size-monitor-shrink">
-                  <div class=""></div>
-                </div>
+                <app-charts-widget3 [title]="'Consultant'" class="card card-xl-stretch mb-xl-8">
+                </app-charts-widget3>
               </div>
-              chart here
             </div>
           </div>
         </div>

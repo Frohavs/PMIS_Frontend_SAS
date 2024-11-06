@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { getCSSVariableValue } from '../../../../../kt/_utils';
 
 @Component({
@@ -6,6 +6,8 @@ import { getCSSVariableValue } from '../../../../../kt/_utils';
   templateUrl: './charts-widget3.component.html',
 })
 export class ChartsWidget3Component implements OnInit {
+  @Input() title: string = 'Recent Transactions';
+  @Input() subTitle: string = '';
   chartOptions: any = {};
 
   constructor() {}
