@@ -156,7 +156,7 @@
           <h5 class="mb-3 text-underline">Project Value</h5>
           <div class="card text-center bg-light">
             <div class="card-body">
-              <h2>{{reportDetails?.originalValue || '--'}}</h2>
+              <h2>{{reportDetails?.originalValue | number: '1.0-0' || '--'}}</h2>
             </div>
           </div>
         </div>
@@ -169,7 +169,7 @@
           <h5 class="mb-3 text-underline">Project Value After Reduction</h5>
           <div class="card text-center bg-light">
             <div class="card-body">
-              <h2>{{'--'}}</h2>
+              <h2>{{reportDetails?.plannedSpentValue | number: '1.0-0' || '--'}}</h2>
             </div>
           </div>
         </div>
@@ -182,7 +182,7 @@
           <h5 class="mb-3 text-underline">Updated contract value</h5>
           <div class="card text-center bg-light">
             <div class="card-body">
-              <h2>{{reportDetails?.finalValue}}</h2>
+              <h2>{{reportDetails?.finalValue | number: '1.0-0' || '--'}}</h2>
             </div>
           </div>
         </div>
@@ -195,7 +195,7 @@
           <h5 class="mb-3 text-underline"> Spent value current year</h5>
           <div class="card text-center bg-light">
             <div class="card-body">
-              <h2>{{reportDetails?.totalInvoiceValueForCurrentYear}}</h2>
+              <h2>{{reportDetails?.totalInvoiceValueForCurrentYear | number: '1.0-0' || '--'}}</h2>
             </div>
           </div>
         </div>
@@ -208,7 +208,7 @@
           <h5 class="mb-3 text-underline"> Planned to spend till now</h5>
           <div class="card text-center bg-light">
             <div class="card-body">
-              <h2>{{reportDetails?.plannedSpentValue}}</h2>
+              <h2>{{reportDetails?.plannedSpentValue | number: '1.0-0' || '--'}}</h2>
             </div>
           </div>
         </div>
@@ -219,7 +219,7 @@
           <h5 class="mb-3 text-underline"> Total Spent Value</h5>
           <div class="card text-center bg-light">
             <div class="card-body">
-              <h2>{{reportDetails?.totalInvoiceValue}}</h2>
+              <h2>{{reportDetails?.totalInvoiceValue | number: '1.0-0' || '--'}}</h2>
             </div>
           </div>
         </div>
@@ -310,8 +310,8 @@
 
               <tr *ngFor="let item of reportDetails?.vos">
                 <td>{{item?.voReason}}</td>
-                <td>{{item?.updatedValue}}</td>
-                <td> {{item?.updatedValue}} </td>
+                <td>{{item?.updatedValue | number: '1.0-0' || '--'}}</td>
+                <td> {{item?.updatedValue | number: '1.0-0' || '--'}} </td>
                 <td>{{item?.approvedLetterNumber}}</td>
                 <td>{{item?.approvedLetterDate | date: 'dd-MM-yyyy'}}</td>
               </tr>
