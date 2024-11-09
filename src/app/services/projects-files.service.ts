@@ -45,7 +45,7 @@ export class ProjectsFilesService {
   }
 
 
-  addVendor(user: string): Observable<any> {
+  addProjectsFile(user: string): Observable<any> {
     const httpHeaders = new HttpHeaders({
       Authorization: `Bearer ${this.token}`,
     });
@@ -54,7 +54,7 @@ export class ProjectsFilesService {
       headers: httpHeaders
     });
   }
-  updateVendor(user: string): Observable<any> {
+  updateProjectsFile(user: string): Observable<any> {
     const httpHeaders = new HttpHeaders({
       Authorization: `Bearer ${this.token}`,
     });

@@ -4,8 +4,11 @@ import { Location } from '@angular/common';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
 import { VendorTypes } from 'src/app/pages/vendors/add-vendor/vendor-types';
-import { VendorService } from 'src/app/services/vendors.service';
+import { ProjectsFilesService } from 'src/app/services/projects-files.service';
 import { SweetAlertOptions } from 'sweetalert2';
+import { LookupService } from 'src/app/services/lookup/lookup.service';
+import { ProjectsService } from 'src/app/services/projects.service';
+import { AttachmentService } from 'src/app/services/attachment/attachment.service';
 
 
 @Component({
@@ -14,10 +17,21 @@ import { SweetAlertOptions } from 'sweetalert2';
   styleUrl: './add-project-files.component.scss'
 })
 export class AddProjectFilesComponent implements OnInit {
-  vendorId: number;
+  fileId: number;
   isLoading: boolean;
   addAttachmentForm: FormGroup;
-  vendorTypes: any[] = VendorTypes;
+  projects: any[] = [];
+
+  categories: any[] = [];
+  subCategories: any[] = [];
+
+  classifications: any[] = [];
+  subClassifications: any[] = [];
+
+  attachmentPurposes: any[] = [];
+  attachmentStatus: any[] = [];
+
+  selectedFile: File;
 
   swalOptions: SweetAlertOptions = {};
   @ViewChild('noticeSwal') noticeSwal!: SwalComponent;
@@ -28,38 +42,87 @@ export class AddProjectFilesComponent implements OnInit {
     private router: Router,
     private formBuilder: FormBuilder,
     private activatedRoute: ActivatedRoute,
-    private vendorService: VendorService,
+    private lookupService: LookupService,
+    private attachmentService: AttachmentService,
+    private projectsService: ProjectsService,
+    private projectsFilesService: ProjectsFilesService,
   ) { }
 
   ngOnInit(): void {
-    this.getVendorId();
-
+    this.getLookups();
+    this.getRecordId();
     this.initProjectFilesForm();
+
+    this.addAttachmentForm.get('categoryId')?.valueChanges.subscribe((id: number) => {
+      if (id) {
+        this.lookupService.getAttachmentSubCategories(id).subscribe(res => {
+          this.subCategories = res.data;
+          this.cdr.detectChanges();
+        });
+      }
+    });
+
+    this.addAttachmentForm.get('classificationId')?.valueChanges.subscribe((id: number) => {
+      if (id) {
+        this.lookupService.getAttachmentSubCategories(id).subscribe(res => {
+          this.subClassifications = res.data;
+          this.cdr.detectChanges();
+        });
+      }
+    });
   }
 
   initProjectFilesForm() {
     this.addAttachmentForm = this.formBuilder.group({
       projectId: [null, Validators.required],
-      subCategoryId: [null, Validators.required],
+      categoryId: [null, Validators.required],
+      subCategoryId: ['', Validators.required],
+      classificationId: [null, Validators.required],
+      subClassificationId: ['', Validators.required],
       title: ['', Validators.required],
       revision: ['', Validators.required],
       revisionDate: ['', Validators.required],
       receivedDate: ['', Validators.required],
-      referenceNo: ['', Validators.required],
-      comments: ['', Validators.required],
-      description: ['', Validators.required],
-      phone: ['', Validators.required],
-      typeId: ['', Validators.required],
+      referenceNo: [''],
+      alternativeReferenceNumber: [''],
+      comments: [''],
+      purposeId: [null, Validators.required],
+      statusId: [null, Validators.required],
+      file: ['', Validators.required],
+
     });
   }
 
-  getVendorId() {
+  getLookups() {
+    this.projectsService.getAllProjects().subscribe(res => {
+      this.projects = res.data.items;
+    });
+    this.lookupService.getAttachmentCategories().subscribe(res => {
+      this.categories = res.data;
+      this.cdr.detectChanges();
+    });
+    this.lookupService.getAttachmentClassifications().subscribe(res => {
+      this.classifications = res.data;
+      this.cdr.detectChanges();
+    });
+
+    this.lookupService.getAttachmentPurposes().subscribe(res => {
+      this.attachmentPurposes = res.data;
+      this.cdr.detectChanges();
+    });
+    this.lookupService.getAttachmentStatuses().subscribe(res => {
+      this.attachmentStatus = res.data;
+      this.cdr.detectChanges();
+    });
+  }
+
+  getRecordId() {
     this.activatedRoute.params.subscribe(params => {
-      this.vendorId = params['id'];
-      if (this.vendorId) {
-        this.vendorService.getVendor(this.vendorId).subscribe(res => {
+      this.fileId = params['id'];
+      if (this.fileId) {
+        this.projectsFilesService.getVendor(this.fileId).subscribe(res => {
           setTimeout(() => {
-            this.editVendorForm(res.data);
+            this.editFileForm(res.data);
             this.cdr.detectChanges();
           }, 1000);
         });
@@ -67,37 +130,70 @@ export class AddProjectFilesComponent implements OnInit {
     });
   }
 
-  editVendorForm(data: any) {
+  editFileForm(data: any) {
     this.addAttachmentForm.patchValue({
-      crNumber: data?.crNumber,
-      email: data?.email,
-      nameAr: data?.nameAr,
-      name: data?.name,
-      address: data?.address,
-      description: data?.description,
-      phone: data?.phone,
-      typeId: data?.typeId,
+      // crNumber: data?.crNumber,
+      // email: data?.email,
+      // nameAr: data?.nameAr,
+      // name: data?.name,
+      // address: data?.address,
+      // description: data?.description,
+      // phone: data?.phone,
+      // typeId: data?.typeId,
+    });
+  }
+
+
+  onAttachment(event: any) {
+    this.selectedFile = <File>event.target.files[0];
+    const fd = new FormData();
+    fd.append('Attachment', this.selectedFile, this.selectedFile.name);
+    this.attachmentService.uploadAttachment(fd).subscribe(res => {
+      this.addAttachmentForm.patchValue({
+        file: this.selectedFile.name
+      });
     });
   }
 
   saveChanges() {
-    if(this.addAttachmentForm.invalid) {
+    if (this.addAttachmentForm.invalid) {
       this.addAttachmentForm.markAllAsTouched();
       return;
     }
-    if (!this.vendorId) {
-      const payload = { ...this.addAttachmentForm.value, typeId: +this.addAttachmentForm.value.typeId };
-      this.vendorService.addVendor(payload).subscribe(res => {
-        this.router.navigateByUrl('vendors');
-        this.showAlert({ icon: 'success', title: 'Success!', text: 'Vendor Added successfully!' });
+    if (!this.fileId) {
+      const payload = {
+        ...this.addAttachmentForm.value,
+        projectId: +this.addAttachmentForm.get('projectId')?.value,
+        subClassificationId: +this.addAttachmentForm.get('subClassificationId')?.value,
+        subCategoryId: +this.addAttachmentForm.get('subCategoryId')?.value,
+        statusId: +this.addAttachmentForm.get('statusId')?.value,
+        purposeId: +this.addAttachmentForm.get('purposeId')?.value,
+      };
+      delete payload.categoryId;
+      delete payload.classificationId;
+
+      this.projectsFilesService.addProjectsFile(payload).subscribe(res => {
+        this.router.navigateByUrl('projects-files');
+        this.showAlert({ icon: 'success', title: 'Success!', text: 'File Added successfully!' });
       }, error => {
         this.showAlert({ icon: 'error', title: 'Error!', text: 'please try again!' })
       });
     } else {
-      const payload = { id: this.vendorId, ...this.addAttachmentForm.value, typeId: +this.addAttachmentForm.value.typeId };
-      this.vendorService.updateVendor(payload).subscribe(res => {
-        this.router.navigateByUrl('vendors');
-        this.showAlert({ icon: 'success', title: 'Success!', text: 'Vendor Updated successfully!' });
+      const payload = {
+        id: this.fileId, ...this.addAttachmentForm.value,
+        projectId: +this.addAttachmentForm.get('projectId')?.value,
+        subClassificationId: +this.addAttachmentForm.get('subClassificationId')?.value,
+        subCategoryId: +this.addAttachmentForm.get('subCategoryId')?.value,
+        statusId: +this.addAttachmentForm.get('statusId')?.value,
+        purposeId: +this.addAttachmentForm.get('purposeId')?.value,
+      };
+
+      delete payload.categoryId;
+      delete payload.classificationId;
+
+      this.projectsFilesService.updateProjectsFile(payload).subscribe(res => {
+        this.router.navigateByUrl('projects-files');
+        this.showAlert({ icon: 'success', title: 'Success!', text: 'File Updated successfully!' });
       }, error => {
         this.showAlert({ icon: 'error', title: 'Error!', text: 'please try again!' })
       });

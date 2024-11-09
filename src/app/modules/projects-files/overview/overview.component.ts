@@ -5,7 +5,6 @@ import { TranslateService } from '@ngx-translate/core';
 import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
 import { Subscription, fromEvent, debounceTime, distinctUntilChanged } from 'rxjs';
 import { ProjectsFilesService } from 'src/app/services/projects-files.service';
-import { VendorService } from 'src/app/services/vendors.service';
 import { SweetAlertOptions } from 'sweetalert2';
 
 @Component({
@@ -78,15 +77,15 @@ export class OverviewComponent implements OnInit, AfterViewInit, OnDestroy {
     this.router.navigateByUrl('projects-files/add')
   }
 
-  editAttachment(user: any) {
-    this.router.navigateByUrl('projects-files/edit/' + user.id)
+  editAttachment(File: any) {
+    this.router.navigateByUrl('projects-files/edit/' + File.id)
   }
 
-  deleteAttachment(user: any) {
+  deleteAttachment(File: any) {
     this.deleteSwal.fire().then((clicked) => {
       if (clicked.isConfirmed) {
         this.isLoading = true;
-        this.projectsFilesService.deleteVendor(user.id).subscribe({
+        this.projectsFilesService.deleteVendor(File.id).subscribe({
           next: (res) => {
             this.showAlert({ icon: 'success', title: 'Success!', text: 'Project Deleted successfully!' });
             setTimeout(() => {

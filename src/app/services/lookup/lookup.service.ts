@@ -245,6 +245,60 @@ export class LookupService {
       headers: httpHeaders
     });
   }
+  getAttachmentCategories(): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/GetAttachmentCategories`;
+    return this.http.get<any>(url, {
+      headers: httpHeaders
+    });
+  }
+  getAttachmentSubCategories(id: number): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/GetAttachmentSubCategories/${id}`;
+    return this.http.get<any>(url, {
+      headers: httpHeaders
+    });
+  }
+  getAttachmentClassifications(): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/GetAttachmentClassifications`;
+    return this.http.get<any>(url, {
+      headers: httpHeaders
+    });
+  }
+  GetAttachmentSubClassifications(id: number): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/GetAttachmentSubClassifications/${id}`;
+    return this.http.get<any>(url, {
+      headers: httpHeaders
+    });
+  }
+  getAttachmentPurposes(): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/GetAttachmentPurposes`;
+    return this.http.get<any>(url, {
+      headers: httpHeaders
+    });
+  }
+  getAttachmentStatuses(): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/GetAttachmentStatuses`;
+    return this.http.get<any>(url, {
+      headers: httpHeaders
+    });
+  }
 
 
 }

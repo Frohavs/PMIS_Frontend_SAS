@@ -28,113 +28,61 @@
             <th class="max-w-100px">Sl No.</th>
             <th class="max-w-50px">Document Code</th>
             <th class="max-w-50px">Project</th>
-            <th class="max-w-100px">Discipline</th>
-            <th class="max-w-100px">Sub-Discipline</th>
+            <th class="max-w-100px">Sub-Category</th>
+            <th class="max-w-100px">Classification</th>
+            <th class="max-w-100px">Sub-Classification</th>
             <th class="max-w-100px">Attachment</th>
-            <th class="max-w-100px">Document Type</th>
             <th class="max-w-100px">Created at</th>
             <th class="max-w-100px">Created By</th>
             <th class="max-w-100px text-end">Actions</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
+          <tr *ngFor="let attachment of dataList; index as i">
             <td>
               <a class="text-gray-900 fw-bolder text-hover-primary d-block fs-6">
-                1
+                {{attachment?.id}}
               </a>
             </td>
             <td>
               <a class="text-gray-900 fw-bolder text-hover-primary d-block fs-6">
-                94049-347-0A0-AG-000001
+                {{attachment?.code}}
+              </a>
+            </td>
+
+            <td>
+              <a class="text-gray-900 fw-bolder text-hover-primary d-block fs-6">
+                {{attachment?.project}}
               </a>
             </td>
             <td>
               <a class="text-gray-900 fw-bolder text-hover-primary d-block fs-6">
-                Establishment of Amana projects
+                {{attachment?.subCategory}}
               </a>
             </td>
             <td>
               <a class="text-gray-900 fw-bolder text-hover-primary d-block fs-6">
-                Admin Services & Facilities
+                {{attachment?.classification}}
               </a>
             </td>
             <td>
               <a class="text-gray-900 fw-bolder text-hover-primary d-block fs-6">
-                General
+                {{attachment?.subClassification}}
               </a>
             </td>
             <td>
-              <span class="badge badge-light-primary fs-6 fw-bold my-2">
+              <span class="badge badge-light-primary fs-6 fw-bold my-2 cursor-pointer">
                 Attachment
               </span>
             </td>
             <td>
               <a class="text-gray-900 fw-bolder text-hover-primary d-block fs-6">
-                Agreement
+                {{attachment?.createdOn | date : 'dd-MM-yyyy'}}
               </a>
             </td>
             <td>
               <a class="text-gray-900 fw-bolder text-hover-primary d-block fs-6">
-                1-1-2025
-              </a>
-            </td>
-            <td>
-              <a class="text-gray-900 fw-bolder text-hover-primary d-block fs-6">
-                Admin
-              </a>
-            </td>
-
-          </tr>
-          <tr *ngFor="let attachment of dataList; index as i">
-
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="d-flex justify-content-start flex-column">
-                  <a class="text-gray-900 fw-bolder text-hover-primary fs-6">
-                    {{attachment?.nameAr}}
-                  </a>
-                  <span class="text-muted fw-bold text-muted d-block fs-7">
-                    {{attachment?.name}}
-                  </span>
-                </div>
-              </div>
-            </td>
-            <td>
-              <a class="text-gray-900 fw-bolder text-hover-primary d-block fs-6">
-                {{attachment?.crNumber}}
-              </a>
-            </td>
-
-            <td>
-              <a class="text-gray-900 fw-bolder text-hover-primary d-block fs-6">
-                {{attachment?.crNumber}}
-              </a>
-            </td>
-
-            <td>
-              <a class="text-gray-900 fw-bolder text-hover-primary d-block fs-6">
-                {{attachment?.crNumber}}
-              </a>
-            </td>
-            <td>
-              <a class="text-gray-900 fw-bolder text-hover-primary d-block fs-6">
-                {{attachment?.crNumber}}
-              </a>
-            </td>
-            <td>
-              <a class="text-gray-900 fw-bolder text-hover-primary d-block fs-6">
-                {{attachment?.crNumber}}
-              </a>
-            </td>
-            <td>
-              <a class="text-gray-900 fw-bolder text-hover-primary d-block fs-6">
-                {{attachment?.crNumber}}
-              </a>
-            </td>
-            <td>
-              <a class="text-gray-900 fw-bolder text-hover-primary d-block fs-6">
-                {{attachment?.crNumber}}
+                {{attachment?.createdBy}}
               </a>
             </td>
             <td>
@@ -150,11 +98,11 @@
               </div>
             </td>
           </tr>
-          <!-- <tr *ngIf="!dataList?.length">
+          <tr *ngIf="!dataList?.length">
             <td colspan="10" class="text-center fs-2 text-primary">
               no items retrieved yet
             </td>
-          </tr> -->
+          </tr>
         </tbody>
       </table>
 

@@ -39,9 +39,9 @@ export class AddBoqComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.getLookups();
     this.initAddBoqForm();
     this.getBoqId();
-    this.getLookups();
   }
 
   getBoqId() {

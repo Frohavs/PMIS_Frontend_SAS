@@ -5,7 +5,7 @@ export const locale = {
     TRANSLATOR: {
       SELECT: 'Select your language',
       SAVE_CHANGES: 'Save Changes',
-      SELECTION: 'Select...',
+      SELECTION: 'select...',
       ADD: 'Add',
     },
     MENU: {

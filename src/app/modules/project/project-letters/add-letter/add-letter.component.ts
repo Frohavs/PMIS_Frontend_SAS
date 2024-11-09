@@ -65,7 +65,7 @@ export class AddLetterComponent implements OnInit {
           this.cdr.detectChanges();
         });
       }
-    })
+    });
   }
 
   getProjectId() {
