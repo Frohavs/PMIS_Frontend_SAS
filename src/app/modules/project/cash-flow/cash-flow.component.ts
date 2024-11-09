@@ -58,7 +58,7 @@ export class CashFlowComponent implements OnInit, AfterViewInit, OnDestroy {
     private modalService: NgbModal
   ) {
     this.Add_text = this.translate.instant('BOQ.Add_Boq');
-    this.Search_text = this.translate.instant('BOQ.Search');
+    this.Search_text = 'Search Cashflow...';
   }
 
   ngOnInit(): void {

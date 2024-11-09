@@ -1,0 +1,371 @@
+<div class="row g-5 g-xl-8 justify-content-between">
+  <div class="col-xl-12">
+    <div class="card mb-5 mb-xl-8">
+
+      <div class="card-header align-items-center border-0 mt-4">
+        <h3 class="card-title align-items-start flex-column">
+          <span class="fw-bolder text-gray-900">{{"Project_files.Add_New" | translate}}</span>
+        </h3>
+        <div class="card-toolbar">
+          <a (click)="back()" class="btn btn-sm btn-danger d-flex">
+            <app-keenicon name="arrow-left" class="fs-3"></app-keenicon>
+            {{"ECOMMERCE.COMMON.BACK" | translate}}
+          </a>
+        </div>
+      </div>
+
+      <div class="card-body pt-3">
+        <form [formGroup]="addAttachmentForm" class="form">
+          <div class="card-body border-top p-9">
+
+            <div class="row mb-1">
+              <div class="col-lg-12">
+                <label class="col-lg-12 col-form-label fw-bold fs-6">
+                  <span>
+                    Project Name
+                  </span>
+                </label>
+                <div class="col-lg-12 fv-row">
+                  <select class="form-select form-select-solid form-select-lg fw-bold" name="projectId"
+                    formControlName="projectId">
+                    <option value="" disabled>{{"TRANSLATOR.SELECTION" | translate}}</option>
+                    <ng-container *ngFor="let item of vendorTypes">
+                      <option [value]="item?.id">{{item?.name}}</option>
+                    </ng-container>
+                  </select>
+                  <div
+                    *ngIf="addAttachmentForm?.get('projectId')?.invalid && (addAttachmentForm?.get('projectId')?.dirty || addAttachmentForm?.get('projectId')?.touched)"
+                    class="fv-plugins-message-container">
+                    <div class="fv-help-block">Project is required</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row mb-1">
+              <div class="col-lg-6">
+                <label class="col-lg-12 col-form-label fw-bold fs-6">
+                  <span>
+                    Discipline
+                  </span>
+                </label>
+                <div class="col-lg-12 fv-row">
+                  <select class="form-select form-select-solid form-select-lg fw-bold" name="subCategoryId"
+                    formControlName="subCategoryId">
+                    <option value="" disabled>{{"TRANSLATOR.SELECTION" | translate}}</option>
+                    <ng-container *ngFor="let item of vendorTypes">
+                      <option [value]="item?.id">{{item?.name}}</option>
+                    </ng-container>
+                  </select>
+                  <div
+                    *ngIf="addAttachmentForm?.get('subCategoryId')?.invalid && (addAttachmentForm?.get('subCategoryId')?.dirty || addAttachmentForm?.get('subCategoryId')?.touched)"
+                    class="fv-plugins-message-container">
+                    <div class="fv-help-block">Discipline is required</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-lg-6">
+                <label class="col-lg-12 col-form-label fw-bold fs-6">
+                  <span>
+                    Sub-Discipline
+                  </span>
+                </label>
+                <div class="col-lg-12 fv-row">
+                  <select class="form-select form-select-solid form-select-lg fw-bold" name="subClassificationId"
+                    formControlName="subClassificationId">
+                    <option value="" disabled>{{"TRANSLATOR.SELECTION" | translate}}</option>
+                    <ng-container *ngFor="let item of vendorTypes">
+                      <option [value]="item?.id">{{item?.name}}</option>
+                    </ng-container>
+                  </select>
+                  <div
+                    *ngIf="addAttachmentForm?.get('subClassificationId')?.invalid && (addAttachmentForm?.get('subClassificationId')?.dirty || addAttachmentForm?.get('subClassificationId')?.touched)"
+                    class="fv-plugins-message-container">
+                    <div class="fv-help-block">sub-discipline is required</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row mb-1">
+              <div class="col-lg-6">
+                <label class="col-lg-12 col-form-label fw-bold fs-6">
+                  <span>
+                    Document class
+                  </span>
+                </label>
+                <div class="col-lg-12 fv-row">
+                  <select class="form-select form-select-solid form-select-lg fw-bold" name="subCategoryId"
+                    formControlName="subCategoryId">
+                    <option value="" disabled>{{"TRANSLATOR.SELECTION" | translate}}</option>
+                    <ng-container *ngFor="let item of vendorTypes">
+                      <option [value]="item?.id">{{item?.name}}</option>
+                    </ng-container>
+                  </select>
+                  <div
+                    *ngIf="addAttachmentForm?.get('subCategoryId')?.invalid && (addAttachmentForm?.get('subCategoryId')?.dirty || addAttachmentForm?.get('subCategoryId')?.touched)"
+                    class="fv-plugins-message-container">
+                    <div class="fv-help-block">Discipline is required</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-lg-6">
+                <label class="col-lg-12 col-form-label fw-bold fs-6">
+                  <span>
+                    Document Type
+                  </span>
+                </label>
+                <div class="col-lg-12 fv-row">
+                  <select class="form-select form-select-solid form-select-lg fw-bold" name="subClassificationId"
+                    formControlName="subClassificationId">
+                    <option value="" disabled>{{"TRANSLATOR.SELECTION" | translate}}</option>
+                    <ng-container *ngFor="let item of vendorTypes">
+                      <option [value]="item?.id">{{item?.name}}</option>
+                    </ng-container>
+                  </select>
+                  <div
+                    *ngIf="addAttachmentForm?.get('subClassificationId')?.invalid && (addAttachmentForm?.get('subClassificationId')?.dirty || addAttachmentForm?.get('subClassificationId')?.touched)"
+                    class="fv-plugins-message-container">
+                    <div class="fv-help-block">sub-discipline is required</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row mb-1">
+              <div class="col-lg-6">
+                <label class="col-lg-12 col-form-label fw-bold fs-6">
+                  <span>
+                    Title
+                  </span>
+                </label>
+                <div class="col-lg-12 fv-row">
+                  <input type="text" class="form-control form-control-lg form-control-solid text-start" name="title"
+                    formControlName="title" placeholder="title" />
+                  <div
+                    *ngIf="addAttachmentForm?.get('title')?.invalid && (addAttachmentForm?.get('title')?.dirty || addAttachmentForm?.get('title')?.touched)"
+                    class="fv-plugins-message-container">
+                    <div class="fv-help-block">title is required</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-lg-6">
+                <label class="col-lg-12 col-form-label fw-bold fs-6">
+                  <span>
+                    Revision
+                  </span>
+                </label>
+                <div class="col-lg-12 fv-row">
+                  <input type="text" class="form-control form-control-lg form-control-solid text-start" name="revision"
+                    formControlName="revision" placeholder="Revision" />
+                  <div
+                    *ngIf="addAttachmentForm?.get('revision')?.invalid && (addAttachmentForm?.get('revision')?.dirty || addAttachmentForm?.get('revision')?.touched)"
+                    class="fv-plugins-message-container">
+                    <div class="fv-help-block">revision is required</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row mb-1">
+              <div class="col-lg-6">
+                <label class="col-lg-12 col-form-label fw-bold fs-6">
+                  <span>
+                    Reason for issue
+                  </span>
+                </label>
+                <div class="col-lg-12 fv-row">
+                  <select class="form-select form-select-solid form-select-lg fw-bold" name="subCategoryId"
+                    formControlName="subCategoryId">
+                    <option value="" disabled>{{"TRANSLATOR.SELECTION" | translate}}</option>
+                    <ng-container *ngFor="let item of vendorTypes">
+                      <option [value]="item?.id">{{item?.name}}</option>
+                    </ng-container>
+                  </select>
+                  <div
+                    *ngIf="addAttachmentForm?.get('subCategoryId')?.invalid && (addAttachmentForm?.get('subCategoryId')?.dirty || addAttachmentForm?.get('subCategoryId')?.touched)"
+                    class="fv-plugins-message-container">
+                    <div class="fv-help-block">reason is required</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-lg-6">
+                <label class="col-lg-12 col-form-label fw-bold fs-6">
+                  <span>
+                    Document Status
+                  </span>
+                </label>
+                <div class="col-lg-12 fv-row">
+                  <select class="form-select form-select-solid form-select-lg fw-bold" name="subClassificationId"
+                    formControlName="subClassificationId">
+                    <option value="" disabled>{{"TRANSLATOR.SELECTION" | translate}}</option>
+                    <ng-container *ngFor="let item of vendorTypes">
+                      <option [value]="item?.id">{{item?.name}}</option>
+                    </ng-container>
+                  </select>
+                  <div
+                    *ngIf="addAttachmentForm?.get('subClassificationId')?.invalid && (addAttachmentForm?.get('subClassificationId')?.dirty || addAttachmentForm?.get('subClassificationId')?.touched)"
+                    class="fv-plugins-message-container">
+                    <div class="fv-help-block">status is required</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row mb-1">
+              <div class="col-lg-6">
+                <label class="col-lg-12 col-form-label fw-bold fs-6">
+                  <span>
+                    Revision date
+                  </span>
+                </label>
+                <div class="col-lg-12 fv-row">
+                  <input type="date" class="form-control form-control-lg form-control-solid text-start" name="title"
+                    formControlName="title" placeholder="title" />
+                  <div
+                    *ngIf="addAttachmentForm?.get('title')?.invalid && (addAttachmentForm?.get('title')?.dirty || addAttachmentForm?.get('title')?.touched)"
+                    class="fv-plugins-message-container">
+                    <div class="fv-help-block">date is required</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-lg-6">
+                <label class="col-lg-12 col-form-label fw-bold fs-6">
+                  <span>
+                    Received date
+                  </span>
+                </label>
+                <div class="col-lg-12 fv-row">
+                  <input type="date" class="form-control form-control-lg form-control-solid text-start" name="revision"
+                    formControlName="revision" placeholder="Revision" />
+                  <div
+                    *ngIf="addAttachmentForm?.get('revision')?.invalid && (addAttachmentForm?.get('revision')?.dirty || addAttachmentForm?.get('revision')?.touched)"
+                    class="fv-plugins-message-container">
+                    <div class="fv-help-block">date is required</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row mb-1">
+              <div class="col-lg-6">
+                <label class="col-lg-12 col-form-label fw-bold fs-6">
+                  <span>
+                    Reference Document No
+                  </span>
+                </label>
+                <div class="col-lg-12 fv-row">
+                  <input type="text" class="form-control form-control-lg form-control-solid text-start" name="title"
+                    formControlName="title" placeholder="title" />
+                  <div
+                    *ngIf="addAttachmentForm?.get('title')?.invalid && (addAttachmentForm?.get('title')?.dirty || addAttachmentForm?.get('title')?.touched)"
+                    class="fv-plugins-message-container">
+                    <div class="fv-help-block">title is required</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-lg-6">
+                <label class="col-lg-12 col-form-label fw-bold fs-6">
+                  <span>
+                    Related reference No
+                  </span>
+                </label>
+                <div class="col-lg-12 fv-row">
+                  <input type="text" class="form-control form-control-lg form-control-solid text-start" name="revision"
+                    formControlName="revision" placeholder="Revision" />
+                  <div
+                    *ngIf="addAttachmentForm?.get('revision')?.invalid && (addAttachmentForm?.get('revision')?.dirty || addAttachmentForm?.get('revision')?.touched)"
+                    class="fv-plugins-message-container">
+                    <div class="fv-help-block">revision is required</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row mb-1">
+              <div class="col-lg-6">
+                <label class="col-lg-12 col-form-label fw-bold fs-6">
+                  <span>
+                    Comments
+                  </span>
+                </label>
+                <div class="col-lg-12 fv-row">
+                  <input type="text" class="form-control form-control-lg form-control-solid text-start" name="comments"
+                    formControlName="comments" placeholder="comments" />
+                </div>
+              </div>
+
+              <div class="col-lg-6">
+                <label class="col-lg-12 col-form-label fw-bold fs-6">
+                  <span>
+                    Projects Files Attachments
+                  </span>
+                </label>
+                <div class="col-lg-12 fv-row">
+                  <input type="file" class="form-control form-control-lg form-control-solid text-start" name="revision"
+                    formControlName="revision" placeholder="Revision" />
+                  <div
+                    *ngIf="addAttachmentForm?.get('revision')?.invalid && (addAttachmentForm?.get('revision')?.dirty || addAttachmentForm?.get('revision')?.touched)"
+                    class="fv-plugins-message-container">
+                    <div class="fv-help-block">attachments is required</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+            <!-- <div class="row mb-6" *ngIf="vendorId">
+              <label class="col-lg-4 col-form-label fw-bold fs-6"><span
+                  class="required">{{"VENDORS.cr_number" | translate}}</span></label>
+              <div class="col-lg-8 fv-row">
+                <input type="text" class="form-control form-control-lg form-control-solid"
+                  placeholder="{{'VENDORS.cr_number' | translate}}" formControlName="crNumber" name="crNumber" />
+                <div
+                  *ngIf="addAttachmentForm?.get('crNumber')?.invalid && (addAttachmentForm?.get('crNumber')?.dirty || addAttachmentForm?.get('crNumber')?.touched)"
+                  class="fv-plugins-message-container">
+                  <div class="fv-help-block">Type is required</div>
+                </div>
+              </div>
+            </div> -->
+
+            <!-- <div class="row mb-6">
+              <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="required">Email</span></label>
+              <div class="col-lg-8 fv-row">
+                <input type="email" class="form-control form-control-lg form-control-solid" placeholder="email"
+                  formControlName="email" name="email" />
+                <div
+                  *ngIf="addAttachmentForm?.get('email')?.invalid && (addAttachmentForm?.get('email')?.dirty || addAttachmentForm?.get('email')?.touched)"
+                  class="fv-plugins-message-container">
+                  <div class="fv-help-block">email is required</div>
+                </div>
+              </div>
+            </div> -->
+
+          </div>
+          <div class="card-footer d-flex justify-content-end py-6 px-9">
+            <button type="button" class="btn btn-primary" [disabled]="isLoading" (click)="saveChanges()">
+              <ng-container *ngIf="!isLoading">{{"TRANSLATOR.ADD" | translate}}</ng-container>
+              <ng-container *ngIf="isLoading">
+                <span clas="indicator-progress" [style.display]="'block'">
+                  Please wait...{{ " " }}
+                  <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                </span>
+              </ng-container>
+            </button>
+          </div>
+        </form>
+
+      </div>
+      <!-- end::Body -->
+    </div>
+  </div>
+</div>
+
+<!-- modal -->
+<swal #noticeSwal [swalOptions]="swalOptions">
+</swal>

@@ -32,6 +32,7 @@ export const locale = {
       Users_Management: 'User Management',
       USERS: 'Users',
       ROLES: 'Roles',
+      PROJECTS_FILES: 'Projects Files',
       VENDORS: 'Vendors',
       BOQ: 'Boq',
       Tracking: 'Tracking',
@@ -120,6 +121,14 @@ export const locale = {
       EMAIL: 'Email',
       PASSWORD: 'Password',
       CONFIRM_PASSWORD: 'Confirm Password',
+    },
+    Project_files: {
+      ID: 'ID',
+      TITLE: 'Projects Files',
+      Add_New: 'Add Attachment',
+      Edit_Attachment: 'Edit Attachment',
+      Status: 'Status',
+      Search: 'Search...',
     },
     VENDORS: {
       ID: 'ID',

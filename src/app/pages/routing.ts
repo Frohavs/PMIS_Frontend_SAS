@@ -65,6 +65,11 @@ const Routing: Routes = [
     // data: { layout: 'light-sidebar' },
   },
   {
+    path: 'projects-files',
+    loadChildren: () => import('../modules/projects-files/projects-files.module').then((m) => m.ProjectsFilesModule),
+    // data: { layout: 'light-sidebar' },
+  },
+  {
     path: 'vendors',
     loadChildren: () => import('../pages/vendors/vendors.module').then((m) => m.VendorsModule),
     // data: { layout: 'light-sidebar' },
