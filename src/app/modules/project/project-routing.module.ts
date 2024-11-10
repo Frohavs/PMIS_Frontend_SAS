@@ -62,6 +62,8 @@ import { CommitAcknowledgementComponent } from './stage-gate-managment/commit-ac
 import { FinalReviewPrintComponent } from './stage-gate-managment/final-review/final-review-print/final-review-print.component';
 import { ProjectStatusReportComponent } from './update-project-info/project-status-report/project-status-report.component';
 import { SiteStudiesDesignsDashboardComponent } from './site-studies-designs-dashboard/site-studies-designs-dashboard.component';
+import { ProjectFilesComponent } from './project-files/project-files.component';
+import { AddProjectFilesComponent } from './project-files/add-project-files/add-project-files.component';
 
 const routes: Routes = [
   {
@@ -361,6 +363,19 @@ const routes: Routes = [
       {
         path: 'site_studies_designs_dashboard/:id',
         component: SiteStudiesDesignsDashboardComponent,
+      },
+
+      {
+        path: 'project-files/:id',
+        component: ProjectFilesComponent,
+      },
+      {
+        path: 'add-files/:id',
+        component: AddProjectFilesComponent,
+      },
+      {
+        path: 'edit-files/:id',
+        component: AddProjectFilesComponent,
       },
 
 

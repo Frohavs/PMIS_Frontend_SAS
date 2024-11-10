@@ -1,5 +1,21 @@
 <div class="card mb-5 mb-xl-8">
 
+  <!-- Tree Structure -->
+  <div class="tree" *ngIf="treeData?.children?.length">
+    <ul>
+      <li>
+        <img src='../../../../../assets/media/icons/file_open.png' alt="Toggle Icon"
+          style="width: 26px; margin: 0px 5px;" />
+        {{ treeData?.name }}
+        <ul>
+          <li *ngFor="let child of treeData?.children">
+            <app-tree-node [node]="child"></app-tree-node>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+
   <div class="card-header border-0 pt-5">
 
     <div class="card-title">
@@ -71,7 +87,7 @@
               </a>
             </td>
             <td>
-              <span class="badge badge-light-primary fs-6 fw-bold my-2 cursor-pointer">
+              <span class="badge badge-light-primary fs-6 fw-bold my-2 cursor-pointer" (click)="openFile(attachment?.file)">
                 Attachment
               </span>
             </td>

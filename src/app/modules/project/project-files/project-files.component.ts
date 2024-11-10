@@ -1,24 +1,27 @@
 import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
 import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
 import { Subscription, fromEvent, debounceTime, distinctUntilChanged } from 'rxjs';
+import { AttachmentService } from 'src/app/services/attachment/attachment.service';
 import { ProjectsFilesService } from 'src/app/services/projects-files.service';
 import { SweetAlertOptions } from 'sweetalert2';
 
 @Component({
-  selector: 'app-overview',
-  templateUrl: './overview.component.html',
-  styleUrl: './overview.component.scss'
+  selector: 'app-project-files',
+  templateUrl: './project-files.component.html',
+  styleUrl: './project-files.component.scss'
 })
-export class OverviewComponent implements OnInit, AfterViewInit, OnDestroy {
+export class ProjectFilesComponent implements OnInit, AfterViewInit, OnDestroy {
+  projectId: number;
   Add_text: string;
   Search_text: string;
   dataList: any[] = [];
   totalCount: number;
   pagesCount: number[] = [];
   selected = 1;
+  treeData: any;
 
   // modal configs
   isLoading = false;
@@ -41,6 +44,8 @@ export class OverviewComponent implements OnInit, AfterViewInit, OnDestroy {
     private elRef: ElementRef,
     private cdr: ChangeDetectorRef,
     private translate: TranslateService,
+    private activatedRoute: ActivatedRoute,
+    private attachmentService: AttachmentService,
     private projectsFilesService: ProjectsFilesService
   ) {
     this.Add_text = this.translate.instant('Project_files.Add_New');
@@ -48,7 +53,7 @@ export class OverviewComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.initializeProjectData()
+    this.getProjectId();
   }
 
   ngAfterViewInit(): void {
@@ -63,22 +68,43 @@ export class OverviewComponent implements OnInit, AfterViewInit, OnDestroy {
     });
   }
 
-  initializeProjectData(pageIndex?: number, search?: string) {
-    this.projectsFilesService.getAll(null, pageIndex, search).subscribe(res => {
+  getProjectId() {
+    this.activatedRoute.params.subscribe(params => {
+      this.projectId = +params['id'];
+      this.initializeProjectData(this.projectId);
+      this.getTreeData();
+    });
+  }
+
+  initializeProjectData(id: number, pageIndex?: number, search?: string) {
+    this.projectsFilesService.getAll(id, pageIndex, search).subscribe(res => {
       this.totalCount = res?.data?.totalcount;
       this.dataList = res.data.items;
-      this.pagesCount = Array.from({ length: Math.ceil(this.totalCount / 10) }, (_, index) => index + 1) ;
+      this.pagesCount = Array.from({ length: Math.ceil(this.totalCount / 10) }, (_, index) => index + 1);
       this.cdr.detectChanges();
     });
   }
 
+  getTreeData() {
+    this.projectsFilesService.getProjectFilesTree(this.projectId).subscribe(res => {
+      this.treeData = res.data;
+      this.cdr.detectChanges();
+    });
+  }
+
+  openFile(name: string) {
+    // const file: any = name.split('\\').pop()?.split('/').pop()?.split('?')[0];
+    this.attachmentService.downloadAttachment(name).subscribe(res => {
+      window.open(res.data, '_blank');
+    });
+  }
 
   redirectToNew() {
-    this.router.navigateByUrl('projects-files/add')
+    this.router.navigateByUrl(`projects/add-files/${this.projectId}`);
   }
 
   editAttachment(File: any) {
-    this.router.navigate([`projects-files/edit/${File.projectId}`], {
+    this.router.navigate([`projects/edit-files/${File.projectId}`], {
       queryParams: { fileId: File.id }
     });
   }
@@ -93,7 +119,7 @@ export class OverviewComponent implements OnInit, AfterViewInit, OnDestroy {
             setTimeout(() => {
               this.isLoading = false;
               this.dataList = [];
-              this.initializeProjectData();
+              this.initializeProjectData(this.projectId,);
             }, 500);
           },
           error: (error) => {
@@ -112,23 +138,23 @@ export class OverviewComponent implements OnInit, AfterViewInit, OnDestroy {
 
   navigatePage(pageIndex: number) {
     this.selected = pageIndex;
-    this.initializeProjectData(pageIndex, '');
+    this.initializeProjectData(this.projectId, pageIndex, '');
   }
 
   navigateArrows(next: boolean) {
-    if(next) {
+    if (next) {
       if (this.selected === this.pagesCount.length) {
         return;
       } else {
         this.selected += 1;
-        this.initializeProjectData(this.selected, '');
+        this.initializeProjectData(this.projectId, this.selected, '');
       }
     } else {
       if (this.selected === 1) {
         return;
       } else {
         this.selected -= 1;
-        this.initializeProjectData(this.selected, '');
+        this.initializeProjectData(this.projectId, this.selected, '');
       }
     }
   }

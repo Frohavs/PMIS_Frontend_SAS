@@ -75,6 +75,10 @@ export const PROJECT_OPTIONS = [
       name: 'Project Status Report',
       route: 'projects/project-status-report'
     },
+    {
+      name: 'Projects Files',
+      route: 'projects/project-files'
+    },
     // {
     //   name: 'stage gate management',
     //   route: 'projects/stage-gate-management'

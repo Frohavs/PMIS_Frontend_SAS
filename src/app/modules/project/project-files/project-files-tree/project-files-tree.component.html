@@ -1,0 +1,30 @@
+<li>
+  <!-- Toggle icon for expandable nodes -->
+  <span (click)="toggle()" class="toggle-icon">
+    <span *ngIf="node.children && node.children.length">
+      <img
+        [src]="isExpanded ? '../../../../../assets/media/icons/file_open.png' : '../../../../../assets/media/icons/file_closed.png'"
+        alt="Toggle Icon" style="width: 20px; margin: 0px 5px;" />
+      </span>
+    </span>
+
+    <!-- Display folder name only -->
+    <span class="folder-name" *ngIf="!node.file">{{ node?.name }}</span>
+
+  <!-- Display child nodes -->
+  <ul *ngIf="node.children && isExpanded">
+    <!-- Display sub-folder or file nodes -->
+    <li *ngFor="let child of node?.children">
+      <ng-container *ngIf="!child.file; else fileTemplate">
+        <app-tree-node [node]="child"></app-tree-node>
+      </ng-container>
+
+      <!-- Separate node for files -->
+      <ng-template #fileTemplate>
+    <li class="file-node">
+      <span class="file-icon badge bg-primary text-white" (click)="openFile(child?.file)">{{ getFileName(child?.file) }}</span>
+    </li>
+    </ng-template>
+</li>
+</ul>
+</li>

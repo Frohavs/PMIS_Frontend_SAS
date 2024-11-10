@@ -18,11 +18,12 @@ export class ProjectsFilesService {
   }
 
   // public methods
-  getAll(pageIndex?: number, search?: string): Observable<any> {
+  getAll(id: number | null, pageIndex?: number, search?: string): Observable<any> {
     const httpHeaders = new HttpHeaders({
       Authorization: `Bearer ${this.token}`,
     });
-    const body = {
+    const milestone = {
+      projectId: id,
       quickSearch: search,
       pagedSearch: {
         "pageIndex": pageIndex,
@@ -30,11 +31,11 @@ export class ProjectsFilesService {
       }
     }
     const url = `${this.API_USERS_URL}/Get`;
-    return this.http.post<any>(url, body, {
+    return this.http.post<any>(url, milestone, {
       headers: httpHeaders
     });
   }
-  getVendor(id: number | null): Observable<any> {
+  getFileDetails(id: number | null): Observable<any> {
     const httpHeaders = new HttpHeaders({
       Authorization: `Bearer ${this.token}`,
     });
@@ -69,6 +70,15 @@ export class ProjectsFilesService {
     });
     const url = `${this.API_USERS_URL}/Delete/${id}`;
     return this.http.delete<any>(url, {
+      headers: httpHeaders
+    });
+  }
+  getProjectFilesTree(id: number | null): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/GetProjectFilesTree/${id}`;
+    return this.http.get<any>(url, {
       headers: httpHeaders
     });
   }

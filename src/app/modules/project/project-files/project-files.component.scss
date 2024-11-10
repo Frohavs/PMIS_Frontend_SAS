@@ -1,0 +1,43 @@
+.tree {
+  margin: 20px 0px;
+}
+.tree ul {
+  list-style-type: none;
+  padding-left: 20px;
+  margin: 0;
+}
+
+.tree li {
+  position: relative;
+  padding: 5px 0 0 20px;
+  font-size: 14px;
+  cursor: pointer;
+
+  .toggle-icon {
+    display: inline-block;
+    width: 16px;
+    text-align: center;
+    margin-right: 5px;
+    cursor: pointer;
+  }
+
+  .folder-icon {
+    background-image: url('../../../../assets/media/icons/staff.png');
+    background-size: 16px;
+    background-repeat: no-repeat;
+    padding-left: 20px;
+  }
+
+  .file-icon {
+    display: inline-block;
+    padding: 3px 8px;
+    border-radius: 4px;
+    background-color: #e3f2fd; /* Light primary color */
+    color: #0d6efd; /* Primary text color */
+    font-size: 12px;
+  }
+
+  .badge {
+    font-weight: bold;
+  }
+}

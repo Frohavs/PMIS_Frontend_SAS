@@ -26,6 +26,15 @@ export class AttachmentService {
       headers: httpHeaders
     });
   }
+  downloadAttachment(fileName: string): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/DownLoad?fileName=${fileName}`;
+    return this.http.post<any>(url, {}, {
+      headers: httpHeaders
+    });
+  }
 
   downloadBoqAttachment(): Observable<any> {
     const httpHeaders = new HttpHeaders({

@@ -3,12 +3,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
-import { VendorTypes } from 'src/app/pages/vendors/add-vendor/vendor-types';
-import { ProjectsFilesService } from 'src/app/services/projects-files.service';
-import { SweetAlertOptions } from 'sweetalert2';
-import { LookupService } from 'src/app/services/lookup/lookup.service';
-import { ProjectsService } from 'src/app/services/projects.service';
 import { AttachmentService } from 'src/app/services/attachment/attachment.service';
+import { LookupService } from 'src/app/services/lookup/lookup.service';
+import { ProjectsFilesService } from 'src/app/services/projects-files.service';
+import { ProjectsService } from 'src/app/services/projects.service';
+import { SweetAlertOptions } from 'sweetalert2';
 
 
 @Component({
@@ -50,9 +49,9 @@ export class AddProjectFilesComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.getLookups();
-    this.getRecordId();
     this.initProjectFilesForm();
+    this.getRecordId();
+    this.getLookups();
 
     this.addAttachmentForm.get('categoryId')?.valueChanges.subscribe((id: number) => {
       if (id) {
@@ -120,6 +119,9 @@ export class AddProjectFilesComponent implements OnInit {
 
     this.activatedRoute.params.subscribe(params => {
       this.projectId = params['id'];
+      if (this.projectId) {
+        this.addAttachmentForm.patchValue({ projectId: this.projectId });
+      }
     });
 
     this.activatedRoute.queryParams.subscribe(params => {
@@ -175,7 +177,7 @@ export class AddProjectFilesComponent implements OnInit {
     if (!this.fileId) {
       const payload = {
         ...this.addAttachmentForm.value,
-        projectId: +this.addAttachmentForm.get('projectId')?.value,
+        projectId: this.projectId,
         subClassificationId: +this.addAttachmentForm.get('subClassificationId')?.value,
         subCategoryId: +this.addAttachmentForm.get('subCategoryId')?.value,
         statusId: +this.addAttachmentForm.get('statusId')?.value,
@@ -185,7 +187,7 @@ export class AddProjectFilesComponent implements OnInit {
       delete payload.classificationId;
 
       this.projectsFilesService.addProjectsFile(payload).subscribe(res => {
-        this.router.navigateByUrl('projects-files');
+        this.router.navigateByUrl(`projects/project-files/${this.projectId}`);
         this.showAlert({ icon: 'success', title: 'Success!', text: 'File Added successfully!' });
       }, error => {
         this.showAlert({ icon: 'error', title: 'Error!', text: 'please try again!' })
@@ -193,7 +195,7 @@ export class AddProjectFilesComponent implements OnInit {
     } else {
       const payload = {
         id: this.fileId, ...this.addAttachmentForm.value,
-        projectId: +this.addAttachmentForm.get('projectId')?.value,
+        projectId: this.projectId,
         subClassificationId: +this.addAttachmentForm.get('subClassificationId')?.value,
         subCategoryId: +this.addAttachmentForm.get('subCategoryId')?.value,
         statusId: +this.addAttachmentForm.get('statusId')?.value,
@@ -204,7 +206,7 @@ export class AddProjectFilesComponent implements OnInit {
       delete payload.classificationId;
 
       this.projectsFilesService.updateProjectsFile(payload).subscribe(res => {
-        this.router.navigateByUrl('projects-files');
+        this.router.navigateByUrl(`projects/project-files/${this.projectId}`);
         this.showAlert({ icon: 'success', title: 'Success!', text: 'File Updated successfully!' });
       }, error => {
         this.showAlert({ icon: 'error', title: 'Error!', text: 'please try again!' })
