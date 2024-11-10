@@ -65,7 +65,7 @@ export class AddProjectFilesComponent implements OnInit {
 
     this.addAttachmentForm.get('classificationId')?.valueChanges.subscribe((id: number) => {
       if (id) {
-        this.lookupService.getAttachmentSubCategories(id).subscribe(res => {
+        this.lookupService.getAttachmentSubClassifications(id).subscribe(res => {
           this.subClassifications = res.data;
           this.cdr.detectChanges();
         });

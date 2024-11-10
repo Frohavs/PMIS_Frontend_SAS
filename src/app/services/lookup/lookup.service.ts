@@ -281,7 +281,7 @@ export class LookupService {
       headers: httpHeaders
     });
   }
-  GetAttachmentSubClassifications(id: number): Observable<any> {
+  getAttachmentSubClassifications(id: number): Observable<any> {
     const httpHeaders = new HttpHeaders({
       Authorization: `Bearer ${this.token}`,
     });
