@@ -250,27 +250,16 @@
             </tr>
           </thead>
           <tbody>
-            <!-- <tr>
-              <td>29</td>
-              <td>5,752,370.33</td>
-              <td>
-                on going </td>
-              <td>220102016829</td>
-              <td>2022-10-28</td>
-              <td>
-                Completed </td>
-            </tr> -->
             <ng-container *ngIf="reportDetails?.invoices?.length">
 
               <tr *ngFor="let item of reportDetails?.invoices">
-                <td>30</td>
-                <td>5,050,596.89</td>
+                <td>{{item?.paymentOrderReferenceNumber}}</td>
+                <td>{{item?.value | number: '1.0-0'}}</td>
+                <td>{{item?.type}} </td>
+                <td>{{item?.mofNumber}}</td>
+                <td>{{item?.etimadSubmitDate | date: 'dd-MM-yyyy'}}</td>
                 <td>
-                  on going </td>
-                <td>220102016833</td>
-                <td>2022-10-28</td>
-                <td>
-                  Completed </td>
+                  {{item?.status}} </td>
               </tr>
             </ng-container>
             <ng-container *ngIf="!reportDetails?.invoices?.length">
@@ -499,7 +488,7 @@
                 <h6>Planned Progress %</h6>
                 <div class="progress">
 
-                  <div class="progress-bar bg-green" role="progressbar"
+                  <div class="progress-bar bg-success" role="progressbar"
                   [style.width]="reportDetails?.progressInfo?.plannedProgress + '%'" aria-valuenow="50"
                     aria-valuemin="0" aria-valuemax="100">
                     {{reportDetails?.progressInfo?.plannedProgress}}%
@@ -522,15 +511,15 @@
                 <h6>Elapsed Duration </h6>
                 <div class="progress">
 
-                  <div class="progress-bar bg-green" role="progressbar" [style.width]="reportDetails?.progressInfo?.elapsedTimePercentage + '%'" aria-valuenow="30"
+                  <div class="progress-bar bg-warning" role="progressbar" [style.width]="reportDetails?.progressInfo?.elapsedTimePercentage + '%'" aria-valuenow="30"
                     aria-valuemin="0" aria-valuemax="100">{{reportDetails?.progressInfo?.elapsedTimePercentage}}%</div>
                 </div>
               </div>
               <div class="col mb-3">
-                <h6>Financial Achievement</h6>
+                <h6>Financial Achievement <span class="text-danger" *ngIf="reportDetails?.progressInfo?.financialAchievementPercentage < 10">{{reportDetails?.progressInfo?.financialAchievementPercentage}}</span></h6>
                 <div class="progress">
 
-                  <div class="progress-bar bg-green" role="progressbar" [style.width]="reportDetails?.progressInfo?.financialAchievementPercentage + '%'" aria-valuenow="30"
+                  <div class="progress-bar bg-danger" role="progressbar" [style.width]="reportDetails?.progressInfo?.financialAchievementPercentage + '%'" aria-valuenow="30"
                     aria-valuemin="0" aria-valuemax="100">{{reportDetails?.progressInfo?.financialAchievementPercentage}}%</div>
                 </div>
               </div>
