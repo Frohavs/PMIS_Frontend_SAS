@@ -95,7 +95,7 @@ export class AddProjectFilesComponent implements OnInit {
 
   getLookups() {
     this.lookupService.getProjects().subscribe(res => {
-      this.projects = res.data.items;
+      this.projects = res.data;
     });
     this.lookupService.getAttachmentCategories().subscribe(res => {
       this.categories = res.data;
