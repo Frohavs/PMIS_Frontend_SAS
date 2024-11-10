@@ -185,8 +185,8 @@ export class AddProjectFilesComponent implements OnInit {
       delete payload.classificationId;
 
       this.projectsFilesService.addProjectsFile(payload).subscribe(res => {
-        this.router.navigateByUrl('projects-files');
         this.showAlert({ icon: 'success', title: 'Success!', text: 'File Added successfully!' });
+        this.router.navigateByUrl(`projects/project-files/${payload.projectId}`);
       }, error => {
         this.showAlert({ icon: 'error', title: 'Error!', text: 'please try again!' })
       });
@@ -204,8 +204,8 @@ export class AddProjectFilesComponent implements OnInit {
       delete payload.classificationId;
 
       this.projectsFilesService.updateProjectsFile(payload).subscribe(res => {
-        this.router.navigateByUrl('projects-files');
         this.showAlert({ icon: 'success', title: 'Success!', text: 'File Updated successfully!' });
+        this.router.navigateByUrl(`projects/project-files/${payload.projectId}`);
       }, error => {
         this.showAlert({ icon: 'error', title: 'Error!', text: 'please try again!' })
       });
