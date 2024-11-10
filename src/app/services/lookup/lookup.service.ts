@@ -17,6 +17,15 @@ export class LookupService {
     this.token = JSON.parse(lsValue as any)?.token;
   }
 
+  getProjects(): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/GetProjects`;
+    return this.http.get<any>(url, {
+      headers: httpHeaders
+    });
+  }
   getUsers(): Observable<any> {
     const httpHeaders = new HttpHeaders({
       Authorization: `Bearer ${this.token}`,
