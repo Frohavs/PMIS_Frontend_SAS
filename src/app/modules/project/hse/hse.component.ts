@@ -5,15 +5,16 @@ import { TranslateService } from '@ngx-translate/core';
 import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
 import { Subscription, fromEvent, debounceTime, distinctUntilChanged } from 'rxjs';
 import { AttachmentService } from 'src/app/services/attachment/attachment.service';
+import { HseService } from 'src/app/services/hse.service';
 import { ProjectsFilesService } from 'src/app/services/projects-files.service';
 import { SweetAlertOptions } from 'sweetalert2';
 
 @Component({
-  selector: 'app-project-files',
-  templateUrl: './project-files.component.html',
-  styleUrl: './project-files.component.scss'
+  selector: 'app-hse',
+  templateUrl: './hse.component.html',
+  styleUrl: './hse.component.scss'
 })
-export class ProjectFilesComponent implements OnInit, AfterViewInit, OnDestroy {
+export class HseComponent implements OnInit, AfterViewInit, OnDestroy {
   projectId: number;
   Add_text: string;
   Search_text: string;
@@ -21,7 +22,6 @@ export class ProjectFilesComponent implements OnInit, AfterViewInit, OnDestroy {
   totalCount: number;
   pagesCount: number[] = [];
   selected = 1;
-  treeData: any;
 
   // modal configs
   isLoading = false;
@@ -45,8 +45,7 @@ export class ProjectFilesComponent implements OnInit, AfterViewInit, OnDestroy {
     private cdr: ChangeDetectorRef,
     private translate: TranslateService,
     private activatedRoute: ActivatedRoute,
-    private attachmentService: AttachmentService,
-    private projectsFilesService: ProjectsFilesService
+    private hseService: HseService
   ) {
     this.Add_text = this.translate.instant('Project_files.Add_New');
     this.Search_text = this.translate.instant('Project_files.Search');
@@ -72,12 +71,11 @@ export class ProjectFilesComponent implements OnInit, AfterViewInit, OnDestroy {
     this.activatedRoute.params.subscribe(params => {
       this.projectId = +params['id'];
       this.initializeProjectData(this.projectId);
-      this.getTreeData();
     });
   }
 
   initializeProjectData(id: number, pageIndex?: number, search?: string) {
-    this.projectsFilesService.getAll(id, pageIndex, search).subscribe(res => {
+    this.hseService.getAll(id, pageIndex, search).subscribe(res => {
       this.totalCount = res?.data?.totalcount;
       this.dataList = res.data.items;
       this.pagesCount = Array.from({ length: Math.ceil(this.totalCount / 10) }, (_, index) => index + 1);
@@ -85,26 +83,12 @@ export class ProjectFilesComponent implements OnInit, AfterViewInit, OnDestroy {
     });
   }
 
-  getTreeData() {
-    this.projectsFilesService.getProjectFilesTree(this.projectId).subscribe(res => {
-      this.treeData = res.data;
-      this.cdr.detectChanges();
-    });
-  }
-
-  openFile(name: string) {
-    // const file: any = name.split('\\').pop()?.split('/').pop()?.split('?')[0];
-    this.attachmentService.downloadAttachment(name).subscribe(res => {
-      window.open(res.data, '_blank');
-    });
-  }
-
   redirectToNew() {
-    this.router.navigateByUrl(`projects/add-files/${this.projectId}`);
+    this.router.navigateByUrl(`projects/hse-create/${this.projectId}`);
   }
 
   editAttachment(File: any) {
-    this.router.navigate([`projects/edit-files/${File.projectId}`], {
+    this.router.navigate([`projects/hse-edit/${File.projectId}`], {
       queryParams: { fileId: File.id }
     });
   }
@@ -113,7 +97,7 @@ export class ProjectFilesComponent implements OnInit, AfterViewInit, OnDestroy {
     this.deleteSwal.fire().then((clicked) => {
       if (clicked.isConfirmed) {
         this.isLoading = true;
-        this.projectsFilesService.deleteVendor(File.id).subscribe({
+        this.hseService.deleteVendor(File.id).subscribe({
           next: (res) => {
             this.showAlert({ icon: 'success', title: 'Success!', text: 'Project Deleted successfully!' });
             setTimeout(() => {

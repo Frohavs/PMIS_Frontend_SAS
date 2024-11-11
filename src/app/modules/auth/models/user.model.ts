@@ -8,6 +8,7 @@ export class UserModel extends AuthModel {
   username: string;
   password: string;
   fullname: string;
+  fullName?: string;
   //@ts-ignore
   email: string;
   pic: string;

@@ -78,6 +78,8 @@ import { SiteStudiesDesignsDashboardComponent } from './site-studies-designs-das
 import { ProjectFilesComponent } from './project-files/project-files.component';
 import { AddProjectFilesComponent } from './project-files/add-project-files/add-project-files.component';
 import { ProjectFilesTreeComponent } from './project-files/project-files-tree/project-files-tree.component';
+import { HseComponent } from './hse/hse.component';
+import { AddReportComponent } from './hse/add-report/add-report.component';
 
 
 @NgModule({
@@ -166,7 +168,10 @@ import { ProjectFilesTreeComponent } from './project-files/project-files-tree/pr
 
     ProjectFilesComponent,
     AddProjectFilesComponent,
-    ProjectFilesTreeComponent
+    ProjectFilesTreeComponent,
+
+    HseComponent,
+    AddReportComponent
   ],
   imports: [
     CommonModule,

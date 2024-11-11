@@ -79,6 +79,10 @@ export const PROJECT_OPTIONS = [
       name: 'Projects Files',
       route: 'projects/project-files'
     },
+    {
+      name: 'HSE',
+      route: 'projects/hse'
+    },
     // {
     //   name: 'stage gate management',
     //   route: 'projects/stage-gate-management'

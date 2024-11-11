@@ -1,0 +1,116 @@
+<div class="row g-5 g-xl-8 justify-content-between">
+  <div class="col-xl-12">
+    <div class="card mb-5 mb-xl-8">
+
+      <div class="card-header align-items-center border-0 mt-4">
+        <h3 class="card-title align-items-start flex-column">
+          <span class="fw-bolder text-gray-900" *ngIf="!fileId">Add Report</span>
+          <span class="fw-bolder text-gray-900" *ngIf="fileId">Edit Report</span>
+        </h3>
+        <div class="card-toolbar">
+          <a (click)="back()" class="btn btn-sm btn-danger d-flex">
+            <app-keenicon name="arrow-left" class="fs-3"></app-keenicon>
+            {{"ECOMMERCE.COMMON.BACK" | translate}}
+          </a>
+        </div>
+      </div>
+
+      <div class="card-body pt-3">
+        <form [formGroup]="addReportForm" class="form">
+          <div class="card-body border-top p-9">
+
+            <div class="row mb-1">
+              <div class="col-lg-6">
+                <label class="col-lg-12 col-form-label fw-bold fs-6">
+                  <span>
+                    Inspection Date:
+                  </span>
+                </label>
+                <div class="col-lg-12 fv-row">
+                  <input type="date" class="form-control form-control-lg form-control-solid text-start" name="inspectionDate"
+                    formControlName="inspectionDate" />
+                  <div
+                    *ngIf="addReportForm?.get('inspectionDate')?.invalid && (addReportForm?.get('inspectionDate')?.dirty || addReportForm?.get('inspectionDate')?.touched)"
+                    class="fv-plugins-message-container">
+                    <div class="fv-help-block">date is required</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-lg-6">
+                <label class="col-lg-12 col-form-label fw-bold fs-6">
+                  <span>
+                    Inspection Executed by
+                  </span>
+                </label>
+                <div class="col-lg-12 fv-row">
+                  <select class="form-select form-select-solid form-select-lg fw-bold" name="executedById"
+                    formControlName="executedById">
+                    <option value="" disabled>{{"TRANSLATOR.SELECTION" | translate}}</option>
+                    <ng-container *ngFor="let item of users">
+                      <option [value]="item?.id">{{item?.name}}</option>
+                    </ng-container>
+                  </select>
+                  <div
+                    *ngIf="addReportForm?.get('executedById')?.invalid && (addReportForm?.get('executedById')?.dirty || addReportForm?.get('executedById')?.touched)"
+                    class="fv-plugins-message-container">
+                    <div class="fv-help-block">user is required</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row mb-1">
+              <div class="col-lg-6">
+                <label class="col-lg-12 col-form-label fw-bold fs-6">
+                  <span>
+                    Inspection Report Created by:
+                  </span>
+                </label>
+                <div class="col-lg-12 fv-row">
+                  <input type="text" class="form-control form-control-lg form-control-solid text-start"
+                    name="createdById" formControlName="createdById" />
+                </div>
+              </div>
+
+              <div class="col-lg-6">
+                <label class="col-lg-12 col-form-label fw-bold fs-6">
+                  <span>
+                    Contractual Penalty Sar / lm:
+                  </span>
+                </label>
+                <div class="col-lg-12 fv-row">
+                  <input type="number" min="0" max="100" class="form-control form-control-lg form-control-solid text-start"
+                    name="contractualPenalty" formControlName="contractualPenalty" />
+                  <div
+                    *ngIf="addReportForm?.get('contractualPenalty')?.invalid && (addReportForm?.get('contractualPenalty')?.dirty || addReportForm?.get('contractualPenalty')?.touched)"
+                    class="fv-plugins-message-container">
+                    <div class="fv-help-block">penalty percent from 0 to 100</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <div class="card-footer d-flex justify-content-end py-6 px-9">
+            <button type="button" class="btn btn-primary" [disabled]="isLoading" (click)="saveChanges()">
+              <ng-container *ngIf="!isLoading">{{"TRANSLATOR.ADD" | translate}}</ng-container>
+              <ng-container *ngIf="isLoading">
+                <span clas="indicator-progress" [style.display]="'block'">
+                  Please wait...{{ " " }}
+                  <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                </span>
+              </ng-container>
+            </button>
+          </div>
+        </form>
+
+      </div>
+      <!-- end::Body -->
+    </div>
+  </div>
+</div>
+
+<!-- modal -->
+<swal #noticeSwal [swalOptions]="swalOptions">
+</swal>

@@ -64,6 +64,8 @@ import { ProjectStatusReportComponent } from './update-project-info/project-stat
 import { SiteStudiesDesignsDashboardComponent } from './site-studies-designs-dashboard/site-studies-designs-dashboard.component';
 import { ProjectFilesComponent } from './project-files/project-files.component';
 import { AddProjectFilesComponent } from './project-files/add-project-files/add-project-files.component';
+import { HseComponent } from './hse/hse.component';
+import { AddReportComponent } from './hse/add-report/add-report.component';
 
 const routes: Routes = [
   {
@@ -376,6 +378,19 @@ const routes: Routes = [
       {
         path: 'edit-files/:id',
         component: AddProjectFilesComponent,
+      },
+
+      {
+        path: 'hse/:id',
+        component: HseComponent,
+      },
+      {
+        path: 'hse-create/:id',
+        component: AddReportComponent,
+      },
+      {
+        path: 'hse-edit/:id',
+        component: AddReportComponent,
       },
 
 
