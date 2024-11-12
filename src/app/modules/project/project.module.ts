@@ -81,6 +81,7 @@ import { ProjectFilesTreeComponent } from './project-files/project-files-tree/pr
 import { HseComponent } from './hse/hse.component';
 import { AddReportComponent } from './hse/add-report/add-report.component';
 import { HseFindingComponent } from './hse/hse-finding/hse-finding.component';
+import { HseFindingCreateComponent } from './hse/hse-finding-create/hse-finding-create.component';
 
 
 @NgModule({
@@ -173,7 +174,8 @@ import { HseFindingComponent } from './hse/hse-finding/hse-finding.component';
 
     HseComponent,
     AddReportComponent,
-    HseFindingComponent
+    HseFindingComponent,
+    HseFindingCreateComponent
   ],
   imports: [
     CommonModule,

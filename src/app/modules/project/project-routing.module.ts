@@ -67,6 +67,7 @@ import { AddProjectFilesComponent } from './project-files/add-project-files/add-
 import { HseComponent } from './hse/hse.component';
 import { AddReportComponent } from './hse/add-report/add-report.component';
 import { HseFindingComponent } from './hse/hse-finding/hse-finding.component';
+import { HseFindingCreateComponent } from './hse/hse-finding-create/hse-finding-create.component';
 
 const routes: Routes = [
   {
@@ -390,12 +391,16 @@ const routes: Routes = [
         component: AddReportComponent,
       },
       {
+        path: 'hse-edit/:id',
+        component: AddReportComponent,
+      },
+      {
         path: 'hse-finding/:id',
         component: HseFindingComponent,
       },
       {
-        path: 'hse-edit/:id',
-        component: AddReportComponent,
+        path: 'hse-finding-create/:id',
+        component: HseFindingCreateComponent,
       },
 
 

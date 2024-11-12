@@ -1,24 +1,24 @@
 import { Location } from '@angular/common';
 import { ChangeDetectorRef, Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
 import { AttachmentService } from 'src/app/services/attachment/attachment.service';
-import { FactoryService } from 'src/app/services/factory.service';
+import { HseService } from 'src/app/services/hse.service';
 import { LookupService } from 'src/app/services/lookup/lookup.service';
 import { SweetAlertOptions } from 'sweetalert2';
 
 @Component({
-  selector: 'app-add-factory',
-  templateUrl: './add-factory.component.html',
-  styleUrl: './add-factory.component.scss'
+  selector: 'app-hse-finding-create',
+  templateUrl: './hse-finding-create.component.html',
+  styleUrl: './hse-finding-create.component.scss'
 })
-export class AddFactoryComponent implements OnInit {
+export class HseFindingCreateComponent implements OnInit {
   projectId: number;
-  boqId: number;
+  hseId: number;
   isLoading: boolean;
-  addFactoryForm: FormGroup;
+  addFindingForm: FormGroup;
 
   options: google.maps.MapOptions = {
     center: { lat: 24.774265, lng: 46.738586 },
@@ -57,7 +57,7 @@ export class AddFactoryComponent implements OnInit {
     private router: Router,
     private _location: Location,
     private cdr: ChangeDetectorRef,
-    private factoryService: FactoryService,
+    private hseService: HseService,
     private attachmentService: AttachmentService,
     private formBuilder: FormBuilder,
     private lookupService: LookupService,
@@ -80,8 +80,8 @@ export class AddFactoryComponent implements OnInit {
       };
       this.lat = event.latLng.lat();
       this.lng = event.latLng.lng();
-      console.log(`Marker set at: Latitude: ${this.lat}, Longitude: ${this.lng}`);
-      this.addFactoryForm.patchValue({ latitude: this.lat, longitude: this.lng });
+      // console.log(`Marker set at: Latitude: ${this.lat}, Longitude: ${this.lng}`);
+      this.addFindingForm.patchValue({ latitude: this.lat, longitude: this.lng });
       this.cdr.detectChanges();
     }
   }
@@ -91,28 +91,23 @@ export class AddFactoryComponent implements OnInit {
       this.projectId = +params['id'];
     });
     this.activatedRoute.queryParams.subscribe(params => {
-      this.boqId = params['boqId'];
+      this.hseId = params['hseId'];
     });
-    const queryParams = this.activatedRoute.snapshot.queryParams;
-    this.boqId = +queryParams?.boqId;
+
   }
 
   initAddBoqForm() {
-    this.addFactoryForm = this.formBuilder.group({
-      factoryCRId: ['', Validators.required],
-      factoryFieldId: ['', Validators.required],
-      description: ['', Validators.required],
-      year: ['', Validators.required],
+    this.addFindingForm = this.formBuilder.group({
+      street: ['', Validators.required],
       latitude: ['24.66911551123412', Validators.required],
       longitude: ['46.690065163710585', Validators.required],
-      repreName: ['', Validators.required],
-      reprePhone: ['', Validators.required],
-      reprEmail: ['', Validators.required],
-      profileAttachment: ['test123.pdf', Validators.required],
-      projectSize: ['', Validators.required],
-      numOfEmployess: ['', Validators.required],
-      lastFinancialAttachment: ['test123.pdf', Validators.required],
-      approveletterAttachment: ['test123.pdf', Validators.required],
+      locationRemarks: ['', Validators.required],
+      hseFindings: ['', Validators.required],
+      findingRemarks: ['', Validators.required],
+      dueDate: ['', Validators.required],
+      categoryId: ['', Validators.required],
+      classificationId: ['', Validators.required],
+      evidences: [null, Validators.required],
     });
   }
 
@@ -127,86 +122,32 @@ export class AddFactoryComponent implements OnInit {
     })
   }
 
-  getVatID(value: string) {
-    let id = 0;
-    if (value == '0') {
-      id = 1;
-    } else if (value == '5') {
-      id = 2;
-    } else if (value == '15') {
-      id = 3;
-    }
-    return id;
-  }
-  getVatValue(id: number) {
-    let value = '';
-    if (id == 1) {
-      value = '0';
-    } else if (id == 2) {
-      value = '5';
-    } else if (id == 3) {
-      value = '10';
-    }
-    return value;
 
-  }
 
   saveChanges() {
-    if (!this.addFactoryForm.valid) {
-      this.addFactoryForm.markAllAsTouched();
+    if (!this.addFindingForm.valid) {
+      this.addFindingForm.markAllAsTouched();
       return;
     }
+
     this.isLoading = true;
     const payload = {
-      ...this.addFactoryForm.value,
+      ...this.addFindingForm.value,
       projectId: +this.projectId,
-      year: +this.addFactoryForm.value.year,
-      numOfEmployess: +this.addFactoryForm.value.numOfEmployess,
-      factoryCRId: +this.addFactoryForm.value.factoryCRId,
-      factoryFieldId: +this.addFactoryForm.value.factoryFieldId,
-
     }
+    this.hseService.createFinding(payload).subscribe({
+      next: (res) => {
+        this.isLoading = false;
+        this.router.navigateByUrl(`projects/factory-list/${this.projectId}`);
+        this.showAlert({ icon: 'success', title: 'Success!', text: 'Boq Added successfully!' });
+        this.cdr.detectChanges();
+      },
+      error: (error) => {
+        this.showAlert({ icon: 'error', title: 'Error!', text: 'Please try again' });
+        this.isLoading = false;
+      }
+    });
 
-    if (!this.boqId) {
-      this.factoryService.addFactory(payload).subscribe({
-        next: (res) => {
-          this.isLoading = false;
-          this.router.navigateByUrl(`projects/factory-list/${this.projectId}`);
-          this.showAlert({ icon: 'success', title: 'Success!', text: 'Boq Added successfully!' });
-          this.cdr.detectChanges();
-        },
-        error: (error) => {
-          this.showAlert({ icon: 'error', title: 'Error!', text: 'Please try again' });
-          this.isLoading = false;
-        }
-      });
-
-    }
-  }
-
-  openPopup() {
-    this.modalService.open(this.crModal, this.modalConfig)
-  }
-
-  onAddFactoryCR(event: Event, myForm: NgForm) {
-    const payload = {
-      name: this.crNameEn,
-      nameAr: this.crNameAr,
-      attachment: this.crAttachment,
-      crNumber: this.crNumber,
-    }
-    this.factoryService.addFactoryCR(payload).subscribe(res => {
-      this.modalService.dismissAll();
-      this.crNumber = '';
-      this.crNameEn = '';
-      this.crNameAr = '';
-      this.crAttachment = '';
-      this.showAlert({ icon: 'success', title: 'Success!', text: 'CR Added successfully!' });
-      this.cdr.detectChanges();
-      this.getLookups();
-    }, (err) => {
-      this.showAlert({ icon: 'error', title: 'Error!', text: 'error adding CR' });
-    })
   }
 
   onFileChange(event: any) {

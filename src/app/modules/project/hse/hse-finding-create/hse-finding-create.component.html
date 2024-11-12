@@ -1,0 +1,263 @@
+<div class="row g-5 g-xl-8 justify-content-between">
+  <div class="col-xl-12">
+    <div class="card mb-5 mb-xl-8">
+      <!-- begin::Header -->
+      <div class="card-header align-items-center border-0 mt-4">
+        <h3 class="card-title align-items-start flex-column">
+          <span class="fw-bolder text-gray-900">add finding</span>
+          <!-- <span class="text-muted mt-1 fw-bold fs-7">test</span> -->
+        </h3>
+        <div class="card-toolbar">
+          <a (click)="back()" class="btn btn-sm btn-danger d-flex">
+            <app-keenicon name="arrow-left" class="fs-3"></app-keenicon>
+            {{"ECOMMERCE.COMMON.BACK" | translate}}
+          </a>
+        </div>
+      </div>
+
+
+      <div class="card-body pt-3">
+
+        <form [formGroup]="addFindingForm" class="form">
+          <div class="card-body border-top p-9">
+            <div class="row mb-2">
+              <div class="col-lg-6">
+                <label class="col-lg-12 col-form-label fw-bold fs-6">
+                  <span>
+                    Street name
+                  </span>
+                </label>
+                <div class="col-lg-12 fv-row">
+                  <input type="text" class="form-control form-control-lg form-control-solid text-start"
+                    name="description" formControlName="description" />
+                  <div
+                    *ngIf="addFindingForm?.get('description')?.invalid && (addFindingForm?.get('description')?.dirty || addFindingForm?.get('description')?.touched)"
+                    class="fv-plugins-message-container">
+                    <div class="fv-help-block">name is required</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-lg-6">
+                <label class="col-lg-12 col-form-label fw-bold fs-6">
+                  <span>
+                    Evidences
+                  </span>
+                </label>
+                <div class="col-lg-12 fv-row">
+                  <input type="file" class="form-control form-control-lg form-control-solid text-start"
+                    name="profileAttachment" formControlName="profileAttachment" />
+                  <div
+                    *ngIf="addFindingForm?.get('profileAttachment')?.invalid && (addFindingForm?.get('profileAttachment')?.dirty || addFindingForm?.get('profileAttachment')?.touched)"
+                    class="fv-plugins-message-container">
+                    <div class="fv-help-block">file is required</div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="map-container">
+              <span class="fw-bold fs-6 mb-3">Location – Upload site location</span><br><br>
+              <google-map height="400px" width="100%" [options]="options" (mapClick)="onMapClick($event)">
+                <map-marker *ngIf="markerPosition" [position]="markerPosition" [options]="markerOptions"></map-marker>
+              </google-map>
+            </div>
+
+
+            <div class="row mb-2">
+              <div class="col-lg-6">
+                <label class="col-lg-12 col-form-label fw-bold fs-6">
+                  <span>
+                    Latitude
+                  </span>
+                </label>
+                <div class="col-lg-12 fv-row">
+                  <input type="text" class="form-control form-control-lg form-control-solid text-start" name="latitude"
+                    formControlName="latitude" />
+                  <div
+                    *ngIf="addFindingForm?.get('latitude')?.invalid && (addFindingForm?.get('latitude')?.dirty || addFindingForm?.get('latitude')?.touched)"
+                    class="fv-plugins-message-container">
+                    <div class="fv-help-block">latitude is required</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <label class="col-lg-12 col-form-label fw-bold fs-6">
+                  <span>
+                    Longitude
+                  </span>
+                </label>
+                <div class="col-lg-12 fv-row">
+                  <input type="text" class="form-control form-control-lg form-control-solid text-start" name="longitude"
+                    formControlName="longitude" />
+                  <div
+                    *ngIf="addFindingForm?.get('longitude')?.invalid && (addFindingForm?.get('longitude')?.dirty || addFindingForm?.get('longitude')?.touched)"
+                    class="fv-plugins-message-container">
+                    <div class="fv-help-block">longitude is required</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row mb-2">
+              <div class="col-lg-4">
+                <label class="col-lg-12 col-form-label fw-bold fs-6">
+                  <span>
+                    Location Remarks
+                  </span>
+                </label>
+                <div class="col-lg-12 fv-row">
+                  <textarea cols="3" class="form-control form-control-lg form-control-solid text-start" name="repreName"
+                    formControlName="repreName"></textarea>
+                  <div
+                    *ngIf="addFindingForm?.get('repreName')?.invalid && (addFindingForm?.get('repreName')?.dirty || addFindingForm?.get('repreName')?.touched)"
+                    class="fv-plugins-message-container">
+                    <div class="fv-help-block">repre name is required</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-4">
+                <label class="col-lg-12 col-form-label fw-bold fs-6">
+                  <span>
+                    HSE Findings
+                  </span>
+                </label>
+                <div class="col-lg-12 fv-row">
+                  <textarea cols="3" class="form-control form-control-lg form-control-solid text-start" name="repreName"
+                    formControlName="repreName"></textarea>
+                  <div
+                    *ngIf="addFindingForm?.get('repreName')?.invalid && (addFindingForm?.get('repreName')?.dirty || addFindingForm?.get('repreName')?.touched)"
+                    class="fv-plugins-message-container">
+                    <div class="fv-help-block">repre name is required</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-4">
+                <label class="col-lg-12 col-form-label fw-bold fs-6">
+                  <span>
+                    Finding Remarks
+                  </span>
+                </label>
+                <div class="col-lg-12 fv-row">
+                  <textarea cols="3" class="form-control form-control-lg form-control-solid text-start" name="repreName"
+                    formControlName="repreName"></textarea>
+                  <div
+                    *ngIf="addFindingForm?.get('repreName')?.invalid && (addFindingForm?.get('repreName')?.dirty || addFindingForm?.get('repreName')?.touched)"
+                    class="fv-plugins-message-container">
+                    <div class="fv-help-block">repre name is required</div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="row mb-2">
+
+              <div class="col-lg-4">
+                <label class="col-lg-12 col-form-label fw-bold fs-6">
+                  <span>
+                    Due Date:
+                  </span>
+                </label>
+                <div class="col-lg-12 fv-row">
+                  <input type="date" class="form-control form-control-lg form-control-solid text-start" name="reprEmail"
+                    formControlName="reprEmail" />
+                  <div
+                    *ngIf="addFindingForm?.get('reprEmail')?.invalid && (addFindingForm?.get('reprEmail')?.dirty || addFindingForm?.get('reprEmail')?.touched)"
+                    class="fv-plugins-message-container">
+                    <div class="fv-help-block">repre email is required</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-lg-4">
+                <label class="col-lg-12 col-form-label fw-bold fs-6">
+                  <span>
+                    Finding Category
+                  </span>
+                </label>
+                <div class="col-lg-12 fv-row">
+                  <select class="form-select form-select-solid form-select-lg fw-bold" name="factoryCRId"
+                    formControlName="factoryCRId">
+                    <option value="" disabled>{{"TRANSLATOR.SELECTION" | translate}}</option>
+                    <ng-container *ngFor="let item of factoriesCR">
+                      <option [value]="item?.id">{{item?.name}}</option>
+                    </ng-container>
+                  </select>
+                  <div
+                    *ngIf="addFindingForm?.get('factoryCRId')?.invalid && (addFindingForm?.get('factoryCRId')?.dirty || addFindingForm?.get('factoryCRId')?.touched)"
+                    class="fv-plugins-message-container">
+                    <div class="fv-help-block">cr is required</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-lg-4">
+                <label class="col-lg-12 col-form-label fw-bold fs-6">
+                  <span>
+                    Finding Classification
+                  </span>
+                </label>
+                <div class="col-lg-12 fv-row">
+                  <select class="form-select form-select-solid form-select-lg fw-bold" name="factoryCRId"
+                    formControlName="factoryCRId">
+                    <option value="" disabled>{{"TRANSLATOR.SELECTION" | translate}}</option>
+                    <ng-container *ngFor="let item of factoriesCR">
+                      <option [value]="item?.id">{{item?.name}}</option>
+                    </ng-container>
+                  </select>
+                  <div
+                    *ngIf="addFindingForm?.get('factoryCRId')?.invalid && (addFindingForm?.get('factoryCRId')?.dirty || addFindingForm?.get('factoryCRId')?.touched)"
+                    class="fv-plugins-message-container">
+                    <div class="fv-help-block">cr is required</div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            <div class="row mb-2">
+
+              <div class="col-lg-12">
+                <label class="col-lg-12 col-form-label fw-bold fs-6">
+                  <span>
+                    Actions required:
+                  </span>
+                </label>
+                <div class="col-lg-12 fv-row">
+                  <textarea cols="3" class="form-control form-control-lg form-control-solid text-start" name="reprEmail"
+                    formControlName="reprEmail"></textarea>
+                  <div
+                    *ngIf="addFindingForm?.get('reprEmail')?.invalid && (addFindingForm?.get('reprEmail')?.dirty || addFindingForm?.get('reprEmail')?.touched)"
+                    class="fv-plugins-message-container">
+                    <div class="fv-help-block">repre email is required</div>
+                  </div>
+                </div>
+              </div>
+
+
+            </div>
+
+          </div>
+          <div class="card-footer d-flex justify-content-end py-6 px-9">
+            <button type="button" class="btn btn-primary" [disabled]="isLoading" (click)="saveChanges()">
+              <ng-container *ngIf="!isLoading">{{"TRANSLATOR.ADD" | translate}}</ng-container>
+              <ng-container *ngIf="isLoading">
+                <span clas="indicator-progress" [style.display]="'block'">
+                  Please wait...{{ " " }}
+                  <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                </span>
+              </ng-container>
+            </button>
+          </div>
+        </form>
+
+      </div>
+      <!-- end::Body -->
+    </div>
+  </div>
+</div>
+
+<!-- modal -->
+<swal #noticeSwal [swalOptions]="swalOptions">
+</swal>

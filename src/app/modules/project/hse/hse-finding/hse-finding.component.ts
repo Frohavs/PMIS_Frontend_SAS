@@ -60,22 +60,22 @@ export class HseFindingComponent implements OnInit, AfterViewInit, OnDestroy {
       distinctUntilChanged(),
     ).subscribe((event: any) => {
       const searchText = event.target.value;
-      this.initializeProjectData(this.projectId, 1, searchText)
+      this.initFindingData(this.projectId, 1, searchText)
     });
   }
 
   getProjectId() {
     this.activatedRoute.params.subscribe(params => {
       this.projectId = +params['id'];
-      this.initializeProjectData(this.projectId);
+      this.initFindingData(this.projectId);
     });
     this.activatedRoute.queryParams.subscribe(params => {
       this.projectId = +params['hseId'];
     });
   }
 
-  initializeProjectData(id: number, pageIndex?: number, search?: string) {
-    this.hseService.getAll(id, pageIndex, search).subscribe(res => {
+  initFindingData(id: number, pageIndex?: number, search?: string) {
+    this.hseService.getFindingsById(id, pageIndex, search).subscribe(res => {
       this.totalCount = res?.data?.totalcount;
       this.dataList = res.data.items;
       this.pagesCount = Array.from({ length: Math.ceil(this.totalCount / 10) }, (_, index) => index + 1);
@@ -90,7 +90,7 @@ export class HseFindingComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   redirectToNew() {
-    this.router.navigateByUrl(`projects/hse-create/${this.projectId}`);
+    this.router.navigateByUrl(`projects/hse-finding-create/${this.projectId}`);
   }
   editAttachment(File: any) {
     this.router.navigate([`projects/hse-edit/${File.projectId}`], {
@@ -108,7 +108,7 @@ export class HseFindingComponent implements OnInit, AfterViewInit, OnDestroy {
             setTimeout(() => {
               this.isLoading = false;
               this.dataList = [];
-              this.initializeProjectData(this.projectId,);
+              this.initFindingData(this.projectId,);
             }, 500);
           },
           error: (error) => {
@@ -127,7 +127,7 @@ export class HseFindingComponent implements OnInit, AfterViewInit, OnDestroy {
 
   navigatePage(pageIndex: number) {
     this.selected = pageIndex;
-    this.initializeProjectData(this.projectId, pageIndex, '');
+    this.initFindingData(this.projectId, pageIndex, '');
   }
 
   navigateArrows(next: boolean) {
@@ -136,14 +136,14 @@ export class HseFindingComponent implements OnInit, AfterViewInit, OnDestroy {
         return;
       } else {
         this.selected += 1;
-        this.initializeProjectData(this.projectId, this.selected, '');
+        this.initFindingData(this.projectId, this.selected, '');
       }
     } else {
       if (this.selected === 1) {
         return;
       } else {
         this.selected -= 1;
-        this.initializeProjectData(this.projectId, this.selected, '');
+        this.initFindingData(this.projectId, this.selected, '');
       }
     }
   }

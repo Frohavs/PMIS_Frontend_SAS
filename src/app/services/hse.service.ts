@@ -71,6 +71,23 @@ export class HseService {
       headers: httpHeaders
     });
   }
+  getFindingsById(id: number | null, pageIndex?: number, search?: string): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const milestone = {
+      projectId: id,
+      quickSearch: search,
+      pagedSearch: {
+        "pageIndex": pageIndex,
+        "pageSize": 10
+      }
+    }
+    const url = `${this.API_USERS_URL}/GetFindings`;
+    return this.http.post<any>(url, milestone, {
+      headers: httpHeaders
+    });
+  }
   createFinding(report: string): Observable<any> {
     const httpHeaders = new HttpHeaders({
       Authorization: `Bearer ${this.token}`,
