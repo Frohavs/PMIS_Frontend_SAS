@@ -4,18 +4,17 @@ import { NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
 import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
 import { Subscription, fromEvent, debounceTime, distinctUntilChanged } from 'rxjs';
-import { AttachmentService } from 'src/app/services/attachment/attachment.service';
 import { HseService } from 'src/app/services/hse.service';
-import { ProjectsFilesService } from 'src/app/services/projects-files.service';
 import { SweetAlertOptions } from 'sweetalert2';
 
 @Component({
-  selector: 'app-hse',
-  templateUrl: './hse.component.html',
-  styleUrl: './hse.component.scss'
+  selector: 'app-hse-finding',
+  templateUrl: './hse-finding.component.html',
+  styleUrl: './hse-finding.component.scss'
 })
-export class HseComponent implements OnInit, AfterViewInit, OnDestroy {
+export class HseFindingComponent implements OnInit, AfterViewInit, OnDestroy {
   projectId: number;
+  hseId: number;
   Add_text: string;
   Search_text: string;
   dataList: any[] = [];
@@ -70,6 +69,9 @@ export class HseComponent implements OnInit, AfterViewInit, OnDestroy {
       this.projectId = +params['id'];
       this.initializeProjectData(this.projectId);
     });
+    this.activatedRoute.queryParams.subscribe(params => {
+      this.projectId = +params['hseId'];
+    });
   }
 
   initializeProjectData(id: number, pageIndex?: number, search?: string) {
@@ -83,7 +85,7 @@ export class HseComponent implements OnInit, AfterViewInit, OnDestroy {
 
   navigateFinding(finding: any) {
     this.router.navigate([`projects/hse-finding/${this.projectId}`], {
-      queryParams: { hseId: finding.id }
+      queryParams: { findingId: finding.id }
     });
   }
 

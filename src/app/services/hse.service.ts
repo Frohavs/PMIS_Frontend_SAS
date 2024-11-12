@@ -44,8 +44,6 @@ export class HseService {
       headers: httpHeaders
     });
   }
-
-
   addReport(report: string): Observable<any> {
     const httpHeaders = new HttpHeaders({
       Authorization: `Bearer ${this.token}`,
@@ -73,12 +71,12 @@ export class HseService {
       headers: httpHeaders
     });
   }
-  getProjectFilesTree(id: number | null): Observable<any> {
+  createFinding(report: string): Observable<any> {
     const httpHeaders = new HttpHeaders({
       Authorization: `Bearer ${this.token}`,
     });
-    const url = `${this.API_USERS_URL}/GetProjectFilesTree/${id}`;
-    return this.http.get<any>(url, {
+    const url = `${this.API_USERS_URL}/CreateFinding`;
+    return this.http.post<any>(url, report, {
       headers: httpHeaders
     });
   }

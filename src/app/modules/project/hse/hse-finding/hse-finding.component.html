@@ -7,9 +7,9 @@
 
     <div class="ms-6">
       <p class="list-unstyled text-gray-600 fw-bold fs-6 p-0 m-0">
-        Disclamier: The reported inspections are the result of multiple assessments, as comprehensive and accurate as
+        Disclamier: The reported inspection findings are the result of an assessment, as comprehensive and accurate as
         possible, of the HSE compliance. Nevertheless as only a sample of the sites, activities and documentation was
-        checked and verified, these reports and information included are not and should not be considered a full
+        checked and verified, these findings and information included are not and should not be considered a full
         assessment and do not replace or invalidate any other unreported findings or information.
       </p>
     </div>
@@ -31,7 +31,7 @@
       title="Click to add a user">
       <a class="btn btn-sm btn-light-primary" (click)="redirectToNew()">
         <app-keenicon name="plus" class="fs-3"></app-keenicon>
-        {{'Create Report'}}
+        {{'create new finding'}}
       </a>
     </div>
   </div>
@@ -42,10 +42,12 @@
         <thead>
           <tr class="fw-bolder text-muted">
 
-            <th class="max-w-100px">Report Number</th>
-            <th class="max-w-50px">Submitted by</th>
-            <th class="max-w-50px">Inspection Date</th>
-            <th class="max-w-50px">Submitted date</th>
+            <th class="max-w-100px">Finding Number</th>
+            <th class="max-w-50px">Line no</th>
+            <th class="max-w-50px">Finding Category</th>
+            <th class="max-w-50px">Finding classification</th>
+            <th class="max-w-50px">Due Date</th>
+            <th class="max-w-50px">Status</th>
             <th class="max-w-100px text-end">Actions</th>
           </tr>
         </thead>
