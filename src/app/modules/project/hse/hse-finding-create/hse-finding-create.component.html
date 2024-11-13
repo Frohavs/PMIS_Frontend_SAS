@@ -29,9 +29,9 @@
                 </label>
                 <div class="col-lg-12 fv-row">
                   <input type="text" class="form-control form-control-lg form-control-solid text-start"
-                    name="description" formControlName="description" />
+                    name="street" formControlName="street" />
                   <div
-                    *ngIf="addFindingForm?.get('description')?.invalid && (addFindingForm?.get('description')?.dirty || addFindingForm?.get('description')?.touched)"
+                    *ngIf="addFindingForm?.get('street')?.invalid && (addFindingForm?.get('street')?.dirty || addFindingForm?.get('street')?.touched)"
                     class="fv-plugins-message-container">
                     <div class="fv-help-block">name is required</div>
                   </div>
@@ -46,9 +46,10 @@
                 </label>
                 <div class="col-lg-12 fv-row">
                   <input type="file" class="form-control form-control-lg form-control-solid text-start"
-                    name="profileAttachment" formControlName="profileAttachment" />
+                    name="evidences" formControlName="evidences" multiple
+                    (change)="onFileChange($event)" />
                   <div
-                    *ngIf="addFindingForm?.get('profileAttachment')?.invalid && (addFindingForm?.get('profileAttachment')?.dirty || addFindingForm?.get('profileAttachment')?.touched)"
+                    *ngIf="addFindingForm?.get('evidences')?.invalid && (addFindingForm?.get('evidences')?.dirty || addFindingForm?.get('evidences')?.touched)"
                     class="fv-plugins-message-container">
                     <div class="fv-help-block">file is required</div>
                   </div>
@@ -108,12 +109,12 @@
                   </span>
                 </label>
                 <div class="col-lg-12 fv-row">
-                  <textarea cols="3" class="form-control form-control-lg form-control-solid text-start" name="repreName"
-                    formControlName="repreName"></textarea>
+                  <textarea cols="3" class="form-control form-control-lg form-control-solid text-start" name="locationRemarks"
+                    formControlName="locationRemarks"></textarea>
                   <div
-                    *ngIf="addFindingForm?.get('repreName')?.invalid && (addFindingForm?.get('repreName')?.dirty || addFindingForm?.get('repreName')?.touched)"
+                    *ngIf="addFindingForm?.get('locationRemarks')?.invalid && (addFindingForm?.get('locationRemarks')?.dirty || addFindingForm?.get('locationRemarks')?.touched)"
                     class="fv-plugins-message-container">
-                    <div class="fv-help-block">repre name is required</div>
+                    <div class="fv-help-block">location remarks is required</div>
                   </div>
                 </div>
               </div>
@@ -124,12 +125,12 @@
                   </span>
                 </label>
                 <div class="col-lg-12 fv-row">
-                  <textarea cols="3" class="form-control form-control-lg form-control-solid text-start" name="repreName"
-                    formControlName="repreName"></textarea>
+                  <textarea cols="3" class="form-control form-control-lg form-control-solid text-start" name="hseFindings"
+                    formControlName="hseFindings"></textarea>
                   <div
-                    *ngIf="addFindingForm?.get('repreName')?.invalid && (addFindingForm?.get('repreName')?.dirty || addFindingForm?.get('repreName')?.touched)"
+                    *ngIf="addFindingForm?.get('hseFindings')?.invalid && (addFindingForm?.get('hseFindings')?.dirty || addFindingForm?.get('hseFindings')?.touched)"
                     class="fv-plugins-message-container">
-                    <div class="fv-help-block">repre name is required</div>
+                    <div class="fv-help-block">hse findings name is required</div>
                   </div>
                 </div>
               </div>
@@ -140,12 +141,12 @@
                   </span>
                 </label>
                 <div class="col-lg-12 fv-row">
-                  <textarea cols="3" class="form-control form-control-lg form-control-solid text-start" name="repreName"
-                    formControlName="repreName"></textarea>
+                  <textarea cols="3" class="form-control form-control-lg form-control-solid text-start" name="findingRemarks"
+                    formControlName="findingRemarks"></textarea>
                   <div
-                    *ngIf="addFindingForm?.get('repreName')?.invalid && (addFindingForm?.get('repreName')?.dirty || addFindingForm?.get('repreName')?.touched)"
+                    *ngIf="addFindingForm?.get('findingRemarks')?.invalid && (addFindingForm?.get('findingRemarks')?.dirty || addFindingForm?.get('findingRemarks')?.touched)"
                     class="fv-plugins-message-container">
-                    <div class="fv-help-block">repre name is required</div>
+                    <div class="fv-help-block">finding remarks is required</div>
                   </div>
                 </div>
               </div>
@@ -161,12 +162,12 @@
                   </span>
                 </label>
                 <div class="col-lg-12 fv-row">
-                  <input type="date" class="form-control form-control-lg form-control-solid text-start" name="reprEmail"
-                    formControlName="reprEmail" />
+                  <input type="date" class="form-control form-control-lg form-control-solid text-start" name="dueDate"
+                    formControlName="dueDate" />
                   <div
-                    *ngIf="addFindingForm?.get('reprEmail')?.invalid && (addFindingForm?.get('reprEmail')?.dirty || addFindingForm?.get('reprEmail')?.touched)"
+                    *ngIf="addFindingForm?.get('dueDate')?.invalid && (addFindingForm?.get('dueDate')?.dirty || addFindingForm?.get('dueDate')?.touched)"
                     class="fv-plugins-message-container">
-                    <div class="fv-help-block">repre email is required</div>
+                    <div class="fv-help-block">date is required</div>
                   </div>
                 </div>
               </div>
@@ -178,17 +179,17 @@
                   </span>
                 </label>
                 <div class="col-lg-12 fv-row">
-                  <select class="form-select form-select-solid form-select-lg fw-bold" name="factoryCRId"
-                    formControlName="factoryCRId">
+                  <select class="form-select form-select-solid form-select-lg fw-bold" name="categoryId"
+                    formControlName="categoryId">
                     <option value="" disabled>{{"TRANSLATOR.SELECTION" | translate}}</option>
-                    <ng-container *ngFor="let item of factoriesCR">
+                    <ng-container *ngFor="let item of findingsCategories">
                       <option [value]="item?.id">{{item?.name}}</option>
                     </ng-container>
                   </select>
                   <div
-                    *ngIf="addFindingForm?.get('factoryCRId')?.invalid && (addFindingForm?.get('factoryCRId')?.dirty || addFindingForm?.get('factoryCRId')?.touched)"
+                    *ngIf="addFindingForm?.get('categoryId')?.invalid && (addFindingForm?.get('categoryId')?.dirty || addFindingForm?.get('categoryId')?.touched)"
                     class="fv-plugins-message-container">
-                    <div class="fv-help-block">cr is required</div>
+                    <div class="fv-help-block">category is required</div>
                   </div>
                 </div>
               </div>
@@ -200,17 +201,17 @@
                   </span>
                 </label>
                 <div class="col-lg-12 fv-row">
-                  <select class="form-select form-select-solid form-select-lg fw-bold" name="factoryCRId"
-                    formControlName="factoryCRId">
+                  <select class="form-select form-select-solid form-select-lg fw-bold" name="classificationId"
+                    formControlName="classificationId">
                     <option value="" disabled>{{"TRANSLATOR.SELECTION" | translate}}</option>
-                    <ng-container *ngFor="let item of factoriesCR">
+                    <ng-container *ngFor="let item of findingsClassifications">
                       <option [value]="item?.id">{{item?.name}}</option>
                     </ng-container>
                   </select>
                   <div
-                    *ngIf="addFindingForm?.get('factoryCRId')?.invalid && (addFindingForm?.get('factoryCRId')?.dirty || addFindingForm?.get('factoryCRId')?.touched)"
+                    *ngIf="addFindingForm?.get('classificationId')?.invalid && (addFindingForm?.get('classificationId')?.dirty || addFindingForm?.get('classificationId')?.touched)"
                     class="fv-plugins-message-container">
-                    <div class="fv-help-block">cr is required</div>
+                    <div class="fv-help-block">classification is required</div>
                   </div>
                 </div>
               </div>
@@ -225,12 +226,12 @@
                   </span>
                 </label>
                 <div class="col-lg-12 fv-row">
-                  <textarea cols="3" class="form-control form-control-lg form-control-solid text-start" name="reprEmail"
-                    formControlName="reprEmail"></textarea>
+                  <textarea cols="3" class="form-control form-control-lg form-control-solid text-start" name="actions"
+                    formControlName="actions"></textarea>
                   <div
-                    *ngIf="addFindingForm?.get('reprEmail')?.invalid && (addFindingForm?.get('reprEmail')?.dirty || addFindingForm?.get('reprEmail')?.touched)"
+                    *ngIf="addFindingForm?.get('actions')?.invalid && (addFindingForm?.get('actions')?.dirty || addFindingForm?.get('actions')?.touched)"
                     class="fv-plugins-message-container">
-                    <div class="fv-help-block">repre email is required</div>
+                    <div class="fv-help-block">actions is required</div>
                   </div>
                 </div>
               </div>

@@ -308,6 +308,24 @@ export class LookupService {
       headers: httpHeaders
     });
   }
+  getFindingCategories(): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/GetFindingCategories`;
+    return this.http.get<any>(url, {
+      headers: httpHeaders
+    });
+  }
+  getFindingClassifications(): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/GetFindingClassifications`;
+    return this.http.get<any>(url, {
+      headers: httpHeaders
+    });
+  }
 
 
 }

@@ -60,17 +60,17 @@ export class HseFindingComponent implements OnInit, AfterViewInit, OnDestroy {
       distinctUntilChanged(),
     ).subscribe((event: any) => {
       const searchText = event.target.value;
-      this.initFindingData(this.projectId, 1, searchText)
+      this.initFindingData(this.hseId, 1, searchText)
     });
   }
 
   getProjectId() {
     this.activatedRoute.params.subscribe(params => {
       this.projectId = +params['id'];
-      this.initFindingData(this.projectId);
     });
     this.activatedRoute.queryParams.subscribe(params => {
-      this.projectId = +params['hseId'];
+      this.hseId = +params['hseId'];
+      this.initFindingData(this.hseId);
     });
   }
 
@@ -84,13 +84,15 @@ export class HseFindingComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   navigateFinding(finding: any) {
-    this.router.navigate([`projects/hse-finding/${this.projectId}`], {
+    this.router.navigate([`projects/finding-details/${this.projectId}`], {
       queryParams: { findingId: finding.id }
     });
   }
 
   redirectToNew() {
-    this.router.navigateByUrl(`projects/hse-finding-create/${this.projectId}`);
+    this.router.navigate([`projects/hse-finding-create/${this.projectId}`], {
+      queryParams: { hseId: this.hseId }
+    });
   }
   editAttachment(File: any) {
     this.router.navigate([`projects/hse-edit/${File.projectId}`], {
@@ -108,7 +110,7 @@ export class HseFindingComponent implements OnInit, AfterViewInit, OnDestroy {
             setTimeout(() => {
               this.isLoading = false;
               this.dataList = [];
-              this.initFindingData(this.projectId,);
+              this.initFindingData(this.hseId, 1);
             }, 500);
           },
           error: (error) => {
@@ -127,7 +129,7 @@ export class HseFindingComponent implements OnInit, AfterViewInit, OnDestroy {
 
   navigatePage(pageIndex: number) {
     this.selected = pageIndex;
-    this.initFindingData(this.projectId, pageIndex, '');
+    this.initFindingData(this.hseId, pageIndex, '');
   }
 
   navigateArrows(next: boolean) {
@@ -136,14 +138,14 @@ export class HseFindingComponent implements OnInit, AfterViewInit, OnDestroy {
         return;
       } else {
         this.selected += 1;
-        this.initFindingData(this.projectId, this.selected, '');
+        this.initFindingData(this.hseId, this.selected, '');
       }
     } else {
       if (this.selected === 1) {
         return;
       } else {
         this.selected -= 1;
-        this.initFindingData(this.projectId, this.selected, '');
+        this.initFindingData(this.hseId, this.selected, '');
       }
     }
   }

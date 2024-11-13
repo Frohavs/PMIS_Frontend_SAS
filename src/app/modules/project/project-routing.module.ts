@@ -68,6 +68,7 @@ import { HseComponent } from './hse/hse.component';
 import { AddReportComponent } from './hse/add-report/add-report.component';
 import { HseFindingComponent } from './hse/hse-finding/hse-finding.component';
 import { HseFindingCreateComponent } from './hse/hse-finding-create/hse-finding-create.component';
+import { HseFindingDetailsComponent } from './hse/hse-finding/hse-finding-details/hse-finding-details.component';
 
 const routes: Routes = [
   {
@@ -401,6 +402,10 @@ const routes: Routes = [
       {
         path: 'hse-finding-create/:id',
         component: HseFindingCreateComponent,
+      },
+      {
+        path: 'finding-details/:id',
+        component: HseFindingDetailsComponent,
       },
 
 

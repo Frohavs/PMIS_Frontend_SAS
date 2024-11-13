@@ -76,7 +76,7 @@ export class HseService {
       Authorization: `Bearer ${this.token}`,
     });
     const milestone = {
-      projectId: id,
+      hseId: id,
       quickSearch: search,
       pagedSearch: {
         "pageIndex": pageIndex,

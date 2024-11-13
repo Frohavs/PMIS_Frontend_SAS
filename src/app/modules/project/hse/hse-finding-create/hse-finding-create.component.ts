@@ -28,6 +28,7 @@ export class HseFindingCreateComponent implements OnInit {
   markerOptions: google.maps.MarkerOptions = {
     draggable: true // Enable marker dragging
   };
+  filesArray: any[] = [];
 
   markerPosition: google.maps.LatLngLiteral = { lat: 24.66911551123412, lng: 46.690065163710585 };
 
@@ -35,8 +36,8 @@ export class HseFindingCreateComponent implements OnInit {
   lng: number = this.markerPosition.lng;
 
 
-  factoriesCR: any[] = [];
-  factoryFields: any[] = [];
+  findingsCategories: any[] = [];
+  findingsClassifications: any[] = [];
   units: any[] = [];
   private updating = false;
   private updatingVat = false;
@@ -91,9 +92,8 @@ export class HseFindingCreateComponent implements OnInit {
       this.projectId = +params['id'];
     });
     this.activatedRoute.queryParams.subscribe(params => {
-      this.hseId = params['hseId'];
+      this.hseId = +params['hseId'];
     });
-
   }
 
   initAddBoqForm() {
@@ -104,6 +104,7 @@ export class HseFindingCreateComponent implements OnInit {
       locationRemarks: ['', Validators.required],
       hseFindings: ['', Validators.required],
       findingRemarks: ['', Validators.required],
+      actions: ['', Validators.required],
       dueDate: ['', Validators.required],
       categoryId: ['', Validators.required],
       classificationId: ['', Validators.required],
@@ -112,34 +113,38 @@ export class HseFindingCreateComponent implements OnInit {
   }
 
   getLookups() {
-    this.lookupService.getFactoryCRS().subscribe(res => {
-      this.factoriesCR = res.data;
+    this.lookupService.getFindingCategories().subscribe(res => {
+      this.findingsCategories = res.data;
       this.cdr.detectChanges();
     });
-    this.lookupService.getFactoryFields().subscribe(res => {
-      this.factoryFields = res.data;
+    this.lookupService.getFindingClassifications().subscribe(res => {
+      this.findingsClassifications = res.data;
       this.cdr.detectChanges();
     })
   }
 
-
-
   saveChanges() {
+    debugger
     if (!this.addFindingForm.valid) {
       this.addFindingForm.markAllAsTouched();
       return;
     }
-
     this.isLoading = true;
     const payload = {
       ...this.addFindingForm.value,
-      projectId: +this.projectId,
+      hseId: +this.hseId,
+      categoryId: +this.addFindingForm.value.categoryId,
+      classificationId: +this.addFindingForm.value.classificationId,
+      evidences: this.filesArray
     }
+
     this.hseService.createFinding(payload).subscribe({
       next: (res) => {
         this.isLoading = false;
-        this.router.navigateByUrl(`projects/factory-list/${this.projectId}`);
-        this.showAlert({ icon: 'success', title: 'Success!', text: 'Boq Added successfully!' });
+        this.router.navigate([`projects/hse-finding/${this.projectId}`], {
+          queryParams: { hseId: this.hseId }
+        });
+        this.showAlert({ icon: 'success', title: 'Success!', text: 'Finding Added successfully!' });
         this.cdr.detectChanges();
       },
       error: (error) => {
@@ -152,15 +157,17 @@ export class HseFindingCreateComponent implements OnInit {
 
   onFileChange(event: any) {
     if (event.target.files.length > 0) {
-      const file = event.target.files[0];
-      const fd = new FormData();
-      fd.append('Attachment', file, file.name);
-      this.attachmentService.uploadAttachment(fd).subscribe(res => {
-        this.crAttachment = file.name;
-        this.cdr.detectChanges();
-      }, (error) => {
-        this.showAlert({ icon: 'error', title: 'Error!', text: 'Please try Upload again' });
-      });
+      const files = event.target.files;
+      for (const element of files) {
+        const fd = new FormData();
+        fd.append('Attachment', element, element.name);
+        this.attachmentService.uploadAttachment(fd).subscribe(res => {
+          this.filesArray.push({ attachment: element.name });
+          this.cdr.detectChanges();
+        }, (error) => {
+          this.showAlert({ icon: 'error', title: 'Error!', text: 'Please try Upload again' });
+        });
+      }
     }
 
   }
