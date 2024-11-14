@@ -133,7 +133,6 @@ export class DeliverableChecklistComponent implements OnInit {
         this.currentAnswersArray = [];
         this.resetFormToInitialState();
       }
-      console.log('currentAnswersArray', this.currentAnswersArray);
       this.patchFormValues(this.currentAnswersArray);
     });
   }

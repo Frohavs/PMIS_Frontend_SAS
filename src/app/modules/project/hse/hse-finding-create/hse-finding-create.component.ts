@@ -124,7 +124,6 @@ export class HseFindingCreateComponent implements OnInit {
   }
 
   saveChanges() {
-    debugger
     if (!this.addFindingForm.valid) {
       this.addFindingForm.markAllAsTouched();
       return;

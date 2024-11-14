@@ -1,7 +1,10 @@
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { GoogleMap } from '@angular/google-maps';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
+import { AttachmentService } from 'src/app/services/attachment/attachment.service';
 import { HseService } from 'src/app/services/hse.service';
 
 @Component({
@@ -26,12 +29,28 @@ export class HseFindingDetailsComponent implements OnInit {
   };
   markerPosition: google.maps.LatLngLiteral | null = null;
 
+  modalConfig: NgbModalOptions = {
+    modalDialogClass: 'modal-dialog modal-dialog-centered mw-650px',
+  };
+  firstModel: { clarifications: string, instructions: string, attachment: string } = { clarifications: '', instructions: '', attachment: '' };
+  @ViewChild('firstModal') firstModal!: any;
+
+  secondModel: { dateOfActionsTaken: string, actionsTaken: string, attachment: string, instructions: string } = { dateOfActionsTaken: '', actionsTaken: '', attachment: '', instructions: '' };
+  @ViewChild('secondModal') secondModal!: any;
+
+  thirdModel: { approved: boolean, validations: string, furtherInstructions: string, attachment: string } = { approved: false, validations: '', furtherInstructions: '', attachment: '' };
+  @ViewChild('thirdModal') thirdModal!: any;
+
+  forthModel: { approved: boolean, validations: string, furtherInstructions: string, attachment: string } = { approved: false, validations: '', furtherInstructions: '', attachment: '' };
+  @ViewChild('forthModal') forthModal!: any;
+
   constructor(
     private router: Router,
     private cdr: ChangeDetectorRef,
-    private translate: TranslateService,
+    private modalService: NgbModal,
     private activatedRoute: ActivatedRoute,
     private hseService: HseService,
+    private attachmentService: AttachmentService,
   ) { }
 
   ngOnInit(): void {
@@ -61,48 +80,73 @@ export class HseFindingDetailsComponent implements OnInit {
     });
   }
 
-
-  navigateUpdateStaff() {
-  }
-
-  navigateUpdateInfo() {
-  }
-
-  updateProjectInfo() {
-  }
-
-  navigateUpdateProgress() {
-  }
-
-  navigateProjectStage() {
-  }
-
-  navigateProjectStatusReport() {
-  }
   fireSubmitContractorModal() {
+    this.firstModel = { clarifications: '', instructions: '', attachment: '' };
+    this.modalService.open(this.firstModal, this.modalConfig);
+  }
+  onFirstFileChange(event: any) {
+    if (event.target.files.length > 0) {
+      const file = event.target.files[0];
+      const fd = new FormData();
+      fd.append('Attachment', file, file.name);
+      this.attachmentService.uploadAttachment(fd).subscribe(res => {
+        this.firstModel.attachment = file.name;
+        this.cdr.detectChanges();
+      });
+    }
+
+  }
+  onFirstSubmit(event: Event, myForm: NgForm) {
+    if (myForm && myForm.invalid) {
+      return;
+    }
     const payload = {
-      clarifications: "testC",
-      instructions: "testI",
-      attachment: "ipad.png",
-      findingId: 7
+      clarifications: this.firstModel.clarifications,
+      instructions: this.firstModel.instructions,
+      attachment: this.firstModel.attachment,
+      findingId: this.findingId
     };
     this.hseService.submitToContractor(payload).subscribe(res => {
-      debugger
+      this.modalService.dismissAll();
       this.getDetails();
       this.getLogs();
+      this.firstModel = { clarifications: '', instructions: '', attachment: '' };
       this.cdr.detectChanges();
     });
   }
+
   fireReturnConsultantModal() {
+    this.secondModel = { dateOfActionsTaken: '', actionsTaken: '', attachment: '', instructions: '' };
+    this.modalService.open(this.secondModal, this.modalConfig);
+  }
+
+  onSecondFileChange(event: any) {
+    if (event.target.files.length > 0) {
+      const file = event.target.files[0];
+      const fd = new FormData();
+      fd.append('Attachment', file, file.name);
+      this.attachmentService.uploadAttachment(fd).subscribe(res => {
+        this.secondModel.attachment = file.name;
+        this.cdr.detectChanges();
+      });
+    }
+
+  }
+
+  onSecondSubmit(event: Event, myForm: NgForm) {
+    if (myForm && myForm.invalid) {
+      return;
+    }
     const payload = {
-      instructions: "string",
-      actionsTaken: "string",
-      dateOfActionsTaken: "2024-11-15T20:15:36.329Z",
-      attachment: "ipad.png",
-      findingId: 7
+      instructions: this.secondModel.instructions,
+      actionsTaken: this.secondModel.actionsTaken,
+      dateOfActionsTaken: this.secondModel.dateOfActionsTaken,
+      attachment: this.secondModel.attachment,
+      findingId: this.findingId
     };
     this.hseService.returnedToConsultant(payload).subscribe(res => {
-      debugger
+      this.modalService.dismissAll();
+      this.secondModel = { dateOfActionsTaken: '', actionsTaken: '', attachment: '', instructions: '' };
       this.getDetails();
       this.getLogs();
       this.cdr.detectChanges();
@@ -110,30 +154,72 @@ export class HseFindingDetailsComponent implements OnInit {
   }
 
   fireConsultantReviewModal() {
+    this.thirdModel = { approved: false, validations: '', furtherInstructions: '', attachment: '' };
+    this.modalService.open(this.thirdModal, this.modalConfig);
+  }
+
+  onThirdFileChange(event: any) {
+    if (event.target.files.length > 0) {
+      const file = event.target.files[0];
+      const fd = new FormData();
+      fd.append('Attachment', file, file.name);
+      this.attachmentService.uploadAttachment(fd).subscribe(res => {
+        this.thirdModel.attachment = file.name;
+        this.cdr.detectChanges();
+      });
+    }
+
+  }
+  onThirdSubmit(event: Event, myForm: NgForm) {
+    if (myForm && myForm.invalid) {
+      return;
+    }
     const payload = {
-      approved: true,
-      validations: "string",
-      furtherInstructions: "string",
-      attachment: "ipad.png",
-      findingId: 7
+      approved: this.thirdModel.approved,
+      validations: this.thirdModel.validations,
+      furtherInstructions: this.thirdModel.furtherInstructions,
+      attachment: this.thirdModel.attachment,
+      findingId: this.findingId
     };
     this.hseService.consultantReview(payload).subscribe(res => {
-      debugger
+      this.modalService.dismissAll();
+      this.thirdModel = { approved: false, validations: '', furtherInstructions: '', attachment: '' };
       this.getDetails();
       this.getLogs();
       this.cdr.detectChanges();
     });
   }
   firePmoReviewModal() {
-    const payload = {
+    this.forthModel = { approved: false, validations: '', furtherInstructions: '', attachment: '' };
+    this.modalService.open(this.forthModal, this.modalConfig);
+  }
 
-      approved: false,
-      validations: "string",
-      furtherInstructions: "string",
-      findingId: 7
+  onForthFileChange(event: any) {
+    if (event.target.files.length > 0) {
+      const file = event.target.files[0];
+      const fd = new FormData();
+      fd.append('Attachment', file, file.name);
+      this.attachmentService.uploadAttachment(fd).subscribe(res => {
+        this.forthModel.attachment = file.name;
+        this.cdr.detectChanges();
+      });
+    }
+
+  }
+  onForthSubmit(event: Event, myForm: NgForm) {
+    if (myForm && myForm.invalid) {
+      return;
+    }
+    const payload = {
+      approved: this.forthModel.approved,
+      validations: this.forthModel.validations,
+      furtherInstructions: this.forthModel.furtherInstructions,
+      attachment: this.forthModel.attachment,
+      findingId: this.findingId
     };
     this.hseService.pMOReview(payload).subscribe(res => {
-      debugger
+      this.modalService.dismissAll();
+      this.forthModel = { approved: false, validations: '', furtherInstructions: '', attachment: '' };
       this.getDetails();
       this.getLogs();
       this.cdr.detectChanges();

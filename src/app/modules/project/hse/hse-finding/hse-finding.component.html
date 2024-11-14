@@ -46,6 +46,7 @@
             <th class="max-w-50px">Finding Category</th>
             <th class="max-w-50px">Finding classification</th>
             <th class="max-w-50px">Due Date</th>
+            <th class="max-w-50px">Status</th>
             <th class="max-w-100px text-center">Actions</th>
           </tr>
         </thead>
@@ -73,17 +74,22 @@
               </a>
             </td>
             <td>
+              <a class="text-gray-900 fw-bolder text-hover-primary d-block fs-6">
+                {{item?.status || ''}}
+              </a>
+            </td>
+            <td>
               <div class="d-flex justify-content-center flex-shrink-0">
                 <a class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1"
                   (click)="navigateFinding(item)">
                   <app-keenicon name="eye" class="fs-3"></app-keenicon>
                 </a>
-                <a class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1"
+                <!-- <a class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1"
                   (click)="editAttachment(item)">
                   <app-keenicon name="pencil" class="fs-3"></app-keenicon>
-                </a>
+                </a> -->
                 <a class="btn btn-icon btn-bg-light btn-active-color-danger btn-sm"
-                  (click)="deleteAttachment(item)">
+                  (click)="deleteFinding(item)">
                   <app-keenicon name="trash" class="fs-3"></app-keenicon>
                 </a>
               </div>

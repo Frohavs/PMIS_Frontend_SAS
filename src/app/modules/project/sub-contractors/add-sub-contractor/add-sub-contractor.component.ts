@@ -223,9 +223,7 @@ export class AddSubContractorComponent implements OnInit {
   }
 
   submitNewSubContractor() {
-    console.log(this.stackholderModelData);
     this.subContractorsService.createSubContractor(this.stackholderModelData).subscribe(res => {
-      console.log(res);
       this.getLookups();
       this.showAlert({ icon: 'success', title: 'Success!', text: 'Added successfully!' });
       this.modalService.dismissAll();

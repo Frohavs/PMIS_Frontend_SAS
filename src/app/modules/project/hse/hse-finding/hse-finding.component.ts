@@ -100,13 +100,13 @@ export class HseFindingComponent implements OnInit, AfterViewInit, OnDestroy {
     });
   }
 
-  deleteAttachment(File: any) {
+  deleteFinding(File: any) {
     this.deleteSwal.fire().then((clicked) => {
       if (clicked.isConfirmed) {
         this.isLoading = true;
-        this.hseService.deleteVendor(File.id).subscribe({
+        this.hseService.deleteFinding(File.id).subscribe({
           next: (res) => {
-            this.showAlert({ icon: 'success', title: 'Success!', text: 'Project Deleted successfully!' });
+            this.showAlert({ icon: 'success', title: 'Success!', text: 'Finding Deleted successfully!' });
             setTimeout(() => {
               this.isLoading = false;
               this.dataList = [];

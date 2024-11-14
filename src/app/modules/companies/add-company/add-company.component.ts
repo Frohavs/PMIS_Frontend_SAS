@@ -51,22 +51,18 @@ export class AddCompanyComponent implements OnInit, OnDestroy {
     this.getCompanyId();
     this.initializeCompanyForm();
     this.vendorService.getAll().subscribe(res => {
-      // console.log('vendorService', res.data.items);
       this.vendorList = res.data.items;
       this.cdr.detectChanges();
     });
   }
 
   onItemSelect(item: any) {
-    // console.log(item);
 
   }
   onItemDeselect(item: any) {
-    // console.log(item);
 
   }
   onSelectAll(items: any) {
-    // console.log(items);
   }
 
   initializeCompanyForm() {

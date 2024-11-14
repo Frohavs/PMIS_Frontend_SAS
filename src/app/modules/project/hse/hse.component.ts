@@ -96,28 +96,6 @@ export class HseComponent implements OnInit, AfterViewInit, OnDestroy {
     });
   }
 
-  deleteAttachment(File: any) {
-    this.deleteSwal.fire().then((clicked) => {
-      if (clicked.isConfirmed) {
-        this.isLoading = true;
-        this.hseService.deleteVendor(File.id).subscribe({
-          next: (res) => {
-            this.showAlert({ icon: 'success', title: 'Success!', text: 'Project Deleted successfully!' });
-            setTimeout(() => {
-              this.isLoading = false;
-              this.dataList = [];
-              this.initializeProjectData(this.projectId,);
-            }, 500);
-          },
-          error: (error) => {
-            this.isLoading = false;
-            this.showAlert({ icon: 'error', title: 'Error!', text: 'Please try again' });
-          }
-        });
-      }
-    });
-  }
-
   navigateTo(event: any) {
     const route = event?.target.value;
     this.router.navigateByUrl(route + `/${'123'}`)

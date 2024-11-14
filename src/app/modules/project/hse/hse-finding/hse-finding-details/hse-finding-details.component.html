@@ -114,12 +114,10 @@
 
             <div class=" me-2">
               <div class="card-toolbar">
-                <button class="btn btn-sm" (click)="firePmoReviewModal()"
-                [ngClass]="{
+                <button class="btn btn-sm" (click)="firePmoReviewModal()" [ngClass]="{
                   'btn-dark': findingDetails?.status === 'Returned To PMO',
                   'btn-light-dark': findingDetails?.status !== 'Returned To PMO'
-                }"
-                  [disabled]="findingDetails?.status !== 'Returned To PMO'">
+                }" [disabled]="findingDetails?.status !== 'Returned To PMO'">
                   PMO review
                 </button>
               </div>
@@ -240,3 +238,261 @@
     </div>
   </div>
 </div>
+
+
+
+<ng-template #firstModal let-modal>
+  <form #firstForm="ngForm" (ngSubmit)="onFirstSubmit($event, firstForm)">
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Submit to contractor</h4>
+      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+      <div class="fv-row mb-7">
+        <label class="required fw-semibold fs-6 mb-2">Clarifications</label>
+        <textarea cols="4" class="form-control form-control-solid" name="clarifications"
+          [(ngModel)]="firstModel.clarifications" #clarifications="ngModel" required></textarea>
+        <div *ngIf="firstForm.submitted && firstForm.invalid"
+          class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
+          <div *ngIf="clarifications.errors?.['required']">clarifications is required</div>
+        </div>
+      </div>
+      <div class="fv-row mb-7">
+        <label class="required fw-semibold fs-6 mb-2">Instructions</label>
+        <textarea cols="4" class="form-control form-control-solid" name="instructions"
+          [(ngModel)]="firstModel.instructions" #instructions="ngModel" required></textarea>
+        <div *ngIf="firstForm.submitted && firstForm.invalid"
+          class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
+          <div *ngIf="instructions.errors?.['required']">instructions is required</div>
+        </div>
+      </div>
+      <div class="fv-row mb-7">
+        <label class="required fw-semibold fs-6 mb-2">Attachment</label>
+        <input type="file" class="form-control form-control-solid" name="attachment" [(ngModel)]="firstModel.attachment"
+          #attachment="ngModel" required (change)="onFirstFileChange($event)" />
+        <div *ngIf="firstForm.submitted && firstForm.invalid"
+          class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
+          <div *ngIf="attachment.errors?.['required']">file is required</div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer flex-center">
+      <!--begin::Button-->
+      <button type="reset" id="kt_modal_update_customer_cancel" class="btn btn-light me-3"
+        (click)="modal.dismiss('cancel')">
+        Discard
+      </button>
+      <!--end::Button-->
+
+      <!--begin::Button-->
+      <button type="submit" id="kt_modal_update_customer_submit" class="btn btn-primary"
+        [attr.data-kt-indicator]="isLoading ? 'on' : 'off'" [disabled]="firstForm.invalid">
+        <span class="indicator-label">
+          Submit
+        </span>
+        <span class="indicator-progress">
+          Please wait... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+        </span>
+      </button>
+      <!--end::Button-->
+    </div>
+  </form>
+</ng-template>
+
+<ng-template #secondModal let-modal>
+    <form #secondForm="ngForm" (ngSubmit)="onSecondSubmit($event, secondForm)">
+      <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Return to Consultant</h4>
+        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+      </div>
+      <div class="modal-body">
+        <div class="fv-row mb-7">
+          <label class="required fw-semibold fs-6 mb-2">Date of Action Taken</label>
+          <input type="date" class="form-control form-control-solid" name="dateOfActionsTaken"
+            [(ngModel)]="secondModel.dateOfActionsTaken" #dateOfActionsTaken="ngModel" required />
+          <div *ngIf="secondForm.submitted && secondForm.invalid"
+            class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
+            <div *ngIf="dateOfActionsTaken.errors?.['required']">date is required</div>
+          </div>
+        </div>
+        <div class="fv-row mb-7">
+          <label class="required fw-semibold fs-6 mb-2">Action Taken</label>
+          <textarea cols="4" class="form-control form-control-solid" name="actionsTaken"
+            [(ngModel)]="secondModel.actionsTaken" #actionsTaken="ngModel" required></textarea>
+          <div *ngIf="secondForm.submitted && secondForm.invalid"
+            class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
+            <div *ngIf="actionsTaken.errors?.['required']">action is required</div>
+          </div>
+        </div>
+        <div class="fv-row mb-7">
+          <label class="required fw-semibold fs-6 mb-2">Clarifications</label>
+          <textarea cols="4" class="form-control form-control-solid" name="instructions"
+            [(ngModel)]="secondModel.instructions" #instructions="ngModel" required></textarea>
+          <div *ngIf="secondForm.submitted && secondForm.invalid"
+            class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
+            <div *ngIf="instructions.errors?.['required']">clarifications is required</div>
+          </div>
+        </div>
+        <div class="fv-row mb-7">
+          <label class="required fw-semibold fs-6 mb-2">Attachment</label>
+          <input type="file" class="form-control form-control-solid" name="attachment" [(ngModel)]="firstModel.attachment"
+            #attachment="ngModel" required (change)="onSecondFileChange($event)" />
+          <div *ngIf="secondForm.submitted && secondForm.invalid"
+            class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
+            <div *ngIf="attachment.errors?.['required']">file is required</div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer flex-center">
+        <!--begin::Button-->
+        <button type="reset" id="kt_modal_update_customer_cancel" class="btn btn-light me-3"
+          (click)="modal.dismiss('cancel')">
+          Discard
+        </button>
+        <!--end::Button-->
+
+        <!--begin::Button-->
+        <button type="submit" id="kt_modal_update_customer_submit" class="btn btn-primary"
+          [attr.data-kt-indicator]="isLoading ? 'on' : 'off'" [disabled]="secondForm.invalid">
+          <span class="indicator-label">
+            Submit
+          </span>
+          <span class="indicator-progress">
+            Please wait... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+          </span>
+        </button>
+        <!--end::Button-->
+      </div>
+    </form>
+</ng-template>
+
+<ng-template #thirdModal let-modal>
+    <form #thirdForm="ngForm" (ngSubmit)="onThirdSubmit($event, thirdForm)">
+      <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Submit to contractor</h4>
+        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+      </div>
+      <div class="modal-body">
+        <div class="fv-row mb-7">
+          <div class="form-check form-check-solid form-switch d-flex align-items-center">
+            <input class="form-check-input w-45px h-30px me-2" type="checkbox" name="approved"
+              [(ngModel)]="thirdModel.approved" #approved="ngModel" />
+            <label class="form-check-label">{{thirdModel.approved ? 'Approve' : 'Reject'}}</label>
+          </div>
+        </div>
+        <div class="fv-row mb-7">
+          <label class="required fw-semibold fs-6 mb-2">validation and remarks</label>
+          <textarea cols="4" class="form-control form-control-solid" name="validations"
+            [(ngModel)]="thirdModel.validations" #validations="ngModel" required></textarea>
+          <div *ngIf="thirdForm.submitted && thirdForm.invalid"
+            class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
+            <div *ngIf="validations.errors?.['required']">validations is required</div>
+          </div>
+        </div>
+        <div class="fv-row mb-7">
+          <label class="required fw-semibold fs-6 mb-2">further instructions</label>
+          <textarea cols="4" class="form-control form-control-solid" name="furtherInstructions"
+            [(ngModel)]="thirdModel.furtherInstructions" #furtherInstructions="ngModel" required></textarea>
+          <div *ngIf="thirdForm.submitted && thirdForm.invalid"
+            class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
+            <div *ngIf="furtherInstructions.errors?.['required']">instructions is required</div>
+          </div>
+        </div>
+        <div class="fv-row mb-7">
+          <label class="required fw-semibold fs-6 mb-2">Attachment</label>
+          <input type="file" class="form-control form-control-solid" name="attachment" [(ngModel)]="firstModel.attachment"
+            #attachment="ngModel" required (change)="onThirdFileChange($event)" />
+          <div *ngIf="thirdForm.submitted && thirdForm.invalid"
+            class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
+            <div *ngIf="attachment.errors?.['required']">file is required</div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer flex-center">
+        <!--begin::Button-->
+        <button type="reset" id="kt_modal_update_customer_cancel" class="btn btn-light me-3"
+          (click)="modal.dismiss('cancel')">
+          Discard
+        </button>
+        <!--end::Button-->
+
+        <!--begin::Button-->
+        <button type="submit" id="kt_modal_update_customer_submit" class="btn btn-primary"
+          [attr.data-kt-indicator]="isLoading ? 'on' : 'off'" [disabled]="thirdForm.invalid">
+          <span class="indicator-label">
+            Submit
+          </span>
+          <span class="indicator-progress">
+            Please wait... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+          </span>
+        </button>
+        <!--end::Button-->
+      </div>
+    </form>
+</ng-template>
+
+<ng-template #forthModal let-modal>
+    <form #forthForm="ngForm" (ngSubmit)="onForthSubmit($event, forthForm)">
+      <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Submit to contractor</h4>
+        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+      </div>
+      <div class="modal-body">
+        <div class="fv-row mb-7">
+          <div class="form-check form-check-solid form-switch d-flex align-items-center">
+            <input class="form-check-input w-45px h-30px me-2" type="checkbox" name="approved"
+              [(ngModel)]="forthModel.approved" #approved="ngModel" />
+            <label class="form-check-label">{{forthModel.approved ? 'Approve' : 'Reject'}}</label>
+          </div>
+        </div>
+        <div class="fv-row mb-7">
+          <label class="required fw-semibold fs-6 mb-2">validation and remarks</label>
+          <textarea cols="4" class="form-control form-control-solid" name="validations"
+            [(ngModel)]="forthModel.validations" #validations="ngModel" required></textarea>
+          <div *ngIf="forthForm.submitted && forthForm.invalid"
+            class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
+            <div *ngIf="validations.errors?.['required']">validations is required</div>
+          </div>
+        </div>
+        <div class="fv-row mb-7">
+          <label class="required fw-semibold fs-6 mb-2">further instructions</label>
+          <textarea cols="4" class="form-control form-control-solid" name="furtherInstructions"
+            [(ngModel)]="forthModel.furtherInstructions" #furtherInstructions="ngModel" required></textarea>
+          <div *ngIf="forthForm.submitted && forthForm.invalid"
+            class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
+            <div *ngIf="furtherInstructions.errors?.['required']">instructions is required</div>
+          </div>
+        </div>
+        <div class="fv-row mb-7">
+          <label class="required fw-semibold fs-6 mb-2">Attachment</label>
+          <input type="file" class="form-control form-control-solid" name="attachment" [(ngModel)]="firstModel.attachment"
+            #attachment="ngModel" required (change)="onForthFileChange($event)" />
+          <div *ngIf="forthForm.submitted && forthForm.invalid"
+            class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
+            <div *ngIf="attachment.errors?.['required']">file is required</div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer flex-center">
+        <!--begin::Button-->
+        <button type="reset" id="kt_modal_update_customer_cancel" class="btn btn-light me-3"
+          (click)="modal.dismiss('cancel')">
+          Discard
+        </button>
+        <!--end::Button-->
+
+        <!--begin::Button-->
+        <button type="submit" id="kt_modal_update_customer_submit" class="btn btn-primary"
+          [attr.data-kt-indicator]="isLoading ? 'on' : 'off'" [disabled]="forthForm.invalid">
+          <span class="indicator-label">
+            Submit
+          </span>
+          <span class="indicator-progress">
+            Please wait... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+          </span>
+        </button>
+        <!--end::Button-->
+      </div>
+    </form>
+</ng-template>
+

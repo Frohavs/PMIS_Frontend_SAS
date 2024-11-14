@@ -62,11 +62,11 @@ export class HseService {
       headers: httpHeaders
     });
   }
-  deleteVendor(id: number): Observable<any> {
+  deleteFinding(id: number): Observable<any> {
     const httpHeaders = new HttpHeaders({
       Authorization: `Bearer ${this.token}`,
     });
-    const url = `${this.API_USERS_URL}/Delete/${id}`;
+    const url = `${this.API_USERS_URL}/DeleteFinding/${id}`;
     return this.http.delete<any>(url, {
       headers: httpHeaders
     });

@@ -86,13 +86,11 @@ export class AddEvaluationComponent implements OnInit {
 
       this.staffEvaluationService.addEvaluation(payload).subscribe(res => {
         this.isLoading = false;
-        console.log(res);
         this.router.navigateByUrl('staff-evaluation')
         this.showAlert({ icon: 'success', title: 'Success!', text: 'Evaluation Added successfully!' });
 
       }, (error) => {
         this.isLoading = false;
-        console.log(error);
         this.showAlert({ icon: 'error', title: 'Error!', text: 'Please try again' });
       });
     }
