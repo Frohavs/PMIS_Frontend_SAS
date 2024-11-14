@@ -1,1 +1,242 @@
-<p>hse-finding-details works!</p>
+<div class="row g-5 g-xl-8 justify-content-between">
+  <div class="col-xl-6">
+
+    <div class="card mb-5 mb-xl-8">
+      <div class="card-header align-items-center border-0 mt-4">
+        <h3 class="card-title align-items-start flex-column">
+          <span class="fw-bolder text-gray-900">Hse List</span>
+        </h3>
+      </div>
+      <div class="card-body pt-3">
+        <div class="d-flex align-items-sm-center mb-7">
+          <div class="d-flex flex-row-fluid flex-wrap align-items-center">
+            <div class="w-50 me-2">
+              <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
+                Street
+              </a>
+              <span class="text-muted fw-bold d-block pt-1">{{findingDetails?.street  ||  '--'}}</span>
+            </div>
+            <div class="flex-grow-1 me-2">
+              <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
+                location Remarks
+              </a>
+              <span class="text-muted fw-bold d-block pt-1">{{findingDetails?.locationRemarks  ||  '--'}}</span>
+            </div>
+          </div>
+        </div>
+        <div class="d-flex align-items-sm-center mb-7">
+          <div class="d-flex flex-row-fluid flex-wrap align-items-center">
+            <div class="w-50 me-2">
+              <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
+                hse Findings
+              </a>
+              <span class="text-muted fw-bold d-block pt-1">{{findingDetails?.hseFindings  ||  '--'}}</span>
+            </div>
+            <div class="flex-grow-1 me-2">
+              <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
+                Finding Remark
+              </a>
+              <span class="text-muted fw-bold d-block pt-1">{{findingDetails?.findingRemarks ||  '--'}}</span>
+            </div>
+          </div>
+          <!-- end::Title -->
+        </div>
+
+        <div class="d-flex align-items-sm-center mb-7">
+
+          <!-- begin::Title -->
+          <div class="d-flex flex-row-fluid flex-wrap align-items-center">
+            <div class="w-50 me-2">
+              <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
+                due Date
+              </a>
+              <span class="text-muted fw-bold d-block pt-1">{{findingDetails?.dueDate || '--'}}</span>
+            </div>
+            <div class="flex-grow-1 me-2">
+              <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
+                evidences
+              </a>
+              <br>
+              <span class="badge badge-light-primary fs-6 fw-bold my-2 cursor-pointer">
+                {{findingDetails?.evidences.length}} files
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="d-flex align-items-sm-center mb-7">
+
+          <!-- begin::Title -->
+          <div class="d-flex flex-row-fluid flex-wrap align-items-center">
+            <div class="w-50 me-2">
+              <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
+                category
+              </a>
+              <span class="text-muted fw-bold d-block pt-1">{{findingDetails?.categoryId || '--'}}</span>
+            </div>
+            <div class="flex-grow-1 me-2">
+              <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
+                Classification
+              </a>
+              <span class="text-muted fw-bold d-block pt-1">{{findingDetails?.classificationId  ||  '--'}}</span>
+            </div>
+          </div>
+        </div>
+        <!-- end::Item -->
+        <!-- begin::Item -->
+        <div class="d-flex align-items-sm-center">
+
+          <!-- begin::Title -->
+          <div class="d-flex flex-row-fluid flex-wrap align-items-center">
+            <div class="w-100 me-2">
+              <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
+                Actions required
+              </a>
+              <span class="text-muted fw-bold d-block pt-1">{{findingDetails?.actions || '--'}}</span>
+            </div>
+
+          </div>
+          <!-- end::Title -->
+        </div>
+        <!-- end::Item -->
+      </div>
+      <!-- end::Body -->
+    </div>
+  </div>
+  <div class="col-xl-6">
+    <div class="card mb-5 mb-xl-8">
+      <!-- begin::Header -->
+      <div class="card-header align-items-center border-0 mt-4">
+        <!-- <h3 class="card-title align-items-start flex-column">
+          <span class="fw-bolder text-gray-900">Finding Location</span>
+        </h3> -->
+        <div class="card-toolbar">
+          <div class="d-flex flex-row-fluid flex-wrap justify-content-end">
+
+            <div class=" me-2">
+              <div class="card-toolbar">
+                <button class="btn btn-sm" (click)="firePmoReviewModal()"
+                [ngClass]="{
+                  'btn-dark': findingDetails?.status === 'Returned To PMO',
+                  'btn-light-dark': findingDetails?.status !== 'Returned To PMO'
+                }"
+                  [disabled]="findingDetails?.status !== 'Returned To PMO'">
+                  PMO review
+                </button>
+              </div>
+            </div>
+
+            <div class=" me-2">
+              <div class="card-toolbar">
+                <button class="btn btn-sm " (click)="fireConsultantReviewModal()" [ngClass]="{
+                  'btn-dark': findingDetails?.status === 'Returned To Consultant',
+                  'btn-light-dark': findingDetails?.status !== 'Returned To Consultant'
+                }" [disabled]="findingDetails?.status !== 'Returned To Consultant'">
+                  Consultant review
+                </button>
+              </div>
+            </div>
+
+            <div class=" me-2">
+              <div class="card-toolbar">
+                <button class="btn btn-sm" (click)="fireReturnConsultantModal()" [ngClass]="{
+                  'btn-dark': findingDetails?.status === 'Submited To Contractor',
+                  'btn-light-dark': findingDetails?.status !== 'Submited To Contractor'}"
+                  [disabled]="findingDetails?.status !== 'Submited To Contractor'">
+                  Return to consultant
+                </button>
+              </div>
+            </div>
+
+            <div class=" me-2">
+              <div class="card-toolbar">
+                <button class="btn btn-sm btn-dark" (click)="fireSubmitContractorModal()" [ngClass]="{
+                  'btn-dark': findingDetails?.status === 'Submited To Consultant',
+                  'btn-light-dark': findingDetails?.status !== 'Submited To Consultant'}"
+                  [disabled]="findingDetails?.status !== 'Submited To Consultant'">
+                  Submit to contractor
+                </button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <div class="card-body pt-3">
+
+        <google-map height="400px" width="100%" [options]="options">
+          <map-marker *ngIf="markerPosition" [position]="markerPosition" [options]="markerOptions"></map-marker>
+        </google-map>
+
+      </div>
+      <!-- end::Body -->
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-xl-12">
+    <div class="card mb-5 mb-xl-8">
+
+      <div class="card-header align-items-center border-0 mt-4">
+        <h3 class="card-title align-items-start flex-column">
+          <span class="fw-bolder text-gray-900">Inspection Findings Status</span>
+        </h3>
+
+      </div>
+
+      <div class="card-body">
+
+        <div class="table-responsive">
+          <!-- begin::Table -->
+          <table class="table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4">
+            <!-- begin::Table head -->
+            <thead>
+              <tr class="fw-bolder text-muted">
+
+                <th class="min-w-120px">status</th>
+                <th class="min-w-120px">Created By</th>
+                <th class="min-w-120px">Created date</th>
+                <th class="min-w-140px">attachment</th>
+                <th class="min-w-120px">code</th>
+              </tr>
+            </thead>
+            <!-- end::Table head -->
+            <!-- begin::Table body -->
+            <tbody>
+              <tr *ngFor="let item of findingLogs; index as i">
+                <td>
+                  <a class="text-gray-900 fw-bolder text-hover-primary" style="font-size: 12px;">
+                    {{item?.status || '--'}}
+                  </a>
+                </td>
+                <td>
+                  <a class="text-gray-900 fw-bolder text-hover-primary" style="font-size: 12px;">
+                    {{item?.createdBy || '--'}}
+                  </a>
+                </td>
+                <td>
+                  <a class="text-gray-900 fw-bolder text-hover-primary" style="font-size: 12px;">
+                    {{item?.createdOn | date : 'dd-MM-yyyy'}}
+                  </a>
+                </td>
+                <td>
+                  <a class="text-gray-900 fw-bolder text-hover-primary" style="font-size: 12px;">
+                    {{item.attachment || '--'}}
+                  </a>
+                </td>
+                <td>
+                  <a class="text-gray-900 fw-bolder text-hover-primary" style="font-size: 12px;">
+                    {{item?.approval || '--'}}
+                  </a>
+                </td>
+              </tr>
+            </tbody>
+            <!-- end::Table body -->
+          </table>
+          <!-- end::Table -->
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

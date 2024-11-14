@@ -88,12 +88,66 @@ export class HseService {
       headers: httpHeaders
     });
   }
+  getFindingById(findingId: number): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/GetFinding/${findingId}`;
+    return this.http.get<any>(url, {
+      headers: httpHeaders
+    });
+  }
+  getFindingLogsById(findingId: number): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/GetFindingLogs/${findingId}`;
+    return this.http.get<any>(url, {
+      headers: httpHeaders
+    });
+  }
   createFinding(report: string): Observable<any> {
     const httpHeaders = new HttpHeaders({
       Authorization: `Bearer ${this.token}`,
     });
     const url = `${this.API_USERS_URL}/CreateFinding`;
     return this.http.post<any>(url, report, {
+      headers: httpHeaders
+    });
+  }
+  submitToContractor(payload: any): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/SubmitToContractor`;
+    return this.http.post<any>(url, payload, {
+      headers: httpHeaders
+    });
+  }
+  returnedToConsultant(payload: any): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/ReturnedToConsultant`;
+    return this.http.post<any>(url, payload, {
+      headers: httpHeaders
+    });
+  }
+  consultantReview(payload: any): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/ConsultantReview`;
+    return this.http.post<any>(url, payload, {
+      headers: httpHeaders
+    });
+  }
+  pMOReview(payload: any): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/PMOReview`;
+    return this.http.post<any>(url, payload, {
       headers: httpHeaders
     });
   }
