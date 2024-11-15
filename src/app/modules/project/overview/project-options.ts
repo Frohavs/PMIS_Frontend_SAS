@@ -87,6 +87,10 @@ export const PROJECT_OPTIONS = [
       name: 'Initial Delivery Status',
       route: 'projects/initial-delivery-status'
     },
+    {
+      name: 'Final Delivery Status',
+      route: 'projects/final-delivery-status'
+    },
     // {
     //   name: 'stage gate management',
     //   route: 'projects/stage-gate-management'

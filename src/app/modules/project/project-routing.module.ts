@@ -70,6 +70,7 @@ import { HseFindingComponent } from './hse/hse-finding/hse-finding.component';
 import { HseFindingCreateComponent } from './hse/hse-finding-create/hse-finding-create.component';
 import { HseFindingDetailsComponent } from './hse/hse-finding/hse-finding-details/hse-finding-details.component';
 import { InitialDeliveryStatusComponent } from './initial-delivery-status/initial-delivery-status.component';
+import { FinalDeliveryStatusComponent } from './final-delivery-status/final-delivery-status.component';
 
 const routes: Routes = [
   {
@@ -412,6 +413,10 @@ const routes: Routes = [
       {
         path: 'initial-delivery-status/:id',
         component: InitialDeliveryStatusComponent,
+      },
+      {
+        path: 'final-delivery-status/:id',
+        component: FinalDeliveryStatusComponent,
       },
 
 
