@@ -83,6 +83,7 @@ import { AddReportComponent } from './hse/add-report/add-report.component';
 import { HseFindingComponent } from './hse/hse-finding/hse-finding.component';
 import { HseFindingCreateComponent } from './hse/hse-finding-create/hse-finding-create.component';
 import { HseFindingDetailsComponent } from './hse/hse-finding/hse-finding-details/hse-finding-details.component';
+import { InitialDeliveryStatusComponent } from './initial-delivery-status/initial-delivery-status.component';
 
 
 @NgModule({
@@ -177,7 +178,9 @@ import { HseFindingDetailsComponent } from './hse/hse-finding/hse-finding-detail
     AddReportComponent,
     HseFindingComponent,
     HseFindingCreateComponent,
-    HseFindingDetailsComponent
+    HseFindingDetailsComponent,
+
+    InitialDeliveryStatusComponent
   ],
   imports: [
     CommonModule,

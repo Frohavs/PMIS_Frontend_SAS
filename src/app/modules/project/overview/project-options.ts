@@ -83,6 +83,10 @@ export const PROJECT_OPTIONS = [
       name: 'HSE',
       route: 'projects/hse'
     },
+    {
+      name: 'Initial Delivery Status',
+      route: 'projects/initial-delivery-status'
+    },
     // {
     //   name: 'stage gate management',
     //   route: 'projects/stage-gate-management'

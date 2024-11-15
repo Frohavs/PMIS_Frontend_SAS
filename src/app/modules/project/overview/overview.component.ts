@@ -37,7 +37,7 @@ export class OverviewComponent implements OnInit, AfterViewInit, OnDestroy {
 
   userModel: { id: number | null, name: string, role: number } = { id: null, name: '', role: 0 };
   modalConfig: NgbModalOptions = {
-    modalDialogClass: 'modal-dialog modal-dialog-centered mw-650px',
+    modalDialogClass: 'modal-dialog modal-dialog-centered mw-850px',
   };
 
   private inputSubscription: Subscription;

@@ -134,6 +134,7 @@ export class InvoiceDetailsComponent implements OnInit, OnDestroy {
       }
     });
   }
+
   getInvoiceDetails() {
     this.invoiceService.getInvoiceById(this.invoiceId).subscribe(res => {
       this.invoiceDetails = res.data;
