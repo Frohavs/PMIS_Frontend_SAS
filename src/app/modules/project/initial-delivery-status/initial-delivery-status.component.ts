@@ -1,10 +1,10 @@
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NgbModalOptions, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
+import { DeliveryStatusService } from 'src/app/services/delivery-status.service';
 import { LookupService } from 'src/app/services/lookup/lookup.service';
-import { StageGateManagementService } from 'src/app/services/stage-gate-management.service';
 import { SweetAlertOptions } from 'sweetalert2';
 
 @Component({
@@ -15,36 +15,16 @@ import { SweetAlertOptions } from 'sweetalert2';
 export class InitialDeliveryStatusComponent implements OnInit {
 
   projectId: number;
+  deliveryStatusId: number;
 
-  projectDetails: any;
+  statusDetails: any;
   subPhaseId: number;
   isLoading: boolean;
 
   updateForm: FormGroup;
 
   activeStep: number = 1;
-  steps: any[] = [
-    {
-      "id": 1,
-      "name": "Create Committee"
-    },
-    {
-      "id": 2,
-      "name": "Track Notes"
-    },
-    {
-      "id": 3,
-      "name": "Provide Contractor with notes"
-    },
-    {
-      "id": 4,
-      "name": "Complete Notes"
-    },
-    {
-      "id": 5,
-      "name": "Sign Contract"
-    }
-  ];
+  steps: any[] = [];
 
   statusModel: { status: boolean } = { status: true };
   @ViewChild('UpdateStatusModal') UpdateStatusModal!: any;
@@ -62,91 +42,146 @@ export class InitialDeliveryStatusComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private lookupService: LookupService,
     private fb: FormBuilder,
-    private stageGateManagementService: StageGateManagementService,
+    private deliveryStatusService: DeliveryStatusService,
   ) { }
 
   ngOnInit(): void {
-    this.initStatusForm();
+    this.lookupService.getIntialDeliveryStatusSteps().subscribe(res => {
+      this.steps = res.data;
+      this.cdr.detectChanges();
+    });
     this.getInitialData();
+    this.initStatusForm();
     this.valueChangesListener();
   }
   initStatusForm() {
     this.updateForm = this.fb.group({
       id: this.projectId,
+
       createCommittee: [false],
-      createCommitteeDate: ['', [Validators.required]],
-      createCommitteeFile: ['', [Validators.required]],
-      trackNotes: [false],
-      trackNotesDate: ['', [Validators.required]],
-      trackNotesFile: ['', [Validators.required]],
-      provideContractorNotes: [false],
-      provideContractorNotesDate: ['', [Validators.required]],
-      provideContractorNotesFile: ['', [Validators.required]],
-      completeNotes: [false],
-      completeNotesDate: ['', [Validators.required]],
-      completeNotesFile: ['', [Validators.required]],
-      signContract: [false],
-      signContractDate: ['', [Validators.required]],
-      signContractFile: ['', [Validators.required]],
+      createCommitteeDate: [{value: '', disabled: true}, [Validators.required]],
+      createCommitteeFile: [{value: '', disabled: true}, [Validators.required]],
+
+      trackNotes: [{value: false, disabled: true}],
+      notApplied: [{value: false, disabled: true}],
+      trackNotesDate: [{value: '', disabled: true}, [Validators.required]],
+      trackNotesFile: [{value: '', disabled: true}, [Validators.required]],
+
+      provideContractorNotes: [{value: false, disabled: true}],
+      provideContractorNotesDate: [{value: '', disabled: true}, [Validators.required]],
+      provideContractorNotesFile: [{value: '', disabled: true}, [Validators.required]],
+
+      completeNotes: [{value: false, disabled: true}],
+      completeNotesDate: [{value: '', disabled: true}, [Validators.required]],
+      completeNotesFile: [{value: '', disabled: true}, [Validators.required]],
+
+      signContract: [{value: false, disabled: true}],
+      signContractDate: [{value: '', disabled: true}, [Validators.required]],
+      signContractFile: [{value: '', disabled: true}, [Validators.required]],
     });
   }
 
   valueChangesListener() {
-    this.updateForm.get('claimCheck')?.valueChanges.subscribe((value) => {
+    this.updateForm.get('createCommittee')?.valueChanges.subscribe((value) => {
       if (!value) {
-        this.updateForm.get('approved')?.disable();
-        this.updateForm.get('approved')?.setValue(false);
-        this.updateForm.get('approvedDate')?.disable();
-        this.updateForm.get('claimCheckDate')?.setValue(null);
-        this.updateForm.get('approvedDate')?.setValue(null);
+        this.updateForm.get('trackNotes')?.disable();
+        this.updateForm.get('trackNotes')?.setValue(false);
+        this.updateForm.get('notApplied')?.disable();
+        this.updateForm.get('notApplied')?.setValue(false);
+        this.updateForm.get('trackNotesDate')?.disable();
+        this.updateForm.get('trackNotesDate')?.setValue(null);
+        this.updateForm.get('trackNotesFile')?.disable();
+        this.updateForm.get('trackNotesFile')?.setValue(null);
       } else {
-        this.updateForm.get('approved')?.enable();
-        this.updateForm.get('approvedDate')?.enable();
+        this.updateForm.get('trackNotes')?.enable();
+        this.updateForm.get('notApplied')?.enable();
+        this.updateForm.get('trackNotesDate')?.enable();
+        this.updateForm.get('trackNotesFile')?.enable();
       }
     });
-    this.updateForm.get('approved')?.valueChanges.subscribe((value) => {
+    this.updateForm.get('trackNotes')?.valueChanges.subscribe((value) => {
       if (!value) {
-        this.updateForm.get('isExchangeorder')?.disable();
-        this.updateForm.get('isExchangeorder')?.setValue(false);
-        this.updateForm.get('exchangeOrderReferenceNumber')?.disable();
-        this.updateForm.get('exchangeOrderReferenceNumber')?.setValue(null);
+        this.updateForm.get('provideContractorNotes')?.disable();
+        this.updateForm.get('provideContractorNotes')?.setValue(false);
+        this.updateForm.get('provideContractorNotesDate')?.disable();
+        this.updateForm.get('provideContractorNotesDate')?.setValue(null);
+        this.updateForm.get('provideContractorNotesFile')?.disable();
+        this.updateForm.get('provideContractorNotesFile')?.setValue(null);
       } else {
-        this.updateForm.get('isExchangeorder')?.enable();
-        this.updateForm.get('exchangeOrderReferenceNumber')?.enable();
-        this.updateForm.get('exchangeOrderReferenceNumber')?.setValue(null);
+        this.updateForm.get('provideContractorNotes')?.enable();
+        this.updateForm.get('provideContractorNotesDate')?.enable();
+        this.updateForm.get('provideContractorNotesFile')?.enable();
       }
     });
-    this.updateForm.get('isExchangeorder')?.valueChanges.subscribe((value) => {
+    this.updateForm.get('notApplied')?.valueChanges.subscribe((value) => {
       if (!value) {
-        this.updateForm.get('isPaymentOrderRef')?.disable();
-        this.updateForm.get('isPaymentOrderRef')?.setValue(false);
-        this.updateForm.get('paymentOrderReferenceNumber')?.disable();
-        this.updateForm.get('paymentOrderReferenceNumber')?.setValue(null);
+        this.updateForm.get('completeNotes')?.disable();
+        this.updateForm.get('completeNotes')?.setValue(false);
+        this.updateForm.get('completeNotesDate')?.disable();
+        this.updateForm.get('completeNotesDate')?.setValue(null);
+        this.updateForm.get('completeNotesFile')?.disable();
+        this.updateForm.get('completeNotesFile')?.setValue(null);
+
+        this.updateForm.get('provideContractorNotes')?.disable();
+        this.updateForm.get('provideContractorNotes')?.setValue(false);
+        this.updateForm.get('provideContractorNotesDate')?.disable();
+        this.updateForm.get('provideContractorNotesDate')?.setValue(null);
+        this.updateForm.get('provideContractorNotesFile')?.disable();
+        this.updateForm.get('provideContractorNotesFile')?.setValue(null);
+
+        this.updateForm.get('signContract')?.disable();
+        this.updateForm.get('signContract')?.setValue(false);
+        this.updateForm.get('signContractDate')?.disable();
+        this.updateForm.get('signContractDate')?.setValue(null);
+        this.updateForm.get('signContractFile')?.disable();
+        this.updateForm.get('signContractFile')?.setValue(null);
+
       } else {
-        this.updateForm.get('isPaymentOrderRef')?.enable();
-        this.updateForm.get('paymentOrderReferenceNumber')?.enable();
-        this.updateForm.get('paymentOrderReferenceNumber')?.setValue(null);
+        this.updateForm.get('completeNotes')?.disable();
+        this.updateForm.get('completeNotes')?.setValue(false);
+        this.updateForm.get('completeNotesDate')?.disable();
+        this.updateForm.get('completeNotesDate')?.setValue(null);
+        this.updateForm.get('completeNotesFile')?.disable();
+        this.updateForm.get('completeNotesFile')?.setValue(null);
+
+        this.updateForm.get('provideContractorNotes')?.disable();
+        this.updateForm.get('provideContractorNotes')?.setValue(false);
+        this.updateForm.get('provideContractorNotesDate')?.disable();
+        this.updateForm.get('provideContractorNotesDate')?.setValue(null);
+        this.updateForm.get('provideContractorNotesFile')?.disable();
+        this.updateForm.get('provideContractorNotesFile')?.setValue(null);
+
+        this.updateForm.get('signContract')?.enable();
+        this.updateForm.get('signContractDate')?.enable();
+        this.updateForm.get('signContractFile')?.enable();
       }
     });
-    this.updateForm.get('isPaymentOrderRef')?.valueChanges.subscribe((value) => {
+    this.updateForm.get('provideContractorNotes')?.valueChanges.subscribe((value) => {
       if (!value) {
-        this.updateForm.get('isPaymentOrder')?.disable();
-        this.updateForm.get('isPaymentOrder')?.setValue(false);
-        this.updateForm.get('paymentOrder')?.disable();
-        this.updateForm.get('paymentOrder')?.setValue(null);
+        this.updateForm.get('completeNotes')?.disable();
+        this.updateForm.get('completeNotes')?.setValue(false);
+        this.updateForm.get('completeNotesDate')?.disable();
+        this.updateForm.get('completeNotesDate')?.setValue(null);
+        this.updateForm.get('completeNotesFile')?.disable();
+        this.updateForm.get('completeNotesFile')?.setValue(null);
       } else {
-        this.updateForm.get('isPaymentOrder')?.enable();
-        this.updateForm.get('paymentOrder')?.enable();
-        this.updateForm.get('paymentOrder')?.setValue(null);
+        this.updateForm.get('completeNotes')?.enable();
+        this.updateForm.get('completeNotesDate')?.enable();
+        this.updateForm.get('completeNotesFile')?.enable();
       }
     });
-    this.updateForm.get('isPaymentOrder')?.valueChanges.subscribe((value) => {
+    this.updateForm.get('completeNotes')?.valueChanges.subscribe((value) => {
       if (!value) {
-        this.updateForm.get('completed')?.disable();
-        this.updateForm.get('completed')?.setValue(false);
+        this.updateForm.get('signContract')?.disable();
+        this.updateForm.get('signContract')?.setValue(false);
+        this.updateForm.get('signContractDate')?.disable();
+        this.updateForm.get('signContractDate')?.setValue(null);
+        this.updateForm.get('signContractFile')?.disable();
+        this.updateForm.get('signContractFile')?.setValue(null);
       } else {
-        this.updateForm.get('completed')?.enable();
-        this.updateForm.get('completed')?.setValue(false);
+        this.updateForm.get('signContract')?.enable();
+        this.updateForm.get('signContractDate')?.enable();
+        this.updateForm.get('signContractFile')?.enable();
       }
     });
   }
@@ -154,19 +189,24 @@ export class InitialDeliveryStatusComponent implements OnInit {
   getInitialData() {
     this.activatedRoute.params.subscribe(params => {
       this.projectId = +params['id'];
-      this.getByID();
+    });
+    this.activatedRoute.queryParams.subscribe(params => {
+      this.deliveryStatusId = +params['statusId'];
+      setTimeout(() => {
+        this.getByID();
+      }, 1000);
     });
   }
 
   getByID() {
-    this.stageGateManagementService.getByID(this.projectId).subscribe(res => {
-      this.projectDetails = res.data;
+    this.deliveryStatusService.getDeliveryStatusById(this.projectId, 1).subscribe(res => {
       debugger
-      // this.subPhaseId = this.projectDetails?.subPhaseId;
-      // if (this.projectDetails?.status == 'DeliverableChecklist') {
+      this.statusDetails = res.data;
+      // this.subPhaseId = this.statusDetails?.subPhaseId;
+      // if (this.statusDetails?.status == 'DeliverableChecklist') {
       //   this.activeStep = 1;
       // }
-      // switch (this.projectDetails?.status) {
+      // switch (this.statusDetails?.status) {
       //   case 'formCommittee':
       //     this.activeStep = 0;
       //     break;

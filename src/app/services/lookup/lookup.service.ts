@@ -327,5 +327,25 @@ export class LookupService {
     });
   }
 
+  getIntialDeliveryStatusSteps(): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/GetIntialDeliveryStatusSteps`;
+    return this.http.get<any>(url, {
+      headers: httpHeaders
+    });
+  }
+
+  getFinalDeliveryStatusSteps(): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/GetFinalDeliveryStatusSteps`;
+    return this.http.get<any>(url, {
+      headers: httpHeaders
+    });
+  }
+
 
 }

@@ -8,6 +8,7 @@ import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
 import { SweetAlertOptions } from 'sweetalert2';
 import { PROJECT_OPTIONS } from './project-options';
 import { ProjectsService } from 'src/app/services/projects.service';
+import { DeliveryStatusService } from 'src/app/services/delivery-status.service';
 
 @Component({
   selector: 'app-overview',
@@ -49,6 +50,7 @@ export class OverviewComponent implements OnInit, AfterViewInit, OnDestroy {
     private modalService: NgbModal,
     private translate: TranslateService,
     private projectsService: ProjectsService,
+    private deliveryStatusService: DeliveryStatusService,
   ) {
     this.Add_text = this.translate.instant('PROJECTS.Add_Project');
     this.Search_text = this.translate.instant('PROJECTS.Search');
@@ -121,10 +123,59 @@ export class OverviewComponent implements OnInit, AfterViewInit, OnDestroy {
     });
   }
 
-  navigateTo(route: any) {
-    this.router.navigateByUrl(route + `/${this.selectedSettingId}`);
-    this.modalService.dismissAll();
-    this.selectedSettingId = null;
+  navigateTo(route: string) {
+    if (route === 'projects/initial-delivery-status') {
+      this.deliveryStatusService.getDeliveryStatusById(this.selectedSettingId, 1).subscribe(res => {
+        if (res === null) {
+          this.deliveryStatusService.createDeliveryStatus({ projectId: this.selectedSettingId, type: 1 }).subscribe(res => {
+            this.router.navigate([route + `/${this.selectedSettingId}`], {
+              queryParams: {
+                statusId: res.data
+              }
+            });
+            this.modalService.dismissAll();
+            this.selectedSettingId = null;
+          });
+        } else {
+          this.router.navigate([route + `/${this.selectedSettingId}`], {
+            queryParams: {
+              statusId: res.data.id
+            }
+          });
+          this.modalService.dismissAll();
+          this.selectedSettingId = null;
+        }
+      });
+    } else if (route === 'projects/final-delivery-status') {
+      this.deliveryStatusService.getDeliveryStatusById(this.selectedSettingId, 2).subscribe(res => {
+        if (res === null) {
+          this.deliveryStatusService.createDeliveryStatus({ projectId: this.selectedSettingId, type: 2 }).subscribe(res => {
+            this.router.navigate([route + `/${this.selectedSettingId}`], {
+              queryParams: {
+                statusId: res.data
+              }
+            });
+            this.modalService.dismissAll();
+            this.selectedSettingId = null;
+          });
+        } else {
+          this.router.navigate([route + `/${this.selectedSettingId}`], {
+            queryParams: {
+              statusId: res.data.id
+            }
+          });
+          this.modalService.dismissAll();
+          this.selectedSettingId = null;
+        }
+      });
+
+
+    } else {
+      this.router.navigateByUrl(route + `/${this.selectedSettingId}`);
+      this.modalService.dismissAll();
+      this.selectedSettingId = null;
+
+    }
   }
 
   showAlert(swalOptions: SweetAlertOptions) {
@@ -149,7 +200,7 @@ export class OverviewComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   navigateArrows(next: boolean) {
-    if(next) {
+    if (next) {
       if (this.selected === this.pagesCount.length) {
         return;
       } else {

@@ -55,12 +55,14 @@
 
         <div class="col-lg-12 fv-row">
           <div class="d-flex align-items-center justify-content-between mt-3">
-            <div class="form-check form-check-solid form-switch d-flex align-items-center" style="flex: 0.3;">
-              <input class="form-check-input w-45px h-30px me-2" type="checkbox" name="trackNotes"
-                formControlName="trackNotes" />
-              <label
-                class="form-check-label">{{updateForm.get('trackNotes')?.value ? 'track notes' : 'not applied'}}</label>
-            </div>
+            <label class="form-check form-check-inline form-check-solid me-5" style="flex: 0.15;">
+              <input class="form-check-input" type="checkbox" formControlName="trackNotes" />
+              <span class="fw-bold ps-2 fs-6">track notes</span>
+            </label>
+            <label class="form-check form-check-inline form-check-solid me-5" style="flex: 0.15;">
+              <input class="form-check-input" type="checkbox" formControlName="notApplied" />
+              <span class="fw-bold ps-2 fs-6">not applied</span>
+            </label>
             <input type="date" class="form-control form-control-solid" style="flex: 0.3;"
               formControlName="trackNotesDate" />
             <input type="file" class="form-control form-control-solid" style="flex: 0.3;"
