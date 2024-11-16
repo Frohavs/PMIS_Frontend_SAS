@@ -23,7 +23,7 @@ export class FinalDeliveryStatusComponent implements OnInit {
 
   updateForm: FormGroup;
 
-  activeStep: number = 1;
+  activeStep!: number;
   steps: any[] = [];
 
   statusModel: { status: boolean } = { status: true };
@@ -59,29 +59,29 @@ export class FinalDeliveryStatusComponent implements OnInit {
       id: this.projectId,
 
       finalDelivery: [false],
-      finalDeliveryDate: [{ value: '', disabled: true }, [Validators.required]],
-      finalDeliveryFile: [{ value: '', disabled: true }, [Validators.required]],
+      finalDeliveryDate: [''],
+      finalDeliveryFile: [''],
 
-      finalDeliveryNotes: [{ value: false, disabled: true }],
+      finalDeliveryNotes: [{ value: null, disabled: true }],
       notApplied: [{ value: false, disabled: true }],
-      finalDeliveryNotesDate: [{ value: '', disabled: true }, [Validators.required]],
-      finalDeliveryNotesFile: [{ value: '', disabled: true }, [Validators.required]],
+      finalDeliveryNotesDate: [{ value: '', disabled: true }],
+      finalDeliveryNotesFile: [{ value: '', disabled: true }],
 
-      supplyContractor: [{ value: false, disabled: true }],
-      supplyContractorDate: [{ value: '', disabled: true }, [Validators.required]],
-      supplyContractorFile: [{ value: '', disabled: true }, [Validators.required]],
+      supplyContractor: [{ value: null, disabled: true }],
+      supplyContractorDate: [{ value: '', disabled: true }],
+      supplyContractorFile: [{ value: '', disabled: true }],
 
-      finishNote: [{ value: false, disabled: true }],
-      finishNoteDate: [{ value: '', disabled: true }, [Validators.required]],
-      finishNoteFile: [{ value: '', disabled: true }, [Validators.required]],
+      finishNote: [{ value: null, disabled: true }],
+      finishNoteDate: [{ value: '', disabled: true }],
+      finishNoteFile: [{ value: '', disabled: true }],
 
-      signNote: [{ value: false, disabled: true }],
-      signNoteDate: [{ value: '', disabled: true }, [Validators.required]],
-      signNoteFile: [{ value: '', disabled: true }, [Validators.required]],
+      signNote: [{ value: null, disabled: true }],
+      signNoteDate: [{ value: '', disabled: true }],
+      signNoteFile: [{ value: '', disabled: true }],
 
-      warrantyRelease: [{ value: false, disabled: true }],
-      warrantyReleaseDate: [{ value: '', disabled: true }, [Validators.required]],
-      warrantyReleaseFile: [{ value: '', disabled: true }, [Validators.required]],
+      warrantyRelease: [{ value: null, disabled: true }],
+      warrantyReleaseDate: [{ value: '', disabled: true }],
+      warrantyReleaseFile: [{ value: '', disabled: true }],
     });
   }
 
@@ -89,14 +89,23 @@ export class FinalDeliveryStatusComponent implements OnInit {
     this.updateForm.get('finalDelivery')?.valueChanges.subscribe((value) => {
       if (!value) {
         this.updateForm.get('finalDeliveryNotes')?.disable();
-        this.updateForm.get('finalDeliveryNotes')?.setValue(false);
+        this.updateForm.get('finalDeliveryNotes')?.setValue(null);
         this.updateForm.get('notApplied')?.disable();
         this.updateForm.get('notApplied')?.setValue(false);
         this.updateForm.get('finalDeliveryNotesDate')?.disable();
         this.updateForm.get('finalDeliveryNotesDate')?.setValue(null);
         this.updateForm.get('finalDeliveryNotesFile')?.disable();
         this.updateForm.get('finalDeliveryNotesFile')?.setValue(null);
+        this.updateForm.get('finalDeliveryDate')?.clearValidators();
+        this.updateForm.get('finalDeliveryFile')?.clearValidators();
+        this.updateForm.get('finalDeliveryDate')?.updateValueAndValidity();
+        this.updateForm.get('finalDeliveryFile')?.updateValueAndValidity();
       } else {
+
+        this.updateForm.get('finalDeliveryDate')?.setValidators([Validators.required]);
+        this.updateForm.get('finalDeliveryFile')?.setValidators([Validators.required]);
+        this.updateForm.get('finalDeliveryDate')?.updateValueAndValidity();
+        this.updateForm.get('finalDeliveryFile')?.updateValueAndValidity();
         this.updateForm.get('finalDeliveryNotes')?.enable();
         this.updateForm.get('notApplied')?.enable();
         this.updateForm.get('finalDeliveryNotesDate')?.enable();
@@ -106,12 +115,21 @@ export class FinalDeliveryStatusComponent implements OnInit {
     this.updateForm.get('finalDeliveryNotes')?.valueChanges.subscribe((value) => {
       if (!value) {
         this.updateForm.get('supplyContractor')?.disable();
-        this.updateForm.get('supplyContractor')?.setValue(false);
+        this.updateForm.get('supplyContractor')?.setValue(null);
         this.updateForm.get('supplyContractorDate')?.disable();
         this.updateForm.get('supplyContractorDate')?.setValue(null);
         this.updateForm.get('supplyContractorFile')?.disable();
         this.updateForm.get('supplyContractorFile')?.setValue(null);
+        this.updateForm.get('finalDeliveryNotesDate')?.clearValidators();
+        this.updateForm.get('finalDeliveryNotesFile')?.clearValidators();
+        this.updateForm.get('finalDeliveryNotesDate')?.updateValueAndValidity();
+        this.updateForm.get('finalDeliveryNotesFile')?.updateValueAndValidity();
       } else {
+
+        this.updateForm.get('finalDeliveryNotesDate')?.setValidators([Validators.required]);
+        this.updateForm.get('finalDeliveryNotesFile')?.setValidators([Validators.required]);
+        this.updateForm.get('finalDeliveryNotesDate')?.updateValueAndValidity();
+        this.updateForm.get('finalDeliveryNotesFile')?.updateValueAndValidity();
         this.updateForm.get('supplyContractor')?.enable();
         this.updateForm.get('supplyContractorDate')?.enable();
         this.updateForm.get('supplyContractorFile')?.enable();
@@ -126,42 +144,42 @@ export class FinalDeliveryStatusComponent implements OnInit {
         this.updateForm.get('finalDeliveryNotesFile')?.setValue(null);
 
         this.updateForm.get('supplyContractor')?.disable();
-        this.updateForm.get('supplyContractor')?.setValue(false);
+        this.updateForm.get('supplyContractor')?.setValue(null);
         this.updateForm.get('supplyContractorDate')?.disable();
         this.updateForm.get('supplyContractorDate')?.setValue(null);
         this.updateForm.get('supplyContractorFile')?.disable();
         this.updateForm.get('supplyContractorFile')?.setValue(null);
 
         this.updateForm.get('finishNote')?.disable();
-        this.updateForm.get('finishNote')?.setValue(false);
+        this.updateForm.get('finishNote')?.setValue(null);
         this.updateForm.get('finishNoteDate')?.disable();
         this.updateForm.get('finishNoteDate')?.setValue(null);
         this.updateForm.get('finishNoteFile')?.disable();
         this.updateForm.get('finishNoteFile')?.setValue(null);
 
         this.updateForm.get('warrantyRelease')?.disable();
-        this.updateForm.get('warrantyRelease')?.setValue(false);
+        this.updateForm.get('warrantyRelease')?.setValue(null);
         this.updateForm.get('warrantyReleaseDate')?.disable();
         this.updateForm.get('warrantyReleaseDate')?.setValue(null);
         this.updateForm.get('warrantyReleaseFile')?.disable();
         this.updateForm.get('warrantyReleaseFile')?.setValue(null);
       } else {
         this.updateForm.get('supplyContractor')?.disable();
-        this.updateForm.get('supplyContractor')?.setValue(false);
+        this.updateForm.get('supplyContractor')?.setValue(null);
         this.updateForm.get('supplyContractorDate')?.disable();
         this.updateForm.get('supplyContractorDate')?.setValue(null);
         this.updateForm.get('supplyContractorFile')?.disable();
         this.updateForm.get('supplyContractorFile')?.setValue(null);
 
         this.updateForm.get('finishNote')?.disable();
-        this.updateForm.get('finishNote')?.setValue(false);
+        this.updateForm.get('finishNote')?.setValue(null);
         this.updateForm.get('finishNoteDate')?.disable();
         this.updateForm.get('finishNoteDate')?.setValue(null);
         this.updateForm.get('finishNoteFile')?.disable();
         this.updateForm.get('finishNoteFile')?.setValue(null);
 
         this.updateForm.get('finalDeliveryNotesDate')?.disable();
-        this.updateForm.get('finalDeliveryNotesDate')?.setValue(false);
+        this.updateForm.get('finalDeliveryNotesDate')?.setValue(null);
         this.updateForm.get('finalDeliveryNotesFile')?.disable();
         this.updateForm.get('finalDeliveryNotesFile')?.setValue(null);
 
@@ -178,12 +196,21 @@ export class FinalDeliveryStatusComponent implements OnInit {
     this.updateForm.get('supplyContractor')?.valueChanges.subscribe((value) => {
       if (!value) {
         this.updateForm.get('finishNote')?.disable();
-        this.updateForm.get('finishNote')?.setValue(false);
+        this.updateForm.get('finishNote')?.setValue(null);
         this.updateForm.get('finishNoteDate')?.disable();
         this.updateForm.get('finishNoteDate')?.setValue(null);
         this.updateForm.get('finishNoteFile')?.disable();
         this.updateForm.get('finishNoteFile')?.setValue(null);
+        this.updateForm.get('supplyContractorDate')?.clearValidators();
+        this.updateForm.get('supplyContractorFile')?.clearValidators();
+        this.updateForm.get('supplyContractorDate')?.updateValueAndValidity();
+        this.updateForm.get('supplyContractorFile')?.updateValueAndValidity();
       } else {
+
+        this.updateForm.get('supplyContractorDate')?.setValidators([Validators.required]);
+        this.updateForm.get('supplyContractorFile')?.setValidators([Validators.required]);
+        this.updateForm.get('supplyContractorDate')?.updateValueAndValidity();
+        this.updateForm.get('supplyContractorFile')?.updateValueAndValidity();
         this.updateForm.get('finishNote')?.enable();
         this.updateForm.get('finishNoteDate')?.enable();
         this.updateForm.get('finishNoteFile')?.enable();
@@ -192,12 +219,21 @@ export class FinalDeliveryStatusComponent implements OnInit {
     this.updateForm.get('finishNote')?.valueChanges.subscribe((value) => {
       if (!value) {
         this.updateForm.get('signNote')?.disable();
-        this.updateForm.get('signNote')?.setValue(false);
+        this.updateForm.get('signNote')?.setValue(null);
         this.updateForm.get('signNoteDate')?.disable();
         this.updateForm.get('signNoteDate')?.setValue(null);
         this.updateForm.get('signNoteFile')?.disable();
         this.updateForm.get('signNoteFile')?.setValue(null);
+        this.updateForm.get('finishNoteDate')?.clearValidators();
+        this.updateForm.get('finishNoteFile')?.clearValidators();
+        this.updateForm.get('finishNoteDate')?.updateValueAndValidity();
+        this.updateForm.get('finishNoteFile')?.updateValueAndValidity();
       } else {
+
+        this.updateForm.get('finishNoteDate')?.setValidators([Validators.required]);
+        this.updateForm.get('finishNoteFile')?.setValidators([Validators.required]);
+        this.updateForm.get('finishNoteDate')?.updateValueAndValidity();
+        this.updateForm.get('finishNoteFile')?.updateValueAndValidity();
         this.updateForm.get('signNote')?.enable();
         this.updateForm.get('signNoteDate')?.enable();
         this.updateForm.get('signNoteFile')?.enable();
@@ -206,15 +242,38 @@ export class FinalDeliveryStatusComponent implements OnInit {
     this.updateForm.get('signNote')?.valueChanges.subscribe((value) => {
       if (!value) {
         this.updateForm.get('warrantyRelease')?.disable();
-        this.updateForm.get('warrantyRelease')?.setValue(false);
+        this.updateForm.get('warrantyRelease')?.setValue(null);
         this.updateForm.get('warrantyReleaseDate')?.disable();
         this.updateForm.get('warrantyReleaseDate')?.setValue(null);
         this.updateForm.get('warrantyReleaseFile')?.disable();
         this.updateForm.get('warrantyReleaseFile')?.setValue(null);
+        this.updateForm.get('signNoteDate')?.clearValidators();
+        this.updateForm.get('signNoteFile')?.clearValidators();
+        this.updateForm.get('signNoteDate')?.updateValueAndValidity();
+        this.updateForm.get('signNoteFile')?.updateValueAndValidity();
       } else {
+
+        this.updateForm.get('signNoteDate')?.setValidators([Validators.required]);
+        this.updateForm.get('signNoteFile')?.setValidators([Validators.required]);
+        this.updateForm.get('signNoteDate')?.updateValueAndValidity();
+        this.updateForm.get('signNoteFile')?.updateValueAndValidity();
         this.updateForm.get('warrantyRelease')?.enable();
         this.updateForm.get('warrantyReleaseDate')?.enable();
         this.updateForm.get('warrantyReleaseFile')?.enable();
+      }
+    });
+    this.updateForm.get('warrantyRelease')?.valueChanges.subscribe((value) => {
+      if (!value) {
+
+        this.updateForm.get('warrantyReleaseDate')?.clearValidators();
+        this.updateForm.get('warrantyReleaseFile')?.clearValidators();
+        this.updateForm.get('warrantyReleaseDate')?.updateValueAndValidity();
+        this.updateForm.get('warrantyReleaseFile')?.updateValueAndValidity();
+      } else {
+        this.updateForm.get('warrantyReleaseDate')?.setValidators([Validators.required]);
+        this.updateForm.get('warrantyReleaseFile')?.setValidators([Validators.required]);
+        this.updateForm.get('warrantyReleaseDate')?.updateValueAndValidity();
+        this.updateForm.get('warrantyReleaseFile')?.updateValueAndValidity();
       }
     });
   }
@@ -233,8 +292,9 @@ export class FinalDeliveryStatusComponent implements OnInit {
 
   getByID() {
     this.deliveryStatusService.getDeliveryStatusById(this.projectId, 1).subscribe(res => {
-      debugger
+      // debugger
       this.statusDetails = res.data;
+      this.activeStep = this.statusDetails?.items.length ? this.statusDetails?.items.length + 1 : 1;
       // this.subPhaseId = this.statusDetails?.subPhaseId;
       // if (this.statusDetails?.status == 'DeliverableChecklist') {
       //   this.activeStep = 1;
@@ -275,21 +335,71 @@ export class FinalDeliveryStatusComponent implements OnInit {
   }
   onSubmitStatus() {
     // const val = this.updateForm.value
-    const payload = {
-      ...this.updateForm.value
+    if (this.updateForm.invalid) {
+      this.updateForm.markAllAsTouched();
+      return;
     }
-    delete payload.isClaimRegistration
-    delete payload.claimRegistrationCheckDate
-    // this.invoiceService.UpdateInvoiceStatus(payload).subscribe(res => {
+    let payload = []
+    payload[0] = {
+      "checked": this.updateForm.get('finalDelivery')?.value,
+      "createdAt": this.updateForm.get('finalDeliveryDate')?.value,
+      "attachment": this.updateForm.get('finalDeliveryFile')?.value,
+      "finalStep": 1,
+      "deliveryStatusId": this.deliveryStatusId
+    }
 
-    //   this.modalService.dismissAll();
-    //   this.showAlert({ icon: 'success', title: 'Success!', text: 'Status Updated successfully!' });
-    //   this.getInvoiceDetails();
-    //   this.cdr.detectChanges();
-    // }, (error) => {
-    //   this.modalService.dismissAll()
-    //   this.showAlert({ icon: 'error', title: 'Error!', text: 'Please try again' });
-    // });
+    payload[1] = {
+      "checked": this.updateForm.get('finalDeliveryNotes')?.value,
+      "createdAt": this.updateForm.get('finalDeliveryNotesDate')?.value,
+      "attachment": this.updateForm.get('finalDeliveryNotesFile')?.value,
+      "finalStep": 2,
+      "deliveryStatusId": this.deliveryStatusId
+    }
+
+    payload[2] = {
+      "checked": this.updateForm.get('supplyContractor')?.value,
+      "createdAt": this.updateForm.get('supplyContractorDate')?.value,
+      "attachment": this.updateForm.get('supplyContractorFile')?.value,
+      "finalStep": 3,
+      "deliveryStatusId": this.deliveryStatusId
+    }
+
+    payload[3] = {
+      "checked": this.updateForm.get('finishNote')?.value,
+      "createdAt": this.updateForm.get('finishNoteDate')?.value,
+      "attachment": this.updateForm.get('finishNoteFile')?.value,
+      "finalStep": 4,
+      "deliveryStatusId": this.deliveryStatusId
+    }
+
+    payload[4] = {
+      "checked": this.updateForm.get('signNote')?.value,
+      "createdAt": this.updateForm.get('signNoteDate')?.value,
+      "attachment": this.updateForm.get('signNoteFile')?.value,
+      "finalStep": 5,
+      "deliveryStatusId": this.deliveryStatusId
+    }
+    payload[5] = {
+      "checked": this.updateForm.get('warrantyRelease')?.value,
+      "createdAt": this.updateForm.get('warrantyReleaseDate')?.value,
+      "attachment": this.updateForm.get('warrantyReleaseFile')?.value,
+      "finalStep": 6,
+      "deliveryStatusId": this.deliveryStatusId
+    }
+    const checkedItems = payload.filter(item => item.checked === true);
+
+    this.deliveryStatusService.createDeliveryStatusItems({items: checkedItems}).subscribe(res => {
+
+      this.modalService.dismissAll();
+      this.showAlert({ icon: 'success', title: 'Success!', text: 'Status Updated successfully!' });
+      this.getByID();
+      debugger
+      this.cdr.detectChanges();
+    }, (error) => {
+      debugger
+      this.modalService.dismissAll()
+      this.showAlert({ icon: 'error', title: 'Error!', text: 'Please try again' });
+    });
   }
 
 

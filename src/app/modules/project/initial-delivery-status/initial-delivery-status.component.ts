@@ -23,7 +23,7 @@ export class InitialDeliveryStatusComponent implements OnInit {
 
   updateForm: FormGroup;
 
-  activeStep: number = 1;
+  activeStep!: number;
   steps: any[] = [];
 
   statusModel: { status: boolean } = { status: true };
@@ -59,25 +59,25 @@ export class InitialDeliveryStatusComponent implements OnInit {
       id: this.projectId,
 
       createCommittee: [false],
-      createCommitteeDate: [{value: '', disabled: true}, [Validators.required]],
-      createCommitteeFile: [{value: '', disabled: true}, [Validators.required]],
+      createCommitteeDate: [''],
+      createCommitteeFile: [''],
 
-      trackNotes: [{value: false, disabled: true}],
-      notApplied: [{value: false, disabled: true}],
-      trackNotesDate: [{value: '', disabled: true}, [Validators.required]],
-      trackNotesFile: [{value: '', disabled: true}, [Validators.required]],
+      trackNotes: [{ value: null, disabled: true }],
+      notApplied: [{ value: false, disabled: true }],
+      trackNotesDate: [{ value: '', disabled: true },],
+      trackNotesFile: [{ value: '', disabled: true },],
 
-      provideContractorNotes: [{value: false, disabled: true}],
-      provideContractorNotesDate: [{value: '', disabled: true}, [Validators.required]],
-      provideContractorNotesFile: [{value: '', disabled: true}, [Validators.required]],
+      provideContractorNotes: [{ value: null, disabled: true },],
+      provideContractorNotesDate: [{ value: '', disabled: true },],
+      provideContractorNotesFile: [{ value: '', disabled: true },],
 
-      completeNotes: [{value: false, disabled: true}],
-      completeNotesDate: [{value: '', disabled: true}, [Validators.required]],
-      completeNotesFile: [{value: '', disabled: true}, [Validators.required]],
+      completeNotes: [{ value: null, disabled: true },],
+      completeNotesDate: [{ value: '', disabled: true },],
+      completeNotesFile: [{ value: '', disabled: true },],
 
-      signContract: [{value: false, disabled: true}],
-      signContractDate: [{value: '', disabled: true}, [Validators.required]],
-      signContractFile: [{value: '', disabled: true}, [Validators.required]],
+      signContract: [{ value: null, disabled: true },],
+      signContractDate: [{ value: '', disabled: true },],
+      signContractFile: [{ value: '', disabled: true },],
     });
   }
 
@@ -85,14 +85,23 @@ export class InitialDeliveryStatusComponent implements OnInit {
     this.updateForm.get('createCommittee')?.valueChanges.subscribe((value) => {
       if (!value) {
         this.updateForm.get('trackNotes')?.disable();
-        this.updateForm.get('trackNotes')?.setValue(false);
+        this.updateForm.get('trackNotes')?.setValue(null);
         this.updateForm.get('notApplied')?.disable();
         this.updateForm.get('notApplied')?.setValue(false);
         this.updateForm.get('trackNotesDate')?.disable();
         this.updateForm.get('trackNotesDate')?.setValue(null);
         this.updateForm.get('trackNotesFile')?.disable();
         this.updateForm.get('trackNotesFile')?.setValue(null);
+        this.updateForm.get('createCommitteeDate')?.clearValidators();
+        this.updateForm.get('createCommitteeFile')?.clearValidators();
+        this.updateForm.get('createCommitteeDate')?.updateValueAndValidity();
+        this.updateForm.get('createCommitteeFile')?.updateValueAndValidity();
       } else {
+
+        this.updateForm.get('createCommitteeDate')?.setValidators([Validators.required]);
+        this.updateForm.get('createCommitteeFile')?.setValidators([Validators.required]);
+        this.updateForm.get('createCommitteeDate')?.updateValueAndValidity();
+        this.updateForm.get('createCommitteeFile')?.updateValueAndValidity();
         this.updateForm.get('trackNotes')?.enable();
         this.updateForm.get('notApplied')?.enable();
         this.updateForm.get('trackNotesDate')?.enable();
@@ -102,12 +111,21 @@ export class InitialDeliveryStatusComponent implements OnInit {
     this.updateForm.get('trackNotes')?.valueChanges.subscribe((value) => {
       if (!value) {
         this.updateForm.get('provideContractorNotes')?.disable();
-        this.updateForm.get('provideContractorNotes')?.setValue(false);
+        this.updateForm.get('provideContractorNotes')?.setValue(null);
         this.updateForm.get('provideContractorNotesDate')?.disable();
         this.updateForm.get('provideContractorNotesDate')?.setValue(null);
         this.updateForm.get('provideContractorNotesFile')?.disable();
         this.updateForm.get('provideContractorNotesFile')?.setValue(null);
+        this.updateForm.get('trackNotesDate')?.clearValidators();
+        this.updateForm.get('trackNotesFile')?.clearValidators();
+        this.updateForm.get('trackNotesDate')?.updateValueAndValidity();
+        this.updateForm.get('trackNotesFile')?.updateValueAndValidity();
       } else {
+
+        this.updateForm.get('trackNotesDate')?.setValidators([Validators.required]);
+        this.updateForm.get('trackNotesFile')?.setValidators([Validators.required]);
+        this.updateForm.get('trackNotesDate')?.updateValueAndValidity();
+        this.updateForm.get('trackNotesFile')?.updateValueAndValidity();
         this.updateForm.get('provideContractorNotes')?.enable();
         this.updateForm.get('provideContractorNotesDate')?.enable();
         this.updateForm.get('provideContractorNotesFile')?.enable();
@@ -116,21 +134,21 @@ export class InitialDeliveryStatusComponent implements OnInit {
     this.updateForm.get('notApplied')?.valueChanges.subscribe((value) => {
       if (!value) {
         this.updateForm.get('completeNotes')?.disable();
-        this.updateForm.get('completeNotes')?.setValue(false);
+        this.updateForm.get('completeNotes')?.setValue(null);
         this.updateForm.get('completeNotesDate')?.disable();
         this.updateForm.get('completeNotesDate')?.setValue(null);
         this.updateForm.get('completeNotesFile')?.disable();
         this.updateForm.get('completeNotesFile')?.setValue(null);
 
         this.updateForm.get('provideContractorNotes')?.disable();
-        this.updateForm.get('provideContractorNotes')?.setValue(false);
+        this.updateForm.get('provideContractorNotes')?.setValue(null);
         this.updateForm.get('provideContractorNotesDate')?.disable();
         this.updateForm.get('provideContractorNotesDate')?.setValue(null);
         this.updateForm.get('provideContractorNotesFile')?.disable();
         this.updateForm.get('provideContractorNotesFile')?.setValue(null);
 
         this.updateForm.get('signContract')?.disable();
-        this.updateForm.get('signContract')?.setValue(false);
+        this.updateForm.get('signContract')?.setValue(null);
         this.updateForm.get('signContractDate')?.disable();
         this.updateForm.get('signContractDate')?.setValue(null);
         this.updateForm.get('signContractFile')?.disable();
@@ -138,14 +156,14 @@ export class InitialDeliveryStatusComponent implements OnInit {
 
       } else {
         this.updateForm.get('completeNotes')?.disable();
-        this.updateForm.get('completeNotes')?.setValue(false);
+        this.updateForm.get('completeNotes')?.setValue(null);
         this.updateForm.get('completeNotesDate')?.disable();
         this.updateForm.get('completeNotesDate')?.setValue(null);
         this.updateForm.get('completeNotesFile')?.disable();
         this.updateForm.get('completeNotesFile')?.setValue(null);
 
         this.updateForm.get('provideContractorNotes')?.disable();
-        this.updateForm.get('provideContractorNotes')?.setValue(false);
+        this.updateForm.get('provideContractorNotes')?.setValue(null);
         this.updateForm.get('provideContractorNotesDate')?.disable();
         this.updateForm.get('provideContractorNotesDate')?.setValue(null);
         this.updateForm.get('provideContractorNotesFile')?.disable();
@@ -159,12 +177,21 @@ export class InitialDeliveryStatusComponent implements OnInit {
     this.updateForm.get('provideContractorNotes')?.valueChanges.subscribe((value) => {
       if (!value) {
         this.updateForm.get('completeNotes')?.disable();
-        this.updateForm.get('completeNotes')?.setValue(false);
+        this.updateForm.get('completeNotes')?.setValue(null);
         this.updateForm.get('completeNotesDate')?.disable();
         this.updateForm.get('completeNotesDate')?.setValue(null);
         this.updateForm.get('completeNotesFile')?.disable();
         this.updateForm.get('completeNotesFile')?.setValue(null);
+        this.updateForm.get('provideContractorNotesDate')?.clearValidators();
+        this.updateForm.get('provideContractorNotesFile')?.clearValidators();
+        this.updateForm.get('provideContractorNotesDate')?.updateValueAndValidity();
+        this.updateForm.get('provideContractorNotesFile')?.updateValueAndValidity();
       } else {
+
+        this.updateForm.get('provideContractorNotesDate')?.setValidators([Validators.required]);
+        this.updateForm.get('provideContractorNotesFile')?.setValidators([Validators.required]);
+        this.updateForm.get('provideContractorNotesDate')?.updateValueAndValidity();
+        this.updateForm.get('provideContractorNotesFile')?.updateValueAndValidity();
         this.updateForm.get('completeNotes')?.enable();
         this.updateForm.get('completeNotesDate')?.enable();
         this.updateForm.get('completeNotesFile')?.enable();
@@ -173,15 +200,38 @@ export class InitialDeliveryStatusComponent implements OnInit {
     this.updateForm.get('completeNotes')?.valueChanges.subscribe((value) => {
       if (!value) {
         this.updateForm.get('signContract')?.disable();
-        this.updateForm.get('signContract')?.setValue(false);
+        this.updateForm.get('signContract')?.setValue(null);
         this.updateForm.get('signContractDate')?.disable();
         this.updateForm.get('signContractDate')?.setValue(null);
         this.updateForm.get('signContractFile')?.disable();
         this.updateForm.get('signContractFile')?.setValue(null);
+        this.updateForm.get('completeNotesDate')?.clearValidators();
+        this.updateForm.get('completeNotesFile')?.clearValidators();
+        this.updateForm.get('completeNotesDate')?.updateValueAndValidity();
+        this.updateForm.get('completeNotesFile')?.updateValueAndValidity();
       } else {
+
+        this.updateForm.get('completeNotesDate')?.setValidators([Validators.required]);
+        this.updateForm.get('completeNotesFile')?.setValidators([Validators.required]);
+        this.updateForm.get('completeNotesDate')?.updateValueAndValidity();
+        this.updateForm.get('completeNotesFile')?.updateValueAndValidity();
         this.updateForm.get('signContract')?.enable();
         this.updateForm.get('signContractDate')?.enable();
         this.updateForm.get('signContractFile')?.enable();
+      }
+    });
+    this.updateForm.get('signContract')?.valueChanges.subscribe((value) => {
+      if (!value) {
+
+        this.updateForm.get('signContractDate')?.clearValidators();
+        this.updateForm.get('signContractFile')?.clearValidators();
+        this.updateForm.get('signContractDate')?.updateValueAndValidity();
+        this.updateForm.get('signContractFile')?.updateValueAndValidity();
+      } else {
+        this.updateForm.get('signContractDate')?.setValidators([Validators.required]);
+        this.updateForm.get('signContractFile')?.setValidators([Validators.required]);
+        this.updateForm.get('signContractDate')?.updateValueAndValidity();
+        this.updateForm.get('signContractFile')?.updateValueAndValidity();
       }
     });
   }
@@ -200,8 +250,10 @@ export class InitialDeliveryStatusComponent implements OnInit {
 
   getByID() {
     this.deliveryStatusService.getDeliveryStatusById(this.projectId, 1).subscribe(res => {
-      debugger
       this.statusDetails = res.data;
+      this.activeStep = this.statusDetails?.items.length ? this.statusDetails?.items.length + 1 : 1;
+      debugger
+
       // this.subPhaseId = this.statusDetails?.subPhaseId;
       // if (this.statusDetails?.status == 'DeliverableChecklist') {
       //   this.activeStep = 1;
@@ -242,21 +294,64 @@ export class InitialDeliveryStatusComponent implements OnInit {
   }
   onSubmitStatus() {
     // const val = this.updateForm.value
-    const payload = {
-      ...this.updateForm.value
+    if (this.updateForm.invalid) {
+      this.updateForm.markAllAsTouched();
+      return;
     }
-    delete payload.isClaimRegistration
-    delete payload.claimRegistrationCheckDate
-    // this.invoiceService.UpdateInvoiceStatus(payload).subscribe(res => {
+    let payload = []
+    payload[0] = {
+      "checked": this.updateForm.get('createCommittee')?.value,
+      "createdAt": this.updateForm.get('createCommitteeDate')?.value,
+      "attachment": this.updateForm.get('createCommitteeFile')?.value,
+      "intialStep": 1,
+      "deliveryStatusId": this.deliveryStatusId
+    }
 
-    //   this.modalService.dismissAll();
-    //   this.showAlert({ icon: 'success', title: 'Success!', text: 'Status Updated successfully!' });
-    //   this.getInvoiceDetails();
-    //   this.cdr.detectChanges();
-    // }, (error) => {
-    //   this.modalService.dismissAll()
-    //   this.showAlert({ icon: 'error', title: 'Error!', text: 'Please try again' });
-    // });
+    payload[1] = {
+      "checked": this.updateForm.get('trackNotes')?.value,
+      "createdAt": this.updateForm.get('trackNotesDate')?.value,
+      "attachment": this.updateForm.get('trackNotesFile')?.value,
+      "intialStep": 2,
+      "deliveryStatusId": this.deliveryStatusId
+    }
+
+    payload[2] = {
+      "checked": this.updateForm.get('provideContractorNotes')?.value,
+      "createdAt": this.updateForm.get('provideContractorNotesDate')?.value,
+      "attachment": this.updateForm.get('provideContractorNotesFile')?.value,
+      "intialStep": 3,
+      "deliveryStatusId": this.deliveryStatusId
+    }
+
+    payload[3] = {
+      "checked": this.updateForm.get('completeNotes')?.value,
+      "createdAt": this.updateForm.get('completeNotesDate')?.value,
+      "attachment": this.updateForm.get('completeNotesFile')?.value,
+      "intialStep": 4,
+      "deliveryStatusId": this.deliveryStatusId
+    }
+
+    payload[4] = {
+      "checked": this.updateForm.get('signContract')?.value,
+      "createdAt": this.updateForm.get('signContractDate')?.value,
+      "attachment": this.updateForm.get('signContractFile')?.value,
+      "intialStep": 5,
+      "deliveryStatusId": this.deliveryStatusId
+    }
+    const checkedItems = payload.filter(item => item.checked === true);
+
+    this.deliveryStatusService.createDeliveryStatusItems({items: checkedItems}).subscribe(res => {
+
+      this.modalService.dismissAll();
+      this.showAlert({ icon: 'success', title: 'Success!', text: 'Status Updated successfully!' });
+      this.getByID();
+      debugger
+      this.cdr.detectChanges();
+    }, (error) => {
+      debugger
+      this.modalService.dismissAll()
+      this.showAlert({ icon: 'error', title: 'Error!', text: 'Please try again' });
+    });
   }
 
 

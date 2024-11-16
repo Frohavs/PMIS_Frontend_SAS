@@ -47,9 +47,19 @@
               <span class="fw-bold ps-2 fs-6">create committee</span>
             </label>
             <input type="date" class="form-control form-control-solid" style="flex: 0.3;"
-              formControlName="createCommitteeDate" />
+              formControlName="createCommitteeDate" /><br>
+            <!-- <div
+              *ngIf="updateForm?.get('createCommitteeDate')?.invalid && (updateForm?.get('createCommitteeDate')?.dirty || updateForm?.get('createCommitteeDate')?.touched)"
+              class="fv-plugins-message-container">
+              <div class="fv-help-block">date is required</div>
+            </div> -->
             <input type="file" class="form-control form-control-solid" style="flex: 0.3;"
-              formControlName="createCommitteeFile" />
+            formControlName="createCommitteeFile" /><br>
+            <!-- <div
+              *ngIf="updateForm?.get('createCommitteeFile')?.invalid && (updateForm?.get('createCommitteeFile')?.dirty || updateForm?.get('createCommitteeFile')?.touched)"
+              class="fv-plugins-message-container">
+              <div class="fv-help-block">file is required</div>
+            </div> -->
           </div>
         </div>
 

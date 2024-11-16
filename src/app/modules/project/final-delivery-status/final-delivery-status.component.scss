@@ -73,3 +73,8 @@
     background-color: #ddd;
   }
 }
+
+input.ng-invalid.ng-touched {
+  border: 1px solid #ff000061;
+  background: #ff00001f;
+}

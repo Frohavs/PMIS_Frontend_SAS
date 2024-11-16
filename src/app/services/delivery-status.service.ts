@@ -39,21 +39,12 @@ export class DeliveryStatusService {
       headers: httpHeaders
     });
   }
-  updateContractor(path: any): Observable<any> {
+  createDeliveryStatusItems(path: any): Observable<any> {
     const httpHeaders = new HttpHeaders({
       Authorization: `Bearer ${this.token}`,
     });
-    const url = `${this.API_USERS_URL}/Update`;
+    const url = `${this.API_USERS_URL}/CreateDeliveryStatusItems`;
     return this.http.put<any>(url, path, {
-      headers: httpHeaders
-    });
-  }
-  deleteContractor(id: number): Observable<any> {
-    const httpHeaders = new HttpHeaders({
-      Authorization: `Bearer ${this.token}`,
-    });
-    const url = `${this.API_USERS_URL}/Delete/${id}`;
-    return this.http.delete<any>(url, {
       headers: httpHeaders
     });
   }
