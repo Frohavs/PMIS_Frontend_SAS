@@ -54,7 +54,7 @@
               <div class="fv-help-block">date is required</div>
             </div> -->
             <input type="file" class="form-control form-control-solid" style="flex: 0.3;"
-            formControlName="createCommitteeFile" /><br>
+            formControlName="createCommitteeFile" (change)="onCreateCommitteeFileSelected($event)" /><br>
             <!-- <div
               *ngIf="updateForm?.get('createCommitteeFile')?.invalid && (updateForm?.get('createCommitteeFile')?.dirty || updateForm?.get('createCommitteeFile')?.touched)"
               class="fv-plugins-message-container">
@@ -76,7 +76,7 @@
             <input type="date" class="form-control form-control-solid" style="flex: 0.3;"
               formControlName="trackNotesDate" />
             <input type="file" class="form-control form-control-solid" style="flex: 0.3;"
-              formControlName="trackNotesFile" />
+              formControlName="trackNotesFile" (change)="onTrackNotesFileSelected($event)" />
           </div>
         </div>
 
@@ -89,7 +89,7 @@
             <input type="date" class="form-control form-control-solid" style="flex: 0.3;"
               formControlName="provideContractorNotesDate" />
             <input type="file" class="form-control form-control-solid" style="flex: 0.3;"
-              formControlName="provideContractorNotesFile" />
+              formControlName="provideContractorNotesFile" (change)="onProvideContractorNotesFileSelected($event)" />
           </div>
         </div>
 
@@ -102,7 +102,7 @@
             <input type="date" class="form-control form-control-solid" style="flex: 0.3;"
               formControlName="completeNotesDate" />
             <input type="file" class="form-control form-control-solid" style="flex: 0.3;"
-              formControlName="completeNotesFile" />
+              formControlName="completeNotesFile" (change)="onCompleteNotesFileSelected($event)" />
           </div>
         </div>
 
@@ -115,7 +115,7 @@
             <input type="date" class="form-control form-control-solid" style="flex: 0.3;"
               formControlName="signContractDate" />
             <input type="file" class="form-control form-control-solid" style="flex: 0.3;"
-              formControlName="signContractFile" />
+              formControlName="signContractFile" (change)="onSignContractFileSelected($event)" />
           </div>
         </div>
 

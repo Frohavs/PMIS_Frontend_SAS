@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
+import { AttachmentService } from 'src/app/services/attachment/attachment.service';
 import { DeliveryStatusService } from 'src/app/services/delivery-status.service';
 import { LookupService } from 'src/app/services/lookup/lookup.service';
 import { SweetAlertOptions } from 'sweetalert2';
@@ -26,6 +27,12 @@ export class InitialDeliveryStatusComponent implements OnInit {
   activeStep!: number;
   steps: any[] = [];
 
+  createCommitteeSelectedFile: any;
+  trackNotesSelectedFile: any;
+  provideContractorNotesSelectedFile: any;
+  completeNotesSelectedFile: any;
+  signContractSelectedFile: any;
+
   statusModel: { status: boolean } = { status: true };
   @ViewChild('UpdateStatusModal') UpdateStatusModal!: any;
 
@@ -37,11 +44,12 @@ export class InitialDeliveryStatusComponent implements OnInit {
 
   constructor(
     private router: Router,
+    private fb: FormBuilder,
     private cdr: ChangeDetectorRef,
     private modalService: NgbModal,
     private activatedRoute: ActivatedRoute,
     private lookupService: LookupService,
-    private fb: FormBuilder,
+    private attachmentService: AttachmentService,
     private deliveryStatusService: DeliveryStatusService,
   ) { }
 
@@ -278,6 +286,61 @@ export class InitialDeliveryStatusComponent implements OnInit {
       //     break;
       // }
       this.cdr.detectChanges();
+    });
+  }
+
+  onCreateCommitteeFileSelected(event: any) {
+    this.createCommitteeSelectedFile = <File>event.target.files[0];
+    const fd = new FormData();
+    fd.append('Attachment', this.createCommitteeSelectedFile, this.createCommitteeSelectedFile.name);
+    this.attachmentService.uploadAttachment(fd).subscribe(res => {
+      this.updateForm.patchValue({
+        createCommitteeFile: this.createCommitteeSelectedFile.name
+      });
+    });
+  }
+
+  onTrackNotesFileSelected(event: any) {
+    this.trackNotesSelectedFile = <File>event.target.files[0];
+    const fd = new FormData();
+    fd.append('Attachment', this.trackNotesSelectedFile, this.trackNotesSelectedFile.name);
+    this.attachmentService.uploadAttachment(fd).subscribe(res => {
+      this.updateForm.patchValue({
+        trackNotesFile: this.trackNotesSelectedFile.name
+      });
+    });
+  }
+
+  onProvideContractorNotesFileSelected(event: any) {
+    this.provideContractorNotesSelectedFile = <File>event.target.files[0];
+    const fd = new FormData();
+    fd.append('Attachment', this.provideContractorNotesSelectedFile, this.provideContractorNotesSelectedFile.name);
+    this.attachmentService.uploadAttachment(fd).subscribe(res => {
+      this.updateForm.patchValue({
+        provideContractorNotesFile: this.provideContractorNotesSelectedFile.name
+      });
+    });
+  }
+
+  onCompleteNotesFileSelected(event: any) {
+    this.completeNotesSelectedFile = <File>event.target.files[0];
+    const fd = new FormData();
+    fd.append('Attachment', this.completeNotesSelectedFile, this.completeNotesSelectedFile.name);
+    this.attachmentService.uploadAttachment(fd).subscribe(res => {
+      this.updateForm.patchValue({
+        completeNotesFile: this.completeNotesSelectedFile.name
+      });
+    });
+  }
+
+  onSignContractFileSelected(event: any) {
+    this.signContractSelectedFile = <File>event.target.files[0];
+    const fd = new FormData();
+    fd.append('Attachment', this.signContractSelectedFile, this.signContractSelectedFile.name);
+    this.attachmentService.uploadAttachment(fd).subscribe(res => {
+      this.updateForm.patchValue({
+        signContractFile: this.signContractSelectedFile.name
+      });
     });
   }
 
