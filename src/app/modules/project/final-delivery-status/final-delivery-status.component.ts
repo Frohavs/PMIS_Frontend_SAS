@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators, NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModalOptions, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
+import { AttachmentService } from 'src/app/services/attachment/attachment.service';
 import { DeliveryStatusService } from 'src/app/services/delivery-status.service';
 import { LookupService } from 'src/app/services/lookup/lookup.service';
 import { SweetAlertOptions } from 'sweetalert2';
@@ -26,6 +27,13 @@ export class FinalDeliveryStatusComponent implements OnInit {
   activeStep!: number;
   steps: any[] = [];
 
+  finalDeliveryFile: any;
+  finalDeliveryNotesFile: any;
+  supplyContractorFile: any;
+  finishNotesFile: any;
+  signNotesFile: any;
+  warrantyReleaseFile: any;
+
   statusModel: { status: boolean } = { status: true };
   @ViewChild('UpdateStatusModal') UpdateStatusModal!: any;
 
@@ -37,11 +45,12 @@ export class FinalDeliveryStatusComponent implements OnInit {
 
   constructor(
     private router: Router,
+    private fb: FormBuilder,
     private cdr: ChangeDetectorRef,
     private modalService: NgbModal,
     private activatedRoute: ActivatedRoute,
     private lookupService: LookupService,
-    private fb: FormBuilder,
+    private attachmentService: AttachmentService,
     private deliveryStatusService: DeliveryStatusService,
   ) { }
 
@@ -319,6 +328,72 @@ export class FinalDeliveryStatusComponent implements OnInit {
       //     break;
       // }
       this.cdr.detectChanges();
+    });
+  }
+
+  onFinalDeliveryFileSelected(event: any) {
+    this.finalDeliveryFile = <File>event.target.files[0];
+    const fd = new FormData();
+    fd.append('Attachment', this.finalDeliveryFile, this.finalDeliveryFile.name);
+    this.attachmentService.uploadAttachment(fd).subscribe(res => {
+      this.updateForm.patchValue({
+        finalDeliveryFile: this.finalDeliveryFile.name
+      });
+    });
+  }
+
+  onFinalDeliveryNotesFileSelected($event: any) {
+    this.finalDeliveryNotesFile = <File>$event.target.files[0];
+    const fd = new FormData();
+    fd.append('Attachment', this.finalDeliveryNotesFile, this.finalDeliveryNotesFile.name);
+    this.attachmentService.uploadAttachment(fd).subscribe(res => {
+      this.updateForm.patchValue({
+        finalDeliveryNotesFile: this.finalDeliveryNotesFile.name
+      });
+    });
+  }
+
+  onSupplyContractorFileSelected($event: any) {
+    this.supplyContractorFile = <File>$event.target.files[0];
+    const fd = new FormData();
+    fd.append('Attachment', this.supplyContractorFile, this.supplyContractorFile.name);
+    this.attachmentService.uploadAttachment(fd).subscribe(res => {
+      this.updateForm.patchValue({
+        supplyContractorFile: this.supplyContractorFile.name
+      });
+    });
+  }
+
+  onFinishNotesFileSelected($event: any) {
+    this.finishNotesFile = <File>$event.target.files[0];
+    const fd = new FormData();
+    fd.append('Attachment', this.finishNotesFile, this.finishNotesFile.name);
+    this.attachmentService.uploadAttachment(fd).subscribe(res => {
+      this.updateForm.patchValue({
+        finishNoteFile: this.finishNotesFile.name
+      });
+    });
+  }
+
+  onSignNoteFileSelected($event: any) {
+    this.signNotesFile = <File>$event.target.files[0];
+    const fd = new FormData();
+    fd.append('Attachment', this.signNotesFile, this.signNotesFile.name);
+    this.attachmentService.uploadAttachment(fd).subscribe(res => {
+      this.updateForm.patchValue({
+        signNoteFile: this.signNotesFile.name
+      });
+    });
+  }
+
+  onWarrantyReleaseFileSelected($event: any) {
+    this.warrantyReleaseFile = <File>$event.target.files[0];
+    const fd = new FormData();
+    fd.append('Attachment', this.warrantyReleaseFile, this.warrantyReleaseFile.name);
+    this.attachmentService.uploadAttachment(fd).subscribe(res => {
+      this.updateForm.patchValue({
+        warrantyReleaseFile: this.warrantyReleaseFile.name
+      });
     });
   }
 

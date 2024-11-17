@@ -49,7 +49,7 @@
             <input type="date" class="form-control form-control-solid" style="flex: 0.3;"
               formControlName="finalDeliveryDate" />
             <input type="file" class="form-control form-control-solid" style="flex: 0.3;"
-              formControlName="finalDeliveryFile" />
+              formControlName="finalDeliveryFile" (change)="onFinalDeliveryFileSelected($event)" />
           </div>
         </div>
 
