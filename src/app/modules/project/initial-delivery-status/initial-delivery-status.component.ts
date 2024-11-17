@@ -259,7 +259,7 @@ export class InitialDeliveryStatusComponent implements OnInit {
   getByID() {
     this.deliveryStatusService.getDeliveryStatusById(this.projectId, 1).subscribe(res => {
       this.statusDetails = res.data;
-      this.activeStep = this.statusDetails?.items.length ? this.statusDetails?.items.length + 1 : 1;
+      this.activeStep = this.statusDetails?.items.length ? this.statusDetails?.items.length + 1 : 0;
       debugger
 
       // this.subPhaseId = this.statusDetails?.subPhaseId;

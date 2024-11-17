@@ -303,7 +303,7 @@ export class FinalDeliveryStatusComponent implements OnInit {
     this.deliveryStatusService.getDeliveryStatusById(this.projectId, 1).subscribe(res => {
       // debugger
       this.statusDetails = res.data;
-      this.activeStep = this.statusDetails?.items.length ? this.statusDetails?.items.length + 1 : 1;
+      this.activeStep = this.statusDetails?.items.length ? this.statusDetails?.items.length + 1 : 0;
       // this.subPhaseId = this.statusDetails?.subPhaseId;
       // if (this.statusDetails?.status == 'DeliverableChecklist') {
       //   this.activeStep = 1;
