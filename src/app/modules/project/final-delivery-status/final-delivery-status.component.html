@@ -61,7 +61,7 @@
             </ng-container>
             <ng-container *ngIf="finalDeliveryFile">
               <span style="min-width: 80px; padding: 15px;"
-                class="badge badge-light-primary fs-6 fw-bold my-2 cursor-pointer">
+                class="badge badge-light-primary fs-6 fw-bold my-2 cursor-pointer" (click)="downloadFile(finalDeliveryFile.name)">
                 {{ finalDeliveryFile.name }}
               </span>
             </ng-container>
@@ -86,7 +86,7 @@
             </ng-container>
             <ng-container *ngIf="finalDeliveryNotesFile">
               <span style="min-width: 80px; padding: 15px;"
-                class="badge badge-light-primary fs-6 fw-bold my-2 cursor-pointer">
+                class="badge badge-light-primary fs-6 fw-bold my-2 cursor-pointer" (click)="downloadFile(finalDeliveryNotesFile.name)">
                 {{ finalDeliveryNotesFile.name }}
               </span>
             </ng-container>
@@ -107,7 +107,7 @@
             </ng-container>
             <ng-container *ngIf="supplyContractorFile">
               <span style="min-width: 80px; padding: 15px;"
-                class="badge badge-light-primary fs-6 fw-bold my-2 cursor-pointer">
+                class="badge badge-light-primary fs-6 fw-bold my-2 cursor-pointer" (click)="downloadFile(supplyContractorFile.name)">
                 {{ supplyContractorFile.name }}
               </span>
             </ng-container>
@@ -127,7 +127,7 @@
             </ng-container>
             <ng-container *ngIf="finishNotesFile">
               <span style="min-width: 80px; padding: 15px;"
-                class="badge badge-light-primary fs-6 fw-bold my-2 cursor-pointer">
+                class="badge badge-light-primary fs-6 fw-bold my-2 cursor-pointer" (click)="downloadFile(finishNotesFile.name)">
                 {{ finishNotesFile.name }}
               </span>
             </ng-container>
@@ -148,7 +148,7 @@
             </ng-container>
             <ng-container *ngIf="signNotesFile">
               <span style="min-width: 80px; padding: 15px;"
-                class="badge badge-light-primary fs-6 fw-bold my-2 cursor-pointer">
+                class="badge badge-light-primary fs-6 fw-bold my-2 cursor-pointer" (click)="downloadFile(signNotesFile.name)">
                 {{ signNotesFile.name }}
               </span>
             </ng-container>
@@ -169,7 +169,7 @@
             </ng-container>
             <ng-container *ngIf="warrantyReleaseFile">
               <span style="min-width: 80px; padding: 15px;"
-                class="badge badge-light-primary fs-6 fw-bold my-2 cursor-pointer">
+                class="badge badge-light-primary fs-6 fw-bold my-2 cursor-pointer" (click)="downloadFile(warrantyReleaseFile.name)">
                 {{ warrantyReleaseFile.name }}
               </span>
             </ng-container>

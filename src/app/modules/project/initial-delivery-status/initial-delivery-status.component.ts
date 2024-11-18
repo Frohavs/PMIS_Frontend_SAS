@@ -266,56 +266,64 @@ export class InitialDeliveryStatusComponent implements OnInit {
       this.activeStep = this.statusDetails?.items.length ? this.statusDetails?.items[this.statusDetails?.items.length - 1]?.step : 0;
       for (const element of this.statusDetails?.items) {
         if (element.step === 1) {
-          this.createCommitteeSelectedFile = { name: this.statusDetails.items[0].attachment };
-          this.updateForm.get('createCommittee')?.setValue(this.statusDetails.items[0].checked);
+          debugger
+          this.createCommitteeSelectedFile = { name: element.attachment };
+          this.updateForm.get('createCommittee')?.setValue(element.checked);
           this.updateForm.get('createCommittee')?.disable();
-          this.updateForm.get('notApplied')?.enable();
-          this.updateForm.get('notApplied')?.setValue(false);
-          this.updateForm.get('createCommitteeDate')?.setValue(this.statusDetails.items[0].createdAt.slice(0, 10));
+          this.updateForm.get('createCommitteeDate')?.setValue(element.createdAt.slice(0, 10));
           this.updateForm.get('createCommitteeDate')?.disable();
-          this.updateForm.get('createCommitteeFile')?.setValue({ name: this.statusDetails.items[0].attachment });
+          this.updateForm.get('createCommitteeFile')?.setValue({ name: element.attachment });
           this.updateForm.get('createCommitteeFile')?.disable();
           this.updateForm.get('trackNotes')?.enable();
           this.cdr.detectChanges();
 
         }
         if (element.step === 2) {
-          this.provideContractorNotesSelectedFile = { name: this.statusDetails.items[2].attachment };
-          this.updateForm.get('provideContractorNotes')?.setValue(this.statusDetails.items[2].checked);
+          debugger
+          this.trackNotesSelectedFile = { name: element.attachment };
+          this.updateForm.get('trackNotes')?.setValue(element.checked);
+          this.updateForm.get('trackNotes')?.disable();
+          this.updateForm.get('notApplied')?.setValue(element.applied);
+          this.updateForm.get('notApplied')?.disable();
+          this.updateForm.get('trackNotesDate')?.setValue(element.createdAt.slice(0, 10));
+          this.updateForm.get('trackNotesDate')?.disable();
+          this.updateForm.get('trackNotesFile')?.setValue({ name: element.attachment });
+          this.updateForm.get('trackNotesFile')?.disable();
+          this.updateForm.get('completeNotes')?.enable();
+          this.updateForm.get('provideContractorNotes')?.enable();
+
+          this.cdr.detectChanges();
+        }
+        if (element.step === 3) {
+          debugger
+          this.provideContractorNotesSelectedFile = { name: element.attachment };
+          this.updateForm.get('provideContractorNotes')?.setValue(element.checked);
           this.updateForm.get('provideContractorNotes')?.disable();
-          this.updateForm.get('provideContractorNotesDate')?.setValue(this.statusDetails.items[2].createdAt.slice(0, 10));
+          this.updateForm.get('provideContractorNotesDate')?.setValue(element.createdAt.slice(0, 10));
           this.updateForm.get('provideContractorNotesDate')?.disable();
-          this.updateForm.get('provideContractorNotesFile')?.setValue({ name: this.statusDetails.items[2].attachment });
+          this.updateForm.get('provideContractorNotesFile')?.setValue({ name: element.attachment });
           this.updateForm.get('provideContractorNotesFile')?.disable();
           this.updateForm.get('completeNotes')?.enable();
           this.cdr.detectChanges();
         }
-        if (element.step === 3) {
-          this.completeNotesSelectedFile = { name: this.statusDetails.items[3].attachment };
-          this.updateForm.get('completeNotes')?.setValue(this.statusDetails.items[3].checked);
-          this.updateForm.get('completeNotes')?.disable();
-          this.updateForm.get('completeNotesDate')?.setValue(this.statusDetails.items[3].createdAt.slice(0, 10));
-          this.updateForm.get('completeNotesDate')?.disable();
-          this.updateForm.get('completeNotesFile')?.setValue({ name: this.statusDetails.items[3].attachment });
-          this.updateForm.get('completeNotesFile')?.disable();
-          this.updateForm.get('signContract')?.enable();
-          this.cdr.detectChanges();
-        }
         if (element.step === 4) {
-          this.signContractSelectedFile = { name: this.statusDetails.items[4].attachment };
-          this.updateForm.get('signContract')?.setValue(this.statusDetails.items[4].checked);
-          this.updateForm.get('signContract')?.disable();
-          this.updateForm.get('signContractDate')?.setValue(this.statusDetails.items[4].createdAt.slice(0, 10));
-          this.updateForm.get('signContractDate')?.disable();
-          this.updateForm.get('signContractFile')?.setValue({ name: this.statusDetails.items[4].attachment });
+          debugger
+          this.completeNotesSelectedFile = { name: element.attachment };
+          this.updateForm.get('completeNotes')?.setValue(element.checked);
+          this.updateForm.get('completeNotes')?.disable();
+          this.updateForm.get('completeNotesDate')?.setValue(element.createdAt.slice(0, 10));
+          this.updateForm.get('completeNotesDate')?.disable();
+          this.updateForm.get('completeNotesFile')?.setValue({ name: element.attachment });
+          this.updateForm.get('signContract')?.enable();
         }
         if (element.step === 5) {
-          this.signContractSelectedFile = { name: this.statusDetails.items[4].attachment };
-          this.updateForm.get('signContract')?.setValue(this.statusDetails.items[4].checked);
+          debugger
+          this.signContractSelectedFile = { name: element.attachment };
+          this.updateForm.get('signContract')?.setValue(element.checked);
           this.updateForm.get('signContract')?.disable();
-          this.updateForm.get('signContractDate')?.setValue(this.statusDetails.items[4].createdAt.slice(0, 10));
+          this.updateForm.get('signContractDate')?.setValue(element.createdAt.slice(0, 10));
           this.updateForm.get('signContractDate')?.disable();
-          this.updateForm.get('signContractFile')?.setValue({ name: this.statusDetails.items[4].attachment });
+          this.updateForm.get('signContractFile')?.setValue({ name: element.attachment });
         }
       }
       // this.cdr.detectChanges();
@@ -507,6 +515,12 @@ export class InitialDeliveryStatusComponent implements OnInit {
     }, (error) => {
       this.modalService.dismissAll()
       this.showAlert({ icon: 'error', title: 'Error!', text: 'Please try again' });
+    });
+  }
+
+  downloadFile(attachment: string) {
+    this.attachmentService.downloadAttachment(attachment).subscribe(res => {
+      window.open(res.data, '_blank');
     });
   }
 

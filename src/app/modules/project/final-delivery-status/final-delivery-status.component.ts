@@ -307,69 +307,69 @@ export class FinalDeliveryStatusComponent implements OnInit {
 
       for (const element of this.statusDetails?.items) {
         if (element.step === 1) {
-          this.finalDeliveryFile = { name: this.statusDetails.items[0].attachment };
-          this.updateForm.get('finalDelivery')?.setValue(this.statusDetails.items[0].checked);
+          this.finalDeliveryFile = { name: element.attachment };
+          this.updateForm.get('finalDelivery')?.setValue(element.checked);
           this.updateForm.get('finalDelivery')?.disable();
-          this.updateForm.get('finalDeliveryDate')?.setValue(this.statusDetails.items[0].createdAt.slice(0, 10));
+          this.updateForm.get('finalDeliveryDate')?.setValue(element.createdAt.slice(0, 10));
           this.updateForm.get('finalDeliveryDate')?.disable();
-          this.updateForm.get('finalDeliveryFile')?.setValue({ name: this.statusDetails.items[0].attachment });
+          this.updateForm.get('finalDeliveryFile')?.setValue({ name: element.attachment });
           this.updateForm.get('finalDeliveryFile')?.disable();
           this.updateForm.get('finalDeliveryNotes')?.enable();
           this.cdr.detectChanges();
         }
         if (element.step === 2) {
-          this.finalDeliveryNotesFile = { name: this.statusDetails.items[0].attachment };
-          this.updateForm.get('finalDeliveryNotes')?.setValue(this.statusDetails.items[0].checked);
+          this.finalDeliveryNotesFile = { name: element.attachment };
+          this.updateForm.get('finalDeliveryNotes')?.setValue(element.checked);
           this.updateForm.get('finalDeliveryNotes')?.disable();
-          this.updateForm.get('notApplied')?.setValue(this.statusDetails.items[1].applied || null);
+          this.updateForm.get('notApplied')?.setValue(element.applied);
           this.updateForm.get('notApplied')?.disable();
-          this.updateForm.get('finalDeliveryNotesDate')?.setValue(this.statusDetails.items[0].createdAt.slice(0, 10));
+          this.updateForm.get('finalDeliveryNotesDate')?.setValue(element.createdAt.slice(0, 10));
           this.updateForm.get('finalDeliveryNotesDate')?.disable();
-          this.updateForm.get('finalDeliveryNotesFile')?.setValue({ name: this.statusDetails.items[0].attachment });
+          this.updateForm.get('finalDeliveryNotesFile')?.setValue({ name: element.attachment });
           this.updateForm.get('finalDeliveryNotesFile')?.disable();
           this.updateForm.get('supplyContractor')?.enable();
           this.cdr.detectChanges();
         }
         if (element.step === 3) {
-          this.supplyContractorFile = { name: this.statusDetails.items[0].attachment };
-          this.updateForm.get('supplyContractor')?.setValue(this.statusDetails.items[0].checked);
+          this.supplyContractorFile = { name: element.attachment };
+          this.updateForm.get('supplyContractor')?.setValue(element.checked);
           this.updateForm.get('supplyContractor')?.disable();
-          this.updateForm.get('supplyContractorDate')?.setValue(this.statusDetails.items[0].createdAt.slice(0, 10));
+          this.updateForm.get('supplyContractorDate')?.setValue(element.createdAt.slice(0, 10));
           this.updateForm.get('supplyContractorDate')?.disable();
-          this.updateForm.get('supplyContractorFile')?.setValue({ name: this.statusDetails.items[0].attachment });
+          this.updateForm.get('supplyContractorFile')?.setValue({ name: element.attachment });
           this.updateForm.get('supplyContractorFile')?.disable();
           this.updateForm.get('finishNote')?.enable();
           this.cdr.detectChanges();
         }
         if (element.step === 4) {
-          this.finishNotesFile = { name: this.statusDetails.items[0].attachment };
-          this.updateForm.get('finishNote')?.setValue(this.statusDetails.items[0].checked);
+          this.finishNotesFile = { name: element.attachment };
+          this.updateForm.get('finishNote')?.setValue(element.checked);
           this.updateForm.get('finishNote')?.disable();
-          this.updateForm.get('finishNoteDate')?.setValue(this.statusDetails.items[0].createdAt.slice(0, 10));
+          this.updateForm.get('finishNoteDate')?.setValue(element.createdAt.slice(0, 10));
           this.updateForm.get('finishNoteDate')?.disable();
-          this.updateForm.get('finishNoteFile')?.setValue({ name: this.statusDetails.items[0].attachment });
+          this.updateForm.get('finishNoteFile')?.setValue({ name: element.attachment });
           this.updateForm.get('finishNoteFile')?.disable();
           this.updateForm.get('signNote')?.enable();
           this.cdr.detectChanges();
         }
         if (element.step === 5) {
-          this.signNotesFile = { name: this.statusDetails.items[0].attachment };
-          this.updateForm.get('signNote')?.setValue(this.statusDetails.items[0].checked);
+          this.signNotesFile = { name: element.attachment };
+          this.updateForm.get('signNote')?.setValue(element.checked);
           this.updateForm.get('signNote')?.disable();
-          this.updateForm.get('signNoteDate')?.setValue(this.statusDetails.items[0].createdAt.slice(0, 10));
+          this.updateForm.get('signNoteDate')?.setValue(element.createdAt.slice(0, 10));
           this.updateForm.get('signNoteDate')?.disable();
-          this.updateForm.get('signNoteFile')?.setValue({ name: this.statusDetails.items[0].attachment });
+          this.updateForm.get('signNoteFile')?.setValue({ name: element.attachment });
           this.updateForm.get('signNoteFile')?.disable();
           this.updateForm.get('warrantyRelease')?.enable();
           this.cdr.detectChanges();
         }
         if (element.step === 6) {
-          this.warrantyReleaseFile = { name: this.statusDetails.items[4].attachment };
-          this.updateForm.get('warrantyRelease')?.setValue(this.statusDetails.items[4].checked);
+          this.warrantyReleaseFile = { name: element.attachment };
+          this.updateForm.get('warrantyRelease')?.setValue(element.checked);
           this.updateForm.get('warrantyRelease')?.disable();
-          this.updateForm.get('warrantyReleaseDate')?.setValue(this.statusDetails.items[4].createdAt.slice(0, 10));
+          this.updateForm.get('warrantyReleaseDate')?.setValue(element.createdAt.slice(0, 10));
           this.updateForm.get('warrantyReleaseDate')?.disable();
-          this.updateForm.get('warrantyReleaseFile')?.setValue({ name: this.statusDetails.items[4].attachment });
+          this.updateForm.get('warrantyReleaseFile')?.setValue({ name: element.attachment });
           this.updateForm.get('warrantyReleaseFile')?.disable();
           this.cdr.detectChanges();
         }
@@ -509,6 +509,12 @@ export class FinalDeliveryStatusComponent implements OnInit {
       this.updateForm.patchValue({
         warrantyReleaseFile: this.warrantyReleaseFile.name
       });
+    });
+  }
+
+  downloadFile(attachment: string) {
+    this.attachmentService.downloadAttachment(attachment).subscribe(res => {
+      window.open(res.data, '_blank');
     });
   }
 
