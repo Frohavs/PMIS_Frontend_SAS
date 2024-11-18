@@ -9,10 +9,17 @@
         </h3>
         <div class="card-toolbar" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-trigger="hover"
           title="Click to add a user">
-          <button class="btn btn-light-success font-weight-bolder font-size-sm cursor-pointer"
-            (click)="openStatusModal()">
-            Update Status
-          </button>
+          <ng-container *ngIf="activeStep === 6">
+            <button class="btn btn-success font-weight-bolder font-size-sm cursor-pointer" (click)="openStatusModal()">
+              Show Status
+            </button>
+          </ng-container>
+          <ng-container *ngIf="activeStep !== 6">
+            <button class="btn btn-light-success font-weight-bolder font-size-sm cursor-pointer"
+              (click)="openStatusModal()">
+              Update Status
+            </button>
+          </ng-container>
         </div>
       </div>
       <div class="card-body pt-3">
@@ -48,8 +55,16 @@
             </label>
             <input type="date" class="form-control form-control-solid" style="flex: 0.3;"
               formControlName="finalDeliveryDate" />
-            <input type="file" class="form-control form-control-solid" style="flex: 0.3;"
-              formControlName="finalDeliveryFile" (change)="onFinalDeliveryFileSelected($event)" />
+            <ng-container *ngIf="!finalDeliveryFile">
+              <input type="file" class="form-control form-control-solid" style="flex: 0.3;"
+                formControlName="finalDeliveryFile" (change)="onFinalDeliveryFileSelected($event)" />
+            </ng-container>
+            <ng-container *ngIf="finalDeliveryFile">
+              <span style="min-width: 80px; padding: 15px;"
+                class="badge badge-light-primary fs-6 fw-bold my-2 cursor-pointer">
+                {{ finalDeliveryFile.name }}
+              </span>
+            </ng-container>
           </div>
         </div>
 
@@ -65,8 +80,16 @@
             </label>
             <input type="date" class="form-control form-control-solid" style="flex: 0.3;"
               formControlName="finalDeliveryNotesDate" />
-            <input type="file" class="form-control form-control-solid" style="flex: 0.3;"
-              formControlName="finalDeliveryNotesFile" />
+            <ng-container *ngIf="!finalDeliveryNotesFile">
+              <input type="file" class="form-control form-control-solid" style="flex: 0.3;"
+                formControlName="finalDeliveryNotesFile" (change)="onFinalDeliveryNotesFileSelected($event)" />
+            </ng-container>
+            <ng-container *ngIf="finalDeliveryNotesFile">
+              <span style="min-width: 80px; padding: 15px;"
+                class="badge badge-light-primary fs-6 fw-bold my-2 cursor-pointer">
+                {{ finalDeliveryNotesFile.name }}
+              </span>
+            </ng-container>
           </div>
         </div>
 
@@ -78,8 +101,16 @@
             </label>
             <input type="date" class="form-control form-control-solid" style="flex: 0.3;"
               formControlName="supplyContractorDate" />
-            <input type="file" class="form-control form-control-solid" style="flex: 0.3;"
-              formControlName="supplyContractorFile" />
+            <ng-container *ngIf="!supplyContractorFile">
+              <input type="file" class="form-control form-control-solid" style="flex: 0.3;"
+                formControlName="supplyContractorFile" (change)="onSupplyContractorFileSelected($event)" />
+            </ng-container>
+            <ng-container *ngIf="supplyContractorFile">
+              <span style="min-width: 80px; padding: 15px;"
+                class="badge badge-light-primary fs-6 fw-bold my-2 cursor-pointer">
+                {{ supplyContractorFile.name }}
+              </span>
+            </ng-container>
           </div>
         </div>
         <div class="col-lg-12 fv-row">
@@ -90,8 +121,16 @@
             </label>
             <input type="date" class="form-control form-control-solid" style="flex: 0.3;"
               formControlName="finishNoteDate" />
-            <input type="file" class="form-control form-control-solid" style="flex: 0.3;"
-              formControlName="finishNoteFile" />
+            <ng-container *ngIf="!finishNotesFile">
+              <input type="file" class="form-control form-control-solid" style="flex: 0.3;"
+                formControlName="finishNoteFile" (change)="onFinishNotesFileSelected($event)" />
+            </ng-container>
+            <ng-container *ngIf="finishNotesFile">
+              <span style="min-width: 80px; padding: 15px;"
+                class="badge badge-light-primary fs-6 fw-bold my-2 cursor-pointer">
+                {{ finishNotesFile.name }}
+              </span>
+            </ng-container>
           </div>
         </div>
 
@@ -103,8 +142,16 @@
             </label>
             <input type="date" class="form-control form-control-solid" style="flex: 0.3;"
               formControlName="signNoteDate" />
-            <input type="file" class="form-control form-control-solid" style="flex: 0.3;"
-              formControlName="signNoteFile" />
+            <ng-container *ngIf="!signNotesFile">
+              <input type="file" class="form-control form-control-solid" style="flex: 0.3;"
+                formControlName="signNoteFile" (change)="onSignNoteFileSelected($event)" />
+            </ng-container>
+            <ng-container *ngIf="signNotesFile">
+              <span style="min-width: 80px; padding: 15px;"
+                class="badge badge-light-primary fs-6 fw-bold my-2 cursor-pointer">
+                {{ signNotesFile.name }}
+              </span>
+            </ng-container>
           </div>
         </div>
 
@@ -116,8 +163,16 @@
             </label>
             <input type="date" class="form-control form-control-solid" style="flex: 0.3;"
               formControlName="warrantyReleaseDate" />
-            <input type="file" class="form-control form-control-solid" style="flex: 0.3;"
-              formControlName="warrantyReleaseFile" />
+            <ng-container *ngIf="!warrantyReleaseFile">
+              <input type="file" class="form-control form-control-solid" style="flex: 0.3;"
+                formControlName="warrantyReleaseFile" (change)="onWarrantyReleaseFileSelected($event)" />
+            </ng-container>
+            <ng-container *ngIf="warrantyReleaseFile">
+              <span style="min-width: 80px; padding: 15px;"
+                class="badge badge-light-primary fs-6 fw-bold my-2 cursor-pointer">
+                {{ warrantyReleaseFile.name }}
+              </span>
+            </ng-container>
           </div>
         </div>
 
@@ -132,7 +187,7 @@
       <!--end::Button-->
 
       <!--begin::Button-->
-      <button type="submit" id="kt_modal_update_customer_submit" class="btn btn-primary"
+      <button type="submit" id="kt_modal_update_customer_submit" class="btn btn-primary" *ngIf="activeStep !== 6"
         [attr.data-kt-indicator]="isLoading ? 'on' : 'off'">
         <span class="indicator-label">
           Submit
@@ -146,3 +201,7 @@
   </form>
 
 </ng-template>
+
+
+<swal #noticeSwal [swalOptions]="swalOptions">
+</swal>

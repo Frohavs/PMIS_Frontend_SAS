@@ -44,7 +44,7 @@ export class DeliveryStatusService {
       Authorization: `Bearer ${this.token}`,
     });
     const url = `${this.API_USERS_URL}/CreateDeliveryStatusItems`;
-    return this.http.put<any>(url, path, {
+    return this.http.post<any>(url, path, {
       headers: httpHeaders
     });
   }

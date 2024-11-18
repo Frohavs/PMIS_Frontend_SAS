@@ -9,10 +9,19 @@
         </h3>
         <div class="card-toolbar" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-trigger="hover"
           title="Click to add a user">
-          <button class="btn btn-light-success font-weight-bolder font-size-sm cursor-pointer"
-            (click)="openStatusModal()">
-            Update Status
-          </button>
+          <ng-container *ngIf="activeStep === 5">
+            <button class="btn btn-success font-weight-bolder font-size-sm cursor-pointer"
+              (click)="openStatusModal()">
+              Show Status
+            </button>
+          </ng-container>
+          <ng-container *ngIf="activeStep !== 5">
+            <button class="btn btn-light-success font-weight-bolder font-size-sm cursor-pointer"
+              (click)="openStatusModal()">
+              Update Status
+            </button>
+          </ng-container>
+
         </div>
       </div>
       <div class="card-body pt-3">
@@ -47,14 +56,22 @@
               <span class="fw-bold ps-2 fs-6">create committee</span>
             </label>
             <input type="date" class="form-control form-control-solid" style="flex: 0.3;"
-              formControlName="createCommitteeDate" /><br>
+              formControlName="createCommitteeDate" />
             <!-- <div
               *ngIf="updateForm?.get('createCommitteeDate')?.invalid && (updateForm?.get('createCommitteeDate')?.dirty || updateForm?.get('createCommitteeDate')?.touched)"
               class="fv-plugins-message-container">
               <div class="fv-help-block">date is required</div>
             </div> -->
-            <input type="file" class="form-control form-control-solid" style="flex: 0.3;"
-            formControlName="createCommitteeFile" (change)="onCreateCommitteeFileSelected($event)" /><br>
+            <ng-container *ngIf="!createCommitteeSelectedFile">
+              <input type="file" class="form-control form-control-solid" style="flex: 0.3;"
+                formControlName="createCommitteeFile" (change)="onCreateCommitteeFileSelected($event)" />
+            </ng-container>
+            <ng-container *ngIf="createCommitteeSelectedFile">
+              <span style="min-width: 80px; padding: 15px;"
+                class="badge badge-light-primary fs-6 fw-bold my-2 cursor-pointer">
+                {{ createCommitteeSelectedFile.name }}
+              </span>
+            </ng-container>
             <!-- <div
               *ngIf="updateForm?.get('createCommitteeFile')?.invalid && (updateForm?.get('createCommitteeFile')?.dirty || updateForm?.get('createCommitteeFile')?.touched)"
               class="fv-plugins-message-container">
@@ -75,8 +92,16 @@
             </label>
             <input type="date" class="form-control form-control-solid" style="flex: 0.3;"
               formControlName="trackNotesDate" />
-            <input type="file" class="form-control form-control-solid" style="flex: 0.3;"
-              formControlName="trackNotesFile" (change)="onTrackNotesFileSelected($event)" />
+            <ng-container *ngIf="!trackNotesSelectedFile">
+              <input type="file" class="form-control form-control-solid" style="flex: 0.3;"
+                formControlName="trackNotesFile" (change)="onTrackNotesFileSelected($event)" />
+            </ng-container>
+            <ng-container *ngIf="trackNotesSelectedFile">
+              <span style="min-width: 80px; padding: 15px;"
+                class="badge badge-light-primary fs-6 fw-bold my-2 cursor-pointer">
+                {{ trackNotesSelectedFile.name }}
+              </span>
+            </ng-container>
           </div>
         </div>
 
@@ -88,8 +113,16 @@
             </label>
             <input type="date" class="form-control form-control-solid" style="flex: 0.3;"
               formControlName="provideContractorNotesDate" />
-            <input type="file" class="form-control form-control-solid" style="flex: 0.3;"
-              formControlName="provideContractorNotesFile" (change)="onProvideContractorNotesFileSelected($event)" />
+            <ng-container *ngIf="!provideContractorNotesSelectedFile">
+              <input type="file" class="form-control form-control-solid" style="flex: 0.3;"
+                formControlName="provideContractorNotesFile" (change)="onProvideContractorNotesFileSelected($event)" />
+            </ng-container>
+            <ng-container *ngIf="provideContractorNotesSelectedFile">
+              <span style="min-width: 80px; padding: 15px;"
+                class="badge badge-light-primary fs-6 fw-bold my-2 cursor-pointer">
+                {{ provideContractorNotesSelectedFile.name }}
+              </span>
+            </ng-container>
           </div>
         </div>
 
@@ -101,8 +134,16 @@
             </label>
             <input type="date" class="form-control form-control-solid" style="flex: 0.3;"
               formControlName="completeNotesDate" />
-            <input type="file" class="form-control form-control-solid" style="flex: 0.3;"
-              formControlName="completeNotesFile" (change)="onCompleteNotesFileSelected($event)" />
+            <ng-container *ngIf="!completeNotesSelectedFile">
+              <input type="file" class="form-control form-control-solid" style="flex: 0.3;"
+                formControlName="completeNotesFile" (change)="onCompleteNotesFileSelected($event)" />
+            </ng-container>
+            <ng-container *ngIf="completeNotesSelectedFile">
+              <span style="min-width: 80px; padding: 15px;"
+                class="badge badge-light-primary fs-6 fw-bold my-2 cursor-pointer">
+                {{ completeNotesSelectedFile.name }}
+              </span>
+            </ng-container>
           </div>
         </div>
 
@@ -114,8 +155,16 @@
             </label>
             <input type="date" class="form-control form-control-solid" style="flex: 0.3;"
               formControlName="signContractDate" />
-            <input type="file" class="form-control form-control-solid" style="flex: 0.3;"
-              formControlName="signContractFile" (change)="onSignContractFileSelected($event)" />
+            <ng-container *ngIf="!signContractSelectedFile">
+              <input type="file" class="form-control form-control-solid" style="flex: 0.3;"
+                formControlName="signContractFile" (change)="onSignContractFileSelected($event)" />
+            </ng-container>
+            <ng-container *ngIf="signContractSelectedFile">
+              <span style="min-width: 80px; padding: 15px;"
+                class="badge badge-light-primary fs-6 fw-bold my-2 cursor-pointer">
+                {{ signContractSelectedFile.name }}
+              </span>
+            </ng-container>
           </div>
         </div>
 
@@ -132,7 +181,7 @@
       <!--end::Button-->
 
       <!--begin::Button-->
-      <button type="submit" id="kt_modal_update_customer_submit" class="btn btn-primary"
+      <button type="submit" id="kt_modal_update_customer_submit" class="btn btn-primary" *ngIf="activeStep !== 5"
         [attr.data-kt-indicator]="isLoading ? 'on' : 'off'">
         <span class="indicator-label">
           Submit
@@ -144,5 +193,7 @@
       <!--end::Button-->
     </div>
   </form>
-
 </ng-template>
+
+<swal #noticeSwal [swalOptions]="swalOptions">
+</swal>

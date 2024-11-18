@@ -29,8 +29,8 @@ export class FinalDeliveryStatusComponent implements OnInit {
 
   finalDeliveryFile: any;
   finalDeliveryNotesFile: any;
-  supplyContractorFile: any;
   finishNotesFile: any;
+  supplyContractorFile: any;
   signNotesFile: any;
   warrantyReleaseFile: any;
 
@@ -173,6 +173,7 @@ export class FinalDeliveryStatusComponent implements OnInit {
         this.updateForm.get('warrantyReleaseFile')?.disable();
         this.updateForm.get('warrantyReleaseFile')?.setValue(null);
       } else {
+        this.updateForm.get('finalDeliveryNotes')?.setValue(false);
         this.updateForm.get('supplyContractor')?.disable();
         this.updateForm.get('supplyContractor')?.setValue(null);
         this.updateForm.get('supplyContractorDate')?.disable();
@@ -300,34 +301,78 @@ export class FinalDeliveryStatusComponent implements OnInit {
   }
 
   getByID() {
-    this.deliveryStatusService.getDeliveryStatusById(this.projectId, 1).subscribe(res => {
-      // debugger
+    this.deliveryStatusService.getDeliveryStatusById(this.projectId, 2).subscribe(res => {
       this.statusDetails = res.data;
-      this.activeStep = this.statusDetails?.items.length ? this.statusDetails?.items.length + 1 : 0;
-      // this.subPhaseId = this.statusDetails?.subPhaseId;
-      // if (this.statusDetails?.status == 'DeliverableChecklist') {
-      //   this.activeStep = 1;
-      // }
-      // switch (this.statusDetails?.status) {
-      //   case 'formCommittee':
-      //     this.activeStep = 0;
-      //     break;
-      //   case 'trackNotes':
-      //     this.activeStep = 1;
-      //     break;
-      //   case 'provideContractorNotes':
-      //     this.activeStep = 2;
-      //     break;
-      //   case 'finishNotes':
-      //     this.activeStep = 3;
-      //     break;
-      //   case 'SignContract':
-      //     this.activeStep = 4;
-      //     break;
-      //   default:
-      //     break;
-      // }
-      this.cdr.detectChanges();
+      this.activeStep = this.statusDetails?.items.length ? this.statusDetails?.items[this.statusDetails?.items.length - 1]?.step : 0;
+
+      if (this.statusDetails.items[0] && this.statusDetails.items[0].step === 1) {
+        this.finalDeliveryFile = { name: this.statusDetails.items[0].attachment };
+        this.updateForm.get('finalDelivery')?.setValue(this.statusDetails.items[0].checked);
+        this.updateForm.get('finalDelivery')?.disable();
+        this.updateForm.get('finalDeliveryDate')?.setValue(this.statusDetails.items[0].createdAt.slice(0, 10));
+        this.updateForm.get('finalDeliveryDate')?.disable();
+        this.updateForm.get('finalDeliveryFile')?.setValue({ name: this.statusDetails.items[0].attachment });
+        this.updateForm.get('finalDeliveryFile')?.disable();
+        this.updateForm.get('finalDeliveryNotes')?.enable();
+        this.cdr.detectChanges();
+      }
+      if (this.statusDetails.items[1] && this.statusDetails.items[1].step === 2) {
+        this.finalDeliveryNotesFile = { name: this.statusDetails.items[0].attachment };
+        this.updateForm.get('finalDeliveryNotes')?.setValue(this.statusDetails.items[0].checked);
+        this.updateForm.get('finalDeliveryNotes')?.disable();
+        this.updateForm.get('notApplied')?.setValue(this.statusDetails.items[1].applied || null);
+        this.updateForm.get('notApplied')?.disable();
+        this.updateForm.get('finalDeliveryNotesDate')?.setValue(this.statusDetails.items[0].createdAt.slice(0, 10));
+        this.updateForm.get('finalDeliveryNotesDate')?.disable();
+        this.updateForm.get('finalDeliveryNotesFile')?.setValue({ name: this.statusDetails.items[0].attachment });
+        this.updateForm.get('finalDeliveryNotesFile')?.disable();
+        this.updateForm.get('supplyContractor')?.enable();
+
+        this.cdr.detectChanges();
+      }
+      if (this.statusDetails.items[2] && this.statusDetails.items[2].step === 3) {
+        this.supplyContractorFile = { name: this.statusDetails.items[0].attachment };
+        this.updateForm.get('supplyContractor')?.setValue(this.statusDetails.items[0].checked);
+        this.updateForm.get('supplyContractor')?.disable();
+        this.updateForm.get('supplyContractorDate')?.setValue(this.statusDetails.items[0].createdAt.slice(0, 10));
+        this.updateForm.get('supplyContractorDate')?.disable();
+        this.updateForm.get('supplyContractorFile')?.setValue({ name: this.statusDetails.items[0].attachment });
+        this.updateForm.get('supplyContractorFile')?.disable();
+        this.updateForm.get('finishNote')?.enable();
+        this.cdr.detectChanges();
+      }
+      if (this.statusDetails.items[3] && this.statusDetails.items[3].step === 4) {
+        this.finishNotesFile = { name: this.statusDetails.items[0].attachment };
+        this.updateForm.get('finishNote')?.setValue(this.statusDetails.items[0].checked);
+        this.updateForm.get('finishNote')?.disable();
+        this.updateForm.get('finishNoteDate')?.setValue(this.statusDetails.items[0].createdAt.slice(0, 10));
+        this.updateForm.get('finishNoteDate')?.disable();
+        this.updateForm.get('finishNoteFile')?.setValue({ name: this.statusDetails.items[0].attachment });
+        this.updateForm.get('finishNoteFile')?.disable();
+        this.updateForm.get('signNote')?.enable();
+        this.cdr.detectChanges();
+      }
+      if (this.statusDetails.items[4] && this.statusDetails.items[4].step === 5) {
+        this.signNotesFile = { name: this.statusDetails.items[0].attachment };
+        this.updateForm.get('signNote')?.setValue(this.statusDetails.items[0].checked);
+        this.updateForm.get('signNote')?.disable();
+        this.updateForm.get('signNoteDate')?.setValue(this.statusDetails.items[0].createdAt.slice(0, 10));
+        this.updateForm.get('signNoteDate')?.disable();
+        this.updateForm.get('signNoteFile')?.setValue({ name: this.statusDetails.items[0].attachment });
+        this.updateForm.get('signNoteFile')?.disable();
+        this.updateForm.get('warrantyRelease')?.enable();
+        this.cdr.detectChanges();
+      }
+      if (this.statusDetails.items[5] && this.statusDetails.items[5].step === 6) {
+        this.warrantyReleaseFile = {name: this.statusDetails.items[4].attachment};
+        this.updateForm.get('warrantyRelease')?.setValue(this.statusDetails.items[4].checked);
+        this.updateForm.get('warrantyRelease')?.disable();
+        this.updateForm.get('warrantyReleaseDate')?.setValue(this.statusDetails.items[4].createdAt.slice(0, 10));
+        this.updateForm.get('warrantyReleaseDate')?.disable();
+        this.updateForm.get('warrantyReleaseFile')?.setValue({name: this.statusDetails.items[4].attachment});
+        this.updateForm.get('warrantyReleaseFile')?.disable();
+        this.cdr.detectChanges();
+      }
     });
   }
 
@@ -417,6 +462,7 @@ export class FinalDeliveryStatusComponent implements OnInit {
     let payload = []
     payload[0] = {
       "checked": this.updateForm.get('finalDelivery')?.value,
+      "applied": false,
       "createdAt": this.updateForm.get('finalDeliveryDate')?.value,
       "attachment": this.updateForm.get('finalDeliveryFile')?.value,
       "finalStep": 1,
@@ -425,6 +471,7 @@ export class FinalDeliveryStatusComponent implements OnInit {
 
     payload[1] = {
       "checked": this.updateForm.get('finalDeliveryNotes')?.value,
+      "applied": false,
       "createdAt": this.updateForm.get('finalDeliveryNotesDate')?.value,
       "attachment": this.updateForm.get('finalDeliveryNotesFile')?.value,
       "finalStep": 2,
@@ -433,6 +480,7 @@ export class FinalDeliveryStatusComponent implements OnInit {
 
     payload[2] = {
       "checked": this.updateForm.get('supplyContractor')?.value,
+      "applied": false,
       "createdAt": this.updateForm.get('supplyContractorDate')?.value,
       "attachment": this.updateForm.get('supplyContractorFile')?.value,
       "finalStep": 3,
@@ -441,6 +489,7 @@ export class FinalDeliveryStatusComponent implements OnInit {
 
     payload[3] = {
       "checked": this.updateForm.get('finishNote')?.value,
+      "applied": false,
       "createdAt": this.updateForm.get('finishNoteDate')?.value,
       "attachment": this.updateForm.get('finishNoteFile')?.value,
       "finalStep": 4,
@@ -449,6 +498,7 @@ export class FinalDeliveryStatusComponent implements OnInit {
 
     payload[4] = {
       "checked": this.updateForm.get('signNote')?.value,
+      "applied": false,
       "createdAt": this.updateForm.get('signNoteDate')?.value,
       "attachment": this.updateForm.get('signNoteFile')?.value,
       "finalStep": 5,
@@ -456,87 +506,34 @@ export class FinalDeliveryStatusComponent implements OnInit {
     }
     payload[5] = {
       "checked": this.updateForm.get('warrantyRelease')?.value,
+      "applied": false,
       "createdAt": this.updateForm.get('warrantyReleaseDate')?.value,
       "attachment": this.updateForm.get('warrantyReleaseFile')?.value,
       "finalStep": 6,
       "deliveryStatusId": this.deliveryStatusId
     }
-    const checkedItems = payload.filter(item => item.checked === true);
+    const checkedItems = payload.filter(item => {
+      return (item.checked === true || item.applied === true);
+    });
+    const filteredData = checkedItems.filter((item) => {
+      // Check if there's a match for intialStep in backendData.items
+      return !this.statusDetails?.items.some(
+        (backendItem: any) => backendItem.step === item.finalStep
+      );
+    });
 
-    this.deliveryStatusService.createDeliveryStatusItems({items: checkedItems}).subscribe(res => {
-
-      this.modalService.dismissAll();
-      this.showAlert({ icon: 'success', title: 'Success!', text: 'Status Updated successfully!' });
+    this.deliveryStatusService.createDeliveryStatusItems({ items: this.statusDetails?.items.length ? filteredData : checkedItems }).subscribe(res => {
       this.getByID();
-      debugger
+      this.modalService.dismissAll();
       this.cdr.detectChanges();
     }, (error) => {
-      debugger
       this.modalService.dismissAll()
       this.showAlert({ icon: 'error', title: 'Error!', text: 'Please try again' });
     });
   }
 
 
-  navigateCreateCommittee() {
-    if (this.activeStep !== 0) {
-      return
-    }
 
-  }
-  navigateDeliverableChecklist() {
-    if (this.activeStep !== 1) {
-      return
-    }
-
-  }
-  navigateKickOffMeeting() {
-    if (this.activeStep !== 2) {
-      return
-    }
-
-  }
-  navigateKickOffStepPrint() {
-
-  }
-  navigateKickoffMeetingSubmit() {
-    if (this.activeStep !== 3) {
-      return
-    }
-  }
-  navigateUploadDeliverableChecklist() {
-    if (this.activeStep !== 4) {
-      return
-    }
-
-  }
-  navigateReview() {
-    if (this.activeStep !== 5) {
-      return
-    }
-  }
-
-  navigateFinalReview() {
-    if (this.activeStep !== 6) {
-      return
-    }
-  }
-  navigateFinalReviewPrint() {
-
-  }
-  navigateCommitAcknowledgement() {
-    if (this.activeStep !== 7) {
-      return
-    }
-
-  }
-  navigateFinalSubmit() {
-    if (this.activeStep !== 8) {
-      return
-    }
-
-
-  }
   // Method to check if a step is active
   isStepActive(stepNumber: number): boolean {
     return stepNumber <= this.activeStep;
