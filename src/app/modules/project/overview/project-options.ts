@@ -68,10 +68,6 @@ export const PROJECT_OPTIONS = [
       route: 'projects/initial-delivery-list'
     },
     {
-      name: 'factory',
-      route: 'projects/factory-list'
-    },
-    {
       name: 'Project Status Report',
       route: 'projects/project-status-report'
     },
@@ -90,6 +86,14 @@ export const PROJECT_OPTIONS = [
     {
       name: 'Final Delivery Status',
       route: 'projects/final-delivery-status'
+    },
+    {
+      name: 'factory',
+      route: 'projects/factory-list'
+    },
+    {
+      name: 'Library File Listing',
+      route: 'projects/library-file-listing'
     },
     // {
     //   name: 'stage gate management',

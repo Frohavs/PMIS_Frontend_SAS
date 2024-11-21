@@ -85,6 +85,7 @@ import { HseFindingCreateComponent } from './hse/hse-finding-create/hse-finding-
 import { HseFindingDetailsComponent } from './hse/hse-finding/hse-finding-details/hse-finding-details.component';
 import { InitialDeliveryStatusComponent } from './initial-delivery-status/initial-delivery-status.component';
 import { FinalDeliveryStatusComponent } from './final-delivery-status/final-delivery-status.component';
+import { LibraryFileListingComponent } from './library-file-listing/library-file-listing.component';
 
 
 @NgModule({
@@ -182,7 +183,9 @@ import { FinalDeliveryStatusComponent } from './final-delivery-status/final-deli
     HseFindingDetailsComponent,
 
     InitialDeliveryStatusComponent,
-    FinalDeliveryStatusComponent
+    FinalDeliveryStatusComponent,
+
+    LibraryFileListingComponent
   ],
   imports: [
     CommonModule,

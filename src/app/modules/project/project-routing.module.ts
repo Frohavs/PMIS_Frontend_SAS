@@ -71,6 +71,7 @@ import { HseFindingCreateComponent } from './hse/hse-finding-create/hse-finding-
 import { HseFindingDetailsComponent } from './hse/hse-finding/hse-finding-details/hse-finding-details.component';
 import { InitialDeliveryStatusComponent } from './initial-delivery-status/initial-delivery-status.component';
 import { FinalDeliveryStatusComponent } from './final-delivery-status/final-delivery-status.component';
+import { LibraryFileListingComponent } from './library-file-listing/library-file-listing.component';
 
 const routes: Routes = [
   {
@@ -419,6 +420,10 @@ const routes: Routes = [
         component: FinalDeliveryStatusComponent,
       },
 
+      {
+        path: 'library-file-listing/:id',
+        component: LibraryFileListingComponent,
+      },
 
 
       { path: '', redirectTo: 'overview', pathMatch: 'full' },
