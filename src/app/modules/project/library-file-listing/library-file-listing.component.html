@@ -1,37 +1,52 @@
 <div class="horizontal-tree">
-  <div class="node-container">
-    <div class="node">
-      <div class="node-content">
-        <span class="node-title">1 - Introduction</span>
-      </div>
-      <button class="btn btn-icon btn-primary">+</button>
-    </div>
-    <div class="node">
-      <div class="node-content">
-        <span class="node-title">2 - Stage Gates</span>
-      </div>
-      <button class="btn btn-icon btn-primary">+</button>
-    </div>
-    <div class="node">
-      <div class="node-content">
-        <span class="node-title">3 - Project Registration</span>
-      </div>
-      <button class="btn btn-icon btn-primary">+</button>
-    </div>
-    <div class="node">
-      <div class="node-content">
-        <span class="node-title">4 - Design</span>
-      </div>
-      <div class="child-nodes">
-        <div class="child-node">
-          <span>Drawings</span>
-          <button class="btn btn-icon btn-primary">+</button>
+  <ng-container *ngFor="let node of treeData">
+    <div class="node-container">
+      <div class="node">
+        <div class="node-content">
+          <span class="node-title">{{ node.name }}</span>
         </div>
-        <div class="child-node">
-          <span>Documents</span>
-          <button class="btn btn-icon btn-primary">+</button>
-        </div>
+        <button
+          class="btn btn-icon btn-primary"
+          (click)="toggleNode(node)"
+          *ngIf="node.categories?.length > 0"
+        >
+          {{ node.expanded ? '-' : '+' }}
+        </button>
+      </div>
+
+      <div class="child-nodes" *ngIf="node.expanded && node.categories?.length > 0">
+        <ng-container *ngFor="let category of node.categories">
+          <div class="child-node">
+            <span>{{ category.name }}</span>
+            <button
+              class="btn btn-icon btn-primary"
+              (click)="toggleNode(category)"
+              *ngIf="category.subCategories?.length > 0"
+            >
+              {{ category.expanded ? '-' : '+' }}
+            </button>
+            <div class="grandchild-nodes" *ngIf="category.expanded && category.subCategories?.length > 0">
+              <ng-container *ngFor="let subCategory of category.subCategories">
+                <div class="child-node">
+                  <span>{{ subCategory.name }}</span>
+                  <button
+                    class="btn btn-icon btn-primary"
+                    (click)="toggleNode(subCategory)"
+                    *ngIf="subCategory.leaves?.length > 0"
+                  >
+                    {{ subCategory.expanded ? '-' : '+' }}
+                  </button>
+                  <div class="leaf-nodes" *ngIf="subCategory.expanded && subCategory.leaves?.length > 0">
+                    <div class="child-node" *ngFor="let leaf of subCategory.leaves">
+                      <span>{{ leaf.name }}</span>
+                    </div>
+                  </div>
+                </div>
+              </ng-container>
+            </div>
+          </div>
+        </ng-container>
       </div>
     </div>
-  </div>
+  </ng-container>
 </div>
