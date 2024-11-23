@@ -12,6 +12,7 @@ export class FactoryService {
   token: string;
   private authLocalStorageToken = `${environment.appVersion}-${environment.USERDATA_KEY}`;
 
+
   constructor(private http: HttpClient) {
     const lsValue = localStorage.getItem(this.authLocalStorageToken);
     this.token = JSON.parse(lsValue as any)?.token;

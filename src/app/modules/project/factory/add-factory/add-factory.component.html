@@ -212,7 +212,7 @@
                 </label>
                 <div class="col-lg-12 fv-row">
                   <input type="file" class="form-control form-control-lg form-control-solid text-start"
-                    name="profileAttachment" formControlName="profileAttachment" />
+                    name="profileAttachment" formControlName="profileAttachment" (change)="onProfileFileChange($event)" />
                   <div
                     *ngIf="addFactoryForm?.get('profileAttachment')?.invalid && (addFactoryForm?.get('profileAttachment')?.dirty || addFactoryForm?.get('profileAttachment')?.touched)"
                     class="fv-plugins-message-container">
@@ -268,9 +268,9 @@
                 </label>
                 <div class="col-lg-12 fv-row">
                   <input type="file" class="form-control form-control-lg form-control-solid text-start"
-                    name="profileAttachment" formControlName="profileAttachment" />
+                    name="lastFinancialAttachment" formControlName="lastFinancialAttachment" (change)="onLastFileChange($event)" />
                   <div
-                    *ngIf="addFactoryForm?.get('profileAttachment')?.invalid && (addFactoryForm?.get('profileAttachment')?.dirty || addFactoryForm?.get('profileAttachment')?.touched)"
+                    *ngIf="addFactoryForm?.get('lastFinancialAttachment')?.invalid && (addFactoryForm?.get('lastFinancialAttachment')?.dirty || addFactoryForm?.get('lastFinancialAttachment')?.touched)"
                     class="fv-plugins-message-container">
                     <div class="fv-help-block">attachment is required</div>
                   </div>
@@ -284,9 +284,9 @@
                 </label>
                 <div class="col-lg-12 fv-row">
                   <input type="file" class="form-control form-control-lg form-control-solid text-start"
-                    name="profileAttachment" formControlName="profileAttachment" />
+                    name="approveletterAttachment" formControlName="approveletterAttachment" (change)="onApproveFileChange($event)" />
                   <div
-                    *ngIf="addFactoryForm?.get('profileAttachment')?.invalid && (addFactoryForm?.get('profileAttachment')?.dirty || addFactoryForm?.get('profileAttachment')?.touched)"
+                    *ngIf="addFactoryForm?.get('approveletterAttachment')?.invalid && (addFactoryForm?.get('approveletterAttachment')?.dirty || addFactoryForm?.get('approveletterAttachment')?.touched)"
                     class="fv-plugins-message-container">
                     <div class="fv-help-block">attachment is required</div>
                   </div>

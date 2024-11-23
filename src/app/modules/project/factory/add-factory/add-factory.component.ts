@@ -224,6 +224,51 @@ export class AddFactoryComponent implements OnInit {
 
   }
 
+  onApproveFileChange(event: any) {
+    if (event.target.files.length > 0) {
+      const file = event.target.files[0];
+      const fd = new FormData();
+      fd.append('Attachment', file, file.name);
+      this.attachmentService.uploadAttachment(fd).subscribe(res => {
+        this.addFactoryForm.patchValue({
+          approveletterAttachment: file.name
+        })
+      }, (error) => {
+        this.showAlert({ icon: 'error', title: 'Error!', text: 'Please try Upload again' });
+      });
+    }
+  }
+
+  onLastFileChange(event: any) {
+    if (event.target.files.length > 0) {
+      const file = event.target.files[0];
+      const fd = new FormData();
+      fd.append('Attachment', file, file.name);
+      this.attachmentService.uploadAttachment(fd).subscribe(res => {
+        this.addFactoryForm.patchValue({
+          lastFinancialAttachment: file.name
+        })
+      }, (error) => {
+        this.showAlert({ icon: 'error', title: 'Error!', text: 'Please try Upload again' });
+      });
+    }
+  }
+
+  onProfileFileChange(event: any) {
+    if (event.target.files.length > 0) {
+      const file = event.target.files[0];
+      const fd = new FormData();
+      fd.append('Attachment', file, file.name);
+      this.attachmentService.uploadAttachment(fd).subscribe(res => {
+        this.addFactoryForm.patchValue({
+          profileAttachment: file.name
+        })
+      }, (error) => {
+        this.showAlert({ icon: 'error', title: 'Error!', text: 'Please try Upload again' });
+      });
+    }
+  }
+
   numbersOnly(event: any): boolean {
     const charCode = (event.which) ? event.which : event.keyCode;
     if ((charCode > 31 && charCode != 43) && (charCode < 48 || charCode > 57)) {
