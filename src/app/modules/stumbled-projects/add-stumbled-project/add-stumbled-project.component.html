@@ -1,1 +1,196 @@
-<p>add-stumbled-project works!</p>
+<div class="row g-5 g-xl-8 justify-content-between">
+  <div class="col-xl-12">
+    <div class="card mb-5 mb-xl-8">
+      <!-- begin::Header -->
+      <div class="card-header align-items-center border-0 mt-4">
+        <h3 class="card-title align-items-start flex-column">
+          <span class="fw-bolder text-gray-900">new Stumbled Project</span>
+          <!-- <span class="text-muted mt-1 fw-bold fs-7">test</span> -->
+        </h3>
+        <div class="card-toolbar">
+          <a (click)="back()" class="btn btn-sm btn-danger d-flex">
+            <app-keenicon name="arrow-left" class="fs-3"></app-keenicon>
+            {{"ECOMMERCE.COMMON.BACK" | translate}}
+          </a>
+        </div>
+      </div>
+
+
+      <div class="card-body pt-3">
+
+        <form [formGroup]="addStumbledForm" class="form">
+          <div class="card-body border-top p-9">
+            <div formArrayName="stumbledItems">
+              <!-- Loop through FormArray items -->
+              <div *ngFor="let item of stumbledItems.controls; let i = index" [formGroupName]="i" class="mb-5">
+                <h4>Item {{ i + 1 }}</h4>
+
+                <!-- Reasons -->
+                <div class="row mb-2">
+                  <div class="col-lg-6">
+                    <label class="col-lg-12 col-form-label fw-bold fs-6">Reasons</label>
+                    <textarea
+                      cols="3"
+                      class="form-control form-control-lg form-control-solid text-start"
+                      formControlName="reasons"
+                    ></textarea>
+                    <div *ngIf="item.get('reasons')?.invalid && (item.get('reasons')?.dirty || item.get('reasons')?.touched)">
+                      <div class="fv-help-block">Reasons are required</div>
+                    </div>
+                  </div>
+
+                  <!-- Reason Type -->
+                  <div class="col-lg-6">
+                    <label class="col-lg-12 col-form-label fw-bold fs-6">Reason Type</label>
+                    <select class="form-select form-select-solid form-select-lg fw-bold" formControlName="reasonTypeId">
+                      <option value="" disabled>Select</option>
+                      <option *ngFor="let category of stumbledReasonTypes" [value]="category.id">{{ category.name }}</option>
+                    </select>
+                    <div
+                      *ngIf="item.get('reasonTypeId')?.invalid && (item.get('reasonTypeId')?.dirty || item.get('reasonTypeId')?.touched)"
+                    >
+                      <div class="fv-help-block">Reason type is required</div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Action Required and Responsibility -->
+                <div class="row mb-2">
+                  <div class="col-lg-6">
+                    <label class="col-lg-12 col-form-label fw-bold fs-6">Action Required</label>
+                    <textarea
+                      cols="3"
+                      class="form-control form-control-lg form-control-solid text-start"
+                      formControlName="actionRequired"
+                    ></textarea>
+                    <div
+                      *ngIf="item.get('actionRequired')?.invalid && (item.get('actionRequired')?.dirty || item.get('actionRequired')?.touched)"
+                    >
+                      <div class="fv-help-block">Action required is mandatory</div>
+                    </div>
+                  </div>
+
+                  <div class="col-lg-6">
+                    <label class="col-lg-12 col-form-label fw-bold fs-6">Responsibility</label>
+                    <select class="form-select form-select-solid form-select-lg fw-bold" formControlName="responsibilityId">
+                      <option value="" disabled>Select</option>
+                      <option *ngFor="let category of stumbledResponsibilities" [value]="category.id">{{ category.name }}</option>
+                    </select>
+                    <div
+                      *ngIf="item.get('responsibilityId')?.invalid && (item.get('responsibilityId')?.dirty || item.get('responsibilityId')?.touched)"
+                    >
+                      <div class="fv-help-block">Responsibility is required</div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- PMO Recommendation and Status -->
+                <div class="row mb-2">
+                  <div class="col-lg-6">
+                    <label class="col-lg-12 col-form-label fw-bold fs-6">PMO Recommendation</label>
+                    <textarea
+                      cols="3"
+                      class="form-control form-control-lg form-control-solid text-start"
+                      formControlName="pmoRecommendation"
+                    ></textarea>
+                    <div
+                      *ngIf="item.get('pmoRecommendation')?.invalid && (item.get('pmoRecommendation')?.dirty || item.get('pmoRecommendation')?.touched)"
+                    >
+                      <div class="fv-help-block">PMO Recommendation is required</div>
+                    </div>
+                  </div>
+
+                  <div class="col-lg-6">
+                    <label class="col-lg-12 col-form-label fw-bold fs-6">Status</label>
+                    <select class="form-select form-select-solid form-select-lg fw-bold" formControlName="status">
+                      <option value="" disabled>Select</option>
+                      <option *ngFor="let category of stumbledStatuses" [value]="category.id">{{ category.name }}</option>
+                    </select>
+                    <div
+                      *ngIf="item.get('status')?.invalid && (item.get('status')?.dirty || item.get('status')?.touched)"
+                    >
+                      <div class="fv-help-block">Status is required</div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Impact Type and Impact Level -->
+                <div class="row mb-2">
+                  <div class="col-lg-6">
+                    <label class="col-lg-12 col-form-label fw-bold fs-6">Impact Type</label>
+                    <select class="form-select form-select-solid form-select-lg fw-bold" formControlName="impactTypeId">
+                      <option value="" disabled>Select</option>
+                      <option *ngFor="let category of stumbledImpactTypes" [value]="category.id">{{ category.name }}</option>
+                    </select>
+                    <div
+                      *ngIf="item.get('impactTypeId')?.invalid && (item.get('impactTypeId')?.dirty || item.get('impactTypeId')?.touched)"
+                    >
+                      <div class="fv-help-block">Impact type is required</div>
+                    </div>
+                  </div>
+
+                  <div class="col-lg-6">
+                    <label class="col-lg-12 col-form-label fw-bold fs-6">Impact Level</label>
+                    <select class="form-select form-select-solid form-select-lg fw-bold" formControlName="impactLevelId">
+                      <option value="" disabled>Select</option>
+                      <option *ngFor="let category of stumbledImpactLevels" [value]="category.id">{{ category.name }}</option>
+                    </select>
+                    <div
+                      *ngIf="item.get('impactLevelId')?.invalid && (item.get('impactLevelId')?.dirty || item.get('impactLevelId')?.touched)"
+                    >
+                      <div class="fv-help-block">Impact level is required</div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Due Date and Attachment -->
+                <div class="row mb-2">
+                  <div class="col-lg-6">
+                    <label class="col-lg-12 col-form-label fw-bold fs-6">Due Date</label>
+                    <input type="date" class="form-control form-control-lg form-control-solid text-start" formControlName="dueDate" />
+                    <div *ngIf="item.get('dueDate')?.invalid && (item.get('dueDate')?.dirty || item.get('dueDate')?.touched)">
+                      <div class="fv-help-block">Due Date is required</div>
+                    </div>
+                  </div>
+
+                  <div class="col-lg-6">
+                    <label class="col-lg-12 col-form-label fw-bold fs-6">Attachment</label>
+                    <input
+                      type="file"
+                      class="form-control form-control-lg form-control-solid text-start"
+                      formControlName="attachment"
+                      (change)="onFileChange($event, i)"
+                    />
+                    <div
+                      *ngIf="item.get('attachment')?.invalid && (item.get('attachment')?.dirty || item.get('attachment')?.touched)"
+                    >
+                      <div class="fv-help-block">Attachment is required</div>
+                    </div>
+                  </div>
+                </div>
+
+                <button type="button" class="btn btn-danger my-4" (click)="removeStumbledItem(i)" *ngIf="i > 0">
+                  -
+                </button>
+              </div>
+            </div>
+
+            <button type="button" class="btn btn-primary" (click)="addStumbledItem()">Add Item</button>
+          </div>
+
+          <div class="card-footer">
+            <button type="button" class="btn btn-success" (click)="saveChanges()">Save Changes</button>
+          </div>
+        </form>
+
+
+
+      </div>
+      <!-- end::Body -->
+    </div>
+  </div>
+</div>
+
+<!-- modal -->
+<swal #noticeSwal [swalOptions]="swalOptions">
+</swal>

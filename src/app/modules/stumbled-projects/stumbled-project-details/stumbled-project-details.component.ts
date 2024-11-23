@@ -67,11 +67,14 @@ export class StumbledProjectDetailsComponent implements OnInit {
   }
 
   redirectToNew() {
-    this.router.navigate([`stumbled-projects/create`]);
+    this.router.navigate([`stumbled-projects/create/${this.projectId}`]);
   }
 
   redirectToDetails(id: number) {
-    this.router.navigate([`stumbled-projects/details/${id}`]);
+    debugger
+    this.router.navigate([`stumbled-projects/view/${id}`], {
+      queryParams: { stumbledId: id }
+    });
   }
 
   navigatePage(pageIndex: number) {

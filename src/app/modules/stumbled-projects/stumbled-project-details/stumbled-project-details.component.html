@@ -27,7 +27,6 @@
             <th class="min-w-100px">#</th>
             <th class="min-w-100px">Year</th>
             <th class="min-w-100px">Month</th>
-            <th class="min-w-100px">Version</th>
             <th class="min-w-100px">Created By</th>
             <th class="min-w-100px">Created at</th>
             <th class="max-w-100px text-center">Actions</th>
@@ -44,24 +43,32 @@
             </td>
             <td>
               <a class="text-gray-900 fw-bolder text-hover-primary d-block fs-6">
-                {{eval.id}}
+                {{eval.createdOn | date : 'yyyy'}}
               </a>
             </td>
             <td>
               <a class="text-gray-900 fw-bolder text-hover-primary d-block fs-6">
-                {{eval?.name || '--'}}
+                {{eval?.createdOn | date : 'MM'}}
               </a>
             </td>
             <td>
               <a class="text-gray-900 fw-bolder text-hover-primary d-block fs-6">
-                {{eval?.contractNo || '--'}}
+                {{eval?.createdBy || '--'}}
+              </a>
+            </td>
+            <td>
+              <a class="text-gray-900 fw-bolder text-hover-primary d-block fs-6">
+                {{eval?.createdOn | date : 'dd/MM/yyyy'}}
               </a>
             </td>
             <td class="text-center">
-              <span class="badge badge-dark mx-3 fs-6 fw-bold my-2 p-3 cursor-pointer"
-                (click)="redirectToDetails(eval?.id)">
-                update stumbled
-              </span>
+
+              <div class="d-flex justify-content-center flex-shrink-0">
+                <a class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1"
+                  (click)="redirectToDetails(eval?.id)">
+                  <app-keenicon name="eye" class="fs-3"></app-keenicon>
+                </a>
+              </div>
             </td>
           </tr>
 

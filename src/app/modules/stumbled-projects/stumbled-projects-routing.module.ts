@@ -15,7 +15,11 @@ const routes: Routes = [
         component: OverviewComponent,
       },
       {
-        path: 'create',
+        path: 'create/:id',
+        component: AddStumbledProjectComponent,
+      },
+      {
+        path: 'view/:id',
         component: AddStumbledProjectComponent,
       },
       {
