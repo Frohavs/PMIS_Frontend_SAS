@@ -347,5 +347,50 @@ export class LookupService {
     });
   }
 
+  getStumbledImpactLevels(): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/GetStumbledImpactLevels`;
+    return this.http.get<any>(url, {
+      headers: httpHeaders
+    });
+  }
+  getStumbledImpactTypes(): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/GetStumbledImpactTypes`;
+    return this.http.get<any>(url, {
+      headers: httpHeaders
+    });
+  }
+  getStumbledReasonTypes(): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/GetStumbledReasonTypes`;
+    return this.http.get<any>(url, {
+      headers: httpHeaders
+    });
+  }
+  getStumbledResponsibilities(): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/GetStumbledResponsibilities`;
+    return this.http.get<any>(url, {
+      headers: httpHeaders
+    });
+  }
+  getStumbledStatuses(): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/GetStumbledStatuses`;
+    return this.http.get<any>(url, {
+      headers: httpHeaders
+    });
+  }
 
 }

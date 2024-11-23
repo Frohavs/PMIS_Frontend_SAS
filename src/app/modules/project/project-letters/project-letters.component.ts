@@ -56,7 +56,6 @@ export class ProjectLettersComponent implements OnInit, AfterViewInit, OnDestroy
 
   ngOnInit(): void {
     this.getProjectId();
-    this.initializeMilesStoneList();
   }
 
   initializeMilesStoneList(pageIndex?: number, search?: string) {

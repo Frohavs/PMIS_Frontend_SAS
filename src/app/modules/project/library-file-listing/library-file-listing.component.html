@@ -1,16 +1,15 @@
 <div class="horizontal-tree">
   <ng-container *ngFor="let node of treeData">
     <div class="node-container">
-      <div class="node">
-        <div class="node-content">
+      <div class="node" [ngClass]="{'bg-hover-light-primary': node.attachments.length !== 0}">
+        <div class="node-content" (click)="openNodePopup(node)">
           <span class="node-title">{{ node.name }}</span>
         </div>
-        <button
-          class="btn btn-icon btn-primary"
-          (click)="toggleNode(node)"
-          *ngIf="node.categories?.length > 0"
-        >
+        <button class="btn btn-icon btn-primary" (click)="toggleNode(node)" *ngIf="node.categories?.length > 0">
           {{ node.expanded ? '-' : '+' }}
+        </button>
+        <button class="btn btn-sm btn-success" (click)="addNode(node)" *ngIf="!node.categories?.length">
+          {{ 'add' }}
         </button>
       </div>
 
@@ -18,22 +17,17 @@
         <ng-container *ngFor="let category of node.categories">
           <div class="child-node">
             <span>{{ category.name }}</span>
-            <button
-              class="btn btn-icon btn-primary"
-              (click)="toggleNode(category)"
-              *ngIf="category.subCategories?.length > 0"
-            >
+            <button class="btn btn-icon btn-primary" (click)="toggleNode(category)"
+              *ngIf="category.subCategories?.length > 0">
               {{ category.expanded ? '-' : '+' }}
             </button>
+
             <div class="grandchild-nodes" *ngIf="category.expanded && category.subCategories?.length > 0">
               <ng-container *ngFor="let subCategory of category.subCategories">
                 <div class="child-node">
                   <span>{{ subCategory.name }}</span>
-                  <button
-                    class="btn btn-icon btn-primary"
-                    (click)="toggleNode(subCategory)"
-                    *ngIf="subCategory.leaves?.length > 0"
-                  >
+                  <button class="btn btn-icon btn-primary" (click)="toggleNode(subCategory)"
+                    *ngIf="subCategory.leaves?.length > 0">
                     {{ subCategory.expanded ? '-' : '+' }}
                   </button>
                   <div class="leaf-nodes" *ngIf="subCategory.expanded && subCategory.leaves?.length > 0">
@@ -50,3 +44,25 @@
     </div>
   </ng-container>
 </div>
+
+
+<ng-template #nodeModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Role Details</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+    <div class="node_file_wrap">
+      <ng-container *ngFor="let item of this.nodeModelData?.attachments; let i = index">
+        <span>{{i+1}}.</span>
+        <h4 class="file">File:
+          <span class="bg-primary text-white badge" (click)="downloadFile(item.attachment)">
+            {{item?.attachment}}
+          </span>
+        </h4>
+        <h4 class="date">Created By: {{item?.createdBy}} </h4>
+      </ng-container>
+
+    </div>
+  </div>
+</ng-template>

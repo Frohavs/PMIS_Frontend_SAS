@@ -152,5 +152,21 @@ export class ProjectsService {
       headers: httpHeaders
     });
   }
+  getStumbledProjects(pageIndex?: number, search?: string): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const body = {
+      quickSearch: search,
+      pagedSearch: {
+        "pageIndex": pageIndex,
+        "pageSize": 10
+      }
+    }
+    const url = `${this.API_USERS_URL}/GetStumbledProjects`;
+    return this.http.post<any>(url,body, {
+      headers: httpHeaders
+    });
+  }
 
 }

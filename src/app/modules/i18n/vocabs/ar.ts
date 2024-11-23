@@ -33,6 +33,7 @@ export const locale = {
       USERS: 'المستخدمين',
       ROLES: 'الأدوار',
       PROJECTS_FILES: 'ملفات المشاريع',
+      Stumbled_Projects: 'تحديث المشاريع المتعثرة',
       VENDORS: 'البائعون',
       BOQ: 'جدول الكميات',
       Tracking: 'التعقب',

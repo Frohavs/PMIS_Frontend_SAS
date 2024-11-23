@@ -33,6 +33,7 @@ export const locale = {
       USERS: 'Users',
       ROLES: 'Roles',
       PROJECTS_FILES: 'Projects Files',
+      Stumbled_Projects: 'Stumbled Projects Procedure',
       VENDORS: 'Vendors',
       BOQ: 'Boq',
       Tracking: 'Tracking',
