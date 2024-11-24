@@ -27,6 +27,7 @@
             <th class="min-w-100px">#</th>
             <th class="min-w-100px">Year</th>
             <th class="min-w-100px">Month</th>
+            <th class="min-w-100px">Status</th>
             <th class="min-w-100px">Created By</th>
             <th class="min-w-100px">Created at</th>
             <th class="max-w-100px text-center">Actions</th>
@@ -49,6 +50,11 @@
             <td>
               <a class="text-gray-900 fw-bolder text-hover-primary d-block fs-6">
                 {{eval?.createdOn | date : 'MM'}}
+              </a>
+            </td>
+            <td>
+              <a class="text-gray-900 fw-bolder text-hover-primary d-block fs-6">
+                {{eval?.status === 1 ? 'On Going' : eval?.status === 2 ? 'Not Started' : 'Done'}}
               </a>
             </td>
             <td>

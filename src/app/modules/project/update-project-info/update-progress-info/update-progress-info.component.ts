@@ -82,7 +82,7 @@ export class UpdateProgressInfoComponent implements OnInit {
         plannedProgress: res?.data.plannedProgress,
         actualPercentage: res?.data.actualPercentage,
         difference: res?.data.difference,
-        status: res?.data.status,
+        status: this.getValue(res?.data.difference),
         // attachment: res.data.attachment
       });
     });
@@ -141,6 +141,21 @@ export class UpdateProgressInfoComponent implements OnInit {
             statusControl?.setValue(4, { emitEvent: false });
           }
         });
+  }
+
+  getValue(difference: any) {
+    let result = 0;
+    if (+difference < 0) {
+      result = 1
+    } else if (+difference >= 0 && +difference <= 5) {
+      result = 2
+    } else if (+difference >= 5 && +difference <= 25) {
+      result = 3
+    } else if (+difference >= 25) {
+      result = 5
+    }
+
+    return result
   }
 
   saveChanges() {
