@@ -18,7 +18,6 @@ import { StumbledProjectsService } from 'src/app/services/stumbled-projects.serv
 })
 export class AddStumbledProjectComponent implements OnInit {
   projectId: number;
-  stumbledId: number;
   isLoading: boolean;
   addStumbledForm: FormGroup;
 
@@ -62,16 +61,44 @@ export class AddStumbledProjectComponent implements OnInit {
   getBoqId() {
     this.activatedRoute.params.subscribe(params => {
       this.projectId = +params['id'];
-    });
-    this.activatedRoute.queryParams.subscribe(params => {
-      this.stumbledId = +params['stumbledId'];
-      if (this.stumbledId) {
-        this.stumbledProjectsService.getByID(this.stumbledId).subscribe(res => {
-          // patch value of formArray here
-          debugger
+      if (this.projectId) {
+        this.stumbledProjectsService.getAllCreated(this.projectId).subscribe(res => {
+          // Ensure the response exists and contains items
+          const items = res?.data?.items || [];
+
+          // Filter items where status !== 3
+          const filteredItems = items.filter((item: any) => item.status !== 3);
+
+          // Clear the existing FormArray
+          this.stumbledItems.clear();
+
+          filteredItems.forEach((item: any) => {
+            this.stumbledItems.push(
+              this.formBuilder.group({
+                reasons: [item.reasons, Validators.required],
+                reasonTypeId: [item.reasonTypeId, Validators.required],
+                actionRequired: [item.actionRequired, Validators.required],
+                responsibilityId: [item.responsibilityId, Validators.required],
+                pmoRecommendation: [item.pmoRecommendation, Validators.required],
+                status: [item.status, Validators.required],
+                impactTypeId: [item.impactTypeId, Validators.required],
+                impactLevelId: [item.impactLevelId, Validators.required],
+                dueDate: [item.dueDate.slice(0, 10), Validators.required],
+                attachment: [item.attachment, Validators.required],
+              })
+            );
+          });
+          this.cdr.detectChanges();
+          console.log('Form array patched successfully', this.addStumbledForm.value);
+
         });
       }
     });
+    // this.activatedRoute.queryParams.subscribe(params => {
+    //   this.stumbledId = +params['stumbledId'];
+    //   if (this.stumbledId) {
+    //   }
+    // });
   }
 
   initAddBoqForm() {
@@ -174,7 +201,8 @@ export class AddStumbledProjectComponent implements OnInit {
         this.cdr.detectChanges();
       },
       error: (error) => {
-        this.showAlert({ icon: 'error', title: 'Error!', text: error?.error?.responseException?.exceptionMessage?.errors['']
+        this.showAlert({
+          icon: 'error', title: 'Error!', text: error?.error?.responseException?.exceptionMessage?.errors['']
         });
         this.isLoading = false;
       }

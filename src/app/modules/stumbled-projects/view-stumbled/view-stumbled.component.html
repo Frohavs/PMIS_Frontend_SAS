@@ -1,0 +1,175 @@
+<div class="row g-5 g-xl-8 justify-content-between">
+  <div class="col-xl-12">
+    <div class="card mb-5 mb-xl-8">
+      <!-- begin::Header -->
+      <div class="card-header align-items-center border-0 mt-4">
+        <h3 class="card-title align-items-start flex-column">
+          <span class="fw-bolder text-gray-900">Stumbled Details</span>
+          <!-- <span class="text-muted mt-1 fw-bold fs-7">test</span> -->
+        </h3>
+      </div>
+      <!-- end::Header -->
+      <!-- begin::Body -->
+      <div class="card-body pt-3">
+        <!-- begin::Item -->
+        <div class="d-flex align-items-sm-center mb-7">
+
+          <!-- begin::Title -->
+          <div class="d-flex flex-row-fluid flex-wrap align-items-center">
+            <div class="w-50 me-2">
+              <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
+                Project ID
+              </a>
+              <span class="text-muted fw-bold d-block pt-1">{{stumbledDetails?.id  ||  '--'}}</span>
+            </div>
+            <div class="flex-grow-1 me-2">
+              <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
+                Action Required
+              </a>
+              <span class="text-muted fw-bold d-block pt-1">{{stumbledDetails?.actionRequired ||  '--'}}</span>
+            </div>
+          </div>
+          <!-- end::Title -->
+        </div>
+        <!-- end::Item -->
+        <!-- begin::Item -->
+        <div class="d-flex align-items-sm-center mb-7">
+
+          <!-- begin::Title -->
+          <div class="d-flex flex-row-fluid flex-wrap align-items-center">
+            <div class="flex-grow-1 me-2">
+              <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
+                Created By
+              </a>
+              <span class="text-muted fw-bold d-block pt-1">{{stumbledDetails?.createdBy ||  '--'}}</span>
+            </div>
+            <div class="flex-grow-1 me-2">
+              <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
+                Status
+              </a>
+              <span
+                class="text-muted fw-bold d-block pt-1">{{stumbledDetails?.status  === 1 ? 'On going' : stumbledDetails?.status  === 2 ? 'Not Started' : 'Done'}}</span>
+            </div>
+
+          </div>
+          <!-- end::Title -->
+        </div>
+
+        <div class="d-flex align-items-sm-center mb-7">
+
+          <!-- begin::Title -->
+          <div class="d-flex flex-row-fluid flex-wrap align-items-center">
+            <div class="w-50 me-2">
+              <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
+                Created At
+              </a>
+              <span class="text-muted fw-bold d-block pt-1">{{stumbledDetails?.createdOn || '--'}}</span>
+            </div>
+            <div class="flex-grow-1 me-2">
+              <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
+                Due Date
+              </a>
+              <span class="text-muted fw-bold d-block pt-1">{{stumbledDetails?.dueDate?.slice(0, 10)  ||  '--'}}</span>
+            </div>
+          </div>
+          <!-- end::Title -->
+        </div>
+
+        <div class="d-flex align-items-sm-center mb-7">
+
+          <!-- begin::Title -->
+          <div class="d-flex flex-row-fluid flex-wrap align-items-center">
+            <div class="w-50 me-2">
+              <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
+                month
+              </a>
+              <span class="text-muted fw-bold d-block pt-1">{{stumbledDetails?.month || '--'}}</span>
+            </div>
+            <div class="flex-grow-1 me-2">
+              <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
+                Year
+              </a>
+              <span class="text-muted fw-bold d-block pt-1">{{stumbledDetails?.year ||  '--'}}</span>
+            </div>
+          </div>
+          <!-- end::Title -->
+        </div>
+
+        <div class="d-flex align-items-sm-center mb-7">
+
+          <!-- begin::Title -->
+          <div class="d-flex flex-row-fluid flex-wrap align-items-center">
+            <div class="w-50 me-2">
+              <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
+                Responsibility
+              </a>
+              <span class="text-muted fw-bold d-block pt-1">{{stumbledDetails?.responsibility || '--'}}</span>
+            </div>
+            <div class="flex-grow-1 me-2">
+              <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
+                Pmo Recommendation
+              </a>
+              <span class="text-muted fw-bold d-block pt-1">{{stumbledDetails?.pmoRecommendation ||  '--'}}</span>
+            </div>
+          </div>
+          <!-- end::Title -->
+        </div>
+        <div class="d-flex align-items-sm-center mb-7">
+
+          <!-- begin::Title -->
+          <div class="d-flex flex-row-fluid flex-wrap align-items-center">
+            <div class="w-50 me-2">
+              <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
+                Impact Level
+              </a>
+              <span class="text-muted fw-bold d-block pt-1">{{stumbledDetails?.impactLevel || '--'}}</span>
+            </div>
+            <div class="flex-grow-1 me-2">
+              <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
+                Impact Type
+              </a>
+              <span class="text-muted fw-bold d-block pt-1">{{stumbledDetails?.impactType ||  '--'}}</span>
+            </div>
+          </div>
+          <!-- end::Title -->
+        </div>
+
+        <div class="d-flex align-items-sm-center mb-7">
+
+          <!-- begin::Title -->
+          <div class="d-flex flex-row-fluid flex-wrap align-items-center">
+            <div class="w-50 me-2">
+              <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
+                Reasons
+              </a>
+              <span class="text-muted fw-bold d-block pt-1">{{stumbledDetails?.reasons || '--'}}</span>
+            </div>
+            <div class="flex-grow-1 me-2">
+              <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
+                Reason Type
+              </a>
+              <span class="text-muted fw-bold d-block pt-1">{{stumbledDetails?.reasonType ||  '--'}}</span>
+            </div>
+          </div>
+          <!-- end::Title -->
+        </div>
+
+        <div class="d-flex align-items-sm-center mb-7">
+
+          <!-- begin::Title -->
+          <div class="d-flex flex-row-fluid flex-wrap align-items-center">
+            <div class="w-50 me-2">
+              <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
+                Attachment
+              </a><br>
+              <span class="badge badge-primary fs-6 fw-bolder cursor-pointer" (click)="downloadFile(stumbledDetails?.attachment)">{{stumbledDetails?.attachment  ||  '--'}}</span>
+            </div>
+          </div>
+          <!-- end::Title -->
+        </div>
+
+      </div>
+      <!-- end::Body -->
+    </div>
+  </div>
+</div>

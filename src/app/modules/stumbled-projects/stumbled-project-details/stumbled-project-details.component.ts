@@ -71,7 +71,6 @@ export class StumbledProjectDetailsComponent implements OnInit {
   }
 
   redirectToDetails(id: number) {
-    debugger
     this.router.navigate([`stumbled-projects/view/${id}`], {
       queryParams: { stumbledId: id }
     });

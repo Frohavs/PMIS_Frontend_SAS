@@ -4,6 +4,7 @@ import { StumbledProjectsComponent } from './stumbled-projects.component';
 import { OverviewComponent } from './overview/overview.component';
 import { StumbledProjectDetailsComponent } from './stumbled-project-details/stumbled-project-details.component';
 import { AddStumbledProjectComponent } from './add-stumbled-project/add-stumbled-project.component';
+import { ViewStumbledComponent } from './view-stumbled/view-stumbled.component';
 
 const routes: Routes = [
   {
@@ -20,7 +21,7 @@ const routes: Routes = [
       },
       {
         path: 'view/:id',
-        component: AddStumbledProjectComponent,
+        component: ViewStumbledComponent,
       },
       {
         path: 'details/:id',

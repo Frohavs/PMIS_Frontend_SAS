@@ -13,6 +13,7 @@ import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { WidgetsModule } from 'src/app/_metronic/partials';
 import { SharedModule } from 'src/app/_metronic/shared/shared.module';
 import { AddStumbledProjectComponent } from './add-stumbled-project/add-stumbled-project.component';
+import { ViewStumbledComponent } from './view-stumbled/view-stumbled.component';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import { AddStumbledProjectComponent } from './add-stumbled-project/add-stumbled
     OverviewComponent,
     StumbledProjectsComponent,
     AddStumbledProjectComponent,
-    StumbledProjectDetailsComponent
+    StumbledProjectDetailsComponent,
+    ViewStumbledComponent
   ],
   imports: [
     CommonModule,
