@@ -28,4 +28,14 @@ export class StandardTreeService {
       headers: httpHeaders
     });
   }
+
+  createNew(body: any) {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/CreateStandardAttachment`;
+    return this.http.post<any>(url, body, {
+      headers: httpHeaders
+    });
+  }
 }

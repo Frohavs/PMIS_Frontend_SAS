@@ -8,27 +8,39 @@
         <button class="btn btn-icon btn-primary" (click)="toggleNode(node)" *ngIf="node.categories?.length > 0">
           {{ node.expanded ? '-' : '+' }}
         </button>
-        <button class="btn btn-sm btn-success" (click)="addNode(node)" *ngIf="!node.categories?.length">
+        <input type="file" #fileInput (change)="uploadNodeTemplate($event, node)" style="display: none;">
+        <button class="btn btn-sm btn-success" (click)="fileInput.click()"
+          *ngIf="!node.categories?.length && !node.attachments.length">
           {{ 'add' }}
         </button>
       </div>
 
       <div class="child-nodes" *ngIf="node.expanded && node.categories?.length > 0">
         <ng-container *ngFor="let category of node.categories">
-          <div class="child-node">
-            <span>{{ category.name }}</span>
+          <div class="child-node" [ngClass]="{'bg-hover-light-primary': category.attachments.length !== 0}" >
+            <span (click)="openNodePopup(category)">{{ category.name }}</span>
             <button class="btn btn-icon btn-primary" (click)="toggleNode(category)"
               *ngIf="category.subCategories?.length > 0">
               {{ category.expanded ? '-' : '+' }}
             </button>
+            <input type="file" #fileInput2 (change)="uploadCategoryTemplate($event, category)" style="display: none;">
+            <button *ngIf="!category.subCategories?.length && !category.attachments.length" class="btn btn-sm btn-success" (click)="fileInput2.click()">
+              {{ 'add' }}
+            </button>
 
             <div class="grandchild-nodes" *ngIf="category.expanded && category.subCategories?.length > 0">
               <ng-container *ngFor="let subCategory of category.subCategories">
-                <div class="child-node">
-                  <span>{{ subCategory.name }}</span>
+                <div class="child-node" [ngClass]="{'bg-hover-light-primary': subCategory.attachments.length !== 0}" >
+                  <span (click)="openNodePopup(subCategory)">{{ subCategory.name }}</span>
                   <button class="btn btn-icon btn-primary" (click)="toggleNode(subCategory)"
                     *ngIf="subCategory.leaves?.length > 0">
                     {{ subCategory.expanded ? '-' : '+' }}
+                  </button>
+                  <input type="file" #fileInput3 (change)="uploadSubCategoryTemplate($event, subCategory)"
+                    style="display: none;">
+                  <button *ngIf="!subCategory.leaves?.length && !subCategory.attachments.length" class="btn btn-sm btn-success"
+                    (click)="fileInput3.click()">
+                    {{ 'add' }}
                   </button>
                   <div class="leaf-nodes" *ngIf="subCategory.expanded && subCategory.leaves?.length > 0">
                     <div class="child-node" *ngFor="let leaf of subCategory.leaves">

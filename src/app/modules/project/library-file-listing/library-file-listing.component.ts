@@ -35,23 +35,111 @@ export class LibraryFileListingComponent implements OnInit {
     this.activatedRoute.params.subscribe(params => {
       this.projectId = +params['id'];
       if (this.projectId) {
-        this.standardTreeService.getByPRojectId(this.projectId).subscribe(res => {
-          this.treeData = res.data;
-          this.cdr.detectChanges();
-        });
+        this.fetchList();
       }
     })
   }
 
+  fetchList() {
+    this.standardTreeService.getByPRojectId(this.projectId).subscribe(res => {
+      this.treeData = res.data;
+      this.cdr.detectChanges();
+    });
+  }
+
+  uploadNodeTemplate(event: Event, node: any) {
+
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      const file = input.files[0];
+      const fd = new FormData();
+      fd.append('Attachment', file, file.name);
+
+      this.attachmentService.uploadAttachment(fd).subscribe(res => {
+        this.addNode(node, res.data);
+      });
+    }
+  }
+  uploadCategoryTemplate(event: Event, category: any) {
+
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      const file = input.files[0];
+      const fd = new FormData();
+      fd.append('Attachment', file, file.name);
+
+      this.attachmentService.uploadAttachment(fd).subscribe(res => {
+        this.addCategory(category, res.data);
+      });
+    }
+  }
+  uploadSubCategoryTemplate(event: Event, subCategory: any) {
+
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      const file = input.files[0];
+      const fd = new FormData();
+      fd.append('Attachment', file, file.name);
+
+      this.attachmentService.uploadAttachment(fd).subscribe(res => {
+        this.addSubCategory(subCategory, res.data);
+      });
+    }
+  }
+
   openNodePopup(node: any) {
+    if(!node.attachments?.length) return;
     this.nodeModelData = node;
-    debugger
     this.modalService.open(this.nodeModal, this.modalConfig);
   }
 
-  addNode(node: any) {
+  addNode(node: any, fileName: any) {
     console.log(node);
-
+    const body = {
+      "attachment": fileName,
+      "projectId": this.projectId,
+      "categoryId": null,
+      "standardId": node.id,
+      "subCategoryId": null,
+      "leafId": null
+    };
+    this.standardTreeService.createNew(body).subscribe(res => {
+      this.fetchList();
+    },() => {
+      alert('error');
+    });
+  }
+  addCategory(category: any, fileName: any) {
+    console.log(category);
+    const body = {
+      "attachment": fileName,
+      "projectId": this.projectId,
+      "categoryId": category.id,
+      "standardId": null,
+      "subCategoryId": null,
+      "leafId": null
+    };
+    this.standardTreeService.createNew(body).subscribe(res => {
+      this.fetchList();
+    },() => {
+      alert('error');
+    });
+  }
+  addSubCategory(subCategory: any, fileName: any) {
+    console.log(subCategory);
+    const body = {
+      "attachment": fileName,
+      "projectId": this.projectId,
+      "categoryId": null,
+      "standardId": null,
+      "subCategoryId": subCategory.id,
+      "leafId": null
+    };
+    this.standardTreeService.createNew(body).subscribe(res => {
+      this.fetchList();
+    },() => {
+      alert('error');
+    });
   }
 
   toggleNode(node: any): void {
