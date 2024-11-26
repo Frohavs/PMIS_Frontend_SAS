@@ -1,9 +1,13 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
+import { Location } from '@angular/common';
+import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
 import { AuthService } from 'src/app/modules/auth';
 import { FactoryService } from 'src/app/services/factory.service';
 import { ProjectsService } from 'src/app/services/projects.service';
+import { SweetAlertOptions } from 'sweetalert2';
 
 
 @Component({
@@ -29,8 +33,18 @@ export class FactoryDetailsComponent implements OnInit {
     draggable: false // Enable marker dragging
   };
 
+  swalOptions: SweetAlertOptions = { buttonsStyling: false };
+  @ViewChild('noticeSwal') noticeSwal!: SwalComponent;
+  @ViewChild('approveModal') approveModal: TemplateRef<any>;
+  modalConfig: NgbModalOptions = {
+    modalDialogClass: 'modal-dialog modal-dialog-centered mw-650px',
+  };
+  approveModelData: any = { accepted: true, note: '', id: 0, approval: 0 }
+
   constructor(
     private router: Router,
+    private _location: Location,
+    private modalService: NgbModal,
     private cdr: ChangeDetectorRef,
     private activatedRoute: ActivatedRoute,
     private factoryService: FactoryService,
@@ -60,19 +74,49 @@ export class FactoryDetailsComponent implements OnInit {
     });
   }
 
-  approve() {
-    if(this.factoryDetails.approvals.length === 2) return;
+  fireApproveModal() {
+    if (this.factoryDetails.approvals.length === 2 || this.factoryDetails.approvals.length === 3) return;
+    this.modalService.open(this.approveModal, this.modalConfig);
+  }
+
+  onApproveSubmit() {
+    if (this.factoryDetails.approvals.length === 2 || this.factoryDetails.approvals.length === 3) return;
+    this.approveModelData.approval = this.factoryDetails.approvals.length + 1;
     const payload = {
-      status: !this.factoryDetails.approvals ? 1 : 2,
-      accepted: true,
-      note: "string",
-      userId: this.userId,
+      status: this.approveModelData.approval,
+      accepted: this.approveModelData.accepted,
+      note: this.approveModelData.note,
+      userId: +this.userId,
       factoryId: this.factoryId
     }
     this.factoryService.approveFactory(payload).subscribe(res => {
 
       this.getFactoryDetails();
-
+      this.approveModelData = { accepted: true, notes: '', id: this.factoryId, approval: 0 };
+      this.showAlert({ icon: 'success', title: 'Success!', text: 'approved successfully!' });
+      this.modalService.dismissAll();
+    }, () => {
+      this.showAlert({ icon: 'error', title: 'Error!', text: 'please try again!' })
     });
+  }
+
+  showAlert(swalOptions: SweetAlertOptions) {
+    let style = swalOptions.icon?.toString() || 'success';
+    if (swalOptions.icon === 'error') {
+      style = 'danger';
+    }
+    this.swalOptions = Object.assign({
+      buttonsStyling: false,
+      confirmButtonText: "Ok, got it!",
+      customClass: {
+        confirmButton: "btn btn-" + style
+      }
+    }, swalOptions);
+    this.cdr.detectChanges();
+    this.noticeSwal.fire();
+  }
+
+  back() {
+    this._location.back();
   }
 }
