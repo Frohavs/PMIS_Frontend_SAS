@@ -161,7 +161,7 @@ export class HseFindingCreateComponent implements OnInit {
         const fd = new FormData();
         fd.append('Attachment', element, element.name);
         this.attachmentService.uploadAttachment(fd).subscribe(res => {
-          this.filesArray.push({ attachment: element.name });
+          this.filesArray.push({ attachment: res.data });
           this.cdr.detectChanges();
         }, (error) => {
           this.showAlert({ icon: 'error', title: 'Error!', text: 'Please try Upload again' });

@@ -105,7 +105,7 @@ export class UpdateVariationOrderComponent implements OnInit {
 
     fd.append('Attachment', this.selectedFile, this.selectedFile?.name);
     this.attachmentService.uploadAttachment(fd).subscribe(res => {
-      this.VoModel['voAttachment'] = this.selectedFile?.name;
+      this.VoModel['voAttachment'] = res.data;
     });
   }
 

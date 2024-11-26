@@ -142,7 +142,7 @@ export class UpdateEotComponent implements OnInit {
     const fd = new FormData();
     fd.append('Attachment', this.selectedFile, this.selectedFile.name);
     this.attachmentService.uploadAttachment(fd).subscribe(res => {
-      this.EotModel['eotAttachment'] = this.selectedFile.name;
+      this.EotModel['eotAttachment'] = res.data;
     });
   }
 

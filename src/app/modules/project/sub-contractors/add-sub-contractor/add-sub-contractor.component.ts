@@ -177,7 +177,7 @@ export class AddSubContractorComponent implements OnInit {
     fd.append('letter', this.selectedFile1, this.selectedFile1.name);
     this.attachmentService.uploadAttachment(fd).subscribe(res => {
       this.addSubContractorForm.patchValue({
-        letter: this.selectedFile1.name
+        letter: res.data
       });
     });
   }
@@ -187,7 +187,7 @@ export class AddSubContractorComponent implements OnInit {
     fd.append('attachment2', this.selectedFile2, this.selectedFile2.name);
     this.attachmentService.uploadAttachment(fd).subscribe(res => {
       this.addSubContractorForm.patchValue({
-        attachment2: this.selectedFile1.name
+        attachment2: res.data
       });
     });
   }
@@ -197,7 +197,7 @@ export class AddSubContractorComponent implements OnInit {
     fd.append('attachment3', this.selectedFile3, this.selectedFile3.name);
     this.attachmentService.uploadAttachment(fd).subscribe(res => {
       this.addSubContractorForm.patchValue({
-        attachment3: this.selectedFile1.name
+        attachment3: res.data
       });
     });
   }

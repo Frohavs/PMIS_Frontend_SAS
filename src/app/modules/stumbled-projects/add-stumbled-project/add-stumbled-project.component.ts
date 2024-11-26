@@ -217,7 +217,7 @@ export class AddStumbledProjectComponent implements OnInit {
         const fd = new FormData();
         fd.append('Attachment', element, element.name);
         this.attachmentService.uploadAttachment(fd).subscribe(res => {
-          this.stumbledItems.at(index).get('attachment')?.setValue(element.name);
+          this.stumbledItems.at(index).get('attachment')?.setValue(res.data);
           this.cdr.detectChanges();
         }, (error) => {
           this.showAlert({ icon: 'error', title: 'Error!', text: 'Please try Upload again' });

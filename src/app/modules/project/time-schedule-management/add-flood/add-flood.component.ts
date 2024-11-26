@@ -111,7 +111,7 @@ export class AddFloodComponent implements OnInit {
     fd.append('Attachment', this.selectedFile1, this.selectedFile1.name);
     this.attachmentService.uploadAttachment(fd).subscribe(res => {
       this.addBoqForm.patchValue({
-        schedulingAttachment: this.selectedFile1.name
+        schedulingAttachment: res.data
       });
     });
   }
@@ -121,7 +121,7 @@ export class AddFloodComponent implements OnInit {
     fd.append('Attachment', this.selectedFile2, this.selectedFile2.name);
     this.attachmentService.uploadAttachment(fd).subscribe(res => {
       this.addBoqForm.patchValue({
-        baseAttachment: this.selectedFile1.name
+        baseAttachment: res.data
       });
     });
   }
@@ -131,7 +131,7 @@ export class AddFloodComponent implements OnInit {
     fd.append('Attachment', this.selectedFile3, this.selectedFile3.name);
     this.attachmentService.uploadAttachment(fd).subscribe(res => {
       this.addBoqForm.patchValue({
-        narrativeAttachment: this.selectedFile1.name
+        narrativeAttachment: res.data
       });
     });
   }
@@ -141,7 +141,7 @@ export class AddFloodComponent implements OnInit {
     fd.append('Attachment', this.selectedFile3, this.selectedFile3.name);
     this.attachmentService.uploadAttachment(fd).subscribe(res => {
       this.addBoqForm.patchValue({
-        physicalStatusAttachment: this.selectedFile1.name
+        physicalStatusAttachment: res.data
       });
     });
   }

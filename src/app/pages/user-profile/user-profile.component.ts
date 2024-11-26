@@ -83,7 +83,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     fd.append('Attachment', this.selectedCV, this.selectedCV.name);
     this.attachmentService.uploadAttachment(fd).subscribe(res => {
       this.profileForm.patchValue({
-        attachment: fileName
+        attachment: res.data
       });
     }, () => {
       this.showAlert({ icon: 'error', title: 'Error!', text: 'Please try again' });
@@ -109,7 +109,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     fd.append('Attachment', this.selectedImg, this.selectedImg.name);
     this.attachmentService.uploadAttachment(fd).subscribe(res => {
       this.profileForm.patchValue({
-        profilePic: fileName
+        profilePic: res.data
       });
     }, () => {
       this.imageSrc = null;

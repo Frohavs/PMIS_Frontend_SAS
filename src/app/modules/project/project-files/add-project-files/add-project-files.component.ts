@@ -164,7 +164,7 @@ export class AddProjectFilesComponent implements OnInit {
     fd.append('Attachment', this.selectedFile, this.selectedFile.name);
     this.attachmentService.uploadAttachment(fd).subscribe(res => {
       this.addAttachmentForm.patchValue({
-        file: this.selectedFile.name
+        file: res.data
       });
     });
   }

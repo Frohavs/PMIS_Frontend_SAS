@@ -90,7 +90,7 @@ export class HseFindingDetailsComponent implements OnInit {
       const fd = new FormData();
       fd.append('Attachment', file, file.name);
       this.attachmentService.uploadAttachment(fd).subscribe(res => {
-        this.firstModel.attachment = file.name;
+        this.firstModel.attachment = res.data;
         this.cdr.detectChanges();
       });
     }
@@ -126,7 +126,7 @@ export class HseFindingDetailsComponent implements OnInit {
       const fd = new FormData();
       fd.append('Attachment', file, file.name);
       this.attachmentService.uploadAttachment(fd).subscribe(res => {
-        this.secondModel.attachment = file.name;
+        this.secondModel.attachment = res.data;
         this.cdr.detectChanges();
       });
     }
@@ -164,7 +164,7 @@ export class HseFindingDetailsComponent implements OnInit {
       const fd = new FormData();
       fd.append('Attachment', file, file.name);
       this.attachmentService.uploadAttachment(fd).subscribe(res => {
-        this.thirdModel.attachment = file.name;
+        this.thirdModel.attachment = res.data;
         this.cdr.detectChanges();
       });
     }
@@ -200,7 +200,7 @@ export class HseFindingDetailsComponent implements OnInit {
       const fd = new FormData();
       fd.append('Attachment', file, file.name);
       this.attachmentService.uploadAttachment(fd).subscribe(res => {
-        this.forthModel.attachment = file.name;
+        this.forthModel.attachment = res.data;
         this.cdr.detectChanges();
       });
     }

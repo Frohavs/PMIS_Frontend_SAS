@@ -384,7 +384,7 @@ export class InitialDeliveryStatusComponent implements OnInit {
     fd.append('Attachment', this.createCommitteeSelectedFile, this.createCommitteeSelectedFile.name);
     this.attachmentService.uploadAttachment(fd).subscribe(res => {
       this.updateForm.patchValue({
-        createCommitteeFile: this.createCommitteeSelectedFile.name
+        createCommitteeFile: res.data
       });
     });
   }
@@ -395,7 +395,7 @@ export class InitialDeliveryStatusComponent implements OnInit {
     fd.append('Attachment', this.trackNotesSelectedFile, this.trackNotesSelectedFile.name);
     this.attachmentService.uploadAttachment(fd).subscribe(res => {
       this.updateForm.patchValue({
-        trackNotesFile: this.trackNotesSelectedFile.name
+        trackNotesFile: res.data
       });
     });
   }
@@ -406,7 +406,7 @@ export class InitialDeliveryStatusComponent implements OnInit {
     fd.append('Attachment', this.provideContractorNotesSelectedFile, this.provideContractorNotesSelectedFile.name);
     this.attachmentService.uploadAttachment(fd).subscribe(res => {
       this.updateForm.patchValue({
-        provideContractorNotesFile: this.provideContractorNotesSelectedFile.name
+        provideContractorNotesFile: res.data
       });
     });
   }
@@ -417,7 +417,7 @@ export class InitialDeliveryStatusComponent implements OnInit {
     fd.append('Attachment', this.completeNotesSelectedFile, this.completeNotesSelectedFile.name);
     this.attachmentService.uploadAttachment(fd).subscribe(res => {
       this.updateForm.patchValue({
-        completeNotesFile: this.completeNotesSelectedFile.name
+        completeNotesFile: res.data
       });
     });
   }
@@ -428,7 +428,7 @@ export class InitialDeliveryStatusComponent implements OnInit {
     fd.append('Attachment', this.signContractSelectedFile, this.signContractSelectedFile.name);
     this.attachmentService.uploadAttachment(fd).subscribe(res => {
       this.updateForm.patchValue({
-        signContractFile: this.signContractSelectedFile.name
+        signContractFile: res.data
       });
     });
   }

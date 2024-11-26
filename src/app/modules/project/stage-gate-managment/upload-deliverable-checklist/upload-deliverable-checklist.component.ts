@@ -78,7 +78,7 @@ export class UploadDeliverableChecklistComponent implements OnInit {
         // Upload each file and store the names of successfully uploaded files
         this.attachmentService.uploadAttachment(fd).subscribe({
           next: (res) => {
-            this.fileData[index].push(file.name); // Push file name to the array
+            this.fileData[index].push(res.data); // Push file name to the array
             this.cdr.detectChanges();
           },
           error: () => {

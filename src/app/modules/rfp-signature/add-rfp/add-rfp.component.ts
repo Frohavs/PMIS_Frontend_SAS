@@ -100,7 +100,7 @@ export class AddRfpComponent implements OnInit {
     fd.append('Attachment', this.selectedFile, this.selectedFile.name);
     this.attachmentService.uploadAttachment(fd).subscribe(res => {
       this.addRFPForm.patchValue({
-        requestedWayDocument: this.selectedFile.name
+        requestedWayDocument: res.data
       });
     });
 

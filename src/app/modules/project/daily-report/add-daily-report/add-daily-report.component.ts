@@ -344,7 +344,7 @@ export class AddDailyReportComponent implements OnInit {
       const fd = new FormData();
       fd.append('Attachment', file, file.name)
       this.attachmentService.uploadAttachment(fd).subscribe(res => {
-        this.dailyReportAttachments.push({ attachment: file.name });
+        this.dailyReportAttachments.push({ attachment: res.data});
         this.cdr.detectChanges();
       }, () => {
         this.showAlert({ icon: 'error', title: 'Error!', text: 'Please try Upload again' });

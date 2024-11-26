@@ -452,7 +452,7 @@ export class FinalDeliveryStatusComponent implements OnInit {
     fd.append('Attachment', this.finalDeliveryFile, this.finalDeliveryFile.name);
     this.attachmentService.uploadAttachment(fd).subscribe(res => {
       this.updateForm.patchValue({
-        finalDeliveryFile: this.finalDeliveryFile.name
+        finalDeliveryFile: res.data
       });
     });
   }
@@ -463,7 +463,7 @@ export class FinalDeliveryStatusComponent implements OnInit {
     fd.append('Attachment', this.finalDeliveryNotesFile, this.finalDeliveryNotesFile.name);
     this.attachmentService.uploadAttachment(fd).subscribe(res => {
       this.updateForm.patchValue({
-        finalDeliveryNotesFile: this.finalDeliveryNotesFile.name
+        finalDeliveryNotesFile: res.data
       });
     });
   }
@@ -474,7 +474,7 @@ export class FinalDeliveryStatusComponent implements OnInit {
     fd.append('Attachment', this.supplyContractorFile, this.supplyContractorFile.name);
     this.attachmentService.uploadAttachment(fd).subscribe(res => {
       this.updateForm.patchValue({
-        supplyContractorFile: this.supplyContractorFile.name
+        supplyContractorFile: res.data
       });
     });
   }
@@ -485,7 +485,7 @@ export class FinalDeliveryStatusComponent implements OnInit {
     fd.append('Attachment', this.finishNotesFile, this.finishNotesFile.name);
     this.attachmentService.uploadAttachment(fd).subscribe(res => {
       this.updateForm.patchValue({
-        finishNoteFile: this.finishNotesFile.name
+        finishNoteFile: res.data
       });
     });
   }
@@ -496,7 +496,7 @@ export class FinalDeliveryStatusComponent implements OnInit {
     fd.append('Attachment', this.signNotesFile, this.signNotesFile.name);
     this.attachmentService.uploadAttachment(fd).subscribe(res => {
       this.updateForm.patchValue({
-        signNoteFile: this.signNotesFile.name
+        signNoteFile: res.data
       });
     });
   }
@@ -507,7 +507,7 @@ export class FinalDeliveryStatusComponent implements OnInit {
     fd.append('Attachment', this.warrantyReleaseFile, this.warrantyReleaseFile.name);
     this.attachmentService.uploadAttachment(fd).subscribe(res => {
       this.updateForm.patchValue({
-        warrantyReleaseFile: this.warrantyReleaseFile.name
+        warrantyReleaseFile: res.data
       });
     });
   }

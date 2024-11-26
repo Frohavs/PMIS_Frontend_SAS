@@ -202,7 +202,7 @@ export class AddDeliveryListComponent implements OnInit {
     fd.append('Attachment', this.selectedFile, this.selectedFile.name);
     this.attachmentService.uploadAttachment(fd).subscribe(res => {
       this.deliveryForm.patchValue({
-        attachment: this.selectedFile.name
+        attachment: res.data
       });
       this.attachmentInput.nativeElement.value = '';
       this.selectedFile = null;

@@ -215,7 +215,7 @@ export class AddFactoryComponent implements OnInit {
       const fd = new FormData();
       fd.append('Attachment', file, file.name);
       this.attachmentService.uploadAttachment(fd).subscribe(res => {
-        this.crAttachment = file.name;
+        this.crAttachment = res.data;
         this.cdr.detectChanges();
       }, (error) => {
         this.showAlert({ icon: 'error', title: 'Error!', text: 'Please try Upload again' });
@@ -231,7 +231,7 @@ export class AddFactoryComponent implements OnInit {
       fd.append('Attachment', file, file.name);
       this.attachmentService.uploadAttachment(fd).subscribe(res => {
         this.addFactoryForm.patchValue({
-          approveletterAttachment: file.name
+          approveletterAttachment: res.data
         })
       }, (error) => {
         this.showAlert({ icon: 'error', title: 'Error!', text: 'Please try Upload again' });
@@ -246,7 +246,7 @@ export class AddFactoryComponent implements OnInit {
       fd.append('Attachment', file, file.name);
       this.attachmentService.uploadAttachment(fd).subscribe(res => {
         this.addFactoryForm.patchValue({
-          lastFinancialAttachment: file.name
+          lastFinancialAttachment: res.data
         })
       }, (error) => {
         this.showAlert({ icon: 'error', title: 'Error!', text: 'Please try Upload again' });
@@ -261,7 +261,7 @@ export class AddFactoryComponent implements OnInit {
       fd.append('Attachment', file, file.name);
       this.attachmentService.uploadAttachment(fd).subscribe(res => {
         this.addFactoryForm.patchValue({
-          profileAttachment: file.name
+          profileAttachment: res.data
         })
       }, (error) => {
         this.showAlert({ icon: 'error', title: 'Error!', text: 'Please try Upload again' });
