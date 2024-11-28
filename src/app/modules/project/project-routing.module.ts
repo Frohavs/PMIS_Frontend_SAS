@@ -72,6 +72,9 @@ import { HseFindingDetailsComponent } from './hse/hse-finding/hse-finding-detail
 import { InitialDeliveryStatusComponent } from './initial-delivery-status/initial-delivery-status.component';
 import { FinalDeliveryStatusComponent } from './final-delivery-status/final-delivery-status.component';
 import { LibraryFileListingComponent } from './library-file-listing/library-file-listing.component';
+import { MirListComponent } from './mir-list/mir-list.component';
+import { AddMirComponent } from './mir-list/add-mir/add-mir.component';
+import { MirDetailsComponent } from './mir-list/mir-details/mir-details.component';
 
 const routes: Routes = [
   {
@@ -424,6 +427,20 @@ const routes: Routes = [
         path: 'library-file-listing/:id',
         component: LibraryFileListingComponent,
       },
+
+      {
+        path: 'mir-list/:id',
+        component: MirListComponent,
+      },
+      {
+        path: 'add-mir/:id',
+        component: AddMirComponent,
+      },
+      {
+        path: 'mir-derails/:id',
+        component: MirDetailsComponent,
+      },
+
 
 
       { path: '', redirectTo: 'overview', pathMatch: 'full' },

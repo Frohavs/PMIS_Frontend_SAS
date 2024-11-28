@@ -86,6 +86,9 @@ import { HseFindingDetailsComponent } from './hse/hse-finding/hse-finding-detail
 import { InitialDeliveryStatusComponent } from './initial-delivery-status/initial-delivery-status.component';
 import { FinalDeliveryStatusComponent } from './final-delivery-status/final-delivery-status.component';
 import { LibraryFileListingComponent } from './library-file-listing/library-file-listing.component';
+import { MirListComponent } from './mir-list/mir-list.component';
+import { AddMirComponent } from './mir-list/add-mir/add-mir.component';
+import { MirDetailsComponent } from './mir-list/mir-details/mir-details.component';
 
 
 @NgModule({
@@ -185,7 +188,11 @@ import { LibraryFileListingComponent } from './library-file-listing/library-file
     InitialDeliveryStatusComponent,
     FinalDeliveryStatusComponent,
 
-    LibraryFileListingComponent
+    LibraryFileListingComponent,
+
+    MirListComponent,
+    AddMirComponent,
+    MirDetailsComponent
   ],
   imports: [
     CommonModule,

@@ -95,6 +95,10 @@ export const PROJECT_OPTIONS = [
       name: 'Library File Listing',
       route: 'projects/library-file-listing'
     },
+    {
+      name: 'MIR List',
+      route: 'projects/mir-list'
+    },
     // {
     //   name: 'stage gate management',
     //   route: 'projects/stage-gate-management'
