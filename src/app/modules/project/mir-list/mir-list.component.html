@@ -27,8 +27,7 @@
             <th class="max-w-100px">Mir No</th>
             <th class="min-w-100px">Factory Name</th>
             <th class="min-w-100px">Type</th>
-            <th class="min-w-100px">Assigned</th>
-            <th class="min-w-100px">Date</th>
+            <th class="min-w-100px">Assigned Date</th>
             <th class="min-w-100px">Status</th>
             <th class="max-w-100px text-end">Actions</th>
           </tr>
@@ -37,27 +36,27 @@
           <tr *ngFor="let milestone of dataList; index as i">
             <td>
               <a class="text-gray-900 fw-bolder text-hover-primary d-block fs-6">
-                {{milestone?.factoryCR  || '--'}}
+                {{milestone?.id  || '--'}}
               </a>
             </td>
             <td>
               <a class="text-gray-900 fw-bolder text-hover-primary d-block fs-6">
-                {{milestone?.factoryField  || '--'}}
+                {{milestone?.factory  || '--'}}
               </a>
             </td>
             <td>
               <a class="text-gray-900 fw-bolder text-hover-primary d-block fs-6">
-                {{milestone?.repreName  || '--'}}
+                {{milestone?.type  || '--'}}
               </a>
             </td>
             <td>
               <a class="text-gray-900 fw-bolder text-hover-primary d-block fs-6">
-                {{milestone?.reprePhone  || '--'}}
+                {{milestone?.assignedDate  | date: 'dd/MM/yyyy'}}
               </a>
             </td>
             <td>
               <a class="text-gray-900 fw-bolder text-hover-primary d-block fs-6">
-                {{milestone?.numOfEmployess  || '--'}}
+                {{milestone?.status  || '--'}}
               </a>
             </td>
             <td>

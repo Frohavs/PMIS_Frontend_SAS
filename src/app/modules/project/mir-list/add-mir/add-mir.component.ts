@@ -1,14 +1,14 @@
-import { ChangeDetectorRef, Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
-import { FormGroup, FormBuilder, Validators, NgForm } from '@angular/forms';
-import { NgbModalOptions, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ChangeDetectorRef, Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
-import { AttachmentService } from 'src/app/services/attachment/attachment.service';
+import { BoqService } from 'src/app/services/boq.service';
 import { FactoryService } from 'src/app/services/factory.service';
 import { LookupService } from 'src/app/services/lookup/lookup.service';
+import { MirService } from 'src/app/services/mir.service';
 import { SweetAlertOptions } from 'sweetalert2';
-import { BoqService } from 'src/app/services/boq.service';
 
 
 @Component({
@@ -41,7 +41,7 @@ export class AddMirComponent implements OnInit {
   mirStatus: any[] = [];
   mirTypes: any[] = [];
   boqList: any[] = [];
-  units: any[] = [];
+  mirBoqs: any[] = [];
 
   swalOptions: SweetAlertOptions = {};
   @ViewChild('noticeSwal') noticeSwal!: SwalComponent;
@@ -60,9 +60,8 @@ export class AddMirComponent implements OnInit {
     private _location: Location,
     private cdr: ChangeDetectorRef,
     private factoryService: FactoryService,
-    private attachmentService: AttachmentService,
     private formBuilder: FormBuilder,
-    private boqService: BoqService,
+    private mirService: MirService,
     private lookupService: LookupService,
     private activatedRoute: ActivatedRoute,
   ) { }
@@ -106,9 +105,8 @@ export class AddMirComponent implements OnInit {
       longitude: ['46.690065163710585', Validators.required],
       assignedDate: ['', Validators.required],
       typeId: ['', Validators.required],
-      nameId: ['', Validators.required],
-      quantity: ['', Validators.required],
-      boqId: ['', Validators.required],
+      quantity: [''],
+      boqId: [null],
       factoryId: ['', Validators.required],
     });
   }
@@ -129,29 +127,48 @@ export class AddMirComponent implements OnInit {
       this.factories = res.data.items;
       this.cdr.detectChanges();
     });
-    this.boqService.getAll(this.projectId).subscribe(res => {
-      this.boqList = res.data.items;
+    this.lookupService.getBoqsByProjectId(this.projectId).subscribe(res => {
+      this.boqList = res.data;
       this.cdr.detectChanges();
     });
   }
 
   addQuantity() {
+    this.mirBoqs.push({
+      boqId: this.addFactoryForm.value.boqId,
+      quantity: this.addFactoryForm.value.quantity
+    });
+    this.addFactoryForm.patchValue({ boqId: null });
+    this.addFactoryForm.patchValue({ quantity: '' });
+    this.cdr.detectChanges();
+  }
 
+  deleteBoq(boq: any) {
+    const result = this.mirBoqs.filter(item => item.boq !== boq.boq);
+    this.mirBoqs = result;
   }
 
   saveChanges() {
-    if (!this.addFactoryForm.valid) {
+    if (!this.addFactoryForm.valid || !this.mirBoqs.length) {
       this.addFactoryForm.markAllAsTouched();
       return;
     }
+
     this.isLoading = true;
     const payload = {
       ...this.addFactoryForm.value,
       projectId: +this.projectId,
+      typeId: +this.addFactoryForm.value.typeId,
+      factoryId: +this.addFactoryForm.value.factoryId,
     }
+    payload.mirBoqs = this.mirBoqs;
+
+    delete payload.boqId;
+    delete payload.quantity;
+
 
     if (!this.boqId) {
-      this.factoryService.addFactory(payload).subscribe({
+      this.mirService.addMir(payload).subscribe({
         next: (res) => {
           this.isLoading = false;
           this.router.navigateByUrl(`projects/mir-list/${this.projectId}`);
