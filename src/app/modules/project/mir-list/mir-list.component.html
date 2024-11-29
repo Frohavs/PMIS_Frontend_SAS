@@ -1,1 +1,113 @@
-<p>mir-list works!</p>
+<div class="card mb-5 mb-xl-8">
+
+  <div class="card-header border-0 pt-5">
+
+    <div class="card-title">
+      <div class="d-flex align-items-center position-relative my-1">
+        <app-keenicon name="magnifier" class="fs-3 position-absolute ms-5"></app-keenicon>
+        <input type="text" data-action="filter" class="form-control form-control-solid w-250px ps-12"
+          [placeholder]="Search_text">
+      </div>
+    </div>
+
+    <div class="card-toolbar" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-trigger="hover"
+      title="Click to add a user">
+      <a class="btn btn-sm btn-light-primary" (click)="redirectToNew()">
+        <app-keenicon name="plus" class="fs-3"></app-keenicon>
+        {{Add_text}}
+      </a>
+    </div>
+  </div>
+
+  <div class="card-body py-3">
+    <div class="table-responsive">
+      <table class="table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4">
+        <thead>
+          <tr class="fw-bolder text-muted">
+            <th class="max-w-100px">Mir No</th>
+            <th class="min-w-100px">Factory Name</th>
+            <th class="min-w-100px">Type</th>
+            <th class="min-w-100px">Assigned</th>
+            <th class="min-w-100px">Date</th>
+            <th class="min-w-100px">Status</th>
+            <th class="max-w-100px text-end">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let milestone of dataList; index as i">
+            <td>
+              <a class="text-gray-900 fw-bolder text-hover-primary d-block fs-6">
+                {{milestone?.factoryCR  || '--'}}
+              </a>
+            </td>
+            <td>
+              <a class="text-gray-900 fw-bolder text-hover-primary d-block fs-6">
+                {{milestone?.factoryField  || '--'}}
+              </a>
+            </td>
+            <td>
+              <a class="text-gray-900 fw-bolder text-hover-primary d-block fs-6">
+                {{milestone?.repreName  || '--'}}
+              </a>
+            </td>
+            <td>
+              <a class="text-gray-900 fw-bolder text-hover-primary d-block fs-6">
+                {{milestone?.reprePhone  || '--'}}
+              </a>
+            </td>
+            <td>
+              <a class="text-gray-900 fw-bolder text-hover-primary d-block fs-6">
+                {{milestone?.numOfEmployess  || '--'}}
+              </a>
+            </td>
+            <td>
+              <div class="d-flex justify-content-end flex-shrink-0">
+                <a class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1"
+                  (click)="factoryDetails(milestone)">
+                  <app-keenicon name="eye" class="fs-3"></app-keenicon>
+                </a>
+              </div>
+            </td>
+          </tr>
+          <tr *ngIf="!dataList?.length">
+            <td colspan="8" class="text-center fs-2 text-primary">
+              no items retrieved yet
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="d-flex flex-stack flex-wrap pt-10">
+        <div class="fs-6 fw-bold text-gray-700">Showing {{totalCount}} to 10 of {{totalCount}} entries</div>
+
+        <ul class="pagination">
+          <li class="page-item previous" (click)="navigateArrows(false)">
+            <a class="page-link cursor-pointer">
+              <i class="previous"></i>
+            </a>
+          </li>
+
+          <li class="page-item" [ngClass]="{'active': selected === i+1}" (click)="navigatePage(i+1)"
+            *ngFor="let page of pagesCount; index as i">
+            <a class="page-link cursor-pointer"> {{i+1}} </a>
+          </li>
+
+          <li class="page-item next" (click)="navigateArrows(true)">
+            <a class="page-link cursor-pointer">
+              <i class="next"></i>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<swal #noticeSwal [swalOptions]="swalOptions">
+</swal>
+
+
+<swal #deleteSwal [swalOptions]="swalOptions" title="Are you sure to delete?" text="This can't be undone" icon="warning"
+  [showCancelButton]="true" [focusCancel]="true"
+  [customClass]="{confirmButton: 'btn btn-danger', cancelButton: 'btn btn-active-light'}">
+</swal>

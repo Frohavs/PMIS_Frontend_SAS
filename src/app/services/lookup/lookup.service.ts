@@ -393,4 +393,24 @@ export class LookupService {
     });
   }
 
+  getMIRStatuses(): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/GetMIRStatuses`;
+    return this.http.get<any>(url, {
+      headers: httpHeaders
+    });
+  }
+
+  getMIRTypes(): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/GetMIRTypes`;
+    return this.http.get<any>(url, {
+      headers: httpHeaders
+    });
+  }
+
 }
