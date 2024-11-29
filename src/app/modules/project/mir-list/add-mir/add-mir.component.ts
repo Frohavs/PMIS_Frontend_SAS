@@ -148,19 +148,14 @@ export class AddMirComponent implements OnInit {
     const payload = {
       ...this.addFactoryForm.value,
       projectId: +this.projectId,
-      year: +this.addFactoryForm.value.year,
-      numOfEmployess: +this.addFactoryForm.value.numOfEmployess,
-      factoryCRId: +this.addFactoryForm.value.factoryCRId,
-      factoryFieldId: +this.addFactoryForm.value.factoryFieldId,
-
     }
 
     if (!this.boqId) {
       this.factoryService.addFactory(payload).subscribe({
         next: (res) => {
           this.isLoading = false;
-          this.router.navigateByUrl(`projects/factory-list/${this.projectId}`);
-          this.showAlert({ icon: 'success', title: 'Success!', text: 'Boq Added successfully!' });
+          this.router.navigateByUrl(`projects/mir-list/${this.projectId}`);
+          this.showAlert({ icon: 'success', title: 'Success!', text: 'Mir Added successfully!' });
           this.cdr.detectChanges();
         },
         error: (error) => {
@@ -169,66 +164,6 @@ export class AddMirComponent implements OnInit {
         }
       });
 
-    }
-  }
-
-  onFileChange(event: any) {
-    if (event.target.files.length > 0) {
-      const file = event.target.files[0];
-      const fd = new FormData();
-      fd.append('Attachment', file, file.name);
-      this.attachmentService.uploadAttachment(fd).subscribe(res => {
-        this.crAttachment = res.data;
-        this.cdr.detectChanges();
-      }, (error) => {
-        this.showAlert({ icon: 'error', title: 'Error!', text: 'Please try Upload again' });
-      });
-    }
-
-  }
-
-  onApproveFileChange(event: any) {
-    if (event.target.files.length > 0) {
-      const file = event.target.files[0];
-      const fd = new FormData();
-      fd.append('Attachment', file, file.name);
-      this.attachmentService.uploadAttachment(fd).subscribe(res => {
-        this.addFactoryForm.patchValue({
-          approveletterAttachment: res.data
-        })
-      }, (error) => {
-        this.showAlert({ icon: 'error', title: 'Error!', text: 'Please try Upload again' });
-      });
-    }
-  }
-
-  onLastFileChange(event: any) {
-    if (event.target.files.length > 0) {
-      const file = event.target.files[0];
-      const fd = new FormData();
-      fd.append('Attachment', file, file.name);
-      this.attachmentService.uploadAttachment(fd).subscribe(res => {
-        this.addFactoryForm.patchValue({
-          lastFinancialAttachment: res.data
-        })
-      }, (error) => {
-        this.showAlert({ icon: 'error', title: 'Error!', text: 'Please try Upload again' });
-      });
-    }
-  }
-
-  onProfileFileChange(event: any) {
-    if (event.target.files.length > 0) {
-      const file = event.target.files[0];
-      const fd = new FormData();
-      fd.append('Attachment', file, file.name);
-      this.attachmentService.uploadAttachment(fd).subscribe(res => {
-        this.addFactoryForm.patchValue({
-          profileAttachment: res.data
-        })
-      }, (error) => {
-        this.showAlert({ icon: 'error', title: 'Error!', text: 'Please try Upload again' });
-      });
     }
   }
 
