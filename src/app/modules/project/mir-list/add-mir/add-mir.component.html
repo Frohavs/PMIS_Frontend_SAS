@@ -58,8 +58,8 @@
                       <select class="form-select form-select-solid form-select-lg fw-bold" name="nameId"
                         formControlName="nameId">
                         <option value="" disabled>{{"TRANSLATOR.SELECTION" | translate}}</option>
-                        <ng-container *ngFor="let item of factoryNames">
-                          <option [value]="item?.id">{{item?.name}}</option>
+                        <ng-container *ngFor="let item of factories">
+                          <option [value]="item?.id">{{item?.factoryCR}}</option>
                         </ng-container>
                       </select>
                       <div

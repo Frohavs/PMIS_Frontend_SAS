@@ -37,7 +37,7 @@ export class AddMirComponent implements OnInit {
   lng: number = this.markerPosition.lng;
 
 
-  factoryNames: any[] = [];
+  factories: any[] = [];
   mirStatus: any[] = [];
   mirTypes: any[] = [];
   boqList: any[] = [];
@@ -91,7 +91,7 @@ export class AddMirComponent implements OnInit {
   getBoqId() {
     this.activatedRoute.params.subscribe(params => {
       this.projectId = +params['id'];
-      this.getBoqList();
+      this.getProjectIdDependentLists();
     });
     this.activatedRoute.queryParams.subscribe(params => {
       this.boqId = params['boqId'];
@@ -109,14 +109,11 @@ export class AddMirComponent implements OnInit {
       nameId: ['', Validators.required],
       quantity: ['', Validators.required],
       boqId: ['', Validators.required],
+      factoryId: ['', Validators.required],
     });
   }
 
   getLookups() {
-    // this.lookupService.getMIRNames().subscribe(res => {
-    //   this.factoryNames = res.data;
-    //   this.cdr.detectChanges();
-    // });
     this.lookupService.getMIRStatuses().subscribe(res => {
       this.mirStatus = res.data;
       this.cdr.detectChanges();
@@ -127,10 +124,13 @@ export class AddMirComponent implements OnInit {
     });
   }
 
-  getBoqList() {
+  getProjectIdDependentLists() {
+    this.factoryService.getAll(this.projectId).subscribe(res => {
+      this.factories = res.data.items;
+      this.cdr.detectChanges();
+    });
     this.boqService.getAll(this.projectId).subscribe(res => {
       this.boqList = res.data.items;
-      debugger
       this.cdr.detectChanges();
     });
   }
