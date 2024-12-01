@@ -92,9 +92,6 @@ export class AddMirComponent implements OnInit {
       this.projectId = +params['id'];
       this.getProjectIdDependentLists();
     });
-    this.activatedRoute.queryParams.subscribe(params => {
-      this.boqId = params['boqId'];
-    });
     const queryParams = this.activatedRoute.snapshot.queryParams;
     this.boqId = +queryParams?.boqId;
   }

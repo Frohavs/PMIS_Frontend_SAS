@@ -26,6 +26,8 @@ export class MirDetailsComponent implements OnInit {
   statusList: any[] = [];
   noteTypes: any[] = [];
 
+  quantityEdit: any;
+
   userId: any;
   swalOptions: SweetAlertOptions = { buttonsStyling: false };
   @ViewChild('noticeSwal') noticeSwal!: SwalComponent;
@@ -82,6 +84,14 @@ export class MirDetailsComponent implements OnInit {
     });
   }
 
+  numbersOnly(event: any): boolean {
+    const charCode = (event.which) ? event.which : event.keyCode;
+    if ((charCode > 31 && charCode != 43) && (charCode < 48 || charCode > 57)) {
+      return false;
+    }
+    return true;
+  }
+
   getNoteType(type: any) {
     const result = this.noteTypes.find(x => x.id === type)?.name;
     return result
@@ -116,6 +126,15 @@ export class MirDetailsComponent implements OnInit {
     }, () => {
       this.showAlert({ icon: 'error', title: 'Error!', text: 'please try again!' })
     });
+  }
+
+  detectChange(event: any, item: any) {
+    if(event.target.value === 0 || event.target.value === '') return;
+    console.log(event.target.value);
+    item.quantity = +event.target.value;
+    console.log(item);
+
+
   }
 
   showAlert(swalOptions: SweetAlertOptions) {
