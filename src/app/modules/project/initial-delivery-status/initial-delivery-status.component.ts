@@ -266,7 +266,6 @@ export class InitialDeliveryStatusComponent implements OnInit {
       this.activeStep = this.statusDetails?.items.length ? this.statusDetails?.items[this.statusDetails?.items.length - 1]?.step : 0;
       for (const element of this.statusDetails?.items) {
         if (element.step === 1) {
-          debugger
           this.createCommitteeSelectedFile = { name: element.attachment };
           this.updateForm.get('createCommittee')?.setValue(element.checked);
           this.updateForm.get('createCommittee')?.disable();
@@ -279,7 +278,6 @@ export class InitialDeliveryStatusComponent implements OnInit {
 
         }
         if (element.step === 2) {
-          debugger
           this.trackNotesSelectedFile = { name: element.attachment };
           this.updateForm.get('trackNotes')?.setValue(element.checked);
           this.updateForm.get('trackNotes')?.disable();
@@ -295,7 +293,6 @@ export class InitialDeliveryStatusComponent implements OnInit {
           this.cdr.detectChanges();
         }
         if (element.step === 3) {
-          debugger
           this.provideContractorNotesSelectedFile = { name: element.attachment };
           this.updateForm.get('provideContractorNotes')?.setValue(element.checked);
           this.updateForm.get('provideContractorNotes')?.disable();
@@ -307,7 +304,6 @@ export class InitialDeliveryStatusComponent implements OnInit {
           this.cdr.detectChanges();
         }
         if (element.step === 4) {
-          debugger
           this.completeNotesSelectedFile = { name: element.attachment };
           this.updateForm.get('completeNotes')?.setValue(element.checked);
           this.updateForm.get('completeNotes')?.disable();
@@ -317,7 +313,6 @@ export class InitialDeliveryStatusComponent implements OnInit {
           this.updateForm.get('signContract')?.enable();
         }
         if (element.step === 5) {
-          debugger
           this.signContractSelectedFile = { name: element.attachment };
           this.updateForm.get('signContract')?.setValue(element.checked);
           this.updateForm.get('signContract')?.disable();
@@ -505,7 +500,6 @@ export class InitialDeliveryStatusComponent implements OnInit {
         (backendItem: any) => backendItem.step === item.intialStep
       );
     });
-    debugger
     this.deliveryStatusService.createDeliveryStatusItems({ items: this.statusDetails?.items.length ? filteredData : checkedItems }).subscribe(res => {
       this.getByID();
       this.modalService.dismissAll();

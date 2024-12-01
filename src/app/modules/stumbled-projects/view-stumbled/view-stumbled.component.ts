@@ -37,7 +37,6 @@ export class ViewStumbledComponent implements OnInit {
   }
 
   downloadFile(attachment: string) {
-    debugger
     this.attachmentService.downloadAttachment(attachment).subscribe(res => {
       window.open(res.data, '_blank');
     });

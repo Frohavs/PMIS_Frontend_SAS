@@ -52,7 +52,6 @@ export class OverviewComponent implements OnInit {
 
   getStumbledProjects(pageIndex?: number, search?: string) {
     this.projectService.getStumbledProjects(pageIndex, search).subscribe(res => {
-      debugger
       this.dataList = res?.data?.items;
       this.totalCount = res?.data?.totalcount;
       this.pagesCount = Array.from({ length: Math.ceil(this.totalCount / 10) }, (_, index) => index + 1);

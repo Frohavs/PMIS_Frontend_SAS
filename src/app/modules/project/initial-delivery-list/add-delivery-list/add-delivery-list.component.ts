@@ -271,7 +271,7 @@ export class AddDeliveryListComponent implements OnInit {
 
       this.projectDeliveryDetails.id = res.data.id || null;
       this.projectDeliveryDetails.committeeMangers = res.data.committeeMangers;
-      debugger
+
       this.deliveryForm.patchValue({
         committeeId: null,
         committeeName: '',

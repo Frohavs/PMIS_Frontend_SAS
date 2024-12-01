@@ -72,7 +72,6 @@ export class StageGateManagementComponent implements OnInit {
 
   getByID() {
     this.stageGateManagementService.getByID(this.stageId).subscribe(res => {
-      debugger
       this.projectDetails = res.data;
       this.subPhaseId = this.projectDetails?.subPhaseId;
       if (this.projectDetails?.status == 'DeliverableChecklist') {

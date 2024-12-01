@@ -50,7 +50,6 @@ export class StumbledProjectsService {
         "pageSize": 0
       }
     }
-    debugger
     const url = `${this.API_USERS_URL}/Get`;
     return this.http.post<any>(url, milestone, {
       headers: httpHeaders

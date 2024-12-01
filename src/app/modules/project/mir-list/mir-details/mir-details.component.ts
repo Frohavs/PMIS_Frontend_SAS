@@ -70,6 +70,7 @@ export class MirDetailsComponent implements OnInit {
         } else {
           this.statusList = res.data.slice(1);
         }
+        this.statusId = this.mirDetails.statusId > 2 ? this.mirDetails.statusId : '';
         this.cdr.detectChanges();
       });
     });
@@ -81,19 +82,19 @@ export class MirDetailsComponent implements OnInit {
     });
   }
 
+  getNoteType(type: any) {
+    const result = this.noteTypes.find(x => x.id === type)?.name;
+    return result
+  }
+
   saveNote() {
     const payload = {
-      id: this.mirId,
-      status: +this.statusId,
-      mirBoqs: this.mirDetails.mirBoqs,
-      notes: [
-        {
-          note: this.note,
-          type: +this.noteType
-        }
-      ]
+      mirId: this.mirId,
+      note: this.note,
+      type: +this.noteType
     }
-    this.mirService.updateMir(payload).subscribe(res => {
+
+    this.mirService.createNote(payload).subscribe(res => {
       this.getFactoryDetails();
       this.note = '';
       this.noteType = '';
@@ -107,18 +108,10 @@ export class MirDetailsComponent implements OnInit {
     const payload = {
       id: this.mirId,
       status: +this.statusId,
-      mirBoqs: this.mirDetails.mirBoqs,
-      notes: [
-        {
-          note: this.note,
-          type: +this.noteType
-        }
-      ]
+      mirBoqs: this.mirDetails.mirBoqs.map(({ boqTitle, ...rest }: any) => rest),
     }
     this.mirService.updateMir(payload).subscribe(res => {
       this.getFactoryDetails();
-      this.note = '';
-      this.noteType = '';
       this.showAlert({ icon: 'success', title: 'Success!', text: 'updated successfully!' });
     }, () => {
       this.showAlert({ icon: 'error', title: 'Error!', text: 'please try again!' })
