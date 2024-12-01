@@ -1,12 +1,10 @@
 import { ChangeDetectorRef, Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
-import { TranslateService } from '@ngx-translate/core';
 import { Location } from '@angular/common';
+import { NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
 import { AuthService } from 'src/app/modules/auth';
 import { FactoryService } from 'src/app/services/factory.service';
-import { ProjectsService } from 'src/app/services/projects.service';
 import { SweetAlertOptions } from 'sweetalert2';
 
 

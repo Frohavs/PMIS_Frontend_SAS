@@ -55,5 +55,24 @@ export class MirService {
       headers: httpHeaders
     });
   }
+  updateMir(payload: any): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/Update`;
+    return this.http.put<any>(url, payload, {
+      headers: httpHeaders
+    });
+  }
+
+  deleteMir(id: any) {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/Delete?id=${id}`;
+    return this.http.delete<any>(url, {
+      headers: httpHeaders
+    });
+  }
 
 }

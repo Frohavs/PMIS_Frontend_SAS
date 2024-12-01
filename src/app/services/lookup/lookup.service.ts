@@ -396,6 +396,7 @@ export class LookupService {
   getMIRStatuses(): Observable<any> {
     const httpHeaders = new HttpHeaders({
       Authorization: `Bearer ${this.token}`,
+      LanguageCode: 'ar'
     });
     const url = `${this.API_USERS_URL}/GetMIRStatuses`;
     return this.http.get<any>(url, {
@@ -406,8 +407,20 @@ export class LookupService {
   getMIRTypes(): Observable<any> {
     const httpHeaders = new HttpHeaders({
       Authorization: `Bearer ${this.token}`,
+      LanguageCode: 'ar'
     });
     const url = `${this.API_USERS_URL}/GetMIRTypes`;
+    return this.http.get<any>(url, {
+      headers: httpHeaders
+    });
+  }
+
+  getMIRNoteTypes(): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+      LanguageCode: 'ar'
+    });
+    const url = `${this.API_USERS_URL}/GetMIRNoteTypes`;
     return this.http.get<any>(url, {
       headers: httpHeaders
     });

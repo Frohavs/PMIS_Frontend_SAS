@@ -92,7 +92,29 @@ export class MirListComponent implements OnInit, AfterViewInit, OnDestroy {
 
   factoryDetails(factory: any) {
     this.router.navigate(['projects/mir-derails/' + this.projectId], {
-      queryParams: { factoryId: factory.id }
+      queryParams: { mirId: factory.id }
+    });
+  }
+
+  deleteMir(mir: any) {
+    this.deleteSwal.fire().then((clicked) => {
+      if (clicked.isConfirmed) {
+        this.isLoading = true;
+        this.mirService.deleteMir(mir.id).subscribe({
+          next: (res) => {
+            this.showAlert({ icon: 'success', title: 'Success!', text: 'MIR Deleted successfully!' });
+            setTimeout(() => {
+              this.isLoading = false;
+              this.dataList = [];
+              this.initFactoryList(this.projectId);
+            }, 500);
+          },
+          error: (error) => {
+            this.isLoading = false;
+            this.showAlert({ icon: 'error', title: 'Error!', text: 'Please try again' });
+          }
+        })
+      }
     });
   }
 
