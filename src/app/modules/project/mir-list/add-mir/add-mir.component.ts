@@ -131,10 +131,35 @@ export class AddMirComponent implements OnInit {
   }
 
   addQuantity() {
+    const selectedBoqId = +this.addFactoryForm.value.boqId;
+    const enteredQuantity = +this.addFactoryForm.value.quantity;
+
+    const selectedBoq = this.boqList.find(item => item.id === selectedBoqId);
+    if (!selectedBoq) {
+      alert('Please select a valid item.');
+      return;
+    }
+    const alreadyAddedQuantity = this.mirBoqs
+      .filter(boq => +boq.boqId === selectedBoqId)
+      .reduce((sum, boq) => sum + boq.quantity, 0);
+
+    const remainingQuantity = selectedBoq.quantity - alreadyAddedQuantity;
+    if (enteredQuantity > remainingQuantity) {
+      alert(
+        `You cannot exceed the available quantity.
+        Original: ${selectedBoq.quantity},
+        Already Added: ${alreadyAddedQuantity},
+        Remaining: ${remainingQuantity}`
+      );
+      return;
+    }
+
     this.mirBoqs.push({
       boqId: this.addFactoryForm.value.boqId,
       quantity: this.addFactoryForm.value.quantity
     });
+    console.log('mirBoqs', this.mirBoqs);
+
     this.addFactoryForm.patchValue({ boqId: null });
     this.addFactoryForm.patchValue({ quantity: '' });
     this.cdr.detectChanges();
