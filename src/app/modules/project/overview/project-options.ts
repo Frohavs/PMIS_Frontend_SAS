@@ -99,6 +99,10 @@ export const PROJECT_OPTIONS = [
       name: 'MIR List',
       route: 'projects/mir-list'
     },
+    {
+      name: 'Project Sites',
+      route: 'projects/project-sites'
+    },
     // {
     //   name: 'stage gate management',
     //   route: 'projects/stage-gate-management'

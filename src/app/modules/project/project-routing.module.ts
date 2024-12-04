@@ -75,6 +75,8 @@ import { LibraryFileListingComponent } from './library-file-listing/library-file
 import { MirListComponent } from './mir-list/mir-list.component';
 import { AddMirComponent } from './mir-list/add-mir/add-mir.component';
 import { MirDetailsComponent } from './mir-list/mir-details/mir-details.component';
+import { ProjectSitesComponent } from './project-sites/project-sites.component';
+import { AddSiteComponent } from './project-sites/add-site/add-site.component';
 
 const routes: Routes = [
   {
@@ -441,6 +443,14 @@ const routes: Routes = [
         component: MirDetailsComponent,
       },
 
+      {
+        path: 'project-sites/:id',
+        component: ProjectSitesComponent,
+      },
+      {
+        path: 'add-project-site/:id',
+        component: AddSiteComponent,
+      },
 
 
       { path: '', redirectTo: 'overview', pathMatch: 'full' },

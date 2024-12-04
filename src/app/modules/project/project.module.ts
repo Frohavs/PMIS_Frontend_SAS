@@ -89,6 +89,8 @@ import { LibraryFileListingComponent } from './library-file-listing/library-file
 import { MirListComponent } from './mir-list/mir-list.component';
 import { AddMirComponent } from './mir-list/add-mir/add-mir.component';
 import { MirDetailsComponent } from './mir-list/mir-details/mir-details.component';
+import { ProjectSitesComponent } from './project-sites/project-sites.component';
+import { AddSiteComponent } from './project-sites/add-site/add-site.component';
 
 
 @NgModule({
@@ -192,7 +194,10 @@ import { MirDetailsComponent } from './mir-list/mir-details/mir-details.componen
 
     MirListComponent,
     AddMirComponent,
-    MirDetailsComponent
+    MirDetailsComponent,
+
+    ProjectSitesComponent,
+    AddSiteComponent
   ],
   imports: [
     CommonModule,
