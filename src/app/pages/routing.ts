@@ -45,6 +45,11 @@ const Routing: Routes = [
     // data: { layout: 'light-sidebar' },
   },
   {
+    path: 'rfp_management',
+    loadChildren: () => import('../modules/rfp-management/rfp-management.module').then((m) => m.RfpManagementModule),
+    // data: { layout: 'light-sidebar' },
+  },
+  {
     path: 'consultant-evaluation',
     loadChildren: () => import('../modules/evaluation-category/evaluation-category.module').then((m) => m.EvaluationCategoryModule),
     // data: { layout: 'light-sidebar' },

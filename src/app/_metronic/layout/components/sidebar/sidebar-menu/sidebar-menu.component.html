@@ -71,7 +71,7 @@
         <span class="menu-title" translate="MENU.INVOICES"></span>
       </a>
     </div>
-    <!-- staff-evaluation module -->
+    <!-- staff-evaluoation module -->
     <div class="menu-item">
       <a class="menu-link without-sub" routerLink="/staff-evaluation" routerLinkActive="active">
         <span class="menu-icon">
@@ -165,6 +165,37 @@
         <span class="menu-title" translate="MENU.PROJECTS_FILES"></span>
       </a>
     </div>
+
+<!-- RFP module -->
+<div class="menu-item menu-accordion" data-kt-menu-trigger="click" routerLinkActive="here show">
+  <span class="menu-link">
+    <span class="menu-icon">
+      <app-keenicon name="abstract-17" class="fs-2"></app-keenicon>
+    </span>
+    <span class="menu-title" data-link="/rfp_management" translate="MENU.RFP_MANAGEMENT">
+    </span>
+    <span class="menu-arrow"></span>
+  </span>
+
+  <div class="menu-sub menu-sub-accordion" routerLinkActive="menu-active-bg">
+    <div class="menu-item">
+      <a class="menu-link without-sub" routerLinkActive="active" routerLink="/rfp_management/overview">
+        <span class="menu-bullet">
+          <span class="bullet bullet-dot"></span>
+        </span>
+        <span class="menu-title" translate="MENU.RFP_MANAGEMENT_LIST"></span>
+      </a>
+    </div>
+    <div class="menu-item">
+      <a class="menu-link without-sub" routerLinkActive="active" routerLink="/rfp_management/settings">
+        <span class="menu-bullet">
+          <span class="bullet bullet-dot"></span>
+        </span>
+        <span class="menu-title" translate="MENU.RFP_MANAGEMENT_SETTING"></span>
+      </a>
+    </div>
+  </div>
+</div>
 
     <!-- Stumbled Projects Procedure module -->
     <div class="menu-item">
