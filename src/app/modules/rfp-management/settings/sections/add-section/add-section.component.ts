@@ -150,7 +150,7 @@ export class AddSectionComponent implements OnInit {
     this.noticeSwal.fire();
   }
   navigateBoqTable() {
-    this.router.navigateByUrl('rfp_management/classification');
+    this.router.navigateByUrl('rfp_management/sections');
   }
   back() {
     this._location.back();

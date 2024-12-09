@@ -1,0 +1,101 @@
+<div class="row g-5 g-xl-8 justify-content-between">
+  <div class="col-xl-12">
+    <div class="card mb-5 mb-xl-8">
+      <!-- begin::Header -->
+      <div class="card-header align-items-center border-0 mt-4">
+        <h3 class="card-title align-items-start flex-column">
+          <span class="fw-bolder text-gray-900">{{"BOQ.Add_Boq" | translate}}</span>
+          <!-- <span class="text-muted mt-1 fw-bold fs-7">test</span> -->
+        </h3>
+        <div class="card-toolbar">
+          <a (click)="back()" class="btn btn-sm btn-danger d-flex">
+            <app-keenicon name="arrow-left" class="fs-3"></app-keenicon>
+            {{"ECOMMERCE.COMMON.BACK" | translate}}
+          </a>
+        </div>
+      </div>
+
+
+      <div class="card-body pt-3">
+
+        <form [formGroup]="addBoqForm" class="form">
+          <div class="card-body border-top p-9">
+
+            <div class="row mb-1">
+              <div class="col-lg-6">
+                <label class="col-lg-12 col-form-label fw-bold fs-6">
+                  <span>
+                    English Name
+                  </span>
+                </label>
+                <div class="col-lg-12 fv-row">
+                  <input type="text" class="form-control form-control-lg form-control-solid text-start" name="name"
+                    formControlName="name" />
+                  <div
+                    *ngIf="addBoqForm?.get('name')?.invalid && (addBoqForm?.get('name')?.dirty || addBoqForm?.get('name')?.touched)"
+                    class="fv-plugins-message-container">
+                    <div class="fv-help-block">name is required</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-lg-6">
+                <label class="col-lg-12 col-form-label fw-bold fs-6">
+                  <span>
+                    Arabic Name
+                  </span>
+                </label>
+                <div class="col-lg-12 fv-row">
+                  <input type="text" class="form-control form-control-lg form-control-solid text-start" name="nameAr"
+                    formControlName="nameAr" />
+                  <div
+                    *ngIf="addBoqForm?.get('nameAr')?.invalid && (addBoqForm?.get('nameAr')?.dirty || addBoqForm?.get('nameAr')?.touched)"
+                    class="fv-plugins-message-container">
+                    <div class="fv-help-block">arabic name is required</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row mb-1">
+              <div class="col-lg-6">
+                <label class="col-lg-12 col-form-label fw-bold fs-6">
+                  <span>
+                    Code
+                  </span>
+                </label>
+                <div class="col-lg-12 fv-row">
+                  <input type="text" class="form-control form-control-lg form-control-solid text-start" name="code"
+                    formControlName="code" />
+                  <div
+                    *ngIf="addBoqForm?.get('code')?.invalid && (addBoqForm?.get('code')?.dirty || addBoqForm?.get('code')?.touched)"
+                    class="fv-plugins-message-container">
+                    <div class="fv-help-block">code is required</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <div class="card-footer d-flex justify-content-end py-6 px-9">
+            <button type="button" class="btn btn-primary" [disabled]="isLoading" (click)="saveChanges()">
+              <ng-container *ngIf="!isLoading">{{"TRANSLATOR.ADD" | translate}}</ng-container>
+              <ng-container *ngIf="isLoading">
+                <span clas="indicator-progress" [style.display]="'block'">
+                  Please wait...{{ " " }}
+                  <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                </span>
+              </ng-container>
+            </button>
+          </div>
+        </form>
+
+      </div>
+      <!-- end::Body -->
+    </div>
+  </div>
+</div>
+
+ <!-- modal -->
+ <swal #noticeSwal [swalOptions]="swalOptions">
+</swal>

@@ -27,6 +27,8 @@ import { OwnerCheckListComponent } from './settings/owner-check-list/owner-check
 import { AddOwnerCheckComponent } from './settings/owner-check-list/add-owner-check/add-owner-check.component';
 import { TypesComponent } from './settings/types/types.component';
 import { AddTypeComponent } from './settings/types/add-type/add-type.component';
+import { AdministratorsComponent } from './settings/administrators/administrators.component';
+import { AddAdministratorComponent } from './settings/administrators/add-administrator/add-administrator.component';
 
 
 @NgModule({
@@ -46,7 +48,9 @@ import { AddTypeComponent } from './settings/types/add-type/add-type.component';
     OwnerCheckListComponent,
     AddOwnerCheckComponent,
     TypesComponent,
-    AddTypeComponent
+    AddTypeComponent,
+    AdministratorsComponent,
+    AddAdministratorComponent
   ],
   imports: [
     CommonModule,

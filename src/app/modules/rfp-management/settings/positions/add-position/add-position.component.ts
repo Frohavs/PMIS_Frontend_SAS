@@ -138,7 +138,7 @@ export class AddPositionComponent implements OnInit {
     this.noticeSwal.fire();
   }
   navigateBoqTable() {
-    this.router.navigateByUrl('rfp_management/classification');
+    this.router.navigateByUrl('rfp_management/positions');
   }
   back() {
     this._location.back();

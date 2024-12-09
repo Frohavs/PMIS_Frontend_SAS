@@ -16,6 +16,8 @@ import { OwnerCheckListComponent } from './settings/owner-check-list/owner-check
 import { AddOwnerCheckComponent } from './settings/owner-check-list/add-owner-check/add-owner-check.component';
 import { TypesComponent } from './settings/types/types.component';
 import { AddTypeComponent } from './settings/types/add-type/add-type.component';
+import { AdministratorsComponent } from './settings/administrators/administrators.component';
+import { AddAdministratorComponent } from './settings/administrators/add-administrator/add-administrator.component';
 
 const routes: Routes = [
   {
@@ -81,6 +83,14 @@ const routes: Routes = [
       {
         path: 'add-type',
         component: AddTypeComponent,
+      },
+      {
+        path: 'administrators',
+        component: AdministratorsComponent,
+      },
+      {
+        path: 'add-administrator',
+        component: AddAdministratorComponent,
       },
       { path: '', redirectTo: 'overview', pathMatch: 'full' },
       { path: '**', redirectTo: 'overview', pathMatch: 'full' },

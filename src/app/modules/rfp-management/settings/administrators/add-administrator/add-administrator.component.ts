@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
 import { LookupService } from 'src/app/services/lookup/lookup.service';
@@ -8,11 +8,11 @@ import { RfpManagementService } from 'src/app/services/rfp-managment.service';
 import { SweetAlertOptions } from 'sweetalert2';
 
 @Component({
-  selector: 'app-add-type',
-  templateUrl: './add-type.component.html',
-  styleUrl: './add-type.component.scss'
+  selector: 'app-add-administrator',
+  templateUrl: './add-administrator.component.html',
+  styleUrl: './add-administrator.component.scss'
 })
-export class AddTypeComponent implements OnInit {
+export class AddAdministratorComponent implements OnInit {
   classificationId: number;
   isLoading: boolean;
   addBoqForm: FormGroup;
@@ -39,9 +39,9 @@ export class AddTypeComponent implements OnInit {
 
   getClassificationId() {
     this.activatedRoute.queryParams.subscribe(params => {
-      this.classificationId = params['typeId'];
+      this.classificationId = params['adminId'];
       if (this.classificationId) {
-        this.rfpManagementService.getRfpTypeById(this.classificationId).subscribe(res => {
+        this.rfpManagementService.getRFPAdministratorById(this.classificationId).subscribe(res => {
           this.editVendorForm(res.data);
           this.cdr.detectChanges();
         });
@@ -53,6 +53,7 @@ export class AddTypeComponent implements OnInit {
     this.addBoqForm = this.formBuilder.group({
       name: ['', Validators.required],
       nameAr: ['', Validators.required],
+      code: ['', Validators.required],
     });
 
 
@@ -69,6 +70,7 @@ export class AddTypeComponent implements OnInit {
     this.addBoqForm.patchValue({
       name: data?.name,
       nameAr: data?.nameAr,
+      code: data?.code,
     });
     this.cdr.detectChanges()
   }
@@ -80,15 +82,15 @@ export class AddTypeComponent implements OnInit {
     }
     this.isLoading = true;
     if (!this.classificationId) {
-      this.rfpManagementService.addRfpType(
+      this.rfpManagementService.addRFPClassification(
         {
           ...this.addBoqForm.value,
         }
       ).subscribe({
         next: (res) => {
           this.isLoading = false;
-          this.router.navigateByUrl(`rfp_management/types`);
-          this.showAlert({ icon: 'success', title: 'Success!', text: 'Type Added successfully!' });
+          this.router.navigateByUrl(`rfp_management/Administrators`);
+          this.showAlert({ icon: 'success', title: 'Success!', text: 'Administrator Added successfully!' });
           this.cdr.detectChanges();
         },
         error: (error) => {
@@ -99,7 +101,7 @@ export class AddTypeComponent implements OnInit {
       });
 
     } else {
-      this.rfpManagementService.updateRfpType(
+      this.rfpManagementService.updateClassification(
         {
           ...this.addBoqForm.value,
           id: +this.classificationId,
@@ -107,10 +109,8 @@ export class AddTypeComponent implements OnInit {
       ).subscribe({
         next: (res) => {
           this.isLoading = false;
-          this.showAlert({ icon: 'success', title: 'Success!', text: 'Type Updated successfully!' });
-          setTimeout(() => {
-            this.router.navigateByUrl(`rfp_management/types`);
-          }, 1000);
+          this.router.navigateByUrl(`rfp_management/Administrators`);
+          this.showAlert({ icon: 'success', title: 'Success!', text: 'Administrator Updated successfully!' });
         },
         error: (error) => {
           this.showAlert({ icon: 'error', title: 'Error!', text: 'Please try again' });
@@ -136,7 +136,7 @@ export class AddTypeComponent implements OnInit {
     this.noticeSwal.fire();
   }
   navigateBoqTable() {
-    this.router.navigateByUrl('rfp_management/types');
+    this.router.navigateByUrl('rfp_management/administrators');
   }
   back() {
     this._location.back();

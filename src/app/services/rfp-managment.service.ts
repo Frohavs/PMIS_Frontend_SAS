@@ -17,6 +17,50 @@ export class RfpManagementService {
     this.token = JSON.parse(lsValue as any)?.token;
   }
 
+  // RfpAdministrator methods
+  getAllAdministrator(pageIndex?: number, search?: string): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const body = {
+      quickSearch: search,
+      pagedSearch: {
+        "pageIndex": pageIndex,
+        "pageSize": 10
+      }
+    }
+    const url = `${this.API_USERS_URL}/RfpAdministrator/Get`;
+    return this.http.post<any>(url, body, {
+      headers: httpHeaders
+    });
+  }
+  getRFPAdministratorById(id: any): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/RfpAdministrator/Get/${id}`;
+    return this.http.get<any>(url, {
+      headers: httpHeaders
+    });
+  }
+  addRFPAdministrator(invoice: any): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/RfpAdministrator/Create`;
+    return this.http.post<any>(url, invoice, {
+      headers: httpHeaders
+    });
+  }
+  updateAdministrator(invoice: any): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/RfpAdministrator/Update`;
+    return this.http.put<any>(url, invoice, {
+      headers: httpHeaders
+    });
+  }
   // RfpClassification methods
   getAllClassification(pageIndex?: number, search?: string): Observable<any> {
     const httpHeaders = new HttpHeaders({
