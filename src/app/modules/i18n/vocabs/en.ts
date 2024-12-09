@@ -35,7 +35,7 @@ export const locale = {
       PROJECTS_FILES: 'Projects Files',
       RFP_MANAGEMENT: 'RFP Management',
       RFP_MANAGEMENT_LIST: 'List',
-      RFP_MANAGEMENT_SETTING: 'Setting',
+      RFP_MANAGEMENT_SETTING: 'Settings',
       Stumbled_Projects: 'Stumbled Projects Procedure',
       VENDORS: 'Vendors',
       BOQ: 'Boq',
