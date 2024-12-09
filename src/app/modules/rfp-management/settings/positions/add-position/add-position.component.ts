@@ -1,19 +1,18 @@
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { Location } from '@angular/common';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
 import { LookupService } from 'src/app/services/lookup/lookup.service';
 import { RfpManagementService } from 'src/app/services/rfp-managment.service';
 import { SweetAlertOptions } from 'sweetalert2';
 
-
 @Component({
-  selector: 'app-add-classification',
-  templateUrl: './add-classification.component.html',
-  styleUrl: './add-classification.component.scss'
+  selector: 'app-add-position',
+  templateUrl: './add-position.component.html',
+  styleUrl: './add-position.component.scss'
 })
-export class AddClassificationComponent implements OnInit {
+export class AddPositionComponent implements OnInit {
   classificationId: number;
   isLoading: boolean;
   addBoqForm: FormGroup;
@@ -42,7 +41,7 @@ export class AddClassificationComponent implements OnInit {
     this.activatedRoute.queryParams.subscribe(params => {
       this.classificationId = params['classId'];
       if (this.classificationId) {
-        this.rfpManagementService.getRFPClassificationById(this.classificationId).subscribe(res => {
+        this.rfpManagementService.getRFPPositionById(this.classificationId).subscribe(res => {
           this.editVendorForm(res.data);
           this.cdr.detectChanges();
         });
@@ -54,11 +53,8 @@ export class AddClassificationComponent implements OnInit {
     this.addBoqForm = this.formBuilder.group({
       name: ['', Validators.required],
       nameAr: ['', Validators.required],
-      code: ['', Validators.required],
-      mangerId: [null, Validators.required],
+      administratorId: [null, Validators.required],
     });
-
-
   }
 
   getLookups() {
@@ -72,8 +68,7 @@ export class AddClassificationComponent implements OnInit {
     this.addBoqForm.patchValue({
       name: data?.name,
       nameAr: data?.nameAr,
-      code: data?.code,
-      mangerId: data?.mangerId
+      administratorId: data?.administratorId
     });
     this.cdr.detectChanges()
   }
@@ -85,16 +80,16 @@ export class AddClassificationComponent implements OnInit {
     }
     this.isLoading = true;
     if (!this.classificationId) {
-      this.rfpManagementService.addRFPClassification(
+      this.rfpManagementService.addRFPPosition(
         {
           ...this.addBoqForm.value,
-          mangerId: +this.addBoqForm.value.mangerId
+          administratorId: +this.addBoqForm.value.administratorId
         }
       ).subscribe({
         next: (res) => {
           this.isLoading = false;
-          this.router.navigateByUrl(`rfp_management/classification`);
-          this.showAlert({ icon: 'success', title: 'Success!', text: 'Classification Added successfully!' });
+          this.router.navigateByUrl(`rfp_management/positions`);
+          this.showAlert({ icon: 'success', title: 'Success!', text: 'Position Added successfully!' });
           this.cdr.detectChanges();
         },
         error: (error) => {
@@ -105,18 +100,18 @@ export class AddClassificationComponent implements OnInit {
       });
 
     } else {
-      this.rfpManagementService.updateClassification(
+      this.rfpManagementService.updatePosition(
         {
           ...this.addBoqForm.value,
           id: +this.classificationId,
-          mangerId: +this.addBoqForm.value.mangerId
+          administratorId: +this.addBoqForm.value.administratorId
         }
       ).subscribe({
         next: (res) => {
           this.isLoading = false;
-          this.showAlert({ icon: 'success', title: 'Success!', text: 'Classification Updated successfully!' });
+          this.showAlert({ icon: 'success', title: 'Success!', text: 'Position Updated successfully!' });
           setTimeout(() => {
-            this.router.navigateByUrl(`rfp_management/classification`);
+            this.router.navigateByUrl(`rfp_management/positions`);
           }, 1000);
         },
         error: (error) => {

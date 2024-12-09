@@ -106,4 +106,48 @@ export class RfpManagementService {
       headers: httpHeaders
     });
   }
+  // RfpPostion methods
+  getAllPosition(pageIndex?: number, search?: string): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const body = {
+      quickSearch: search,
+      pagedSearch: {
+        "pageIndex": pageIndex,
+        "pageSize": 10
+      }
+    }
+    const url = `${this.API_USERS_URL}/RfpPostion/Get`;
+    return this.http.post<any>(url, body, {
+      headers: httpHeaders
+    });
+  }
+  getRFPPositionById(id: any): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/RfpPostion/Get/${id}`;
+    return this.http.get<any>(url, {
+      headers: httpHeaders
+    });
+  }
+  addRFPPosition(invoice: any): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/RfpPostion/Create`;
+    return this.http.post<any>(url, invoice, {
+      headers: httpHeaders
+    });
+  }
+  updatePosition(invoice: any): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/RfpPostion/Update`;
+    return this.http.put<any>(url, invoice, {
+      headers: httpHeaders
+    });
+  }
 }
