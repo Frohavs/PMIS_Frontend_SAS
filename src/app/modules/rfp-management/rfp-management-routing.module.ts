@@ -8,6 +8,8 @@ import { DepartmentsComponent } from './settings/departments/departments.compone
 import { AddDepartmentComponent } from './settings/departments/add-department/add-department.component';
 import { PositionsComponent } from './settings/positions/positions.component';
 import { AddPositionComponent } from './settings/positions/add-position/add-position.component';
+import { SectionsComponent } from './settings/sections/sections.component';
+import { AddSectionComponent } from './settings/sections/add-section/add-section.component';
 
 const routes: Routes = [
   {
@@ -41,6 +43,14 @@ const routes: Routes = [
       {
         path: 'add-position',
         component: AddPositionComponent,
+      },
+      {
+        path: 'sections',
+        component: SectionsComponent,
+      },
+      {
+        path: 'add-section',
+        component: AddSectionComponent,
       },
       { path: '', redirectTo: 'overview', pathMatch: 'full' },
       { path: '**', redirectTo: 'overview', pathMatch: 'full' },

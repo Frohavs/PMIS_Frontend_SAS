@@ -150,4 +150,48 @@ export class RfpManagementService {
       headers: httpHeaders
     });
   }
+  // RfpSection methods
+  getAllRfpSections(pageIndex?: number, search?: string): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const body = {
+      quickSearch: search,
+      pagedSearch: {
+        "pageIndex": pageIndex,
+        "pageSize": 10
+      }
+    }
+    const url = `${this.API_USERS_URL}/RfpSection/Get`;
+    return this.http.post<any>(url, body, {
+      headers: httpHeaders
+    });
+  }
+  getRfpSectionById(id: any): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/RfpSection/Get/${id}`;
+    return this.http.get<any>(url, {
+      headers: httpHeaders
+    });
+  }
+  addRfpSection(invoice: any): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/RfpSection/Create`;
+    return this.http.post<any>(url, invoice, {
+      headers: httpHeaders
+    });
+  }
+  updateRfpSection(invoice: any): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/RfpSection/Update`;
+    return this.http.put<any>(url, invoice, {
+      headers: httpHeaders
+    });
+  }
 }

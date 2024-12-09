@@ -19,6 +19,8 @@ import { DepartmentsComponent } from './settings/departments/departments.compone
 import { AddDepartmentComponent } from './settings/departments/add-department/add-department.component';
 import { PositionsComponent } from './settings/positions/positions.component';
 import { AddPositionComponent } from './settings/positions/add-position/add-position.component';
+import { SectionsComponent } from './settings/sections/sections.component';
+import { AddSectionComponent } from './settings/sections/add-section/add-section.component';
 
 
 @NgModule({
@@ -30,7 +32,9 @@ import { AddPositionComponent } from './settings/positions/add-position/add-posi
     DepartmentsComponent,
     AddDepartmentComponent,
     PositionsComponent,
-    AddPositionComponent
+    AddPositionComponent,
+    SectionsComponent,
+    AddSectionComponent
   ],
   imports: [
     CommonModule,
