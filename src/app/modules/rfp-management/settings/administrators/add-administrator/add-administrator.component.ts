@@ -82,14 +82,14 @@ export class AddAdministratorComponent implements OnInit {
     }
     this.isLoading = true;
     if (!this.classificationId) {
-      this.rfpManagementService.addRFPClassification(
+      this.rfpManagementService.addRFPAdministrator(
         {
           ...this.addBoqForm.value,
         }
       ).subscribe({
         next: (res) => {
           this.isLoading = false;
-          this.router.navigateByUrl(`rfp_management/Administrators`);
+          this.router.navigateByUrl(`rfp_management/administrators`);
           this.showAlert({ icon: 'success', title: 'Success!', text: 'Administrator Added successfully!' });
           this.cdr.detectChanges();
         },
@@ -101,7 +101,7 @@ export class AddAdministratorComponent implements OnInit {
       });
 
     } else {
-      this.rfpManagementService.updateClassification(
+      this.rfpManagementService.updateAdministrator(
         {
           ...this.addBoqForm.value,
           id: +this.classificationId,
@@ -109,7 +109,7 @@ export class AddAdministratorComponent implements OnInit {
       ).subscribe({
         next: (res) => {
           this.isLoading = false;
-          this.router.navigateByUrl(`rfp_management/Administrators`);
+          this.router.navigateByUrl(`rfp_management/administrators`);
           this.showAlert({ icon: 'success', title: 'Success!', text: 'Administrator Updated successfully!' });
         },
         error: (error) => {
