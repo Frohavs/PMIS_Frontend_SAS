@@ -23,6 +23,10 @@ import { SectionsComponent } from './settings/sections/sections.component';
 import { AddSectionComponent } from './settings/sections/add-section/add-section.component';
 import { InitialCheckListComponent } from './settings/initial-check-list/initial-check-list.component';
 import { AddInitialCheckComponent } from './settings/initial-check-list/add-initial-check/add-initial-check.component';
+import { OwnerCheckListComponent } from './settings/owner-check-list/owner-check-list.component';
+import { AddOwnerCheckComponent } from './settings/owner-check-list/add-owner-check/add-owner-check.component';
+import { TypesComponent } from './settings/types/types.component';
+import { AddTypeComponent } from './settings/types/add-type/add-type.component';
 
 
 @NgModule({
@@ -38,7 +42,11 @@ import { AddInitialCheckComponent } from './settings/initial-check-list/add-init
     SectionsComponent,
     AddSectionComponent,
     InitialCheckListComponent,
-    AddInitialCheckComponent
+    AddInitialCheckComponent,
+    OwnerCheckListComponent,
+    AddOwnerCheckComponent,
+    TypesComponent,
+    AddTypeComponent
   ],
   imports: [
     CommonModule,
