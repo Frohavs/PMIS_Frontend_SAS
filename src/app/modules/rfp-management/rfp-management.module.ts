@@ -15,6 +15,7 @@ import { WidgetsModule } from 'src/app/_metronic/partials';
 import { SharedModule } from 'src/app/_metronic/shared/shared.module';
 import { ClassificationComponent } from './settings/classification/classification.component';
 import { DepartmentsComponent } from './settings/departments/departments.component';
+import { AddDepartmentComponent } from './settings/departments/add-department/add-department.component';
 import { PositionsComponent } from './settings/positions/positions.component';
 import { AddClassificationComponent } from './settings/classification/add-classification/add-classification.component';
 
@@ -26,6 +27,7 @@ import { AddClassificationComponent } from './settings/classification/add-classi
     ClassificationComponent,
     AddClassificationComponent,
     DepartmentsComponent,
+    AddDepartmentComponent,
     PositionsComponent
   ],
   imports: [

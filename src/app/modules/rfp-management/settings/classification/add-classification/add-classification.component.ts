@@ -1,13 +1,11 @@
-import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
-import { BoqService } from 'src/app/services/boq.service';
 import { LookupService } from 'src/app/services/lookup/lookup.service';
-import { ProjectsService } from 'src/app/services/projects.service';
-import { SweetAlertOptions } from 'sweetalert2';
 import { RfpManagementService } from 'src/app/services/rfp-managment.service';
+import { SweetAlertOptions } from 'sweetalert2';
 
 
 @Component({
@@ -32,7 +30,6 @@ export class AddClassificationComponent implements OnInit {
     private formBuilder: FormBuilder,
     private lookupService: LookupService,
     private activatedRoute: ActivatedRoute,
-    private projectsService: ProjectsService,
   ) { }
 
   ngOnInit(): void {

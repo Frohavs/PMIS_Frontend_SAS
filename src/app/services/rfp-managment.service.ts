@@ -61,12 +61,48 @@ export class RfpManagementService {
       headers: httpHeaders
     });
   }
-  deleteRfpClassification(id: any): Observable<any> {
+
+  // RfpDepartment methods
+  getAllDepartment(pageIndex?: number, search?: string): Observable<any> {
     const httpHeaders = new HttpHeaders({
       Authorization: `Bearer ${this.token}`,
     });
-    const url = `${this.API_USERS_URL}/RfpClassification/Delete/${id}`;
-    return this.http.delete<any>(url, {
+    const body = {
+      quickSearch: search,
+      pagedSearch: {
+        "pageIndex": pageIndex,
+        "pageSize": 10
+      }
+    }
+    const url = `${this.API_USERS_URL}/RfpDepartment/Get`;
+    return this.http.post<any>(url, body, {
+      headers: httpHeaders
+    });
+  }
+  getRFPDepartmentById(id: any): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/RfpDepartment/Get/${id}`;
+    return this.http.get<any>(url, {
+      headers: httpHeaders
+    });
+  }
+  addRFPDepartment(invoice: any): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/RfpDepartment/Create`;
+    return this.http.post<any>(url, invoice, {
+      headers: httpHeaders
+    });
+  }
+  updateDepartment(invoice: any): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/RfpDepartment/Update`;
+    return this.http.put<any>(url, invoice, {
       headers: httpHeaders
     });
   }

@@ -6,6 +6,7 @@ import { ClassificationComponent } from './settings/classification/classificatio
 import { AddClassificationComponent } from './settings/classification/add-classification/add-classification.component';
 import { DepartmentsComponent } from './settings/departments/departments.component';
 import { PositionsComponent } from './settings/positions/positions.component';
+import { AddDepartmentComponent } from './settings/departments/add-department/add-department.component';
 
 const routes: Routes = [
   {
@@ -27,6 +28,10 @@ const routes: Routes = [
       {
         path: 'departments',
         component: DepartmentsComponent,
+      },
+      {
+        path: 'add-department',
+        component: AddDepartmentComponent,
       },
       {
         path: 'positions',
