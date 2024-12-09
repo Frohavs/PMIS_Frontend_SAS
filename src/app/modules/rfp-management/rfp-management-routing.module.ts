@@ -10,6 +10,8 @@ import { PositionsComponent } from './settings/positions/positions.component';
 import { AddPositionComponent } from './settings/positions/add-position/add-position.component';
 import { SectionsComponent } from './settings/sections/sections.component';
 import { AddSectionComponent } from './settings/sections/add-section/add-section.component';
+import { InitialCheckListComponent } from './settings/initial-check-list/initial-check-list.component';
+import { AddInitialCheckComponent } from './settings/initial-check-list/add-initial-check/add-initial-check.component';
 
 const routes: Routes = [
   {
@@ -51,6 +53,14 @@ const routes: Routes = [
       {
         path: 'add-section',
         component: AddSectionComponent,
+      },
+      {
+        path: 'initial-check-list',
+        component: InitialCheckListComponent,
+      },
+      {
+        path: 'add-initial-check',
+        component: AddInitialCheckComponent,
       },
       { path: '', redirectTo: 'overview', pathMatch: 'full' },
       { path: '**', redirectTo: 'overview', pathMatch: 'full' },

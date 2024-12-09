@@ -8,11 +8,11 @@ import { RfpManagementService } from 'src/app/services/rfp-managment.service';
 import { SweetAlertOptions } from 'sweetalert2';
 
 @Component({
-  selector: 'app-positions',
-  templateUrl: './positions.component.html',
-  styleUrl: './positions.component.scss'
+  selector: 'app-initial-check-list',
+  templateUrl: './initial-check-list.component.html',
+  styleUrl: './initial-check-list.component.scss'
 })
-export class PositionsComponent implements OnInit, AfterViewInit, OnDestroy {
+export class InitialCheckListComponent implements OnInit, AfterViewInit, OnDestroy {
 
   Add_text: string;
   Search_text: string;
@@ -47,7 +47,7 @@ export class PositionsComponent implements OnInit, AfterViewInit, OnDestroy {
 
   initRfpList(pageIndex?: number, search?: string) {
     this.dataList = [];
-    this.rfpManagementService.getAllPosition(pageIndex, search).subscribe(res => {
+    this.rfpManagementService.getAllInitialCheck(pageIndex, search).subscribe(res => {
       this.dataList = res?.data?.items;
       this.totalCount = res?.data?.totalcount;
       this.pagesCount = Array.from({ length: Math.ceil(this.totalCount / 10) }, (_, index) => index + 1);
@@ -77,12 +77,12 @@ export class PositionsComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   redirectToNew() {
-    this.router.navigate(['rfp_management/add-position']);
+    this.router.navigate(['rfp_management/add-initial-check']);
   }
 
   redirectToDetails(id: number) {
-    this.router.navigate(['rfp_management/add-position'], {
-      queryParams: { departmentId: id }
+    this.router.navigate(['rfp_management/add-initial-check'], {
+      queryParams: { initialId: id }
     });
   }
 

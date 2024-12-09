@@ -41,7 +41,7 @@ export class AddSectionComponent implements OnInit {
 
   getClassificationId() {
     this.activatedRoute.queryParams.subscribe(params => {
-      this.classificationId = params['classId'];
+      this.classificationId = params['sectionId'];
       if (this.classificationId) {
         this.rfpManagementService.getRfpSectionById(this.classificationId).subscribe(res => {
           this.editVendorForm(res.data);

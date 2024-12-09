@@ -194,4 +194,48 @@ export class RfpManagementService {
       headers: httpHeaders
     });
   }
+  // RfpInitialCheck methods
+  getAllInitialCheck(pageIndex?: number, search?: string): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const body = {
+      quickSearch: search,
+      pagedSearch: {
+        "pageIndex": pageIndex,
+        "pageSize": 10
+      }
+    }
+    const url = `${this.API_USERS_URL}/RfpInitialCheck/Get`;
+    return this.http.post<any>(url, body, {
+      headers: httpHeaders
+    });
+  }
+  getRfpInitialCheckById(id: any): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/RfpInitialCheck/Get/${id}`;
+    return this.http.get<any>(url, {
+      headers: httpHeaders
+    });
+  }
+  addRfpInitialCheck(invoice: any): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/RfpInitialCheck/Create`;
+    return this.http.post<any>(url, invoice, {
+      headers: httpHeaders
+    });
+  }
+  updateRfpInitialCheck(invoice: any): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/RfpInitialCheck/Update`;
+    return this.http.put<any>(url, invoice, {
+      headers: httpHeaders
+    });
+  }
 }

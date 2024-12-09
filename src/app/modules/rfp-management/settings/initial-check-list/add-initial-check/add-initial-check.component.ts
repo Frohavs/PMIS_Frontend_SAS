@@ -1,18 +1,19 @@
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
-import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Location } from '@angular/common';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
 import { LookupService } from 'src/app/services/lookup/lookup.service';
 import { RfpManagementService } from 'src/app/services/rfp-managment.service';
 import { SweetAlertOptions } from 'sweetalert2';
 
+
 @Component({
-  selector: 'app-add-position',
-  templateUrl: './add-position.component.html',
-  styleUrl: './add-position.component.scss'
+  selector: 'app-add-initial-check',
+  templateUrl: './add-initial-check.component.html',
+  styleUrl: './add-initial-check.component.scss'
 })
-export class AddPositionComponent implements OnInit {
+export class AddInitialCheckComponent implements OnInit {
   classificationId: number;
   isLoading: boolean;
   addBoqForm: FormGroup;
@@ -39,9 +40,9 @@ export class AddPositionComponent implements OnInit {
 
   getClassificationId() {
     this.activatedRoute.queryParams.subscribe(params => {
-      this.classificationId = params['departmentId'];
+      this.classificationId = params['initialId'];
       if (this.classificationId) {
-        this.rfpManagementService.getRFPPositionById(this.classificationId).subscribe(res => {
+        this.rfpManagementService.getRfpInitialCheckById(this.classificationId).subscribe(res => {
           this.editVendorForm(res.data);
           this.cdr.detectChanges();
         });
@@ -53,8 +54,9 @@ export class AddPositionComponent implements OnInit {
     this.addBoqForm = this.formBuilder.group({
       name: ['', Validators.required],
       nameAr: ['', Validators.required],
-      administratorId: [null, Validators.required],
     });
+
+
   }
 
   getLookups() {
@@ -68,7 +70,6 @@ export class AddPositionComponent implements OnInit {
     this.addBoqForm.patchValue({
       name: data?.name,
       nameAr: data?.nameAr,
-      administratorId: data?.administratorId
     });
     this.cdr.detectChanges()
   }
@@ -80,16 +81,15 @@ export class AddPositionComponent implements OnInit {
     }
     this.isLoading = true;
     if (!this.classificationId) {
-      this.rfpManagementService.addRFPPosition(
+      this.rfpManagementService.addRfpInitialCheck(
         {
           ...this.addBoqForm.value,
-          administratorId: +this.addBoqForm.value.administratorId
         }
       ).subscribe({
         next: (res) => {
           this.isLoading = false;
-          this.router.navigateByUrl(`rfp_management/positions`);
-          this.showAlert({ icon: 'success', title: 'Success!', text: 'Position Added successfully!' });
+          this.router.navigateByUrl(`rfp_management/initial-check-list`);
+          this.showAlert({ icon: 'success', title: 'Success!', text: 'Record Added successfully!' });
           this.cdr.detectChanges();
         },
         error: (error) => {
@@ -100,18 +100,17 @@ export class AddPositionComponent implements OnInit {
       });
 
     } else {
-      this.rfpManagementService.updatePosition(
+      this.rfpManagementService.updateRfpInitialCheck(
         {
           ...this.addBoqForm.value,
           id: +this.classificationId,
-          administratorId: +this.addBoqForm.value.administratorId
         }
       ).subscribe({
         next: (res) => {
           this.isLoading = false;
-          this.showAlert({ icon: 'success', title: 'Success!', text: 'Position Updated successfully!' });
+          this.showAlert({ icon: 'success', title: 'Success!', text: 'Record Updated successfully!' });
           setTimeout(() => {
-            this.router.navigateByUrl(`rfp_management/positions`);
+            this.router.navigateByUrl(`rfp_management/initial-check-list`);
           }, 1000);
         },
         error: (error) => {

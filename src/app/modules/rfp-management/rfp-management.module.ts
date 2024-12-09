@@ -21,6 +21,8 @@ import { PositionsComponent } from './settings/positions/positions.component';
 import { AddPositionComponent } from './settings/positions/add-position/add-position.component';
 import { SectionsComponent } from './settings/sections/sections.component';
 import { AddSectionComponent } from './settings/sections/add-section/add-section.component';
+import { InitialCheckListComponent } from './settings/initial-check-list/initial-check-list.component';
+import { AddInitialCheckComponent } from './settings/initial-check-list/add-initial-check/add-initial-check.component';
 
 
 @NgModule({
@@ -34,7 +36,9 @@ import { AddSectionComponent } from './settings/sections/add-section/add-section
     PositionsComponent,
     AddPositionComponent,
     SectionsComponent,
-    AddSectionComponent
+    AddSectionComponent,
+    InitialCheckListComponent,
+    AddInitialCheckComponent
   ],
   imports: [
     CommonModule,
