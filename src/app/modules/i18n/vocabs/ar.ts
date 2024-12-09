@@ -16,7 +16,7 @@ export const locale = {
       FEATURES: 'سمات',
       APPS: 'تطبيقات',
       DASHBOARD: 'لوحة التحكم',
-      COMPANIES: 'الشركات',
+      COMPANIES: 'شركاء الأعمال',
       GROUPS: 'المجموعات',
       PROJECTS: 'المشاريع',
       INVOICES: 'بوابة المطالبات المالية',

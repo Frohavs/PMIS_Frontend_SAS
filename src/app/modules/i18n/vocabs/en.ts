@@ -16,7 +16,7 @@ export const locale = {
       FEATURES: 'Features',
       APPS: 'Apps',
       DASHBOARD: 'Dashboard',
-      COMPANIES: 'Companies',
+      COMPANIES: 'Stack Holders',
       GROUPS: 'Groups',
       PROJECTS: 'Projects',
       INVOICES: 'Invoices',
