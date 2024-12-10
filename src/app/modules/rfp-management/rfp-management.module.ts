@@ -29,12 +29,14 @@ import { TypesComponent } from './settings/types/types.component';
 import { AddTypeComponent } from './settings/types/add-type/add-type.component';
 import { AdministratorsComponent } from './settings/administrators/administrators.component';
 import { AddAdministratorComponent } from './settings/administrators/add-administrator/add-administrator.component';
+import { AddRfpComponent } from './add-rfp/add-rfp.component';
 
 
 @NgModule({
   declarations: [
     RfpManagementComponent,
     OverviewComponent,
+    AddRfpComponent,
     ClassificationComponent,
     AddClassificationComponent,
     DepartmentsComponent,

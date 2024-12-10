@@ -18,6 +18,7 @@ import { TypesComponent } from './settings/types/types.component';
 import { AddTypeComponent } from './settings/types/add-type/add-type.component';
 import { AdministratorsComponent } from './settings/administrators/administrators.component';
 import { AddAdministratorComponent } from './settings/administrators/add-administrator/add-administrator.component';
+import { AddRfpComponent } from './add-rfp/add-rfp.component';
 
 const routes: Routes = [
   {
@@ -29,6 +30,11 @@ const routes: Routes = [
         component: OverviewComponent,
       },
       {
+        path: 'add-rfp',
+        component: AddRfpComponent,
+      },
+      // settings
+      {
         path: 'classification',
         component: ClassificationComponent,
       },
@@ -36,14 +42,14 @@ const routes: Routes = [
         path: 'add-classification',
         component: AddClassificationComponent,
       },
-      {
-        path: 'departments',
-        component: DepartmentsComponent,
-      },
-      {
-        path: 'add-department',
-        component: AddDepartmentComponent,
-      },
+      // {
+      //   path: 'departments',
+      //   component: DepartmentsComponent,
+      // },
+      // {
+      //   path: 'add-department',
+      //   component: AddDepartmentComponent,
+      // },
       {
         path: 'positions',
         component: PositionsComponent,

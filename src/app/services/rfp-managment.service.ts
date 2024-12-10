@@ -17,6 +17,23 @@ export class RfpManagementService {
     this.token = JSON.parse(lsValue as any)?.token;
   }
 
+  // RFP methods
+  getRfpList(pageIndex?: number, search?: string): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const body = {
+      quickSearch: search,
+      pagedSearch: {
+        "pageIndex": pageIndex,
+        "pageSize": 10
+      }
+    }
+    const url = `${this.API_USERS_URL}/Rfp/Get`;
+    return this.http.post<any>(url, body, {
+      headers: httpHeaders
+    });
+  }
   // RfpAdministrator methods
   getAllAdministrator(pageIndex?: number, search?: string): Observable<any> {
     const httpHeaders = new HttpHeaders({
