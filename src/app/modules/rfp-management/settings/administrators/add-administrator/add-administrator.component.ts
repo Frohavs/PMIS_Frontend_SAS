@@ -54,6 +54,7 @@ export class AddAdministratorComponent implements OnInit {
       name: ['', Validators.required],
       nameAr: ['', Validators.required],
       code: ['', Validators.required],
+      mangerId : [null, Validators.required],
     });
 
 
@@ -71,6 +72,7 @@ export class AddAdministratorComponent implements OnInit {
       name: data?.name,
       nameAr: data?.nameAr,
       code: data?.code,
+      mangerId: data?.mangerId
     });
     this.cdr.detectChanges()
   }
@@ -85,6 +87,7 @@ export class AddAdministratorComponent implements OnInit {
       this.rfpManagementService.addRFPAdministrator(
         {
           ...this.addBoqForm.value,
+          mangerId: +this.addBoqForm.value.mangerId
         }
       ).subscribe({
         next: (res) => {
@@ -105,6 +108,7 @@ export class AddAdministratorComponent implements OnInit {
         {
           ...this.addBoqForm.value,
           id: +this.classificationId,
+          mangerId: +this.addBoqForm.value.mangerId
         }
       ).subscribe({
         next: (res) => {

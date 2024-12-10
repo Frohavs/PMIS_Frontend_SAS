@@ -4,7 +4,7 @@
       <!-- begin::Header -->
       <div class="card-header align-items-center border-0 mt-4">
         <h3 class="card-title align-items-start flex-column">
-          <span class="fw-bolder text-gray-900">{{"BOQ.Add_Boq" | translate}}</span>
+          <span class="fw-bolder text-gray-900">Add Administrator</span>
           <!-- <span class="text-muted mt-1 fw-bold fs-7">test</span> -->
         </h3>
         <div class="card-toolbar">
@@ -71,6 +71,27 @@
                     *ngIf="addBoqForm?.get('code')?.invalid && (addBoqForm?.get('code')?.dirty || addBoqForm?.get('code')?.touched)"
                     class="fv-plugins-message-container">
                     <div class="fv-help-block">code is required</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <label class="col-lg-12 col-form-label fw-bold fs-6">
+                  <span>
+                    Manager
+                  </span>
+                </label>
+                <div class="col-lg-12 fv-row">
+                  <select class="form-select form-select-solid form-select-lg fw-bold" name="managerId"
+                    formControlName="managerId">
+                    <option value="" disabled selected>{{"TRANSLATOR.SELECTION" | translate}}</option>
+                    <ng-container *ngFor="let user of users">
+                      <option [value]="user?.id">{{user?.name}}</option>
+                    </ng-container>
+                  </select>
+                  <div
+                    *ngIf="addBoqForm?.get('managerId')?.invalid && (addBoqForm?.get('managerId')?.dirty || addBoqForm?.get('managerId')?.touched)"
+                    class="fv-plugins-message-container">
+                    <div class="fv-help-block">way is required</div>
                   </div>
                 </div>
               </div>

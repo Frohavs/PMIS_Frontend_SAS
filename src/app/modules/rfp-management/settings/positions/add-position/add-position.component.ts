@@ -54,6 +54,7 @@ export class AddPositionComponent implements OnInit {
       name: ['', Validators.required],
       nameAr: ['', Validators.required],
       administratorId: [null, Validators.required],
+      classificationId: [null, Validators.required],
     });
   }
 
@@ -68,7 +69,8 @@ export class AddPositionComponent implements OnInit {
     this.addBoqForm.patchValue({
       name: data?.name,
       nameAr: data?.nameAr,
-      administratorId: data?.administratorId
+      administratorId: data?.administratorId,
+      classificationId: data?.classificationId
     });
     this.cdr.detectChanges()
   }
@@ -83,7 +85,8 @@ export class AddPositionComponent implements OnInit {
       this.rfpManagementService.addRFPPosition(
         {
           ...this.addBoqForm.value,
-          administratorId: +this.addBoqForm.value.administratorId
+          administratorId: +this.addBoqForm.value.administratorId,
+          classificationId: +this.addBoqForm.value.classificationId
         }
       ).subscribe({
         next: (res) => {
@@ -104,7 +107,8 @@ export class AddPositionComponent implements OnInit {
         {
           ...this.addBoqForm.value,
           id: +this.classificationId,
-          administratorId: +this.addBoqForm.value.administratorId
+          administratorId: +this.addBoqForm.value.administratorId,
+          classificationId: +this.addBoqForm.value.classificationId
         }
       ).subscribe({
         next: (res) => {

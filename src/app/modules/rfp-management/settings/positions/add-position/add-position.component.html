@@ -4,7 +4,7 @@
       <!-- begin::Header -->
       <div class="card-header align-items-center border-0 mt-4">
         <h3 class="card-title align-items-start flex-column">
-          <span class="fw-bolder text-gray-900">{{"BOQ.Add_Boq" | translate}}</span>
+          <span class="fw-bolder text-gray-900">Add Position</span>
           <!-- <span class="text-muted mt-1 fw-bold fs-7">test</span> -->
         </h3>
         <div class="card-toolbar">
@@ -58,6 +58,25 @@
             </div>
 
             <div class="row mb-1">
+
+              <div class="col-xl-6">
+                <label class="col-lg-4 col-form-label fw-bold fs-6"><span
+                    class="required">Classification</span></label>
+                <div class="col-lg-10 fv-row">
+                  <select class="form-select form-select-solid form-select-lg fw-bold" name="classificationId"
+                    formControlName="classificationId">
+                    <option value="" disabled selected>{{"TRANSLATOR.SELECTION" | translate}}</option>
+                    <ng-container *ngFor="let user of users">
+                      <option [value]="user?.id">{{user?.name}}</option>
+                    </ng-container>
+                  </select>
+                  <div
+                    *ngIf="addBoqForm?.get('classificationId')?.invalid && (addBoqForm?.get('classificationId')?.dirty || addBoqForm?.get('classificationId')?.touched)"
+                    class="fv-plugins-message-container">
+                    <div class="fv-help-block">classification is required</div>
+                  </div>
+                </div>
+              </div>
 
               <div class="col-xl-6">
                 <label class="col-lg-4 col-form-label fw-bold fs-6"><span
