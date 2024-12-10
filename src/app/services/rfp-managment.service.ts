@@ -34,6 +34,24 @@ export class RfpManagementService {
       headers: httpHeaders
     });
   }
+  getRFPById(id: any): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/Rfp/Get/${id}`;
+    return this.http.get<any>(url, {
+      headers: httpHeaders
+    });
+  }
+  addRFPManagement(invoice: any): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/Rfp/Create`;
+    return this.http.post<any>(url, invoice, {
+      headers: httpHeaders
+    });
+  }
   // RfpAdministrator methods
   getAllAdministrator(pageIndex?: number, search?: string): Observable<any> {
     const httpHeaders = new HttpHeaders({

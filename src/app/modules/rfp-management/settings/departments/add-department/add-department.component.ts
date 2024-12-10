@@ -70,8 +70,8 @@ export class AddDepartmentComponent implements OnInit {
       this.users = res.data;
       this.cdr.detectChanges();
     });
-    this.rfpManagementService.getAllClassification().subscribe(res => {
-      this.classifications = res.data.items;
+    this.lookupService.getRfpClassifications().subscribe(res => {
+      this.classifications = res.data;
       this.cdr.detectChanges();
     });
     this.rfpManagementService.getAllPosition().subscribe(res => {

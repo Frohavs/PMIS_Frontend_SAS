@@ -425,5 +425,45 @@ export class LookupService {
       headers: httpHeaders
     });
   }
+  getRfpAdministrators(): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+      LanguageCode: 'ar'
+    });
+    const url = `${this.API_USERS_URL}/GetRfpAdministrators`;
+    return this.http.get<any>(url, {
+      headers: httpHeaders
+    });
+  }
+  getRfpClassifications(): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+      LanguageCode: 'ar'
+    });
+    const url = `${this.API_USERS_URL}/GetRfpClassifications`;
+    return this.http.get<any>(url, {
+      headers: httpHeaders
+    });
+  }
+  getRfpRequestWays(): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+      LanguageCode: 'ar'
+    });
+    const url = `${this.API_USERS_URL}/GetRfpRequestWays`;
+    return this.http.get<any>(url, {
+      headers: httpHeaders
+    });
+  }
+  getRfpTypes(): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+      LanguageCode: 'ar'
+    });
+    const url = `${this.API_USERS_URL}/GetRfpTypes`;
+    return this.http.get<any>(url, {
+      headers: httpHeaders
+    });
+  }
 
 }
