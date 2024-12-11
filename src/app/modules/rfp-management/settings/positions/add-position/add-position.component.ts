@@ -17,6 +17,7 @@ export class AddPositionComponent implements OnInit {
   isLoading: boolean;
   addBoqForm: FormGroup;
   users: any[] = [];
+  classifications: any[] = [];
 
   swalOptions: SweetAlertOptions = {};
   @ViewChild('noticeSwal') noticeSwal!: SwalComponent;
@@ -61,6 +62,10 @@ export class AddPositionComponent implements OnInit {
   getLookups() {
     this.lookupService.allUsers().subscribe(res => {
       this.users = res.data;
+      this.cdr.detectChanges();
+    });
+    this.lookupService.getRfpClassifications().subscribe(res => {
+      this.classifications = res.data;
       this.cdr.detectChanges();
     });
   }

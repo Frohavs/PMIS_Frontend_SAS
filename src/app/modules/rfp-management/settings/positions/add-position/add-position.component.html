@@ -66,8 +66,8 @@
                   <select class="form-select form-select-solid form-select-lg fw-bold" name="classificationId"
                     formControlName="classificationId">
                     <option value="" disabled selected>{{"TRANSLATOR.SELECTION" | translate}}</option>
-                    <ng-container *ngFor="let user of users">
-                      <option [value]="user?.id">{{user?.name}}</option>
+                    <ng-container *ngFor="let classification of classifications">
+                      <option [value]="classification?.id">{{classification?.name}}</option>
                     </ng-container>
                   </select>
                   <div
