@@ -20,6 +20,15 @@ export class AddSiteComponent implements OnInit {
   boqId: number;
   isLoading: boolean;
   addSiteForm: FormGroup;
+  dropdownSettings: any = {
+    singleSelection: false,
+    idField: 'id',
+    textField: 'name',
+    selectAllText: 'Select All',
+    unSelectAllText: 'UnSelect All',
+    itemsShowLimit: 8,
+    allowSearchFilter: true,
+  };
 
   options: google.maps.MapOptions = {
     center: { lat: 24.774265, lng: 46.738586 },
@@ -95,8 +104,8 @@ export class AddSiteComponent implements OnInit {
       endDate: [{ value: '', disabled: true }, Validators.required],
       latitude: ['24.66911551123412', Validators.required],
       longitude: ['46.690065163710585', Validators.required],
-      districtIds: ['', Validators.required],
-      areaIds: ['', Validators.required],
+      districtIds: [null, Validators.required],
+      areaIds: [null, Validators.required],
 
     });
 
@@ -155,16 +164,17 @@ export class AddSiteComponent implements OnInit {
     const payload = {
       ...this.addSiteForm.value,
       projectId: +this.projectId,
-      districtIds: [+this.addSiteForm.value.districtIds],
-      areaIds: [+this.addSiteForm.value.areaIds],
+      districtIds: this.addSiteForm.value.districtIds?.map((item: any) => +item.id),
+      areaIds: this.addSiteForm.value.areaIds?.map((item: any) => +item.id),
       value: +this.addSiteForm.value.value,
       weight: +this.addSiteForm.value.weight,
 
     }
     delete payload['remainAmount']
-
+    delete payload['duration']
     if (!this.boqId) {
       this.projectSitesService.addSite(payload).subscribe({
+
         next: (res) => {
           this.isLoading = false;
           this.router.navigateByUrl(`projects/project-sites/${this.projectId}`);

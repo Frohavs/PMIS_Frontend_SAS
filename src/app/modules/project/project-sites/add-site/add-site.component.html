@@ -203,13 +203,8 @@
                   </span>
                 </label>
                 <div class="col-lg-12 fv-row">
-                  <select class="form-select form-select-solid form-select-lg fw-bold" name="districtIds"
-                    formControlName="districtIds">
-                    <option value="" disabled>{{"TRANSLATOR.SELECTION" | translate}}</option>
-                    <ng-container *ngFor="let district of districts">
-                      <option [value]="district?.id">{{district?.name}}</option>
-                    </ng-container>
-                  </select>
+                  <ng-multiselect-dropdown [settings]="dropdownSettings" [data]="districts" formControlName="districtIds">
+                  </ng-multiselect-dropdown>
                   <div
                     *ngIf="addSiteForm?.get('districtIds')?.invalid && (addSiteForm?.get('districtIds')?.dirty || addSiteForm?.get('districtIds')?.touched)"
                     class="fv-plugins-message-container">
@@ -224,13 +219,8 @@
                   </span>
                 </label>
                 <div class="col-lg-12 fv-row">
-                  <select class="form-select form-select-solid form-select-lg fw-bold" name="areaIds"
-                    formControlName="areaIds">
-                    <option value="" disabled>{{"TRANSLATOR.SELECTION" | translate}}</option>
-                    <ng-container *ngFor="let area of areas">
-                      <option [value]="area?.id">{{area?.name}}</option>
-                    </ng-container>
-                  </select>
+                  <ng-multiselect-dropdown [settings]="dropdownSettings" [data]="areas" formControlName="areaIds">
+                  </ng-multiselect-dropdown>
                   <div
                     *ngIf="addSiteForm?.get('areaIds')?.invalid && (addSiteForm?.get('areaIds')?.dirty || addSiteForm?.get('areaIds')?.touched)"
                     class="fv-plugins-message-container">
