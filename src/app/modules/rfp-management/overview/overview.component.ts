@@ -81,7 +81,7 @@ export class OverviewComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   redirectToDetails(id: number) {
-    this.router.navigate(['rfp_management/add-rfp'], {
+    this.router.navigate(['rfp_management/rfp-details'], {
       queryParams: { rfpId: id }
     });
   }

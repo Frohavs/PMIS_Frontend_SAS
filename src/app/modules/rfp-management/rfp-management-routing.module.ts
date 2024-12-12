@@ -19,6 +19,8 @@ import { AddTypeComponent } from './settings/types/add-type/add-type.component';
 import { AdministratorsComponent } from './settings/administrators/administrators.component';
 import { AddAdministratorComponent } from './settings/administrators/add-administrator/add-administrator.component';
 import { AddRfpComponent } from './add-rfp/add-rfp.component';
+import { RfpDetailsComponent } from './rfp-details/rfp-details.component';
+import { QuestionsPageComponent } from './rfp-details/questions-page/questions-page.component';
 
 const routes: Routes = [
   {
@@ -32,6 +34,10 @@ const routes: Routes = [
       {
         path: 'add-rfp',
         component: AddRfpComponent,
+      },
+      {
+        path: 'rfp-details',
+        component: RfpDetailsComponent
       },
       // settings
       {
@@ -75,12 +81,20 @@ const routes: Routes = [
         component: AddInitialCheckComponent,
       },
       {
+        path: 'initial-check-questions',
+        component: QuestionsPageComponent,
+      },
+      {
         path: 'owner-check-list',
         component: OwnerCheckListComponent,
       },
       {
         path: 'add-owner-check',
         component: AddOwnerCheckComponent,
+      },
+      {
+        path: 'owner-check-questions',
+        component: QuestionsPageComponent,
       },
       {
         path: 'types',

@@ -43,12 +43,55 @@ export class RfpManagementService {
       headers: httpHeaders
     });
   }
+  getRFPLogsById(id: any): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/Rfp/GetLogs/${id}`;
+    return this.http.get<any>(url, {
+      headers: httpHeaders
+    });
+  }
   addRFPManagement(invoice: any): Observable<any> {
     const httpHeaders = new HttpHeaders({
       Authorization: `Bearer ${this.token}`,
     });
     const url = `${this.API_USERS_URL}/Rfp/Create`;
     return this.http.post<any>(url, invoice, {
+      headers: httpHeaders
+    });
+  }
+  getAllInitialChecks(rfpId: number, pageIndex?: number, search?: string): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const body = {
+      rfpId: rfpId,
+      quickSearch: search,
+      pagedSearch: {
+        "pageIndex": pageIndex,
+        "pageSize": 20
+      }
+    }
+    const url = `${this.API_USERS_URL}/Rfp/GetRfpInitialChecks`;
+    return this.http.post<any>(url, body, {
+      headers: httpHeaders
+    });
+  }
+  getRfpOwnerChecks(rfpId: number, pageIndex?: number, search?: string): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const body = {
+      rfpId: rfpId,
+      quickSearch: search,
+      pagedSearch: {
+        "pageIndex": pageIndex,
+        "pageSize": 20
+      }
+    }
+    const url = `${this.API_USERS_URL}/Rfp/GetRfpOwnerChecks`;
+    return this.http.post<any>(url, body, {
       headers: httpHeaders
     });
   }

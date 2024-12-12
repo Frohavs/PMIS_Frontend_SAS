@@ -30,6 +30,8 @@ import { AddTypeComponent } from './settings/types/add-type/add-type.component';
 import { AdministratorsComponent } from './settings/administrators/administrators.component';
 import { AddAdministratorComponent } from './settings/administrators/add-administrator/add-administrator.component';
 import { AddRfpComponent } from './add-rfp/add-rfp.component';
+import { RfpDetailsComponent } from './rfp-details/rfp-details.component';
+import { QuestionsPageComponent } from './rfp-details/questions-page/questions-page.component';
 
 
 @NgModule({
@@ -52,7 +54,9 @@ import { AddRfpComponent } from './add-rfp/add-rfp.component';
     TypesComponent,
     AddTypeComponent,
     AdministratorsComponent,
-    AddAdministratorComponent
+    AddAdministratorComponent,
+    RfpDetailsComponent,
+    QuestionsPageComponent
   ],
   imports: [
     CommonModule,
