@@ -43,7 +43,6 @@ export class ProjectSitesComponent implements OnInit, AfterViewInit, OnDestroy{
     private _location: Location,
     private activatedRoute: ActivatedRoute,
     private cdr: ChangeDetectorRef,
-    private subContractorsService: SubContractorsService,
     private projectSitesService: ProjectSitesService,
   ) {
   }
@@ -85,13 +84,16 @@ export class ProjectSitesComponent implements OnInit, AfterViewInit, OnDestroy{
     this.router.navigateByUrl('projects/add-project-site/' + this.projectId)
   }
 
-  deleteContractor(user: any) {
+  redirectToDetails(site: any) {
+    this.router.navigateByUrl('projects/site-details/' + site.id)
+  }
+  deleteSite(user: any) {
     this.deleteSwal.fire().then((clicked) => {
       if (clicked.isConfirmed) {
         this.isLoading = true;
-        this.projectSitesService.deleteFlood(user.id).subscribe({
+        this.projectSitesService.deleteSite(user.id).subscribe({
           next: (res) => {
-            this.showAlert({ icon: 'success', title: 'Success!', text: 'Letter Deleted successfully!' });
+            this.showAlert({ icon: 'success', title: 'Success!', text: 'Site Deleted successfully!' });
             setTimeout(() => {
               this.isLoading = false;
               this.dataList = [];

@@ -1,1 +1,265 @@
-<p>add-site works!</p>
+<div class="row g-5 g-xl-8 justify-content-between">
+  <div class="col-xl-12">
+    <div class="card mb-5 mb-xl-8">
+      <!-- begin::Header -->
+      <div class="card-header align-items-center border-0 mt-4">
+        <h3 class="card-title align-items-start flex-column">
+          <span class="fw-bolder text-gray-900">add factory</span>
+          <!-- <span class="text-muted mt-1 fw-bold fs-7">test</span> -->
+        </h3>
+        <div class="card-toolbar">
+          <a (click)="back()" class="btn btn-sm btn-danger d-flex">
+            <app-keenicon name="arrow-left" class="fs-3"></app-keenicon>
+            {{"ECOMMERCE.COMMON.BACK" | translate}}
+          </a>
+        </div>
+      </div>
+
+
+      <div class="card-body pt-3">
+
+        <form [formGroup]="addSiteForm" class="form">
+          <div class="card-body border-top p-9">
+            <div class="row mb-2">
+              <div class="col-lg-6">
+                <label class="col-lg-12 col-form-label fw-bold fs-6">
+                  <span>
+                    Site Name
+                  </span>
+                </label>
+                <div class="col-lg-12 fv-row">
+                  <input type="text" class="form-control form-control-lg form-control-solid text-start"
+                    name="name" formControlName="name" />
+                  <div
+                    *ngIf="addSiteForm?.get('name')?.invalid && (addSiteForm?.get('name')?.dirty || addSiteForm?.get('name')?.touched)"
+                    class="fv-plugins-message-container">
+                    <div class="fv-help-block">name is required</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <label class="col-lg-12 col-form-label fw-bold fs-6">
+                  <span>
+                    Abbreviation
+                  </span>
+                </label>
+                <div class="col-lg-12 fv-row">
+                  <input type="text" class="form-control form-control-lg form-control-solid text-start" name="abbreviation"
+                    formControlName="abbreviation" />
+                  <div
+                    *ngIf="addSiteForm?.get('abbreviation')?.invalid && (addSiteForm?.get('abbreviation')?.dirty || addSiteForm?.get('abbreviation')?.touched)"
+                    class="fv-plugins-message-container">
+                    <div class="fv-help-block">abbreviation is required</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row mb-2">
+              <div class="col-lg-4">
+                <label class="col-lg-12 col-form-label fw-bold fs-6">
+                  <span>
+                    Value
+                  </span>
+                </label>
+                <div class="col-lg-12 fv-row">
+                  <input type="text" class="form-control form-control-lg form-control-solid text-start"
+                    name="value" formControlName="value" (keypress)="numbersOnly($event)" />
+                  <div
+                    *ngIf="addSiteForm?.get('value')?.invalid && (addSiteForm?.get('value')?.dirty || addSiteForm?.get('value')?.touched)"
+                    class="fv-plugins-message-container">
+                    <div class="fv-help-block">value is required</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-4">
+                <label class="col-lg-12 col-form-label fw-bold fs-6">
+                  <span>
+                    Weight
+                  </span>
+                </label>
+                <div class="col-lg-12 fv-row">
+                  <input type="text" class="form-control form-control-lg form-control-solid text-start" name="weight"
+                    formControlName="weight" (keypress)="numbersOnly($event)" />
+                  <div
+                    *ngIf="addSiteForm?.get('weight')?.invalid && (addSiteForm?.get('weight')?.dirty || addSiteForm?.get('weight')?.touched)"
+                    class="fv-plugins-message-container">
+                    <div class="fv-help-block">weight is required</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-4">
+                <label class="col-lg-12 col-form-label fw-bold fs-6">
+                  <span>
+                    Remaining amount
+                  </span>
+                </label>
+                <div class="col-lg-12 fv-row">
+                  <input type="text" class="form-control form-control-lg form-control-solid text-start" name="remainAmount"
+                    formControlName="remainAmount" (keypress)="numbersOnly($event)" />
+
+                </div>
+              </div>
+            </div>
+            <div class="row mb-2">
+              <div class="col-lg-4">
+                <label class="col-lg-12 col-form-label fw-bold fs-6">
+                  <span>
+                    StartDate
+                  </span>
+                </label>
+                <div class="col-lg-12 fv-row">
+                  <input type="date" class="form-control form-control-lg form-control-solid text-start"
+                    name="startDate" formControlName="startDate" />
+                  <div
+                    *ngIf="addSiteForm?.get('startDate')?.invalid && (addSiteForm?.get('startDate')?.dirty || addSiteForm?.get('startDate')?.touched)"
+                    class="fv-plugins-message-container">
+                    <div class="fv-help-block">start date is required</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-4">
+                <label class="col-lg-12 col-form-label fw-bold fs-6">
+                  <span>
+                    Duration in Days
+                  </span>
+                </label>
+                <div class="col-lg-12 fv-row">
+                  <input type="text" class="form-control form-control-lg form-control-solid text-start" name="duration"
+                    formControlName="duration" (keypress)="numbersOnly($event)" />
+                  <div
+                    *ngIf="addSiteForm?.get('duration')?.invalid && (addSiteForm?.get('duration')?.dirty || addSiteForm?.get('duration')?.touched)"
+                    class="fv-plugins-message-container">
+                    <div class="fv-help-block">duration is required</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-4">
+                <label class="col-lg-12 col-form-label fw-bold fs-6">
+                  <span>
+                    End Date
+                  </span>
+                </label>
+                <div class="col-lg-12 fv-row">
+                  <input type="date" class="form-control form-control-lg form-control-solid text-start" name="endDate"
+                    formControlName="endDate"  />
+                  <div
+                    *ngIf="addSiteForm?.get('endDate')?.invalid && (addSiteForm?.get('endDate')?.dirty || addSiteForm?.get('endDate')?.touched)"
+                    class="fv-plugins-message-container">
+                    <div class="fv-help-block">end date is required</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="map-container">
+              <span class="fw-bold fs-6 mb-3">Location – Upload site location</span><br><br>
+              <google-map height="400px" width="100%" [options]="options" (mapClick)="onMapClick($event)">
+                <map-marker *ngIf="markerPosition" [position]="markerPosition" [options]="markerOptions"></map-marker>
+              </google-map>
+            </div>
+
+
+            <div class="row mb-2">
+              <div class="col-lg-6">
+                <label class="col-lg-12 col-form-label fw-bold fs-6">
+                  <span>
+                    Latitude
+                  </span>
+                </label>
+                <div class="col-lg-12 fv-row">
+                  <input type="text" class="form-control form-control-lg form-control-solid text-start" name="latitude"
+                    formControlName="latitude" />
+                  <div
+                    *ngIf="addSiteForm?.get('latitude')?.invalid && (addSiteForm?.get('latitude')?.dirty || addSiteForm?.get('latitude')?.touched)"
+                    class="fv-plugins-message-container">
+                    <div class="fv-help-block">latitude is required</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <label class="col-lg-12 col-form-label fw-bold fs-6">
+                  <span>
+                    Longitude
+                  </span>
+                </label>
+                <div class="col-lg-12 fv-row">
+                  <input type="text" class="form-control form-control-lg form-control-solid text-start" name="longitude"
+                    formControlName="longitude" />
+                  <div
+                    *ngIf="addSiteForm?.get('longitude')?.invalid && (addSiteForm?.get('longitude')?.dirty || addSiteForm?.get('longitude')?.touched)"
+                    class="fv-plugins-message-container">
+                    <div class="fv-help-block">longitude is required</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row mb-2">
+              <div class="col-lg-6">
+                <label class="col-lg-12 col-form-label fw-bold fs-6">
+                  <span>
+                    Districts
+                  </span>
+                </label>
+                <div class="col-lg-12 fv-row">
+                  <select class="form-select form-select-solid form-select-lg fw-bold" name="districtIds"
+                    formControlName="districtIds">
+                    <option value="" disabled>{{"TRANSLATOR.SELECTION" | translate}}</option>
+                    <ng-container *ngFor="let district of districts">
+                      <option [value]="district?.id">{{district?.name}}</option>
+                    </ng-container>
+                  </select>
+                  <div
+                    *ngIf="addSiteForm?.get('districtIds')?.invalid && (addSiteForm?.get('districtIds')?.dirty || addSiteForm?.get('districtIds')?.touched)"
+                    class="fv-plugins-message-container">
+                    <div class="fv-help-block">district is required</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <label class="col-lg-12 col-form-label fw-bold fs-6">
+                  <span>
+                    Areas
+                  </span>
+                </label>
+                <div class="col-lg-12 fv-row">
+                  <select class="form-select form-select-solid form-select-lg fw-bold" name="areaIds"
+                    formControlName="areaIds">
+                    <option value="" disabled>{{"TRANSLATOR.SELECTION" | translate}}</option>
+                    <ng-container *ngFor="let area of areas">
+                      <option [value]="area?.id">{{area?.name}}</option>
+                    </ng-container>
+                  </select>
+                  <div
+                    *ngIf="addSiteForm?.get('areaIds')?.invalid && (addSiteForm?.get('areaIds')?.dirty || addSiteForm?.get('areaIds')?.touched)"
+                    class="fv-plugins-message-container">
+                    <div class="fv-help-block">area is required</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <div class="card-footer d-flex justify-content-end py-6 px-9">
+            <button type="button" class="btn btn-primary" [disabled]="isLoading" (click)="saveChanges()">
+              <ng-container *ngIf="!isLoading">{{"TRANSLATOR.ADD" | translate}}</ng-container>
+              <ng-container *ngIf="isLoading">
+                <span clas="indicator-progress" [style.display]="'block'">
+                  Please wait...{{ " " }}
+                  <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                </span>
+              </ng-container>
+            </button>
+          </div>
+        </form>
+
+      </div>
+      <!-- end::Body -->
+    </div>
+  </div>
+</div>
+
+<!-- modal -->
+<swal #noticeSwal [swalOptions]="swalOptions">
+</swal>

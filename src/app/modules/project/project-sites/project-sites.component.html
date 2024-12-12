@@ -26,9 +26,9 @@
           <tr class="fw-bolder text-muted">
             <th class="max-w-100px">ID</th>
             <th class="max-w-100px">Site Name</th>
-            <th class="max-w-100px">Project Name</th>
-            <th class="max-w-100px">Stage</th>
-            <th class="min-w-100px">Status</th>
+            <th class="max-w-100px">Start Date</th>
+            <th class="max-w-100px">Districts</th>
+            <th class="min-w-100px">Abbreviation</th>
             <th class="max-w-100px text-center">Actions</th>
           </tr>
         </thead>
@@ -36,34 +36,35 @@
           <tr *ngFor="let site of dataList; index as i">
             <td>
               <a class="text-gray-900 fw-bolder text-hover-primary d-block fs-6">
-                {{site?.sadsad || '--'}}
+                {{site?.id || '--'}}
               </a>
             </td>
             <td>
               <a class="text-gray-900 fw-bolder text-hover-primary d-block fs-6">
-                {{site?.sadsad || '--'}}
+                {{site?.name || '--'}}
               </a>
             </td>
             <td>
               <a class="text-gray-900 fw-bolder text-hover-primary d-block fs-6">
-                {{site?.sadsad || '--'}}
+                {{site?.startDate | date: 'dd-MM-yyyy' }}
               </a>
             </td>
             <td>
               <a class="text-gray-900 fw-bolder text-hover-primary d-block fs-6">
-                {{site?.sadsad || '--'}}
+                {{site?.districts[0]?.name || '--'}}
               </a>
             </td>
             <td>
               <a class="text-gray-900 fw-bolder text-hover-primary d-block fs-6">
-                {{site?.sadsad || '--'}}
+                {{site?.abbreviation || '--'}}
               </a>
             </td>
-
             <td>
               <div class="d-flex justify-content-center flex-shrink-0">
-                <a class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm"
-                  (click)="deleteContractor(site)">
+                <a class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1" (click)="redirectToDetails(site)">
+                  <app-keenicon name="pencil" class="fs-3"></app-keenicon>
+                </a>
+                <a class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1" (click)="deleteSite(site)">
                   <app-keenicon name="trash" class="fs-3"></app-keenicon>
                 </a>
               </div>

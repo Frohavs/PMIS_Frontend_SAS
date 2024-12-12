@@ -451,6 +451,10 @@ const routes: Routes = [
         path: 'add-project-site/:id',
         component: AddSiteComponent,
       },
+      {
+        path: 'site-details/:id',
+        component: AddSiteComponent,
+      },
 
 
       { path: '', redirectTo: 'overview', pathMatch: 'full' },

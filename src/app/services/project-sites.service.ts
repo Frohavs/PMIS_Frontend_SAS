@@ -35,7 +35,7 @@ export class ProjectSitesService {
       headers: httpHeaders
     });
   }
-  getFlood(id: number | null): Observable<any> {
+  getSiteById(id: number | null): Observable<any> {
     const httpHeaders = new HttpHeaders({
       Authorization: `Bearer ${this.token}`,
     });
@@ -44,7 +44,7 @@ export class ProjectSitesService {
       headers: httpHeaders
     });
   }
-  addFlood(payload: any): Observable<any> {
+  addSite(payload: any): Observable<any> {
     const httpHeaders = new HttpHeaders({
       Authorization: `Bearer ${this.token}`,
     });
@@ -53,7 +53,7 @@ export class ProjectSitesService {
       headers: httpHeaders
     });
   }
-  updateFlood(payload: any): Observable<any> {
+  updateSite(payload: any): Observable<any> {
     const httpHeaders = new HttpHeaders({
       Authorization: `Bearer ${this.token}`,
     });
@@ -62,7 +62,7 @@ export class ProjectSitesService {
       headers: httpHeaders
     });
   }
-  deleteFlood(id: number): Observable<any> {
+  deleteSite(id: number): Observable<any> {
     const httpHeaders = new HttpHeaders({
       Authorization: `Bearer ${this.token}`,
     });
