@@ -6,6 +6,7 @@ import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
 import { Subscription, fromEvent, debounceTime, distinctUntilChanged } from 'rxjs';
 import { RfpManagementService } from 'src/app/services/rfp-managment.service';
 import { SweetAlertOptions } from 'sweetalert2';
+import { StatusTypes } from '../modals';
 
 @Component({
   selector: 'app-overview',
@@ -49,6 +50,13 @@ export class OverviewComponent implements OnInit, AfterViewInit, OnDestroy {
     this.dataList = [];
     this.rfpManagementService.getRfpList(pageIndex, search).subscribe(res => {
       this.dataList = res?.data?.items;
+      this.dataList.forEach(element => {
+        const statusValues = Object.values(StatusTypes);
+        const index = statusValues.indexOf(element.status);
+        element.statusId = index + 1;
+      });
+      console.log('dataList', this.dataList);
+
       this.totalCount = res?.data?.totalcount;
       this.pagesCount = Array.from({ length: Math.ceil(this.totalCount / 10) }, (_, index) => index + 1);
       this.cdr.detectChanges();
@@ -85,7 +93,13 @@ export class OverviewComponent implements OnInit, AfterViewInit, OnDestroy {
       queryParams: { rfpId: id }
     });
   }
+  redirectToOwnerDetails(id: number) {
+    this.router.navigate(['rfp_management/owner-check-questions'], { queryParams: { rfpId: id } });
+  }
 
+  redirectToPosition(id: number) {
+    // this.router.navigate(['rfp_management/owner-check-questions'], { queryParams: { rfpId: id } });
+  }
 
   // deleteClassification(id: number) {
   //   this.deleteSwal.fire().then((clicked) => {

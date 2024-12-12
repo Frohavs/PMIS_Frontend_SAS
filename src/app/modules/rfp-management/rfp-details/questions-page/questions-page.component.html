@@ -45,7 +45,7 @@
           <tr *ngFor="let rfp of dataList; index as i">
             <td>
               <a class="text-gray-900 fw-bolder text-hover-primary d-block fs-6">
-                {{rfp?.initialCheckId || '--'}}
+                {{rfp?.initialCheckId || rfp?.ownerCheckId || '--'}}
               </a>
             </td>
             <td>
@@ -67,7 +67,7 @@
             <td>
               <div class="d-flex justify-content-center flex-shrink-0" *ngIf="!rfp.status">
                 <a class="btn btn-light-info font-weight-bolder font-size-sm cursor-pointer"
-                  (click)="fireAnswerModal(rfp.initialCheckId)">
+                  (click)="fireAnswerModal(rfp.initialCheckId || rfp.ownerCheckId)">
                   Answer
                 </a>
               </div>

@@ -40,7 +40,7 @@ export class QuestionsPageComponent implements OnInit {
       name: 'Not Applicable',
     }
   ]
-  answerModel: { rfpId: number, initialCheckId: number, status: any, answer: string } = { rfpId: 0, initialCheckId: 0, status: '', answer: '' };
+  answerModel: { rfpId: number, initialCheckId: number, ownerCheckId: number, status: any, answer: string } = { rfpId: 0, initialCheckId: 0, ownerCheckId: 0, status: '', answer: '' };
   @ViewChild('answerModal') answerModal!: any;
 
   swalOptions: SweetAlertOptions = { buttonsStyling: false };
@@ -72,8 +72,9 @@ export class QuestionsPageComponent implements OnInit {
     });
   }
 
-  fireAnswerModal(initialCheckId: any) {
-    this.answerModel['initialCheckId'] = initialCheckId;
+  fireAnswerModal(id: any) {
+    this.answerModel['initialCheckId'] = id;
+    this.answerModel['ownerCheckId'] = id;
     this.modalService.open(this.answerModal, this.modalConfig);
   }
 
@@ -129,43 +130,39 @@ export class QuestionsPageComponent implements OnInit {
 
   approve() {
     if (this.initialCheck) {
-      this.rfpManagementService.moveRfpIntialCheck({ id: this.rfpId, approve: true }).subscribe(res => {
-        this.router.navigate(['rfp_management/rfp-details'], {
+      this.rfpManagementService.moveRfpIntialCheck({ id: this.rfpId, approved: true }).subscribe(res => {
+        this.router.navigate(['rfp_management/overview'], {
           queryParams: { rfpId: this.rfpId }
         });
         this.showAlert({ icon: 'success', title: 'Success!', text: 'Updated successfully' });
       }, () => {
-        this.showAlert({ icon: 'error', title: 'Error!', text: 'please try again' });
       });
     } else {
-      this.rfpManagementService.mMoveRfpOwnerCheck({ id: this.rfpId, approve: true }).subscribe(res => {
-        this.router.navigate(['rfp_management/rfp-details'], {
+      this.rfpManagementService.mMoveRfpOwnerCheck({ id: this.rfpId, approved: true }).subscribe(res => {
+        this.router.navigate(['rfp_management/overview'], {
           queryParams: { rfpId: this.rfpId }
         });
         this.showAlert({ icon: 'success', title: 'Success!', text: 'Updated successfully' });
       }, () => {
-        this.showAlert({ icon: 'error', title: 'Error!', text: 'please try again' });
       });
     }
   }
   reject() {
     if (this.initialCheck) {
-      this.rfpManagementService.moveRfpIntialCheck({ id: this.rfpId, approve: false }).subscribe(res => {
-        this.router.navigate(['rfp_management/rfp-details'], {
+      this.rfpManagementService.moveRfpIntialCheck({ id: this.rfpId, approved: false }).subscribe(res => {
+        this.router.navigate(['rfp_management/overview'], {
           queryParams: { rfpId: this.rfpId }
         });
         this.showAlert({ icon: 'success', title: 'Success!', text: 'Updated successfully' });
       }, () => {
-        this.showAlert({ icon: 'error', title: 'Error!', text: 'please try again' });
       })
     } else {
-      this.rfpManagementService.mMoveRfpOwnerCheck({ id: this.rfpId, approve: false }).subscribe(res => {
-        this.router.navigate(['rfp_management/rfp-details'], {
+      this.rfpManagementService.mMoveRfpOwnerCheck({ id: this.rfpId, approved: false }).subscribe(res => {
+        this.router.navigate(['rfp_management/overview'], {
           queryParams: { rfpId: this.rfpId }
         });
         this.showAlert({ icon: 'success', title: 'Success!', text: 'Updated successfully' });
       }, () => {
-        this.showAlert({ icon: 'error', title: 'Error!', text: 'please try again' });
       });
     }
   }
@@ -175,16 +172,16 @@ export class QuestionsPageComponent implements OnInit {
       return;
     }
     this.isLoading = true;
-    const payload: any = {
-      rfpId: this.rfpId,
-      initialCheckId: +this.answerModel.initialCheckId,
-      status: +this.answerModel.status,
-      answer: this.answerModel.answer
-    }
     if (this.initialCheck) {
+      const payload: any = {
+        rfpId: this.rfpId,
+        initialCheckId: +this.answerModel.initialCheckId,
+        status: +this.answerModel.status,
+        answer: this.answerModel.answer
+      }
       this.rfpManagementService.updateIntialCheckRfp(payload).subscribe({
         next: (res) => {
-          this.answerModel = { rfpId: 0, initialCheckId: 0, status: '', answer: '' };
+          this.answerModel = { rfpId: 0, initialCheckId: 0, ownerCheckId: 0, status: '', answer: '' };
           this.isLoading = false;
           this.modalService.dismissAll();
           this.initRfpList();
@@ -196,9 +193,16 @@ export class QuestionsPageComponent implements OnInit {
           this.isLoading = false;
         }
       });
+    } else {
+      const payload: any = {
+        rfpId: this.rfpId,
+        ownerCheckId: +this.answerModel.ownerCheckId,
+        status: +this.answerModel.status,
+        answer: this.answerModel.answer
+      }
       this.rfpManagementService.updateOwnerCheckRfp(payload).subscribe({
         next: (res) => {
-          this.answerModel = { rfpId: 0, initialCheckId: 0, status: '', answer: '' };
+          this.answerModel = { rfpId: 0, initialCheckId: 0, ownerCheckId: 0, status: '', answer: '' };
           this.isLoading = false;
           this.modalService.dismissAll();
           this.initRfpList();
@@ -210,8 +214,6 @@ export class QuestionsPageComponent implements OnInit {
           this.isLoading = false;
         }
       });
-    } else {
-
     }
   }
 

@@ -99,18 +99,21 @@
               </a>
             </td>
             <td>
-              <div class="d-flex justify-content-center flex-shrink-0">
+              <div class="d-flex justify-content-start flex-shrink-0" *ngIf="rfp.status !== 'Decline'">
                 <!-- <a class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1"
                   (click)="redirectToDetails(rfp?.id)">
                   <app-keenicon name="pencil" class="fs-3"></app-keenicon>
                 </a> -->
-                <span class="badge badge-dark fs-6 fw-bold my-2 p-3 cursor-pointer" (click)="redirectToDetails(rfp?.id)">
+                <span *ngIf="rfp?.statusId > 0" class="badge badge-dark fs-6 fw-bold my-2 p-3 cursor-pointer me-1" (click)="redirectToDetails(rfp?.id)">
                   Details
                 </span>
-                <!-- <a class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm"
-                  (click)="deleteClassification(rfp?.id)">
-                  <app-keenicon name="trash" class="fs-3"></app-keenicon>
-                </a> -->
+                <span *ngIf="rfp?.statusId > 1" class="badge badge-dark fs-6 fw-bold my-2 p-3 cursor-pointer me-1" (click)="redirectToOwnerDetails(rfp?.id)">
+                  Rfp Owner
+                </span>
+                <span *ngIf="rfp?.statusId > 2" class="badge badge-dark fs-6 fw-bold my-2 p-3 cursor-pointer me-1" (click)="redirectToPosition(rfp?.id)">
+                  Position
+                </span>
+
               </div>
             </td>
           </tr>
