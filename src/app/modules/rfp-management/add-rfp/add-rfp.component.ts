@@ -6,6 +6,7 @@ import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
 import { LookupService } from 'src/app/services/lookup/lookup.service';
 import { RfpManagementService } from 'src/app/services/rfp-managment.service';
 import { SweetAlertOptions } from 'sweetalert2';
+import { AttachmentService } from 'src/app/services/attachment/attachment.service';
 
 
 @Component({
@@ -21,6 +22,7 @@ export class AddRfpComponent implements OnInit {
   types: any[] = [];
   classifications: any[] = [];
   ways: any[] = [];
+  selectedFile: any;
 
   swalOptions: SweetAlertOptions = {};
   @ViewChild('noticeSwal') noticeSwal!: SwalComponent;
@@ -33,6 +35,8 @@ export class AddRfpComponent implements OnInit {
     private formBuilder: FormBuilder,
     private lookupService: LookupService,
     private activatedRoute: ActivatedRoute,
+    private attachmentService: AttachmentService,
+
   ) { }
 
   ngOnInit(): void {
@@ -50,6 +54,17 @@ export class AddRfpComponent implements OnInit {
           this.cdr.detectChanges();
         });
       }
+    });
+  }
+
+  onFileSelected($event: any) {
+    this.selectedFile = <File>$event.target.files[0];
+    const fd = new FormData();
+    fd.append('Attachment', this.selectedFile, this.selectedFile.name);
+    this.attachmentService.uploadAttachment(fd).subscribe(res => {
+      this.addRfpForm.patchValue({
+        requestedWayDocument: res.data
+      });
     });
   }
 

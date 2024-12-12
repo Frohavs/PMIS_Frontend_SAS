@@ -194,7 +194,7 @@
                 </label>
                 <div class="col-lg-12 fv-row">
                   <input type="file" class="form-control form-control-lg form-control-solid text-start"
-                    name="requestedWayDocument" formControlName="requestedWayDocument" />
+                    name="requestedWayDocument" formControlName="requestedWayDocument" (change)="onFileSelected($event)" />
                   <div
                     *ngIf="addRfpForm?.get('requestedWayDocument')?.invalid && (addRfpForm?.get('requestedWayDocument')?.dirty || addRfpForm?.get('requestedWayDocument')?.touched)"
                     class="fv-plugins-message-container">

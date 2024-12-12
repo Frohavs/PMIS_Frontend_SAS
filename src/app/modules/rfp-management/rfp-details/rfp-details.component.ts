@@ -92,6 +92,7 @@ export class RfpDetailsComponent implements OnInit {
   }
 
   navigateQuestionsPage(id: any) {
+    if(this.rfpDetails.status === 'Decline') return;
     this.router.navigate(['rfp_management/initial-check-questions'], { queryParams: { rfpId: id } });
   }
 

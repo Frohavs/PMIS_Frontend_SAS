@@ -3,11 +3,19 @@
   <div class="card-header border-0 pt-5">
 
     <div class="card-title">
+      <ng-container *ngIf="showApprove">
+        <a class="btn btn-light-danger font-weight-bolder font-size-sm cursor-pointer me-1" (click)="reject()">
+          reject
+        </a>
+        <a class="btn btn-light-success font-weight-bolder font-size-sm cursor-pointer me-1" (click)="approve()">
+          approve
+        </a>
+      </ng-container>
 
     </div>
 
     <div class="card-toolbar" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-trigger="hover" title="Back">
-      <a class="btn btn-danger font-weight-bolder font-size-sm cursor-pointer" (click)="back()">
+      <a class="btn btn-danger font-weight-bolder font-size-sm cursor-pointer me-1" (click)="back()">
         <app-keenicon name="arrow-left" class="fs-3"></app-keenicon>
         {{"ECOMMERCE.COMMON.BACK" | translate}}
       </a>
@@ -47,18 +55,19 @@
             </td>
             <td>
               <a class="text-gray-900 fw-bolder text-hover-primary d-block fs-6">
-                {{rfp?.note || '--'}}
+                {{rfp?.answer || '--'}}
               </a>
             </td>
             <td>
               <a class="text-gray-900 fw-bolder text-hover-primary d-block fs-6">
-                {{rfp?.answer || '--'}}
+                {{rfp?.status || '--'}}
               </a>
             </td>
 
             <td>
-              <div class="d-flex justify-content-center flex-shrink-0">
-                <a class="btn btn-light-info font-weight-bolder font-size-sm cursor-pointer" (click)="fireAnswerModal()">
+              <div class="d-flex justify-content-center flex-shrink-0" *ngIf="!rfp.status">
+                <a class="btn btn-light-info font-weight-bolder font-size-sm cursor-pointer"
+                  (click)="fireAnswerModal(rfp.initialCheckId)">
                   Answer
                 </a>
               </div>
@@ -110,3 +119,54 @@
   [customClass]="{confirmButton: 'btn btn-danger', cancelButton: 'btn btn-active-light'}">
 </swal>
 
+
+<ng-template #answerModal let-modal>
+  <form #addForm="ngForm" (ngSubmit)="onSubmit($event, addForm)">
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Answer Details</h4>
+      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+      <div class="fv-row mb-7">
+        <label class="col-lg-12 col-form-label fw-bold fs-6">Available</label>
+        <select class="form-select form-select-solid form-select-lg fw-bold" name="editScaledId"
+          [(ngModel)]="answerModel.status">
+          <option value="" disabled selected>{{"TRANSLATOR.SELECTION" | translate}}</option>
+          <ng-container *ngFor="let state of statusList">
+            <option [value]="state?.id">{{state?.name}}</option>
+          </ng-container>
+        </select>
+      </div>
+
+      <div class="fv-row mb-7">
+        <label class="required fw-semibold fs-6 mb-2">Notes</label>
+        <textarea cols="4" class="form-control form-control-solid" name="answer" [(ngModel)]="answerModel.answer"
+          #answer="ngModel" required></textarea>
+        <div *ngIf="addForm.submitted && addForm.invalid"
+          class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
+          <div *ngIf="answer.errors?.['required']">note is required</div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer flex-center">
+      <!--begin::Button-->
+      <button type="reset" id="kt_modal_update_customer_cancel" class="btn btn-light me-3"
+        (click)="modal.dismiss('cancel')">
+        Discard
+      </button>
+      <!--end::Button-->
+
+      <!--begin::Button-->
+      <button type="submit" id="kt_modal_update_customer_submit" class="btn btn-primary"
+        [attr.data-kt-indicator]="isLoading ? 'on' : 'off'">
+        <span class="indicator-label">
+          Submit
+        </span>
+        <span class="indicator-progress">
+          Please wait... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+        </span>
+      </button>
+      <!--end::Button-->
+    </div>
+  </form>
+</ng-template>

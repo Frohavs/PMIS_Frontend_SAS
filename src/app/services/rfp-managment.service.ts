@@ -78,6 +78,26 @@ export class RfpManagementService {
       headers: httpHeaders
     });
   }
+  updateIntialCheckRfp(body: any): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+
+    const url = `${this.API_USERS_URL}/Rfp/UpdateIntialCheckRfp`;
+    return this.http.put<any>(url, body, {
+      headers: httpHeaders
+    });
+  }
+  moveRfpIntialCheck(body: any): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+
+    const url = `${this.API_USERS_URL}/Rfp/MoveRfpIntialCheck`;
+    return this.http.put<any>(url, body, {
+      headers: httpHeaders
+    });
+  }
   getRfpOwnerChecks(rfpId: number, pageIndex?: number, search?: string): Observable<any> {
     const httpHeaders = new HttpHeaders({
       Authorization: `Bearer ${this.token}`,
@@ -92,6 +112,26 @@ export class RfpManagementService {
     }
     const url = `${this.API_USERS_URL}/Rfp/GetRfpOwnerChecks`;
     return this.http.post<any>(url, body, {
+      headers: httpHeaders
+    });
+  }
+  updateOwnerCheckRfp(body: any): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+
+    const url = `${this.API_USERS_URL}/Rfp/UpdateOwnerCheckRfp`;
+    return this.http.put<any>(url, body, {
+      headers: httpHeaders
+    });
+  }
+  mMoveRfpOwnerCheck(body: any): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+
+    const url = `${this.API_USERS_URL}/Rfp/MoveRfpOwnerCheck`;
+    return this.http.put<any>(url, body, {
       headers: httpHeaders
     });
   }
