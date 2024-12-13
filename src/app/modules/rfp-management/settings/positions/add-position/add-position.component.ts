@@ -56,6 +56,8 @@ export class AddPositionComponent implements OnInit {
       nameAr: ['', Validators.required],
       administratorId: [null, Validators.required],
       classificationId: [null, Validators.required],
+      managerId: [null, Validators.required],
+      color: ['', Validators.required],
     });
   }
 
@@ -75,7 +77,9 @@ export class AddPositionComponent implements OnInit {
       name: data?.name,
       nameAr: data?.nameAr,
       administratorId: data?.administratorId,
-      classificationId: data?.classificationId
+      classificationId: data?.classificationId,
+      managerId: data?.managerId,
+      color: data?.color
     });
     this.cdr.detectChanges()
   }
@@ -91,7 +95,8 @@ export class AddPositionComponent implements OnInit {
         {
           ...this.addBoqForm.value,
           administratorId: +this.addBoqForm.value.administratorId,
-          classificationId: +this.addBoqForm.value.classificationId
+          classificationId: +this.addBoqForm.value.classificationId,
+          managerId: +this.addBoqForm.value.managerId
         }
       ).subscribe({
         next: (res) => {
@@ -113,7 +118,8 @@ export class AddPositionComponent implements OnInit {
           ...this.addBoqForm.value,
           id: +this.classificationId,
           administratorId: +this.addBoqForm.value.administratorId,
-          classificationId: +this.addBoqForm.value.classificationId
+          classificationId: +this.addBoqForm.value.classificationId,
+          managerId: +this.addBoqForm.value.managerId
         }
       ).subscribe({
         next: (res) => {

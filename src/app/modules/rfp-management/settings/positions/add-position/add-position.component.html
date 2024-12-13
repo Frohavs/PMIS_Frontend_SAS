@@ -97,6 +97,46 @@
                 </div>
               </div>
             </div>
+            <div class="row mb-1">
+
+              <div class="col-xl-6">
+                <label class="col-lg-4 col-form-label fw-bold fs-6"><span
+                    class="required">Rfp Manager</span></label>
+                <div class="col-lg-10 fv-row">
+                  <select class="form-select form-select-solid form-select-lg fw-bold" name="managerId"
+                    formControlName="managerId">
+                    <option value="" disabled selected>{{"TRANSLATOR.SELECTION" | translate}}</option>
+                    <ng-container *ngFor="let classification of classifications">
+                      <option [value]="classification?.id">{{classification?.name}}</option>
+                    </ng-container>
+                  </select>
+                  <div
+                    *ngIf="addBoqForm?.get('managerId')?.invalid && (addBoqForm?.get('managerId')?.dirty || addBoqForm?.get('managerId')?.touched)"
+                    class="fv-plugins-message-container">
+                    <div class="fv-help-block">classification is required</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-xl-6">
+                <label class="col-lg-4 col-form-label fw-bold fs-6"><span
+                    class="required">Color</span></label>
+                <div class="col-lg-10 fv-row">
+                  <select class="form-select form-select-solid form-select-lg fw-bold" name="color"
+                    formControlName="color">
+                    <option value="" disabled selected>{{"TRANSLATOR.SELECTION" | translate}}</option>
+                    <ng-container *ngFor="let user of users">
+                      <option [value]="user?.id">{{user?.name}}</option>
+                    </ng-container>
+                  </select>
+                  <div
+                    *ngIf="addBoqForm?.get('color')?.invalid && (addBoqForm?.get('color')?.dirty || addBoqForm?.get('color')?.touched)"
+                    class="fv-plugins-message-container">
+                    <div class="fv-help-block">color is required</div>
+                  </div>
+                </div>
+              </div>
+            </div>
 
           </div>
           <div class="card-footer d-flex justify-content-end py-6 px-9">
