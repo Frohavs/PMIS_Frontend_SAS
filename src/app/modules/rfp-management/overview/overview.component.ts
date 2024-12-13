@@ -98,7 +98,7 @@ export class OverviewComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   redirectToPosition(id: number) {
-    // this.router.navigate(['rfp_management/owner-check-questions'], { queryParams: { rfpId: id } });
+    this.router.navigate(['rfp_management/rfp-position'], { queryParams: { rfpId: id } });
   }
 
   // deleteClassification(id: number) {

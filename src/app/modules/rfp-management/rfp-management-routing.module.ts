@@ -21,6 +21,7 @@ import { AddAdministratorComponent } from './settings/administrators/add-adminis
 import { AddRfpComponent } from './add-rfp/add-rfp.component';
 import { RfpDetailsComponent } from './rfp-details/rfp-details.component';
 import { QuestionsPageComponent } from './rfp-details/questions-page/questions-page.component';
+import { RfpPositionComponent } from './rfp-position/rfp-position.component';
 
 const routes: Routes = [
   {
@@ -95,6 +96,10 @@ const routes: Routes = [
       {
         path: 'owner-check-questions',
         component: QuestionsPageComponent,
+      },
+      {
+        path: 'rfp-position',
+        component: RfpPositionComponent,
       },
       {
         path: 'types',
