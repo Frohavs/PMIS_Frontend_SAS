@@ -2,11 +2,10 @@ import { Location } from '@angular/common';
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { end } from '@popperjs/core';
 import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
 import { AreaDistrictService } from 'src/app/services/area-district.service';
-import { FactoryService } from 'src/app/services/factory.service';
 import { ProjectSitesService } from 'src/app/services/project-sites.service';
+import { ProjectsService } from 'src/app/services/projects.service';
 import { SweetAlertOptions } from 'sweetalert2';
 
 @Component({
@@ -44,6 +43,7 @@ export class AddSiteComponent implements OnInit {
   lat: number = this.markerPosition.lat;
   lng: number = this.markerPosition.lng;
 
+  remainAmount: number;
 
   districts: any[] = [];
   areas: any[] = [];
@@ -55,6 +55,7 @@ export class AddSiteComponent implements OnInit {
   constructor(
     private router: Router,
     private _location: Location,
+    private projectService: ProjectsService,
     private cdr: ChangeDetectorRef,
     private projectSitesService: ProjectSitesService,
     private formBuilder: FormBuilder,
@@ -66,6 +67,7 @@ export class AddSiteComponent implements OnInit {
     this.initAddBoqForm();
     this.getBoqId();
     this.getLookups();
+
   }
 
   // Event handler for map click to set marker
@@ -77,7 +79,6 @@ export class AddSiteComponent implements OnInit {
       };
       this.lat = event.latLng.lat();
       this.lng = event.latLng.lng();
-      console.log(`Marker set at: Latitude: ${this.lat}, Longitude: ${this.lng}`);
       this.addSiteForm.patchValue({ latitude: this.lat, longitude: this.lng });
       this.cdr.detectChanges();
     }
@@ -86,9 +87,19 @@ export class AddSiteComponent implements OnInit {
   getBoqId() {
     this.activatedRoute.params.subscribe(params => {
       this.projectId = +params['id'];
+      this.projectService.getFinalValue(this.projectId).subscribe(res => {
+        this.remainAmount = res.data;
+        this.addSiteForm.patchValue({
+          remainAmount: res.data
+        })
+        this.cdr.detectChanges();
+      });
     });
     this.activatedRoute.queryParams.subscribe(params => {
-      this.boqId = params['siteId'];
+      this.boqId = +params['siteId'];
+      this.projectSitesService.getSiteById(this.boqId).subscribe(res => {
+        this.editBoqForm(res.data);
+      });
     });
   }
 
@@ -97,7 +108,7 @@ export class AddSiteComponent implements OnInit {
       name: ['', Validators.required],
       abbreviation: ['', Validators.required],
       value: ['', Validators.required],
-      weight: ['', Validators.required],
+      weight: [{ value: '', disabled: true }, Validators.required],
       remainAmount: [''],
       startDate: ['', Validators.required],
       duration: ['', Validators.required],
@@ -109,14 +120,19 @@ export class AddSiteComponent implements OnInit {
 
     });
 
-    // this.addSiteForm.get('districtIds')?.valueChanges.subscribe((id: number) => {
-    //   if (id) {
-    //     this.areaDistrictService.getAreaById(id).subscribe(res => {
-    //       this.areas = res.data;
-    //       this.cdr.detectChanges();
-    //     });
-    //   }
-    // });
+    this.addSiteForm.get('value')?.valueChanges.subscribe((val: number) => {
+      if (!+val) {
+        this.addSiteForm.patchValue({
+          weight: (val / this.remainAmount) * 100,
+        });
+        return
+      } else {
+        this.addSiteForm.patchValue({
+          weight: (val / this.remainAmount)
+        });
+      };
+      this.cdr.detectChanges();
+    });
     this.addSiteForm.get('duration')?.valueChanges.subscribe((duration) => {
       this.addSiteForm.patchValue({
         endDate: '' // Clear `endDate` initially
@@ -144,6 +160,24 @@ export class AddSiteComponent implements OnInit {
     });
   }
 
+  editBoqForm(data: any) {
+    this.addSiteForm.patchValue({
+      name: data?.name,
+      abbreviation: data?.abbreviation,
+      value: data?.value,
+      weight: data?.weight,
+      remainAmount: data?.remainAmount,
+      startDate: data?.startDate?.slice(0, 10),
+      duration: data?.duration,
+      endDate: data?.endDate?.slice(0, 10),
+      latitude: data?.latitude,
+      longitude: data?.longitude,
+      districtIds: [...data?.districts],
+      areaIds: [...data?.areas]
+    });
+    this.cdr.detectChanges();
+  }
+
   getLookups() {
     this.areaDistrictService.getDistricts().subscribe(res => {
       this.districts = res.data;
@@ -161,19 +195,45 @@ export class AddSiteComponent implements OnInit {
       return;
     }
     this.isLoading = true;
-    const payload = {
-      ...this.addSiteForm.value,
-      projectId: +this.projectId,
-      districtIds: this.addSiteForm.value.districtIds?.map((item: any) => +item.id),
-      areaIds: this.addSiteForm.value.areaIds?.map((item: any) => +item.id),
-      value: +this.addSiteForm.value.value,
-      weight: +this.addSiteForm.value.weight,
-
-    }
-    delete payload['remainAmount']
-    delete payload['duration']
     if (!this.boqId) {
+      const payload = {
+        ...this.addSiteForm.getRawValue(),
+        projectId: +this.projectId,
+        districtIds: this.addSiteForm.value.districtIds?.map((item: any) => +item.id),
+        areaIds: this.addSiteForm.value.areaIds?.map((item: any) => +item.id),
+        value: +this.addSiteForm.value.value,
+        weight: +this.addSiteForm.value.weight,
+
+      }
+      delete payload['remainAmount']
+      delete payload['duration']
       this.projectSitesService.addSite(payload).subscribe({
+
+        next: (res) => {
+          this.isLoading = false;
+          this.router.navigateByUrl(`projects/project-sites/${this.projectId}`);
+          this.showAlert({ icon: 'success', title: 'Success!', text: 'Site Added successfully!' });
+          this.cdr.detectChanges();
+        },
+        error: (error) => {
+          this.showAlert({ icon: 'error', title: 'Error!', text: 'Please try again' });
+          this.isLoading = false;
+        }
+      });
+    } else {
+      const payload = {
+        ...this.addSiteForm.getRawValue(),
+        id: +this.boqId,
+        projectId: +this.projectId,
+        districtIds: this.addSiteForm.value.districtIds?.map((item: any) => +item.id),
+        areaIds: this.addSiteForm.value.areaIds?.map((item: any) => +item.id),
+        value: +this.addSiteForm.value.value,
+        weight: +this.addSiteForm.value.weight,
+
+      }
+      delete payload['remainAmount']
+      delete payload['duration']
+      this.projectSitesService.updateSite(payload).subscribe({
 
         next: (res) => {
           this.isLoading = false;

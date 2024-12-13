@@ -85,7 +85,7 @@ export class ProjectSitesComponent implements OnInit, AfterViewInit, OnDestroy{
   }
 
   redirectToDetails(site: any) {
-    this.router.navigateByUrl('projects/site-details/' + site.id)
+    this.router.navigateByUrl('projects/edit-project-site/' + this.projectId + '?siteId=' + site.id)
   }
   deleteSite(user: any) {
     this.deleteSwal.fire().then((clicked) => {

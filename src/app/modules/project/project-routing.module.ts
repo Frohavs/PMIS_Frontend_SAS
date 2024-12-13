@@ -452,7 +452,7 @@ const routes: Routes = [
         component: AddSiteComponent,
       },
       {
-        path: 'site-details/:id',
+        path: 'edit-project-site/:id',
         component: AddSiteComponent,
       },
 
