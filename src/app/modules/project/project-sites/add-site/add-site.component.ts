@@ -202,7 +202,9 @@ export class AddSiteComponent implements OnInit {
         districtIds: this.addSiteForm.value.districtIds?.map((item: any) => +item.id),
         areaIds: this.addSiteForm.value.areaIds?.map((item: any) => +item.id),
         value: +this.addSiteForm.value.value,
-        weight: +this.addSiteForm.value.weight,
+        latitude: this.addSiteForm.getRawValue().latitude.toString(),
+        longitude: this.addSiteForm.getRawValue().longitude.toString(),
+        weight: +this.addSiteForm.getRawValue().weight,
 
       }
       delete payload['remainAmount']
@@ -228,7 +230,9 @@ export class AddSiteComponent implements OnInit {
         districtIds: this.addSiteForm.value.districtIds?.map((item: any) => +item.id),
         areaIds: this.addSiteForm.value.areaIds?.map((item: any) => +item.id),
         value: +this.addSiteForm.value.value,
-        weight: +this.addSiteForm.value.weight,
+        latitude: this.addSiteForm.getRawValue().latitude.toString(),
+        longitude: this.addSiteForm.getRawValue().longitude.toString(),
+        weight: +this.addSiteForm.getRawValue().weight,
 
       }
       delete payload['remainAmount']
