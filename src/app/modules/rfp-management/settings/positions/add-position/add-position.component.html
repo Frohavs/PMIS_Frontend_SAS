@@ -85,8 +85,8 @@
                   <select class="form-select form-select-solid form-select-lg fw-bold" name="administratorId"
                     formControlName="administratorId">
                     <option value="" disabled selected>{{"TRANSLATOR.SELECTION" | translate}}</option>
-                    <ng-container *ngFor="let user of users">
-                      <option [value]="user?.id">{{user?.name}}</option>
+                    <ng-container *ngFor="let admin of admins">
+                      <option [value]="admin?.id">{{admin?.name}}</option>
                     </ng-container>
                   </select>
                   <div

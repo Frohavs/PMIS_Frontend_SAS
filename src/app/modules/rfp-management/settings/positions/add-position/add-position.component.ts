@@ -17,6 +17,7 @@ export class AddPositionComponent implements OnInit {
   isLoading: boolean;
   addBoqForm: FormGroup;
   users: any[] = [];
+  admins: any[] = [];
   classifications: any[] = [];
 
   swalOptions: SweetAlertOptions = {};
@@ -64,6 +65,10 @@ export class AddPositionComponent implements OnInit {
   getLookups() {
     this.lookupService.allUsers().subscribe(res => {
       this.users = res.data;
+      this.cdr.detectChanges();
+    });
+    this.lookupService.getAdministrators().subscribe(res => {
+      this.admins = res.data;
       this.cdr.detectChanges();
     });
     this.lookupService.getRfpClassifications().subscribe(res => {
