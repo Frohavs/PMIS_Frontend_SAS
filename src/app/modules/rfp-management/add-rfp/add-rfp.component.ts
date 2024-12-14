@@ -19,6 +19,7 @@ export class AddRfpComponent implements OnInit {
   isLoading: boolean;
   addRfpForm: FormGroup;
   users: any[] = [];
+  admins: any[] = [];
   types: any[] = [];
   classifications: any[] = [];
   ways: any[] = [];
@@ -87,6 +88,10 @@ export class AddRfpComponent implements OnInit {
   getLookups() {
     this.lookupService.allUsers().subscribe(res => {
       this.users = res.data;
+      this.cdr.detectChanges();
+    });
+    this.lookupService.getAdministrators().subscribe(res => {
+      this.admins = res.data;
       this.cdr.detectChanges();
     });
     this.lookupService.getRfpTypes().subscribe(res => {

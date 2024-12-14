@@ -66,14 +66,14 @@
                   <select class="form-select form-select-solid form-select-lg fw-bold" name="administratorId"
                     formControlName="administratorId">
                     <option value="" disabled selected>{{"TRANSLATOR.SELECTION" | translate}}</option>
-                    <ng-container *ngFor="let user of users">
-                      <option [value]="user?.id">{{user?.name}}</option>
+                    <ng-container *ngFor="let admin of admins">
+                      <option [value]="admin?.id">{{admin?.name}}</option>
                     </ng-container>
                   </select>
                   <div
                     *ngIf="addRfpForm?.get('administratorId')?.invalid && (addRfpForm?.get('administratorId')?.dirty || addRfpForm?.get('administratorId')?.touched)"
                     class="fv-plugins-message-container">
-                    <div class="fv-help-block">user is required</div>
+                    <div class="fv-help-block">administrator is required</div>
                   </div>
                 </div>
               </div>
