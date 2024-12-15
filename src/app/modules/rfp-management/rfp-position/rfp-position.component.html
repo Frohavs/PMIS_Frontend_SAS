@@ -1,1 +1,165 @@
-<p>rfp-position works!</p>
+<div class="row g-5 g-xl-8 justify-content-between">
+
+  <div class="col-xl-12 mt-2">
+    <div class="card mb-5 mb-xl-8">
+
+
+      <div class="card-header align-items-start border-0 mt-4 flex-column">
+        <div class="d-flex flex-row-fluid flex-wrap align-items-center justify-content-between">
+          <span class="badge badge-light-success me-5 fs-6 fw-bold my-2 p-3 cursor-pointer" >
+            Rfp Submit
+          </span>
+          <span class="badge badge-light-success me-5 fs-6 fw-bold my-2 p-3 cursor-pointer" >
+            Issue Final Submit
+          </span>
+          <span class="badge badge-light-success me-5 fs-6 fw-bold my-2 p-3 cursor-pointer" >
+            Formatting Submit
+          </span>
+          <span class="badge badge-light-success me-5 fs-6 fw-bold my-2 p-3 cursor-pointer" >
+            Class USer Submit
+          </span>
+          <span class="badge badge-light-success me-5 fs-6 fw-bold my-2 p-3 cursor-pointer" >
+            Procurement Submit
+          </span>
+          <span class="badge badge-light-success me-5 fs-6 fw-bold my-2 p-3 cursor-pointer" >
+            Final Submit
+          </span>
+          <span class="badge badge-light-success me-5 fs-6 fw-bold my-2 p-3 cursor-pointer" >
+            Close Submit
+          </span>
+        </div>
+
+        <br>
+
+        <h3 class="card-title align-items-start flex-column">
+          <span class="fw-bolder text-gray-900">RFP Information</span>
+        </h3>
+      </div>
+      <div class="card-body pt-3">
+        <div class="d-flex flex-column">
+          <div class="mb-10 bg-light-secondary p-8 rounded">
+            <div class="text-dark fs-5 fw-bold d-flex align-items-center justify-content-center">
+              RFP Name: {{rfpDetails?.name  ||  '--'}}
+            </div>
+          </div>
+          <div class="d-flex align-items-sm-center mb-7">
+            <div class="d-flex flex-row-fluid flex-wrap align-items-center">
+              <div class="flex-grow-1 me-2">
+                <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
+                  Rfp Classification
+                </a>
+                <span class="text-muted fw-bold d-block pt-1">{{rfpDetails?.classification  ||  '--'}}</span>
+              </div>
+              <div class="flex-grow-1 me-2">
+                <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
+                  Administrator
+                </a>
+                <span class="text-muted fw-bold d-block pt-1">{{rfpDetails?.administrator || '--'}}</span>
+              </div>
+              <div class="flex-grow-1 me-2">
+                <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
+                  Status
+                </a>
+                <span class="text-muted fw-bold d-block pt-1">{{rfpDetails?.status || '--'}}</span>
+              </div>
+              <div class="flex-grow-1 me-2">
+                <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
+                  Created date
+                </a>
+                <span class="text-muted fw-bold d-block pt-1">{{rfpDetails?.createdOn | date: 'dd/MM/yyyy'}}</span>
+              </div>
+              <div class="flex-grow-1 me-2">
+                <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
+                  received date
+                </a>
+                <span class="text-muted fw-bold d-block pt-1">{{rfpDetails?.receivedDate | date: 'dd/MM/yyyy'}}</span>
+              </div>
+              <div class="flex-grow-1 me-2">
+                <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
+                  target date
+                </a>
+                <span class="text-muted fw-bold d-block pt-1">{{rfpDetails?.targetDate | date: 'dd/MM/yyyy'}}</span>
+              </div>
+              <div class="flex-grow-1 me-2">
+                <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
+                  Document
+                </a><br>
+                <span class="badge badge-primary fs-6 fw-bold my-2 cursor-pointer">
+                  {{rfpDetails?.requestedWayDocument ||  '--'}}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <br>
+
+        <div class="d-flex flex-row-fluid flex-wrap align-items-center justify-content-between">
+          <span *ngFor="let position of rfpPositions; let i = index;"
+            class="badge badge-info fs-6 fw-bold my-2 cursor-pointer" (click)="navigatePosition(position)">
+            {{ position.positionName || '--' }}
+          </span>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</div>
+<div class="row g-5 g-xl-8 justify-content-between">
+
+  <div class="col-xl-12 mt-2">
+    <div class="card mb-5 mb-xl-8">
+
+      <div class="card-header align-items-center border-0 mt-4">
+        <h3 class="card-title align-items-start flex-column">
+          <span class="fw-bolder text-gray-900">Log Details</span>
+        </h3>
+      </div>
+
+      <div class="card-body pt-3">
+
+        <div class="table-responsive">
+          <table class="table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4">
+            <thead>
+              <tr class="fw-bolder text-muted">
+
+                <th class="max-w-120px">#</th>
+                <th class="max-w-120px">Status</th>
+                <th class="max-w-120px">Created On</th>
+                <th class="max-w-120px">Created By</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of logsDetails; index as i">
+                <td>
+                  <a class="text-gray-900 fw-bolder text-hover-primary" style="font-size: 12px;">
+                    {{i + 1}}
+                  </a>
+                </td>
+                <td>
+                  <a class="text-gray-900 fw-bolder text-hover-primary" style="font-size: 12px;">
+                    {{item?.status || '--'}}
+                  </a>
+                </td>
+                <td>
+                  <a class="text-gray-900 fw-bolder text-hover-primary" style="font-size: 12px;">
+                    {{item?.createdOn | date : 'dd-MM-yyyy'}}
+                  </a>
+                </td>
+                <td>
+                  <a class="text-gray-900 fw-bolder text-hover-primary" style="font-size: 12px;">
+                    {{item?.createdBy || '--'}}
+                  </a>
+                </td>
+              </tr>
+
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</div>

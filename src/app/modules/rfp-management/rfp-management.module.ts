@@ -33,6 +33,7 @@ import { AddRfpComponent } from './add-rfp/add-rfp.component';
 import { RfpDetailsComponent } from './rfp-details/rfp-details.component';
 import { QuestionsPageComponent } from './rfp-details/questions-page/questions-page.component';
 import { RfpPositionComponent } from './rfp-position/rfp-position.component';
+import { RfpPositionDetailsComponent } from './rfp-position/rfp-position-details/rfp-position-details.component';
 
 
 @NgModule({
@@ -58,7 +59,8 @@ import { RfpPositionComponent } from './rfp-position/rfp-position.component';
     AddAdministratorComponent,
     RfpDetailsComponent,
     QuestionsPageComponent,
-    RfpPositionComponent
+    RfpPositionComponent,
+    RfpPositionDetailsComponent
   ],
   imports: [
     CommonModule,

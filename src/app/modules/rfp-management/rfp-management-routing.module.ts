@@ -22,6 +22,7 @@ import { AddRfpComponent } from './add-rfp/add-rfp.component';
 import { RfpDetailsComponent } from './rfp-details/rfp-details.component';
 import { QuestionsPageComponent } from './rfp-details/questions-page/questions-page.component';
 import { RfpPositionComponent } from './rfp-position/rfp-position.component';
+import { RfpPositionDetailsComponent } from './rfp-position/rfp-position-details/rfp-position-details.component';
 
 const routes: Routes = [
   {
@@ -100,6 +101,10 @@ const routes: Routes = [
       {
         path: 'rfp-position',
         component: RfpPositionComponent,
+      },
+      {
+        path: 'rfp-position-details/:id',
+        component: RfpPositionDetailsComponent,
       },
       {
         path: 'types',
