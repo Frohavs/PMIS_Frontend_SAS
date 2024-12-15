@@ -1,5 +1,5 @@
-import { Location } from '@angular/common';
 import { ChangeDetectorRef, Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
@@ -15,7 +15,6 @@ import { SweetAlertOptions } from 'sweetalert2';
 export class RfpPositionComponent implements OnInit {
 
   rfpId: number;
-  projectId: number;
   rfpDetails: any;
   rfpPositions: any;
   logsDetails: any;
@@ -32,10 +31,6 @@ export class RfpPositionComponent implements OnInit {
   userId: any;
   swalOptions: SweetAlertOptions = { buttonsStyling: false };
   @ViewChild('noticeSwal') noticeSwal!: SwalComponent;
-  @ViewChild('approveModal') approveModal: TemplateRef<any>;
-  modalConfig: NgbModalOptions = {
-    modalDialogClass: 'modal-dialog modal-dialog-centered mw-650px',
-  };
 
   constructor(
     private router: Router,
@@ -89,7 +84,7 @@ export class RfpPositionComponent implements OnInit {
   navigatePosition(position: any) {
     console.log(position);
     this.router.navigate([`rfp_management/rfp-position-details/${position.id}`],
-      { queryParams: { rfpId: this.rfpId, positionId: position.positionId } });
+      { queryParams: { rfpId: this.rfpId, positionId: position.positionId, positionName: position.positionName } });
   }
 
   showAlert(swalOptions: SweetAlertOptions) {

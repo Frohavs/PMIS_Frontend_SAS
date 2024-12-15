@@ -506,4 +506,31 @@ export class RfpManagementService {
       headers: httpHeaders
     });
   }
+  positionsRfpLog(id: any): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/PositionsRfp/get/${id}`;
+    return this.http.get<any>(url, {
+      headers: httpHeaders
+    });
+  }
+  createRfpPositions(payload: any): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/PositionsRfp/Create`;
+    return this.http.post<any>(url, payload, {
+      headers: httpHeaders
+    });
+  }
+  updateRfpPositions(payload: any): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/PositionsRfp/Update`;
+    return this.http.put<any>(url, payload, {
+      headers: httpHeaders
+    });
+  }
 }

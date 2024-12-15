@@ -1,1 +1,206 @@
-<p>rfp-position-details works!</p>
+<div class="row g-5 g-xl-8 justify-content-between">
+
+  <div class="col-xl-5 mt-2">
+    <div class="card mb-5 mb-xl-8">
+
+      <div class="card-header align-items-center border-0 mt-4">
+        <h3 class="card-title align-items-start flex-column">
+          <span class="fw-bolder text-gray-900">Rfp Position Details</span>
+        </h3>
+      </div>
+
+      <div class="card-body pt-3">
+
+        <form [formGroup]="addRfpPositionForm" class="form">
+          <div class="card-body border-top p-9">
+
+            <div class="row mb-1">
+              <div class="col-lg-12">
+                <label class="col-lg-12 col-form-label fw-bold fs-6">
+                  <span>
+                    Position Name
+                  </span>
+                </label>
+                <div class="col-lg-12 fv-row">
+                  <input type="text" class="form-control form-control-lg form-control-solid text-start"
+                    name="positionName" formControlName="positionName" />
+                </div>
+              </div>
+              <div class="col-lg-12">
+                <label class="col-lg-12 col-form-label fw-bold fs-6">
+                  <span>
+                    Page no
+                  </span>
+                </label>
+                <div class="col-lg-12 fv-row">
+                  <input type="text" class="form-control form-control-lg form-control-solid text-start" name="pageNo"
+                    formControlName="pageNo" (keypress)="numbersOnly($event)" />
+                  <div
+                    *ngIf="addRfpPositionForm?.get('pageNo')?.invalid && (addRfpPositionForm?.get('pageNo')?.dirty || addRfpPositionForm?.get('pageNo')?.touched)"
+                    class="fv-plugins-message-container">
+                    <div class="fv-help-block">No is required</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-12">
+                <label class="col-lg-12 col-form-label fw-bold fs-6">
+                  <span>
+                    Clause
+                  </span>
+                </label>
+                <div class="col-lg-12 fv-row">
+                  <input type="text" class="form-control form-control-lg form-control-solid text-start" name="clause"
+                    formControlName="clause" />
+                  <div
+                    *ngIf="addRfpPositionForm?.get('clause')?.invalid && (addRfpPositionForm?.get('clause')?.dirty || addRfpPositionForm?.get('clause')?.touched)"
+                    class="fv-plugins-message-container">
+                    <div class="fv-help-block">clause is required</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-12">
+                <label class="col-lg-12 col-form-label fw-bold fs-6">
+                  <span>
+                    Items
+                  </span>
+                </label>
+                <div class="col-lg-12 fv-row">
+                  <input type="text" class="form-control form-control-lg form-control-solid text-start" name="item"
+                    formControlName="item" />
+                  <div
+                    *ngIf="addRfpPositionForm?.get('item')?.invalid && (addRfpPositionForm?.get('item')?.dirty || addRfpPositionForm?.get('item')?.touched)"
+                    class="fv-plugins-message-container">
+                    <div class="fv-help-block">item is required</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-12">
+                <label class="col-lg-12 col-form-label fw-bold fs-6">
+                  <span>
+                    Notes
+                  </span>
+                </label>
+                <div class="col-lg-12 fv-row">
+                  <textarea cols="4" class="form-control form-control-lg form-control-solid text-start" name="notes"
+                    formControlName="notes"></textarea>
+                  <div
+                    *ngIf="addRfpPositionForm?.get('notes')?.invalid && (addRfpPositionForm?.get('notes')?.dirty || addRfpPositionForm?.get('notes')?.touched)"
+                    class="fv-plugins-message-container">
+                    <div class="fv-help-block">notes is required</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-12">
+                <label class="col-lg-12 col-form-label fw-bold fs-6">
+                  <span>
+                    Attachment
+                  </span>
+                </label>
+                <div class="col-lg-12 fv-row">
+                  <input type="file" class="form-control form-control-lg form-control-solid text-start" name="attachment"
+                    formControlName="attachment" (change)="onFileSelected($event)" />
+                  <div
+                    *ngIf="addRfpPositionForm?.get('attachment')?.invalid && (addRfpPositionForm?.get('attachment')?.dirty || addRfpPositionForm?.get('attachment')?.touched)"
+                    class="fv-plugins-message-container">
+                    <div class="fv-help-block">attachment is required</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <div class="card-footer d-flex justify-content-end py-6 px-9">
+            <button type="button" class="btn btn-primary" [disabled]="isLoading" (click)="saveChanges()">
+              <ng-container *ngIf="!isLoading">{{"TRANSLATOR.ADD" | translate}}</ng-container>
+              <ng-container *ngIf="isLoading">
+                <span clas="indicator-progress" [style.display]="'block'">
+                  Please wait...{{ " " }}
+                  <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                </span>
+              </ng-container>
+            </button>
+          </div>
+        </form>
+
+      </div>
+
+    </div>
+  </div>
+
+  <div class="col-xl-7 mt-2">
+    <div class="card mb-5 mb-xl-8">
+
+      <div class="card-header align-items-center border-0 mt-4">
+        <h3 class="card-title align-items-start flex-column">
+          <span class="fw-bolder text-gray-900">Log Details</span>
+        </h3>
+      </div>
+
+      <div class="card-body pt-3">
+
+        <div class="table-responsive">
+          <table class="table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4">
+            <thead>
+              <tr class="fw-bolder text-muted">
+
+                <th class="max-w-120px">ID</th>
+                <th class="max-w-120px">Name</th>
+                <th class="max-w-120px">Notes</th>
+                <th class="max-w-120px">Page No</th>
+                <th class="max-w-120px">Clause</th>
+                <th class="max-w-120px">Items</th>
+                <th class="max-w-120px">Attachments</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of logsDetails; index as i">
+                <td>
+                  <a class="text-gray-900 fw-bolder text-hover-primary" style="font-size: 12px;">
+                    {{item?.id || '--'}}
+                  </a>
+                </td>
+                <td>
+                  <a class="text-gray-900 fw-bolder text-hover-primary" style="font-size: 12px;">
+                    {{this.positionName || '--'}}
+                  </a>
+                </td>
+                <td>
+                  <a class="text-gray-900 fw-bolder text-hover-primary" style="font-size: 12px;">
+                    {{item?.notes || '--'}}
+                  </a>
+                </td>
+                <td>
+                  <a class="text-gray-900 fw-bolder text-hover-primary" style="font-size: 12px;">
+                    {{item?.pageNo || '--'}}
+                  </a>
+                </td>
+                <td>
+                  <a class="text-gray-900 fw-bolder text-hover-primary" style="font-size: 12px;">
+                    {{item?.clause || '--'}}
+                  </a>
+                </td>
+                <td>
+                  <a class="text-gray-900 fw-bolder text-hover-primary" style="font-size: 12px;">
+                    {{item?.item || '--'}}
+                  </a>
+                </td>
+                <td>
+                  <span class="badge badge-primary fs-6 fw-bold my-2 cursor-pointer">
+                    {{item?.attachment ||  '--'}}
+                  </span>
+                </td>
+              </tr>
+
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- modal -->
+<swal #noticeSwal [swalOptions]="swalOptions">
+</swal>

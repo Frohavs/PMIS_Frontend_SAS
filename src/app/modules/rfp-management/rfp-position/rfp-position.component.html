@@ -6,25 +6,25 @@
 
       <div class="card-header align-items-start border-0 mt-4 flex-column">
         <div class="d-flex flex-row-fluid flex-wrap align-items-center justify-content-between">
-          <span class="badge badge-light-success me-5 fs-6 fw-bold my-2 p-3 cursor-pointer" >
+          <span class="badge badge-light-success me-5 fs-6 fw-bold my-2 p-3 cursor-pointer">
             Rfp Submit
           </span>
-          <span class="badge badge-light-success me-5 fs-6 fw-bold my-2 p-3 cursor-pointer" >
+          <span class="badge badge-light-success me-5 fs-6 fw-bold my-2 p-3 cursor-pointer">
             Issue Final Submit
           </span>
-          <span class="badge badge-light-success me-5 fs-6 fw-bold my-2 p-3 cursor-pointer" >
+          <span class="badge badge-light-success me-5 fs-6 fw-bold my-2 p-3 cursor-pointer">
             Formatting Submit
           </span>
-          <span class="badge badge-light-success me-5 fs-6 fw-bold my-2 p-3 cursor-pointer" >
+          <span class="badge badge-light-success me-5 fs-6 fw-bold my-2 p-3 cursor-pointer">
             Class USer Submit
           </span>
-          <span class="badge badge-light-success me-5 fs-6 fw-bold my-2 p-3 cursor-pointer" >
+          <span class="badge badge-light-success me-5 fs-6 fw-bold my-2 p-3 cursor-pointer">
             Procurement Submit
           </span>
-          <span class="badge badge-light-success me-5 fs-6 fw-bold my-2 p-3 cursor-pointer" >
+          <span class="badge badge-light-success me-5 fs-6 fw-bold my-2 p-3 cursor-pointer">
             Final Submit
           </span>
-          <span class="badge badge-light-success me-5 fs-6 fw-bold my-2 p-3 cursor-pointer" >
+          <span class="badge badge-light-success me-5 fs-6 fw-bold my-2 p-3 cursor-pointer">
             Close Submit
           </span>
         </div>
@@ -96,7 +96,8 @@
 
         <div class="d-flex flex-row-fluid flex-wrap align-items-center justify-content-between">
           <span *ngFor="let position of rfpPositions; let i = index;"
-            class="badge badge-info fs-6 fw-bold my-2 cursor-pointer" (click)="navigatePosition(position)">
+            class="badge badge-light-primary fs-6 fw-bold my-2 cursor-pointer"
+            [ngClass]="{'badge-danger': (i === 0 || i === 1)}" (click)="navigatePosition(position)">
             {{ position.positionName || '--' }}
           </span>
         </div>
