@@ -97,8 +97,8 @@
                   </span>
                 </label>
                 <div class="col-lg-12 fv-row">
-                  <input type="file" class="form-control form-control-lg form-control-solid text-start" name="attachment"
-                    formControlName="attachment" (change)="onFileSelected($event)" />
+                  <input type="file" class="form-control form-control-lg form-control-solid text-start"
+                    name="attachment" formControlName="attachment" (change)="onFileSelected($event)" />
                   <div
                     *ngIf="addRfpPositionForm?.get('attachment')?.invalid && (addRfpPositionForm?.get('attachment')?.dirty || addRfpPositionForm?.get('attachment')?.touched)"
                     class="fv-plugins-message-container">
@@ -150,6 +150,7 @@
                 <th class="max-w-120px">Clause</th>
                 <th class="max-w-120px">Items</th>
                 <th class="max-w-120px">Attachments</th>
+                <th class="max-w-100px">Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -189,6 +190,11 @@
                     {{item?.attachment ||  '--'}}
                   </span>
                 </td>
+                <td>
+                  <a class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm" (click)="deleteLetter(item)">
+                    <app-keenicon name="trash" class="fs-3"></app-keenicon>
+                  </a>
+                </td>
               </tr>
 
             </tbody>
@@ -202,5 +208,10 @@
 </div>
 
 <!-- modal -->
+<swal #deleteSwal [swalOptions]="swalOptions" title="Are you sure to delete?" text="This can't be undone" icon="warning"
+  [showCancelButton]="true" [focusCancel]="true"
+  [customClass]="{confirmButton: 'btn btn-danger', cancelButton: 'btn btn-active-light'}">
+</swal>
+
 <swal #noticeSwal [swalOptions]="swalOptions">
 </swal>

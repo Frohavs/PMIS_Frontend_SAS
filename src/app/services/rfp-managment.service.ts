@@ -533,4 +533,13 @@ export class RfpManagementService {
       headers: httpHeaders
     });
   }
+  deleteRfpPositions(id: number): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/PositionsRfp/Delete/${id}`;
+    return this.http.delete<any>(url, {
+      headers: httpHeaders
+    });
+  }
 }

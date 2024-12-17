@@ -32,6 +32,9 @@ export class RfpPositionDetailsComponent implements OnInit {
   swalOptions: SweetAlertOptions = { buttonsStyling: false };
   @ViewChild('noticeSwal') noticeSwal!: SwalComponent;
 
+  @ViewChild('deleteSwal')
+  public readonly deleteSwal!: SwalComponent;
+
   constructor(
     private attachmentService: AttachmentService,
     private formBuilder: FormBuilder,
@@ -87,6 +90,27 @@ export class RfpPositionDetailsComponent implements OnInit {
     this.rfpManagementService.positionsRfpLog(this.positionId).subscribe(res => {
       this.logsDetails = res.data;
       this.cdr.detectChanges();
+    });
+  }
+
+  deleteLetter(position: any) {
+    this.deleteSwal.fire().then((clicked) => {
+      if (clicked.isConfirmed) {
+        this.isLoading = true;
+        this.rfpManagementService.deleteRfpPositions(position.id).subscribe({
+          next: (res) => {
+            this.showAlert({ icon: 'success', title: 'Success!', text: 'Letter Deleted successfully!' });
+            setTimeout(() => {
+              this.isLoading = false;
+              this.getRfpLogsDetails();
+            }, 500);
+          },
+          error: (error) => {
+            this.isLoading = false;
+            this.showAlert({ icon: 'error', title: 'Error!', text: 'Please try again' });
+          }
+        });
+      }
     });
   }
   getLookups() {
