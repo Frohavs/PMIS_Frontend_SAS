@@ -60,8 +60,7 @@
             <div class="row mb-1">
 
               <div class="col-xl-6">
-                <label class="col-lg-4 col-form-label fw-bold fs-6"><span
-                    class="required">Classification</span></label>
+                <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="required">Classification</span></label>
                 <div class="col-lg-10 fv-row">
                   <select class="form-select form-select-solid form-select-lg fw-bold" name="classificationId"
                     formControlName="classificationId">
@@ -79,8 +78,7 @@
               </div>
 
               <div class="col-xl-6">
-                <label class="col-lg-4 col-form-label fw-bold fs-6"><span
-                    class="required">Administrator</span></label>
+                <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="required">Administrator</span></label>
                 <div class="col-lg-10 fv-row">
                   <select class="form-select form-select-solid form-select-lg fw-bold" name="administratorId"
                     formControlName="administratorId">
@@ -100,14 +98,13 @@
             <div class="row mb-1">
 
               <div class="col-xl-6">
-                <label class="col-lg-4 col-form-label fw-bold fs-6"><span
-                    class="required">Rfp Manager</span></label>
+                <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="required">Rfp Manager</span></label>
                 <div class="col-lg-10 fv-row">
                   <select class="form-select form-select-solid form-select-lg fw-bold" name="managerId"
                     formControlName="managerId">
                     <option value="" disabled selected>{{"TRANSLATOR.SELECTION" | translate}}</option>
-                    <ng-container *ngFor="let classification of classifications">
-                      <option [value]="classification?.id">{{classification?.name}}</option>
+                    <ng-container *ngFor="let manager of managers">
+                      <option [value]="manager?.id">{{manager?.name}}</option>
                     </ng-container>
                   </select>
                   <div
@@ -119,16 +116,10 @@
               </div>
 
               <div class="col-xl-6">
-                <label class="col-lg-4 col-form-label fw-bold fs-6"><span
-                    class="required">Color</span></label>
+                <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="required">Color</span></label>
                 <div class="col-lg-10 fv-row">
-                  <select class="form-select form-select-solid form-select-lg fw-bold" name="color"
-                    formControlName="color">
-                    <option value="" disabled selected>{{"TRANSLATOR.SELECTION" | translate}}</option>
-                    <ng-container *ngFor="let user of users">
-                      <option [value]="user?.id">{{user?.name}}</option>
-                    </ng-container>
-                  </select>
+                  <input type="color" class="form-control form-control-lg form-control-solid w-25" name="color"
+                    formControlName="color" />
                   <div
                     *ngIf="addBoqForm?.get('color')?.invalid && (addBoqForm?.get('color')?.dirty || addBoqForm?.get('color')?.touched)"
                     class="fv-plugins-message-container">
@@ -158,6 +149,6 @@
   </div>
 </div>
 
- <!-- modal -->
- <swal #noticeSwal [swalOptions]="swalOptions">
+<!-- modal -->
+<swal #noticeSwal [swalOptions]="swalOptions">
 </swal>

@@ -18,6 +18,7 @@ export class AddPositionComponent implements OnInit {
   addBoqForm: FormGroup;
   users: any[] = [];
   admins: any[] = [];
+  managers: any[] = [];
   classifications: any[] = [];
 
   swalOptions: SweetAlertOptions = {};
@@ -58,13 +59,17 @@ export class AddPositionComponent implements OnInit {
       administratorId: [null, Validators.required],
       classificationId: [null, Validators.required],
       managerId: [null, Validators.required],
-      color: ['', Validators.required],
+      color: ['#e66465', Validators.required],
     });
   }
 
   getLookups() {
     this.lookupService.allUsers().subscribe(res => {
       this.users = res.data;
+      this.cdr.detectChanges();
+    });
+    this.lookupService.getManagerUsers().subscribe(res => {
+      this.admins = res.data;
       this.cdr.detectChanges();
     });
     this.lookupService.getAdministrators().subscribe(res => {
