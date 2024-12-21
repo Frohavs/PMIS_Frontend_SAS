@@ -37,6 +37,30 @@
       </div>
       <div class="card-body pt-3">
         <div class="d-flex flex-column">
+          <!-- timer -->
+          <div class="d-flex justify-content-center align-items-center my-5">
+            <div *ngIf="timer" class="w-50">
+              <div class="d-flex justify-content-around w-100">
+                <div class="time_wrap">
+                  <h2>{{ timer.days }}</h2>
+                  <span>Days</span>
+                </div>
+                <div class="time_wrap">
+                  <h2>{{ timer.hours }}</h2>
+                  <span>Hours</span>
+                </div>
+                <div class="time_wrap">
+                  <h2>{{ timer.minutes }}</h2>
+                  <span>Minutes</span>
+                </div>
+                <div class="time_wrap">
+                  <h2>{{ timer.seconds }}</h2>
+                  <span>Seconds</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <div class="mb-10 bg-light-secondary p-8 rounded">
             <div class="text-dark fs-5 fw-bold d-flex align-items-center justify-content-center">
               RFP Name: {{rfpDetails?.name  ||  '--'}}
