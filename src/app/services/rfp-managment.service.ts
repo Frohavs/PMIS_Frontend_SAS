@@ -542,4 +542,13 @@ export class RfpManagementService {
       headers: httpHeaders
     });
   }
+  submitRfp(payload: any): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/Rfp/SubmitRfp`;
+    return this.http.put<any>(url, payload, {
+      headers: httpHeaders
+    });
+  }
 }

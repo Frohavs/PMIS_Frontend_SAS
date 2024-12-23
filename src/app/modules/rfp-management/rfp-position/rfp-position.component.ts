@@ -109,6 +109,17 @@ export class RfpPositionComponent implements OnInit, OnDestroy {
     this.noticeSwal.fire();
   }
 
+  submitPosition() {
+    const payload = {
+      "id": this.rfpId,
+      "submitDocument": "Submitted"
+    }
+    this.rfpManagementService.submitRfp(payload).subscribe(res => {
+      this.getRfpLogsDetails();
+      this.cdr.detectChanges();
+    });
+  }
+
   ngOnDestroy(): void {
     if (this.intervalId) {
       clearInterval(this.intervalId);
