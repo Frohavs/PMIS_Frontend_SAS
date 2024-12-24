@@ -115,8 +115,11 @@ export class RfpPositionComponent implements OnInit, OnDestroy {
       "submitDocument": "Submitted"
     }
     this.rfpManagementService.submitRfp(payload).subscribe(res => {
+      this.showAlert({ icon: 'success', title: 'Success!', text: 'Submitted successfully' });
       this.getRfpLogsDetails();
       this.cdr.detectChanges();
+    }, err => {
+      this.showAlert({ icon: 'error', title: 'Error!', text: 'please try again' });
     });
   }
 
