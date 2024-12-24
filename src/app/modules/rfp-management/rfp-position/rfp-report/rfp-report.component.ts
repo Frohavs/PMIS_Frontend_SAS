@@ -1,4 +1,5 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { RfpManagementService } from 'src/app/services/rfp-managment.service';
 
@@ -13,6 +14,7 @@ export class RfpReportComponent implements OnInit {
   reportDetails: any;
 
   constructor(
+    private _location: Location,
     private cdr: ChangeDetectorRef,
     private activatedRoute: ActivatedRoute,
     private rfpManagementService: RfpManagementService,
@@ -34,5 +36,9 @@ export class RfpReportComponent implements OnInit {
       this.reportDetails = res.data;
       this.cdr.detectChanges();
     });
+  }
+
+  back() {
+    this._location.back();
   }
 }

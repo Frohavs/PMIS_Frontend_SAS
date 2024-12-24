@@ -13,7 +13,8 @@
 
 @media print {
    #kt_app_header,
-   .btn.btn-sm.btn-success {
+   .btn.btn-sm.btn-success,
+   .page-heading, .back_btn {
     display: none !important;
   }
 }
