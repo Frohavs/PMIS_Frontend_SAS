@@ -120,6 +120,10 @@ export class RfpPositionComponent implements OnInit, OnDestroy {
     });
   }
 
+  printRfp() {
+    this.router.navigate([`rfp_management/rfp-report/${this.rfpId}`]);
+  }
+
   ngOnDestroy(): void {
     if (this.intervalId) {
       clearInterval(this.intervalId);

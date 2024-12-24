@@ -542,6 +542,15 @@ export class RfpManagementService {
       headers: httpHeaders
     });
   }
+  GetReport(rfpId: number): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/Rfp/GetReport/${rfpId}`;
+    return this.http.get<any>(url, {
+      headers: httpHeaders
+    });
+  }
   submitRfp(payload: any): Observable<any> {
     const httpHeaders = new HttpHeaders({
       Authorization: `Bearer ${this.token}`,

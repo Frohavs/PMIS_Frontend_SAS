@@ -1,0 +1,79 @@
+<div class="rfp-report">
+  <header class="report-header">
+    <h1>Establishment of Project Management Office (PMO)</h1>
+    <h2>to Manage Projects, Assets, and Facilities in Riyadh Municipality</h2>
+    <h3>إنشاء مكتب إدارة المشاريع (PMO) لإدارة المشاريع والأصول والمرافق بأمانة الرياض</h3>
+  </header>
+
+  <section class="rfp-details">
+    <h4>Review of RFP for:</h4>
+    <p>{{reportDetails?.name}}</p>
+  </section>
+  <section class="rfp-details">
+    <h4>مراجعة كراسة:</h4>
+    <p> {{reportDetails?.nameAr}}</p>
+  </section>
+
+  <section class="rfp-details">
+    <div class="rfp-code">
+      <strong>Rfp code</strong>
+      <p>{{reportDetails?.code || '--'}}</p>
+    </div>
+  </section>
+</div>
+
+<div class="rfp-report-data">
+  <section class="departments">
+    <h4>Departments Involved:</h4>
+    <ul>
+      <li>Terms & Conditions</li>
+      <li>Local Content</li>
+      <li>5YPPP</li>
+      <li>Cost</li>
+      <li>Scheduling</li>
+      <li>HSSE</li>
+      <li>Quality</li>
+      <li>Storm Water</li>
+      <li>Mechanical Unit</li>
+      <li>Electrical Unit</li>
+      <li>Civil Unit</li>
+      <li>Architect Unit</li>
+      <li>Urban Planning</li>
+    </ul>
+  </section>
+
+  <section class="findings">
+    <h4>Our Findings:</h4>
+    <p>
+      We have carried out a review of the RFP received from Amana on Tuesday,
+      date 05-03-2024, by the following departments. Our findings are included
+      in the following pages.
+    </p>
+  </section>
+
+  <section class="document-history">
+    <h4>Document Submittal History:</h4>
+    <table>
+      <thead>
+        <tr>
+          <th>No</th>
+          <th>Entity/Department</th>
+          <th>Prepared By</th>
+          <th>Prepared Date</th>
+          <th>Approved By</th>
+          <th>Approved Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of reportDetails?.positions; index as i">
+          <td>{{i+1}}</td>
+          <td>{{item?.name}}</td>
+          <td>--</td>
+          <td>--</td>
+          <td>--</td>
+          <td>--</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+</div>
