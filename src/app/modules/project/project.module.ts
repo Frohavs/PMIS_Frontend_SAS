@@ -91,6 +91,8 @@ import { AddMirComponent } from './mir-list/add-mir/add-mir.component';
 import { MirDetailsComponent } from './mir-list/mir-details/mir-details.component';
 import { ProjectSitesComponent } from './project-sites/project-sites.component';
 import { AddSiteComponent } from './project-sites/add-site/add-site.component';
+import { MonthlyReportComponent } from './monthly-report/monthly-report.component';
+import { MonthlyReportDetailsComponent } from './monthly-report/monthly-report-details/monthly-report-details.component';
 
 
 @NgModule({
@@ -197,7 +199,10 @@ import { AddSiteComponent } from './project-sites/add-site/add-site.component';
     MirDetailsComponent,
 
     ProjectSitesComponent,
-    AddSiteComponent
+    AddSiteComponent,
+
+    MonthlyReportComponent,
+    MonthlyReportDetailsComponent
   ],
   imports: [
     CommonModule,

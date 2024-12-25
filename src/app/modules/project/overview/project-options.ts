@@ -103,8 +103,8 @@ export const PROJECT_OPTIONS = [
       name: 'Project Sites',
       route: 'projects/project-sites'
     },
-    // {
-    //   name: 'stage gate management',
-    //   route: 'projects/stage-gate-management'
-    // },
+    {
+      name: 'Monthly Report',
+      route: 'projects/monthly_reports'
+    },
 ]

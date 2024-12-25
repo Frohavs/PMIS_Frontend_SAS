@@ -77,6 +77,8 @@ import { AddMirComponent } from './mir-list/add-mir/add-mir.component';
 import { MirDetailsComponent } from './mir-list/mir-details/mir-details.component';
 import { ProjectSitesComponent } from './project-sites/project-sites.component';
 import { AddSiteComponent } from './project-sites/add-site/add-site.component';
+import { MonthlyReportComponent } from './monthly-report/monthly-report.component';
+import { MonthlyReportDetailsComponent } from './monthly-report/monthly-report-details/monthly-report-details.component';
 
 const routes: Routes = [
   {
@@ -456,6 +458,14 @@ const routes: Routes = [
         component: AddSiteComponent,
       },
 
+      {
+        path: 'monthly_reports/:id',
+        component: MonthlyReportComponent,
+      },
+      {
+        path: 'monthly_report_details/:id',
+        component: MonthlyReportDetailsComponent,
+      },
 
       { path: '', redirectTo: 'overview', pathMatch: 'full' },
       { path: '**', redirectTo: 'overview', pathMatch: 'full' },

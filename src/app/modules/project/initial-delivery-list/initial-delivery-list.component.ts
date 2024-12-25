@@ -1,13 +1,11 @@
 import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
-import { Subscription, fromEvent, debounceTime, distinctUntilChanged } from 'rxjs';
-import { RiskManagementService } from 'src/app/services/risk-managment.service';
-import { SubContractorsService } from 'src/app/services/sub-contractors.service';
-import { SweetAlertOptions } from 'sweetalert2';
+import { Subscription, debounceTime, distinctUntilChanged, fromEvent } from 'rxjs';
 import { InitialDeliveryService } from 'src/app/services/initial-delivery.service';
+import { SweetAlertOptions } from 'sweetalert2';
 
 
 @Component({
