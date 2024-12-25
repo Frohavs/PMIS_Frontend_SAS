@@ -1,8 +1,10 @@
-import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Location } from '@angular/common';
-import { Subscription, fromEvent, debounceTime, distinctUntilChanged } from 'rxjs';
+import { NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
+import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
+import { Subscription, debounceTime, distinctUntilChanged, fromEvent } from 'rxjs';
 import { InitialDeliveryService } from 'src/app/services/initial-delivery.service';
+import { MonthlyReportsService } from 'src/app/services/monthly-reports.service';
 import { SweetAlertOptions } from 'sweetalert2';
 
 
@@ -14,16 +16,25 @@ import { SweetAlertOptions } from 'sweetalert2';
 export class MonthlyReportComponent implements OnInit, AfterViewInit, OnDestroy {
   projectId: number;
 
-  // Add_text: string = 'create new';
+  Add_text: string = 'create new';
   Search_text: string = 'search...';
   dataList: any[] = [];
   totalCount: number;
   pagesCount: number[] = [];
   selected = 1;
+  hideCreateReport = false;
 
   // modal configs
+
   isLoading = false;
   isCollapsed1 = false;
+  swalOptions: SweetAlertOptions = { buttonsStyling: false };
+  @ViewChild('noticeSwal') noticeSwal!: SwalComponent;
+
+  modalConfig: NgbModalOptions = {
+    modalDialogClass: 'modal-dialog modal-dialog-centered mw-650px',
+  };
+
 
   private inputSubscription: Subscription;
 
@@ -32,8 +43,9 @@ export class MonthlyReportComponent implements OnInit, AfterViewInit, OnDestroy 
     private elRef: ElementRef,
     private activatedRoute: ActivatedRoute,
     private cdr: ChangeDetectorRef,
-    private initialDeliveryService: InitialDeliveryService,
+    private monthlyReportsService: MonthlyReportsService,
   ) {
+
   }
 
   ngOnInit(): void {
@@ -44,6 +56,13 @@ export class MonthlyReportComponent implements OnInit, AfterViewInit, OnDestroy 
     this.activatedRoute.params.subscribe(params => {
       this.projectId = +params['id'];
       if (this.projectId) {
+        this.monthlyReportsService.checkMonthlyReportCreation({ projectId: this.projectId }).subscribe(res => {
+          console.log('res', res);
+
+        },(err) => {
+          this.hideCreateReport = true;
+          this.showAlert({ icon: 'error', title: 'Error!', text: err?.error?.responseException?.exceptionMessage?.errors?.global.join(' ') });
+        });
         this.initReportList(this.projectId);
       }
     });
@@ -51,7 +70,7 @@ export class MonthlyReportComponent implements OnInit, AfterViewInit, OnDestroy 
 
   initReportList(id: number, pageIndex?: number, search?: string) {
     this.dataList = [];
-    this.initialDeliveryService.getAll(id, pageIndex, search).subscribe(res => {
+    this.monthlyReportsService.getAll(id, pageIndex, search).subscribe(res => {
       // this.dataList = res?.data?.items;
       // this.totalCount = res?.data?.totalcount;
       this.pagesCount = Array.from({ length: Math.ceil(this.totalCount / 10) }, (_, index) => index + 1);
@@ -69,6 +88,10 @@ export class MonthlyReportComponent implements OnInit, AfterViewInit, OnDestroy 
       const searchText = event.target.value;
       this.initReportList(this.projectId, 1, searchText)
     });
+  }
+
+  redirectToNew() {
+    this.router.navigateByUrl('projects/add_monthly_report/' + this.projectId)
   }
 
   listDetails(id: any) {
@@ -104,5 +127,21 @@ export class MonthlyReportComponent implements OnInit, AfterViewInit, OnDestroy 
     if (this.inputSubscription) {
       this.inputSubscription.unsubscribe();
     }
+  }
+
+  showAlert(swalOptions: SweetAlertOptions) {
+    let style = swalOptions.icon?.toString() || 'success';
+    if (swalOptions.icon === 'error') {
+      style = 'danger';
+    }
+    this.swalOptions = Object.assign({
+      buttonsStyling: false,
+      confirmButtonText: "Ok, got it!",
+      customClass: {
+        confirmButton: "btn btn-" + style
+      }
+    }, swalOptions);
+    this.cdr.detectChanges();
+    this.noticeSwal.fire();
   }
 }

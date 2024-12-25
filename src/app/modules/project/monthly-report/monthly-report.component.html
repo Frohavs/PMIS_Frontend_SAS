@@ -10,13 +10,13 @@
       </div>
     </div>
 
-    <!-- <div class="card-toolbar" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-trigger="hover"
-      title="Click to add a user">
+    <div class="card-toolbar" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-trigger="hover"
+      title="add report" *ngIf="!hideCreateReport">
       <a class="btn btn-sm btn-light-primary" (click)="redirectToNew()">
         <app-keenicon name="plus" class="fs-3"></app-keenicon>
         {{Add_text}}
       </a>
-    </div> -->
+    </div>
   </div>
 
   <div class="card-body py-3">
@@ -90,3 +90,7 @@
     </div>
   </div>
 </div>
+
+
+<swal #noticeSwal [swalOptions]="swalOptions">
+</swal>

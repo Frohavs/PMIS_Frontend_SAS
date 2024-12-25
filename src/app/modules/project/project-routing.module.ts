@@ -79,6 +79,7 @@ import { ProjectSitesComponent } from './project-sites/project-sites.component';
 import { AddSiteComponent } from './project-sites/add-site/add-site.component';
 import { MonthlyReportComponent } from './monthly-report/monthly-report.component';
 import { MonthlyReportDetailsComponent } from './monthly-report/monthly-report-details/monthly-report-details.component';
+import { AddMonthlyReportComponent } from './monthly-report/add-monthly-report/add-monthly-report.component';
 
 const routes: Routes = [
   {
@@ -461,6 +462,10 @@ const routes: Routes = [
       {
         path: 'monthly_reports/:id',
         component: MonthlyReportComponent,
+      },
+      {
+        path: 'add_monthly_report/:id',
+        component: AddMonthlyReportComponent,
       },
       {
         path: 'monthly_report_details/:id',

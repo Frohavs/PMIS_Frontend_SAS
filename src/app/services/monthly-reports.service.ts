@@ -35,16 +35,17 @@ export class MonthlyReportsService {
       headers: httpHeaders
     });
   }
-  getDeliveryList(id: number | null): Observable<any> {
+
+  checkMonthlyReportCreation(payload: any): Observable<any> {
     const httpHeaders = new HttpHeaders({
       Authorization: `Bearer ${this.token}`,
     });
-    const url = `${this.API_USERS_URL}/GetIntialDelivery/${id}`;
-    return this.http.get<any>(url, {
+    const url = `${this.API_USERS_URL}/CanCreate`;
+    return this.http.post<any>(url, payload, {
       headers: httpHeaders
     });
   }
-  addDeliveryList(payload: any): Observable<any> {
+  addMonthlyReport(payload: any): Observable<any> {
     const httpHeaders = new HttpHeaders({
       Authorization: `Bearer ${this.token}`,
     });
