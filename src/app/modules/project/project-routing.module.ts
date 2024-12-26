@@ -80,6 +80,10 @@ import { AddSiteComponent } from './project-sites/add-site/add-site.component';
 import { MonthlyReportComponent } from './monthly-report/monthly-report.component';
 import { MonthlyReportDetailsComponent } from './monthly-report/monthly-report-details/monthly-report-details.component';
 import { AddMonthlyReportComponent } from './monthly-report/add-monthly-report/add-monthly-report.component';
+import { WorkProgressPictureComponent } from './monthly-report/work-progress-picture/work-progress-picture.component';
+import { MonthlyRecomendationComponent } from './monthly-report/monthly-recomendation/monthly-recomendation.component';
+import { MonthlyMeetingsComponent } from './monthly-report/monthly-meetings/monthly-meetings.component';
+import { ReportStepComponent } from './monthly-report/report-step/report-step.component';
 
 const routes: Routes = [
   {
@@ -470,6 +474,22 @@ const routes: Routes = [
       {
         path: 'monthly_report_details/:id',
         component: MonthlyReportDetailsComponent,
+      },
+      {
+        path: 'monthly_work_progress/:id',
+        component: WorkProgressPictureComponent,
+      },
+      {
+        path: 'monthly_recommendation/:id',
+        component: MonthlyRecomendationComponent,
+      },
+      {
+        path: 'monthly_meetings/:id',
+        component: MonthlyMeetingsComponent,
+      },
+      {
+        path: 'monthly_report_step/:id',
+        component: ReportStepComponent,
       },
 
       { path: '', redirectTo: 'overview', pathMatch: 'full' },

@@ -94,6 +94,10 @@ import { AddSiteComponent } from './project-sites/add-site/add-site.component';
 import { MonthlyReportComponent } from './monthly-report/monthly-report.component';
 import { MonthlyReportDetailsComponent } from './monthly-report/monthly-report-details/monthly-report-details.component';
 import { AddMonthlyReportComponent } from './monthly-report/add-monthly-report/add-monthly-report.component';
+import { WorkProgressPictureComponent } from './monthly-report/work-progress-picture/work-progress-picture.component';
+import { MonthlyRecomendationComponent } from './monthly-report/monthly-recomendation/monthly-recomendation.component';
+import { MonthlyMeetingsComponent } from './monthly-report/monthly-meetings/monthly-meetings.component';
+import { ReportStepComponent } from './monthly-report/report-step/report-step.component';
 
 
 @NgModule({
@@ -204,7 +208,11 @@ import { AddMonthlyReportComponent } from './monthly-report/add-monthly-report/a
 
     MonthlyReportComponent,
     AddMonthlyReportComponent,
-    MonthlyReportDetailsComponent
+    MonthlyReportDetailsComponent,
+    WorkProgressPictureComponent,
+    MonthlyRecomendationComponent,
+    MonthlyMeetingsComponent,
+    ReportStepComponent
   ],
   imports: [
     CommonModule,
