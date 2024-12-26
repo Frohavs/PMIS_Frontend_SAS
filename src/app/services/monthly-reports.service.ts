@@ -30,7 +30,7 @@ export class MonthlyReportsService {
         "pageSize": 10
       }
     }
-    const url = `${this.API_USERS_URL}/GetProjectData`;
+    const url = `${this.API_USERS_URL}/Get`;
     return this.http.post<any>(url, body, {
       headers: httpHeaders
     });
@@ -42,6 +42,15 @@ export class MonthlyReportsService {
     });
     const url = `${this.API_USERS_URL}/CanCreate`;
     return this.http.post<any>(url, payload, {
+      headers: httpHeaders
+    });
+  }
+  getProjectData(id: any): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/GetProjectData/${id}`;
+    return this.http.get<any>(url, {
       headers: httpHeaders
     });
   }

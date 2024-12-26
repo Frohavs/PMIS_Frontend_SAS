@@ -63,16 +63,16 @@ export class MonthlyReportComponent implements OnInit, AfterViewInit, OnDestroy 
           this.hideCreateReport = true;
           this.showAlert({ icon: 'error', title: 'Error!', text: err?.error?.responseException?.exceptionMessage?.errors?.global.join(' ') });
         });
-        this.initReportList(this.projectId);
       }
+      this.initReportList(this.projectId);
     });
   }
 
   initReportList(id: number, pageIndex?: number, search?: string) {
     this.dataList = [];
     this.monthlyReportsService.getAll(id, pageIndex, search).subscribe(res => {
-      // this.dataList = res?.data?.items;
-      // this.totalCount = res?.data?.totalcount;
+      this.dataList = res?.data?.items;
+      this.totalCount = res?.data?.totalcount;
       this.pagesCount = Array.from({ length: Math.ceil(this.totalCount / 10) }, (_, index) => index + 1);
       this.cdr.detectChanges();
     });

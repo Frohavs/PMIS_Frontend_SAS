@@ -26,7 +26,8 @@
           <tr class="fw-bolder text-muted">
             <th class="max-w-100px">#</th>
             <th class="max-w-100px">Project name</th>
-            <th class="max-w-100px">Report Information</th>
+            <th class="max-w-100px">Report Number</th>
+            <th class="max-w-100px">Report Date</th>
             <th class="max-w-100px text-center">Actions</th>
           </tr>
         </thead>
@@ -39,18 +40,24 @@
             </td>
             <td>
               <a class="text-gray-900 fw-bolder text-hover-primary d-block fs-6">
-                {{item?.name || '--'}}
+                {{item?.projectName || '--'}}
               </a>
             </td>
             <td>
-              <span class="badge fs-7 fw-bold my-2" [ngClass]="{'badge-info': item?.approved, 'badge-success': !item?.approved}">
-                {{item?.information}}
+              <span class="badge badge-success fs-7 fw-bold my-2">
+                {{item?.reportNo || '--'}}
+              </span>
+            </td>
+            <td>
+              <span class="text-gray-900 fw-bolder text-hover-primary d-block fs-6">
+                {{item?.createdOn | date: 'dd/MM/yyyy'}}
               </span>
             </td>
 
             <td>
               <div class="d-flex justify-content-center flex-shrink-0">
-                <a class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1" (click)="listDetails(item.id)">
+                <a class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1"
+                  (click)="listDetails(item.id)">
                   <app-keenicon name="eye" class="fs-3"></app-keenicon>
                 </a>
               </div>

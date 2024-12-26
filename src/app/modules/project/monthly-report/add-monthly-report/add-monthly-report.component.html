@@ -1,1 +1,470 @@
-<p>add-monthly-report works!</p>
+<div class="
+    stepper stepper-pills stepper-column
+    d-flex
+    flex-column flex-xl-row flex-row-fluid
+  " id="kt_create_account_stepper">
+  <!--begin::Aside-->
+  <div
+    class="card d-flex justify-content-center justify-content-xl-start flex-row-auto w-100 w-xl-300px w-xxl-400px me-9">
+    <div class="card-body px-6 px-lg-10 px-xxl-15 py-20">
+      <div class="stepper-nav">
+
+        <div class="stepper-item" [ngClass]="{
+            current: currentStep$.value === 1,
+            completed: currentStep$.value > 1
+          }">
+          <!--begin::Wrapper-->
+          <div class="stepper-wrapper">
+            <!--begin::Icon-->
+            <div class="stepper-icon w-40px h-40px">
+              <i class="stepper-check fas fa-check"></i>
+              <span class="stepper-number">1</span>
+            </div>
+            <!--end::Icon-->
+
+            <!--begin::Label-->
+            <div class="stepper-label">
+              <h3 class="stepper-title">
+                Project key data
+              </h3>
+
+              <div class="stepper-desc fw-semibold">
+                Project Details
+              </div>
+            </div>
+            <!--end::Label-->
+          </div>
+          <!--end::Wrapper-->
+
+          <!--begin::Line-->
+          <div class="stepper-line h-40px"></div>
+          <!--end::Line-->
+        </div>
+
+        <div class="stepper-item" [ngClass]="{
+            current: currentStep$.value === 2,
+            completed: currentStep$.value > 2
+          }">
+          <!--begin::Wrapper-->
+          <div class="stepper-wrapper">
+            <!--begin::Icon-->
+            <div class="stepper-icon w-40px h-40px">
+              <i class="stepper-check fas fa-check"></i>
+              <span class="stepper-number">2</span>
+            </div>
+            <!--end::Icon-->
+
+            <!--begin::Label-->
+            <div class="stepper-label">
+              <h3 class="stepper-title">
+                Timing Data
+              </h3>
+              <div class="stepper-desc fw-semibold">
+                timing Details
+              </div>
+            </div>
+            <!--end::Label-->
+          </div>
+          <!--end::Wrapper-->
+
+          <!--begin::Line-->
+          <div class="stepper-line h-40px"></div>
+          <!--end::Line-->
+        </div>
+
+        <div class="stepper-item" [ngClass]="{
+            current: currentStep$.value === 3,
+            completed: currentStep$.value > 3
+          }">
+          <!--begin::Wrapper-->
+          <div class="stepper-wrapper">
+            <!--begin::Icon-->
+            <div class="stepper-icon w-40px h-40px">
+              <i class="stepper-check fas fa-check"></i>
+              <span class="stepper-number">3</span>
+            </div>
+            <!--end::Icon-->
+
+            <!--begin::Label-->
+            <div class="stepper-label">
+              <h3 class="stepper-title">
+                Financial Data
+              </h3>
+              <div class="stepper-desc fw-semibold">
+                financial Info
+              </div>
+            </div>
+            <!--end::Label-->
+          </div>
+          <!--end::Wrapper-->
+
+          <!--begin::Line-->
+          <div class="stepper-line h-40px"></div>
+          <!--end::Line-->
+        </div>
+
+        <div class="stepper-item" [ngClass]="{
+            current: currentStep$.value === 4,
+            completed: currentStep$.value > 4
+          }">
+          <div class="stepper-wrapper">
+            <div class="stepper-icon w-40px h-40px">
+              <i class="stepper-check fas fa-check"></i>
+              <span class="stepper-number">4</span>
+            </div>
+
+            <div class="stepper-label">
+              <h3 class="stepper-title">
+                Cumulative percentages
+              </h3>
+              <div class="stepper-desc fw-semibold">
+                cumulative Details
+              </div>
+            </div>
+          </div>
+
+          <div class="stepper-line h-40px"></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <!--begin::Aside-->
+
+  <!--begin::Content-->
+  <div class="d-flex flex-row-fluid flex-center bg-body rounded">
+    <form class="py-20 w-100 w-xl-700px px-9" [formGroup]="addForm">
+      <div class="current">
+        <ng-container *ngIf="currentStep$.value === 1">
+          <div class="fv-row mb-12">
+            <label class="form-label required">Project Name</label><input name="projectName"
+              class="form-control form-control-lg form-control-solid" formControlName="projectName" />
+          </div>
+          <div class="fv-row mb-12">
+            <label class="form-label required">Contractor Position</label><input name="contractorName"
+              class="form-control form-control-lg form-control-solid" formControlName="contractorName" />
+          </div>
+          <div class="fv-row mb-12">
+            <label class="form-label required">Consultant Position</label><input name="consultantName"
+              class="form-control form-control-lg form-control-solid" formControlName="consultantName" />
+          </div>
+          <div class="row">
+            <div class="mb-4 col-xl-6">
+              <label class="form-label required">Month</label><input name="month"
+                class="form-control form-control-lg form-control-solid" formControlName="month" />
+            </div>
+            <div class="mb-4 col-xl-6">
+              <label class="form-label required">Year</label><input name="year"
+                class="form-control form-control-lg form-control-solid" formControlName="year" />
+            </div>
+          </div>
+          <div class="fv-row mb-4">
+            <label class="form-label required">Monthly work progress report no</label><input name="reportNo"
+              class="form-control form-control-lg form-control-solid" formControlName="reportNo" />
+          </div>
+
+          <!-- <div class="fv-row mb-10">
+              <label class="form-label required">Corporation Type</label>
+              <select name="businessType" class="form-select form-select-lg form-select-solid"
+                formControlName="businessType">
+                <option value="1">S Corporation</option>
+                <option value="1">C Corporation</option>
+                <option value="2">Sole Proprietorship</option>
+                <option value="3">Non-profit</option>
+                <option value="4">Limited Liability</option>
+                <option value="5">General Partnership</option>
+              </select>
+            </div>
+            <div class="fv-row mb-10">
+              <label class="form-label">Business Description</label><textarea name="businessDescription"
+                class="form-control form-control-lg form-control-solid" rows="3"
+                formControlName="businessDescription"></textarea>
+            </div>
+            <div class="fv-row mb-0">
+              <label class="fs-6 fw-bold form-label required">Contact Email</label><input name="businessEmail"
+                class="form-control form-control-lg form-control-solid" formControlName="businessEmail" />
+              <div class="fv-plugins-message-container invalid-feedback" *ngIf="
+                  addForm.get('businessEmail')?.hasError('required') &&
+                  addForm.get('businessEmail')?.touched
+                ">
+                Contact Email is required
+              </div>
+              <div class="fv-plugins-message-container invalid-feedback" *ngIf="
+                  addForm.get('businessEmail')?.hasError('email') &&
+                  addForm.get('businessEmail')?.touched
+                ">
+                Wrong email format
+              </div>
+            </div> -->
+
+        </ng-container>
+
+        <ng-container *ngIf="currentStep$.value === 2">
+          <div class="row">
+            <div class="col-xl-6 mb-12">
+              <label class="form-label required">Execution Start Date</label>
+              <input type="date" name="executionStartDate" class="form-control form-control-lg form-control-solid"
+                formControlName="executionStartDate" />
+            </div>
+            <div class="col-xl-6 mb-12">
+              <label class="form-label required">Original Finish Date</label>
+              <input type="date" name="originalFinishDate" class="form-control form-control-lg form-control-solid"
+                formControlName="originalFinishDate" />
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xl-6 mb-12">
+              <label class="form-label required">Original Duration Day</label>
+              <input name="originalDuration" class="form-control form-control-lg form-control-solid"
+                formControlName="originalDuration" />
+            </div>
+            <div class="col-xl-6 mb-12">
+              <label class="form-label required">Approved Eot</label>
+              <input name="businessType" class="form-control form-control-lg form-control-solid"
+                formControlName="businessType" />
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xl-6 mb-12">
+              <label class="form-label required">EOT Duration</label>
+              <input name="totalDaysWithEOT" class="form-control form-control-lg form-control-solid"
+                formControlName="totalDaysWithEOT" />
+            </div>
+            <div class="col-xl-6 mb-12">
+              <label class="form-label required">EOT Finish Date</label>
+              <input type="date" name="expectedFinishDate" class="form-control form-control-lg form-control-solid"
+                formControlName="expectedFinishDate" />
+            </div>
+          </div>
+        </ng-container>
+
+        <ng-container *ngIf="currentStep$.value === 3">
+          <div class="row">
+            <div class="col-xl-6 mb-12">
+              <label class="form-label required">Value of the project</label>
+              <input name="originalValue" class="form-control form-control-lg form-control-solid"
+                formControlName="originalValue" />
+            </div>
+            <div class="col-xl-6 mb-12">
+              <label class="form-label required">Project Value After Reduction</label>
+              <input name="businessType" class="form-control form-control-lg form-control-solid"
+                formControlName="businessType" />
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xl-6 mb-12">
+              <label class="form-label required">Approved VO</label>
+              <input name="businessType" class="form-control form-control-lg form-control-solid"
+                formControlName="businessType" />
+            </div>
+            <div class="col-xl-6 mb-12">
+              <label class="form-label required">EAC</label>
+              <input name="businessType" class="form-control form-control-lg form-control-solid"
+                formControlName="businessType" />
+            </div>
+          </div>
+        </ng-container>
+
+        <ng-container *ngIf="currentStep$.value === 4">
+          <div class="table-responsive">
+            <table class="table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4">
+              <thead>
+                <tr class="fw-bolder text-muted">
+
+                  <th class="min-w-120px">Cumulative Percentages</th>
+                  <th class="min-w-140px">Current Month</th>
+                  <th class="min-w-120px">Last Month</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <a class="text-gray-900 fw-bolder text-hover-primary" style="font-size: 12px;">
+                      {{'Elapsed time percentage%'}}
+                    </a>
+                  </td>
+                  <td>
+                    <a class="text-gray-900 fw-bolder text-hover-primary" style="font-size: 12px;">
+                      {{addForm.get('elapsedTimePercentage')?.value | number}}
+                    </a>
+                  </td>
+                  <td>
+                    <a class="text-gray-900 fw-bolder text-hover-primary" style="font-size: 12px;">
+                      {{'--'}}
+                    </a>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <a class="text-gray-900 fw-bolder text-hover-primary" style="font-size: 12px;">
+                      {{'%Of planned business'}}
+                    </a>
+                  </td>
+                  <td>
+                    <a class="text-gray-900 fw-bolder text-hover-primary" style="font-size: 12px;">
+                      {{addForm.get('plannedBusinessPercentage')?.value | number}}
+                    </a>
+                  </td>
+                  <td>
+                    <a class="text-gray-900 fw-bolder text-hover-primary" style="font-size: 12px;">
+                      {{'--'}}
+                    </a>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <a class="text-gray-900 fw-bolder text-hover-primary" style="font-size: 12px;">
+                      {{'Actual achievement percentage%'}}
+                    </a>
+                  </td>
+                  <td>
+                    <a class="text-gray-900 fw-bolder text-hover-primary" style="font-size: 12px;">
+                      {{addForm.get('actualBusinessPercentage')?.value | number}}
+                    </a>
+                  </td>
+                  <td>
+                    <a class="text-gray-900 fw-bolder text-hover-primary" style="font-size: 12px;">
+                      {{'--'}}
+                    </a>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <a class="text-gray-900 fw-bolder text-hover-primary" style="font-size: 12px;">
+                      {{'SPI Earned value ratio'}}
+                    </a>
+                  </td>
+                  <td>
+                    <a class="text-gray-900 fw-bolder text-hover-primary" style="font-size: 12px;">
+                      {{addForm.get('spi')?.value | number}}
+                    </a>
+                  </td>
+                  <td>
+                    <a class="text-gray-900 fw-bolder text-hover-primary" style="font-size: 12px;">
+                      {{'--'}}
+                    </a>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <a class="text-gray-900 fw-bolder text-hover-primary" style="font-size: 12px;">
+                      {{'Extract No.'}}
+                    </a>
+                  </td>
+                  <td>
+                    <a class="text-gray-900 fw-bolder text-hover-primary" style="font-size: 12px;">
+                      {{'--'}}
+                    </a>
+                  </td>
+                  <td>
+                    <a class="text-gray-900 fw-bolder text-hover-primary" style="font-size: 12px;">
+                      {{'--'}}
+                    </a>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <a class="text-gray-900 fw-bolder text-hover-primary" style="font-size: 12px;">
+                      {{'Extract From Date'}}
+                    </a>
+                  </td>
+                  <td>
+                    <a class="text-gray-900 fw-bolder text-hover-primary" style="font-size: 12px;">
+                      {{'--'}}
+                    </a>
+                  </td>
+                  <td>
+                    <a class="text-gray-900 fw-bolder text-hover-primary" style="font-size: 12px;">
+                      {{'--'}}
+                    </a>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <a class="text-gray-900 fw-bolder text-hover-primary" style="font-size: 12px;">
+                      {{'Extract To Date'}}
+                    </a>
+                  </td>
+                  <td>
+                    <a class="text-gray-900 fw-bolder text-hover-primary" style="font-size: 12px;">
+                      {{'--'}}
+                    </a>
+                  </td>
+                  <td>
+                    <a class="text-gray-900 fw-bolder text-hover-primary" style="font-size: 12px;">
+                      {{'--'}}
+                    </a>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <a class="text-gray-900 fw-bolder text-hover-primary" style="font-size: 12px;">
+                      {{'Extract Value'}}
+                    </a>
+                  </td>
+                  <td>
+                    <a class="text-gray-900 fw-bolder text-hover-primary" style="font-size: 12px;">
+                      {{'--'}}
+                    </a>
+                  </td>
+                  <td>
+                    <a class="text-gray-900 fw-bolder text-hover-primary" style="font-size: 12px;">
+                      {{'--'}}
+                    </a>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <a class="text-gray-900 fw-bolder text-hover-primary" style="font-size: 12px;">
+                      {{'%of the extract'}}
+                    </a>
+                  </td>
+                  <td>
+                    <a class="text-gray-900 fw-bolder text-hover-primary" style="font-size: 12px;">
+                      {{'--'}}
+                    </a>
+                  </td>
+                  <td>
+                    <a class="text-gray-900 fw-bolder text-hover-primary" style="font-size: 12px;">
+                      {{'--'}}
+                    </a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </ng-container>
+
+      </div>
+
+      <div class="d-flex flex-stack pt-10">
+        <div class="mr-2">
+          <ng-container *ngIf="currentStep$.value !== 1">
+            <button type="button" class="btn btn-lg btn-light-primary me-3" (click)="prevStep()">
+              <app-keenicon name="arrow-left" class="fs-3 ms-1"></app-keenicon>
+              Back
+            </button>
+          </ng-container>
+        </div>
+
+        <ng-container *ngIf="currentStep$.value !== formsCount">
+          <div>
+            <button type="button" class="btn btn-lg btn-primary me-3" [disabled]="!isCurrentFormValid$.value"
+              (click)="nextStep()">
+              <span class="indicator-label">
+                <ng-container *ngIf="currentStep$.value < formsCount - 1">
+                  Continue {{ " " }}
+                  <app-keenicon name="arrow-right" class="fs-3 ms-2 me-0"></app-keenicon>
+                </ng-container>
+                <ng-container *ngIf="currentStep$.value === formsCount - 1">
+                  Submit
+                </ng-container>
+              </span>
+            </button>
+          </div>
+        </ng-container>
+      </div>
+    </form>
+  </div>
+  <!--end::Content-->
+</div>
