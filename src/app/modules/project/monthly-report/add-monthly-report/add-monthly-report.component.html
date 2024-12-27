@@ -220,8 +220,8 @@
             </div>
             <div class="col-xl-6 mb-12">
               <label class="form-label required">Approved Eot</label>
-              <input name="businessType" class="form-control form-control-lg form-control-solid"
-                formControlName="businessType" />
+              <input name="eotDays" class="form-control form-control-lg form-control-solid"
+                formControlName="eotDays" />
             </div>
           </div>
           <div class="row">
@@ -247,20 +247,20 @@
             </div>
             <div class="col-xl-6 mb-12">
               <label class="form-label required">Project Value After Reduction</label>
-              <input name="businessType" class="form-control form-control-lg form-control-solid"
-                formControlName="businessType" />
+              <input name="updatedValue" class="form-control form-control-lg form-control-solid"
+                formControlName="updatedValue" />
             </div>
           </div>
           <div class="row">
             <div class="col-xl-6 mb-12">
               <label class="form-label required">Approved VO</label>
-              <input name="businessType" class="form-control form-control-lg form-control-solid"
-                formControlName="businessType" />
+              <input name="voValues" class="form-control form-control-lg form-control-solid"
+                formControlName="voValues" />
             </div>
             <div class="col-xl-6 mb-12">
               <label class="form-label required">EAC</label>
-              <input name="businessType" class="form-control form-control-lg form-control-solid"
-                formControlName="businessType" />
+              <input name="updatedValue" class="form-control form-control-lg form-control-solid"
+                formControlName="updatedValue" />
             </div>
           </div>
         </ng-container>
@@ -353,7 +353,7 @@
                   </td>
                   <td>
                     <a class="text-gray-900 fw-bolder text-hover-primary" style="font-size: 12px;">
-                      {{'--'}}
+                      {{addForm.get('invoiceReferenceNumber')?.value || '--'}}
                     </a>
                   </td>
                   <td>
@@ -404,7 +404,7 @@
                   </td>
                   <td>
                     <a class="text-gray-900 fw-bolder text-hover-primary" style="font-size: 12px;">
-                      {{'--'}}
+                      {{addForm.get('invoiceValue')?.value | number}}
                     </a>
                   </td>
                   <td>
@@ -421,7 +421,7 @@
                   </td>
                   <td>
                     <a class="text-gray-900 fw-bolder text-hover-primary" style="font-size: 12px;">
-                      {{'--'}}
+                      {{addForm.get('invoiceRatio')?.value | number}}
                     </a>
                   </td>
                   <td>
@@ -468,3 +468,8 @@
   </div>
   <!--end::Content-->
 </div>
+
+
+<!-- modal -->
+<swal #noticeSwal [swalOptions]="swalOptions">
+</swal>

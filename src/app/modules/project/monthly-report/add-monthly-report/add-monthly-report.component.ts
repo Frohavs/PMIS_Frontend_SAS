@@ -1,10 +1,13 @@
-import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
+import { ActivatedRoute, Router } from '@angular/router';
+import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
 import { BehaviorSubject, Subscription } from 'rxjs';
-import { ICreateAccount, inits } from 'src/app/modules/wizards/create-account.helper';
+import { inits } from 'src/app/modules/wizards/create-account.helper';
 import { MonthlyReportsService } from 'src/app/services/monthly-reports.service';
 import { ProjectsService } from 'src/app/services/projects.service';
+import { SweetAlertOptions } from 'sweetalert2';
 
 @Component({
   selector: 'app-add-monthly-report',
@@ -17,16 +20,19 @@ export class AddMonthlyReportComponent implements OnInit, OnDestroy {
   projectDate: any;
   addForm: FormGroup;
   formsCount = 5;
-  account$: BehaviorSubject<any> =
-    new BehaviorSubject<any>(inits);
+  account$: BehaviorSubject<any> = new BehaviorSubject<any>(inits);
   currentStep$: BehaviorSubject<number> = new BehaviorSubject(1);
   isCurrentFormValid$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
     true
   );
   private unsubscribe: Subscription[] = [];
+  swalOptions: SweetAlertOptions = {};
+  @ViewChild('noticeSwal') noticeSwal!: SwalComponent;
 
   constructor(
     private fb: FormBuilder,
+    private _location: Location,
+    private router: Router,
     private activatedRoute: ActivatedRoute,
     private cdr: ChangeDetectorRef,
     private projectsService: ProjectsService,
@@ -45,13 +51,18 @@ export class AddMonthlyReportComponent implements OnInit, OnDestroy {
       originalFinishDate: [{ value: '', disabled: true }],
       originalDuration: [{ value: '', disabled: true }],
       originalValue: [{ value: '', disabled: true }],
+      updatedValue: [{ value: '', disabled: true }],
       expectedFinishDate: [{ value: '', disabled: true }],
       totalDaysWithEOT: [{ value: '', disabled: true }],
       elapsedTimePercentage: [{ value: '', disabled: true }],
       plannedBusinessPercentage: [{ value: '', disabled: true }],
       actualBusinessPercentage: [{ value: '', disabled: true }],
       spi: [{ value: '', disabled: true }],
-
+      eotDays: [{ value: '', disabled: true }],
+      voValues: [{ value: '', disabled: true }],
+      invoiceReferenceNumber: [{ value: '', disabled: true }],
+      invoiceValue: [{ value: '', disabled: true }],
+      invoiceRatio: [{ value: '', disabled: true }],
     });
 
 
@@ -76,10 +87,10 @@ export class AddMonthlyReportComponent implements OnInit, OnDestroy {
         originalValue: this.projectDetails.originalValue,
         totalDaysWithEOT: this.projectDetails.totalDaysWithEOT,
         expectedFinishDate: this.projectDetails.expectedFinishDate.slice(0, 10),
-
-      })
+      });
       this.cdr.detectChanges();
-    })
+    });
+
     this.monthlyReportsService.getProjectData(this.projectId).subscribe(res => {
       this.projectDate = res.data;
       this.addForm.patchValue({
@@ -88,14 +99,24 @@ export class AddMonthlyReportComponent implements OnInit, OnDestroy {
         elapsedTimePercentage: this.projectDate.elapsedTimePercentage,
         plannedBusinessPercentage: this.projectDate.plannedBusinessPercentage,
         actualBusinessPercentage: this.projectDate.actualBusinessPercentage,
-        spi: this.projectDate.spi
-
-      })
+        spi: this.projectDate.spi,
+        eotDays: this.projectDate.eotDays,
+        updatedValue: this.projectDate.updatedValue,
+        voValues: this.projectDate.voValues,
+        invoiceReferenceNumber: this.projectDate.invoiceReferenceNumber,
+        invoiceValue: this.projectDate.invoiceValue,
+        invoiceRatio: this.projectDate.invoiceRatio
+      });
       this.cdr.detectChanges();
     });
   }
 
   nextStep() {
+    if (this.currentStep$.value === this.formsCount - 1) {
+      this.submitReport();
+
+      return
+    }
     const nextStep = this.currentStep$.value + 1;
     if (nextStep > this.formsCount) {
       return;
@@ -109,6 +130,20 @@ export class AddMonthlyReportComponent implements OnInit, OnDestroy {
       return;
     }
     this.currentStep$.next(prevStep);
+  }
+
+  submitReport() {
+
+    const payload = {
+      projectId: +this.projectId,
+      reportNo: this.addForm.get('reportNo')?.value
+    }
+    this.monthlyReportsService.createMonthlyReport(payload).subscribe(res => {
+      this.router.navigateByUrl(`projects/monthly_reports/${this.projectId}`);
+      this.showAlert({ icon: 'success', title: 'Success!', text: 'Report added successfully!' });
+    }, error => {
+      this.showAlert({ icon: 'error', title: 'Error!', text: 'Please try again' });
+    });
   }
 
   /**
@@ -139,5 +174,25 @@ export class AddMonthlyReportComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.unsubscribe.forEach((sb) => sb.unsubscribe());
+  }
+
+  showAlert(swalOptions: SweetAlertOptions) {
+    let style = swalOptions.icon?.toString() || 'success';
+    if (swalOptions.icon === 'error') {
+      style = 'danger';
+    }
+    this.swalOptions = Object.assign({
+      buttonsStyling: false,
+      confirmButtonText: "Ok, got it!",
+      customClass: {
+        confirmButton: "btn btn-" + style
+      }
+    }, swalOptions);
+    this.cdr.detectChanges();
+    this.noticeSwal.fire();
+  }
+
+  back() {
+    this._location.back();
   }
 }
