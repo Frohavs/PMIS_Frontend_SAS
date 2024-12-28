@@ -22,10 +22,10 @@
             <a class="text-success fw-bolder fs-4">
               Report Rating Percentage
             </a>
-            <span class="fw-bolder fs-6">25%</span>
+            <span class="fw-bolder fs-6">{{progressResult}}%</span>
           </div>
           <div class="h-5px mx-3 w-100 bg-light mb-3">
-            <div class="bg-success rounded h-7px" role="progressbar" [style.width]="'25%'"></div>
+            <div class="bg-success rounded h-7px" role="progressbar" [style.width]="progressResult+'%'"></div>
           </div>
         </div>
         <br>
@@ -34,10 +34,10 @@
             <a class="text-info fw-bolder fs-4">
               Report Completions Percentage
             </a>
-            <span class="fw-bolder fs-6">25%</span>
+            <span class="fw-bolder fs-6">{{progressResult}}%</span>
           </div>
           <div class="h-5px mx-3 w-100 bg-light mb-3">
-            <div class="bg-info rounded h-7px" role="progressbar" [style.width]="'25%'"></div>
+            <div class="bg-info rounded h-7px" role="progressbar" [style.width]="progressResult+'%'"></div>
           </div>
         </div>
 
@@ -52,7 +52,8 @@
 
           <div class=" me-2">
             <div class="card-toolbar">
-              <a (click)="navigateTo('monthly_recommendation')" class="btn btn-sm btn-light-warning">
+              <a (click)="navigateTo('monthly_recommendation')" class="btn btn-sm"
+                [ngClass]="{'btn-success': progressResult > 0, 'btn-light-warning': progressResult === 0}">
                 Monthly Recommendation
               </a>
             </div>

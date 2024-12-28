@@ -1,1 +1,81 @@
-<p>work-progress-picture works!</p>
+<div class="row g-5 g-xl-8 justify-content-between">
+  <div class="col-xl-5">
+    <div class="card mb-5 mb-xl-8">
+      <div class="card-header align-items-center border-0 mt-4">
+        <h3 class="card-title align-items-start flex-column">
+          <span class="fw-bolder text-gray-900">Upload Pictures</span>
+          <!-- <span class="text-muted mt-1 fw-bold fs-7">test</span> -->
+        </h3>
+      </div>
+      <div class="card-body pt-3">
+
+        <form [formGroup]="workProgressForm" class="form">
+          <div class="card-body border-top p-9">
+
+            <div class="row mb-1">
+              <label class="col-lg-12 col-form-label fw-bold fs-6">
+                <span>
+                  Attachments
+                </span>
+              </label>
+              <div class="col-lg-12 fv-row">
+                <input type="file" class="form-control form-control-lg form-control-solid text-start" name="attachment"
+                  formControlName="attachment" (change)="onFileChange($event)" multiple />
+                <div
+                  *ngIf="workProgressForm?.get('attachment')?.invalid && (workProgressForm?.get('attachment')?.dirty || workProgressForm?.get('attachment')?.touched)"
+                  class="fv-plugins-message-container">
+                  <div class="fv-help-block">Please Upload .pdf files only</div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <div class="card-footer d-flex justify-content-end py-6 px-9">
+            <button type="button" class="btn btn-primary" [disabled]="isLoading" (click)="saveChanges()">
+              <ng-container *ngIf="!isLoading">{{"TRANSLATOR.SAVE_CHANGES" | translate}}</ng-container>
+              <ng-container *ngIf="isLoading">
+                <span clas="indicator-progress" [style.display]="'block'">
+                  Please wait...{{ " " }}
+                  <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                </span>
+              </ng-container>
+            </button>
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="col-xl-7">
+    <div class="card mb-5 mb-xl-8">
+      <div class="card-header align-items-center border-0 mt-4">
+        <h3 class="card-title align-items-start flex-column">
+          <span class="fw-bolder text-gray-900">Work Progress Pictures</span>
+        </h3>
+        <div class="card-toolbar">
+          <button type="button" class="btn btn-sm btn-icon btn-color-primary btn-active-light-primary"
+            data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end" data-kt-menu-flip="top-end">
+          </button>
+        </div>
+      </div>
+      <div class="card-body pt-3">
+        <!-- show pictures here -->
+        <div class="row">
+          <div class="col-md-4 mb-3" *ngFor="let picture of uploadedPictures">
+            <div class="position-relative">
+              <img [src]="picture.src" alt="Uploaded Image" width="200px" height="200px" />
+              <span class="remove_img" (click)="removePicture(picture.id)">x</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- modal -->
+<swal #noticeSwal [swalOptions]="swalOptions">
+</swal>

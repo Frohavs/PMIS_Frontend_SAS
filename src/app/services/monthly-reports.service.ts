@@ -36,6 +36,15 @@ export class MonthlyReportsService {
     });
   }
 
+  getReportById(id: any): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/Get/${id}`;
+    return this.http.get<any>(url, {
+      headers: httpHeaders
+    });
+  }
   checkMonthlyReportCreation(payload: any): Observable<any> {
     const httpHeaders = new HttpHeaders({
       Authorization: `Bearer ${this.token}`,
@@ -68,6 +77,15 @@ export class MonthlyReportsService {
       Authorization: `Bearer ${this.token}`,
     });
     const url = `${this.API_USERS_URL}/Create`;
+    return this.http.post<any>(url, payload, {
+      headers: httpHeaders
+    });
+  }
+  createWorkProgressImages(payload: any): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/CreateImages`;
     return this.http.post<any>(url, payload, {
       headers: httpHeaders
     });

@@ -141,8 +141,8 @@ export class AddMonthlyReportComponent implements OnInit, OnDestroy {
     this.monthlyReportsService.createMonthlyReport(payload).subscribe(res => {
       this.router.navigateByUrl(`projects/monthly_reports/${this.projectId}`);
       this.showAlert({ icon: 'success', title: 'Success!', text: 'Report added successfully!' });
-    }, error => {
-      this.showAlert({ icon: 'error', title: 'Error!', text: 'Please try again' });
+    }, (err) => {
+      this.showAlert({ icon: 'error', title: 'Error!', text: err?.error?.responseException?.exceptionMessage?.errors?.global.join(' ') });
     });
   }
 
