@@ -22,10 +22,10 @@
             <a class="text-success fw-bolder fs-4">
               Report Rating Percentage
             </a>
-            <span class="fw-bolder fs-6">{{progressResult}}%</span>
+            <span class="fw-bolder fs-6">{{ratingProgressResult}}%</span>
           </div>
           <div class="h-5px mx-3 w-100 bg-light mb-3">
-            <div class="bg-success rounded h-7px" role="progressbar" [style.width]="progressResult+'%'"></div>
+            <div class="bg-success rounded h-7px" role="progressbar" [style.width]="ratingProgressResult+'%'"></div>
           </div>
         </div>
         <br>
@@ -34,17 +34,21 @@
             <a class="text-info fw-bolder fs-4">
               Report Completions Percentage
             </a>
-            <span class="fw-bolder fs-6">{{progressResult}}%</span>
+            <span class="fw-bolder fs-6">{{completionProgressResult}}%</span>
           </div>
           <div class="h-5px mx-3 w-100 bg-light mb-3">
-            <div class="bg-info rounded h-7px" role="progressbar" [style.width]="progressResult+'%'"></div>
+            <div class="bg-info rounded h-7px" role="progressbar" [style.width]="completionProgressResult+'%'"></div>
           </div>
         </div>
 
         <div class="d-flex flex-row-fluid justify-content-start gap-1 mt-8">
           <div class=" me-2">
             <div class="card-toolbar">
-              <a (click)="navigateTo('monthly_work_progress')" class="btn btn-sm btn-success">
+              <a (click)="navigateTo('monthly_work_progress')" class="btn btn-sm" [ngClass]="{
+                  'btn-light-warning': completionProgressResult === 0,
+                  'btn-light-success': completionProgressResult > 0 && !reportDetails?.workProgressImageSubmitted,
+                  'btn-success': completionProgressResult > 0 &&reportDetails?.workProgressImageSubmitted,
+                 }">
                 Work Progress Picture
               </a>
             </div>
@@ -53,7 +57,7 @@
           <div class=" me-2">
             <div class="card-toolbar">
               <a (click)="navigateTo('monthly_recommendation')" class="btn btn-sm"
-                [ngClass]="{'btn-success': progressResult > 0, 'btn-light-warning': progressResult === 0}">
+                [ngClass]="{'btn-success': completionProgressResult > 20 && reportDetails?.workProgressImageSubmitted, 'btn-light-warning': completionProgressResult <= 20}">
                 Monthly Recommendation
               </a>
             </div>

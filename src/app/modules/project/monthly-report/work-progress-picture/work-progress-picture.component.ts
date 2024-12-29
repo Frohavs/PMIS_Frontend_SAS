@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -8,6 +8,7 @@ import { AttachmentService } from 'src/app/services/attachment/attachment.servic
 import { ProjectsService } from 'src/app/services/projects.service';
 import { SweetAlertOptions } from 'sweetalert2';
 import { MonthlyReportsService } from 'src/app/services/monthly-reports.service';
+import { NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 
 
 @Component({
@@ -19,6 +20,7 @@ export class WorkProgressPictureComponent implements OnInit {
 
   projectId: number;
   reportId: number;
+  reportDetails: any;
   isLoading: boolean;
   projectDetails: any;
   workProgressForm: FormGroup;
@@ -26,13 +28,18 @@ export class WorkProgressPictureComponent implements OnInit {
 
   swalOptions: SweetAlertOptions = { buttonsStyling: false };
   @ViewChild('noticeSwal') noticeSwal!: SwalComponent;
-
+  modalConfig: NgbModalOptions = {
+    modalDialogClass: 'modal-dialog modal-dialog-centered mw-650px',
+  };
+  @ViewChild('approveModal') approveModal: TemplateRef<any>;
+  approveModelData: any = { approved: true, id: 0, type: 1 };
 
   constructor(
     private _location: Location,
     private router: Router,
     private cdr: ChangeDetectorRef,
     private formBuilder: FormBuilder,
+    private modalService: NgbModal,
     private activatedRoute: ActivatedRoute,
     private monthlyReportsService: MonthlyReportsService,
     private attachmentService: AttachmentService,
@@ -52,8 +59,11 @@ export class WorkProgressPictureComponent implements OnInit {
     this.activatedRoute.queryParams.subscribe(params => {
       this.reportId = +params['reportId'];
       if (this.reportId) {
-        // this.getProjectDetails();
-        // this.getFormValues()
+        this.monthlyReportsService.getReportById(this.reportId).subscribe((res) => {
+          this.reportDetails = res.data;
+          console.log(this.reportDetails);
+          this.cdr.detectChanges();
+        });
       }
     });
   }
@@ -119,6 +129,25 @@ export class WorkProgressPictureComponent implements OnInit {
         this.isLoading = false;
       }
     });
+  }
+
+  approveNotes() {
+    this.modalService.open(this.approveModal, this.modalConfig);
+  }
+
+  onApprove() {
+    this.approveModelData['id'] = this.reportId;
+    debugger
+    this.monthlyReportsService.approveStep(this.approveModelData).subscribe(res => {
+      this.showAlert({ icon: 'success', title: 'Success!', text: this.approveModelData.approved ? 'Notes Approved successfully' : 'Notes Rejected successfully' });
+      this.approveModelData = { approved: true, id: this.reportId, type: 1 };
+      this.router.navigateByUrl(`projects/monthly_report_details/${this.projectId}?reportId=${this.reportId}`);
+      this.modalService.dismissAll();
+    }, () => {
+      this.showAlert({ icon: 'error', title: 'Error!', text: 'please try again' });
+    });
+
+
   }
 
   showAlert(swalOptions: SweetAlertOptions) {

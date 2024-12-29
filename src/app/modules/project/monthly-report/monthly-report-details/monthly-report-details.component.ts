@@ -12,7 +12,8 @@ export class MonthlyReportDetailsComponent implements OnInit {
   projectId: number;
   reportId: number;
   reportDetails: any;
-  progressResult = 0;
+  ratingProgressResult = 0;
+  completionProgressResult = 0;
 
   constructor(
     private router: Router,
@@ -34,14 +35,17 @@ export class MonthlyReportDetailsComponent implements OnInit {
           console.log(this.reportDetails);
           this.checkProgress();
           this.cdr.detectChanges();
-        })
+        });
       }
     });
   }
 
   checkProgress() {
     if (this.reportDetails.images.length) {
-      this.progressResult = 20
+      this.completionProgressResult = 20
+    }
+    if(this.reportDetails.workProgressImageSubmitted) {
+      this.ratingProgressResult = 20
     }
   }
 
