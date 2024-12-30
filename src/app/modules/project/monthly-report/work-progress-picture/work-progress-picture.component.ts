@@ -48,19 +48,20 @@ export class WorkProgressPictureComponent implements OnInit {
   ngOnInit(): void {
     this.initWorkProgressForm();
 
-
     this.activatedRoute.params.subscribe(params => {
       this.projectId = +params['id'];
-      if (this.projectId) {
-        // this.getProjectDetails();
-        // this.getFormValues()
-      }
     });
     this.activatedRoute.queryParams.subscribe(params => {
       this.reportId = +params['reportId'];
       if (this.reportId) {
         this.monthlyReportsService.getReportById(this.reportId).subscribe((res) => {
           this.reportDetails = res.data;
+          if(this.reportDetails?.images.length) {
+            for (const element of this.reportDetails?.images) {
+              this.uploadedPictures.push({ src: element, id: element });
+
+            }
+          };
           console.log(this.reportDetails);
           this.cdr.detectChanges();
         });
@@ -137,7 +138,6 @@ export class WorkProgressPictureComponent implements OnInit {
 
   onApprove() {
     this.approveModelData['id'] = this.reportId;
-    debugger
     this.monthlyReportsService.approveStep(this.approveModelData).subscribe(res => {
       this.showAlert({ icon: 'success', title: 'Success!', text: this.approveModelData.approved ? 'Notes Approved successfully' : 'Notes Rejected successfully' });
       this.approveModelData = { approved: true, id: this.reportId, type: 1 };
@@ -146,8 +146,6 @@ export class WorkProgressPictureComponent implements OnInit {
     }, () => {
       this.showAlert({ icon: 'error', title: 'Error!', text: 'please try again' });
     });
-
-
   }
 
   showAlert(swalOptions: SweetAlertOptions) {

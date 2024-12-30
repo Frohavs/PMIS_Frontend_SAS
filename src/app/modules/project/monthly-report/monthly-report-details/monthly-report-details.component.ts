@@ -44,8 +44,14 @@ export class MonthlyReportDetailsComponent implements OnInit {
     if (this.reportDetails.images.length) {
       this.completionProgressResult = 20
     }
+    if (this.reportDetails?.recommendation?.contractor) {
+      this.completionProgressResult = 50
+    }
     if(this.reportDetails.workProgressImageSubmitted) {
       this.ratingProgressResult = 20
+    }
+    if(this.reportDetails.recommendationSubmitted) {
+      this.ratingProgressResult = 50
     }
   }
 

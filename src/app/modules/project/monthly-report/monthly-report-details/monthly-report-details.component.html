@@ -57,7 +57,10 @@
           <div class=" me-2">
             <div class="card-toolbar">
               <a (click)="navigateTo('monthly_recommendation')" class="btn btn-sm"
-                [ngClass]="{'btn-success': completionProgressResult > 20 && reportDetails?.workProgressImageSubmitted, 'btn-light-warning': completionProgressResult <= 20}">
+                [ngClass]="{
+                  'btn-light-warning': completionProgressResult >= 20 && !reportDetails?.recommendationSubmitted,
+                  'btn-light-success': (reportDetails?.recommendation?.contractor && !reportDetails?.recommendationSubmitted),
+                  'btn-success': (reportDetails?.recommendation?.contractor && reportDetails?.recommendationSubmitted)}">
                 Monthly Recommendation
               </a>
             </div>

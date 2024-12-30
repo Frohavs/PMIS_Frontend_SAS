@@ -1,1 +1,182 @@
-<p>monthly-recomendation works!</p>
+<div class="row g-5 g-xl-8 justify-content-between">
+  <div class="col-xl-12">
+    <div class="card mb-5 mb-xl-8">
+      <div class="card-header align-items-center border-0 mt-4">
+        <h3 class="card-title align-items-start flex-column">
+          <span class="fw-bolder text-gray-900">Monthly Recommendation</span>
+          <!-- <span class="text-muted mt-1 fw-bold fs-7">test</span> -->
+        </h3>
+        <div class="card-toolbar" *ngIf="!reportDetails?.recommendationSubmitted">
+          <a *ngIf="!reportDetails?.recommendation?.contractor" class="btn btn-sm btn-primary d-flex mx-2" (click)="addRecommendation()">
+            Add Recommendation
+          </a>
+          <a *ngIf="reportDetails?.recommendation?.contractor" class="btn btn-sm btn-light-success d-flex mx-2" (click)="approveRecommendation()">
+            Approve Status
+          </a>
+        </div>
+      </div>
+      <div class="card-body pt-3">
+        <div class="d-flex align-items-sm-center mb-7">
+
+          <div class="d-flex flex-row-fluid flex-wrap align-items-center">
+            <div class="w-100 me-2">
+              <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
+                Report No.
+              </a>
+              <span class="text-muted fw-bold d-block pt-1">{{reportId  ||  '--'}}</span>
+            </div>
+
+          </div>
+        </div>
+        <div class="d-flex align-items-sm-center mb-7">
+
+          <div class="d-flex flex-row-fluid flex-wrap align-items-center">
+            <div class="flex-grow-1 me-2">
+              <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
+                Contractor
+              </a>
+              <span class="text-muted fw-bold d-block pt-1">{{reportDetails?.recommendation?.contractor||  '--'}}</span>
+            </div>
+          </div>
+        </div>
+        <div class="d-flex align-items-sm-center mb-7">
+
+          <div class="d-flex flex-row-fluid flex-wrap align-items-center">
+            <div class="flex-grow-1 me-2">
+              <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
+                Consultant
+              </a>
+              <span class="text-muted fw-bold d-block pt-1">{{reportDetails?.recommendation?.consultant||  '--'}}</span>
+            </div>
+
+          </div>
+        </div>
+        <div class="d-flex align-items-sm-center mb-7">
+
+          <div class="d-flex flex-row-fluid flex-wrap align-items-center">
+            <div class="w-50 me-2">
+              <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
+                Owner
+              </a>
+              <span class="text-muted fw-bold d-block pt-1">{{reportDetails?.recommendation?.owner||  '--'}}</span>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+<swal #noticeSwal [swalOptions]="swalOptions">
+</swal>
+
+<ng-template #addRecommendationModal let-modal>
+  <form #myForm="ngForm" (ngSubmit)="onSubmitNote()">
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Recommendation Details</h4>
+      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+
+      <!-- <div class="fv-row mb-7">
+        <div class="col-lg-8 d-flex align-items-center">
+          <div class="form-check form-check-solid form-switch d-flex align-items-center">
+            <input class="form-check-input w-45px h-30px me-2" type="checkbox" name="durationDays"
+              [(ngModel)]="approveModelData.approved" />
+            <label class="form-check-label">{{approveModelData.approved ? 'approve' : 'reject'}}</label>
+          </div>
+        </div>
+      </div> -->
+
+      <div class="fv-row mb-7">
+        <label class="fw-semibold fs-6 mb-2">Contractor</label>
+        <textarea class="form-control form-control-solid" name="eotReason" [(ngModel)]="recommendModelData.contractor"
+          rows="3"></textarea>
+      </div>
+
+      <div class="fv-row mb-7">
+        <label class="fw-semibold fs-6 mb-2">Consultant</label>
+        <textarea class="form-control form-control-solid" name="eotReason" [(ngModel)]="recommendModelData.consultant"
+          rows="3"></textarea>
+      </div>
+
+      <div class="fv-row mb-7">
+        <label class="fw-semibold fs-6 mb-2">Owner</label>
+        <textarea class="form-control form-control-solid" name="eotReason" [(ngModel)]="recommendModelData.owner"
+          rows="3"></textarea>
+      </div>
+
+    </div>
+    <div class="modal-footer flex-center">
+      <!--begin::Button-->
+      <button type="reset" id="kt_modal_update_customer_cancel" class="btn btn-light me-3"
+        (click)="modal.dismiss('cancel')">
+        Discard
+      </button>
+      <!--end::Button-->
+
+      <!--begin::Button-->
+      <button type="submit" id="kt_modal_update_customer_submit" class="btn btn-primary"
+        [attr.data-kt-indicator]="isLoading ? 'on' : 'off'">
+        <span class="indicator-label">
+          Submit
+        </span>
+        <span class="indicator-progress">
+          Please wait... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+        </span>
+      </button>
+      <!--end::Button-->
+    </div>
+  </form>
+</ng-template>
+
+
+<swal #noticeSwal [swalOptions]="swalOptions">
+</swal>
+
+
+<ng-template #approveModal let-modal>
+  <form #myForm="ngForm" (ngSubmit)="onApprove()">
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Role Details</h4>
+      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+
+      <div class="fv-row mb-7">
+        <div class="col-lg-8 d-flex align-items-center">
+          <div class="form-check form-check-solid form-switch d-flex align-items-center">
+            <input class="form-check-input w-45px h-30px me-2" type="checkbox" name="durationDays"
+              [(ngModel)]="approveModelData.approved" />
+            <label class="form-check-label">{{approveModelData.approved ? 'approve' : 'reject'}}</label>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="modal-footer flex-center">
+      <!--begin::Button-->
+      <button type="reset" id="kt_modal_update_customer_cancel" class="btn btn-light me-3"
+        (click)="modal.dismiss('cancel')">
+        Discard
+      </button>
+      <!--end::Button-->
+
+      <!--begin::Button-->
+      <button type="submit" id="kt_modal_update_customer_submit" class="btn btn-primary"
+        [attr.data-kt-indicator]="isLoading ? 'on' : 'off'">
+        <span class="indicator-label">
+          Submit
+        </span>
+        <span class="indicator-progress">
+          Please wait... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+        </span>
+      </button>
+      <!--end::Button-->
+    </div>
+  </form>
+</ng-template>
