@@ -6,5 +6,6 @@ import { Component } from '@angular/core';
   styleUrl: './report-step.component.scss'
 })
 export class ReportStepComponent {
+  
 
 }
