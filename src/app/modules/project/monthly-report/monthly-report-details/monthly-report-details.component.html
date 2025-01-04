@@ -118,14 +118,14 @@
                   <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
                     Project name
                   </a>
-                  <span class="text-muted fw-bold d-block pt-1">{{reportDetails?.nameAr  ||  '--'}}</span>
+                  <span class="text-muted fw-bold d-block pt-1">{{reportDetails?.projectName  ||  '--'}}</span>
                 </div>
                 <div class="flex-grow-1 me-2">
                   <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
                     Contract Date
                   </a>
                   <span
-                    class="text-muted fw-bold d-block pt-1">{{reportDetails?.createdDate?.slice(0, 10)  ||  '--'}}</span>
+                    class="text-muted fw-bold d-block pt-1">{{projectDetails?.createdDate?.slice(0, 10)  ||  '--'}}</span>
                 </div>
               </div>
               <!-- end::Title -->
@@ -140,13 +140,13 @@
                   <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
                     Contract No
                   </a>
-                  <span class="text-muted fw-bold d-block pt-1">{{reportDetails?.contractNo  ||  '--'}}</span>
+                  <span class="text-muted fw-bold d-block pt-1">{{projectDetails?.contractNo  ||  '--'}}</span>
                 </div>
                 <div class="flex-grow-1 me-2">
                   <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
                     Consultant
                   </a>
-                  <span class="text-muted fw-bold d-block pt-1">{{reportDetails?.consultantName ||  '--'}}</span>
+                  <span class="text-muted fw-bold d-block pt-1">{{projectDetails?.consultantName ||  '--'}}</span>
                 </div>
               </div>
               <!-- end::Title -->
@@ -161,14 +161,14 @@
                   <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
                     Contractor
                   </a>
-                  <span class="text-muted fw-bold d-block pt-1">{{reportDetails?.contractorName || '--'}}</span>
+                  <span class="text-muted fw-bold d-block pt-1">{{projectDetails?.contractorName || '--'}}</span>
                 </div>
                 <div class="flex-grow-1 me-2">
                   <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
-                    Sector
+                    Contract Value
                   </a>
                   <span
-                    class="text-muted fw-bold d-block pt-1">{{reportDetails?.Sector ||  '--'}}</span>
+                    class="text-muted fw-bold d-block pt-1">{{projectDetails?.updatedValue | number}}</span>
                 </div>
               </div>
               <!-- end::Title -->
@@ -198,14 +198,14 @@
                   <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
                     Project Start date
                   </a>
-                  <span class="text-muted fw-bold d-block pt-1">{{reportDetails?.nameAr  ||  '--'}}</span>
+                  <span class="text-muted fw-bold d-block pt-1">{{projectDetails?.nameAr  ||  '--'}}</span>
                 </div>
                 <div class="flex-grow-1 me-2">
                   <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
                     Expected Finish Date
                   </a>
                   <span
-                    class="text-muted fw-bold d-block pt-1">{{reportDetails?.createdDate?.slice(0, 10)  ||  '--'}}</span>
+                    class="text-muted fw-bold d-block pt-1">{{projectDetails?.originalFinishDate?.slice(0, 10)  ||  '--'}}</span>
                 </div>
               </div>
               <!-- end::Title -->
@@ -220,13 +220,13 @@
                   <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
                     Original Duration
                   </a>
-                  <span class="text-muted fw-bold d-block pt-1">{{reportDetails?.contractNo  ||  '--'}}</span>
+                  <span class="text-muted fw-bold d-block pt-1">{{projectDetails?.originalDuration  ||  '--'}}</span>
                 </div>
                 <div class="flex-grow-1 me-2">
                   <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
                     Approved EOT Days
                   </a>
-                  <span class="text-muted fw-bold d-block pt-1">{{reportDetails?.consultantName ||  '--'}}</span>
+                  <span class="text-muted fw-bold d-block pt-1">{{projectDetails?.eotDays ||  '--'}}</span>
                 </div>
               </div>
               <!-- end::Title -->
@@ -241,14 +241,14 @@
                   <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
                     Total EOT Days
                   </a>
-                  <span class="text-muted fw-bold d-block pt-1">{{reportDetails?.contractorName || '--'}}</span>
+                  <span class="text-muted fw-bold d-block pt-1">{{projectDetails?.totalDaysWithEOT || '--'}}</span>
                 </div>
                 <div class="flex-grow-1 me-2">
                   <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
                     Finish date after extension
                   </a>
                   <span
-                    class="text-muted fw-bold d-block pt-1">{{reportDetails?.originalFinishDate?.slice(0, 10)  ||  '--'}}</span>
+                    class="text-muted fw-bold d-block pt-1">{{projectDetails?.expectedFinishDate?.slice(0, 10)  ||  '--'}}</span>
                 </div>
               </div>
               <!-- end::Title -->
@@ -279,14 +279,14 @@
                   <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
                     Original Project Value
                   </a>
-                  <span class="text-muted fw-bold d-block pt-1">{{reportDetails?.nameAr  ||  '--'}}</span>
+                  <span class="text-muted fw-bold d-block pt-1">{{projectDetails?.originalValue  ||  '--'}}</span>
                 </div>
                 <div class="flex-grow-1 me-2">
                   <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
                     Final Project Value
                   </a>
                   <span
-                    class="text-muted fw-bold d-block pt-1">{{reportDetails?.createdDate?.slice(0, 10)  ||  '--'}}</span>
+                    class="text-muted fw-bold d-block pt-1">{{projectDetails?.updatedValue ||  '--'}}</span>
                 </div>
               </div>
               <!-- end::Title -->
@@ -301,13 +301,13 @@
                   <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
                     VO
                   </a>
-                  <span class="text-muted fw-bold d-block pt-1">{{reportDetails?.contractNo  ||  '--'}}</span>
+                  <span class="text-muted fw-bold d-block pt-1">{{projectDetails?.voValues  ||  '--'}}</span>
                 </div>
                 <div class="flex-grow-1 me-2">
                   <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
                     EAC
                   </a>
-                  <span class="text-muted fw-bold d-block pt-1">{{reportDetails?.consultantName ||  '--'}}</span>
+                  <span class="text-muted fw-bold d-block pt-1">{{projectDetails?.spi ||  '--'}}</span>
                 </div>
               </div>
               <!-- end::Title -->

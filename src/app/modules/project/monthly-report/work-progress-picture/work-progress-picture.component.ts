@@ -1,14 +1,12 @@
+import { Location } from '@angular/common';
 import { ChangeDetectorRef, Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
-import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
-import { map } from 'rxjs';
-import { AttachmentService } from 'src/app/services/attachment/attachment.service';
-import { ProjectsService } from 'src/app/services/projects.service';
-import { SweetAlertOptions } from 'sweetalert2';
-import { MonthlyReportsService } from 'src/app/services/monthly-reports.service';
 import { NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
+import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
+import { AttachmentService } from 'src/app/services/attachment/attachment.service';
+import { MonthlyReportsService } from 'src/app/services/monthly-reports.service';
+import { SweetAlertOptions } from 'sweetalert2';
 
 
 @Component({

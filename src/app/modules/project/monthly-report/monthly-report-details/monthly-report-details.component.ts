@@ -11,6 +11,7 @@ export class MonthlyReportDetailsComponent implements OnInit {
 
   projectId: number;
   reportId: number;
+  projectDetails: any;
   reportDetails: any;
   ratingProgressResult = 0;
   completionProgressResult = 0;
@@ -26,6 +27,12 @@ export class MonthlyReportDetailsComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.params.subscribe((res) => {
       this.projectId = +res['id'];
+      this.monthlyReportsService.getProjectData(this.projectId).subscribe((res) => {
+        this.projectDetails = res.data;
+        console.log('this.projectDetails', this.projectDetails);
+
+        this.cdr.detectChanges();
+      })
     });
     this.activatedRoute.queryParams.subscribe((res) => {
       this.reportId = +res['reportId'];
