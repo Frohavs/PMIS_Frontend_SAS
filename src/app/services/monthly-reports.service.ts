@@ -110,5 +110,14 @@ export class MonthlyReportsService {
       headers: httpHeaders
     });
   }
+  postMonthlyReportCorrespondence(payload: any): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/CreateCorrespondence`;
+    return this.http.post<any>(url, payload, {
+      headers: httpHeaders
+    });
+  }
 
 }
