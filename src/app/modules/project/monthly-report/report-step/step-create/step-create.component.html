@@ -1,9 +1,15 @@
 <div class="card">
   <div class="card-body">
-    <div class="card-toolbar d-flex justify-content-center f-3 fw-bolder text-gray-900">
+    <div class="card-toolbar d-flex justify-content-between f-3 fw-bolder text-gray-900">
       <h3>
         Monthly Schedule Report Create
       </h3>
+
+      <a class="btn btn-danger font-weight-bolder font-size-sm cursor-pointer mx-2" (click)="back()">
+        <app-keenicon name="arrow-left" class="fs-3"></app-keenicon>
+        {{"ECOMMERCE.COMMON.BACK" | translate}}
+      </a>
+
     </div>
     <div class="stepper stepper-links d-flex flex-column pt-15" id="kt_create_account_stepper">
       <div class="stepper-nav mb-5">
@@ -24,14 +30,159 @@
 
       </div>
 
-      <form class="mx-auto mw-600px w-100 pt-15 pb-10" noValidate id="kt_create_account_form">
+      <form [formGroup]="addReportForm" class="mx-auto mw-1000px w-100 pt-15 pb-10" id="kt_create_account_form">
         <div class="current">
           <ng-container *ngIf="currentStep$.value === 1">
-            One
+            <div class="row mb-1 align-items-center">
+              <label class="col-lg-3 col-form-label fw-bold fs-6"> <span> SCurved (current month) </span> </label>
+              <div class="col-md-4 mb-6">
+                <label class="col-lg-8 col-form-label fw-bold fs-6">
+                  <span>Planned </span>
+                </label>
+                <div class="col-lg-11 fv-row">
+                  <input class="form-control form-control-lg form-control-solid text-start" disabled value="--" />
+
+                </div>
+              </div>
+              <div class="col-md-5 mb-6">
+                <label class="col-lg-8 col-form-label fw-bold fs-6">
+                  <span> Actual </span>
+                </label>
+                <div class="col-lg-11 fv-row">
+                  <input class="form-control form-control-lg form-control-solid text-start" name="scurveValue"
+                    formControlName="scurveValue" />
+                  <div
+                    *ngIf="addReportForm?.get('scurveValue')?.invalid && (addReportForm?.get('scurveValue')?.dirty || addReportForm?.get('scurveValue')?.touched)"
+                    class="fv-plugins-message-container">
+                    <div class="fv-help-block">field is required</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row mb-1 align-items-center" *ngFor="let scurve of projectDetails?.scurves">
+              <label class="col-lg-3 col-form-label fw-bold fs-6"> <span> SCurved {{scurve.month}},
+                  {{scurve.year}}</span> </label>
+              <div class="col-md-4 mb-6">
+                <label class="col-lg-8 col-form-label fw-bold fs-6">
+                  <span>Planned </span>
+                </label>
+                <div class="col-lg-11 fv-row">
+                  <input class="form-control form-control-lg form-control-solid text-start" disabled
+                    [value]="scurve.plannedValue" />
+
+                </div>
+              </div>
+              <div class="col-md-5 mb-6">
+                <label class="col-lg-8 col-form-label fw-bold fs-6">
+                  <span> Actual </span>
+                </label>
+                <div class="col-lg-11 fv-row">
+                  <input class="form-control form-control-lg form-control-solid text-start" disabled
+                    [value]="scurve.actualValue" />
+
+                </div>
+              </div>
+            </div>
+            <div class="row mb-1 align-items-center">
+              <label class="col-lg-3 col-form-label fw-bold fs-6"> <span> Resource (current month) </span> </label>
+              <div class="col-md-4 mb-6">
+                <label class="col-lg-8 col-form-label fw-bold fs-6">
+                  <span>Planned </span>
+                </label>
+                <div class="col-lg-11 fv-row">
+                  <input class="form-control form-control-lg form-control-solid text-start" disabled value="--" />
+
+                </div>
+              </div>
+              <div class="col-md-5 mb-6">
+                <label class="col-lg-8 col-form-label fw-bold fs-6">
+                  <span> Actual </span>
+                </label>
+                <div class="col-lg-11 fv-row">
+                  <input class="form-control form-control-lg form-control-solid text-start" name="resourcePlanValue"
+                    formControlName="resourcePlanValue" />
+                  <div
+                    *ngIf="addReportForm?.get('resourcePlanValue')?.invalid && (addReportForm?.get('resourcePlanValue')?.dirty || addReportForm?.get('resourcePlanValue')?.touched)"
+                    class="fv-plugins-message-container">
+                    <div class="fv-help-block">field is required</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row mb-1 align-items-center" *ngFor="let scurve of projectDetails?.resourcePlans">
+              <label class="col-lg-3 col-form-label fw-bold fs-6"> <span> Resource {{scurve.month}},
+                  {{scurve.year}}</span> </label>
+              <div class="col-md-4 mb-6">
+                <label class="col-lg-8 col-form-label fw-bold fs-6">
+                  <span>Planned </span>
+                </label>
+                <div class="col-lg-11 fv-row">
+                  <input class="form-control form-control-lg form-control-solid text-start" disabled
+                    [value]="scurve.plannedLabour" />
+
+                </div>
+              </div>
+              <div class="col-md-5 mb-6">
+                <label class="col-lg-8 col-form-label fw-bold fs-6">
+                  <span> Actual </span>
+                </label>
+                <div class="col-lg-11 fv-row">
+                  <input class="form-control form-control-lg form-control-solid text-start" disabled
+                    [value]="scurve.actualLabour" />
+
+                </div>
+              </div>
+            </div>
+
+
           </ng-container>
 
           <ng-container *ngIf="currentStep$.value === 2">
-            Two
+            <div class="row mb-1">
+
+              <div class="col-md-12 mb-6">
+                <label class="col-lg-8 col-form-label fw-bold fs-6"><span> Actual Finish Data/تاريخ نهاية المشروع
+                    الفعلية</span></label>
+                <div class="col-lg-11 fv-row">
+                  <input type="date" class="form-control form-control-lg form-control-solid text-start"
+                    name="actualEndDate" formControlName="actualEndDate" />
+                  <div
+                    *ngIf="addReportForm?.get('actualEndDate')?.invalid && (addReportForm?.get('actualEndDate')?.dirty || addReportForm?.get('actualEndDate')?.touched)"
+                    class="fv-plugins-message-container">
+                    <div class="fv-help-block">field is required</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-12 mb-6">
+                <label class="col-lg-8 col-form-label fw-bold fs-6"><span> Expected Finish Data/تاريخ النهاية
+                    المتوقع</span></label>
+                <div class="col-lg-11 fv-row">
+                  <input type="date" class="form-control form-control-lg form-control-solid text-start"
+                    name="expectedEndDate" formControlName="expectedEndDate" />
+                  <div
+                    *ngIf="addReportForm?.get('expectedEndDate')?.invalid && (addReportForm?.get('expectedEndDate')?.dirty || addReportForm?.get('expectedEndDate')?.touched)"
+                    class="fv-plugins-message-container">
+                    <div class="fv-help-block">field is required</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-12 mb-6">
+                <label class="col-lg-8 col-form-label fw-bold fs-6"><span>difference between end of the project, basic
+                    schedule/فرق مدة نهاية المشروع عن البرنامج الزمني
+                    الأساسي</span></label>
+                <div class="col-lg-11 fv-row">
+                  <input type="text" class="form-control form-control-lg form-control-solid text-start" name="delayDays"
+                    formControlName="delayDays" (keypress)="numbersOnly($event)" />
+                  <div
+                    *ngIf="addReportForm?.get('delayDays')?.invalid && (addReportForm?.get('delayDays')?.dirty || addReportForm?.get('delayDays')?.touched)"
+                    class="fv-plugins-message-container">
+                    <div class="fv-help-block">field is required</div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </ng-container>
 
         </div>
@@ -69,3 +220,8 @@
     </div>
   </div>
 </div>
+
+
+<!-- modal -->
+<swal #noticeSwal [swalOptions]="swalOptions">
+</swal>

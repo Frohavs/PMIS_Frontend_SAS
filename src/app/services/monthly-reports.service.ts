@@ -119,5 +119,14 @@ export class MonthlyReportsService {
       headers: httpHeaders
     });
   }
+  createMonthlyReportData(payload: any): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/CreateMonthlyReportData`;
+    return this.http.post<any>(url, payload, {
+      headers: httpHeaders
+    });
+  }
 
 }

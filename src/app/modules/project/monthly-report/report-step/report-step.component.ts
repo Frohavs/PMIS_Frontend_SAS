@@ -11,8 +11,8 @@ import { MonthlyReportsService } from 'src/app/services/monthly-reports.service'
 export class ReportStepComponent implements OnInit {
 
   projectId: number;
-  reportId: number;
   projectDetails: any;
+  reportId: number;
   reportDetails: any;
   ratingProgressResult = 0;
   completionProgressResult = 0;
