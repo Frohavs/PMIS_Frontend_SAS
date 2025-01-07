@@ -18,6 +18,7 @@ export class StepDetailsComponent implements OnInit {
   reportId: number;
   reportDetails: any;
 
+  printCheck: boolean = false;
   isLoading: boolean;
   projectId: number;
 
@@ -26,13 +27,13 @@ export class StepDetailsComponent implements OnInit {
   chartSize: number = 150;
   chartLine: number = 15;
   chartRotate: number = 145;
+  projectCreationDetails: any;
   projectDetails: any;
   UpdateProgressForm: FormGroup;
 
 
   swalOptions: SweetAlertOptions = { buttonsStyling: false };
   @ViewChild('noticeSwal') noticeSwal!: SwalComponent;
-
 
   constructor(
     private _location: Location,
@@ -52,6 +53,7 @@ export class StepDetailsComponent implements OnInit {
     });
 
     this.activatedRoute.queryParams.subscribe((res) => {
+      this.printCheck = res['print'];
       this.reportId = +res['reportId'];
       if (this.reportId) {
         this.getReportDetails();
@@ -68,6 +70,11 @@ export class StepDetailsComponent implements OnInit {
   }
 
   getProjectDetails() {
+    this.projectsService.getByID(this.projectId).subscribe(res => {
+      this.projectCreationDetails = res.data;
+      console.log('projectCreationDetails', this.projectCreationDetails);
+      this.cdr.detectChanges();
+    });
     this.monthlyReportsService.getProjectData(this.projectId).subscribe(res => {
       this.projectDetails = res.data;
       console.log('projectDetails', this.projectDetails);
@@ -78,6 +85,9 @@ export class StepDetailsComponent implements OnInit {
     this.monthlyReportsService.getReportById(this.reportId).subscribe((res) => {
       this.reportDetails = res.data;
       console.log('reportDetails', this.reportDetails);
+      setTimeout(() => {
+        if(this.printCheck) window.print();
+      }, 500);
       this.cdr.detectChanges();
     });
   }
@@ -178,11 +188,11 @@ export class StepDetailsComponent implements OnInit {
       series: [
         {
           name: 'Net Profit',
-          data: [44, 55, 57, 56, 61, 58],
+          data: [44, 55, 57],
         },
         {
           name: 'Revenue',
-          data: [76, 85, 101, 98, 87, 105],
+          data: [76, 85, 101],
         },
       ],
       chart: {
@@ -212,7 +222,7 @@ export class StepDetailsComponent implements OnInit {
         colors: ['transparent'],
       },
       xaxis: {
-        categories: ['Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+        categories: ['Jan', 'Feb', 'Mar'],
         axisBorder: {
           show: false,
         },
@@ -290,11 +300,11 @@ export class StepDetailsComponent implements OnInit {
       series: [
         {
           name: 'Net Profit',
-          data: [34, 55, 20, 26, 41, 30],
+          data: [34],
         },
         {
           name: 'Revenue',
-          data: [16, 25, 80, 38, 77, 20],
+          data: [16],
         },
       ],
       chart: {
@@ -324,7 +334,7 @@ export class StepDetailsComponent implements OnInit {
         colors: ['transparent'],
       },
       xaxis: {
-        categories: ['Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+        categories: ['Jan'],
         axisBorder: {
           show: false,
         },

@@ -22,27 +22,27 @@
             <tbody>
               <tr>
                 <td class="colored-cell">مقاول المشروع</td>
-                <td class="light-colored-cell">-------------------------------------------------</td>
+                <td class="light-colored-cell">{{projectCreationDetails?.contractorName}}</td>
                 <td class="colored-cell">الإستشاري</td>
-                <td class="light-colored-cell">-------------------------------------------------</td>
+                <td class="light-colored-cell">{{projectCreationDetails?.consultantName}}</td>
               </tr>
               <tr>
                 <td class="colored-cell">تاريخ بداية العقد</td>
-                <td class="light-colored-cell">-------------------------------------------------</td>
+                <td class="light-colored-cell">{{projectCreationDetails?.executionStartDate | date: 'dd-MM-yyyy'}}</td>
                 <td class="colored-cell">تاريخ نهاية العقد الأساسية</td>
-                <td class="light-colored-cell">-------------------------------------------------</td>
+                <td class="light-colored-cell">{{projectCreationDetails?.originalFinishDate | date: 'dd-MM-yyyy'}}</td>
               </tr>
               <tr>
                 <td class="colored-cell">عدد التمديدات المعتمدة</td>
-                <td class="light-colored-cell">-------------------------------------------------</td>
+                <td class="light-colored-cell">{{projectCreationDetails?.originalDuration}}</td>
                 <td class="colored-cell">مدة التمديد المتوقع رفعها</td>
-                <td class="light-colored-cell">-------------------------------------------------</td>
+                <td class="light-colored-cell">{{projectCreationDetails?.asdsad || '--------------------'}}</td>
               </tr>
               <tr>
                 <td class="colored-cell">إجمالي مدة التمديد المعتمدة</td>
-                <td class="light-colored-cell">-------------------------------------------------</td>
+                <td class="light-colored-cell">{{projectCreationDetails?.asdsad || '--------------------'}}</td>
                 <td class="colored-cell">إجمالي مدة المشروع بعد إعتماد التعديلات</td>
-                <td class="light-colored-cell">-------------------------------------------------</td>
+                <td class="light-colored-cell">{{projectCreationDetails?.asdsad || '--------------------'}}</td>
               </tr>
             </tbody>
           </table>
@@ -181,8 +181,8 @@
             </div>
           </div>
         </div>
-        <div class="col-xl-12" style="min-height: 400px;">
-          <div class="card mb-2" style="height: 100%;">
+        <div class="col-xl-12">
+          <div class="card mb-2">
 
             <div class="card-body bg-light-success" style="display: flex; align-items: center;">
               <span class="vertical-text">
@@ -213,7 +213,7 @@
             <span class="fs-3 fw-bold w-100 d-flex justify-content-center">النسبة المخططة</span>
             <div class="d-flex flex-center me-5 pt-2">
               <div id="kt_card_widget_17_chart"
-              [ngStyle]="{'min-width': chartSize + 'px', 'min-height': chartSize + 'px'}"
+                [ngStyle]="{'min-width': chartSize + 'px', 'min-height': chartSize + 'px'}"
                 [attr.data-kt-size]="chartSize" [attr.data-kt-line]="chartLine">
               </div>
             </div>

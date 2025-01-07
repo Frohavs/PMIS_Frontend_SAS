@@ -56,7 +56,7 @@ export class ReportStepComponent implements OnInit {
     this.router.navigate([`projects/monthly_report_step_details/${this.projectId}`], { queryParams: { reportId: this.reportId } });
   }
   download() {
-    alert('download will work after complete the report charts');
+    this.router.navigate([`projects/monthly_report_step_details/${this.projectId}`], { queryParams: { reportId: this.reportId, print:true } });
   }
   back() {
     this._location.back();
