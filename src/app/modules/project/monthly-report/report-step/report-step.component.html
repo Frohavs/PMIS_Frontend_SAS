@@ -22,38 +22,23 @@
         <div class="d-flex align-items-sm-center mb-7">
 
           <div class="d-flex flex-row-fluid flex-wrap align-items-center">
-            <div class="w-50 me-2">
+            <div class="flex-grow-1 me-2">
               <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
-                Monthly Planned
+                Resource Actual
               </a>
-              <span class="text-muted fw-bold d-block pt-1">{{reportDetails?.promkijjectName  ||  '--'}}</span>
+              <span class="text-muted fw-bold d-block pt-1">{{reportDetails?.resourcePlanValue ||  '--'}}</span>
             </div>
+
             <div class="flex-grow-1 me-2">
               <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
                 Monthly Actual
               </a>
               <span
-                class="text-muted fw-bold d-block pt-1">{{reportDetails?.actualEndDate?.slice(0, 10)  ||  '--'}}</span>
+                class="text-muted fw-bold d-block pt-1">{{reportDetails?.scurveValue  ||  '--'}}</span>
             </div>
           </div>
         </div>
-        <div class="d-flex align-items-sm-center mb-7">
 
-          <div class="d-flex flex-row-fluid flex-wrap align-items-center">
-            <div class="w-50 me-2">
-              <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
-                Resource Planned
-              </a>
-              <span class="text-muted fw-bold d-block pt-1">{{reportDetails?.contractNo  ||  '--'}}</span>
-            </div>
-            <div class="flex-grow-1 me-2">
-              <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
-                Resource Actual
-              </a>
-              <span class="text-muted fw-bold d-block pt-1">{{reportDetails?.consultantName ||  '--'}}</span>
-            </div>
-          </div>
-        </div>
 
         <div class="d-flex align-items-sm-center mb-7">
           <div class="d-flex flex-row-fluid flex-wrap align-items-center">
@@ -61,13 +46,14 @@
               <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
                 Actual Finish Data
               </a>
-              <span class="text-muted fw-bold d-block pt-1">{{reportDetails?.actualEndDate | date : "dd-MM-YYYY"}}</span>
+              <span
+                class="text-muted fw-bold d-block pt-1">{{projectDetails?.originalFinishDate | date : "dd-MM-YYYY"}}</span>
             </div>
             <div class="flex-grow-1 me-2">
               <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
                 Expected Finish Date
               </a>
-              <span class="text-muted fw-bold d-block pt-1">{{reportDetails?.updatedValue || '--'}}</span>
+              <span class="text-muted fw-bold d-block pt-1">{{projectDetails?.expectedFinishDate | date: "dd-MM-YYYY" }}</span>
             </div>
           </div>
         </div>
@@ -78,13 +64,13 @@
               <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
                 Project Duration
               </a>
-              <span class="text-muted fw-bold d-block pt-1">{{reportDetails?.contractorName || '--'}}</span>
+              <span class="text-muted fw-bold d-block pt-1">{{projectDetails?.originalDuration || '--'}}</span>
             </div>
             <div class="flex-grow-1 me-2">
               <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
                 EOT Days
               </a>
-              <span class="text-muted fw-bold d-block pt-1">{{reportDetails?.updatedValue | number}}</span>
+              <span class="text-muted fw-bold d-block pt-1">{{projectDetails?.eotDays}}</span>
             </div>
           </div>
         </div>
@@ -95,13 +81,7 @@
               <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
                 Total Float (TF)
               </a>
-              <span class="text-muted fw-bold d-block pt-1">{{reportDetails?.contractorName || '--'}}</span>
-            </div>
-            <div class="flex-grow-1 me-2">
-              <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
-                Created By
-              </a>
-              <span class="text-muted fw-bold d-block pt-1">{{reportDetails?.updatedValue | number}}</span>
+              <span class="text-muted fw-bold d-block pt-1">{{projectDetails?.totalDaysWithEOT || '--'}}</span>
             </div>
           </div>
         </div>
@@ -111,7 +91,7 @@
               <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
                 Created On
               </a>
-              <span class="text-muted fw-bold d-block pt-1">{{reportDetails?.updatedValue | number}}</span>
+              <span class="text-muted fw-bold d-block pt-1">{{projectDetails?.createdDate | date: "dd-MM-YYYY"}}</span>
             </div>
           </div>
         </div>

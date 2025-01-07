@@ -100,6 +100,7 @@ import { MonthlyMeetingsComponent } from './monthly-report/monthly-meetings/mont
 import { ReportStepComponent } from './monthly-report/report-step/report-step.component';
 import { StepDetailsComponent } from './monthly-report/report-step/step-details/step-details.component';
 import { StepCreateComponent } from './monthly-report/report-step/step-create/step-create.component';
+import { NgApexchartsModule } from 'ng-apexcharts';
 
 
 @NgModule({
@@ -235,7 +236,8 @@ import { StepCreateComponent } from './monthly-report/report-step/step-create/st
     NgxCurrencyDirective,
     AngularSignaturePadModule,
     GoogleMapsModule,
-    NgMultiSelectDropDownModule.forRoot()
+    NgMultiSelectDropDownModule.forRoot(),
+    NgApexchartsModule
 
   ]
 })
