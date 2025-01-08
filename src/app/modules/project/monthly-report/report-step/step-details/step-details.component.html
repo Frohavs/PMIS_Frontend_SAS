@@ -209,7 +209,7 @@
       <div class="col-xl-12">
         <div class="card">
           <div class="card-body p-3">
-            <span class="fs-4" style="position: absolute; top: 51%; left: 46%;">30%</span>
+            <span class="fs-4" style="position: absolute; top: 51%; left: 46%;">{{projectDetails?.plannedBusinessPercentage || 0}}%</span>
             <span class="fs-3 fw-bold w-100 d-flex justify-content-center">النسبة المخططة</span>
             <div class="d-flex flex-center me-5 pt-2">
               <div id="kt_card_widget_17_chart"
@@ -223,7 +223,7 @@
       <div class="col-xl-12">
         <div class="card">
           <div class="card-body p-3">
-            <span class="fs-4" style="position: absolute; top: 51%; left: 46%;">50%</span>
+            <span class="fs-4" style="position: absolute; top: 51%; left: 46%;">{{projectDetails?.actualBusinessPercentage || 0}}%</span>
             <span class="fs-3 fw-bold w-100 d-flex justify-content-center">التقدم الفعلي</span>
             <div class="d-flex flex-center me-5 pt-2">
               <div id="kt_card_widget_17_chart2"
@@ -237,7 +237,7 @@
       <div class="col-xl-12">
         <div class="card">
           <div class="card-body p-3">
-            <span class="fs-4" style="position: absolute; top: 51%; left: 46%;">10%</span>
+            <span class="fs-4" style="position: absolute; top: 51%; left: 46%;">{{projectDetails?.spi || 0}}%</span>
             <span class="fs-3 fw-bold w-100 d-flex justify-content-center">معدل الأداء التقدمي</span>
             <div class="d-flex flex-center me-5 pt-2">
               <div id="kt_card_widget_17_chart3"
@@ -257,7 +257,7 @@
           <div class="col-xl-4">
             <div class="card ">
               <div class="card-body p-3 bg-light-success text-center">
-                ---
+                {{projectDetails?.createdDate | date: 'yyyy-MM-dd'}}
               </div>
             </div>
           </div>
@@ -277,7 +277,7 @@
           <div class="col-xl-4">
             <div class="card ">
               <div class="card-body p-3 bg-light-success text-center">
-                ---
+                {{projectDetails?.expectedFinishDate | date: 'yyyy-MM-dd'}}
               </div>
             </div>
           </div>
@@ -296,7 +296,7 @@
           <div class="col-xl-4">
             <div class="card ">
               <div class="card-body p-3 bg-light-success text-center">
-                ---
+                {{projectDetails?.originalDuration || '--'}}
               </div>
             </div>
           </div>
@@ -315,7 +315,7 @@
           <div class="col-xl-4">
             <div class="card ">
               <div class="card-body p-3 bg-light-success text-center">
-                ---
+                {{projectDetails?.originalFinishDate | date: 'yyyy-MM-dd'}}
               </div>
             </div>
           </div>
@@ -334,7 +334,7 @@
           <div class="col-xl-4">
             <div class="card ">
               <div class="card-body p-3 bg-light-success text-center">
-                ---
+                {{projectDetails?.expectedFinishDate | date: 'yyyy-MM-dd'}}
               </div>
             </div>
           </div>
@@ -353,7 +353,7 @@
           <div class="col-xl-4">
             <div class="card ">
               <div class="card-body p-3 bg-light-success text-center">
-                ---
+                {{projectDetails?.totalDaysWithEOT || '--'}}
               </div>
             </div>
           </div>
@@ -372,7 +372,7 @@
           <div class="col-xl-4">
             <div class="card ">
               <div class="card-body p-3 bg-light-primary text-center">
-                ------
+                {{projectDetails?.actualBusinessPercentage || '--'}}
               </div>
             </div>
           </div>
@@ -391,7 +391,7 @@
           <div class="col-xl-4">
             <div class="card ">
               <div class="card-body p-3 bg-light-primary text-center">
-                ------
+                {{projectDetails?.plannedBusinessPercentage || '--'}}
               </div>
             </div>
           </div>
@@ -429,7 +429,7 @@
           <div class="col-xl-4">
             <div class="card ">
               <div class="card-body p-3 bg-light-primary text-center">
-                ------
+                {{projectDetails?.plannedBusinessPercentage || '--'}}
               </div>
             </div>
           </div>
@@ -448,7 +448,7 @@
           <div class="col-xl-4">
             <div class="card ">
               <div class="card-body p-3 bg-light-primary text-center">
-                ------
+                {{projectDetails?.spi || '--'}}
               </div>
             </div>
           </div>
@@ -467,7 +467,7 @@
           <div class="col-xl-4">
             <div class="card ">
               <div class="card-body p-3 bg-light-primary text-center">
-                ------
+                {{projectDetails?.achievementForNextThreeMonths || '--'}}
               </div>
             </div>
           </div>
@@ -486,7 +486,7 @@
           <div class="col-xl-4">
             <div class="card ">
               <div class="card-body p-3 bg-light-primary text-center">
-                ------
+                {{projectDetails?.plannedBusinessNextMonthPercentage || '--'}}
               </div>
             </div>
           </div>

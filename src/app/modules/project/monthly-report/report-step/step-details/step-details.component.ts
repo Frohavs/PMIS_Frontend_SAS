@@ -61,17 +61,12 @@ export class StepDetailsComponent implements OnInit {
     });
 
 
-    setTimeout(() => {
-      this.initChart(this.chartSize, this.chartLine, this.chartRotate);
-      this.initChart2(this.chartSize, this.chartLine, this.chartRotate);
-      this.initChart3(this.chartSize, this.chartLine, this.chartRotate);
-    }, 10);
   }
 
   getProjectDetails() {
     this.projectsService.getByID(this.projectId).subscribe(res => {
       this.projectCreationDetails = res.data;
-      console.log('projectCreationDetails', this.projectCreationDetails);
+      // console.log('projectCreationDetails', this.projectCreationDetails);
       this.cdr.detectChanges();
     });
     this.monthlyReportsService.getProjectData(this.projectId).subscribe(res => {
@@ -79,6 +74,11 @@ export class StepDetailsComponent implements OnInit {
       console.log('projectDetails', this.projectDetails);
       this.chartOptions = this.getChartOptions(180);
       this.chartOption2 = this.getChartOptions2(180);
+      setTimeout(() => {
+        this.initChart(this.chartSize, this.chartLine, this.chartRotate);
+        this.initChart2(this.chartSize, this.chartLine, this.chartRotate);
+        this.initChart3(this.chartSize, this.chartLine, this.chartRotate);
+      }, 10);
       this.cdr.detectChanges();
     });
   }
@@ -465,7 +465,7 @@ export class StepDetailsComponent implements OnInit {
 
     // Init
     drawCircle('#E4E6EF', options.lineWidth, 100 / 100);
-    drawCircle(getCSSVariableValue('--bs-success'), options.lineWidth, 30 / 100);
+    drawCircle(getCSSVariableValue('--bs-success'), options.lineWidth, this.projectDetails?.plannedBusinessPercentage / 100);
   };
   initChart2(
     chartSize: number,
@@ -528,7 +528,7 @@ export class StepDetailsComponent implements OnInit {
 
     // Init
     drawCircle('#E4E6EF', options.lineWidth, 100 / 100);
-    drawCircle(getCSSVariableValue('--bs-primary'), options.lineWidth, 50 / 100);
+    drawCircle(getCSSVariableValue('--bs-primary'), options.lineWidth, this.projectDetails?.actualBusinessPercentage / 100);
   };
   initChart3(
     chartSize: number,
@@ -591,8 +591,7 @@ export class StepDetailsComponent implements OnInit {
 
     // Init
     drawCircle('#E4E6EF', options.lineWidth, 100 / 100);
-    drawCircle(getCSSVariableValue('--bs-danger'), options.lineWidth, 10 / 100);
-    // drawCircle(getCSSVariableValue('--bs-success'), options.lineWidth, 100 / 190);
+    drawCircle(getCSSVariableValue('--bs-danger'), options.lineWidth, this.projectDetails?.spi / 100);
   };
 
   showAlert(swalOptions: SweetAlertOptions) {
