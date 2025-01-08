@@ -146,6 +146,10 @@ export class WorkProgressPictureComponent implements OnInit {
     });
   }
 
+  back() {
+    this._location.back();
+  }
+
   showAlert(swalOptions: SweetAlertOptions) {
     let style = swalOptions.icon?.toString() || 'success';
     if (swalOptions.icon === 'error') {

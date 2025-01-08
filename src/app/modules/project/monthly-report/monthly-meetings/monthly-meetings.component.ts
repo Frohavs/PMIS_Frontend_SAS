@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
@@ -30,7 +30,7 @@ export class MonthlyMeetingsComponent implements OnInit {
   constructor(
     private router: Router,
     private cdr: ChangeDetectorRef,
-    private formBuilder: FormBuilder,
+    private _location: Location,
     private modalService: NgbModal,
     private activatedRoute: ActivatedRoute,
     private monthlyReportsService: MonthlyReportsService,
@@ -50,7 +50,7 @@ export class MonthlyMeetingsComponent implements OnInit {
         });
       }
     });
-    
+
   }
 
   addReport() {
@@ -102,6 +102,10 @@ export class MonthlyMeetingsComponent implements OnInit {
     });
   }
 
+  back() {
+    this._location.back();
+  }
+
   showAlert(swalOptions: SweetAlertOptions) {
     let style = swalOptions.icon?.toString() || 'success';
     if (swalOptions.icon === 'error') {
@@ -117,8 +121,5 @@ export class MonthlyMeetingsComponent implements OnInit {
     this.cdr.detectChanges();
     this.noticeSwal.fire();
   }
- 
+
 }
-
-  
-

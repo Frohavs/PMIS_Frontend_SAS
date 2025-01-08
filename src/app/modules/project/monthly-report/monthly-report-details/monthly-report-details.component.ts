@@ -1,5 +1,6 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Location } from '@angular/common';
 import { MonthlyReportsService } from 'src/app/services/monthly-reports.service';
 
 @Component({
@@ -18,6 +19,7 @@ export class MonthlyReportDetailsComponent implements OnInit {
 
   constructor(
     private router: Router,
+    private _location: Location,
     private cdr: ChangeDetectorRef,
     private activatedRoute: ActivatedRoute,
     private monthlyReportsService: MonthlyReportsService,
@@ -66,6 +68,11 @@ export class MonthlyReportDetailsComponent implements OnInit {
     if (this.reportDetails.correspondenceSubmitted) {
       this.ratingProgressResult = 75
     }
+  }
+
+
+  back() {
+    this._location.back();
   }
 
   navigateTo(route: string) {

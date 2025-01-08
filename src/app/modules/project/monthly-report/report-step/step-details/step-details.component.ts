@@ -60,8 +60,7 @@ export class StepDetailsComponent implements OnInit {
       }
     });
 
-    this.chartOptions = this.getChartOptions(180);
-    this.chartOption2 = this.getChartOptions2(180);
+
     setTimeout(() => {
       this.initChart(this.chartSize, this.chartLine, this.chartRotate);
       this.initChart2(this.chartSize, this.chartLine, this.chartRotate);
@@ -78,6 +77,8 @@ export class StepDetailsComponent implements OnInit {
     this.monthlyReportsService.getProjectData(this.projectId).subscribe(res => {
       this.projectDetails = res.data;
       console.log('projectDetails', this.projectDetails);
+      this.chartOptions = this.getChartOptions(180);
+      this.chartOption2 = this.getChartOptions2(180);
       this.cdr.detectChanges();
     });
   }
@@ -86,7 +87,7 @@ export class StepDetailsComponent implements OnInit {
       this.reportDetails = res.data;
       console.log('reportDetails', this.reportDetails);
       setTimeout(() => {
-        if(this.printCheck) window.print();
+        if (this.printCheck) window.print();
       }, 500);
       this.cdr.detectChanges();
     });
@@ -187,12 +188,12 @@ export class StepDetailsComponent implements OnInit {
     return {
       series: [
         {
-          name: 'Net Profit',
-          data: [44, 55, 57],
+          name: 'Actual',
+          data: this.projectDetails?.scurves.map((item: any) => item.actualValue),
         },
         {
-          name: 'Revenue',
-          data: [76, 85, 101],
+          name: 'Planned',
+          data: this.projectDetails?.scurves.map((item: any) => item.plannedValue),
         },
       ],
       chart: {
@@ -222,7 +223,7 @@ export class StepDetailsComponent implements OnInit {
         colors: ['transparent'],
       },
       xaxis: {
-        categories: ['Jan', 'Feb', 'Mar'],
+        categories: this.projectDetails?.scurves.map((item: any) => item.month),
         axisBorder: {
           show: false,
         },
@@ -274,7 +275,7 @@ export class StepDetailsComponent implements OnInit {
         },
         y: {
           formatter: function (val: number) {
-            return '$' + val + ' thousands';
+            return val + ' %';
           },
         },
       },
@@ -299,12 +300,12 @@ export class StepDetailsComponent implements OnInit {
     return {
       series: [
         {
-          name: 'Net Profit',
-          data: [34],
+          name: 'Actual',
+          data: this.projectDetails?.resourcePlans.map((item: any) => item.actualLabour),
         },
         {
-          name: 'Revenue',
-          data: [16],
+          name: 'Planned',
+          data: this.projectDetails?.resourcePlans.map((item: any) => item.plannedLabour),
         },
       ],
       chart: {
@@ -334,7 +335,7 @@ export class StepDetailsComponent implements OnInit {
         colors: ['transparent'],
       },
       xaxis: {
-        categories: ['Jan'],
+        categories: this.projectDetails?.resourcePlans.map((item: any) => item.month),
         axisBorder: {
           show: false,
         },
@@ -386,7 +387,7 @@ export class StepDetailsComponent implements OnInit {
         },
         y: {
           formatter: function (val: number) {
-            return '$' + val + ' thousands';
+            return val + ' %';
           },
         },
       },

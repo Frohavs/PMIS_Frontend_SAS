@@ -7,14 +7,19 @@
           <!-- <span class="text-muted mt-1 fw-bold fs-7">test</span> -->
         </h3>
         <div class="card-toolbar">
-          <a *ngIf="!reportDetails?.correspondence?.type" class="btn btn-sm btn-primary d-flex mx-2" (click)="addReport()">
-            Add Report
-          </a>
-          <a
-            class="btn btn-sm btn-light-success d-flex mx-2"
-            (click)="approveReport()"
-          >
-            Approve Status
+          <ng-container *ngIf="!reportDetails?.correspondenceSubmitted">
+            <a *ngIf="!reportDetails?.correspondence?.type" class="btn btn-sm btn-primary d-flex mx-2"
+              (click)="addReport()">
+              Add Report
+            </a>
+            <a class="btn btn-sm btn-light-success d-flex mx-2" (click)="approveReport()">
+              Approve Status
+            </a>
+          </ng-container>
+
+          <a (click)="back()" class="btn btn-sm btn-danger d-flex mx-2">
+            <app-keenicon name="arrow-left" class="fs-3"></app-keenicon>
+            {{"ECOMMERCE.COMMON.BACK" | translate}}
           </a>
         </div>
       </div>
@@ -103,12 +108,7 @@
   <form #myForm="ngForm" (ngSubmit)="onSubmitNote()">
     <div class="modal-header">
       <h4 class="modal-title" id="modal-basic-title">Report Details</h4>
-      <button
-        type="button"
-        class="btn-close"
-        aria-label="Close"
-        (click)="modal.dismiss('Cross click')"
-      ></button>
+      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
     </div>
     <div class="modal-body">
       <!-- <div class="fv-row mb-7">
@@ -128,74 +128,44 @@
 
       <div class="fv-row mb-7">
         <label class="fw-semibold fs-6 mb-2">التاريخ</label>
-        <input
-          type="date"
-          class="form-control form-control-solid"
-          name="eotReason"
-          [(ngModel)]="CorrespondenceModelData.createdOn"
-        />
+        <input type="date" class="form-control form-control-solid" name="eotReason"
+          [(ngModel)]="CorrespondenceModelData.createdOn" />
       </div>
 
       <div class="fv-row mb-7">
         <label class="fw-semibold fs-6 mb-2">المكان</label>
-        <input
-          class="form-control form-control-solid"
-          name="eotReason"
-          [(ngModel)]="CorrespondenceModelData.parties"
-        />
+        <input class="form-control form-control-solid" name="eotReason" [(ngModel)]="CorrespondenceModelData.parties" />
       </div>
       <div class="fv-row mb-7">
         <label class="fw-semibold fs-6 mb-2">الموضوع</label>
-        <input
-          class="form-control form-control-solid"
-          name="eotReason"
-          [(ngModel)]="CorrespondenceModelData.subject"
-        />
+        <input class="form-control form-control-solid" name="eotReason" [(ngModel)]="CorrespondenceModelData.subject" />
       </div>
       <div class="fv-row mb-7">
         <label class="fw-semibold fs-6 mb-2">مرجع المحضر </label>
-        <input
-          class="form-control form-control-solid"
-          name="eotReason"
-          [(ngModel)]="CorrespondenceModelData.reference"
-        />
+        <input class="form-control form-control-solid" name="eotReason"
+          [(ngModel)]="CorrespondenceModelData.reference" />
       </div>
       <div class="fv-row mb-7">
         <label class="fw-semibold fs-6 mb-2">المرفق</label>
-        <input
-          class="form-control form-control-solid"
-          (change)="onFileSelected($event)"
-          type="file"
-          name="eotReason"
-          [(ngModel)]="CorrespondenceModelData.attachment"
-        />
+        <input class="form-control form-control-solid" (change)="onFileSelected($event)" type="file" name="eotReason"
+          [(ngModel)]="CorrespondenceModelData.attachment" />
       </div>
     </div>
     <div class="modal-footer flex-center">
       <!--begin::Button-->
-      <button
-        type="reset"
-        id="kt_modal_update_customer_cancel"
-        class="btn btn-light me-3"
-        (click)="modal.dismiss('cancel')"
-      >
+      <button type="reset" id="kt_modal_update_customer_cancel" class="btn btn-light me-3"
+        (click)="modal.dismiss('cancel')">
         Discard
       </button>
       <!--end::Button-->
 
       <!--begin::Button-->
-      <button
-        type="submit"
-        id="kt_modal_update_customer_submit"
-        class="btn btn-primary"
-        [attr.data-kt-indicator]="isLoading ? 'on' : 'off'"
-      >
+      <button type="submit" id="kt_modal_update_customer_submit" class="btn btn-primary"
+        [attr.data-kt-indicator]="isLoading ? 'on' : 'off'">
         <span class="indicator-label"> Submit </span>
         <span class="indicator-progress">
           Please wait...
-          <span
-            class="spinner-border spinner-border-sm align-middle ms-2"
-          ></span>
+          <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
         </span>
       </button>
       <!--end::Button-->
@@ -209,51 +179,36 @@
   <form #myForm="ngForm" (ngSubmit)="onApprove()">
     <div class="modal-header">
       <h4 class="modal-title" id="modal-basic-title">Role Details</h4>
-      <button
-        type="button"
-        class="btn-close"
-        aria-label="Close"
-        (click)="modal.dismiss('Cross click')"
-      ></button>
+      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
     </div>
     <div class="modal-body">
 
-        <div class="fv-row mb-7">
-            <div class="col-lg-8 d-flex align-items-center">
-              <div class="form-check form-check-solid form-switch d-flex align-items-center">
-                <input class="form-check-input w-45px h-30px me-2" type="checkbox" name="durationDays"
-                  [(ngModel)]="approveModelData.approved" />
-                <label class="form-check-label">{{approveModelData.approved ? 'approve' : 'reject'}}</label>
-              </div>
-            </div>
+      <div class="fv-row mb-7">
+        <div class="col-lg-8 d-flex align-items-center">
+          <div class="form-check form-check-solid form-switch d-flex align-items-center">
+            <input class="form-check-input w-45px h-30px me-2" type="checkbox" name="durationDays"
+              [(ngModel)]="approveModelData.approved" />
+            <label class="form-check-label">{{approveModelData.approved ? 'approve' : 'reject'}}</label>
+          </div>
         </div>
+      </div>
 
     </div>
     <div class="modal-footer flex-center">
       <!--begin::Button-->
-      <button
-        type="reset"
-        id="kt_modal_update_customer_cancel"
-        class="btn btn-light me-3"
-        (click)="modal.dismiss('cancel')"
-      >
+      <button type="reset" id="kt_modal_update_customer_cancel" class="btn btn-light me-3"
+        (click)="modal.dismiss('cancel')">
         Discard
       </button>
       <!--end::Button-->
 
       <!--begin::Button-->
-      <button
-        type="submit"
-        id="kt_modal_update_customer_submit"
-        class="btn btn-primary"
-        [attr.data-kt-indicator]="isLoading ? 'on' : 'off'"
-      >
+      <button type="submit" id="kt_modal_update_customer_submit" class="btn btn-primary"
+        [attr.data-kt-indicator]="isLoading ? 'on' : 'off'">
         <span class="indicator-label"> Submit </span>
         <span class="indicator-progress">
           Please wait...
-          <span
-            class="spinner-border spinner-border-sm align-middle ms-2"
-          ></span>
+          <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
         </span>
       </button>
       <!--end::Button-->

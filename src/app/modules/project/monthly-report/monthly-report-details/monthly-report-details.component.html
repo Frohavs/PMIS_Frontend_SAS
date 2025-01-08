@@ -8,9 +8,10 @@
           <span class="text-muted mt-1 fw-bold fs-7"></span> -->
         </h3>
         <div class="card-toolbar">
-          <!-- <button type="button" class="btn btn-sm btn-icon btn-color-primary btn-active-light-primary"
-            data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end" data-kt-menu-flip="top-end">
-          </button> -->
+          <a (click)="back()" class="btn btn-sm btn-danger d-flex">
+            <app-keenicon name="arrow-left" class="fs-3"></app-keenicon>
+            {{"ECOMMERCE.COMMON.BACK" | translate}}
+          </a>
         </div>
       </div>
 
