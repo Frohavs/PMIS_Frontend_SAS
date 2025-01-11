@@ -91,7 +91,6 @@ export class MonthlyMeetingsComponent implements OnInit {
 
   onApprove() {
     this.approveModelData['id'] = this.reportId;
-    debugger
     this.monthlyReportsService.approveStep(this.approveModelData).subscribe(res => {
       this.showAlert({ icon: 'success', title: 'Success!', text: this.approveModelData.approved ? 'Meeting Data Approved successfully' : 'Meeting Data Rejected successfully' });
       this.approveModelData = { approved: true, id: this.reportId, type: 3 };

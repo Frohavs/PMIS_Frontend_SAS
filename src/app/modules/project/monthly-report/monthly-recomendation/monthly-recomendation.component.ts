@@ -70,7 +70,6 @@ export class MonthlyRecomendationComponent implements OnInit {
   }
 
   onSubmitNote() {
-    // debugger
     this.monthlyReportsService.postMonthlyReportRecommendation(this.recommendModelData).subscribe(res => {
       this.showAlert({ icon: 'success', title: 'Success!', text: 'Recommendation Added successfully!' });
       this.modalService.dismissAll();

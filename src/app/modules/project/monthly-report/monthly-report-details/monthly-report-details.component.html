@@ -59,7 +59,7 @@
             <div class="card-toolbar">
               <a (click)="navigateTo('monthly_recommendation')" class="btn btn-sm"
                 [ngClass]="{
-                  'btn-light-warning': completionProgressResult >= 20 && !reportDetails?.recommendationSubmitted,
+                  'btn-light-warning': completionProgressResult <= 20 && !reportDetails?.recommendationSubmitted,
                   'btn-light-success': (reportDetails?.recommendation?.contractor && !reportDetails?.recommendationSubmitted),
                   'btn-success': (reportDetails?.recommendation?.contractor && reportDetails?.recommendationSubmitted)}">
                 Monthly Recommendation
@@ -71,7 +71,7 @@
             <div class="card-toolbar">
               <a (click)="navigateTo('monthly_meetings')" class="btn btn-sm"
               [ngClass]="{
-                'btn-light-warning': completionProgressResult >= 50 && !reportDetails?.correspondenceSubmitted,
+                'btn-light-warning': completionProgressResult <= 50 && !reportDetails?.correspondenceSubmitted,
                 'btn-light-success': (reportDetails?.correspondence?.type && !reportDetails?.correspondenceSubmitted),
                 'btn-success': (reportDetails?.correspondence?.type && reportDetails?.correspondenceSubmitted)}">
                 Monthly Meetings

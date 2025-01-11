@@ -96,7 +96,6 @@ export class WorkProgressPictureComponent implements OnInit {
   }
 
   removePicture(picture: string): void {
-    debugger
     for (let index = 0; index < this.uploadedPictures.length; index++) {
       if (this.uploadedPictures[index].id === picture) {
         this.uploadedPictures.splice(index, 1); // Remove the picture from the array
