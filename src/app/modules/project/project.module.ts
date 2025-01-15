@@ -99,6 +99,9 @@ import { MonthlyRecomendationComponent } from './monthly-report/monthly-recomend
 import { MonthlyMeetingsComponent } from './monthly-report/monthly-meetings/monthly-meetings.component';
 import { ReportStepComponent } from './monthly-report/report-step/report-step.component';
 import { RfiListComponent } from './rfi-list/rfi-list.component';
+import { StepDetailsComponent } from './monthly-report/report-step/step-details/step-details.component';
+import { StepCreateComponent } from './monthly-report/report-step/step-create/step-create.component';
+import { NgApexchartsModule } from 'ng-apexcharts';
 
 
 @NgModule({
@@ -214,6 +217,9 @@ import { RfiListComponent } from './rfi-list/rfi-list.component';
     MonthlyRecomendationComponent,
     MonthlyMeetingsComponent,
     ReportStepComponent,
+    StepCreateComponent,
+    StepDetailsComponent,
+    
     RfiListComponent,
   ],
   imports: [
@@ -233,7 +239,8 @@ import { RfiListComponent } from './rfi-list/rfi-list.component';
     NgxCurrencyDirective,
     AngularSignaturePadModule,
     GoogleMapsModule,
-    NgMultiSelectDropDownModule.forRoot()
+    NgMultiSelectDropDownModule.forRoot(),
+    NgApexchartsModule
 
   ]
 })

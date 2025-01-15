@@ -70,7 +70,6 @@ export class MonthlyRecomendationComponent implements OnInit {
   }
 
   onSubmitNote() {
-    // debugger
     this.monthlyReportsService.postMonthlyReportRecommendation(this.recommendModelData).subscribe(res => {
       this.showAlert({ icon: 'success', title: 'Success!', text: 'Recommendation Added successfully!' });
       this.modalService.dismissAll();
@@ -95,6 +94,10 @@ export class MonthlyRecomendationComponent implements OnInit {
     }, () => {
       this.showAlert({ icon: 'error', title: 'Error!', text: 'please try again' });
     });
+  }
+
+  back() {
+    this._location.back();
   }
 
   showAlert(swalOptions: SweetAlertOptions) {

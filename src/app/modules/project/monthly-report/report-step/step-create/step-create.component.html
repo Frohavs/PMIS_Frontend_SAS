@@ -1,0 +1,343 @@
+<div class="card">
+  <div class="card-body">
+    <div class="card-toolbar d-flex justify-content-between f-3 fw-bolder text-gray-900">
+      <h3>
+        Monthly Schedule Report Create
+      </h3>
+
+      <a class="btn btn-danger font-weight-bolder font-size-sm cursor-pointer mx-2" (click)="back()">
+        <app-keenicon name="arrow-left" class="fs-3"></app-keenicon>
+        {{"ECOMMERCE.COMMON.BACK" | translate}}
+      </a>
+
+    </div>
+    <div class="stepper stepper-links d-flex flex-column pt-15" id="kt_create_account_stepper">
+      <div class="stepper-nav mb-5">
+        <div class="stepper-item" [ngClass]="{
+            current: currentStep$.value === 1,
+            completed: currentStep$.value > 1
+          }">
+          <h3 class="stepper-title">step 1</h3>
+        </div>
+
+        <div class="stepper-item" [ngClass]="{
+            current: currentStep$.value === 2,
+            completed: currentStep$.value > 2
+          }">
+          <h3 class="stepper-title">step 2</h3>
+        </div>
+
+
+      </div>
+
+      <form [formGroup]="addReportForm" class="mx-auto mw-1000px w-100 pt-15 pb-10" id="kt_create_account_form">
+        <div class="current">
+          <ng-container *ngIf="currentStep$.value === 1">
+            <div class="row mb-1 align-items-center">
+              <label class="col-lg-3 col-form-label fw-bold fs-6"> <span> SCurved (current month) </span> </label>
+              <div class="col-md-4 mb-6">
+                <label class="col-lg-8 col-form-label fw-bold fs-6">
+                  <span>Planned </span>
+                </label>
+                <div class="col-lg-11 fv-row">
+                  <input class="form-control form-control-lg form-control-solid text-start" disabled
+                    [value]="projectDetails?.scurves[0].plannedValue" />
+
+                </div>
+              </div>
+              <div class="col-md-5 mb-6">
+                <label class="col-lg-8 col-form-label fw-bold fs-6">
+                  <span> Actual </span>
+                </label>
+                <div class="col-lg-11 fv-row">
+                  <input class="form-control form-control-lg form-control-solid text-start" name="scurveValue"
+                    formControlName="scurveValue" />
+                  <div
+                    *ngIf="addReportForm?.get('scurveValue')?.invalid && (addReportForm?.get('scurveValue')?.dirty || addReportForm?.get('scurveValue')?.touched)"
+                    class="fv-plugins-message-container">
+                    <div class="fv-help-block">field is required</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row mb-1 align-items-center" *ngFor="let scurve of projectDetails?.scurves; let i = index">
+              <ng-container *ngIf="i > 0">
+                <label class="col-lg-3 col-form-label fw-bold fs-6">
+                  <span> SCurved {{scurve.month}}, {{scurve.year}}</span>
+                </label>
+                <div class="col-md-4 mb-6">
+                  <label class="col-lg-8 col-form-label fw-bold fs-6">
+                    <span>Planned </span>
+                  </label>
+                  <div class="col-lg-11 fv-row">
+                    <input class="form-control form-control-lg form-control-solid text-start" disabled
+                      [value]="scurve.plannedValue" />
+
+                  </div>
+                </div>
+                <div class="col-md-5 mb-6">
+                  <label class="col-lg-8 col-form-label fw-bold fs-6">
+                    <span> Actual </span>
+                  </label>
+                  <div class="col-lg-11 fv-row">
+                    <input class="form-control form-control-lg form-control-solid text-start" disabled
+                      [value]="scurve.actualValue" />
+
+                  </div>
+                </div>
+              </ng-container>
+            </div>
+            <div class="row mb-1 align-items-center">
+              <label class="col-lg-3 col-form-label fw-bold fs-6"> <span> Resource (current month) </span> </label>
+              <div class="col-md-4 mb-6">
+                <label class="col-lg-8 col-form-label fw-bold fs-6">
+                  <span>Planned </span>
+                </label>
+                <div class="col-lg-11 fv-row">
+                  <input class="form-control form-control-lg form-control-solid text-start" disabled
+                    [value]="projectDetails?.resourcePlans[0].plannedLabour" />
+
+                </div>
+              </div>
+              <div class="col-md-5 mb-6">
+                <label class="col-lg-8 col-form-label fw-bold fs-6">
+                  <span> Actual </span>
+                </label>
+                <div class="col-lg-11 fv-row">
+                  <input class="form-control form-control-lg form-control-solid text-start" name="resourcePlanValue"
+                    formControlName="resourcePlanValue" />
+                  <div
+                    *ngIf="addReportForm?.get('resourcePlanValue')?.invalid && (addReportForm?.get('resourcePlanValue')?.dirty || addReportForm?.get('resourcePlanValue')?.touched)"
+                    class="fv-plugins-message-container">
+                    <div class="fv-help-block">field is required</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row mb-1 align-items-center"
+              *ngFor="let scurve of projectDetails?.resourcePlans; let i = index">
+              <ng-container *ngIf="i > 0">
+                <label class="col-lg-3 col-form-label fw-bold fs-6"> <span> Resource {{scurve.month}},
+                    {{scurve.year}}</span> </label>
+                <div class="col-md-4 mb-6">
+                  <label class="col-lg-8 col-form-label fw-bold fs-6">
+                    <span>Planned </span>
+                  </label>
+                  <div class="col-lg-11 fv-row">
+                    <input class="form-control form-control-lg form-control-solid text-start" disabled
+                      [value]="scurve.plannedLabour" />
+
+                  </div>
+                </div>
+                <div class="col-md-5 mb-6">
+                  <label class="col-lg-8 col-form-label fw-bold fs-6">
+                    <span> Actual </span>
+                  </label>
+                  <div class="col-lg-11 fv-row">
+                    <input class="form-control form-control-lg form-control-solid text-start" disabled
+                      [value]="scurve.actualLabour" />
+
+                  </div>
+                </div>
+              </ng-container>
+            </div>
+
+
+          </ng-container>
+
+          <ng-container *ngIf="currentStep$.value === 2">
+            <div class="row mb-1">
+              <div class="col-md-6 mb-6">
+                <label class="col-lg-8 col-form-label fw-bold fs-6"><span> Actual Finish Data/تاريخ نهاية المشروع
+                    الفعلية</span></label>
+                <div class="col-lg-11 fv-row">
+                  <input type="date" class="form-control form-control-lg form-control-solid text-start"
+                    name="actualEndDate" formControlName="actualEndDate" />
+                  <div
+                    *ngIf="addReportForm?.get('actualEndDate')?.invalid && (addReportForm?.get('actualEndDate')?.dirty || addReportForm?.get('actualEndDate')?.touched)"
+                    class="fv-plugins-message-container">
+                    <div class="fv-help-block">field is required</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 mb-6">
+                <label class="col-lg-8 col-form-label fw-bold fs-6"><span> Expected Finish Data/تاريخ النهاية
+                    المتوقع</span></label>
+                <div class="col-lg-11 fv-row">
+                  <input type="date" class="form-control form-control-lg form-control-solid text-start"
+                    name="expectedEndDate" formControlName="expectedEndDate" />
+                  <div
+                    *ngIf="addReportForm?.get('expectedEndDate')?.invalid && (addReportForm?.get('expectedEndDate')?.dirty || addReportForm?.get('expectedEndDate')?.touched)"
+                    class="fv-plugins-message-container">
+                    <div class="fv-help-block">field is required</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row mb-1">
+              <div class="col-md-6">
+                <label class="col-lg-8 col-form-label fw-bold fs-6">
+                  <span>difference between end of the project, basic schedule/فرق مدة نهاية المشروع عن البرنامج الزمني
+                    الأساسي
+                  </span>
+                </label>
+                <div class="col-lg-11 fv-row">
+                  <input type="text" class="form-control form-control-lg form-control-solid text-start" [value]="'---'"
+                    disabled />
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <label class="col-lg-8 col-form-label fw-bold fs-6">
+                  <span>
+                    إجمالي نسبه الاعمال المنفذة بالمشروع حتي تاريخ التقرير
+                  </span>
+                </label>
+                <div class="col-lg-11 fv-row">
+                  <div class="col-lg-11 fv-row">
+                    <input type="text" class="form-control form-control-lg form-control-solid text-start" [value]="projectDetails?.spi"
+                      disabled />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row mb-1">
+              <div class="col-md-6">
+                <label class="col-lg-8 col-form-label fw-bold fs-6">
+                  <span>
+                    إجمالي نسبة الأعمال المخطط لها بالمشروع حتى تاريخ التقرير
+                  </span>
+                </label>
+                <div class="col-lg-11 fv-row">
+                  <input type="text" class="form-control form-control-lg form-control-solid text-start" [value]="projectDetails?.plannedBusinessPercentage"
+                    disabled />
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <label class="col-lg-8 col-form-label fw-bold fs-6">
+                  <span>
+                    نسبة التأخر في المشروع حسب الخطة الزمنية المحدثة
+                  </span>
+                </label>
+                <div class="col-lg-11 fv-row">
+                  <div class="col-lg-11 fv-row">
+                    <input type="text" class="form-control form-control-lg form-control-solid text-start" [value]="projectDetails?.latePercentage"
+                      disabled />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row mb-1">
+              <div class="col-md-6">
+                <label class="col-lg-8 col-form-label fw-bold fs-6">
+                  <span>
+                    إجمالي نسبة الأعمال المخطط لها بالمشروع حتى نهاية الشهر القادم </span>
+                </label>
+                <div class="col-lg-11 fv-row">
+                  <input type="text" class="form-control form-control-lg form-control-solid text-start" [value]="projectDetails?.plannedBusinessNextMonthPercentage"
+                    disabled />
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <label class="col-lg-8 col-form-label fw-bold fs-6">
+                  <span>
+                    مؤشر البرنامج الزمني (SPI) </span>
+                </label>
+                <div class="col-lg-11 fv-row">
+                  <div class="col-lg-11 fv-row">
+                    <input type="text" class="form-control form-control-lg form-control-solid text-start" [value]="projectDetails?.spi"
+                      disabled />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row mb-1">
+              <div class="col-md-6">
+                <label class="col-lg-8 col-form-label fw-bold fs-6">
+                  <span>
+                    متوسط نسبة الإنجاز الفعلي خلال الثلاثة الشهور الأخيرة
+                  </span>
+                </label>
+                <div class="col-lg-11 fv-row">
+                  <input type="text" class="form-control form-control-lg form-control-solid text-start" [value]="'---'"
+                    disabled />
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <label class="col-lg-8 col-form-label fw-bold fs-6">
+                  <span>
+                    نسبة المخطط إنجازه خلال الثلاثة الشهور القادمة للمشروع
+                  </span>
+                </label>
+                <div class="col-lg-11 fv-row">
+                  <div class="col-lg-11 fv-row">
+                    <input type="text" class="form-control form-control-lg form-control-solid text-start" [value]="projectDetails?.achievementForNextThreeMonths"
+                      disabled />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row mb-1">
+              <div class="col-md-6 mb-6">
+                <label class="col-lg-8 col-form-label fw-bold fs-6"><span>
+                  عدد أيام التأخر في المسار الحرج بالمشروع (Total Float - TF)
+                  </span>
+                </label>
+                <div class="col-lg-11 fv-row">
+                  <input type="text" class="form-control form-control-lg form-control-solid text-start" name="delayDays"
+                    formControlName="delayDays" (keypress)="numbersOnly($event)" />
+                  <div
+                    *ngIf="addReportForm?.get('delayDays')?.invalid && (addReportForm?.get('delayDays')?.dirty || addReportForm?.get('delayDays')?.touched)"
+                    class="fv-plugins-message-container">
+                    <div class="fv-help-block">field is required</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ng-container>
+
+        </div>
+
+        <div class="d-flex flex-stack pt-15">
+          <div class="mr-2">
+            <ng-container *ngIf="currentStep$.value !== 1">
+              <button type="button" class="btn btn-lg btn-light-primary me-3" (click)="prevStep()">
+                <app-keenicon name="arrow-left" class="fs-3 ms-4 me-1"></app-keenicon>
+                Back
+              </button>
+            </ng-container>
+          </div>
+
+          <ng-container *ngIf="currentStep$.value !== formsCount">
+            <div>
+              <button type="button" class="btn btn-lg btn-primary me-3" (click)="nextStep()"
+                *ngIf="currentStep$.value < formsCount - 1">
+                <span class="indicator-label">
+                  Continue {{ " " }}
+                  <app-keenicon name="arrow-right" class="fs-3 ms-2 me-0"></app-keenicon>
+                </span>
+              </button>
+
+              <button type="button" class="btn btn-lg btn-primary me-3" (click)="Submit()"
+                *ngIf="currentStep$.value === formsCount - 1">
+                <span class="indicator-label">
+                  Submit
+                </span>
+              </button>
+            </div>
+          </ng-container>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+<!-- modal -->
+<swal #noticeSwal [swalOptions]="swalOptions">
+</swal>

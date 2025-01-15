@@ -85,6 +85,8 @@ import { MonthlyRecomendationComponent } from './monthly-report/monthly-recomend
 import { MonthlyMeetingsComponent } from './monthly-report/monthly-meetings/monthly-meetings.component';
 import { ReportStepComponent } from './monthly-report/report-step/report-step.component';
 import { RfiListComponent } from './rfi-list/rfi-list.component';
+import { StepDetailsComponent } from './monthly-report/report-step/step-details/step-details.component';
+import { StepCreateComponent } from './monthly-report/report-step/step-create/step-create.component';
 
 const routes: Routes = [
   {
@@ -495,6 +497,14 @@ const routes: Routes = [
       {
         path: 'rfi-list/:id',
         component: RfiListComponent,
+      },
+      {
+        path: 'monthly_report_step_add/:id',
+        component: StepCreateComponent,
+      },
+      {
+        path: 'monthly_report_step_details/:id',
+        component: StepDetailsComponent,
       },
 
       { path: '', redirectTo: 'overview', pathMatch: 'full' },

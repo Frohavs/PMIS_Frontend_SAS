@@ -1,5 +1,6 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Location } from '@angular/common';
 import { MonthlyReportsService } from 'src/app/services/monthly-reports.service';
 
 @Component({
@@ -11,12 +12,14 @@ export class MonthlyReportDetailsComponent implements OnInit {
 
   projectId: number;
   reportId: number;
+  projectDetails: any;
   reportDetails: any;
   ratingProgressResult = 0;
   completionProgressResult = 0;
 
   constructor(
     private router: Router,
+    private _location: Location,
     private cdr: ChangeDetectorRef,
     private activatedRoute: ActivatedRoute,
     private monthlyReportsService: MonthlyReportsService,
@@ -26,6 +29,12 @@ export class MonthlyReportDetailsComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.params.subscribe((res) => {
       this.projectId = +res['id'];
+      this.monthlyReportsService.getProjectData(this.projectId).subscribe((res) => {
+        this.projectDetails = res.data;
+        console.log('this.projectDetails', this.projectDetails);
+
+        this.cdr.detectChanges();
+      })
     });
     this.activatedRoute.queryParams.subscribe((res) => {
       this.reportId = +res['reportId'];
@@ -47,12 +56,23 @@ export class MonthlyReportDetailsComponent implements OnInit {
     if (this.reportDetails?.recommendation?.contractor) {
       this.completionProgressResult = 50
     }
-    if(this.reportDetails.workProgressImageSubmitted) {
+    if (this.reportDetails?.correspondence?.type) {
+      this.completionProgressResult = 75
+    }
+    if (this.reportDetails.workProgressImageSubmitted) {
       this.ratingProgressResult = 20
     }
-    if(this.reportDetails.recommendationSubmitted) {
+    if (this.reportDetails.recommendationSubmitted) {
       this.ratingProgressResult = 50
     }
+    if (this.reportDetails.correspondenceSubmitted) {
+      this.ratingProgressResult = 75
+    }
+  }
+
+
+  back() {
+    this._location.back();
   }
 
   navigateTo(route: string) {
