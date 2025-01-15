@@ -98,7 +98,7 @@ deleteRfi(rfi: any) {
   this.deleteSwal.fire().then((clicked) => {
     if (clicked.isConfirmed) {
       this.isLoading = true;
-      this.rfiService.deleteMir(rfi.id).subscribe({
+      this.rfiService.deleteRfi(rfi.id).subscribe({
         next: (res) => {
           this.showAlert({ icon: 'success', title: 'Success!', text: 'MIR Deleted successfully!' });
           setTimeout(() => {
