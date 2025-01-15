@@ -107,4 +107,8 @@ export const PROJECT_OPTIONS = [
       name: 'Monthly Report',
       route: 'projects/monthly_reports'
     },
+    {
+      name: 'RFI',
+      route: 'projects/rfi-list'
+    },
 ]

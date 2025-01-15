@@ -84,6 +84,7 @@ import { WorkProgressPictureComponent } from './monthly-report/work-progress-pic
 import { MonthlyRecomendationComponent } from './monthly-report/monthly-recomendation/monthly-recomendation.component';
 import { MonthlyMeetingsComponent } from './monthly-report/monthly-meetings/monthly-meetings.component';
 import { ReportStepComponent } from './monthly-report/report-step/report-step.component';
+import { RfiListComponent } from './rfi-list/rfi-list.component';
 
 const routes: Routes = [
   {
@@ -490,6 +491,10 @@ const routes: Routes = [
       {
         path: 'monthly_report_step/:id',
         component: ReportStepComponent,
+      },
+      {
+        path: 'rfi-list/:id',
+        component: RfiListComponent,
       },
 
       { path: '', redirectTo: 'overview', pathMatch: 'full' },
