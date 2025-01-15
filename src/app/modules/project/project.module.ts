@@ -102,6 +102,8 @@ import { RfiListComponent } from './rfi-list/rfi-list.component';
 import { StepDetailsComponent } from './monthly-report/report-step/step-details/step-details.component';
 import { StepCreateComponent } from './monthly-report/report-step/step-create/step-create.component';
 import { NgApexchartsModule } from 'ng-apexcharts';
+import { AddRfiComponent } from './rfi-list/add-rfi/add-rfi.component';
+import { RfiDetailsComponent } from './rfi-list/rfi-details/rfi-details.component';
 
 
 @NgModule({
@@ -221,6 +223,8 @@ import { NgApexchartsModule } from 'ng-apexcharts';
     StepDetailsComponent,
     
     RfiListComponent,
+    AddRfiComponent,
+    RfiDetailsComponent
   ],
   imports: [
     CommonModule,

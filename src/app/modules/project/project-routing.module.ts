@@ -87,6 +87,8 @@ import { ReportStepComponent } from './monthly-report/report-step/report-step.co
 import { RfiListComponent } from './rfi-list/rfi-list.component';
 import { StepDetailsComponent } from './monthly-report/report-step/step-details/step-details.component';
 import { StepCreateComponent } from './monthly-report/report-step/step-create/step-create.component';
+import { RfiDetailsComponent } from './rfi-list/rfi-details/rfi-details.component';
+import { AddRfiComponent } from './rfi-list/add-rfi/add-rfi.component';
 
 const routes: Routes = [
   {
@@ -495,10 +497,6 @@ const routes: Routes = [
         component: ReportStepComponent,
       },
       {
-        path: 'rfi-list/:id',
-        component: RfiListComponent,
-      },
-      {
         path: 'monthly_report_step_add/:id',
         component: StepCreateComponent,
       },
@@ -506,7 +504,19 @@ const routes: Routes = [
         path: 'monthly_report_step_details/:id',
         component: StepDetailsComponent,
       },
-
+      {
+        path: 'rfi-list/:id',
+        component: RfiListComponent,
+      },
+      {
+        path: 'rfi-details/:id',
+        component: RfiDetailsComponent,
+      },
+      {
+        path: 'add-rfi/:id',
+        component: AddRfiComponent,
+      },
+      
       { path: '', redirectTo: 'overview', pathMatch: 'full' },
       { path: '**', redirectTo: 'overview', pathMatch: 'full' },
     ]
