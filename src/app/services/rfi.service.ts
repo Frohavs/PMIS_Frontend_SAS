@@ -8,7 +8,7 @@ import { environment } from 'src/environments/environment';
 })
 export class RfiService {
   
-  API_USERS_URL = `${environment.apiUrl}/MIR`;
+  API_USERS_URL = `${environment.apiUrl}/RFI`;
   token: string;
   private authLocalStorageToken = `${environment.appVersion}-${environment.USERDATA_KEY}`;
 
@@ -45,7 +45,7 @@ export class RfiService {
       headers: httpHeaders
     });
   }
-  addMir(payload: any): Observable<any> {
+  addRfi(payload: any): Observable<any> {
     const httpHeaders = new HttpHeaders({
       Authorization: `Bearer ${this.token}`,
     });

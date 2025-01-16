@@ -466,4 +466,38 @@ export class LookupService {
     });
   }
 
+  getRFIStatuses(): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+      LanguageCode: 'ar'
+    });
+    const url = `${this.API_USERS_URL}/GetRFIStatuses`;
+    return this.http.get<any>(url, {
+      headers: httpHeaders
+    });
+  }
+
+  getRFITypes(): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+      LanguageCode: 'ar'
+    });
+    const url = `${this.API_USERS_URL}/GetRFITypes`;
+    return this.http.get<any>(url, {
+      headers: httpHeaders
+    });
+  }
+
+  getRFINoteTypes(): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+      LanguageCode: 'ar'
+    });
+    const url = `${this.API_USERS_URL}/GetRFINoteTypes`;
+    return this.http.get<any>(url, {
+      headers: httpHeaders
+    });
+  }
+
+
 }

@@ -1,1 +1,234 @@
-<p>add-rfi works!</p>
+<div class="row g-5 g-xl-8 justify-content-between">
+    <div class="col-xl-12">
+      <div class="card mb-5 mb-xl-8">
+        <!-- begin::Header -->
+        <div class="card-header align-items-center border-0 mt-4">
+          <h3 class="card-title align-items-start flex-column">
+            <span class="fw-bolder text-gray-900">add Rfi</span>
+            <!-- <span class="text-muted mt-1 fw-bold fs-7">test</span> -->
+          </h3>
+          <div class="card-toolbar">
+            <a (click)="back()" class="btn btn-sm btn-danger d-flex">
+              <app-keenicon name="arrow-left" class="fs-3"></app-keenicon>
+              {{"ECOMMERCE.COMMON.BACK" | translate}}
+            </a>
+          </div>
+        </div>
+  
+  
+        <div class="card-body pt-3">
+  
+          <form [formGroup]="addFactoryForm" class="form">
+            <div class="card-body border-top p-9">
+  
+              <div class="row mb-2">
+  
+              </div>
+              <div class="row mb-2">
+                <div class="col-lg-6">
+                  <div class="row">
+                    <div class="col-lg-12">
+                      <label class="col-lg-12 col-form-label fw-bold fs-6">
+                        <span>
+                          Type
+                        </span>
+                      </label>
+                      <div class="col-lg-12 fv-row">
+                        <select class="form-select form-select-solid form-select-lg fw-bold" name="typeId"
+                          formControlName="typeId">
+                          <option value="" disabled>{{"TRANSLATOR.SELECTION" | translate}}</option>
+                          <ng-container *ngFor="let item of rfiTypes">
+                            <option [value]="item?.id">{{item?.name}}</option>
+                          </ng-container>
+                        </select>
+                        <div
+                          *ngIf="addFactoryForm?.get('typeId')?.invalid && (addFactoryForm?.get('typeId')?.dirty || addFactoryForm?.get('typeId')?.touched)"
+                          class="fv-plugins-message-container">
+                          <div class="fv-help-block">type is required</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-12">
+                      <label class="col-lg-12 col-form-label fw-bold fs-6">
+                        <span>
+                          Factory Name
+                        </span>
+                      </label>
+                      <div class="col-lg-12 fv-row">
+                        <select class="form-select form-select-solid form-select-lg fw-bold" name="factoryId"
+                          formControlName="factoryId">
+                          <option value="" disabled>{{"TRANSLATOR.SELECTION" | translate}}</option>
+                          <ng-container *ngFor="let item of factories">
+                            <option [value]="item?.id">{{item?.description}}</option>
+                          </ng-container>
+                        </select>
+                        <div
+                          *ngIf="addFactoryForm?.get('factoryId')?.invalid && (addFactoryForm?.get('factoryId')?.dirty || addFactoryForm?.get('factoryId')?.touched)"
+                          class="fv-plugins-message-container">
+                          <div class="fv-help-block">name is required</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-12">
+                      <label class="col-lg-12 col-form-label fw-bold fs-6">
+                        <span>
+                          Assignment Date
+                        </span>
+                      </label>
+                      <div class="col-lg-12 fv-row">
+                        <input type="date" class="form-control form-control-lg form-control-solid text-start"
+                          name="assignedDate" formControlName="assignedDate" />
+                        <div
+                          *ngIf="addFactoryForm?.get('assignedDate')?.invalid && (addFactoryForm?.get('assignedDate')?.dirty || addFactoryForm?.get('assignedDate')?.touched)"
+                          class="fv-plugins-message-container">
+                          <div class="fv-help-block">date is required</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-12">
+                      <label class="col-lg-12 col-form-label fw-bold fs-6">
+                        <span>
+                          Latitude
+                        </span>
+                      </label>
+                      <div class="col-lg-12 fv-row">
+                        <input type="text" class="form-control form-control-lg form-control-solid text-start"
+                          name="latitude" formControlName="latitude" />
+                        <div
+                          *ngIf="addFactoryForm?.get('latitude')?.invalid && (addFactoryForm?.get('latitude')?.dirty || addFactoryForm?.get('latitude')?.touched)"
+                          class="fv-plugins-message-container">
+                          <div class="fv-help-block">latitude is required</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-12">
+                      <label class="col-lg-12 col-form-label fw-bold fs-6">
+                        <span>
+                          Longitude
+                        </span>
+                      </label>
+                      <div class="col-lg-12 fv-row">
+                        <input type="text" class="form-control form-control-lg form-control-solid text-start"
+                          name="longitude" formControlName="longitude" />
+                        <div
+                          *ngIf="addFactoryForm?.get('longitude')?.invalid && (addFactoryForm?.get('longitude')?.dirty || addFactoryForm?.get('longitude')?.touched)"
+                          class="fv-plugins-message-container">
+                          <div class="fv-help-block">longitude is required</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="map-container">
+                    <span class="fw-bold fs-6 mb-3">Location – Upload site location</span><br><br>
+                    <google-map height="400px" width="100%" [options]="options" (mapClick)="onMapClick($event)">
+                      <map-marker *ngIf="markerPosition" [position]="markerPosition" [options]="markerOptions">
+                      </map-marker>
+                    </google-map>
+                  </div>
+                </div>
+              </div>
+  
+              <div class="row mb-2">
+                <div class="col-lg-6">
+                  <label class="col-lg-12 col-form-label fw-bold fs-6">
+                    <span>
+                      BOQ
+                    </span>
+                  </label>
+                  <div class="col-lg-12 fv-row">
+                    <select class="form-select form-select-solid form-select-lg fw-bold" name="boqId"
+                      formControlName="boqId">
+                      <option value="" disabled>{{"TRANSLATOR.SELECTION" | translate}}</option>
+                      <ng-container *ngFor="let item of boqList">
+                        <option [value]="item.id">{{item?.name}}</option>
+                      </ng-container>
+                    </select>
+                    <div
+                      *ngIf="addFactoryForm?.get('boqId')?.invalid && (addFactoryForm?.get('boqId')?.dirty || addFactoryForm?.get('boqId')?.touched)"
+                      class="fv-plugins-message-container">
+                      <div class="fv-help-block">boq is required</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-4">
+                  <label class="col-lg-12 col-form-label fw-bold fs-6">
+                    <span>
+                      Quantity
+                    </span>
+                  </label>
+                  <div class="col-lg-12 fv-row">
+                    <input type="number" min="1" class="form-control form-control-lg form-control-solid text-start"
+                      name="quantity" formControlName="quantity" (keypress)="numbersOnly($event)" />
+                    <div
+                      *ngIf="addFactoryForm?.get('quantity')?.invalid && (addFactoryForm?.get('quantity')?.dirty || addFactoryForm?.get('quantity')?.touched)"
+                      class="fv-plugins-message-container">
+                      <div class="fv-help-block">quantity phone is required</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-2 d-flex align-items-end">
+                  <button class="btn btn-success mx-3" type="button" (click)="addQuantity()">add</button>
+                </div>
+              </div>
+  
+              <table class="table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4">
+                <!-- begin::Table head -->
+                <thead>
+                  <tr class="fw-bolder text-muted">
+  
+                    <th class="min-w-120px">Boq list</th>
+                    <th class="min-w-120px">Quantity</th>
+                    <th class="min-w-120px">Action</th>
+                  </tr>
+                </thead>
+                <!-- end::Table head -->
+                <!-- begin::Table body -->
+                <tbody>
+                  <tr *ngFor="let item of rfiBoqs; index as i">
+                    <td>
+                      <a class="text-gray-900 fw-bolder text-hover-primary" style="font-size: 12px;">
+                        {{item?.boqId || '--'}}
+                      </a>
+                    </td>
+                    <td>
+                      <a class="text-gray-900 fw-bolder text-hover-primary" style="font-size: 12px;">
+                        {{item.quantity || '--'}}
+                      </a>
+                    </td>
+                    <td>
+                      <div class="d-flex justify-content-center flex-shrink-0">
+                        <a class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm" (click)="deleteBoq(item)">
+                          <app-keenicon name="trash" class="fs-3"></app-keenicon>
+                        </a>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+                <!-- end::Table body -->
+              </table>
+  
+            </div>
+            <div class="card-footer d-flex justify-content-end py-6 px-9">
+              <button type="button" class="btn btn-primary" [disabled]="isLoading" (click)="saveChanges()">
+                <ng-container *ngIf="!isLoading">{{"TRANSLATOR.SAVE_CHANGES" | translate}}</ng-container>
+                <ng-container *ngIf="isLoading">
+                  <span clas="indicator-progress" [style.display]="'block'">
+                    Please wait...{{ " " }}
+                    <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                  </span>
+                </ng-container>
+              </button>
+            </div>
+          </form>
+  
+        </div>
+        <!-- end::Body -->
+      </div>
+    </div>
+  </div>
+  
+  <!-- modal -->
+  <swal #noticeSwal [swalOptions]="swalOptions">
+  </swal>
