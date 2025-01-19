@@ -124,6 +124,10 @@ export class StepCreateComponent implements OnInit, OnDestroy {
     });
   }
 
+  floatNumberPiping(floatNumber: number) {
+    return floatNumber.toFixed(5);
+  }
+
   showAlert(swalOptions: SweetAlertOptions) {
     let style = swalOptions.icon?.toString() || 'success';
     if (swalOptions.icon === 'error') {

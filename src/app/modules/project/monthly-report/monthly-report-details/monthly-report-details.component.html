@@ -199,7 +199,7 @@
                   <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
                     Project Start date
                   </a>
-                  <span class="text-muted fw-bold d-block pt-1">{{projectDetails?.nameAr  ||  '--'}}</span>
+                  <span class="text-muted fw-bold d-block pt-1">{{projectDetails?.createdDate  | date: "dd-MM-YYYY"}}</span>
                 </div>
                 <div class="flex-grow-1 me-2">
                   <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
@@ -287,7 +287,7 @@
                     Final Project Value
                   </a>
                   <span
-                    class="text-muted fw-bold d-block pt-1">{{projectDetails?.updatedValue ||  '--'}}</span>
+                    class="text-muted fw-bold d-block pt-1">{{projectDetails?.updatedValue | number}}</span>
                 </div>
               </div>
               <!-- end::Title -->
@@ -308,7 +308,7 @@
                   <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
                     EAC
                   </a>
-                  <span class="text-muted fw-bold d-block pt-1">{{projectDetails?.spi ||  '--'}}</span>
+                  <span class="text-muted fw-bold d-block pt-1">{{projectDetails?.updatedValue | number}}</span>
                 </div>
               </div>
               <!-- end::Title -->
@@ -339,7 +339,6 @@
 
                 <th class="min-w-120px">Cumulative Percentages</th>
                 <th class="min-w-140px">Current Month</th>
-                <th class="min-w-120px">Last Month</th>
               </tr>
             </thead>
             <tbody>
@@ -354,11 +353,7 @@
                     {{projectDetails?.elapsedTimePercentage  | number}}
                   </a>
                 </td>
-                <td>
-                  <a class="text-gray-900 fw-bolder text-hover-primary" style="font-size: 12px;">
-                    {{'--'}}
-                  </a>
-                </td>
+
               </tr>
               <tr>
                 <td>
@@ -368,14 +363,10 @@
                 </td>
                 <td>
                   <a class="text-gray-900 fw-bolder text-hover-primary" style="font-size: 12px;">
-                    {{'--'}}
+                    {{reportDetails?.scurveValue  | number}}
                   </a>
                 </td>
-                <td>
-                  <a class="text-gray-900 fw-bolder text-hover-primary" style="font-size: 12px;">
-                    {{'--'}}
-                  </a>
-                </td>
+
               </tr>
               <tr>
                 <td>
@@ -388,11 +379,7 @@
                     {{projectDetails?.actualBusinessPercentage  | number}}
                   </a>
                 </td>
-                <td>
-                  <a class="text-gray-900 fw-bolder text-hover-primary" style="font-size: 12px;">
-                    {{'--'}}
-                  </a>
-                </td>
+
               </tr>
               <tr>
                 <td>
@@ -402,14 +389,10 @@
                 </td>
                 <td>
                   <a class="text-gray-900 fw-bolder text-hover-primary" style="font-size: 12px;">
-                    {{projectDetails?.spi || '--'}}
+                    {{projectDetails?.spi | number}}
                   </a>
                 </td>
-                <td>
-                  <a class="text-gray-900 fw-bolder text-hover-primary" style="font-size: 12px;">
-                    {{'--'}}
-                  </a>
-                </td>
+
               </tr>
               <tr>
                 <td>
@@ -419,14 +402,10 @@
                 </td>
                 <td>
                   <a class="text-gray-900 fw-bolder text-hover-primary" style="font-size: 12px;">
-                    {{'--'}}
+                    {{projectDetails?.invoiceReferenceNumber  | number}}
                   </a>
                 </td>
-                <td>
-                  <a class="text-gray-900 fw-bolder text-hover-primary" style="font-size: 12px;">
-                    {{'--'}}
-                  </a>
-                </td>
+
               </tr>
               <tr>
                 <td>
@@ -436,14 +415,10 @@
                 </td>
                 <td>
                   <a class="text-gray-900 fw-bolder text-hover-primary" style="font-size: 12px;">
-                    {{'--'}}
+                    {{projectDetails?.invoiceRatio  | number}}
                   </a>
                 </td>
-                <td>
-                  <a class="text-gray-900 fw-bolder text-hover-primary" style="font-size: 12px;">
-                    {{'--'}}
-                  </a>
-                </td>
+
               </tr>
               <tr>
                 <td>
@@ -453,31 +428,10 @@
                 </td>
                 <td>
                   <a class="text-gray-900 fw-bolder text-hover-primary" style="font-size: 12px;">
-                    {{'--'}}
+                    {{projectDetails?.invoiceValue  | number}}
                   </a>
                 </td>
-                <td>
-                  <a class="text-gray-900 fw-bolder text-hover-primary" style="font-size: 12px;">
-                    {{'--'}}
-                  </a>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <a class="text-gray-900 fw-bolder text-hover-primary" style="font-size: 12px;">
-                    {{'Extract Value'}}
-                  </a>
-                </td>
-                <td>
-                  <a class="text-gray-900 fw-bolder text-hover-primary" style="font-size: 12px;">
-                    {{'--'}}
-                  </a>
-                </td>
-                <td>
-                  <a class="text-gray-900 fw-bolder text-hover-primary" style="font-size: 12px;">
-                    {{'--'}}
-                  </a>
-                </td>
+
               </tr>
             </tbody>
           </table>

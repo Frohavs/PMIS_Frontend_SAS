@@ -63,7 +63,7 @@ export class MonthlyReportComponent implements OnInit, AfterViewInit, OnDestroy 
           }
           this.cdr.detectChanges();
         },(err) => {
-          this.hideCreateReport = false;
+          this.hideCreateReport = true;
           this.cdr.detectChanges();
         });
       }
