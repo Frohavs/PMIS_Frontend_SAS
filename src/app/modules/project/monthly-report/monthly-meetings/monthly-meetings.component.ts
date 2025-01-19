@@ -38,6 +38,9 @@ export class MonthlyMeetingsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.activatedRoute.params.subscribe(params => {
+      this.projectId = +params['id'];
+    });
 
     this.activatedRoute.queryParams.subscribe(params => {
       this.reportId = +params['reportId'];
@@ -66,7 +69,6 @@ export class MonthlyMeetingsComponent implements OnInit {
     });
   }
   onSubmitNote() {
-    debugger
     this.monthlyReportsService.postMonthlyReportCorrespondence(this.CorrespondenceModelData).subscribe(res => {
       this.modalService.dismissAll();
       this.CorrespondenceModelData = { createdOn: '', subject: '', attachment: '', parties: '', reference: '', typeId: 1, monthlyReportId: this.reportId };
