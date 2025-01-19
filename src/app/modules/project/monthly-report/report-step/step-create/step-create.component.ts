@@ -53,7 +53,6 @@ export class StepCreateComponent implements OnInit, OnDestroy {
       this.projectId = +res['id'];
       this.monthlyReportsService.getProjectData(this.projectId).subscribe((res) => {
         this.projectDetails = res.data;
-        debugger
         this.cdr.detectChanges();
       });
     });

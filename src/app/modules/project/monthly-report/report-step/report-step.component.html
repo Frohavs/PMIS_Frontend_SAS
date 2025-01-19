@@ -12,10 +12,17 @@
             <app-keenicon name="arrow-left" class="fs-3"></app-keenicon>
             {{"ECOMMERCE.COMMON.BACK" | translate}}
           </a>
-          <a class="btn btn-primary font-weight-bolder font-size-sm cursor-pointer mx-2" (click)="addNewReport()">
-            <app-keenicon name="arrow-left" class="fs-3"></app-keenicon>
-            Create
-          </a>
+          <ng-container *ngIf="!reportDetails?.submitted">
+            <a class="btn btn-primary font-weight-bolder font-size-sm cursor-pointer mx-2" (click)="addNewReport()" *ngIf="!reportDetails?.resourcePlanValue">
+              <app-keenicon name="arrow-left" class="fs-3"></app-keenicon>
+              Create
+            </a>
+            <a class="btn btn-success font-weight-bolder font-size-sm cursor-pointer mx-2" (click)="approve()" *ngIf="reportDetails?.resourcePlanValue">
+              <app-keenicon name="arrow-left" class="fs-3"></app-keenicon>
+              Approve
+            </a>
+          </ng-container>
+
         </div>
       </div>
       <div class="card-body pt-3">
@@ -109,3 +116,47 @@
     </div>
   </div>
 </div>
+
+
+<swal #noticeSwal [swalOptions]="swalOptions"> </swal>
+
+<ng-template #approveModal let-modal>
+  <form #myForm="ngForm" (ngSubmit)="onApprove()">
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Role Details</h4>
+      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+
+      <div class="fv-row mb-7">
+        <div class="col-lg-8 d-flex align-items-center">
+          <div class="form-check form-check-solid form-switch d-flex align-items-center">
+            <input class="form-check-input w-45px h-30px me-2" type="checkbox" name="durationDays"
+              [(ngModel)]="approveModelData.approved" />
+            <label class="form-check-label">{{approveModelData.approved ? 'approve' : 'reject'}}</label>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="modal-footer flex-center">
+      <!--begin::Button-->
+      <button type="reset" id="kt_modal_update_customer_cancel" class="btn btn-light me-3"
+        (click)="modal.dismiss('cancel')">
+        Discard
+      </button>
+      <!--end::Button-->
+
+      <!--begin::Button-->
+      <button type="submit" id="kt_modal_update_customer_submit" class="btn btn-primary"
+        [attr.data-kt-indicator]="isLoading ? 'on' : 'off'">
+        <span class="indicator-label"> Submit </span>
+        <span class="indicator-progress">
+          Please wait...
+          <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+        </span>
+      </button>
+      <!--end::Button-->
+    </div>
+  </form>
+</ng-template>

@@ -59,6 +59,9 @@ export class MonthlyReportDetailsComponent implements OnInit {
     if (this.reportDetails?.correspondence?.type) {
       this.completionProgressResult = 75
     }
+    if (this.reportDetails?.resourcePlanValue) {
+      this.completionProgressResult = 100
+    }
     if (this.reportDetails.workProgressImageSubmitted) {
       this.ratingProgressResult = 25
     }
@@ -67,6 +70,9 @@ export class MonthlyReportDetailsComponent implements OnInit {
     }
     if (this.reportDetails.correspondenceSubmitted) {
       this.ratingProgressResult = 75
+    }
+    if (this.reportDetails.submitted) {
+      this.ratingProgressResult = 100
     }
   }
 
