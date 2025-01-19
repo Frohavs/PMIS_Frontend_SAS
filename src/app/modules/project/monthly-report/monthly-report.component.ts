@@ -21,7 +21,7 @@ export class MonthlyReportComponent implements OnInit, AfterViewInit, OnDestroy 
   totalCount: number;
   pagesCount: number[] = [];
   selected = 1;
-  hideCreateReport = true;
+  hideCreateReport = false;
 
   // modal configs
 
@@ -56,10 +56,14 @@ export class MonthlyReportComponent implements OnInit, AfterViewInit, OnDestroy 
       this.projectId = +params['id'];
       if (this.projectId) {
         this.monthlyReportsService.checkMonthlyReportCreation({ projectId: this.projectId }).subscribe(res => {
-          this.hideCreateReport = false;
+          if(!res) {
+            this.hideCreateReport = false;
+          } else {
+            this.hideCreateReport = true;
+          }
           this.cdr.detectChanges();
         },(err) => {
-          this.hideCreateReport = true;
+          this.hideCreateReport = false;
           this.cdr.detectChanges();
         });
       }
