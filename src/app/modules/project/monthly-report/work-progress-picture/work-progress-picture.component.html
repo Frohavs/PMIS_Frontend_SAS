@@ -6,7 +6,7 @@
           <span class="fw-bolder text-gray-900">Upload Pictures</span>
           <!-- <span class="text-muted mt-1 fw-bold fs-7">test</span> -->
         </h3>
-        <div class="card-toolbar" *ngIf="!reportDetails?.workProgressImageSubmitted">
+        <div class="card-toolbar" *ngIf="reportDetails?.images?.length > 0 && !reportDetails?.workProgressImageSubmitted">
           <a (click)="approveNotes()" class="btn btn-sm btn-light-success d-flex mx-2">
             Approve Status
           </a>
@@ -36,7 +36,7 @@
 
           </div>
           <div class="card-footer d-flex justify-content-end py-6 px-9">
-            <button type="button" class="btn btn-primary" [disabled]="isLoading" (click)="saveChanges()">
+            <button type="button" class="btn btn-primary" [disabled]="isLoading || !uploadedPictures.length" (click)="saveChanges()">
               <ng-container *ngIf="!isLoading">{{"TRANSLATOR.SAVE_CHANGES" | translate}}</ng-container>
               <ng-container *ngIf="isLoading">
                 <span clas="indicator-progress" [style.display]="'block'">

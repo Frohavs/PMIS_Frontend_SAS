@@ -51,7 +51,7 @@ export class MonthlyReportDetailsComponent implements OnInit {
 
   checkProgress() {
     if (this.reportDetails.images.length) {
-      this.completionProgressResult = 20
+      this.completionProgressResult = 25
     }
     if (this.reportDetails?.recommendation?.contractor) {
       this.completionProgressResult = 50
@@ -60,7 +60,7 @@ export class MonthlyReportDetailsComponent implements OnInit {
       this.completionProgressResult = 75
     }
     if (this.reportDetails.workProgressImageSubmitted) {
-      this.ratingProgressResult = 20
+      this.ratingProgressResult = 25
     }
     if (this.reportDetails.recommendationSubmitted) {
       this.ratingProgressResult = 50

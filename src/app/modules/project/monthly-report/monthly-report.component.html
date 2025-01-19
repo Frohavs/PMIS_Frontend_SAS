@@ -17,6 +17,9 @@
         {{Add_text}}
       </a>
     </div>
+    <div class="card-toolbar" *ngIf="hideCreateReport">
+      <span class="mx-2 text-danger fs-3 fw-bold">You Can't add more than one report for one month</span>
+    </div>
   </div>
 
   <div class="card-body py-3">
