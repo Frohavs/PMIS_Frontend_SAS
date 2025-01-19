@@ -35,7 +35,7 @@ export class MonthlyMeetingsComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private monthlyReportsService: MonthlyReportsService,
     private attachmentService: AttachmentService,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
 
@@ -45,7 +45,7 @@ export class MonthlyMeetingsComponent implements OnInit {
         this.monthlyReportsService.getReportById(this.reportId).subscribe((res) => {
           this.reportDetails = res.data;
           console.log(this.reportDetails);
-          this.CorrespondenceModelData = { createdOn: '',subject: '', attachment: '', parties: '', reference:'', typeId: 1, monthlyReportId: this.reportId }
+          this.CorrespondenceModelData = { createdOn: '', subject: '', attachment: '', parties: '', reference: '', typeId: 1, monthlyReportId: this.reportId }
           this.cdr.detectChanges();
         });
       }
@@ -60,18 +60,23 @@ export class MonthlyMeetingsComponent implements OnInit {
   approveReport() {
     this.modalService.open(this.approveModal, this.modalConfig);
   }
+  downloadFile(attachment: string) {
+    this.attachmentService.downloadAttachment(attachment).subscribe(res => {
+      window.open(res.data, '_blank');
+    });
+  }
   onSubmitNote() {
     debugger
     this.monthlyReportsService.postMonthlyReportCorrespondence(this.CorrespondenceModelData).subscribe(res => {
       this.modalService.dismissAll();
-      this.CorrespondenceModelData = { createdOn: '',subject: '', attachment: '', parties: '', reference:'', typeId: 1, monthlyReportId: this.reportId };
+      this.CorrespondenceModelData = { createdOn: '', subject: '', attachment: '', parties: '', reference: '', typeId: 1, monthlyReportId: this.reportId };
       this.showAlert({ icon: 'success', title: 'Success!', text: 'Metting Data Added successfully!' });
       this.getReportDetails();
     }, () => {
       this.modalService.dismissAll();
       this.showAlert({ icon: 'error', title: 'Error!', text: 'please try again!' })
     });
-}
+  }
   getReportDetails() {
     this.monthlyReportsService.getReportById(this.reportId).subscribe((res) => {
       this.reportDetails = res.data;
