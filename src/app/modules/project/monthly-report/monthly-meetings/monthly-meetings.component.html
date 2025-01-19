@@ -122,6 +122,12 @@
       <div class="fv-row mb-7">
         <label class="fw-semibold fs-6 mb-2">Type</label>
         <input class="form-control form-control-solid" name="eotReason" [(ngModel)]="CorrespondenceModelData.typeId" />
+        <select class="form-select form-select-solid form-select-lg fw-bold" name="typeId" [(ngModel)]="CorrespondenceModelData.typeId">
+          <option value="" disabled selected>{{"TRANSLATOR.SELECTION" | translate}}</option>
+          <ng-container *ngFor="let type of types">
+            <option [value]="type?.id">{{type?.name}}</option>
+          </ng-container>
+        </select>
       </div>
 
       <div class="fv-row mb-7">

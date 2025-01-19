@@ -498,6 +498,16 @@ export class LookupService {
       headers: httpHeaders
     });
   }
+  getCorrespondenceTypes(): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+      LanguageCode: 'ar'
+    });
+    const url = `${this.API_USERS_URL}/GetCorrespondenceTypes`;
+    return this.http.get<any>(url, {
+      headers: httpHeaders
+    });
+  }
 
 
 }

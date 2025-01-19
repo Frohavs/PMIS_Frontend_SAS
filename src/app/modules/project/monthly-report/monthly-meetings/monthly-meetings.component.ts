@@ -6,6 +6,7 @@ import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
 import { AttachmentService } from 'src/app/services/attachment/attachment.service';
 import { MonthlyReportsService } from 'src/app/services/monthly-reports.service';
 import { SweetAlertOptions } from 'sweetalert2';
+import { LookupService } from 'src/app/services/lookup/lookup.service';
 @Component({
   selector: 'app-monthly-meetings',
   templateUrl: './monthly-meetings.component.html',
@@ -27,10 +28,13 @@ export class MonthlyMeetingsComponent implements OnInit {
   reportDetails: any;
   isLoading: boolean;
 
+  types: any[] = [];
+
   constructor(
     private router: Router,
     private cdr: ChangeDetectorRef,
     private _location: Location,
+    private lookupService: LookupService,
     private modalService: NgbModal,
     private activatedRoute: ActivatedRoute,
     private monthlyReportsService: MonthlyReportsService,
@@ -38,6 +42,12 @@ export class MonthlyMeetingsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+
+    this.lookupService.getCorrespondenceTypes().subscribe((res) => {
+      this.types = res.data;
+      this.cdr.detectChanges();
+    });
+
     this.activatedRoute.params.subscribe(params => {
       this.projectId = +params['id'];
     });
