@@ -30,11 +30,11 @@ export class StepCreateComponent implements OnInit, OnDestroy {
   isCurrentFormValid$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
     false
   );
-    swalOptions: SweetAlertOptions = { buttonsStyling: false };
-    @ViewChild('noticeSwal') noticeSwal!: SwalComponent;
-    modalConfig: NgbModalOptions = {
-      modalDialogClass: 'modal-dialog modal-dialog-centered mw-600px',
-    };
+  swalOptions: SweetAlertOptions = { buttonsStyling: false };
+  @ViewChild('noticeSwal') noticeSwal!: SwalComponent;
+  modalConfig: NgbModalOptions = {
+    modalDialogClass: 'modal-dialog modal-dialog-centered mw-600px',
+  };
   private unsubscribe: Subscription[] = [];
 
   constructor(
@@ -47,15 +47,15 @@ export class StepCreateComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
+    this.initReportForm();
 
     this.activatedRoute.params.subscribe((res) => {
       this.projectId = +res['id'];
       this.monthlyReportsService.getProjectData(this.projectId).subscribe((res) => {
         this.projectDetails = res.data;
-        console.log('this.projectDetails', this.projectDetails);
-
+        debugger
         this.cdr.detectChanges();
-      })
+      });
     });
 
     this.activatedRoute.queryParams.subscribe((res) => {
@@ -63,13 +63,11 @@ export class StepCreateComponent implements OnInit, OnDestroy {
       if (this.reportId) {
         this.monthlyReportsService.getReportById(this.reportId).subscribe((res) => {
           this.reportDetails = res.data;
-          console.log(this.reportDetails);
           this.cdr.detectChanges();
         });
       }
     });
 
-    this.initReportForm();
   }
 
   initReportForm() {
