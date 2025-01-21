@@ -35,24 +35,24 @@
 <div class="row g-5 g-xl-8">
 
   <div class="col-xl-3">
-    <app-stats-widget6 class="card bg-light-warning card-xl-stretch mb-xl-8" color="warning"
-      title="SAR" description="OnProgress" [progress]="invoiceStatistics?.onProgress">
+    <app-stats-widget6 class="card bg-light-warning card-xl-stretch mb-xl-8" color="warning" title="SAR"
+      description="OnProgress" [progress]="invoiceStatistics?.onProgress">
     </app-stats-widget6>
   </div>
   <div class="col-xl-3">
-    <app-stats-widget6 class="card bg-light-success card-xl-stretch mb-xl-8" color="success"
-      title="SAR" description="Approved" [progress]="invoiceStatistics?.approved"></app-stats-widget6>
+    <app-stats-widget6 class="card bg-light-success card-xl-stretch mb-xl-8" color="success" title="SAR"
+      description="Approved" [progress]="invoiceStatistics?.approved"></app-stats-widget6>
   </div>
   <div class="col-xl-3">
-    <app-stats-widget6 class="card bg-light-primary card-xl-stretch mb-xl-8" color="primary"
-      title="SAR" description="Completed" [progress]="invoiceStatistics?.completed">
+    <app-stats-widget6 class="card bg-light-primary card-xl-stretch mb-xl-8" color="primary" title="SAR"
+      description="Completed" [progress]="invoiceStatistics?.completed">
     </app-stats-widget6>
   </div>
 
 
   <div class="col-xl-3">
-    <app-stats-widget6 class="card bg-light-danger card-xl-stretch mb-xl-8" color="danger"
-      title="SAR" description="Canceled" [progress]="invoiceStatistics?.cancelled">
+    <app-stats-widget6 class="card bg-light-danger card-xl-stretch mb-xl-8" color="danger" title="SAR"
+      description="Canceled" [progress]="invoiceStatistics?.cancelled">
     </app-stats-widget6>
   </div>
 
@@ -145,11 +145,15 @@
               </a>
             </td>
             <td>
-              <div class="d-flex justify-content-center flex-shrink-0">
+              <div class="d-flex justify-content-center align-items-center flex-shrink-0">
                 <a class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1"
                   (click)="navigateInvoiceDetails(invoice.id)">
                   <app-keenicon name="eye" class="fs-3"></app-keenicon>
                 </a>
+                <span class="badge badge-light-primary fs-6 fw-bold my-2 p-3 cursor-pointer mx-2"
+                  (click)="invoiceExchangeData(invoice)">
+                  Invoice Details
+                </span>
               </div>
             </td>
           </tr>
@@ -192,3 +196,185 @@
 <!-- modal -->
 <swal #noticeSwal [swalOptions]="swalOptions">
 </swal>
+
+
+<ng-template #exchangeDataModal let-modal>
+  <form [formGroup]="exchangeForm" (ngSubmit)="onSubmitDetails()">
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Invoice Details</h4>
+      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+
+      <div class="row mb-2">
+        <label class="fw-semibold fs-6 mb-2">Work done Value:</label>
+        <input type="text" class="form-control form-control-solid" name="createCommitteeDate"
+          formControlName="createCommitteeDate" />
+      </div>
+
+      <h4 class="my-4">Deduction from operation and Apartner</h4>
+
+      <div class="row mb-2">
+        <div class="col-xl-5">
+          <label class="fw-semibold fs-6 mb-2">Guarantee Deduction</label>
+        </div>
+        <div class="col-xl-7">
+          <input class="form-control form-control-solid col-xl-6" name="createCommitteeDate"
+            formControlName="createCommitteeDate" />
+        </div>
+      </div>
+      <div class="row mb-2">
+        <div class="col-xl-5">
+          <label class="fw-semibold fs-6 mb-2">Delay Penalties</label>
+        </div>
+        <div class="col-xl-7">
+          <input class="form-control form-control-solid col-xl-6" name="createCommitteeDate"
+            formControlName="createCommitteeDate" />
+        </div>
+      </div>
+      <div class="row mb-2">
+        <div class="col-xl-5">
+          <label class="fw-semibold fs-6 mb-2">Supervision Fees</label>
+        </div>
+        <div class="col-xl-7">
+          <input class="form-control form-control-solid col-xl-6" name="createCommitteeDate"
+            formControlName="createCommitteeDate" />
+        </div>
+      </div>
+      <div class="row mb-2">
+        <div class="col-xl-5">
+          <label class="fw-semibold fs-6 mb-2">HSSE Penalties</label>
+        </div>
+        <div class="col-xl-7">
+          <input class="form-control form-control-solid col-xl-6" name="createCommitteeDate"
+            formControlName="createCommitteeDate" />
+        </div>
+      </div>
+      <div class="row mb-2">
+        <div class="col-xl-5">
+          <label class="fw-semibold fs-6 mb-2">Material Shortage Penalties</label>
+        </div>
+        <div class="col-xl-7">
+          <input class="form-control form-control-solid col-xl-6" name="createCommitteeDate"
+            formControlName="createCommitteeDate" />
+        </div>
+      </div>
+      <div class="row mb-2">
+        <div class="col-xl-5">
+          <label class="fw-semibold fs-6 mb-2">Equipments Shortage Penalties</label>
+        </div>
+        <div class="col-xl-7">
+          <input class="form-control form-control-solid col-xl-6" name="createCommitteeDate"
+            formControlName="createCommitteeDate" />
+        </div>
+      </div>
+      <div class="row mb-2">
+        <div class="col-xl-5">
+          <label class="fw-semibold fs-6 mb-2">Others</label>
+        </div>
+        <div class="col-xl-7">
+          <input class="form-control form-control-solid col-xl-6" name="createCommitteeDate"
+            formControlName="createCommitteeDate" />
+        </div>
+      </div>
+      <!-- separate -->
+      <div class="row mb-2">
+        <label class="fw-semibold fs-6 mb-2">Total Deduction Value:</label>
+        <input type="text" class="form-control form-control-solid" name="createCommitteeDate"
+          formControlName="createCommitteeDate" />
+      </div>
+
+      <h4 class="my-4">NOT Deducted from operation and Apartner </h4>
+
+      <div class="row mb-2">
+        <div class="col-xl-5">
+          <label class="fw-semibold fs-6 mb-2">Advanced payment return</label>
+        </div>
+        <div class="col-xl-7">
+          <input class="form-control form-control-solid col-xl-6" name="createCommitteeDate"
+            formControlName="createCommitteeDate" />
+        </div>
+      </div>
+      <div class="row mb-2">
+        <div class="col-xl-5">
+          <label class="fw-semibold fs-6 mb-2">Final invoice deduction</label>
+        </div>
+        <div class="col-xl-7">
+          <input class="form-control form-control-solid col-xl-6" name="createCommitteeDate"
+            formControlName="createCommitteeDate" />
+        </div>
+      </div>
+      <div class="row mb-2">
+        <div class="col-xl-5">
+          <label class="fw-semibold fs-6 mb-2">Supervision Fees</label>
+        </div>
+        <div class="col-xl-7">
+          <input class="form-control form-control-solid col-xl-6" name="createCommitteeDate"
+            formControlName="createCommitteeDate" />
+        </div>
+      </div>
+
+      <!-- separate -->
+      <div class="row mb-2">
+        <label class="fw-semibold fs-6 mb-2">Total deduction value:</label>
+        <input type="text" class="form-control form-control-solid" name="createCommitteeDate"
+          formControlName="createCommitteeDate" />
+      </div>
+
+      <!-- separate -->
+      <div class="row mb-2">
+        <label class="fw-semibold fs-6 mb-2">Net value without VAT:</label>
+        <input type="text" class="form-control form-control-solid" name="createCommitteeDate"
+          formControlName="createCommitteeDate" />
+      </div>
+
+      <!-- separate -->
+      <div class="row mb-2">
+        <label class="fw-semibold fs-6 mb-2">VAT Value:</label>
+        <input type="text" class="form-control form-control-solid" name="createCommitteeDate"
+          formControlName="createCommitteeDate" />
+      </div>
+      <!-- separate -->
+      <div class="row mb-2">
+        <label class="fw-semibold fs-6 mb-2">Total with VAT:</label>
+        <input type="text" class="form-control form-control-solid" name="createCommitteeDate"
+          formControlName="createCommitteeDate" />
+      </div>
+      <!-- separate -->
+      <div class="row mb-2">
+        <label class="fw-semibold fs-6 mb-2">Total value with deduction:</label>
+        <input type="text" class="form-control form-control-solid" name="createCommitteeDate"
+          formControlName="createCommitteeDate" />
+      </div>
+
+      <div class="m-3 d-flex align-items-center justify-content-between">
+        <span class="fw-semibold fs-6">Invoice Value: {{'-----'}}</span>
+        <button class="btn btn-light-success font-weight-bolder font-size-sm cursor-pointer">
+          Submit
+        </button>
+      </div>
+
+
+    </div>
+    <div class="modal-footer flex-center">
+      <!--begin::Button-->
+      <button type="reset" id="kt_modal_update_customer_cancel" class="btn btn-light me-3"
+        (click)="modal.dismiss('cancel')">
+        Discard
+      </button>
+      <!--end::Button-->
+
+      <!--begin::Button-->
+      <button type="submit" id="kt_modal_update_customer_submit" class="btn btn-primary"
+        [attr.data-kt-indicator]="isLoading ? 'on' : 'off'">
+        <span class="indicator-label">
+          Submit
+        </span>
+        <span class="indicator-progress">
+          Please wait... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+        </span>
+      </button>
+      <!--end::Button-->
+    </div>
+  </form>
+</ng-template>

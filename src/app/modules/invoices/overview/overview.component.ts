@@ -1,4 +1,5 @@
-import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
@@ -24,6 +25,8 @@ export class OverviewComponent implements OnInit, AfterViewInit, OnDestroy {
   selected = 1;
   invoiceStatistics: any;
 
+  exchangeForm: FormGroup;
+
   // modal configs
   isLoading = false;
   isCollapsed1 = false;
@@ -33,12 +36,14 @@ export class OverviewComponent implements OnInit, AfterViewInit, OnDestroy {
   modalConfig: NgbModalOptions = {
     modalDialogClass: 'modal-dialog modal-dialog-centered mw-650px',
   };
+  @ViewChild('exchangeDataModal') exchangeDataModal: TemplateRef<any>;
   private inputSubscription: Subscription;
 
   constructor(
     private cdr: ChangeDetectorRef,
     private router: Router,
     private elRef: ElementRef,
+    private fb: FormBuilder,
     private modalService: NgbModal,
     private invoiceService: InvoiceService,
     private translate: TranslateService,
@@ -47,7 +52,16 @@ export class OverviewComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnInit(): void {
     this.initInvoicesList();
     this.getInvoiceStatistics();
+    this.initDetailsForm();
+  }
 
+  initDetailsForm() {
+    this.exchangeForm = this.fb.group({
+
+      createCommittee: [false],
+      createCommitteeDate: [''],
+
+    });
   }
 
   getInvoiceStatistics() {
@@ -108,7 +122,7 @@ export class OverviewComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   navigateArrows(next: boolean) {
-    if(next) {
+    if (next) {
       if (this.selected === this.pagesCount.length) {
         return;
       } else {
@@ -123,6 +137,35 @@ export class OverviewComponent implements OnInit, AfterViewInit, OnDestroy {
         this.initInvoicesList(this.selected);
       }
     }
+  }
+
+  invoiceExchangeData(invoice: any) {
+    console.log('invoice', invoice);
+    this.modalService.open(this.exchangeDataModal, this.modalConfig);
+  }
+
+  onSubmitDetails() {
+    if (this.exchangeForm.invalid) {
+      this.exchangeForm.markAllAsTouched();
+      return;
+    }
+
+    const payload: any = {
+      "createdAt": this.exchangeForm.get('signContractDate')?.value,
+      "attachment": this.exchangeForm.get('signContractFile')?.value,
+      "intialStep": 5,
+    }
+
+    // this.invoiceService.createDeliveryStatusItems({ items: this.statusDetails?.items.length ? filteredData : checkedItems }).subscribe(res => {
+    //   this.getByID();
+    //   this.modalService.dismissAll();
+    //   this.showAlert({ icon: 'success', title: 'Success!', text: 'Status Updated successfully!' });
+
+    //   this.cdr.detectChanges();
+    // }, (error) => {
+    //   this.modalService.dismissAll()
+    //   this.showAlert({ icon: 'error', title: 'Error!', text: 'Please try again' });
+    // });
   }
 
   showAlert(swalOptions: SweetAlertOptions) {
