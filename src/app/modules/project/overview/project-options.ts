@@ -111,4 +111,8 @@ export const PROJECT_OPTIONS = [
       name: 'RFI',
       route: 'projects/rfi-list'
     },
+    {
+      name: 'Exchange-data',
+      route: 'projects/exchange-data'
+    },
 ]

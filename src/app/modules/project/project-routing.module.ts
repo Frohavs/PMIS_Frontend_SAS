@@ -89,6 +89,7 @@ import { StepDetailsComponent } from './monthly-report/report-step/step-details/
 import { StepCreateComponent } from './monthly-report/report-step/step-create/step-create.component';
 import { RfiDetailsComponent } from './rfi-list/rfi-details/rfi-details.component';
 import { AddRfiComponent } from './rfi-list/add-rfi/add-rfi.component';
+import { ExchangeDataComponent } from './exchange-data/exchange-data.component';
 
 const routes: Routes = [
   {
@@ -515,6 +516,10 @@ const routes: Routes = [
       {
         path: 'add-rfi/:id',
         component: AddRfiComponent,
+      },
+      {
+        path: 'exchange-data/:id',
+        component: ExchangeDataComponent,
       },
       
       { path: '', redirectTo: 'overview', pathMatch: 'full' },

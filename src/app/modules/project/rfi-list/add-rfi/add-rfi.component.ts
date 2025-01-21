@@ -155,7 +155,7 @@ export class AddRfiComponent implements OnInit { projectId: number;
       boqId: this.addFactoryForm.value.boqId,
       quantity: this.addFactoryForm.value.quantity
     });
-    console.log('mirBoqs', this.rfiBoqs);
+    console.log('rfiBoqs', this.rfiBoqs);
 
     this.addFactoryForm.patchValue({ boqId: null });
     this.addFactoryForm.patchValue({ quantity: '' });
@@ -191,7 +191,7 @@ export class AddRfiComponent implements OnInit { projectId: number;
       this.rfiService.addRfi(payload).subscribe({
         next: (res) => {
           this.isLoading = false;
-          this.router.navigateByUrl(`projects/mir-list/${this.projectId}`);
+          this.router.navigateByUrl(`projects/rfi-list/${this.projectId}`);
           this.showAlert({ icon: 'success', title: 'Success!', text: 'Rfi Added successfully!' });
           this.cdr.detectChanges();
         },

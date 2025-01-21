@@ -100,7 +100,7 @@ deleteRfi(rfi: any) {
       this.isLoading = true;
       this.rfiService.deleteRfi(rfi.id).subscribe({
         next: (res) => {
-          this.showAlert({ icon: 'success', title: 'Success!', text: 'MIR Deleted successfully!' });
+          this.showAlert({ icon: 'success', title: 'Success!', text: 'RFI Deleted successfully!' });
           setTimeout(() => {
             this.isLoading = false;
             this.dataList = [];
