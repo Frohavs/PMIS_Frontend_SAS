@@ -1,10 +1,11 @@
 import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { Router } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
 import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
 import { fromEvent, debounceTime, distinctUntilChanged, Subscription } from 'rxjs';
+import { ExchangeDataService } from 'src/app/services/exchange-data.service';
 import { InvoiceService } from 'src/app/services/invoice.service';
 import { SweetAlertOptions } from 'sweetalert2';
 
@@ -47,20 +48,37 @@ export class OverviewComponent implements OnInit, AfterViewInit, OnDestroy {
     private modalService: NgbModal,
     private invoiceService: InvoiceService,
     private translate: TranslateService,
+    private exchangeService:ExchangeDataService,
   ) { }
 
   ngOnInit(): void {
     this.initInvoicesList();
     this.getInvoiceStatistics();
     this.initDetailsForm();
+    this.exchangeForm?.get('workDoneValue')?.valueChanges.subscribe(res => {
+      console.log(res);
+    });
   }
 
-  initDetailsForm() {
-    this.exchangeForm = this.fb.group({
-
-      createCommittee: [false],
-      createCommitteeDate: [''],
-
+  initDetailsForm() { 
+    this.exchangeForm = this.fb.group({  
+        workDoneValue: ['',Validators.required],
+        guaranteeDeduction: [''],
+        delayPenalties: [''],
+        supervisionFees: [''],
+        hssePenalties: [''],
+        materialShortagePenalties: [''],
+        equipmentsShortagePenalties: [''],
+        others: [''],
+        deductionFromOperationAndPartner: [''],
+        advancedPaymentReturn: [''],
+        finalInvoiceDeduction: [''],
+        supervisionFees1: [''],
+        notDeductionFromOperationAndPartner: [''],
+        netValueWithoutVAT: [''],
+        vatValue: [''],
+        totalWithVAT: [''],
+        totalValue: [''],
     });
   }
 
@@ -70,6 +88,8 @@ export class OverviewComponent implements OnInit, AfterViewInit, OnDestroy {
       this.cdr.detectChanges();
     });
   }
+  
+
 
   initInvoicesList(pageIndex?: number, search?: string) {
     this.dataList = [];
@@ -139,24 +159,54 @@ export class OverviewComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-  invoiceExchangeData(invoice: any) {
-    console.log('invoice', invoice);
-    this.modalService.open(this.exchangeDataModal, this.modalConfig);
+  invoiceExchangeData(invoiceId: number) {
+    console.log(invoiceId);
+    this.exchangeService.getById(invoiceId).subscribe(res => {
+      if(res && res.data !== null) this.patchFormValues(res.data)
+    });
+
   }
+
+  patchFormValues(data: any){
+    this.exchangeForm.patchValue({
+      workDoneValue: data?.workDoneValue,
+      guaranteeDeduction: data?.guaranteeDeduction,
+      delayPenalties: data?.delayPenalties,
+      supervisionFees: data?.supervisionFees,
+      hssePenalties: data?.hssePenalties,
+      materialShortagePenalties: data?.materialShortagePenalties,
+      equipmentsShortagePenalties: data?.equipmentsShortagePenalties,
+      others: data?.others,
+      deductionFromOperationAndPartner: data?.deductionFromOperationAndPartner,
+      advancedPaymentReturn: data?.advancedPaymentReturn,
+      finalInvoiceDeduction: data?.finalInvoiceDeduction,
+      supervisionFees1: data?.supervisionFees1,
+      notDeductionFromOperationAndPartner: data?.notDeductionFromOperationAndPartner,
+      netValueWithoutVAT: data?.netValueWithoutVAT,
+      vatValue: data?.vatValue,
+      totalWithVAT: data?.totalWithVAT,
+      totalValue: data?.totalValue,
+    });
+
+    this.modalService.open(this.exchangeDataModal, this.modalConfig);
+    this.cdr.detectChanges();    
+  }
+
 
   onSubmitDetails() {
     if (this.exchangeForm.invalid) {
       this.exchangeForm.markAllAsTouched();
+      console.log(this.exchangeForm);
+      
       return;
     }
 
     const payload: any = {
-      "createdAt": this.exchangeForm.get('signContractDate')?.value,
-      "attachment": this.exchangeForm.get('signContractFile')?.value,
-      "intialStep": 5,
+      ...this.exchangeForm.get(' workDoneValue')?.value,
+      // "invoiceId": 5,
     }
 
-    // this.invoiceService.createDeliveryStatusItems({ items: this.statusDetails?.items.length ? filteredData : checkedItems }).subscribe(res => {
+    // this.invoiceService.get({ items: this.statusDetails?.items.length ? filteredData : checkedItems }).subscribe(res => {
     //   this.getByID();
     //   this.modalService.dismissAll();
     //   this.showAlert({ icon: 'success', title: 'Success!', text: 'Status Updated successfully!' });
@@ -167,6 +217,7 @@ export class OverviewComponent implements OnInit, AfterViewInit, OnDestroy {
     //   this.showAlert({ icon: 'error', title: 'Error!', text: 'Please try again' });
     // });
   }
+  
 
   showAlert(swalOptions: SweetAlertOptions) {
     let style = swalOptions.icon?.toString() || 'success';

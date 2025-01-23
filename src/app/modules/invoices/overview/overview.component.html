@@ -151,7 +151,7 @@
                   <app-keenicon name="eye" class="fs-3"></app-keenicon>
                 </a>
                 <span class="badge badge-light-primary fs-6 fw-bold my-2 p-3 cursor-pointer mx-2"
-                  (click)="invoiceExchangeData(invoice)">
+                  (click)="invoiceExchangeData(invoice.id)">
                   Invoice Details
                 </span>
               </div>
@@ -208,8 +208,8 @@
 
       <div class="row mb-2">
         <label class="fw-semibold fs-6 mb-2">Work done Value:</label>
-        <input type="text" class="form-control form-control-solid" name="createCommitteeDate"
-          formControlName="createCommitteeDate" />
+        <input type="text" class="form-control form-control-solid" name="workDoneValue"
+          formControlName="workDoneValue" />
       </div>
 
       <h4 class="my-4">Deduction from operation and Apartner</h4>
@@ -219,8 +219,8 @@
           <label class="fw-semibold fs-6 mb-2">Guarantee Deduction</label>
         </div>
         <div class="col-xl-7">
-          <input class="form-control form-control-solid col-xl-6" name="createCommitteeDate"
-            formControlName="createCommitteeDate" />
+          <input class="form-control form-control-solid col-xl-6" name="guaranteeDeduction"
+            formControlName="guaranteeDeduction" />
         </div>
       </div>
       <div class="row mb-2">
@@ -228,8 +228,8 @@
           <label class="fw-semibold fs-6 mb-2">Delay Penalties</label>
         </div>
         <div class="col-xl-7">
-          <input class="form-control form-control-solid col-xl-6" name="createCommitteeDate"
-            formControlName="createCommitteeDate" />
+          <input class="form-control form-control-solid col-xl-6" name="delayPenalties"
+            formControlName="delayPenalties" />
         </div>
       </div>
       <div class="row mb-2">
@@ -237,8 +237,8 @@
           <label class="fw-semibold fs-6 mb-2">Supervision Fees</label>
         </div>
         <div class="col-xl-7">
-          <input class="form-control form-control-solid col-xl-6" name="createCommitteeDate"
-            formControlName="createCommitteeDate" />
+          <input class="form-control form-control-solid col-xl-6" name="supervisionFees"
+            formControlName="supervisionFees" />
         </div>
       </div>
       <div class="row mb-2">
@@ -246,8 +246,8 @@
           <label class="fw-semibold fs-6 mb-2">HSSE Penalties</label>
         </div>
         <div class="col-xl-7">
-          <input class="form-control form-control-solid col-xl-6" name="createCommitteeDate"
-            formControlName="createCommitteeDate" />
+          <input class="form-control form-control-solid col-xl-6" name="hssePenalties"
+            formControlName="hssePenalties" />
         </div>
       </div>
       <div class="row mb-2">
@@ -255,8 +255,8 @@
           <label class="fw-semibold fs-6 mb-2">Material Shortage Penalties</label>
         </div>
         <div class="col-xl-7">
-          <input class="form-control form-control-solid col-xl-6" name="createCommitteeDate"
-            formControlName="createCommitteeDate" />
+          <input class="form-control form-control-solid col-xl-6" name="materialShortagePenalties"
+            formControlName="materialShortagePenalties" />
         </div>
       </div>
       <div class="row mb-2">
@@ -264,8 +264,8 @@
           <label class="fw-semibold fs-6 mb-2">Equipments Shortage Penalties</label>
         </div>
         <div class="col-xl-7">
-          <input class="form-control form-control-solid col-xl-6" name="createCommitteeDate"
-            formControlName="createCommitteeDate" />
+          <input class="form-control form-control-solid col-xl-6" name="equipmentsShortagePenalties"
+            formControlName="equipmentsShortagePenalties" />
         </div>
       </div>
       <div class="row mb-2">
@@ -273,15 +273,15 @@
           <label class="fw-semibold fs-6 mb-2">Others</label>
         </div>
         <div class="col-xl-7">
-          <input class="form-control form-control-solid col-xl-6" name="createCommitteeDate"
-            formControlName="createCommitteeDate" />
+          <input class="form-control form-control-solid col-xl-6" name="others"
+            formControlName="others" />
         </div>
       </div>
       <!-- separate -->
       <div class="row mb-2">
         <label class="fw-semibold fs-6 mb-2">Total Deduction Value:</label>
-        <input type="text" class="form-control form-control-solid" name="createCommitteeDate"
-          formControlName="createCommitteeDate" />
+        <input type="text" class="form-control form-control-solid" name="deductionFromOperationAndPartner"
+          formControlName="deductionFromOperationAndPartner" />
       </div>
 
       <h4 class="my-4">NOT Deducted from operation and Apartner </h4>
@@ -291,8 +291,8 @@
           <label class="fw-semibold fs-6 mb-2">Advanced payment return</label>
         </div>
         <div class="col-xl-7">
-          <input class="form-control form-control-solid col-xl-6" name="createCommitteeDate"
-            formControlName="createCommitteeDate" />
+          <input class="form-control form-control-solid col-xl-6" name="advancedPaymentReturn"
+            formControlName="advancedPaymentReturn" />
         </div>
       </div>
       <div class="row mb-2">
@@ -300,8 +300,8 @@
           <label class="fw-semibold fs-6 mb-2">Final invoice deduction</label>
         </div>
         <div class="col-xl-7">
-          <input class="form-control form-control-solid col-xl-6" name="createCommitteeDate"
-            formControlName="createCommitteeDate" />
+          <input class="form-control form-control-solid col-xl-6" name="finalInvoiceDeduction"
+            formControlName="finalInvoiceDeduction" />
         </div>
       </div>
       <div class="row mb-2">
@@ -309,49 +309,46 @@
           <label class="fw-semibold fs-6 mb-2">Supervision Fees</label>
         </div>
         <div class="col-xl-7">
-          <input class="form-control form-control-solid col-xl-6" name="createCommitteeDate"
-            formControlName="createCommitteeDate" />
+          <input class="form-control form-control-solid col-xl-6" name="supervisionFees1"
+            formControlName="supervisionFees1" />
         </div>
       </div>
 
       <!-- separate -->
       <div class="row mb-2">
         <label class="fw-semibold fs-6 mb-2">Total deduction value:</label>
-        <input type="text" class="form-control form-control-solid" name="createCommitteeDate"
-          formControlName="createCommitteeDate" />
+        <input type="text" class="form-control form-control-solid" name="notDeductionFromOperationAndPartner"
+          formControlName="notDeductionFromOperationAndPartner" />
       </div>
 
       <!-- separate -->
       <div class="row mb-2">
         <label class="fw-semibold fs-6 mb-2">Net value without VAT:</label>
-        <input type="text" class="form-control form-control-solid" name="createCommitteeDate"
-          formControlName="createCommitteeDate" />
+        <input type="text" class="form-control form-control-solid" name="netValueWithoutVAT"
+          formControlName="netValueWithoutVAT" />
       </div>
 
       <!-- separate -->
       <div class="row mb-2">
         <label class="fw-semibold fs-6 mb-2">VAT Value:</label>
-        <input type="text" class="form-control form-control-solid" name="createCommitteeDate"
-          formControlName="createCommitteeDate" />
+        <input type="text" class="form-control form-control-solid" name="vatValue"
+          formControlName="vatValue" />
       </div>
       <!-- separate -->
       <div class="row mb-2">
         <label class="fw-semibold fs-6 mb-2">Total with VAT:</label>
-        <input type="text" class="form-control form-control-solid" name="createCommitteeDate"
-          formControlName="createCommitteeDate" />
+        <input type="text" class="form-control form-control-solid" name="totalWithVAT"
+          formControlName="totalWithVAT" />
       </div>
       <!-- separate -->
       <div class="row mb-2">
         <label class="fw-semibold fs-6 mb-2">Total value with deduction:</label>
-        <input type="text" class="form-control form-control-solid" name="createCommitteeDate"
-          formControlName="createCommitteeDate" />
+        <input type="text" class="form-control form-control-solid" name="totalValue"
+          formControlName="totalValue" />
       </div>
 
       <div class="m-3 d-flex align-items-center justify-content-between">
         <span class="fw-semibold fs-6">Invoice Value: {{'-----'}}</span>
-        <button class="btn btn-light-success font-weight-bolder font-size-sm cursor-pointer">
-          Submit
-        </button>
       </div>
 
 
@@ -365,7 +362,7 @@
       <!--end::Button-->
 
       <!--begin::Button-->
-      <button type="submit" id="kt_modal_update_customer_submit" class="btn btn-primary"
+      <button type="submit" id="kt_modal_update_customer_submit" class="btn btn-light-success"
         [attr.data-kt-indicator]="isLoading ? 'on' : 'off'">
         <span class="indicator-label">
           Submit
