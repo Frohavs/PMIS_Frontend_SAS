@@ -208,8 +208,11 @@
 
       <div class="row mb-2">
         <label class="fw-semibold fs-6 mb-2">Work done Value:</label>
-        <input type="text" class="form-control form-control-solid" name="workDoneValue"
-          formControlName="workDoneValue" />
+
+        <input type="text" class="form-control form-control-lg form-control-solid text-start"
+          [currencyMask]="{ prefix: 'SAR ', thousands: ',', precision: 0, align: 'left' }"
+          placeholder="{{'PROJECTS.project_value' | translate}}" name="workDoneValue" formControlName="workDoneValue"
+          min="0" />
       </div>
 
       <h4 class="my-4">Deduction from operation and Apartner</h4>
@@ -273,8 +276,7 @@
           <label class="fw-semibold fs-6 mb-2">Others</label>
         </div>
         <div class="col-xl-7">
-          <input class="form-control form-control-solid col-xl-6" name="others"
-            formControlName="others" />
+          <input class="form-control form-control-solid col-xl-6" name="others" formControlName="others" />
         </div>
       </div>
       <!-- separate -->
@@ -331,20 +333,17 @@
       <!-- separate -->
       <div class="row mb-2">
         <label class="fw-semibold fs-6 mb-2">VAT Value:</label>
-        <input type="text" class="form-control form-control-solid" name="vatValue"
-          formControlName="vatValue" />
+        <input type="text" class="form-control form-control-solid" name="vatValue" formControlName="vatValue" />
       </div>
       <!-- separate -->
       <div class="row mb-2">
         <label class="fw-semibold fs-6 mb-2">Total with VAT:</label>
-        <input type="text" class="form-control form-control-solid" name="totalWithVAT"
-          formControlName="totalWithVAT" />
+        <input type="text" class="form-control form-control-solid" name="totalWithVAT" formControlName="totalWithVAT" />
       </div>
       <!-- separate -->
       <div class="row mb-2">
         <label class="fw-semibold fs-6 mb-2">Total value with deduction:</label>
-        <input type="text" class="form-control form-control-solid" name="totalValue"
-          formControlName="totalValue" />
+        <input type="text" class="form-control form-control-solid" name="totalValue" formControlName="totalValue" />
       </div>
 
       <div class="m-3 d-flex align-items-center justify-content-between">
