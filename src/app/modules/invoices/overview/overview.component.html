@@ -151,7 +151,7 @@
                   <app-keenicon name="eye" class="fs-3"></app-keenicon>
                 </a>
                 <span class="badge badge-light-primary fs-6 fw-bold my-2 p-3 cursor-pointer mx-2"
-                  (click)="invoiceExchangeData(invoice.id)">
+                  (click)="invoiceExchangeData(invoice)">
                   Invoice Details
                 </span>
               </div>
@@ -347,7 +347,7 @@
       </div>
 
       <div class="m-3 d-flex align-items-center justify-content-between">
-        <span class="fw-semibold fs-6">Invoice Value: {{'-----'}}</span>
+        <span class="fw-semibold fs-6">Invoice Value: {{this.invoiceForExchange.value | number}}</span>
       </div>
 
 

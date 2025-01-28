@@ -12,7 +12,7 @@ import { SweetAlertOptions } from 'sweetalert2';
   templateUrl: './invoice-details.component.html',
   styleUrl: './invoice-details.component.scss'
 })
-export class InvoiceDetailsComponent implements OnInit, OnDestroy {
+export class InvoiceDetailsComponent implements OnInit {
 
   etimadNumber: any;
   invoiceId: any;
@@ -244,9 +244,5 @@ export class InvoiceDetailsComponent implements OnInit, OnDestroy {
     }, swalOptions);
     this.cdr.detectChanges();
     this.noticeSwal.fire();
-  }
-
-  ngOnDestroy(): void {
-
   }
 }

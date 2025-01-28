@@ -5,7 +5,7 @@
       <div class="card-header align-items-center border-0 mt-4">
         <h3 class="card-title align-items-start flex-column">
           <span class="fw-bolder text-gray-900">Project Information</span>
-          <span class="text-muted mt-1 fw-bold fs-7">test</span>
+          <!-- <span class="text-muted mt-1 fw-bold fs-7">test</span> -->
         </h3>
       </div>
       <!-- end::Header -->
@@ -20,13 +20,13 @@
               <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
                 Project name
               </a>
-              <span class="text-muted fw-bold d-block pt-1">Design of Heat Cave Resort</span>
+              <span class="text-muted fw-bold d-block pt-1">{{projectDetails?.nameAr  ||  '--'}}</span>
             </div>
             <div class="flex-grow-1 me-2">
               <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
                 Contract Date
               </a>
-              <span class="text-muted fw-bold d-block pt-1">2021-05-12</span>
+              <span class="text-muted fw-bold d-block pt-1">{{projectDetails?.createdDate?.slice(0, 10)  ||  '--'}}</span>
             </div>
           </div>
           <!-- end::Title -->
@@ -41,13 +41,13 @@
               <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
                 Contract No
               </a>
-              <span class="text-muted fw-bold d-block pt-1">57</span>
+              <span class="text-muted fw-bold d-block pt-1">{{projectDetails?.contractNo  ||  '--'}}</span>
             </div>
             <div class="flex-grow-1 me-2">
               <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
                 Consultant
               </a>
-              <span class="text-muted fw-bold d-block pt-1">SAUDCONSULT</span>
+              <span class="text-muted fw-bold d-block pt-1">{{projectDetails?.consultantName ||  '--'}}</span>
             </div>
           </div>
           <!-- end::Title -->
@@ -62,13 +62,13 @@
               <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
                 Contractor
               </a>
-              <span class="text-muted fw-bold d-block pt-1">N/A</span>
+              <span class="text-muted fw-bold d-block pt-1">{{projectDetails?.contractorName || '--'}}</span>
             </div>
             <div class="flex-grow-1 me-2">
               <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
                 Finish date after extension
               </a>
-              <span class="text-muted fw-bold d-block pt-1">2023-04-10</span>
+              <span class="text-muted fw-bold d-block pt-1">{{projectDetails?.originalFinishDate?.slice(0, 10)  ||  '--'}}</span>
             </div>
           </div>
           <!-- end::Title -->
@@ -81,9 +81,9 @@
           <div class="d-flex flex-row-fluid flex-wrap align-items-center">
             <div class="w-50 me-2">
               <a class="text-gray-800 fw-bolder text-hover-primary fs-6">
-                Amana manager
+                Sector
               </a>
-              <span class="text-muted fw-bold d-block pt-1">manager</span>
+              <span class="text-muted fw-bold d-block pt-1">{{projectDetails?.projectSectorName}}</span>
             </div>
 
           </div>
@@ -104,11 +104,10 @@
           <!-- <span class="text-muted mt-1 fw-bold fs-7">test</span> -->
         </h3>
         <div class="card-toolbar">
-          <!-- begin::Menu -->
-          <button type="button" class="btn btn-sm btn-icon btn-color-primary btn-active-light-primary"
-            data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end" data-kt-menu-flip="top-end">
-          </button>
-          <!-- end::Menu -->
+          <a (click)="back()" class="btn btn-sm btn-danger d-flex">
+            <app-keenicon name="arrow-left" class="fs-3"></app-keenicon>
+            {{"ECOMMERCE.COMMON.BACK" | translate}}
+          </a>
         </div>
       </div>
       <!-- end::Header -->
@@ -125,7 +124,7 @@
                     Program Name
                   </a>
                   <span class="text-muted fw-bold d-block pt-1">
-                    انشاء مكتب لادارة المشاريع و الأصول و المرافق بالامانة (PMO)
+                    {{projectDetails?.nameAr  ||  '--'}}
                   </span>
                 </div>
               </div>
@@ -134,21 +133,45 @@
             <div class="row">
               <label class="col-lg-8 col-form-label fw-bold fs-6"><span class="required">New Project
                   Stage</span></label>
-              <div class="col-lg-12 fv-row">
-                <select class="form-select form-select-solid form-select-lg fw-bold" name="new_project_stage"
-                  formControlName="new_project_stage">
-                  <option value="" disabled>{{"TRANSLATOR.SELECTION" | translate}}</option>
-                  <option value="on_going">on going</option>
-                  <option value="closed">closed</option>
-                  <!-- <ng-container *ngFor="let company of companies">
-                  </ng-container> -->
-                </select>
-                <div
+                  <div class="col-lg-12 fv-row">
+                    <select class="form-select form-select-solid form-select-lg fw-bold" name="new_project_stage"
+                    formControlName="new_project_stage">
+                    <option value="" disabled selected>{{"TRANSLATOR.SELECTION" | translate}}</option>
+                    <ng-container *ngFor="let stage of stages">
+                      <option [value]="stage?.id">{{stage?.name}}</option>
+                    </ng-container>
+                  </select>
+                  <div
                   *ngIf="UpdateStageForm?.get('new_project_stage')?.invalid && (UpdateStageForm?.get('new_project_stage')?.dirty || UpdateStageForm?.get('new_project_stage')?.touched)"
                   class="fv-plugins-message-container">
                   <div class="fv-help-block">Stage is required</div>
                 </div>
               </div>
+              <ng-container *ngIf="UpdateStageForm.get('new_project_stage')?.value == 4">
+                <label class="col-lg-8 col-form-label fw-bold fs-6">
+                  <span class="required">
+                    Off Track Date
+                  </span>
+                </label>
+                    <div class="col-lg-12 fv-row">
+                      <input type="date" class="form-control form-control-lg form-control-solid text-start"
+                      name="offTrackDate" formControlName="offTrackDate"  />
+                    </div>
+                <label class="col-lg-8 col-form-label fw-bold fs-6">
+                  <span class="required">
+                    Off Track Attachment
+                  </span>
+                </label>
+                <div class="col-lg-12 fv-row">
+                  <input type="file" class="form-control form-control-lg form-control-solid text-start"
+                  name="offTrackAttachment" formControlName="offTrackAttachment" (change)="onFileSelected($event)"  />
+                  <div
+                    *ngIf="UpdateStageForm?.get('offTrackAttachment')?.invalid && (UpdateStageForm?.get('offTrackAttachment')?.dirty || UpdateStageForm?.get('offTrackAttachment')?.touched)"
+                    class="fv-plugins-message-container">
+                    <div class="fv-help-block">file is required</div>
+                  </div>
+                </div>
+              </ng-container>
             </div>
 
 
@@ -171,3 +194,7 @@
     </div>
   </div>
 </div>
+
+<!-- modal -->
+<swal #noticeSwal [swalOptions]="swalOptions">
+</swal>

@@ -27,7 +27,7 @@ export class OverviewComponent implements OnInit, AfterViewInit, OnDestroy {
   invoiceStatistics: any;
 
   exchangeForm: FormGroup;
-  invoiceIdForExchange: number;
+  invoiceForExchange: any;
 
   // modal configs
   isLoading = false;
@@ -61,8 +61,8 @@ export class OverviewComponent implements OnInit, AfterViewInit, OnDestroy {
 
   initDetailsForm() {
     this.exchangeForm = this.fb.group({
-      workDoneValue: [0, Validators.required],// don't sum this one
-
+      workDoneValue: [0, Validators.required],
+  
       guaranteeDeduction: [0],
       delayPenalties: [0],
       supervisionFees: [0],
@@ -70,104 +70,64 @@ export class OverviewComponent implements OnInit, AfterViewInit, OnDestroy {
       materialShortagePenalties: [0],
       equipmentsShortagePenalties: [0],
       others: [0],
-      // sum the above values in the input when value changes
-      deductionFromOperationAndPartner: [{ value: 0, disabled: true }],
-      // ---------------------------------------------------------------------------
+      deductionFromOperationAndPartner: [{ value: 0, disabled: true }], // auto-calculated
+  
       advancedPaymentReturn: [0],
       finalInvoiceDeduction: [0],
       supervisionFees1: [0],
-      // sum the above 3 values in the input when value changes
-
-      notDeductionFromOperationAndPartner: [{ value: 0, disabled: true }],
-
-      netValueWithoutVAT: [{ value: 0, disabled: true }],
+      notDeductionFromOperationAndPartner: [{ value: 0, disabled: true }], // auto-calculated
+  
+      netValueWithoutVAT: [{ value: 0, disabled: true }], // auto-calculated
+  
       vatValue: [0],
-      totalWithVAT: [{ value: 0, disabled: true }],
-      totalValue: [{ value: 0, disabled: true }],
+      totalWithVAT: [{ value: 0, disabled: true }], // auto-calculated
+      totalValue: [{ value: 0, disabled: true }], // auto-calculated
     });
   }
 
   setupValueChangeListeners() {
-    // Watch deduction-related fields and update the total
-    const deductionFields = [
-      'guaranteeDeduction',
-      'delayPenalties',
-      'supervisionFees',
-      'hssePenalties',
-      'materialShortagePenalties',
-      'equipmentsShortagePenalties',
-      'others',
-    ];
-
-    deductionFields.forEach((field) => {
-      this.exchangeForm.get(field)!.valueChanges.subscribe(() => {
-        this.updateDeductionFromOperationAndPartner();
-      });
+    // Sum deduction-related fields
+    this.exchangeForm.valueChanges.subscribe((values) => {
+      // Calculate 'deductionFromOperationAndPartner'
+      const deductions =
+        +values.guaranteeDeduction +
+        +values.delayPenalties +
+        +values.supervisionFees +
+        +values.hssePenalties +
+        +values.materialShortagePenalties +
+        +values.equipmentsShortagePenalties +
+        +values.others;
+      this.exchangeForm
+        .get('deductionFromOperationAndPartner')
+        ?.setValue(deductions, { emitEvent: false });
+  
+      // Calculate 'notDeductionFromOperationAndPartner'
+      const notDeductions =
+        +values.advancedPaymentReturn +
+        +values.finalInvoiceDeduction +
+        +values.supervisionFees1;
+      this.exchangeForm
+        .get('notDeductionFromOperationAndPartner')
+        ?.setValue(notDeductions, { emitEvent: false });
+  
+      // Calculate 'netValueWithoutVAT'
+      const netValueWithoutVAT =
+        +values.workDoneValue - (deductions + notDeductions);
+      this.exchangeForm
+        .get('netValueWithoutVAT')
+        ?.setValue(netValueWithoutVAT, { emitEvent: false });
+  
+      // Calculate 'totalWithVAT'
+      const totalWithVAT = netValueWithoutVAT + +values.vatValue;
+      this.exchangeForm
+        .get('totalWithVAT')
+        ?.setValue(totalWithVAT, { emitEvent: false });
+  
+      // Calculate 'totalValue'
+      this.exchangeForm
+        .get('totalValue')
+        ?.setValue(0, { emitEvent: false });
     });
-
-    // Watch non-deduction fields and update the total
-    const nonDeductionFields = [
-      'advancedPaymentReturn',
-      'finalInvoiceDeduction',
-      'supervisionFees1',
-    ];
-
-    nonDeductionFields.forEach((field) => {
-      this.exchangeForm.get(field)!.valueChanges.subscribe(() => {
-        this.updateNotDeductionFromOperationAndPartner();
-      });
-    });
-
-    // Watch VAT and Net Value to calculate total with VAT
-    this.exchangeForm.get('vatValue')!.valueChanges.subscribe(() => {
-      this.updateTotalWithVAT();
-    });
-
-  }
-
-  updateDeductionFromOperationAndPartner() {
-    const deductionFields = [
-      'guaranteeDeduction',
-      'delayPenalties',
-      'supervisionFees',
-      'hssePenalties',
-      'materialShortagePenalties',
-      'equipmentsShortagePenalties',
-      'others',
-    ];
-
-    const total = deductionFields.reduce((sum, field) => {
-      return sum + Number(this.exchangeForm.get(field)?.value || 0);
-    }, 0);
-
-    this.exchangeForm.get('deductionFromOperationAndPartner')?.setValue(total, {
-      emitEvent: false,
-    });
-  }
-
-  updateNotDeductionFromOperationAndPartner() {
-    const nonDeductionFields = [
-      'advancedPaymentReturn',
-      'finalInvoiceDeduction',
-      'supervisionFees1',
-    ];
-
-    const total = nonDeductionFields.reduce((sum, field) => {
-      return sum + Number(this.exchangeForm.get(field)?.value || 0);
-    }, 0);
-
-    this.exchangeForm.get('notDeductionFromOperationAndPartner')?.setValue(total, {
-      emitEvent: false,
-    });
-  }
-
-  updateTotalWithVAT() {
-    const netValue = Number(this.exchangeForm.get('netValueWithoutVAT')?.value || 0);
-    const vatValue = Number(this.exchangeForm.get('vatValue')?.value || 0);
-
-    const total = netValue + vatValue;
-
-    this.exchangeForm.get('totalWithVAT')?.setValue(total, { emitEvent: false });
   }
 
   getInvoiceStatistics() {
@@ -247,39 +207,41 @@ export class OverviewComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-  invoiceExchangeData(invoiceId: number) {
-    this.invoiceIdForExchange = invoiceId;
-    this.exchangeService.getById(this.invoiceIdForExchange).subscribe(res => {
-      if (res && res.data !== null) this.patchFormValues(res.data)
-    });
-
-  }
-
-  patchFormValues(data: any) {
-    this.exchangeForm.patchValue({
-      workDoneValue: data?.workDoneValue,
-      guaranteeDeduction: data?.guaranteeDeduction,
-      delayPenalties: data?.delayPenalties,
-      supervisionFees: data?.supervisionFees,
-      hssePenalties: data?.hssePenalties,
-      materialShortagePenalties: data?.materialShortagePenalties,
-      equipmentsShortagePenalties: data?.equipmentsShortagePenalties,
-      others: data?.others,
-      deductionFromOperationAndPartner: data?.deductionFromOperationAndPartner,
-      advancedPaymentReturn: data?.advancedPaymentReturn,
-      finalInvoiceDeduction: data?.finalInvoiceDeduction,
-      supervisionFees1: data?.supervisionFees1,
-      notDeductionFromOperationAndPartner: data?.notDeductionFromOperationAndPartner,
-      netValueWithoutVAT: data?.netValueWithoutVAT,
-      vatValue: data?.vatValue,
-      totalWithVAT: data?.totalWithVAT,
-      totalValue: data?.totalValue,
-    });
-
+  invoiceExchangeData(invoice: any) {
+    this.exchangeForm.reset();
+    this.invoiceForExchange = invoice;
+    this.exchangeForm.get('totalValue')?.setValue(this.invoiceForExchange.value);
     this.modalService.open(this.exchangeDataModal, this.modalConfig);
-    this.cdr.detectChanges();
+    // this.exchangeService.getById(this.invoiceIdForExchange).subscribe(res => {
+    //   if (res && res.data !== null) this.patchFormValues(res.data)
+    // });
+
   }
 
+  // patchFormValues(data: any) {
+  //   this.exchangeForm.patchValue({
+  //     workDoneValue: data?.workDoneValue,
+  //     guaranteeDeduction: data?.guaranteeDeduction,
+  //     delayPenalties: data?.delayPenalties,
+  //     supervisionFees: data?.supervisionFees,
+  //     hssePenalties: data?.hssePenalties,
+  //     materialShortagePenalties: data?.materialShortagePenalties,
+  //     equipmentsShortagePenalties: data?.equipmentsShortagePenalties,
+  //     others: data?.others,
+  //     deductionFromOperationAndPartner: data?.deductionFromOperationAndPartner,
+  //     advancedPaymentReturn: data?.advancedPaymentReturn,
+  //     finalInvoiceDeduction: data?.finalInvoiceDeduction,
+  //     supervisionFees1: data?.supervisionFees1,
+  //     notDeductionFromOperationAndPartner: data?.notDeductionFromOperationAndPartner,
+  //     netValueWithoutVAT: data?.netValueWithoutVAT,
+  //     vatValue: data?.vatValue,
+  //     totalWithVAT: data?.totalWithVAT,
+  //     totalValue: data?.totalValue,
+  //   });
+
+  //   this.modalService.open(this.exchangeDataModal, this.modalConfig);
+  //   this.cdr.detectChanges();
+  // }ks
 
   onSubmitDetails() {
     console.log(this.exchangeForm?.value);
@@ -290,7 +252,7 @@ export class OverviewComponent implements OnInit, AfterViewInit, OnDestroy {
 
     const payload: any = {
       ...this.exchangeForm.getRawValue(),
-      "invoiceId": this.invoiceIdForExchange
+      "invoiceId": this.invoiceForExchange.id
     };
 
     this.exchangeService.addExchange(payload).subscribe(res => {
