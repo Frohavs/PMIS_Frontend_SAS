@@ -68,7 +68,7 @@
         <td>----</td>
         <td>{{item?.required ? 'yes' : 'no'}}</td>
         <td>----</td>
-        <td>{{item?.reviewMeetingDate | date : 'dd-MM-yyyy' || '----'}}</td>
+        <td>{{item?.reviewMeetingDate | date : 'dd-MM-yyyy'}}</td>
         <td>{{item?.comments || '----'}}</td>
       </tr>
     </tbody>
@@ -139,7 +139,7 @@
       <tr>
         <td>{{printDetails?.coordinator}}</td>
         <td>----</td>
-        <td>{{printDetails?.approvedDate | date : 'dd-MM-yyyy' || '----'}}</td>
+        <td>{{printDetails?.approvedDate | date : 'dd-MM-yyyy'}}</td>
         <td>{{printDetails?.note || '----'}}</td>
       </tr>
     </tbody>

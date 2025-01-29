@@ -107,6 +107,7 @@ import { RfiDetailsComponent } from './rfi-list/rfi-details/rfi-details.componen
 import { AddVisitComponent } from './visit-form/add-visit/add-visit.component';
 import { VisitDetailsComponent } from './visit-form/visit-details/visit-details.component';
 import { VisitFormComponent } from './visit-form/visit-form.component';
+import { FormTableComponent } from './visit-form/form-table/form-table.component';
 
 
 @NgModule({
@@ -231,7 +232,8 @@ import { VisitFormComponent } from './visit-form/visit-form.component';
 
     VisitFormComponent,
     AddVisitComponent,
-    VisitDetailsComponent
+    VisitDetailsComponent,
+    FormTableComponent
   ],
   imports: [
     CommonModule,

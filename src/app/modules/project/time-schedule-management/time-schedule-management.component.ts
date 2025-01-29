@@ -78,7 +78,7 @@ export class TimeScheduleManagementComponent implements OnInit, AfterViewInit, O
       distinctUntilChanged(),
     ).subscribe((event: any) => {
       const searchText = event.target.value;
-      this.initScheduleList(this.projectId, 1, searchText)
+      this.initScheduleList(this.projectId, this.selected, searchText)
     });
   }
 

@@ -92,6 +92,7 @@ import { AddRfiComponent } from './rfi-list/add-rfi/add-rfi.component';
 import { VisitFormComponent } from './visit-form/visit-form.component';
 import { VisitDetailsComponent } from './visit-form/visit-details/visit-details.component';
 import { AddVisitComponent } from './visit-form/add-visit/add-visit.component';
+import { FormTableComponent } from './visit-form/form-table/form-table.component';
 
 const routes: Routes = [
   {
@@ -536,6 +537,10 @@ const routes: Routes = [
       {
         path: 'visit-details/:id',
         component: VisitDetailsComponent,
+      },
+      {
+        path: 'visit-form-table/:id',
+        component: FormTableComponent,
       },
 
       { path: '', redirectTo: 'overview', pathMatch: 'full' },

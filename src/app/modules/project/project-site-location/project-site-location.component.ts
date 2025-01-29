@@ -78,7 +78,7 @@ export class ProjectSiteLocationComponent implements OnInit, AfterViewInit, OnDe
       distinctUntilChanged(),
     ).subscribe((event: any) => {
       const searchText = event.target.value;
-      this.initScheduleList(1, searchText)
+      this.initScheduleList(this.projectId, this.selected, searchText)
     });
   }
 
@@ -100,7 +100,7 @@ export class ProjectSiteLocationComponent implements OnInit, AfterViewInit, OnDe
             setTimeout(() => {
               this.isLoading = false;
               this.dataList = [];
-              this.initScheduleList(this.projectId,);
+              this.initScheduleList(this.projectId)
             }, 500);
           },
           error: (error) => {

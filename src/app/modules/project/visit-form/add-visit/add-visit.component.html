@@ -59,7 +59,7 @@
                   </label>
                   <div class="col-lg-12 fv-row">
                     <textarea rows="4" class="form-control form-control-lg form-control-solid text-start"
-                      name="justification" formControlName="justification" (keypress)="numbersOnly($event)"></textarea>
+                      name="justification" formControlName="justification"></textarea>
                     <div
                       *ngIf="addVisitForm?.get('justification')?.invalid && (addVisitForm?.get('justification')?.dirty || addVisitForm?.get('justification')?.touched)"
                       class="fv-plugins-message-container">

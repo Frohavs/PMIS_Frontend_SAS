@@ -44,12 +44,21 @@ export class VisitFormService {
       headers: httpHeaders
     });
   }
-  addSite(payload: any): Observable<any> {
+  addVisit(payload: any): Observable<any> {
     const httpHeaders = new HttpHeaders({
       Authorization: `Bearer ${this.token}`,
     });
-    const url = `${this.API_USERS_URL}/Create`;
+    const url = `${this.API_USERS_URL}/CreateVisitForm`;
     return this.http.post<any>(url, payload, {
+      headers: httpHeaders
+    });
+  }
+  editVisit(payload: any): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/Update`;
+    return this.http.put<any>(url, payload, {
       headers: httpHeaders
     });
   }

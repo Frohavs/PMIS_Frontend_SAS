@@ -77,7 +77,7 @@ export class VisitFormComponent implements OnInit, AfterViewInit, OnDestroy{
       distinctUntilChanged(),
     ).subscribe((event: any) => {
       const searchText = event.target.value;
-      this.initScheduleList(1, searchText)
+      this.initScheduleList(this.projectId, this.selected, searchText)
     });
   }
 

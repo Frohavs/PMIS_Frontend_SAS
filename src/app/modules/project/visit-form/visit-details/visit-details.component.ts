@@ -47,11 +47,15 @@ export class VisitDetailsComponent implements OnInit {
     this.activatedRoute.queryParams.subscribe((params) => {
       this.visitId = +params['visitId'];
       if (this.visitId) {
-        this.visitFormService.getVisitById(this.visitId).subscribe((res) => {
-          this.visitDetails = res.data;
-          this.cdr.detectChanges();
-        });
+        this.getVisitDetails();
       }
+    });
+  }
+
+  getVisitDetails() {
+    this.visitFormService.getVisitById(this.visitId).subscribe((res) => {
+      this.visitDetails = res.data;
+      this.cdr.detectChanges();
     });
   }
 
@@ -68,17 +72,18 @@ export class VisitDetailsComponent implements OnInit {
     }
     this.isLoading = true;
     const payload = {
-      "visitFormId": this.visitId,
-      "comment": this.addCommentForm.value.comment
-    }
+      visitFormId: this.visitId,
+      comment: this.addCommentForm.value.comment,
+    };
     this.visitFormService.addComment(payload).subscribe({
       next: (res) => {
         this.isLoading = false;
-        this.router.navigateByUrl(`projects/boq-list/${this.projectId}`);
+        this.addCommentForm.reset();
+        this.getVisitDetails();
         this.showAlert({
           icon: 'success',
           title: 'Success!',
-          text: 'Boq Added successfully!',
+          text: 'Comment Added successfully!',
         });
         this.cdr.detectChanges();
       },
@@ -91,6 +96,12 @@ export class VisitDetailsComponent implements OnInit {
         this.isLoading = false;
       },
     });
+  }
+
+  navigateToForm() {
+    this.router.navigateByUrl(
+      'projects/visit-form-table/' + this.projectId + '?visitId=' + this.visitId
+    );
   }
 
   showAlert(swalOptions: SweetAlertOptions) {

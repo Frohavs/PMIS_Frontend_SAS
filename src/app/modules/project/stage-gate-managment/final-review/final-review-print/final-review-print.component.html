@@ -42,7 +42,7 @@
       <tr *ngFor="let item of printDetails?.notes; index as i">
         <td>{{i+1}}</td>
         <td>{{item?.note || '----'}}</td>
-        <td>{{item?.createdOn | date : 'dd-MM-yyyy' || '----'}}</td>
+        <td>{{item?.createdOn | date : 'dd-MM-yyyy'}}</td>
       </tr>
     </tbody>
   </table>

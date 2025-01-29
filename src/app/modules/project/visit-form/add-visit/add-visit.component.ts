@@ -45,18 +45,27 @@ export class AddVisitComponent implements OnInit {
     });
     this.activatedRoute.queryParams.subscribe((params) => {
       this.visitId = +params['visitId'];
-      this.visitFormService.getVisitById(this.visitId).subscribe((res) => {
-        // edit here
-        this.editVisitForm(res.data);
-      });
+      if (this.visitId) {
+        this.visitFormService.getVisitById(this.visitId).subscribe((res) => {
+          // edit here
+          this.editVisitForm(res.data);
+        });
+      }
     });
   }
 
   initAddBoqForm() {
     this.addVisitForm = this.formBuilder.group({
       fromDate: ['', Validators.required],
-      finalDate: [{value: '', disabled: true}, Validators.required],
+      finalDate: [{ value: '', disabled: true }, Validators.required],
       justification: ['', Validators.required],
+    });
+
+    this.addVisitForm.get('fromDate')?.valueChanges.subscribe((val: string) => {
+      const final = new Date(new Date(val).getTime() + 7 * 24 * 60 * 60 * 1000).toISOString().slice(0, 10)
+      this.addVisitForm.patchValue({
+        finalDate: final
+      })
     });
   }
 
@@ -64,8 +73,8 @@ export class AddVisitComponent implements OnInit {
     this.addVisitForm.patchValue({
       fromDate: data?.fromDate.slice(0, 10),
       finalDate: data?.finalDate.slice(0, 10),
-      justification: data?.justification
-    })
+      justification: data?.justification,
+    });
   }
 
   saveChanges() {
@@ -74,39 +83,63 @@ export class AddVisitComponent implements OnInit {
       return;
     }
     this.isLoading = true;
-    const payload = {
-      ...this.addVisitForm.getRawValue(),
-      projectId: +this.projectId,
-      districtIds: this.addVisitForm.value.districtIds?.map(
-        (item: any) => +item.id
-      ),
-      areaIds: this.addVisitForm.value.areaIds?.map((item: any) => +item.id),
-      value: +this.addVisitForm.value.value,
-      latitude: this.addVisitForm.getRawValue().latitude.toString(),
-      longitude: this.addVisitForm.getRawValue().longitude.toString(),
-      weight: +this.addVisitForm.getRawValue().weight,
-    };
+    if(!this.visitId) {
+       
+      const payload = {
+        fromDate: this.addVisitForm.value.fromDate,
+        justification: this.addVisitForm.value.justification,
+        projectId: this.projectId,
+      };
+  
+      this.visitFormService.addVisit(payload).subscribe({
+        next: (res) => {
+          this.isLoading = false;
+          this.router.navigateByUrl(`projects/visit-list/${this.projectId}`);
+          this.showAlert({
+            icon: 'success',
+            title: 'Success!',
+            text: 'Visit Added successfully!',
+          });
+          this.cdr.detectChanges();
+        },
+        error: (error) => {
+          this.showAlert({
+            icon: 'error',
+            title: 'Error!',
+            text: 'Please try again',
+          });
+          this.isLoading = false;
+        },
+      });
+    } else {
+      const payload = {
+        fromDate: this.addVisitForm.value.fromDate,
+        justification: this.addVisitForm.value.justification,
+        id: this.visitId,
+      };
+  
+      this.visitFormService.editVisit(payload).subscribe({
+        next: (res) => {
+          this.isLoading = false;
+          this.router.navigateByUrl(`projects/visit-list/${this.projectId}`);
+          this.showAlert({
+            icon: 'success',
+            title: 'Success!',
+            text: 'Visit Updated successfully!',
+          });
+          this.cdr.detectChanges();
+        },
+        error: (error) => {
+          this.showAlert({
+            icon: 'error',
+            title: 'Error!',
+            text: 'Please try again',
+          });
+          this.isLoading = false;
+        },
+      });
 
-    this.visitFormService.addSite(payload).subscribe({
-      next: (res) => {
-        this.isLoading = false;
-        this.router.navigateByUrl(`projects/project-sites/${this.projectId}`);
-        this.showAlert({
-          icon: 'success',
-          title: 'Success!',
-          text: 'Site Added successfully!',
-        });
-        this.cdr.detectChanges();
-      },
-      error: (error) => {
-        this.showAlert({
-          icon: 'error',
-          title: 'Error!',
-          text: 'Please try again',
-        });
-        this.isLoading = false;
-      },
-    });
+    }
   }
 
   numbersOnly(event: any): boolean {
