@@ -31,15 +31,14 @@ export class OverviewComponent implements OnInit {
   // modal configs
   isLoading = false;
   isCollapsed1 = false;
-  @ViewChild('fileModal') fileModal: TemplateRef<any>;
   swalOptions: SweetAlertOptions = { buttonsStyling: false };
   @ViewChild('noticeSwal') noticeSwal!: SwalComponent;
   @ViewChild('deleteSwal') public readonly deleteSwal!: SwalComponent;
-
+  
+  @ViewChild('fileModal') fileModal: TemplateRef<any>;
   modalConfig: NgbModalOptions = {
     modalDialogClass: 'modal-dialog modal-dialog-centered mw-650px',
   };
-  private inputSubscription: Subscription;
 
   constructor(
     private cdr: ChangeDetectorRef,

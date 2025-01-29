@@ -1,1 +1,70 @@
-<p>form-table works!</p>
+<div class="row d-flex flex-column justify-content-center align-items-center">
+    <div class="col-xl-12 d-flex flex-column justify-content-center align-items-center">
+        <div class="pt-5 text-center">
+            <h4>Assistant agency for mega projects</h4>
+            <h3>{{projectDetails?.name || '--'}}</h3>
+        </div>
+        <div class="pt-5 text-center">
+            <h2>Visit the contract project website No ({{projectDetails?.contractNo || '--'}})</h2>
+        </div>
+        <div class="pt-5 text-center">
+            <h2>
+                Project : {{projectDetails?.name || '--'}}
+            </h2>
+            <h2>Consultant: {{projectDetails?.consultantName || '--'}}</h2>
+            <h2>Contractor : {{projectDetails?.contractorName || '--'}}</h2>
+        </div>
+        <div class="pt-5 text-center">
+            <a (click)="changeDocumentNo()" class="btn btn-light-primary d-flex">
+                Document No: 455646
+            </a>
+        </div>
+    </div>
+</div>
+
+
+<ng-template #documentModal let-modal>
+    <form [formGroup]="changeDocumentForm" (ngSubmit)="onChangeDocuemntNo()">
+        <div class="modal-header">
+            <h4 class="modal-title" id="modal-basic-title">Document Number</h4>
+            <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+        </div>
+        <div class="modal-body">
+            <div class="row mb-6">
+
+                <div class="col-lg-12 fv-row">
+                    <div class="col-lg-12 fv-row">
+                        <input type="text" class="form-control form-control-lg form-control-solid text-start" name="documentNo"
+                          formControlName="documentNo" (keypress)="numbersOnly($event)" />
+                        <div
+                          *ngIf="changeDocumentForm?.get('documentNo')?.invalid && (changeDocumentForm?.get('documentNo')?.dirty || changeDocumentForm?.get('documentNo')?.touched)"
+                          class="fv-plugins-message-container">
+                          <div class="fv-help-block">No is required</div>
+                        </div>
+                      </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="modal-footer flex-center">
+            <!--begin::Button-->
+            <button type="reset" id="kt_modal_update_customer_cancel" class="btn btn-light me-3"
+                (click)="modal.dismiss('cancel')">
+                Discard
+            </button>
+            <!--end::Button-->
+
+            <!--begin::Button-->
+            <button type="submit" id="kt_modal_update_customer_submit" class="btn btn-primary" [disabled]="!changeDocumentForm.valid"
+                [attr.data-kt-indicator]="isLoading ? 'on' : 'off'">
+                <span class="indicator-label">
+                    Submit
+                </span>
+                <span class="indicator-progress">
+                    Please wait... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                </span>
+            </button>
+            <!--end::Button-->
+        </div>
+    </form>
+</ng-template>

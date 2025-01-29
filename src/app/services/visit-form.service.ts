@@ -89,4 +89,13 @@ export class VisitFormService {
       headers: httpHeaders
     });
   }
+  updateDocumentNo(payload: any): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/UpdateDocumentNo`;
+    return this.http.put<any>(url, payload, {
+      headers: httpHeaders
+    });
+  }
 }
