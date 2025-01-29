@@ -89,6 +89,9 @@ import { StepDetailsComponent } from './monthly-report/report-step/step-details/
 import { StepCreateComponent } from './monthly-report/report-step/step-create/step-create.component';
 import { RfiDetailsComponent } from './rfi-list/rfi-details/rfi-details.component';
 import { AddRfiComponent } from './rfi-list/add-rfi/add-rfi.component';
+import { VisitFormComponent } from './visit-form/visit-form.component';
+import { VisitDetailsComponent } from './visit-form/visit-details/visit-details.component';
+import { AddVisitComponent } from './visit-form/add-visit/add-visit.component';
 
 const routes: Routes = [
   {
@@ -504,6 +507,7 @@ const routes: Routes = [
         path: 'monthly_report_step_details/:id',
         component: StepDetailsComponent,
       },
+
       {
         path: 'rfi-list/:id',
         component: RfiListComponent,
@@ -516,6 +520,24 @@ const routes: Routes = [
         path: 'add-rfi/:id',
         component: AddRfiComponent,
       },
+
+      {
+        path: 'visit-list/:id',
+        component: VisitFormComponent,
+      },
+      {
+        path: 'add-visit/:id',
+        component: AddVisitComponent,
+      },
+      {
+        path: 'edit-visit/:id',
+        component: AddVisitComponent,
+      },
+      {
+        path: 'visit-details/:id',
+        component: VisitDetailsComponent,
+      },
+
       { path: '', redirectTo: 'overview', pathMatch: 'full' },
       { path: '**', redirectTo: 'overview', pathMatch: 'full' },
     ]

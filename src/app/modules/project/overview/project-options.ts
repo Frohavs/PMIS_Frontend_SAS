@@ -115,4 +115,8 @@ export const PROJECT_OPTIONS = [
       name: 'Exchange-data',
       route: 'projects/exchange-data'
     },
+    {
+      name: 'Visit Form',
+      route: 'projects/visit-list'
+    },
 ]
