@@ -7,12 +7,13 @@ import {
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
 import { ProjectsService } from 'src/app/services/projects.service';
 import { VisitFormService } from 'src/app/services/visit-form.service';
 import { SweetAlertOptions } from 'sweetalert2';
 import { NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
+import { LookupService } from 'src/app/services/lookup/lookup.service';
 
 @Component({
   selector: 'app-form-table',
@@ -24,24 +25,27 @@ export class FormTableComponent implements OnInit {
   visitId: number;
   projectDetails: any;
   visitDetails: any;
+  visitIndices: any[] = [];
   isLoading: boolean;
 
-  addCommentForm: FormGroup;
   swalOptions: SweetAlertOptions = {};
   @ViewChild('noticeSwal') noticeSwal!: SwalComponent;
-
+  
   modalConfig: NgbModalOptions = {
     modalDialogClass: 'modal-dialog modal-dialog-centered mw-650px',
   };
-
+  
   changeDocumentForm: FormGroup;
   @ViewChild('documentModal') documentModal: TemplateRef<any>;
+  attendanceForm: FormGroup;
+  @ViewChild('attendanceModal') attendanceModal: TemplateRef<any>;
 
   constructor(
     private router: Router,
     private cdr: ChangeDetectorRef,
     private fb: FormBuilder,
     private modalService: NgbModal,
+    private lookupService: LookupService,
     private _location: Location,
     private activatedRoute: ActivatedRoute,
     private projectsService: ProjectsService,
@@ -49,8 +53,10 @@ export class FormTableComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.getLookups();
     this.initChangeDocumentForm();
-
+    this.initAttendanceFormForm();
+    
     this.activatedRoute.params.subscribe((params) => {
       this.projectId = +params['id'];
       if (this.projectId) {
@@ -63,9 +69,8 @@ export class FormTableComponent implements OnInit {
         this.getVisitDetails();
       }
     });
-
   }
-
+  
   getProjectDetails() {
     this.projectsService.getByID(this.projectId).subscribe((res) => {
       this.projectDetails = res.data;
@@ -78,32 +83,55 @@ export class FormTableComponent implements OnInit {
       this.cdr.detectChanges();
     });
   }
+  getLookups(){
+    this.lookupService.getVisitFormIndices().subscribe(res => {
+      this.visitIndices = res.data;
+      this.cdr.detectChanges();
+    })
+  }
 
   changeDocumentNo() {
     this.modalService.open(this.documentModal, this.modalConfig);
   }
+  openAttendance() {
+    this.modalService.open(this.attendanceModal, this.modalConfig);
+  }
 
   initChangeDocumentForm() {
     this.changeDocumentForm = this.fb.group({
-      documentNo: [''],
+      documentNo: ['', Validators.required],
+    });
+  }
+  initAttendanceFormForm() {
+    this.attendanceForm = this.fb.group({
+      name: ['', Validators.required],
+      side: ['', Validators.required],
+      job: ['', Validators.required],
+      email: ['', Validators.required, Validators.email],
     });
   }
 
-  onChangeDocuemntNo() {
+  onChangeDocumentNo() {
     // const val = this.updateForm.value
     if (this.changeDocumentForm.invalid) {
       this.changeDocumentForm.markAllAsTouched();
       return;
     }
     const payload = {
-      "id": this.visitId,
-      "documentNo": this.changeDocumentForm.value.documentNo
+      id: 0,
+      updateType: 1,
+      documentNo: this.changeDocumentForm.value.documentNo,
+      generalRecommendations: '',
+      communicationAndCoordination: '',
+      safetyRecommendations: '',
+      totalCommitmentPercentage: '',
     };
 
-    this.visitFormService.updateDocumentNo(payload).subscribe(
+    this.visitFormService.updateDocumentFields(payload).subscribe(
       (res) => {
         this.getVisitDetails();
         this.modalService.dismissAll();
+        this.changeDocumentForm.reset();
         this.showAlert({
           icon: 'success',
           title: 'Success!',
@@ -120,6 +148,44 @@ export class FormTableComponent implements OnInit {
         });
       }
     );
+  }
+  onAddAttendance() {
+    // const val = this.updateForm.value
+    if (this.attendanceForm.invalid) {
+      this.attendanceForm.markAllAsTouched();
+      return;
+    }
+    // const payload = {
+    //   id: 0,
+    //   updateType: 1,
+    //   documentNo: this.changeDocumentForm.value.documentNo,
+    //   generalRecommendations: '',
+    //   communicationAndCoordination: '',
+    //   safetyRecommendations: '',
+    //   totalCommitmentPercentage: '',
+    // };
+
+    // this.visitFormService.updateDocumentFields(payload).subscribe(
+    //   (res) => {
+    //     this.getVisitDetails();
+    //     this.modalService.dismissAll();
+    //     this.changeDocumentForm.reset();
+    //     this.showAlert({
+    //       icon: 'success',
+    //       title: 'Success!',
+    //       text: 'No Updated successfully!',
+    //     });
+    //     this.cdr.detectChanges();
+    //   },
+    //   (error) => {
+    //     this.modalService.dismissAll();
+    //     this.showAlert({
+    //       icon: 'error',
+    //       title: 'Error!',
+    //       text: 'Please try again',
+    //     });
+    //   }
+    // );
   }
 
   showAlert(swalOptions: SweetAlertOptions) {
@@ -145,8 +211,8 @@ export class FormTableComponent implements OnInit {
   }
 
   numbersOnly(event: any): boolean {
-    const charCode = (event.which) ? event.which : event.keyCode;
-    if ((charCode > 31 && charCode != 43) && (charCode < 48 || charCode > 57)) {
+    const charCode = event.which ? event.which : event.keyCode;
+    if (charCode > 31 && charCode != 43 && (charCode < 48 || charCode > 57)) {
       return false;
     }
     return true;

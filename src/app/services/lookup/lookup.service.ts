@@ -521,7 +521,7 @@ export class LookupService {
   getVisitFormIndices(): Observable<any> {
     const httpHeaders = new HttpHeaders({
       Authorization: `Bearer ${this.token}`,
-      LanguageCode: 'ar',
+      LanguageCode: 'en',
     });
     const url = `${this.API_USERS_URL}/GetVisitFormIndices`;
     return this.http.get<any>(url, {
@@ -531,7 +531,7 @@ export class LookupService {
   getVisitObjectives(): Observable<any> {
     const httpHeaders = new HttpHeaders({
       Authorization: `Bearer ${this.token}`,
-      LanguageCode: 'ar',
+      LanguageCode: 'en',
     });
     const url = `${this.API_USERS_URL}/GetVisitObjectives`;
     return this.http.get<any>(url, {
@@ -541,7 +541,7 @@ export class LookupService {
   getVisitFormConditions(): Observable<any> {
     const httpHeaders = new HttpHeaders({
       Authorization: `Bearer ${this.token}`,
-      LanguageCode: 'ar',
+      LanguageCode: 'en',
     });
     const url = `${this.API_USERS_URL}/GetVisitFormConditions`;
     return this.http.get<any>(url, {
