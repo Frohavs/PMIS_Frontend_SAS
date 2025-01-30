@@ -118,7 +118,7 @@ export class FormTableComponent implements OnInit {
       return;
     }
     const payload = {
-      id: 0,
+      id: this.visitId,
       updateType: 1,
       documentNo: this.changeDocumentForm.value.documentNo,
       generalRecommendations: '',
