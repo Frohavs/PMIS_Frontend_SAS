@@ -30,11 +30,11 @@ export class FormTableComponent implements OnInit {
 
   swalOptions: SweetAlertOptions = {};
   @ViewChild('noticeSwal') noticeSwal!: SwalComponent;
-  
+
   modalConfig: NgbModalOptions = {
     modalDialogClass: 'modal-dialog modal-dialog-centered mw-650px',
   };
-  
+
   changeDocumentForm: FormGroup;
   @ViewChild('documentModal') documentModal: TemplateRef<any>;
   attendanceForm: FormGroup;
@@ -56,7 +56,7 @@ export class FormTableComponent implements OnInit {
     this.getLookups();
     this.initChangeDocumentForm();
     this.initAttendanceFormForm();
-    
+
     this.activatedRoute.params.subscribe((params) => {
       this.projectId = +params['id'];
       if (this.projectId) {
@@ -70,7 +70,7 @@ export class FormTableComponent implements OnInit {
       }
     });
   }
-  
+
   getProjectDetails() {
     this.projectsService.getByID(this.projectId).subscribe((res) => {
       this.projectDetails = res.data;
@@ -83,17 +83,27 @@ export class FormTableComponent implements OnInit {
       this.cdr.detectChanges();
     });
   }
-  getLookups(){
-    this.lookupService.getVisitFormIndices().subscribe(res => {
+  getLookups() {
+    this.lookupService.getVisitFormIndices().subscribe((res) => {
       this.visitIndices = res.data;
       this.cdr.detectChanges();
-    })
+    });
   }
 
   changeDocumentNo() {
     this.modalService.open(this.documentModal, this.modalConfig);
   }
-  openAttendance() {
+  openAttendance(attendance?: any){
+    this.attendanceForm.reset();
+    if(attendance) {
+      this.attendanceForm.patchValue({
+        id: attendance.id,
+        name: attendance.name,
+        side: attendance.side,
+        job: attendance.job,
+        email: attendance.email
+      });
+    }
     this.modalService.open(this.attendanceModal, this.modalConfig);
   }
 
@@ -104,10 +114,11 @@ export class FormTableComponent implements OnInit {
   }
   initAttendanceFormForm() {
     this.attendanceForm = this.fb.group({
+      id: [0],
       name: ['', Validators.required],
       side: ['', Validators.required],
       job: ['', Validators.required],
-      email: ['', Validators.required, Validators.email],
+      email: ['', Validators.required],
     });
   }
 
@@ -150,42 +161,46 @@ export class FormTableComponent implements OnInit {
     );
   }
   onAddAttendance() {
-    // const val = this.updateForm.value
     if (this.attendanceForm.invalid) {
       this.attendanceForm.markAllAsTouched();
       return;
     }
-    // const payload = {
-    //   id: 0,
-    //   updateType: 1,
-    //   documentNo: this.changeDocumentForm.value.documentNo,
-    //   generalRecommendations: '',
-    //   communicationAndCoordination: '',
-    //   safetyRecommendations: '',
-    //   totalCommitmentPercentage: '',
-    // };
+    debugger;
+    this.isLoading = true;
+    let payload: any = {
+      visitFormId: this.visitId,
+      name: this.attendanceForm.value.name,
+      side: this.attendanceForm.value.side,
+      job: this.attendanceForm.value.job,
+      email: this.attendanceForm.value.email,
+    };
+    if(this.attendanceForm.value.id !== 0){ 
+      payload['id'] = this.attendanceForm.value.id;
+    }
 
-    // this.visitFormService.updateDocumentFields(payload).subscribe(
-    //   (res) => {
-    //     this.getVisitDetails();
-    //     this.modalService.dismissAll();
-    //     this.changeDocumentForm.reset();
-    //     this.showAlert({
-    //       icon: 'success',
-    //       title: 'Success!',
-    //       text: 'No Updated successfully!',
-    //     });
-    //     this.cdr.detectChanges();
-    //   },
-    //   (error) => {
-    //     this.modalService.dismissAll();
-    //     this.showAlert({
-    //       icon: 'error',
-    //       title: 'Error!',
-    //       text: 'Please try again',
-    //     });
-    //   }
-    // );
+    this.visitFormService.addAttendee(payload).subscribe(
+      (res) => {
+        this.isLoading = false;
+        this.getVisitDetails();
+        this.modalService.dismissAll();
+        this.attendanceForm.reset();
+        this.showAlert({
+          icon: 'success',
+          title: 'Success!',
+          text: 'Added successfully!',
+        });
+        this.cdr.detectChanges();
+      },
+      (error) => {
+        this.isLoading = false;
+        this.modalService.dismissAll();
+        this.showAlert({
+          icon: 'error',
+          title: 'Error!',
+          text: 'Please try again',
+        });
+      }
+    );
   }
 
   showAlert(swalOptions: SweetAlertOptions) {

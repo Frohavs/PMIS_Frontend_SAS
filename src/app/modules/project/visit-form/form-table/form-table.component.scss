@@ -37,7 +37,9 @@ h3 {
 }
 
 .document-table,
-.visit-table {
+.visit-table,
+.status-table,
+.schedule-table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 10px;
@@ -66,4 +68,47 @@ h3 {
 .document-table tbody tr:nth-child(even),
 .visit-table tbody tr:nth-child(even) {
   background-color: #f9f9f9;
+}
+
+.visit-table,
+.status-table,
+.schedule-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.status-table td,
+.schedule-table th,
+.schedule-table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: center;
+}
+
+.status-table .label {
+  background-color: #5cbf75;
+  color: white;
+  font-weight: bold;
+  max-width: 70px;
+}
+
+.status-table tbody tr:nth-child(even),
+.schedule-table tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.schedule-table thead {
+  background-color: #5cbf75;
+  color: white;
+}
+
+.schedule-table td:nth-child(5) {
+  font-size: 20px;
+  color: black;
+}
+
+.shadow {
+    background-color: #A8D6FF;
+    cursor: pointer;
 }

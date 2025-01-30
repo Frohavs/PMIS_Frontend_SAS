@@ -9,6 +9,7 @@ import { environment } from 'src/environments/environment';
 export class VisitFormService {
 
   API_USERS_URL = `${environment.apiUrl}/VisitForm`;
+  API_USERS_URL_Attendee = `${environment.apiUrl}/VisitFormAttendee`;
   token: string;
   private authLocalStorageToken = `${environment.appVersion}-${environment.USERDATA_KEY}`;
 
@@ -95,6 +96,15 @@ export class VisitFormService {
     });
     const url = `${this.API_USERS_URL}/UpdateFields`;
     return this.http.put<any>(url, payload, {
+      headers: httpHeaders
+    });
+  }
+  addAttendee(payload: any): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL_Attendee}/Upsert`;
+    return this.http.post<any>(url, payload, {
       headers: httpHeaders
     });
   }
