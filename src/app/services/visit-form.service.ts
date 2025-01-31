@@ -108,4 +108,13 @@ export class VisitFormService {
       headers: httpHeaders
     });
   }
+  upsertVisitFormStep(payload: any): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/UpsertVisitFormStep`;
+    return this.http.post<any>(url, payload, {
+      headers: httpHeaders
+    });
+  }
 }

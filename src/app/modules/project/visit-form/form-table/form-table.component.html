@@ -19,7 +19,7 @@
       <h2>Contractor : {{ projectDetails?.contractorName || "--" }}</h2>
     </div>
     <div class="pt-5 text-center">
-      <a (click)="changeDocumentNo()" class="btn btn-light-primary d-flex">
+      <a (click)="changeDocumentNo(1)" class="btn btn-light-primary d-flex">
         Document No: {{ visitDetails?.documentNo || "--" }}
       </a>
     </div>
@@ -54,12 +54,13 @@
   </div>
 
   <div class="pt-2 d-flex flex-column">
-    <span class="shadow_item mb-2">
-      Ensuring the unification of models, processes and procedures for working
-      in projects
+    <span
+      class="shadow_item mb-2"
+      *ngFor="let item of visitObjectives"
+      (click)="openObjectives(item)"
+    >
+      {{ item?.name || "--" }}
     </span>
-    <span class="shadow_item mb-2"> Test 1 </span>
-    <span class="shadow_item mb-2"> Motawea Test </span>
   </div>
 
   <!-- Document Data -->
@@ -248,44 +249,11 @@
       </tr>
     </thead>
     <tbody>
-      <tr>
+      <tr *ngFor="let item of visitSchedulePositions">
         <td>1</td>
         <td>
-          <span class="shadow">الإلتزام بالنماذج الموحدة بدليل (PDM) </span>
+          <span class="shadow">{{item?.name}}</span>
         </td>
-        <td><span>Approved </span></td>
-        <td><span>Fully committed </span></td>
-        <td><span>Partially committed </span></td>
-        <td><span>Not committed </span></td>
-        <td><span>N/A </span></td>
-        <td><span>27-01-2025 </span></td>
-        <td><span>sad </span></td>
-      </tr>
-      <tr>
-        <td>2</td>
-        <td><span class="shadow">الجدول الزمني (خط الأساس) </span></td>
-        <td></td>
-        <td></td>
-        <td>&#8226;</td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-      </tr>
-      <tr>
-        <td>3</td>
-        <td><span class="shadow">الجدول الزمني المحدد </span></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-      </tr>
-      <tr>
-        <td>4</td>
-        <td><span class="shadow">رفع وتحديث البرنامج الزمني </span></td>
         <td></td>
         <td></td>
         <td></td>
@@ -361,7 +329,7 @@
     <thead>
       <tr>
         <th>No</th>
-        <th>Statement</th>
+        <th rowspan="2">Statement</th>
         <th
           colspan="4"
           style="background-color: #5cbf75 !important; color: #fff !important"
@@ -377,7 +345,6 @@
       </tr>
       <tr>
         <th></th>
-        <th></th>
         <th>Fully committed</th>
         <th>Partially committed</th>
         <th>Not committed</th>
@@ -386,9 +353,9 @@
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td class="greened">1</td>
-        <td><span class="shadow"> بدليل النماذج الموحدة (PDM) </span></td>
+      <tr *ngFor="let item of visitHealths; index as i">
+        <td class="greened">{{i+1}}</td>
+        <td><span class="shadow"> {{item?.name}}</span></td>
         <td></td>
         <td></td>
         <td></td>
@@ -396,21 +363,11 @@
         <td></td>
       </tr>
       <tr>
-        <td class="greened">12</td>
-        <td><span class="shadow"> توفر مرافق رعاية الموظفين </span></td>
-        <td class="centered">&#8226;</td>
-        <!-- Green dot -->
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-      </tr>
-      <tr>
-        <td class="greened"></td>
+        <td class="greened">{{this.visitHealths.length + 1}}</td>
         <td>
           <span class="shadow">Total commitment percentage (estimated)</span>
         </td>
-        <td colspan="4" class="centered">70 %</td>
+        <td colspan="4" class="centered">--</td>
         <td></td>
       </tr>
     </tbody>
@@ -418,8 +375,8 @@
   <!-- --------------------------------------------------------------------- -->
   <h3 class="pt-5">Security and safety recommendations:</h3>
   <div class="pt-3 d-flex">
-    <a (click)="openRecommendation()" class="btn btn-sm btn-primary">
-      MKsadasd
+    <a (click)="changeDocumentNo(2)" class="btn btn-sm btn-primary">
+      {{ visitDetails?.generalRecommendations || "--" }}
     </a>
   </div>
   <!-- --------------------------------------------------------------------- -->
@@ -437,10 +394,14 @@
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td></td>
-        <td></td>
-        <td></td>
+      <tr *ngFor="let item of visitDetails?.evidences">
+        <td>
+          <span class="shadow" (click)="openEvidence(item)">
+            {{ item.attachment }}
+          </span>
+        </td>
+        <td>{{item?.note}}</td>
+        <td>{{item?.riskLevel}}</td>
       </tr>
     </tbody>
   </table>
@@ -1342,7 +1303,7 @@
 </ng-template>
 
 <ng-template #evidenceModal let-modal>
-  <form [formGroup]="chRequestsForm" (ngSubmit)="onAddEvidence()">
+  <form [formGroup]="evidenceForm" (ngSubmit)="onAddEvidence()">
     <div class="modal-header">
       <h4 class="modal-title" id="modal-basic-title">Add Evidence</h4>
       <button
@@ -1362,6 +1323,7 @@
               class="form-control form-control-lg form-control-solid text-start"
               name="picture"
               formControlName="picture"
+              (change)="onFileSelected($event)"
             />
             <div
               *ngIf="
@@ -1401,21 +1363,21 @@
           <div class="col-lg-12 fv-row">
             <select
               class="form-select form-select-solid form-select-lg fw-bold"
-              name="risk"
-              formControlName="risk"
+              name="riskId"
+              formControlName="riskId"
             >
               <option value="" disabled>
                 {{ "TRANSLATOR.SELECTION" | translate }}
               </option>
-              <ng-container *ngFor="let item of risks">
-                <option [value]="item?.id">{{ item?.name }}</option>
+              <ng-container *ngFor="let risk of visitRiskLevels">
+                <option [value]="risk?.id">{{ risk?.name }}</option>
               </ng-container>
             </select>
             <div
               *ngIf="
-                evidenceForm?.get('risk')?.invalid &&
-                (evidenceForm?.get('risk')?.dirty ||
-                  evidenceForm?.get('risk')?.touched)
+                evidenceForm?.get('riskId')?.invalid &&
+                (evidenceForm?.get('riskId')?.dirty ||
+                  evidenceForm?.get('riskId')?.touched)
               "
               class="fv-plugins-message-container"
             >
@@ -1442,7 +1404,7 @@
         type="submit"
         id="kt_modal_update_customer_submit"
         class="btn btn-primary"
-        [disabled]="!attendanceForm.valid"
+        [disabled]="!evidenceForm.valid"
         [attr.data-kt-indicator]="isLoading ? 'on' : 'off'"
       >
         <span class="indicator-label"> Submit </span>
@@ -1457,3 +1419,4 @@
     </div>
   </form>
 </ng-template>
+<!-- <td>&#8226;</td> -->

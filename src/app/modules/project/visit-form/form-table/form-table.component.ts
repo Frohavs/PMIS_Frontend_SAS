@@ -14,6 +14,7 @@ import { VisitFormService } from 'src/app/services/visit-form.service';
 import { SweetAlertOptions } from 'sweetalert2';
 import { NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 import { LookupService } from 'src/app/services/lookup/lookup.service';
+import { AttachmentService } from 'src/app/services/attachment/attachment.service';
 
 @Component({
   selector: 'app-form-table',
@@ -26,8 +27,12 @@ export class FormTableComponent implements OnInit {
   projectDetails: any;
   visitDetails: any;
   visitIndices: any[] = [];
+  visitRiskLevels: any[] = [];
+  visitObjectives: any[] = [];
+  visitSchedulePositions: any[] = [];
+  visitHealths: any[] = [];
   isLoading: boolean;
-
+  documentType: number = 0;
   swalOptions: SweetAlertOptions = {};
   @ViewChild('noticeSwal') noticeSwal!: SwalComponent;
 
@@ -47,10 +52,12 @@ export class FormTableComponent implements OnInit {
   @ViewChild('recommendationModal') recommendationModal: TemplateRef<any>;
   evidenceForm: FormGroup;
   risks: any[] = [];
+  selectedFile: any;
   @ViewChild('evidenceModal') evidenceModal: TemplateRef<any>;
 
   constructor(
     private router: Router,
+    private attachmentService: AttachmentService,
     private cdr: ChangeDetectorRef,
     private fb: FormBuilder,
     private modalService: NgbModal,
@@ -101,27 +108,55 @@ export class FormTableComponent implements OnInit {
       this.visitIndices = res.data;
       this.cdr.detectChanges();
     });
+    this.lookupService.getVisitFormRiskLevel().subscribe((res) => {
+      this.visitRiskLevels = res.data;
+      this.cdr.detectChanges();
+    });
+    this.getObjectivesLookup();
+    this.getSchedulePositions();
+    this.getVisitFormHealth();
   }
 
-  changeDocumentNo() {
+  getObjectivesLookup() {
+    this.lookupService.getVisitObjectives().subscribe((res) => {
+      this.visitObjectives = res.data;
+      this.cdr.detectChanges();
+    });
+  }
+
+  getSchedulePositions() {
+    this.lookupService.getSchedulePositions().subscribe((res) => {
+      this.visitSchedulePositions = res.data;
+      this.cdr.detectChanges();
+    });
+  }
+  getVisitFormHealth() {
+    this.lookupService.getVisitFormHealth().subscribe((res) => {
+      this.visitHealths = res.data;
+      this.cdr.detectChanges();
+    });
+  }
+
+  changeDocumentNo(type: number) {
+    this.documentType = type;
     this.modalService.open(this.documentModal, this.modalConfig);
   }
-  openAttendance(attendance?: any){
+  openAttendance(attendance?: any) {
     this.attendanceForm.reset();
-    if(attendance) {
+    if (attendance) {
       this.attendanceForm.patchValue({
         id: attendance.id,
         name: attendance.name,
         side: attendance.side,
         job: attendance.job,
-        email: attendance.email
+        email: attendance.email,
       });
     }
     this.modalService.open(this.attendanceModal, this.modalConfig);
   }
-  openObjectives(objective?: any){
+  openObjectives(objective?: any) {
     this.objectivesForm.reset();
-    if(objective) {
+    if (objective) {
       this.objectivesForm.patchValue({
         id: objective.id,
         name: objective.name,
@@ -129,9 +164,9 @@ export class FormTableComponent implements OnInit {
     }
     this.modalService.open(this.objectivesModal, this.modalConfig);
   }
-  openRecommendation(recommend?: any){
+  openRecommendation(recommend?: any) {
     this.recommendationForm.reset();
-    if(recommend) {
+    if (recommend) {
       this.recommendationForm.patchValue({
         id: recommend.id,
         name: recommend.name,
@@ -139,9 +174,9 @@ export class FormTableComponent implements OnInit {
     }
     this.modalService.open(this.recommendationModal, this.modalConfig);
   }
-  openCommunication(recommend?: any){
+  openCommunication(recommend?: any) {
     this.recommendationForm.reset();
-    if(recommend) {
+    if (recommend) {
       this.recommendationForm.patchValue({
         id: recommend.id,
         name: recommend.name,
@@ -150,28 +185,28 @@ export class FormTableComponent implements OnInit {
     this.modalService.open(this.recommendationModal, this.modalConfig);
   }
 
-  openChRequests(request?: any){
+  openChRequests(request?: any) {
     this.chRequestsForm.reset();
-    if(request) {
+    if (request) {
       this.chRequestsForm.patchValue({
         id: request.id,
         name: request.name,
         side: request.side,
         job: request.job,
-        email: request.email
+        email: request.email,
       });
     }
     this.modalService.open(this.chRequestsModal, this.modalConfig);
   }
 
-  openEvidence(evidence?: any){
+  openEvidence(evidence?: any) {
     this.evidenceForm.reset();
-    if(evidence) {
+    if (evidence) {
       this.evidenceForm.patchValue({
         id: evidence.id,
         picture: evidence.picture,
         notes: evidence.notes,
-        risk: evidence.risk
+        risk: evidence.risk,
       });
     }
     this.modalService.open(this.evidenceModal, this.modalConfig);
@@ -217,7 +252,19 @@ export class FormTableComponent implements OnInit {
       id: [0],
       picture: ['', Validators.required],
       notes: ['', Validators.required],
-      risk: ['', Validators.required],
+      riskId: ['', Validators.required],
+    });
+  }
+  onFileSelected(event: any) {
+    this.selectedFile = <File>event.target.files[0];
+    const fd = new FormData();
+    fd.append('Attachment', this.selectedFile, this.selectedFile.name);
+    this.attachmentService.uploadAttachment(fd).subscribe(res => {
+      this.evidenceForm.patchValue({
+        picture: res.data
+      });
+    }, (error) => {
+      this.showAlert({ icon: 'error', title: 'Error!', text: 'Please try upload again' });
     });
   }
 
@@ -229,12 +276,12 @@ export class FormTableComponent implements OnInit {
     }
     const payload = {
       id: this.visitId,
-      updateType: 1,
+      updateType: this.documentType,
       documentNo: this.changeDocumentForm.value.documentNo,
-      generalRecommendations: '',
-      communicationAndCoordination: '',
-      safetyRecommendations: '',
-      totalCommitmentPercentage: '',
+      generalRecommendations: this.changeDocumentForm.value.documentNo,
+      communicationAndCoordination: this.changeDocumentForm.value.documentNo,
+      safetyRecommendations: this.changeDocumentForm.value.documentNo,
+      totalCommitmentPercentage: this.changeDocumentForm.value.documentNo,
     };
 
     this.visitFormService.updateDocumentFields(payload).subscribe(
@@ -245,7 +292,7 @@ export class FormTableComponent implements OnInit {
         this.showAlert({
           icon: 'success',
           title: 'Success!',
-          text: 'No Updated successfully!',
+          text: 'Updated successfully!',
         });
         this.cdr.detectChanges();
       },
@@ -266,17 +313,23 @@ export class FormTableComponent implements OnInit {
     }
     this.isLoading = true;
     let payload: any = {
-      visitFormId: this.visitId,
-      name: this.attendanceForm.value.name,
-      side: this.attendanceForm.value.side,
-      job: this.attendanceForm.value.job,
-      email: this.attendanceForm.value.email,
+      step: 1,
+      body: {
+        visitFormId: this.visitId,
+        name: this.attendanceForm.value.name,
+        side: this.attendanceForm.value.side,
+        job: this.attendanceForm.value.job,
+        email: this.attendanceForm.value.email,
+      },
     };
-    if(this.attendanceForm.value.id !== 0){ 
-      payload['id'] = this.attendanceForm.value.id;
+    if (
+      this.attendanceForm.value.id !== 0 &&
+      this.attendanceForm.value.id !== null
+    ) {
+      payload.body['id'] = this.attendanceForm.value.id;
     }
 
-    this.visitFormService.addAttendee(payload).subscribe(
+    this.visitFormService.upsertVisitFormStep(payload).subscribe(
       (res) => {
         this.isLoading = false;
         this.getVisitDetails();
@@ -307,23 +360,33 @@ export class FormTableComponent implements OnInit {
     }
     this.isLoading = true;
     let payload: any = {
-      visitFormId: this.visitId,
-      name: this.objectivesForm.value.name,
+      step: 15,
+      body: {
+        visitFormId: this.visitId,
+        name: this.objectivesForm.value.name,
+        nameAr: this.objectivesForm.value.name,
+      },
     };
-    if(this.objectivesForm.value.id !== 0){ 
-      payload['id'] = this.objectivesForm.value.id;
+    if (
+      this.objectivesForm.value.id !== 0 &&
+      this.objectivesForm.value.id !== null
+    ) {
+      payload.body['id'] = this.objectivesForm.value.id;
     }
 
-    this.visitFormService.addAttendee(payload).subscribe(
+    this.visitFormService.upsertVisitFormStep(payload).subscribe(
       (res) => {
         this.isLoading = false;
-        this.getVisitDetails();
+        this.getObjectivesLookup();
         this.modalService.dismissAll();
         this.objectivesForm.reset();
         this.showAlert({
           icon: 'success',
           title: 'Success!',
-          text: 'Added successfully!',
+          text:
+            this.objectivesForm.value.id !== 0
+              ? 'Updated successfully!'
+              : 'Added successfully!',
         });
         this.cdr.detectChanges();
       },
@@ -346,12 +409,47 @@ export class FormTableComponent implements OnInit {
     }
     this.isLoading = true;
     let payload: any = {
-      visitFormId: this.visitId,
-      picture: this.evidenceForm.value.picture,
-      notes: this.evidenceForm.value.notes,
-      risk: this.evidenceForm.value.risk,
+      step: 3,
+      body: {
+        attachment: this.evidenceForm.value.picture,
+        note: this.evidenceForm.value.notes,
+        riskLevel: +this.evidenceForm.value.riskId,
+        visitFormId: this.visitId,
+      },
     };
+    if (
+      this.evidenceForm.value.id !== 0 &&
+      this.evidenceForm.value.id !== null
+    ) {
+      payload.body['id'] = this.evidenceForm.value.id;
+    }
 
+    this.visitFormService.upsertVisitFormStep(payload).subscribe(
+      (res) => {
+        this.isLoading = false;
+        this.getVisitDetails();
+        this.modalService.dismissAll();
+        this.evidenceForm.reset();
+        this.showAlert({
+          icon: 'success',
+          title: 'Success!',
+          text:
+            this.evidenceForm.value.id !== 0
+              ? 'Updated successfully!'
+              : 'Added successfully!',
+        });
+        this.cdr.detectChanges();
+      },
+      (error) => {
+        this.isLoading = false;
+        this.modalService.dismissAll();
+        this.showAlert({
+          icon: 'error',
+          title: 'Error!',
+          text: 'Please try again',
+        });
+      }
+    );
   }
 
   showAlert(swalOptions: SweetAlertOptions) {
