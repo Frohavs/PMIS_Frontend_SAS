@@ -50,10 +50,37 @@ export class FormTableComponent implements OnInit {
   @ViewChild('chRequestsModal') chRequestsModal: TemplateRef<any>;
   recommendationForm: FormGroup;
   @ViewChild('recommendationModal') recommendationModal: TemplateRef<any>;
+
   evidenceForm: FormGroup;
   risks: any[] = [];
   selectedFile: any;
   @ViewChild('evidenceModal') evidenceModal: TemplateRef<any>;
+
+  criticalProblemsForm: FormGroup;
+  criticalStatus: any[] = [
+    {
+      name: 'Open',
+      id: true,
+    },
+    {
+      name: 'Close',
+      id: false,
+    },
+  ];
+  @ViewChild('criticalProblemsModal') criticalProblemsModal: TemplateRef<any>;
+  
+  lessonForm: FormGroup;
+  lessonClassifications: any[] = [
+    {
+      name: 'Type 1',
+      id: 1,
+    },
+    {
+      name: 'Type 2',
+      id: 2,
+    },
+  ];
+  @ViewChild('lessonModal') lessonModal: TemplateRef<any>;
 
   constructor(
     private router: Router,
@@ -76,6 +103,8 @@ export class FormTableComponent implements OnInit {
     this.initChRequestsForm();
     this.initRecommendationForm();
     this.initEvidenceForm();
+    this.initCriticalProblems();
+    this.initLesson();
 
     this.activatedRoute.params.subscribe((params) => {
       this.projectId = +params['id'];
@@ -202,14 +231,45 @@ export class FormTableComponent implements OnInit {
   openEvidence(evidence?: any) {
     this.evidenceForm.reset();
     if (evidence) {
+      debugger;
       this.evidenceForm.patchValue({
         id: evidence.id,
-        picture: evidence.picture,
-        notes: evidence.notes,
-        risk: evidence.risk,
+        picture: evidence.attachment,
+        notes: evidence.note,
+        riskId: evidence.riskLevelId,
       });
     }
     this.modalService.open(this.evidenceModal, this.modalConfig);
+  }
+  openCriticalProblems(problem?: any) {
+    this.criticalProblemsForm.reset();
+    if (problem) {
+      this.criticalProblemsForm.patchValue({
+        id: problem.id,
+        description: problem.description,
+        actionTaken: problem.actionTaken,
+        startDate: problem.startDate.slice(0, 10),
+        anotherDateProcedure: problem.anotherDateProcedure.slice(0, 10),
+        status: problem.status,
+        notes: problem.notes,
+      });
+    }
+    this.modalService.open(this.criticalProblemsModal, this.modalConfig);
+  }
+
+  openLesson(lesson?: any) {
+    this.lessonForm.reset();
+    if (lesson) {
+      debugger
+      this.lessonForm.patchValue({
+        id: lesson.id,
+        learned: lesson.learned,
+        classification: 1,
+        impact: lesson.impact,
+        notes: lesson.notes,
+      });
+    }
+    this.modalService.open(this.lessonModal, this.modalConfig);
   }
 
   initChangeDocumentForm() {
@@ -255,17 +315,44 @@ export class FormTableComponent implements OnInit {
       riskId: ['', Validators.required],
     });
   }
+  initCriticalProblems() {
+    this.criticalProblemsForm = this.fb.group({
+      id: [0],
+      description: ['', Validators.required],
+      actionTaken: ['', Validators.required],
+      startDate: ['', Validators.required],
+      anotherDateProcedure: ['', Validators.required],
+      status: ['', Validators.required],
+      notes: ['', Validators.required],
+    });
+  }
+  initLesson() {
+    this.lessonForm = this.fb.group({
+      id: [0],
+      learned: ['', Validators.required],
+      classification: ['', Validators.required],
+      impact: ['', Validators.required],
+      notes: ['', Validators.required],
+    });
+  }
   onFileSelected(event: any) {
     this.selectedFile = <File>event.target.files[0];
     const fd = new FormData();
     fd.append('Attachment', this.selectedFile, this.selectedFile.name);
-    this.attachmentService.uploadAttachment(fd).subscribe(res => {
-      this.evidenceForm.patchValue({
-        picture: res.data
-      });
-    }, (error) => {
-      this.showAlert({ icon: 'error', title: 'Error!', text: 'Please try upload again' });
-    });
+    this.attachmentService.uploadAttachment(fd).subscribe(
+      (res) => {
+        this.evidenceForm.patchValue({
+          picture: res.data,
+        });
+      },
+      (error) => {
+        this.showAlert({
+          icon: 'error',
+          title: 'Error!',
+          text: 'Please try upload again',
+        });
+      }
+    );
   }
 
   onChangeDocumentNo() {
@@ -435,6 +522,106 @@ export class FormTableComponent implements OnInit {
           title: 'Success!',
           text:
             this.evidenceForm.value.id !== 0
+              ? 'Updated successfully!'
+              : 'Added successfully!',
+        });
+        this.cdr.detectChanges();
+      },
+      (error) => {
+        this.isLoading = false;
+        this.modalService.dismissAll();
+        this.showAlert({
+          icon: 'error',
+          title: 'Error!',
+          text: 'Please try again',
+        });
+      }
+    );
+  }
+  onAddCriticalProblem() {
+    if (this.criticalProblemsForm.invalid) {
+      this.criticalProblemsForm.markAllAsTouched();
+      return;
+    }
+    this.isLoading = true;
+    let payload: any = {
+      step: 4,
+      body: {
+        description: this.criticalProblemsForm.value.description,
+        actionTaken: this.criticalProblemsForm.value.actionTaken,
+        startDate: this.criticalProblemsForm.value.startDate,
+        anotherDateProcedure:
+          this.criticalProblemsForm.value.anotherDateProcedure,
+        status: this.criticalProblemsForm.value.status === 'true' ? true : false,
+        notes: this.criticalProblemsForm.value.notes,
+        visitFormId: this.visitId,
+      },
+    };
+    if (
+      this.criticalProblemsForm.value.id !== 0 &&
+      this.criticalProblemsForm.value.id !== null
+    ) {
+      payload.body['id'] = this.criticalProblemsForm.value.id;
+    }
+
+    this.visitFormService.upsertVisitFormStep(payload).subscribe(
+      (res) => {
+        this.isLoading = false;
+        this.getVisitDetails();
+        this.modalService.dismissAll();
+        this.criticalProblemsForm.reset();
+        this.showAlert({
+          icon: 'success',
+          title: 'Success!',
+          text:
+            this.criticalProblemsForm.value.id !== 0
+              ? 'Updated successfully!'
+              : 'Added successfully!',
+        });
+        this.cdr.detectChanges();
+      },
+      (error) => {
+        this.isLoading = false;
+        this.modalService.dismissAll();
+        this.showAlert({
+          icon: 'error',
+          title: 'Error!',
+          text: 'Please try again',
+        });
+      }
+    );
+  }
+  onAddLesson() {
+    if (this.lessonForm.invalid) {
+      this.lessonForm.markAllAsTouched();
+      return;
+    }
+    this.isLoading = true;
+    let payload: any = {
+      step: 5,
+      body: {
+        learned: this.lessonForm.value.learned,
+        classification: this.lessonForm.value.classification,
+        impact: this.lessonForm.value.impact,
+        notes: this.lessonForm.value.notes,
+        visitFormId: this.visitId,
+      },
+    };
+    if (this.lessonForm.value.id !== 0 && this.lessonForm.value.id !== null) {
+      payload.body['id'] = this.lessonForm.value.id;
+    }
+
+    this.visitFormService.upsertVisitFormStep(payload).subscribe(
+      (res) => {
+        this.isLoading = false;
+        this.getVisitDetails();
+        this.modalService.dismissAll();
+        this.lessonForm.reset();
+        this.showAlert({
+          icon: 'success',
+          title: 'Success!',
+          text:
+            this.lessonForm.value.id !== 0
               ? 'Updated successfully!'
               : 'Added successfully!',
         });

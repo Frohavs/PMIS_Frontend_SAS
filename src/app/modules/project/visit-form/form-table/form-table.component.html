@@ -252,7 +252,7 @@
       <tr *ngFor="let item of visitSchedulePositions">
         <td>1</td>
         <td>
-          <span class="shadow">{{item?.name}}</span>
+          <span class="shadow">{{ item?.name }}</span>
         </td>
         <td></td>
         <td></td>
@@ -354,8 +354,10 @@
     </thead>
     <tbody>
       <tr *ngFor="let item of visitHealths; index as i">
-        <td class="greened">{{i+1}}</td>
-        <td><span class="shadow"> {{item?.name}}</span></td>
+        <td class="greened">{{ i + 1 }}</td>
+        <td>
+          <span class="shadow"> {{ item?.name }}</span>
+        </td>
         <td></td>
         <td></td>
         <td></td>
@@ -363,7 +365,7 @@
         <td></td>
       </tr>
       <tr>
-        <td class="greened">{{this.visitHealths.length + 1}}</td>
+        <td class="greened">{{ this.visitHealths.length + 1 }}</td>
         <td>
           <span class="shadow">Total commitment percentage (estimated)</span>
         </td>
@@ -400,8 +402,8 @@
             {{ item.attachment }}
           </span>
         </td>
-        <td>{{item?.note}}</td>
-        <td>{{item?.riskLevel}}</td>
+        <td>{{ item?.note }}</td>
+        <td>{{ item?.riskLevel }}</td>
       </tr>
     </tbody>
   </table>
@@ -564,7 +566,9 @@
   <!-- --------------------------------------------------------------------- -->
   <h3 class="pt-5">3.8 Communication and coordination are my main concerns:</h3>
   <div class="pt-3 d-flex">
-    <a (click)="openCommunication()" class="btn btn-sm btn-primary"> test </a>
+    <a (click)="changeDocumentNo(3)" class="btn btn-sm btn-primary">
+      {{ visitDetails?.communicationAndCoordination || "--" }}
+    </a>
   </div>
 
   <!-- --------------------------------------------------------------------- -->
@@ -572,7 +576,7 @@
   <h4 class="pt-3">3.9 Critical problems:</h4>
 
   <div class="pt-2 d-flex">
-    <a (click)="openChRequests()" class="btn btn-sm btn-dark d-flex">
+    <a (click)="openCriticalProblems()" class="btn btn-sm btn-dark d-flex">
       Add Critical Issue
     </a>
   </div>
@@ -591,8 +595,12 @@
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td><span class="shadow">Test</span></td>
+      <tr *ngFor="let item of [{ description: '' }]">
+        <td>
+          <span class="shadow" (click)="openCriticalProblems(item)">
+            {{ item.description || "--" }}
+          </span>
+        </td>
         <td></td>
         <td></td>
         <td></td>
@@ -606,7 +614,7 @@
   <h4 class="pt-3">3.10 Lessons learned from the project:</h4>
 
   <div class="pt-2 d-flex">
-    <a (click)="openChRequests()" class="btn btn-sm btn-dark d-flex">
+    <a (click)="openLesson()" class="btn btn-sm btn-dark d-flex">
       Add Lesson
     </a>
   </div>
@@ -622,13 +630,16 @@
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td><span class="shadow">Test</span></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
+      <tr *ngFor="let item of visitDetails?.lessons; index as i">
+        <td>{{ i + 1 }}</td>
+        <td>
+          <span class="shadow" (click)="openLesson(item)">
+            {{ item.learned || "--" }}
+          </span>
+        </td>
+        <td>{{item.classification || "--"}}</td>
+        <td>{{item.impact || "--"}}</td>
+        <td>{{item.notes || "--"}}</td>
       </tr>
     </tbody>
   </table>
@@ -1405,6 +1416,342 @@
         id="kt_modal_update_customer_submit"
         class="btn btn-primary"
         [disabled]="!evidenceForm.valid"
+        [attr.data-kt-indicator]="isLoading ? 'on' : 'off'"
+      >
+        <span class="indicator-label"> Submit </span>
+        <span class="indicator-progress">
+          Please wait...
+          <span
+            class="spinner-border spinner-border-sm align-middle ms-2"
+          ></span>
+        </span>
+      </button>
+      <!--end::Button-->
+    </div>
+  </form>
+</ng-template>
+
+<ng-template #criticalProblemsModal let-modal>
+  <form [formGroup]="criticalProblemsForm" (ngSubmit)="onAddCriticalProblem()">
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Add Critical Problem</h4>
+      <button
+        type="button"
+        class="btn-close"
+        aria-label="Close"
+        (click)="modal.dismiss('Cross click')"
+      ></button>
+    </div>
+    <div class="modal-body">
+      <div class="row mb-6">
+        <div class="col-lg-12 fv-row">
+          <label class="col-lg-8 col-form-label fw-bold fs-6"
+            >Description</label
+          >
+          <div class="col-lg-12 fv-row">
+            <textarea
+              rows="2"
+              class="form-control form-control-lg form-control-solid text-start"
+              name="description"
+              formControlName="description"
+            ></textarea>
+            <div
+              *ngIf="
+                criticalProblemsForm?.get('description')?.invalid &&
+                (criticalProblemsForm?.get('description')?.dirty ||
+                  criticalProblemsForm?.get('description')?.touched)
+              "
+              class="fv-plugins-message-container"
+            >
+              <div class="fv-help-block">description is required</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-12 fv-row">
+          <label class="col-lg-8 col-form-label fw-bold fs-6"
+            >Action Taken</label
+          >
+          <div class="col-lg-12 fv-row">
+            <textarea
+              rows="2"
+              class="form-control form-control-lg form-control-solid text-start"
+              name="actionTaken"
+              formControlName="actionTaken"
+            ></textarea>
+            <div
+              *ngIf="
+                criticalProblemsForm?.get('actionTaken')?.invalid &&
+                (criticalProblemsForm?.get('actionTaken')?.dirty ||
+                  criticalProblemsForm?.get('actionTaken')?.touched)
+              "
+              class="fv-plugins-message-container"
+            >
+              <div class="fv-help-block">action is required</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-12 fv-row">
+          <label class="col-lg-8 col-form-label fw-bold fs-6"
+            >Start date The problem</label
+          >
+          <div class="col-lg-12 fv-row">
+            <input
+              type="date"
+              class="form-control form-control-lg form-control-solid text-start"
+              name="startDate"
+              formControlName="startDate"
+            />
+            <div
+              *ngIf="
+                criticalProblemsForm?.get('startDate')?.invalid &&
+                (criticalProblemsForm?.get('startDate')?.dirty ||
+                  criticalProblemsForm?.get('startDate')?.touched)
+              "
+              class="fv-plugins-message-container"
+            >
+              <div class="fv-help-block">date is required</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-12 fv-row">
+          <label class="col-lg-8 col-form-label fw-bold fs-6"
+            >Another Date Procedure</label
+          >
+          <div class="col-lg-12 fv-row">
+            <input
+              type="date"
+              class="form-control form-control-lg form-control-solid text-start"
+              name="anotherDateProcedure"
+              formControlName="anotherDateProcedure"
+            />
+            <div
+              *ngIf="
+                criticalProblemsForm?.get('anotherDateProcedure')?.invalid &&
+                (criticalProblemsForm?.get('anotherDateProcedure')?.dirty ||
+                  criticalProblemsForm?.get('anotherDateProcedure')?.touched)
+              "
+              class="fv-plugins-message-container"
+            >
+              <div class="fv-help-block">date is required</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-12 fv-row">
+          <label class="col-lg-4 col-form-label fw-bold fs-6">Status</label>
+          <div class="col-lg-12 fv-row">
+            <select
+              class="form-select form-select-solid form-select-lg fw-bold"
+              name="status"
+              formControlName="status"
+            >
+              <option value="" disabled>
+                {{ "TRANSLATOR.SELECTION" | translate }}
+              </option>
+              <ng-container *ngFor="let status of criticalStatus">
+                <option [value]="status?.id">{{ status?.name }}</option>
+              </ng-container>
+            </select>
+            <div
+              *ngIf="
+                criticalProblemsForm?.get('status')?.invalid &&
+                (criticalProblemsForm?.get('status')?.dirty ||
+                  criticalProblemsForm?.get('status')?.touched)
+              "
+              class="fv-plugins-message-container"
+            >
+              <div class="fv-help-block">status is required</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-12 fv-row">
+          <label class="col-lg-8 col-form-label fw-bold fs-6">Notes</label>
+          <div class="col-lg-12 fv-row">
+            <input
+              type="text"
+              class="form-control form-control-lg form-control-solid text-start"
+              name="notes"
+              formControlName="notes"
+            />
+            <div
+              *ngIf="
+                criticalProblemsForm?.get('notes')?.invalid &&
+                (criticalProblemsForm?.get('notes')?.dirty ||
+                  criticalProblemsForm?.get('notes')?.touched)
+              "
+              class="fv-plugins-message-container"
+            >
+              <div class="fv-help-block">notes is required</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer flex-center">
+      <!--begin::Button-->
+      <button
+        type="reset"
+        id="kt_modal_update_customer_cancel"
+        class="btn btn-light me-3"
+        (click)="modal.dismiss('cancel')"
+      >
+        Discard
+      </button>
+      <!--end::Button-->
+
+      <!--begin::Button-->
+      <button
+        type="submit"
+        id="kt_modal_update_customer_submit"
+        class="btn btn-primary"
+        [disabled]="!criticalProblemsForm.valid"
+        [attr.data-kt-indicator]="isLoading ? 'on' : 'off'"
+      >
+        <span class="indicator-label"> Submit </span>
+        <span class="indicator-progress">
+          Please wait...
+          <span
+            class="spinner-border spinner-border-sm align-middle ms-2"
+          ></span>
+        </span>
+      </button>
+      <!--end::Button-->
+    </div>
+  </form>
+</ng-template>
+
+<ng-template #lessonModal let-modal>
+  <form [formGroup]="lessonForm" (ngSubmit)="onAddLesson()">
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Add Lesson</h4>
+      <button
+        type="button"
+        class="btn-close"
+        aria-label="Close"
+        (click)="modal.dismiss('Cross click')"
+      ></button>
+    </div>
+    <div class="modal-body">
+      <div class="row mb-6">
+        <div class="col-lg-12 fv-row">
+          <label class="col-lg-8 col-form-label fw-bold fs-6"
+            >Lesson learned</label
+          >
+          <div class="col-lg-12 fv-row">
+            <input
+              type="text"
+              class="form-control form-control-lg form-control-solid text-start"
+              name="learned"
+              formControlName="learned"
+            />
+            <div
+              *ngIf="
+                lessonForm?.get('learned')?.invalid &&
+                (lessonForm?.get('learned')?.dirty ||
+                  lessonForm?.get('learned')?.touched)
+              "
+              class="fv-plugins-message-container"
+            >
+              <div class="fv-help-block">field is required</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-12 fv-row">
+          <label class="col-lg-8 col-form-label fw-bold fs-6"
+            >Classification</label
+          >
+          <div class="col-lg-12 fv-row">
+            <select
+              class="form-select form-select-solid form-select-lg fw-bold"
+              name="classification"
+              formControlName="classification"
+            >
+              <option value="" disabled>
+                {{ "TRANSLATOR.SELECTION" | translate }}
+              </option>
+              <ng-container
+                *ngFor="let classification of lessonClassifications"
+              >
+                <option [value]="classification?.id">
+                  {{ classification?.name }}
+                </option>
+              </ng-container>
+            </select>
+            <div
+              *ngIf="
+                lessonForm?.get('classification')?.invalid &&
+                (lessonForm?.get('classification')?.dirty ||
+                  lessonForm?.get('classification')?.touched)
+              "
+              class="fv-plugins-message-container"
+            >
+              <div class="fv-help-block">classification is required</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-12 fv-row">
+          <label class="col-lg-8 col-form-label fw-bold fs-6">Impact</label>
+          <div class="col-lg-12 fv-row">
+            <input
+              type="text"
+              class="form-control form-control-lg form-control-solid text-start"
+              name="impact"
+              formControlName="impact"
+            />
+            <div
+              *ngIf="
+                lessonForm?.get('impact')?.invalid &&
+                (lessonForm?.get('impact')?.dirty ||
+                  lessonForm?.get('impact')?.touched)
+              "
+              class="fv-plugins-message-container"
+            >
+              <div class="fv-help-block">impact is required</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-12 fv-row">
+          <label class="col-lg-8 col-form-label fw-bold fs-6">Notes</label>
+          <div class="col-lg-12 fv-row">
+            <input
+              type="text"
+              class="form-control form-control-lg form-control-solid text-start"
+              name="notes"
+              formControlName="notes"
+            />
+            <div
+              *ngIf="
+                lessonForm?.get('notes')?.invalid &&
+                (lessonForm?.get('notes')?.dirty ||
+                  lessonForm?.get('notes')?.touched)
+              "
+              class="fv-plugins-message-container"
+            >
+              <div class="fv-help-block">notes is required</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer flex-center">
+      <!--begin::Button-->
+      <button
+        type="reset"
+        id="kt_modal_update_customer_cancel"
+        class="btn btn-light me-3"
+        (click)="modal.dismiss('cancel')"
+      >
+        Discard
+      </button>
+      <!--end::Button-->
+
+      <!--begin::Button-->
+      <button
+        type="submit"
+        id="kt_modal_update_customer_submit"
+        class="btn btn-primary"
+        [disabled]="!lessonForm.valid"
         [attr.data-kt-indicator]="isLoading ? 'on' : 'off'"
       >
         <span class="indicator-label"> Submit </span>
