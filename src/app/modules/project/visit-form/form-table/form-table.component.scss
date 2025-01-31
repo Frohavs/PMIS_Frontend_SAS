@@ -39,7 +39,8 @@ h3 {
 .document-table,
 .visit-table,
 .status-table,
-.schedule-table {
+.schedule-table,
+.hsse-table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 10px;
@@ -108,7 +109,65 @@ h3 {
   color: black;
 }
 
+.hsse-table th,
+.hsse-table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: center;
+}
+
+.hsse-table thead {
+  background-color: #5cbf75;
+  color: white;
+}
+
+.hsse-table thead th:nth-child(3),
+.hsse-table thead th:nth-child(4),
+.hsse-table thead th:nth-child(5),
+.hsse-table thead th:nth-child(6) {
+  background-color: #fff2cc; /* Light Yellow */
+  color: black;
+}
+
+.hsse-table tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.hsse-table .greened {
+  background-color: #5cbf75 !important;
+  color: #fff !important;
+}
+.hsse-table .highlight {
+  background-color: #a5d8fa; /* Light Blue */
+  font-weight: bold;
+}
+
+.hsse-table .centered {
+  text-align: center;
+  font-weight: bold;
+  color: #333;
+}
+
+.hsse-table td:nth-child(3) {
+  font-size: 20px;
+  color: green;
+}
+
+.focus {
+  background-color: #fff2cc;
+}
 .shadow {
-    background-color: #A8D6FF;
-    cursor: pointer;
+  background-color: #a8d6ff;
+  cursor: pointer;
+}
+.shadow_item {
+  background-color: #a8d6ff;
+  cursor: pointer;
+  min-height: 47px;
+  margin: auto 0;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  font-weight: 600;
 }

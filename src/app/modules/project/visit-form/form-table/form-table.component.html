@@ -43,6 +43,25 @@
     </li>
   </ul>
 
+  <h3 class="pt-5">
+    Objectives of the Project Management Office's visit to work sites:
+  </h3>
+
+  <div class="pt-3 d-flex">
+    <a (click)="openObjectives()" class="btn btn-sm btn-dark d-flex">
+      Add More
+    </a>
+  </div>
+
+  <div class="pt-2 d-flex flex-column">
+    <span class="shadow_item mb-2">
+      Ensuring the unification of models, processes and procedures for working
+      in projects
+    </span>
+    <span class="shadow_item mb-2"> Test 1 </span>
+    <span class="shadow_item mb-2"> Motawea Test </span>
+  </div>
+
   <!-- Document Data -->
   <h3>Document data:</h3>
   <table class="document-table">
@@ -277,6 +296,152 @@
       </tr>
     </tbody>
   </table>
+
+  <h4 class="pt-3">3.2 Change orders (time/cost):</h4>
+
+  <div class="pt-2 d-flex">
+    <a (click)="openChRequests()" class="btn btn-sm btn-dark d-flex">
+      Ch Requests
+    </a>
+  </div>
+
+  <table class="schedule-table">
+    <thead>
+      <tr>
+        <th>Description of the change order</th>
+        <th>Reference number(Approved)</th>
+        <th>date Accreditation</th>
+        <th>The condition</th>
+        <th>My influence cost/the time</th>
+        <th>Cause of an order Change</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="shadow">Test</span></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h4 class="pt-3">
+    3.3 Application status of Project Management Manual (PDM) models:
+  </h4>
+
+  <table class="schedule-table">
+    <thead>
+      <tr>
+        <th colspan="2">Number of models used by the contractor</th>
+        <th colspan="2">Number of special models for consultants</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="focus">Contractor Approved Planned No</td>
+        <td class="focus">Approved no of actual contractor</td>
+        <td class="focus">Consultant Approved Planned No</td>
+        <td class="focus">Approved no of actual consultant</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Health, Safety, Security, and Environment Table -->
+  <h4>3.4 Health, safety, security and environment:</h4>
+  <table class="hsse-table">
+    <thead>
+      <tr>
+        <th>No</th>
+        <th>Statement</th>
+        <th
+          colspan="4"
+          style="background-color: #5cbf75 !important; color: #fff !important"
+        >
+          Notes>State of commitment
+        </th>
+        <th
+          rowspan="2"
+          style="background-color: #5cbf75 !important; color: #fff !important"
+        >
+          Notes
+        </th>
+      </tr>
+      <tr>
+        <th></th>
+        <th></th>
+        <th>Fully committed</th>
+        <th>Partially committed</th>
+        <th>Not committed</th>
+        <th>N/A</th>
+        <!-- <th></th> -->
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="greened">1</td>
+        <td><span class="shadow"> بدليل النماذج الموحدة (PDM) </span></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td class="greened">12</td>
+        <td><span class="shadow"> توفر مرافق رعاية الموظفين </span></td>
+        <td class="centered">&#8226;</td>
+        <!-- Green dot -->
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td class="greened"></td>
+        <td>
+          <span class="shadow">Total commitment percentage (estimated)</span>
+        </td>
+        <td colspan="4" class="centered">70 %</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <!-- --------------------------------------------------------------------- -->
+  <h3 class="pt-5">Security and safety recommendations:</h3>
+  <div class="pt-3 d-flex">
+    <a (click)="openAttendance()" class="btn btn-sm btn-primary"> MKsadasd </a>
+  </div>
+  <!-- --------------------------------------------------------------------- -->
+  <div class="pt-20 d-flex">
+    <a (click)="openAttendance()" class="btn btn-sm btn-dark d-flex">
+      Add Evidence
+    </a>
+  </div>
+  <table class="visit-table">
+    <thead>
+      <tr>
+        <th>The picture</th>
+        <th>Notes</th>
+        <th>Risk Level</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
 </div>
 
 <ng-template #documentModal let-modal>
@@ -464,6 +629,335 @@
         id="kt_modal_update_customer_submit"
         class="btn btn-primary"
         [disabled]="!attendanceForm.valid"
+        [attr.data-kt-indicator]="isLoading ? 'on' : 'off'"
+      >
+        <span class="indicator-label"> Submit </span>
+        <span class="indicator-progress">
+          Please wait...
+          <span
+            class="spinner-border spinner-border-sm align-middle ms-2"
+          ></span>
+        </span>
+      </button>
+      <!--end::Button-->
+    </div>
+  </form>
+</ng-template>
+
+<ng-template #objectivesModal let-modal>
+  <form [formGroup]="objectivesForm" (ngSubmit)="onAddObjective()">
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Objective Details</h4>
+      <button
+        type="button"
+        class="btn-close"
+        aria-label="Close"
+        (click)="modal.dismiss('Cross click')"
+      ></button>
+    </div>
+    <div class="modal-body">
+      <div class="row mb-6">
+        <div class="col-lg-12 fv-row">
+          <label class="col-lg-4 col-form-label fw-bold fs-6"
+            >Objectives of the Project Management Office's visit to work sites
+            *</label
+          >
+          <div class="col-lg-12 fv-row">
+            <input
+              type="text"
+              class="form-control form-control-lg form-control-solid text-start"
+              name="name"
+              formControlName="name"
+            />
+            <div
+              *ngIf="
+                attendanceForm?.get('name')?.invalid &&
+                (attendanceForm?.get('name')?.dirty ||
+                  attendanceForm?.get('name')?.touched)
+              "
+              class="fv-plugins-message-container"
+            >
+              <div class="fv-help-block">Name is required</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer flex-center">
+      <!--begin::Button-->
+      <button
+        type="reset"
+        id="kt_modal_update_customer_cancel"
+        class="btn btn-light me-3"
+        (click)="modal.dismiss('cancel')"
+      >
+        Discard
+      </button>
+      <!--end::Button-->
+
+      <!--begin::Button-->
+      <button
+        type="submit"
+        id="kt_modal_update_customer_submit"
+        class="btn btn-primary"
+        [disabled]="!objectivesForm.valid"
+        [attr.data-kt-indicator]="isLoading ? 'on' : 'off'"
+      >
+        <span class="indicator-label"> Submit </span>
+        <span class="indicator-progress">
+          Please wait...
+          <span
+            class="spinner-border spinner-border-sm align-middle ms-2"
+          ></span>
+        </span>
+      </button>
+      <!--end::Button-->
+    </div>
+  </form>
+</ng-template>
+
+<ng-template #chRequestsModal let-modal>
+  <form [formGroup]="chRequestsForm" (ngSubmit)="onAddAttendance()">
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Request Details</h4>
+      <button
+        type="button"
+        class="btn-close"
+        aria-label="Close"
+        (click)="modal.dismiss('Cross click')"
+      ></button>
+    </div>
+    <div class="modal-body">
+      <div class="row mb-6">
+        <div class="col-lg-12 fv-row">
+          <label class="col-lg-8 col-form-label fw-bold fs-6"
+            >Description of the change order</label
+          >
+          <div class="col-lg-12 fv-row">
+            <input
+              type="text"
+              class="form-control form-control-lg form-control-solid text-start"
+              name="name"
+              formControlName="name"
+            />
+            <div
+              *ngIf="
+                attendanceForm?.get('name')?.invalid &&
+                (attendanceForm?.get('name')?.dirty ||
+                  attendanceForm?.get('name')?.touched)
+              "
+              class="fv-plugins-message-container"
+            >
+              <div class="fv-help-block">description is required</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-12 fv-row">
+          <label class="col-lg-8 col-form-label fw-bold fs-6"
+            >Reference number(Approved)</label
+          >
+          <div class="col-lg-12 fv-row">
+            <input
+              type="text"
+              class="form-control form-control-lg form-control-solid text-start"
+              name="side"
+              formControlName="side"
+            />
+            <div
+              *ngIf="
+                attendanceForm?.get('side')?.invalid &&
+                (attendanceForm?.get('side')?.dirty ||
+                  attendanceForm?.get('side')?.touched)
+              "
+              class="fv-plugins-message-container"
+            >
+              <div class="fv-help-block">reference is required</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-12 fv-row">
+          <label class="col-lg-4 col-form-label fw-bold fs-6"
+            >date Accreditation</label
+          >
+          <div class="col-lg-12 fv-row">
+            <input
+              type="date"
+              class="form-control form-control-lg form-control-solid text-start"
+              name="job"
+              formControlName="job"
+            />
+            <div
+              *ngIf="
+                attendanceForm?.get('job')?.invalid &&
+                (attendanceForm?.get('job')?.dirty ||
+                  attendanceForm?.get('job')?.touched)
+              "
+              class="fv-plugins-message-container"
+            >
+              <div class="fv-help-block">date is required</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-12 fv-row">
+          <label class="col-lg-4 col-form-label fw-bold fs-6"
+            >The Condition</label
+          >
+          <div class="col-lg-12 fv-row">
+            <input
+              type="text"
+              class="form-control form-control-lg form-control-solid text-start"
+              name="email"
+              formControlName="email"
+            />
+            <div
+              *ngIf="
+                attendanceForm?.get('email')?.invalid &&
+                (attendanceForm?.get('email')?.dirty ||
+                  attendanceForm?.get('email')?.touched)
+              "
+              class="fv-plugins-message-container"
+            >
+              <div class="fv-help-block">condition required</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-12 fv-row">
+          <label class="col-lg-8 col-form-label fw-bold fs-6"
+            >My influence cost/the time</label
+          >
+          <div class="col-lg-12 fv-row">
+            <input
+              type="text"
+              class="form-control form-control-lg form-control-solid text-start"
+              name="email"
+              formControlName="email"
+            />
+            <div
+              *ngIf="
+                attendanceForm?.get('email')?.invalid &&
+                (attendanceForm?.get('email')?.dirty ||
+                  attendanceForm?.get('email')?.touched)
+              "
+              class="fv-plugins-message-container"
+            >
+              <div class="fv-help-block">field is required</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-12 fv-row">
+          <label class="col-lg-4 col-form-label fw-bold fs-6"
+            >Cause of an order Change</label
+          >
+          <div class="col-lg-12 fv-row">
+            <input
+              type="text"
+              class="form-control form-control-lg form-control-solid text-start"
+              name="email"
+              formControlName="email"
+            />
+            <div
+              *ngIf="
+                attendanceForm?.get('email')?.invalid &&
+                (attendanceForm?.get('email')?.dirty ||
+                  attendanceForm?.get('email')?.touched)
+              "
+              class="fv-plugins-message-container"
+            >
+              <div class="fv-help-block">field is required</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer flex-center">
+      <!--begin::Button-->
+      <button
+        type="reset"
+        id="kt_modal_update_customer_cancel"
+        class="btn btn-light me-3"
+        (click)="modal.dismiss('cancel')"
+      >
+        Discard
+      </button>
+      <!--end::Button-->
+
+      <!--begin::Button-->
+      <button
+        type="submit"
+        id="kt_modal_update_customer_submit"
+        class="btn btn-primary"
+        [disabled]="!attendanceForm.valid"
+        [attr.data-kt-indicator]="isLoading ? 'on' : 'off'"
+      >
+        <span class="indicator-label"> Submit </span>
+        <span class="indicator-progress">
+          Please wait...
+          <span
+            class="spinner-border spinner-border-sm align-middle ms-2"
+          ></span>
+        </span>
+      </button>
+      <!--end::Button-->
+    </div>
+  </form>
+</ng-template>
+
+<ng-template #recommendationModal let-modal>
+  <form [formGroup]="recommendationForm" (ngSubmit)="onChangeDocumentNo()">
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Edit Recommendation</h4>
+      <button
+        type="button"
+        class="btn-close"
+        aria-label="Close"
+        (click)="modal.dismiss('Cross click')"
+      ></button>
+    </div>
+    <div class="modal-body">
+      <div class="row mb-6">
+        <div class="col-lg-12 fv-row">
+          <label class="col-lg-4 col-form-label fw-bold fs-6"
+            >Recommendation</label
+          >
+          <div class="col-lg-12 fv-row">
+            <input
+              type="text"
+              class="form-control form-control-lg form-control-solid text-start"
+              name="name"
+              formControlName="name"
+            />
+            <div
+              *ngIf="
+                recommendationForm?.get('name')?.invalid &&
+                (recommendationForm?.get('name')?.dirty ||
+                  recommendationForm?.get('name')?.touched)
+              "
+              class="fv-plugins-message-container"
+            >
+              <div class="fv-help-block">recommendation is required</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer flex-center">
+      <!--begin::Button-->
+      <button
+        type="reset"
+        id="kt_modal_update_customer_cancel"
+        class="btn btn-light me-3"
+        (click)="modal.dismiss('cancel')"
+      >
+        Discard
+      </button>
+      <!--end::Button-->
+
+      <!--begin::Button-->
+      <button
+        type="submit"
+        id="kt_modal_update_customer_submit"
+        class="btn btn-primary"
+        [disabled]="!recommendationForm.valid"
         [attr.data-kt-indicator]="isLoading ? 'on' : 'off'"
       >
         <span class="indicator-label"> Submit </span>

@@ -39,6 +39,12 @@ export class FormTableComponent implements OnInit {
   @ViewChild('documentModal') documentModal: TemplateRef<any>;
   attendanceForm: FormGroup;
   @ViewChild('attendanceModal') attendanceModal: TemplateRef<any>;
+  objectivesForm: FormGroup;
+  @ViewChild('objectivesModal') objectivesModal: TemplateRef<any>;
+  chRequestsForm: FormGroup;
+  @ViewChild('chRequestsModal') chRequestsModal: TemplateRef<any>;
+  recommendationForm: FormGroup;
+  @ViewChild('recommendationModal') recommendationModal: TemplateRef<any>;
 
   constructor(
     private router: Router,
@@ -55,7 +61,10 @@ export class FormTableComponent implements OnInit {
   ngOnInit(): void {
     this.getLookups();
     this.initChangeDocumentForm();
-    this.initAttendanceFormForm();
+    this.initAttendanceForm();
+    this.initObjectivesForm();
+    this.initChRequestsForm();
+    this.initRecommendationForm();
 
     this.activatedRoute.params.subscribe((params) => {
       this.projectId = +params['id'];
@@ -106,19 +115,74 @@ export class FormTableComponent implements OnInit {
     }
     this.modalService.open(this.attendanceModal, this.modalConfig);
   }
+  openObjectives(objective?: any){
+    this.objectivesForm.reset();
+    if(objective) {
+      this.objectivesForm.patchValue({
+        id: objective.id,
+        name: objective.name,
+      });
+    }
+    this.modalService.open(this.objectivesModal, this.modalConfig);
+  }
+  openRecommendation(recommend?: any){
+    this.recommendationForm.reset();
+    if(recommend) {
+      this.recommendationForm.patchValue({
+        id: recommend.id,
+        name: recommend.name,
+      });
+    }
+    this.modalService.open(this.recommendationModal, this.modalConfig);
+  }
+
+  openChRequests(request?: any){
+    this.chRequestsForm.reset();
+    if(request) {
+      this.chRequestsForm.patchValue({
+        id: request.id,
+        name: request.name,
+        side: request.side,
+        job: request.job,
+        email: request.email
+      });
+    }
+    this.modalService.open(this.chRequestsModal, this.modalConfig);
+  }
 
   initChangeDocumentForm() {
     this.changeDocumentForm = this.fb.group({
       documentNo: ['', Validators.required],
     });
   }
-  initAttendanceFormForm() {
+  initAttendanceForm() {
     this.attendanceForm = this.fb.group({
       id: [0],
       name: ['', Validators.required],
       side: ['', Validators.required],
       job: ['', Validators.required],
       email: ['', Validators.required],
+    });
+  }
+  initObjectivesForm() {
+    this.objectivesForm = this.fb.group({
+      id: [0],
+      name: ['', Validators.required],
+    });
+  }
+  initChRequestsForm() {
+    this.chRequestsForm = this.fb.group({
+      id: [0],
+      name: ['', Validators.required],
+      side: ['', Validators.required],
+      job: ['', Validators.required],
+      email: ['', Validators.required],
+    });
+  }
+  initRecommendationForm() {
+    this.recommendationForm = this.fb.group({
+      id: [0],
+      name: ['', Validators.required],
     });
   }
 
@@ -165,7 +229,6 @@ export class FormTableComponent implements OnInit {
       this.attendanceForm.markAllAsTouched();
       return;
     }
-    debugger;
     this.isLoading = true;
     let payload: any = {
       visitFormId: this.visitId,
@@ -184,6 +247,44 @@ export class FormTableComponent implements OnInit {
         this.getVisitDetails();
         this.modalService.dismissAll();
         this.attendanceForm.reset();
+        this.showAlert({
+          icon: 'success',
+          title: 'Success!',
+          text: 'Added successfully!',
+        });
+        this.cdr.detectChanges();
+      },
+      (error) => {
+        this.isLoading = false;
+        this.modalService.dismissAll();
+        this.showAlert({
+          icon: 'error',
+          title: 'Error!',
+          text: 'Please try again',
+        });
+      }
+    );
+  }
+  onAddObjective() {
+    if (this.objectivesForm.invalid) {
+      this.objectivesForm.markAllAsTouched();
+      return;
+    }
+    this.isLoading = true;
+    let payload: any = {
+      visitFormId: this.visitId,
+      name: this.objectivesForm.value.name,
+    };
+    if(this.objectivesForm.value.id !== 0){ 
+      payload['id'] = this.objectivesForm.value.id;
+    }
+
+    this.visitFormService.addAttendee(payload).subscribe(
+      (res) => {
+        this.isLoading = false;
+        this.getVisitDetails();
+        this.modalService.dismissAll();
+        this.objectivesForm.reset();
         this.showAlert({
           icon: 'success',
           title: 'Success!',
