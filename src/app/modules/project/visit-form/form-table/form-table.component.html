@@ -595,17 +595,17 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let item of [{ description: '' }]">
+      <tr *ngFor="let item of visitDetails?.crticalIssues">
         <td>
           <span class="shadow" (click)="openCriticalProblems(item)">
             {{ item.description || "--" }}
           </span>
         </td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td>{{ item.actionTaken || "--" }}</td>
+        <td>{{ item.startDate | date: 'dd-MM-yyyy' }}</td>
+        <td>{{ item.anotherDate | date: 'dd-MM-yyyy' }}</td>
+        <td>{{ item.status ? 'Open' : 'Close' }}</td>
+        <td>{{ item.notes || "--" }}</td>
       </tr>
     </tbody>
   </table>
@@ -637,9 +637,9 @@
             {{ item.learned || "--" }}
           </span>
         </td>
-        <td>{{item.classification || "--"}}</td>
-        <td>{{item.impact || "--"}}</td>
-        <td>{{item.notes || "--"}}</td>
+        <td>{{ item.classification || "--" }}</td>
+        <td>{{ item.impact || "--" }}</td>
+        <td>{{ item.notes || "--" }}</td>
       </tr>
     </tbody>
   </table>
@@ -648,9 +648,7 @@
   <h4 class="pt-3">3.11 Main risks:</h4>
 
   <div class="pt-2 d-flex">
-    <a (click)="openChRequests()" class="btn btn-sm btn-dark d-flex">
-      Add Risk
-    </a>
+    <a (click)="openRisk()" class="btn btn-sm btn-dark d-flex"> Add Risk </a>
   </div>
   <h4 class="pt-3">
     The use of the approved risk register form is confirmed, and a form can be
@@ -668,13 +666,16 @@
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td><span class="shadow">Test</span></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
+      <tr *ngFor="let item of visitDetails?.risks">
+        <td>
+          <span class="shadow" (click)="openRisk(item)">
+            {{ item.description || "--" }}
+          </span>
+        </td>
+        <td>{{ item.expectedImpact || "--" }}</td>
+        <td>{{ item.riskOwner || "--" }}</td>
+        <td>{{ item.typeResponse || "--" }}</td>
+        <td>{{ item.responsePlan || "--" }}</td>
       </tr>
     </tbody>
   </table>
@@ -686,7 +687,9 @@
   </h4>
 
   <div class="pt-2 d-flex">
-    <a (click)="openChRequests()" class="btn btn-sm btn-dark d-flex"> Add </a>
+    <a (click)="openCorrectivePlan()" class="btn btn-sm btn-dark d-flex">
+      Add Corrective Plan
+    </a>
   </div>
 
   <table class="schedule-table">
@@ -1752,6 +1755,398 @@
         id="kt_modal_update_customer_submit"
         class="btn btn-primary"
         [disabled]="!lessonForm.valid"
+        [attr.data-kt-indicator]="isLoading ? 'on' : 'off'"
+      >
+        <span class="indicator-label"> Submit </span>
+        <span class="indicator-progress">
+          Please wait...
+          <span
+            class="spinner-border spinner-border-sm align-middle ms-2"
+          ></span>
+        </span>
+      </button>
+      <!--end::Button-->
+    </div>
+  </form>
+</ng-template>
+<ng-template #riskModal let-modal>
+  <form [formGroup]="riskForm" (ngSubmit)="onAddRisk()">
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Add Risk</h4>
+      <button
+        type="button"
+        class="btn-close"
+        aria-label="Close"
+        (click)="modal.dismiss('Cross click')"
+      ></button>
+    </div>
+    <div class="modal-body">
+      <div class="row mb-6">
+        <div class="col-lg-12 fv-row">
+          <label class="col-lg-8 col-form-label fw-bold fs-6"
+            >Description of the risk</label
+          >
+          <div class="col-lg-12 fv-row">
+            <textarea
+              rows="2"
+              class="form-control form-control-lg form-control-solid text-start"
+              name="description"
+              formControlName="description"
+            ></textarea>
+            <div
+              *ngIf="
+                lessonForm?.get('description')?.invalid &&
+                (lessonForm?.get('description')?.dirty ||
+                  lessonForm?.get('description')?.touched)
+              "
+              class="fv-plugins-message-container"
+            >
+              <div class="fv-help-block">description is required</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-12 fv-row">
+          <label class="col-lg-8 col-form-label fw-bold fs-6"
+            >Expected impact</label
+          >
+          <div class="col-lg-12 fv-row">
+            <select
+              class="form-select form-select-solid form-select-lg fw-bold"
+              name="expectedImpactId"
+              formControlName="expectedImpactId"
+            >
+              <option value="" disabled>
+                {{ "TRANSLATOR.SELECTION" | translate }}
+              </option>
+              <ng-container
+                *ngFor="let classification of lessonClassifications"
+              >
+                <option [value]="classification?.id">
+                  {{ classification?.name }}
+                </option>
+              </ng-container>
+            </select>
+            <div
+              *ngIf="
+                lessonForm?.get('expectedImpactId')?.invalid &&
+                (lessonForm?.get('expectedImpactId')?.dirty ||
+                  lessonForm?.get('expectedImpactId')?.touched)
+              "
+              class="fv-plugins-message-container"
+            >
+              <div class="fv-help-block">expected Impact is required</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-12 fv-row">
+          <label class="col-lg-8 col-form-label fw-bold fs-6">Risk owner</label>
+          <div class="col-lg-12 fv-row">
+            <select
+              class="form-select form-select-solid form-select-lg fw-bold"
+              name="riskOwnerId"
+              formControlName="riskOwnerId"
+            >
+              <option value="" disabled>
+                {{ "TRANSLATOR.SELECTION" | translate }}
+              </option>
+              <ng-container *ngFor="let classification of riskOwners">
+                <option [value]="classification?.id">
+                  {{ classification?.name }}
+                </option>
+              </ng-container>
+            </select>
+            <div
+              *ngIf="
+                lessonForm?.get('riskOwnerId')?.invalid &&
+                (lessonForm?.get('riskOwnerId')?.dirty ||
+                  lessonForm?.get('riskOwnerId')?.touched)
+              "
+              class="fv-plugins-message-container"
+            >
+              <div class="fv-help-block">risk owner is required</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-12 fv-row">
+          <label class="col-lg-8 col-form-label fw-bold fs-6"
+            >type Response</label
+          >
+          <div class="col-lg-12 fv-row">
+            <select
+              class="form-select form-select-solid form-select-lg fw-bold"
+              name="typeResponseId"
+              formControlName="typeResponseId"
+            >
+              <option value="" disabled>
+                {{ "TRANSLATOR.SELECTION" | translate }}
+              </option>
+              <ng-container
+                *ngFor="let classification of lessonClassifications"
+              >
+                <option [value]="classification?.id">
+                  {{ classification?.name }}
+                </option>
+              </ng-container>
+            </select>
+            <div
+              *ngIf="
+                lessonForm?.get('typeResponseId')?.invalid &&
+                (lessonForm?.get('typeResponseId')?.dirty ||
+                  lessonForm?.get('typeResponseId')?.touched)
+              "
+              class="fv-plugins-message-container"
+            >
+              <div class="fv-help-block">type response is required</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-12 fv-row">
+          <label class="col-lg-8 col-form-label fw-bold fs-6"
+            >Response plan</label
+          >
+          <div class="col-lg-12 fv-row">
+            <textarea
+              rows="2"
+              class="form-control form-control-lg form-control-solid text-start"
+              name="responseplan"
+              formControlName="responseplan"
+            ></textarea>
+            <div
+              *ngIf="
+                lessonForm?.get('responseplan')?.invalid &&
+                (lessonForm?.get('responseplan')?.dirty ||
+                  lessonForm?.get('responseplan')?.touched)
+              "
+              class="fv-plugins-message-container"
+            >
+              <div class="fv-help-block">response plan is required</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer flex-center">
+      <!--begin::Button-->
+      <button
+        type="reset"
+        id="kt_modal_update_customer_cancel"
+        class="btn btn-light me-3"
+        (click)="modal.dismiss('cancel')"
+      >
+        Discard
+      </button>
+      <!--end::Button-->
+
+      <!--begin::Button-->
+      <button
+        type="submit"
+        id="kt_modal_update_customer_submit"
+        class="btn btn-primary"
+        [disabled]="!riskForm.valid"
+        [attr.data-kt-indicator]="isLoading ? 'on' : 'off'"
+      >
+        <span class="indicator-label"> Submit </span>
+        <span class="indicator-progress">
+          Please wait...
+          <span
+            class="spinner-border spinner-border-sm align-middle ms-2"
+          ></span>
+        </span>
+      </button>
+      <!--end::Button-->
+    </div>
+  </form>
+</ng-template>
+<ng-template #correctivePlanModal let-modal>
+  <form [formGroup]="correctivePlanForm" (ngSubmit)="onAddCorrectivePlan()">
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Add Corrective Plan</h4>
+      <button
+        type="button"
+        class="btn-close"
+        aria-label="Close"
+        (click)="modal.dismiss('Cross click')"
+      ></button>
+    </div>
+    <div class="modal-body">
+      <div class="row mb-6">
+        <div class="col-lg-12 fv-row">
+          <label class="col-lg-8 col-form-label fw-bold fs-6"
+            >Works to be corrected</label
+          >
+          <div class="col-lg-12 fv-row">
+            <textarea
+              rows="2"
+              class="form-control form-control-lg form-control-solid text-start"
+              name="works"
+              formControlName="works"
+            ></textarea>
+            <div
+              *ngIf="
+                lessonForm?.get('works')?.invalid &&
+                (lessonForm?.get('works')?.dirty ||
+                  lessonForm?.get('works')?.touched)
+              "
+              class="fv-plugins-message-container"
+            >
+              <div class="fv-help-block">works is required</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-12 fv-row">
+          <label class="col-lg-8 col-form-label fw-bold fs-6"
+            >Classification of works</label
+          >
+          <div class="col-lg-12 fv-row">
+            <select
+              class="form-select form-select-solid form-select-lg fw-bold"
+              name="classification"
+              formControlName="classification"
+            >
+              <option value="" disabled>
+                {{ "TRANSLATOR.SELECTION" | translate }}
+              </option>
+              <ng-container
+                *ngFor="let classification of correctivePlanClassifications"
+              >
+                <option [value]="classification?.id">
+                  {{ classification?.name }}
+                </option>
+              </ng-container>
+            </select>
+            <div
+              *ngIf="
+                lessonForm?.get('classification')?.invalid &&
+                (lessonForm?.get('classification')?.dirty ||
+                  lessonForm?.get('classification')?.touched)
+              "
+              class="fv-plugins-message-container"
+            >
+              <div class="fv-help-block">expected Impact is required</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-12 fv-row">
+          <label class="col-lg-8 col-form-label fw-bold fs-6">Notes</label>
+          <div class="col-lg-12 fv-row">
+            <textarea
+              rows="2"
+              class="form-control form-control-lg form-control-solid text-start"
+              name="notes"
+              formControlName="notes"
+            ></textarea>
+            <div
+              *ngIf="
+                lessonForm?.get('notes')?.invalid &&
+                (lessonForm?.get('notes')?.dirty ||
+                  lessonForm?.get('notes')?.touched)
+              "
+              class="fv-plugins-message-container"
+            >
+              <div class="fv-help-block">notes is required</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-12 fv-row">
+          <label class="col-lg-8 col-form-label fw-bold fs-6"
+            >the date Expected</label
+          >
+          <div class="col-lg-12 fv-row">
+            <input
+              type="date"
+              class="form-control form-control-lg form-control-solid text-start"
+              name="expectedDate"
+              formControlName="expectedDate"
+            />
+            <div
+              *ngIf="
+                lessonForm?.get('expectedDate')?.invalid &&
+                (lessonForm?.get('expectedDate')?.dirty ||
+                  lessonForm?.get('expectedDate')?.touched)
+              "
+              class="fv-plugins-message-container"
+            >
+              <div class="fv-help-block">response plan is required</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-12 fv-row">
+          <label class="col-lg-8 col-form-label fw-bold fs-6"
+            >The Condition</label
+          >
+          <div class="col-lg-12 fv-row">
+            <select
+              class="form-select form-select-solid form-select-lg fw-bold"
+              name="condition"
+              formControlName="condition"
+            >
+              <option value="" disabled>
+                {{ "TRANSLATOR.SELECTION" | translate }}
+              </option>
+              <ng-container
+                *ngFor="let item of correctivePlanConditions"
+              >
+                <option [value]="item?.id">
+                  {{ item?.name }}
+                </option>
+              </ng-container>
+            </select>
+            <div
+              *ngIf="
+                lessonForm?.get('condition')?.invalid &&
+                (lessonForm?.get('condition')?.dirty ||
+                  lessonForm?.get('condition')?.touched)
+              "
+              class="fv-plugins-message-container"
+            >
+              <div class="fv-help-block">condition is required</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-12 fv-row">
+          <label class="col-lg-8 col-form-label fw-bold fs-6"
+            >Assigned With correction</label
+          >
+          <div class="col-lg-12 fv-row">
+            <input
+              type="text"
+              class="form-control form-control-lg form-control-solid text-start"
+              name="assigned"
+              formControlName="assigned"
+            />
+            <div
+              *ngIf="
+                lessonForm?.get('assigned')?.invalid &&
+                (lessonForm?.get('assigned')?.dirty ||
+                  lessonForm?.get('assigned')?.touched)
+              "
+              class="fv-plugins-message-container"
+            >
+              <div class="fv-help-block">assigned is required</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer flex-center">
+      <!--begin::Button-->
+      <button
+        type="reset"
+        id="kt_modal_update_customer_cancel"
+        class="btn btn-light me-3"
+        (click)="modal.dismiss('cancel')"
+      >
+        Discard
+      </button>
+      <!--end::Button-->
+
+      <!--begin::Button-->
+      <button
+        type="submit"
+        id="kt_modal_update_customer_submit"
+        class="btn btn-primary"
+        [disabled]="!correctivePlanForm.valid"
         [attr.data-kt-indicator]="isLoading ? 'on' : 'off'"
       >
         <span class="indicator-label"> Submit </span>

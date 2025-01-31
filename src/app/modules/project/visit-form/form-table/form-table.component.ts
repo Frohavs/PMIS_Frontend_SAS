@@ -68,7 +68,7 @@ export class FormTableComponent implements OnInit {
     },
   ];
   @ViewChild('criticalProblemsModal') criticalProblemsModal: TemplateRef<any>;
-  
+
   lessonForm: FormGroup;
   lessonClassifications: any[] = [
     {
@@ -81,6 +81,62 @@ export class FormTableComponent implements OnInit {
     },
   ];
   @ViewChild('lessonModal') lessonModal: TemplateRef<any>;
+
+  riskForm: FormGroup;
+  expectedImpacts: any[] = [
+    {
+      name: 'Type 1',
+      id: 1,
+    },
+    {
+      name: 'Type 2',
+      id: 2,
+    },
+  ];
+  riskOwners: any[] = [
+    {
+      name: 'Type 1',
+      id: 1,
+    },
+    {
+      name: 'Type 2',
+      id: 2,
+    },
+  ];
+  typeResponses: any[] = [
+    {
+      name: 'Type 1',
+      id: 1,
+    },
+    {
+      name: 'Type 2',
+      id: 2,
+    },
+  ];
+  @ViewChild('riskModal') riskModal: TemplateRef<any>;
+
+  correctivePlanForm: FormGroup;
+  correctivePlanClassifications: any[] = [
+    {
+      name: 'Type 1',
+      id: 1,
+    },
+    {
+      name: 'Type 2',
+      id: 2,
+    },
+  ];
+  correctivePlanConditions: any[] = [
+    {
+      name: 'Type 1',
+      id: 1,
+    },
+    {
+      name: 'Type 2',
+      id: 2,
+    },
+  ];
+  @ViewChild('correctivePlanModal') correctivePlanModal: TemplateRef<any>;
 
   constructor(
     private router: Router,
@@ -105,6 +161,8 @@ export class FormTableComponent implements OnInit {
     this.initEvidenceForm();
     this.initCriticalProblems();
     this.initLesson();
+    this.initRisk();
+    this.initCorrectivePlan();
 
     this.activatedRoute.params.subscribe((params) => {
       this.projectId = +params['id'];
@@ -242,15 +300,16 @@ export class FormTableComponent implements OnInit {
     this.modalService.open(this.evidenceModal, this.modalConfig);
   }
   openCriticalProblems(problem?: any) {
+    debugger
     this.criticalProblemsForm.reset();
     if (problem) {
       this.criticalProblemsForm.patchValue({
         id: problem.id,
         description: problem.description,
         actionTaken: problem.actionTaken,
-        startDate: problem.startDate.slice(0, 10),
-        anotherDateProcedure: problem.anotherDateProcedure.slice(0, 10),
-        status: problem.status,
+        startDate: problem.startDate?.slice(0, 10),
+        anotherDateProcedure: problem?.anotherDate.slice(0, 10),
+        status: problem.status === true ? 1 : 2,
         notes: problem.notes,
       });
     }
@@ -260,7 +319,7 @@ export class FormTableComponent implements OnInit {
   openLesson(lesson?: any) {
     this.lessonForm.reset();
     if (lesson) {
-      debugger
+      debugger;
       this.lessonForm.patchValue({
         id: lesson.id,
         learned: lesson.learned,
@@ -270,6 +329,35 @@ export class FormTableComponent implements OnInit {
       });
     }
     this.modalService.open(this.lessonModal, this.modalConfig);
+  }
+
+  openRisk(risk?: any) {
+    this.riskForm.reset();
+    if (risk) {
+      this.riskForm.patchValue({
+        id: risk.id,
+        learned: risk.learned,
+        classification: 1,
+        impact: risk.impact,
+        notes: risk.notes,
+      });
+    }
+    this.modalService.open(this.riskModal, this.modalConfig);
+  }
+  openCorrectivePlan(plan?: any) {
+    this.correctivePlanForm.reset();
+    if (plan) {
+      this.correctivePlanForm.patchValue({
+        id: plan.id,
+        works: plan.works,
+        classification: plan.classification,
+        notes: plan.notes,
+        expectedDate: plan.expectedDate.slice(0, 10),
+        condition: plan.condition,
+        assigned: plan.assigned,
+      });
+    }
+    this.modalService.open(this.correctivePlanModal, this.modalConfig);
   }
 
   initChangeDocumentForm() {
@@ -335,6 +423,28 @@ export class FormTableComponent implements OnInit {
       notes: ['', Validators.required],
     });
   }
+  initRisk() {
+    this.riskForm = this.fb.group({
+      id: [0],
+      description: ['', Validators.required],
+      expectedImpactId: ['', Validators.required],
+      riskOwnerId: ['', Validators.required],
+      typeResponseId: ['', Validators.required],
+      responseplan: ['', Validators.required],
+    });
+  }
+  initCorrectivePlan() {
+    this.correctivePlanForm = this.fb.group({
+      id: [0],
+      works: ['', Validators.required],
+      classification: ['', Validators.required],
+      notes: ['', Validators.required],
+      expectedDate: ['', Validators.required],
+      condition: ['', Validators.required],
+      assigned: ['', Validators.required],
+    });
+  }
+
   onFileSelected(event: any) {
     this.selectedFile = <File>event.target.files[0];
     const fd = new FormData();
@@ -552,7 +662,8 @@ export class FormTableComponent implements OnInit {
         startDate: this.criticalProblemsForm.value.startDate,
         anotherDateProcedure:
           this.criticalProblemsForm.value.anotherDateProcedure,
-        status: this.criticalProblemsForm.value.status === 'true' ? true : false,
+        status:
+          this.criticalProblemsForm.value.status === 'true' ? true : false,
         notes: this.criticalProblemsForm.value.notes,
         visitFormId: this.visitId,
       },
@@ -622,6 +733,104 @@ export class FormTableComponent implements OnInit {
           title: 'Success!',
           text:
             this.lessonForm.value.id !== 0
+              ? 'Updated successfully!'
+              : 'Added successfully!',
+        });
+        this.cdr.detectChanges();
+      },
+      (error) => {
+        this.isLoading = false;
+        this.modalService.dismissAll();
+        this.showAlert({
+          icon: 'error',
+          title: 'Error!',
+          text: 'Please try again',
+        });
+      }
+    );
+  }
+  onAddRisk() {
+    if (this.riskForm.invalid) {
+      this.riskForm.markAllAsTouched();
+      return;
+    }
+    this.isLoading = true;
+    let payload: any = {
+      step: 6,
+      body: {
+        id: 1,
+        description: this.riskForm.value.description,
+        responseplan: this.riskForm.value.responseplan,
+        expectedImpactId: +this.riskForm.value.expectedImpactId,
+        riskOwnerId: +this.riskForm.value.riskOwnerId,
+        typeResponseId: +this.riskForm.value.typeResponseId,
+        visitFormId: this.visitId,
+      },
+    };
+    if (this.riskForm.value.id !== 0 && this.riskForm.value.id !== null) {
+      payload.body['id'] = this.riskForm.value.id;
+    }
+
+    this.visitFormService.upsertVisitFormStep(payload).subscribe(
+      (res) => {
+        this.isLoading = false;
+        this.getVisitDetails();
+        this.modalService.dismissAll();
+        this.riskForm.reset();
+        this.showAlert({
+          icon: 'success',
+          title: 'Success!',
+          text:
+            this.riskForm.value.id !== 0
+              ? 'Updated successfully!'
+              : 'Added successfully!',
+        });
+        this.cdr.detectChanges();
+      },
+      (error) => {
+        this.isLoading = false;
+        this.modalService.dismissAll();
+        this.showAlert({
+          icon: 'error',
+          title: 'Error!',
+          text: 'Please try again',
+        });
+      }
+    );
+  }
+  onAddCorrectivePlan() {
+    if (this.correctivePlanForm.invalid) {
+      this.correctivePlanForm.markAllAsTouched();
+      return;
+    }
+    this.isLoading = true;
+    let payload: any = {
+      step: 16,
+      body: {
+        works: this.correctivePlanForm.value.works,
+        classification: this.correctivePlanForm.value.classification,
+        notes: this.correctivePlanForm.value.notes,
+        expectedDate: this.correctivePlanForm.value.expectedDate,
+        condition: +this.correctivePlanForm.value.condition,
+        assigned: this.correctivePlanForm.value.assigned,
+        visitFormId: this.visitId,
+      },
+    };
+    if (this.correctivePlanForm.value.id !== 0 && this.correctivePlanForm.value.id !== null) {
+      payload.body['id'] = this.correctivePlanForm.value.id;
+    }
+
+    this.visitFormService.upsertVisitFormStep(payload).subscribe(
+      (res) => {
+        this.isLoading = false;
+        this.getVisitDetails();
+        this.modalService.dismissAll();
+        this.correctivePlanForm.reset();
+        this.showAlert({
+          icon: 'success',
+          title: 'Success!',
+          text:
+            this.riskForm.value.id !== 0
               ? 'Updated successfully!'
               : 'Added successfully!',
         });
