@@ -390,7 +390,7 @@
   <table class="visit-table">
     <thead>
       <tr>
-        <th>The picture</th>
+        <th style="max-width: 200px">The picture</th>
         <th>Notes</th>
         <th>Risk Level</th>
       </tr>
@@ -398,11 +398,15 @@
     <tbody>
       <tr *ngFor="let item of visitDetails?.evidences">
         <td>
-          <span class="shadow" (click)="openEvidence(item)">
-            {{ item.attachment }}
+          <span class="shadow" (click)="getImage(item?.attachment)">
+            {{ item?.attachment || "--" }}
           </span>
         </td>
-        <td>{{ item?.note }}</td>
+        <td>
+          <span class="shadow" (click)="openEvidence(item)">
+            {{ item.note }}
+          </span>
+        </td>
         <td>{{ item?.riskLevel }}</td>
       </tr>
     </tbody>
@@ -602,9 +606,9 @@
           </span>
         </td>
         <td>{{ item.actionTaken || "--" }}</td>
-        <td>{{ item.startDate | date: 'dd-MM-yyyy' }}</td>
-        <td>{{ item.anotherDate | date: 'dd-MM-yyyy' }}</td>
-        <td>{{ item.status ? 'Open' : 'Close' }}</td>
+        <td>{{ item.startDate | date : "dd-MM-yyyy" }}</td>
+        <td>{{ item.anotherDate | date : "dd-MM-yyyy" }}</td>
+        <td>{{ item.status ? "Open" : "Close" }}</td>
         <td>{{ item.notes || "--" }}</td>
       </tr>
     </tbody>
@@ -783,7 +787,9 @@
     importance of taking the following corrective measures::
   </h4>
   <div class="d-flex">
-    <a (click)="openCommunication()" class="btn btn-sm btn-primary"> test </a>
+    <a (click)="changeDocumentNo(4)" class="btn btn-sm btn-primary">
+      {{ visitDetails?.safetyRecommendations || "--" }}
+    </a>
   </div>
 </div>
 
@@ -1060,7 +1066,7 @@
 </ng-template>
 
 <ng-template #chRequestsModal let-modal>
-  <form [formGroup]="chRequestsForm" (ngSubmit)="onAddAttendance()">
+  <form [formGroup]="chRequestsForm" (ngSubmit)="onChRequests()">
     <div class="modal-header">
       <h4 class="modal-title" id="modal-basic-title">Request Details</h4>
       <button
@@ -1080,14 +1086,14 @@
             <input
               type="text"
               class="form-control form-control-lg form-control-solid text-start"
-              name="name"
-              formControlName="name"
+              name="description"
+              formControlName="description"
             />
             <div
               *ngIf="
-                attendanceForm?.get('name')?.invalid &&
-                (attendanceForm?.get('name')?.dirty ||
-                  attendanceForm?.get('name')?.touched)
+                chRequestsForm?.get('description')?.invalid &&
+                (chRequestsForm?.get('description')?.dirty ||
+                  chRequestsForm?.get('description')?.touched)
               "
               class="fv-plugins-message-container"
             >
@@ -1101,16 +1107,17 @@
           >
           <div class="col-lg-12 fv-row">
             <input
+              (keypress)="numbersOnly($event)"
               type="text"
               class="form-control form-control-lg form-control-solid text-start"
-              name="side"
-              formControlName="side"
+              name="referenceNumber"
+              formControlName="referenceNumber"
             />
             <div
               *ngIf="
-                attendanceForm?.get('side')?.invalid &&
-                (attendanceForm?.get('side')?.dirty ||
-                  attendanceForm?.get('side')?.touched)
+                chRequestsForm?.get('referenceNumber')?.invalid &&
+                (chRequestsForm?.get('referenceNumber')?.dirty ||
+                  chRequestsForm?.get('referenceNumber')?.touched)
               "
               class="fv-plugins-message-container"
             >
@@ -1126,14 +1133,14 @@
             <input
               type="date"
               class="form-control form-control-lg form-control-solid text-start"
-              name="job"
-              formControlName="job"
+              name="dateAccreditation"
+              formControlName="dateAccreditation"
             />
             <div
               *ngIf="
-                attendanceForm?.get('job')?.invalid &&
-                (attendanceForm?.get('job')?.dirty ||
-                  attendanceForm?.get('job')?.touched)
+                chRequestsForm?.get('dateAccreditation')?.invalid &&
+                (chRequestsForm?.get('dateAccreditation')?.dirty ||
+                  chRequestsForm?.get('dateAccreditation')?.touched)
               "
               class="fv-plugins-message-container"
             >
@@ -1147,16 +1154,17 @@
           >
           <div class="col-lg-12 fv-row">
             <input
+              (keypress)="numbersOnly($event)"
               type="text"
               class="form-control form-control-lg form-control-solid text-start"
-              name="email"
-              formControlName="email"
+              name="condition"
+              formControlName="condition"
             />
             <div
               *ngIf="
-                attendanceForm?.get('email')?.invalid &&
-                (attendanceForm?.get('email')?.dirty ||
-                  attendanceForm?.get('email')?.touched)
+                chRequestsForm?.get('condition')?.invalid &&
+                (chRequestsForm?.get('condition')?.dirty ||
+                  chRequestsForm?.get('condition')?.touched)
               "
               class="fv-plugins-message-container"
             >
@@ -1172,18 +1180,18 @@
             <input
               type="text"
               class="form-control form-control-lg form-control-solid text-start"
-              name="email"
-              formControlName="email"
+              name="influence"
+              formControlName="influence"
             />
             <div
               *ngIf="
-                attendanceForm?.get('email')?.invalid &&
-                (attendanceForm?.get('email')?.dirty ||
-                  attendanceForm?.get('email')?.touched)
+                chRequestsForm?.get('influence')?.invalid &&
+                (chRequestsForm?.get('influence')?.dirty ||
+                  chRequestsForm?.get('influence')?.touched)
               "
               class="fv-plugins-message-container"
             >
-              <div class="fv-help-block">field is required</div>
+              <div class="fv-help-block">influence is required</div>
             </div>
           </div>
         </div>
@@ -1195,18 +1203,18 @@
             <input
               type="text"
               class="form-control form-control-lg form-control-solid text-start"
-              name="email"
-              formControlName="email"
+              name="cause"
+              formControlName="cause"
             />
             <div
               *ngIf="
-                attendanceForm?.get('email')?.invalid &&
-                (attendanceForm?.get('email')?.dirty ||
-                  attendanceForm?.get('email')?.touched)
+                chRequestsForm?.get('cause')?.invalid &&
+                (chRequestsForm?.get('cause')?.dirty ||
+                  chRequestsForm?.get('cause')?.touched)
               "
               class="fv-plugins-message-container"
             >
-              <div class="fv-help-block">field is required</div>
+              <div class="fv-help-block">cause is required</div>
             </div>
           </div>
         </div>
@@ -1229,7 +1237,7 @@
         type="submit"
         id="kt_modal_update_customer_submit"
         class="btn btn-primary"
-        [disabled]="!attendanceForm.valid"
+        [disabled]="!chRequestsForm.valid"
         [attr.data-kt-indicator]="isLoading ? 'on' : 'off'"
       >
         <span class="indicator-label"> Submit </span>
@@ -2084,9 +2092,7 @@
               <option value="" disabled>
                 {{ "TRANSLATOR.SELECTION" | translate }}
               </option>
-              <ng-container
-                *ngFor="let item of correctivePlanConditions"
-              >
+              <ng-container *ngFor="let item of correctivePlanConditions">
                 <option [value]="item?.id">
                   {{ item?.name }}
                 </option>

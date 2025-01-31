@@ -300,7 +300,7 @@ export class FormTableComponent implements OnInit {
     this.modalService.open(this.evidenceModal, this.modalConfig);
   }
   openCriticalProblems(problem?: any) {
-    debugger
+    debugger;
     this.criticalProblemsForm.reset();
     if (problem) {
       this.criticalProblemsForm.patchValue({
@@ -383,10 +383,13 @@ export class FormTableComponent implements OnInit {
   initChRequestsForm() {
     this.chRequestsForm = this.fb.group({
       id: [0],
-      name: ['', Validators.required],
-      side: ['', Validators.required],
-      job: ['', Validators.required],
-      email: ['', Validators.required],
+      description: ['', Validators.required],
+      referenceNumber: ['', Validators.required],
+      dateAccreditation: ['', Validators.required],
+      condition: ['', Validators.required],
+      influence: ['', Validators.required],
+      cause: ['', Validators.required],
+      check: [true],
     });
   }
   initRecommendationForm() {
@@ -536,6 +539,61 @@ export class FormTableComponent implements OnInit {
           icon: 'success',
           title: 'Success!',
           text: 'Added successfully!',
+        });
+        this.cdr.detectChanges();
+      },
+      (error) => {
+        this.isLoading = false;
+        this.modalService.dismissAll();
+        this.showAlert({
+          icon: 'error',
+          title: 'Error!',
+          text: 'Please try again',
+        });
+      }
+    );
+  }
+  onChRequests() {
+    if (this.chRequestsForm.invalid) {
+      this.chRequestsForm.markAllAsTouched();
+      return;
+    }
+    this.isLoading = true;
+    let payload: any = {
+      step: 2,
+      body: {
+        id: 1,
+        description: this.chRequestsForm.value.description,
+        referenceNumber: +this.chRequestsForm.value.referenceNumber,
+        dateAccreditation: this.chRequestsForm.value.dateAccreditation,
+        condition: +this.chRequestsForm.value.condition,
+        influence: this.chRequestsForm.value.influence,
+        cause: this.chRequestsForm.value.cause,
+        check: true,
+        visitFormId: this.visitId,
+      },
+    };
+    debugger
+    if (
+      this.chRequestsForm.value.id !== 0 &&
+      this.chRequestsForm.value.id !== null
+    ) {
+      payload.body['id'] = this.chRequestsForm.value.id;
+    }
+
+    this.visitFormService.upsertVisitFormStep(payload).subscribe(
+      (res) => {
+        this.isLoading = false;
+        this.getObjectivesLookup();
+        this.modalService.dismissAll();
+        this.chRequestsForm.reset();
+        this.showAlert({
+          icon: 'success',
+          title: 'Success!',
+          text:
+            this.objectivesForm.value.id !== 0
+              ? 'Updated successfully!'
+              : 'Added successfully!',
         });
         this.cdr.detectChanges();
       },
@@ -816,7 +874,10 @@ export class FormTableComponent implements OnInit {
         visitFormId: this.visitId,
       },
     };
-    if (this.correctivePlanForm.value.id !== 0 && this.correctivePlanForm.value.id !== null) {
+    if (
+      this.correctivePlanForm.value.id !== 0 &&
+      this.correctivePlanForm.value.id !== null
+    ) {
       payload.body['id'] = this.correctivePlanForm.value.id;
     }
 
@@ -876,5 +937,11 @@ export class FormTableComponent implements OnInit {
       return false;
     }
     return true;
+  }
+
+  getImage(id: string) {
+    this.attachmentService.downloadAttachment(id).subscribe((res) => {
+      window.open(res.data, '_blank');
+    });
   }
 }
