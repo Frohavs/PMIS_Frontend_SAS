@@ -45,6 +45,9 @@ export class FormTableComponent implements OnInit {
   @ViewChild('chRequestsModal') chRequestsModal: TemplateRef<any>;
   recommendationForm: FormGroup;
   @ViewChild('recommendationModal') recommendationModal: TemplateRef<any>;
+  evidenceForm: FormGroup;
+  risks: any[] = [];
+  @ViewChild('evidenceModal') evidenceModal: TemplateRef<any>;
 
   constructor(
     private router: Router,
@@ -65,6 +68,7 @@ export class FormTableComponent implements OnInit {
     this.initObjectivesForm();
     this.initChRequestsForm();
     this.initRecommendationForm();
+    this.initEvidenceForm();
 
     this.activatedRoute.params.subscribe((params) => {
       this.projectId = +params['id'];
@@ -135,6 +139,16 @@ export class FormTableComponent implements OnInit {
     }
     this.modalService.open(this.recommendationModal, this.modalConfig);
   }
+  openCommunication(recommend?: any){
+    this.recommendationForm.reset();
+    if(recommend) {
+      this.recommendationForm.patchValue({
+        id: recommend.id,
+        name: recommend.name,
+      });
+    }
+    this.modalService.open(this.recommendationModal, this.modalConfig);
+  }
 
   openChRequests(request?: any){
     this.chRequestsForm.reset();
@@ -148,6 +162,19 @@ export class FormTableComponent implements OnInit {
       });
     }
     this.modalService.open(this.chRequestsModal, this.modalConfig);
+  }
+
+  openEvidence(evidence?: any){
+    this.evidenceForm.reset();
+    if(evidence) {
+      this.evidenceForm.patchValue({
+        id: evidence.id,
+        picture: evidence.picture,
+        notes: evidence.notes,
+        risk: evidence.risk
+      });
+    }
+    this.modalService.open(this.evidenceModal, this.modalConfig);
   }
 
   initChangeDocumentForm() {
@@ -183,6 +210,14 @@ export class FormTableComponent implements OnInit {
     this.recommendationForm = this.fb.group({
       id: [0],
       name: ['', Validators.required],
+    });
+  }
+  initEvidenceForm() {
+    this.evidenceForm = this.fb.group({
+      id: [0],
+      picture: ['', Validators.required],
+      notes: ['', Validators.required],
+      risk: ['', Validators.required],
     });
   }
 
@@ -302,6 +337,21 @@ export class FormTableComponent implements OnInit {
         });
       }
     );
+  }
+
+  onAddEvidence() {
+    if (this.evidenceForm.invalid) {
+      this.evidenceForm.markAllAsTouched();
+      return;
+    }
+    this.isLoading = true;
+    let payload: any = {
+      visitFormId: this.visitId,
+      picture: this.evidenceForm.value.picture,
+      notes: this.evidenceForm.value.notes,
+      risk: this.evidenceForm.value.risk,
+    };
+
   }
 
   showAlert(swalOptions: SweetAlertOptions) {
