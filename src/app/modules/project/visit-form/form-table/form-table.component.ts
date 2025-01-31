@@ -46,6 +46,8 @@ export class FormTableComponent implements OnInit {
   @ViewChild('attendanceModal') attendanceModal: TemplateRef<any>;
   objectivesForm: FormGroup;
   @ViewChild('objectivesModal') objectivesModal: TemplateRef<any>;
+  scheduleForm: FormGroup;
+  @ViewChild('scheduleModal') scheduleModal: TemplateRef<any>;
   chRequestsForm: FormGroup;
   @ViewChild('chRequestsModal') chRequestsModal: TemplateRef<any>;
   recommendationForm: FormGroup;
@@ -156,6 +158,7 @@ export class FormTableComponent implements OnInit {
     this.initChangeDocumentForm();
     this.initAttendanceForm();
     this.initObjectivesForm();
+    this.initScheduleForm();
     this.initChRequestsForm();
     this.initRecommendationForm();
     this.initEvidenceForm();
@@ -272,8 +275,21 @@ export class FormTableComponent implements OnInit {
     this.modalService.open(this.recommendationModal, this.modalConfig);
   }
 
-  openChRequests(request?: any) {
+  openSchedule(schedule?: any) {
     debugger
+    this.scheduleForm.reset();
+    if (schedule) {
+      // this.scheduleForm.patchValue({
+      //   // commitment: schedule.commitment,
+      //   // schedulePositionId: schedule.schedulePositionId,
+      //   // date: schedule.date.slice(0, 10),
+      //   // status: schedule.status,
+      //   // note: schedule.note,
+      // });
+    }
+    this.modalService.open(this.scheduleModal, this.modalConfig);
+  }
+  openChRequests(request?: any) {
     this.chRequestsForm.reset();
     if (request) {
       this.chRequestsForm.patchValue({
@@ -382,6 +398,15 @@ export class FormTableComponent implements OnInit {
     this.objectivesForm = this.fb.group({
       id: [0],
       name: ['', Validators.required],
+    });
+  }
+  initScheduleForm() {
+    this.scheduleForm = this.fb.group({
+      schedulePositionId: [0],
+      commitment: ['', Validators.required],
+      date: ['', Validators.required],
+      status: ['', Validators.required],
+      note: ['', Validators.required],
     });
   }
   initChRequestsForm() {
@@ -557,6 +582,58 @@ export class FormTableComponent implements OnInit {
       }
     );
   }
+  onSchedulePosition() {
+    debugger
+    if (this.scheduleForm.invalid) {
+      this.scheduleForm.markAllAsTouched();
+      return;
+    }
+    this.isLoading = true;
+    let payload: any = {
+      step: 14,
+      body: {
+        commitment: this.scheduleForm.value.commitment,
+        status: this.scheduleForm.value.status,
+        date: this.scheduleForm.value.date,
+        notes: this.scheduleForm.value.notes,
+        visitFormId: this.visitId,
+      },
+    };
+    debugger;
+    if (
+      this.scheduleForm.value.schedulePositionId !== 0 &&
+      this.scheduleForm.value.schedulePositionId !== null
+    ) {
+      payload.body['schedulePositionId'] = this.scheduleForm.value.schedulePositionId;
+    }
+
+    this.visitFormService.upsertVisitFormStep(payload).subscribe(
+      (res) => {
+        this.isLoading = false;
+        this.getVisitDetails();
+        this.modalService.dismissAll();
+        this.scheduleForm.reset();
+        this.showAlert({
+          icon: 'success',
+          title: 'Success!',
+          text:
+            this.objectivesForm.value.id !== 0
+              ? 'Updated successfully!'
+              : 'Added successfully!',
+        });
+        this.cdr.detectChanges();
+      },
+      (error) => {
+        this.isLoading = false;
+        this.modalService.dismissAll();
+        this.showAlert({
+          icon: 'error',
+          title: 'Error!',
+          text: 'Please try again',
+        });
+      }
+    );
+  }
   onChRequests() {
     if (this.chRequestsForm.invalid) {
       this.chRequestsForm.markAllAsTouched();
@@ -577,7 +654,7 @@ export class FormTableComponent implements OnInit {
         visitFormId: this.visitId,
       },
     };
-    debugger
+    debugger;
     if (
       this.chRequestsForm.value.id !== 0 &&
       this.chRequestsForm.value.id !== null

@@ -237,6 +237,11 @@
   <!-- Main Data of the Report -->
   <h3>3. Main data of the report:</h3>
   <h4>3.1 Schedule position:</h4>
+  <!-- <div class="pt-2 d-flex">
+    <a (click)="openSchedule()" class="btn btn-sm btn-dark d-flex">
+      Add Schedule
+    </a>
+  </div> -->
   <table class="schedule-table">
     <thead>
       <tr>
@@ -252,7 +257,9 @@
       <tr *ngFor="let item of visitSchedulePositions">
         <td>1</td>
         <td>
-          <span class="shadow">{{ item?.name }}</span>
+          <span class="shadow" (click)="openSchedule(item)">{{
+            item?.name
+          }}</span>
         </td>
         <td></td>
         <td></td>
@@ -287,10 +294,12 @@
     <tbody>
       <tr *ngFor="let item of visitDetails?.changeOrders">
         <td>
-          <span (click)="openChRequests(item)" class="shadow">{{ item?.description }}</span>
+          <span (click)="openChRequests(item)" class="shadow">{{
+            item?.description
+          }}</span>
         </td>
         <td>{{ item?.referenceNumber || "--" }}</td>
-        <td>{{ item?.dateAccreditation | date: "dd-MM-yyyy" }}</td>
+        <td>{{ item?.dateAccreditation | date : "dd-MM-yyyy" }}</td>
         <td>{{ item?.condition || "--" }}</td>
         <td>{{ item?.influence || "--" }}</td>
         <td>{{ item?.cause || "--" }}</td>
@@ -1052,6 +1061,155 @@
         id="kt_modal_update_customer_submit"
         class="btn btn-primary"
         [disabled]="!objectivesForm.valid"
+        [attr.data-kt-indicator]="isLoading ? 'on' : 'off'"
+      >
+        <span class="indicator-label"> Submit </span>
+        <span class="indicator-progress">
+          Please wait...
+          <span
+            class="spinner-border spinner-border-sm align-middle ms-2"
+          ></span>
+        </span>
+      </button>
+      <!--end::Button-->
+    </div>
+  </form>
+</ng-template>
+
+<ng-template #scheduleModal let-modal>
+  <form [formGroup]="scheduleForm" (ngSubmit)="onSchedulePosition()">
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">
+        الالتزام بالنماذج الموحدة بدليل (PDM)
+      </h4>
+      <button
+        type="button"
+        class="btn-close"
+        aria-label="Close"
+        (click)="modal.dismiss('Cross click')"
+      ></button>
+    </div>
+    <div class="modal-body">
+      <div class="row mb-6">
+        <div class="col-lg-12 fv-row">
+          <label class="col-lg-8 col-form-label fw-bold fs-6">Commitment</label>
+          <div class="col-lg-12 fv-row">
+            <select
+              class="form-select form-select-solid form-select-lg fw-bold"
+              name="commitment"
+              formControlName="commitment"
+            >
+              <option value="" disabled>
+                {{ "TRANSLATOR.SELECTION" | translate }}
+              </option>
+              <ng-container *ngFor="let status of criticalStatus">
+                <option [value]="status?.id">{{ status?.name }}</option>
+              </ng-container>
+            </select>
+            <div
+              *ngIf="
+                scheduleForm?.get('commitment')?.invalid &&
+                (scheduleForm?.get('commitment')?.dirty ||
+                  scheduleForm?.get('commitment')?.touched)
+              "
+              class="fv-plugins-message-container"
+            >
+              <div class="fv-help-block">commitment is required</div>
+            </div>
+          </div>
+          <div class="col-lg-12 fv-row">
+            <label class="col-lg-8 col-form-label fw-bold fs-6">Status</label>
+            <div class="col-lg-12 fv-row">
+              <select
+                class="form-select form-select-solid form-select-lg fw-bold"
+                name="status"
+                formControlName="status"
+              >
+                <option value="" disabled>
+                  {{ "TRANSLATOR.SELECTION" | translate }}
+                </option>
+                <ng-container *ngFor="let status of criticalStatus">
+                  <option [value]="status?.id">{{ status?.name }}</option>
+                </ng-container>
+              </select>
+              <div
+                *ngIf="
+                  scheduleForm?.get('status')?.invalid &&
+                  (scheduleForm?.get('status')?.dirty ||
+                    scheduleForm?.get('status')?.touched)
+                "
+                class="fv-plugins-message-container"
+              >
+                <div class="fv-help-block">status is required</div>
+              </div>
+            </div>
+
+            <div class="col-lg-12 fv-row">
+              <label class="col-lg-4 col-form-label fw-bold fs-6"
+                >Date of approval</label
+              >
+              <div class="col-lg-12 fv-row">
+                <input
+                  type="date"
+                  class="form-control form-control-lg form-control-solid text-start"
+                  name="date"
+                  formControlName="date"
+                />
+                <div
+                  *ngIf="
+                    scheduleForm?.get('date')?.invalid &&
+                    (scheduleForm?.get('date')?.dirty ||
+                      scheduleForm?.get('date')?.touched)
+                  "
+                  class="fv-plugins-message-container"
+                >
+                  <div class="fv-help-block">date is required</div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-12 fv-row">
+              <label class="col-lg-4 col-form-label fw-bold fs-6">Notes</label>
+              <div class="col-lg-12 fv-row">
+                <textarea
+                  rows="2"
+                  class="form-control form-control-lg form-control-solid text-start"
+                  name="notes"
+                  formControlName="notes"
+                ></textarea>
+                <div
+                  *ngIf="
+                    scheduleForm?.get('notes')?.invalid &&
+                    (scheduleForm?.get('notes')?.dirty ||
+                      scheduleForm?.get('notes')?.touched)
+                  "
+                  class="fv-plugins-message-container"
+                >
+                  <div class="fv-help-block">notes required</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer flex-center">
+      <!--begin::Button-->
+      <button
+        type="reset"
+        id="kt_modal_update_customer_cancel"
+        class="btn btn-light me-3"
+        (click)="modal.dismiss('cancel')"
+      >
+        Discard
+      </button>
+      <!--end::Button-->
+
+      <!--begin::Button-->
+      <button
+        type="submit"
+        id="kt_modal_update_customer_submit"
+        class="btn btn-primary"
+        [disabled]="!scheduleForm.valid"
         [attr.data-kt-indicator]="isLoading ? 'on' : 'off'"
       >
         <span class="indicator-label"> Submit </span>
