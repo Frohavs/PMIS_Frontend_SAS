@@ -1102,7 +1102,7 @@
               <option value="" disabled>
                 {{ "TRANSLATOR.SELECTION" | translate }}
               </option>
-              <ng-container *ngFor="let status of criticalStatus">
+              <ng-container *ngFor="let status of lessonClassifications">
                 <option [value]="status?.id">{{ status?.name }}</option>
               </ng-container>
             </select>
@@ -1128,7 +1128,7 @@
                 <option value="" disabled>
                   {{ "TRANSLATOR.SELECTION" | translate }}
                 </option>
-                <ng-container *ngFor="let status of criticalStatus">
+                <ng-container *ngFor="let status of lessonClassifications">
                   <option [value]="status?.id">{{ status?.name }}</option>
                 </ng-container>
               </select>
@@ -1173,18 +1173,18 @@
                 <textarea
                   rows="2"
                   class="form-control form-control-lg form-control-solid text-start"
-                  name="notes"
-                  formControlName="notes"
+                  name="note"
+                  formControlName="note"
                 ></textarea>
                 <div
                   *ngIf="
-                    scheduleForm?.get('notes')?.invalid &&
-                    (scheduleForm?.get('notes')?.dirty ||
-                      scheduleForm?.get('notes')?.touched)
+                    scheduleForm?.get('note')?.invalid &&
+                    (scheduleForm?.get('note')?.dirty ||
+                      scheduleForm?.get('note')?.touched)
                   "
                   class="fv-plugins-message-container"
                 >
-                  <div class="fv-help-block">notes required</div>
+                  <div class="fv-help-block">note required</div>
                 </div>
               </div>
             </div>

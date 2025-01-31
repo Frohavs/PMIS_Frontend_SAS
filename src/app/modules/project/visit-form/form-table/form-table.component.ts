@@ -592,10 +592,10 @@ export class FormTableComponent implements OnInit {
     let payload: any = {
       step: 14,
       body: {
-        commitment: this.scheduleForm.value.commitment,
-        status: this.scheduleForm.value.status,
+        commitment: +this.scheduleForm.value.commitment,
+        status: +this.scheduleForm.value.status,
         date: this.scheduleForm.value.date,
-        notes: this.scheduleForm.value.notes,
+        note: this.scheduleForm.value.note,
         visitFormId: this.visitId,
       },
     };
