@@ -285,13 +285,15 @@
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td><span class="shadow">Test</span></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
+      <tr *ngFor="let item of visitDetails?.changeOrders">
+        <td>
+          <span (click)="openChRequests(item)" class="shadow">{{ item?.description }}</span>
+        </td>
+        <td>{{ item?.referenceNumber || "--" }}</td>
+        <td>{{ item?.dateAccreditation | date: "dd-MM-yyyy" }}</td>
+        <td>{{ item?.condition || "--" }}</td>
+        <td>{{ item?.influence || "--" }}</td>
+        <td>{{ item?.cause || "--" }}</td>
       </tr>
     </tbody>
   </table>

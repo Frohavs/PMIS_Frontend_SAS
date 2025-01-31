@@ -273,14 +273,18 @@ export class FormTableComponent implements OnInit {
   }
 
   openChRequests(request?: any) {
+    debugger
     this.chRequestsForm.reset();
     if (request) {
       this.chRequestsForm.patchValue({
         id: request.id,
-        name: request.name,
-        side: request.side,
-        job: request.job,
-        email: request.email,
+        description: request.description,
+        referenceNumber: request.referenceNumber,
+        dateAccreditation: request.dateAccreditation.slice(0, 10),
+        condition: request.condition || '',
+        influence: request.influence,
+        cause: request.cause,
+        check: request.check,
       });
     }
     this.modalService.open(this.chRequestsModal, this.modalConfig);
@@ -584,7 +588,7 @@ export class FormTableComponent implements OnInit {
     this.visitFormService.upsertVisitFormStep(payload).subscribe(
       (res) => {
         this.isLoading = false;
-        this.getObjectivesLookup();
+        this.getVisitDetails();
         this.modalService.dismissAll();
         this.chRequestsForm.reset();
         this.showAlert({
