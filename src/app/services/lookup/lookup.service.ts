@@ -558,6 +558,26 @@ export class LookupService {
       headers: httpHeaders,
     });
   }
+  getQualityGuarantors(): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+      LanguageCode: 'en',
+    });
+    const url = `${this.API_USERS_URL}/GetQualityGuarantors`;
+    return this.http.get<any>(url, {
+      headers: httpHeaders,
+    });
+  }
+  getPeriodicReports(): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+      LanguageCode: 'en',
+    });
+    const url = `${this.API_USERS_URL}/GetPeriodicReports`;
+    return this.http.get<any>(url, {
+      headers: httpHeaders,
+    });
+  }
   getVisitFormRiskLevel(): Observable<any> {
     const httpHeaders = new HttpHeaders({
       Authorization: `Bearer ${this.token}`,

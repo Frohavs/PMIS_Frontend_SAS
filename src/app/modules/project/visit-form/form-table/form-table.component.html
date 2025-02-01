@@ -454,20 +454,10 @@
       </tr>
     </thead>
     <tbody>
-      <tr>
+      <tr *ngFor="let item of visitQualityGuarantors">
         <td class="greened">1</td>
-        <td><span class="shadow"> بدليل النماذج الموحدة (PDM) </span></td>
+        <td><span class="shadow" (click)="openQualityGuarantor(item)"> بدليل النماذج الموحدة (PDM) </span></td>
         <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-      </tr>
-      <tr>
-        <td class="greened">12</td>
-        <td><span class="shadow"> توفر مرافق رعاية الموظفين </span></td>
-        <td class="centered">&#8226;</td>
-        <!-- Green dot -->
         <td></td>
         <td></td>
         <td></td>
@@ -507,20 +497,10 @@
       </tr>
     </thead>
     <tbody>
-      <tr>
+      <tr *ngFor="let item of visitPeriodicReports">
         <td class="greened">1</td>
-        <td><span class="shadow"> بدليل النماذج الموحدة (PDM) </span></td>
+        <td><span class="shadow" (click)="openPeriodicReport(item)"> بدليل النماذج الموحدة (PDM) </span></td>
         <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-      </tr>
-      <tr>
-        <td class="greened">12</td>
-        <td><span class="shadow"> توفر مرافق رعاية الموظفين </span></td>
-        <td class="centered">&#8226;</td>
-        <!-- Green dot -->
         <td></td>
         <td></td>
         <td></td>
@@ -1225,101 +1205,6 @@
   </form>
 </ng-template>
 
-<ng-template #healthModal let-modal>
-  <form [formGroup]="healthForm" (ngSubmit)="onVisitHealth()">
-    <div class="modal-header">
-      <h4 class="modal-title" id="modal-basic-title">Criteria</h4>
-      <button
-        type="button"
-        class="btn-close"
-        aria-label="Close"
-        (click)="modal.dismiss('Cross click')"
-      ></button>
-    </div>
-    <div class="modal-body">
-      <div class="row mb-6">
-        <div class="col-lg-12 fv-row">
-          <label class="col-lg-8 col-form-label fw-bold fs-6">Commitment</label>
-          <div class="col-lg-12 fv-row">
-            <select
-              class="form-select form-select-solid form-select-lg fw-bold"
-              name="commitment"
-              formControlName="commitment"
-            >
-              <option value="" disabled>
-                {{ "TRANSLATOR.SELECTION" | translate }}
-              </option>
-              <ng-container *ngFor="let status of visitCommitments">
-                <option [value]="status?.id">{{ status?.name }}</option>
-              </ng-container>
-            </select>
-            <div
-              *ngIf="
-                healthForm?.get('commitment')?.invalid &&
-                (healthForm?.get('commitment')?.dirty ||
-                  healthForm?.get('commitment')?.touched)
-              "
-              class="fv-plugins-message-container"
-            >
-              <div class="fv-help-block">commitment is required</div>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-12 fv-row">
-          <label class="col-lg-4 col-form-label fw-bold fs-6">Notes</label>
-          <div class="col-lg-12 fv-row">
-            <textarea
-              rows="2"
-              class="form-control form-control-lg form-control-solid text-start"
-              name="note"
-              formControlName="note"
-            ></textarea>
-            <div
-              *ngIf="
-                healthForm?.get('note')?.invalid &&
-                (healthForm?.get('note')?.dirty ||
-                  healthForm?.get('note')?.touched)
-              "
-              class="fv-plugins-message-container"
-            >
-              <div class="fv-help-block">note required</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="modal-footer flex-center">
-      <!--begin::Button-->
-      <button
-        type="reset"
-        id="kt_modal_update_customer_cancel"
-        class="btn btn-light me-3"
-        (click)="modal.dismiss('cancel')"
-      >
-        Discard
-      </button>
-      <!--end::Button-->
-
-      <!--begin::Button-->
-      <button
-        type="submit"
-        id="kt_modal_update_customer_submit"
-        class="btn btn-primary"
-        [disabled]="!healthForm.valid"
-        [attr.data-kt-indicator]="isLoading ? 'on' : 'off'"
-      >
-        <span class="indicator-label"> Submit </span>
-        <span class="indicator-progress">
-          Please wait...
-          <span
-            class="spinner-border spinner-border-sm align-middle ms-2"
-          ></span>
-        </span>
-      </button>
-      <!--end::Button-->
-    </div>
-  </form>
-</ng-template>
 <ng-template #chRequestsModal let-modal>
   <form [formGroup]="chRequestsForm" (ngSubmit)="onChRequests()">
     <div class="modal-header">
@@ -1500,6 +1385,293 @@
         id="kt_modal_update_customer_submit"
         class="btn btn-primary"
         [disabled]="!chRequestsForm.valid"
+        [attr.data-kt-indicator]="isLoading ? 'on' : 'off'"
+      >
+        <span class="indicator-label"> Submit </span>
+        <span class="indicator-progress">
+          Please wait...
+          <span
+            class="spinner-border spinner-border-sm align-middle ms-2"
+          ></span>
+        </span>
+      </button>
+      <!--end::Button-->
+    </div>
+  </form>
+</ng-template>
+
+<ng-template #healthModal let-modal>
+  <form [formGroup]="healthForm" (ngSubmit)="onVisitHealth()">
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Criteria</h4>
+      <button
+        type="button"
+        class="btn-close"
+        aria-label="Close"
+        (click)="modal.dismiss('Cross click')"
+      ></button>
+    </div>
+    <div class="modal-body">
+      <div class="row mb-6">
+        <div class="col-lg-12 fv-row">
+          <label class="col-lg-8 col-form-label fw-bold fs-6">Commitment</label>
+          <div class="col-lg-12 fv-row">
+            <select
+              class="form-select form-select-solid form-select-lg fw-bold"
+              name="commitment"
+              formControlName="commitment"
+            >
+              <option value="" disabled>
+                {{ "TRANSLATOR.SELECTION" | translate }}
+              </option>
+              <ng-container *ngFor="let status of visitCommitments">
+                <option [value]="status?.id">{{ status?.name }}</option>
+              </ng-container>
+            </select>
+            <div
+              *ngIf="
+                healthForm?.get('commitment')?.invalid &&
+                (healthForm?.get('commitment')?.dirty ||
+                  healthForm?.get('commitment')?.touched)
+              "
+              class="fv-plugins-message-container"
+            >
+              <div class="fv-help-block">commitment is required</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-12 fv-row">
+          <label class="col-lg-4 col-form-label fw-bold fs-6">Notes</label>
+          <div class="col-lg-12 fv-row">
+            <textarea
+              rows="2"
+              class="form-control form-control-lg form-control-solid text-start"
+              name="note"
+              formControlName="note"
+            ></textarea>
+            <div
+              *ngIf="
+                healthForm?.get('note')?.invalid &&
+                (healthForm?.get('note')?.dirty ||
+                  healthForm?.get('note')?.touched)
+              "
+              class="fv-plugins-message-container"
+            >
+              <div class="fv-help-block">note required</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer flex-center">
+      <!--begin::Button-->
+      <button
+        type="reset"
+        id="kt_modal_update_customer_cancel"
+        class="btn btn-light me-3"
+        (click)="modal.dismiss('cancel')"
+      >
+        Discard
+      </button>
+      <!--end::Button-->
+
+      <!--begin::Button-->
+      <button
+        type="submit"
+        id="kt_modal_update_customer_submit"
+        class="btn btn-primary"
+        [disabled]="!healthForm.valid"
+        [attr.data-kt-indicator]="isLoading ? 'on' : 'off'"
+      >
+        <span class="indicator-label"> Submit </span>
+        <span class="indicator-progress">
+          Please wait...
+          <span
+            class="spinner-border spinner-border-sm align-middle ms-2"
+          ></span>
+        </span>
+      </button>
+      <!--end::Button-->
+    </div>
+  </form>
+</ng-template>
+
+<ng-template #qualityGuarantorModal let-modal>
+  <form [formGroup]="qualityGuarantorForm" (ngSubmit)="onQualityGuarantor()">
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Quality Guarantor Criteria</h4>
+      <button
+        type="button"
+        class="btn-close"
+        aria-label="Close"
+        (click)="modal.dismiss('Cross click')"
+      ></button>
+    </div>
+    <div class="modal-body">
+      <div class="row mb-6">
+        <div class="col-lg-12 fv-row">
+          <label class="col-lg-8 col-form-label fw-bold fs-6">Commitment</label>
+          <div class="col-lg-12 fv-row">
+            <select
+              class="form-select form-select-solid form-select-lg fw-bold"
+              name="commitment"
+              formControlName="commitment"
+            >
+              <option value="" disabled>
+                {{ "TRANSLATOR.SELECTION" | translate }}
+              </option>
+              <ng-container *ngFor="let status of visitCommitments">
+                <option [value]="status?.id">{{ status?.name }}</option>
+              </ng-container>
+            </select>
+            <div
+              *ngIf="
+                qualityGuarantorForm?.get('commitment')?.invalid &&
+                (qualityGuarantorForm?.get('commitment')?.dirty ||
+                  qualityGuarantorForm?.get('commitment')?.touched)
+              "
+              class="fv-plugins-message-container"
+            >
+              <div class="fv-help-block">commitment is required</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-12 fv-row">
+          <label class="col-lg-4 col-form-label fw-bold fs-6">Notes</label>
+          <div class="col-lg-12 fv-row">
+            <textarea
+              rows="2"
+              class="form-control form-control-lg form-control-solid text-start"
+              name="note"
+              formControlName="note"
+            ></textarea>
+            <div
+              *ngIf="
+                qualityGuarantorForm?.get('note')?.invalid &&
+                (qualityGuarantorForm?.get('note')?.dirty ||
+                  qualityGuarantorForm?.get('note')?.touched)
+              "
+              class="fv-plugins-message-container"
+            >
+              <div class="fv-help-block">note required</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer flex-center">
+      <!--begin::Button-->
+      <button
+        type="reset"
+        id="kt_modal_update_customer_cancel"
+        class="btn btn-light me-3"
+        (click)="modal.dismiss('cancel')"
+      >
+        Discard
+      </button>
+      <!--end::Button-->
+
+      <!--begin::Button-->
+      <button
+        type="submit"
+        id="kt_modal_update_customer_submit"
+        class="btn btn-primary"
+        [disabled]="!qualityGuarantorForm.valid"
+        [attr.data-kt-indicator]="isLoading ? 'on' : 'off'"
+      >
+        <span class="indicator-label"> Submit </span>
+        <span class="indicator-progress">
+          Please wait...
+          <span
+            class="spinner-border spinner-border-sm align-middle ms-2"
+          ></span>
+        </span>
+      </button>
+      <!--end::Button-->
+    </div>
+  </form>
+</ng-template>
+<ng-template #periodicReportModal let-modal>
+  <form [formGroup]="periodicReportForm" (ngSubmit)="onPeriodicReport()">
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Periodic Report Criteria</h4>
+      <button
+        type="button"
+        class="btn-close"
+        aria-label="Close"
+        (click)="modal.dismiss('Cross click')"
+      ></button>
+    </div>
+    <div class="modal-body">
+      <div class="row mb-6">
+        <div class="col-lg-12 fv-row">
+          <label class="col-lg-8 col-form-label fw-bold fs-6">Commitment</label>
+          <div class="col-lg-12 fv-row">
+            <select
+              class="form-select form-select-solid form-select-lg fw-bold"
+              name="commitment"
+              formControlName="commitment"
+            >
+              <option value="" disabled>
+                {{ "TRANSLATOR.SELECTION" | translate }}
+              </option>
+              <ng-container *ngFor="let status of visitCommitments">
+                <option [value]="status?.id">{{ status?.name }}</option>
+              </ng-container>
+            </select>
+            <div
+              *ngIf="
+                periodicReportForm?.get('commitment')?.invalid &&
+                (periodicReportForm?.get('commitment')?.dirty ||
+                  periodicReportForm?.get('commitment')?.touched)
+              "
+              class="fv-plugins-message-container"
+            >
+              <div class="fv-help-block">commitment is required</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-12 fv-row">
+          <label class="col-lg-4 col-form-label fw-bold fs-6">Notes</label>
+          <div class="col-lg-12 fv-row">
+            <textarea
+              rows="2"
+              class="form-control form-control-lg form-control-solid text-start"
+              name="note"
+              formControlName="note"
+            ></textarea>
+            <div
+              *ngIf="
+                periodicReportForm?.get('note')?.invalid &&
+                (periodicReportForm?.get('note')?.dirty ||
+                  periodicReportForm?.get('note')?.touched)
+              "
+              class="fv-plugins-message-container"
+            >
+              <div class="fv-help-block">note required</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer flex-center">
+      <!--begin::Button-->
+      <button
+        type="reset"
+        id="kt_modal_update_customer_cancel"
+        class="btn btn-light me-3"
+        (click)="modal.dismiss('cancel')"
+      >
+        Discard
+      </button>
+      <!--end::Button-->
+
+      <!--begin::Button-->
+      <button
+        type="submit"
+        id="kt_modal_update_customer_submit"
+        class="btn btn-primary"
+        [disabled]="!periodicReportForm.valid"
         [attr.data-kt-indicator]="isLoading ? 'on' : 'off'"
       >
         <span class="indicator-label"> Submit </span>
