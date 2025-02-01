@@ -263,7 +263,6 @@ export class FormTableComponent implements OnInit {
         const matched = this.visitDetails?.visitFormHealth?.find(
           (v: any) => v.qualityGuarantor === item.name
         );
-        debugger
         return {
           id: item.id,
           name: item.name,
@@ -287,7 +286,6 @@ export class FormTableComponent implements OnInit {
         const matched = this.visitDetails?.periodicReports?.find(
           (v: any) => v.periodicReport === item.name
         );
-        debugger
         return {
           id: item.id,
           name: item.name,
