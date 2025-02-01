@@ -50,6 +50,8 @@ export class FormTableComponent implements OnInit {
   @ViewChild('scheduleModal') scheduleModal: TemplateRef<any>;
   chRequestsForm: FormGroup;
   @ViewChild('chRequestsModal') chRequestsModal: TemplateRef<any>;
+  healthForm: FormGroup;
+  @ViewChild('healthModal') healthModal: TemplateRef<any>;
   recommendationForm: FormGroup;
   @ViewChild('recommendationModal') recommendationModal: TemplateRef<any>;
 
@@ -151,6 +153,7 @@ export class FormTableComponent implements OnInit {
     this.initAttendanceForm();
     this.initObjectivesForm();
     this.initScheduleForm();
+    this.initHealthForm();
     this.initChRequestsForm();
     this.initRecommendationForm();
     this.initEvidenceForm();
@@ -182,6 +185,7 @@ export class FormTableComponent implements OnInit {
   getVisitDetails() {
     this.visitFormService.getVisitById(this.visitId).subscribe((res) => {
       this.visitDetails = res.data;
+      this.getVisitFormHealth();
       this.cdr.detectChanges();
     });
   }
@@ -204,7 +208,6 @@ export class FormTableComponent implements OnInit {
     });
     this.getObjectivesLookup();
     this.getSchedulePositions();
-    this.getVisitFormHealth();
   }
 
   getObjectivesLookup() {
@@ -223,6 +226,24 @@ export class FormTableComponent implements OnInit {
   getVisitFormHealth() {
     this.lookupService.getVisitFormHealth().subscribe((res) => {
       this.visitHealths = res.data;
+  
+      const transformedData = this.visitHealths.map((item: any) => {
+        const matched = this.visitDetails?.visitFormHealth?.find(
+          (v: any) => v.healthAndSecurityTitle === item.name
+        );
+  
+        return {
+          id: item.id,
+          name: item.name,
+          fullyCommitted: matched?.commitment === 'Fully Committed' || false,
+          partiallyCommitted: matched?.commitment === 'Partially Committed' || false,
+          notCommitted: matched?.commitment === 'Not Committed' || false,
+          na: matched?.commitment === 'NA' || false,
+          note: matched?.note || '',
+        };
+      });
+  
+      this.visitHealths = transformedData;
       this.cdr.detectChanges();
     });
   }
@@ -276,7 +297,6 @@ export class FormTableComponent implements OnInit {
   }
 
   openSchedule(schedule?: any) {
-    debugger
     this.scheduleForm.reset();
     if (schedule) {
       // this.scheduleForm.patchValue({
@@ -297,7 +317,7 @@ export class FormTableComponent implements OnInit {
         description: request.description,
         referenceNumber: request.referenceNumber,
         dateAccreditation: request.dateAccreditation.slice(0, 10),
-        condition: request.condition || '',
+        condition: request.condition,
         influence: request.influence,
         cause: request.cause,
         check: request.check,
@@ -305,11 +325,21 @@ export class FormTableComponent implements OnInit {
     }
     this.modalService.open(this.chRequestsModal, this.modalConfig);
   }
+  openVisitHealth(request?: any) {
+    this.healthForm.reset();
+    if (request) {
+      this.healthForm.patchValue({
+        healthAndSecurityId: request.id,
+        commitment: request.commitment,
+        note: request.note,
+      });
+    }
+    this.modalService.open(this.healthModal, this.modalConfig);
+  }
 
   openEvidence(evidence?: any) {
     this.evidenceForm.reset();
     if (evidence) {
-      debugger;
       this.evidenceForm.patchValue({
         id: evidence.id,
         picture: evidence.attachment,
@@ -320,7 +350,6 @@ export class FormTableComponent implements OnInit {
     this.modalService.open(this.evidenceModal, this.modalConfig);
   }
   openCriticalProblems(problem?: any) {
-    debugger;
     this.criticalProblemsForm.reset();
     if (problem) {
       this.criticalProblemsForm.patchValue({
@@ -339,7 +368,6 @@ export class FormTableComponent implements OnInit {
   openLesson(lesson?: any) {
     this.lessonForm.reset();
     if (lesson) {
-      debugger;
       this.lessonForm.patchValue({
         id: lesson.id,
         learned: lesson.learned,
@@ -406,6 +434,13 @@ export class FormTableComponent implements OnInit {
       commitment: ['', Validators.required],
       date: ['', Validators.required],
       status: ['', Validators.required],
+      note: ['', Validators.required],
+    });
+  }
+  initHealthForm() {
+    this.healthForm = this.fb.group({
+      healthAndSecurityId: [0],
+      commitment: ['', Validators.required],
       note: ['', Validators.required],
     });
   }
@@ -598,12 +633,13 @@ export class FormTableComponent implements OnInit {
         visitFormId: this.visitId,
       },
     };
-    debugger;
+
     if (
       this.scheduleForm.value.schedulePositionId !== 0 &&
       this.scheduleForm.value.schedulePositionId !== null
     ) {
-      payload.body['schedulePositionId'] = this.scheduleForm.value.schedulePositionId;
+      payload.body['schedulePositionId'] =
+        this.scheduleForm.value.schedulePositionId;
     }
 
     this.visitFormService.upsertVisitFormStep(payload).subscribe(
@@ -612,6 +648,56 @@ export class FormTableComponent implements OnInit {
         this.getVisitDetails();
         this.modalService.dismissAll();
         this.scheduleForm.reset();
+        this.showAlert({
+          icon: 'success',
+          title: 'Success!',
+          text:
+            this.objectivesForm.value.id !== 0
+              ? 'Updated successfully!'
+              : 'Added successfully!',
+        });
+        this.cdr.detectChanges();
+      },
+      (error) => {
+        this.isLoading = false;
+        this.modalService.dismissAll();
+        this.showAlert({
+          icon: 'error',
+          title: 'Error!',
+          text: 'Please try again',
+        });
+      }
+    );
+  }
+  onVisitHealth() {
+    if (this.healthForm.invalid) {
+      this.healthForm.markAllAsTouched();
+      return;
+    }
+    this.isLoading = true;
+    let payload: any = {
+      step: 10,
+      body: {
+        commitment: +this.healthForm.value.commitment,
+        note: this.healthForm.value.note,
+        visitFormId: this.visitId,
+      },
+    };
+
+    if (
+      this.healthForm.value.healthAndSecurityId !== 0 &&
+      this.healthForm.value.healthAndSecurityId !== null
+    ) {
+      payload.body['healthAndSecurityId'] =
+        this.healthForm.value.healthAndSecurityId;
+    }
+
+    this.visitFormService.upsertVisitFormStep(payload).subscribe(
+      (res) => {
+        this.isLoading = false;
+        this.getVisitDetails();
+        this.modalService.dismissAll();
+        this.healthForm.reset();
         this.showAlert({
           icon: 'success',
           title: 'Success!',
@@ -653,7 +739,7 @@ export class FormTableComponent implements OnInit {
         visitFormId: this.visitId,
       },
     };
-    debugger;
+
     if (
       this.chRequestsForm.value.id !== 0 &&
       this.chRequestsForm.value.id !== null

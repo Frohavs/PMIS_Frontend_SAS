@@ -307,7 +307,7 @@
     </tbody>
   </table>
 
-  <h4 class="pt-3">
+  <h4 class="pt-5">
     3.3 Application status of Project Management Manual (PDM) models:
   </h4>
 
@@ -335,7 +335,7 @@
   </table>
 
   <!-- Health, Safety, Security, and Environment Table -->
-  <h4>3.4 Health, safety, security and environment:</h4>
+  <h4 class="pt-5">3.4 Health, safety, security and environment:</h4>
   <table class="hsse-table">
     <thead>
       <tr>
@@ -356,7 +356,7 @@
       </tr>
       <tr>
         <th></th>
-        <th>Fully committed</th>
+        <th style="background-color: #fff2cc !important; color: #000 !important">Fully committed</th>
         <th>Partially committed</th>
         <th>Not committed</th>
         <th>N/A</th>
@@ -367,18 +367,18 @@
       <tr *ngFor="let item of visitHealths; index as i">
         <td class="greened">{{ i + 1 }}</td>
         <td>
-          <span class="shadow"> {{ item?.name }}</span>
+          <span class="shadow" (click)="openVisitHealth(item)"> {{ item?.name }}</span>
         </td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td>{{item?.fullyCommitted ? '&#8226;' : ""}}</td>
+        <td>{{item?.partiallyCommitted ? '&#8226;' : ""}}</td>
+        <td>{{item?.notCommitted ? '&#8226;' : ""}}</td>
+        <td>{{item?.na ? '&#8226;' : ""}}</td>
+        <td>{{item?.note || "--"}}</td>
       </tr>
       <tr>
         <td class="greened">{{ this.visitHealths.length + 1 }}</td>
         <td>
-          <span class="shadow">Total commitment percentage (estimated)</span>
+          <h5>Total commitment percentage (estimated)</h5>
         </td>
         <td colspan="4" class="centered">--</td>
         <td></td>
@@ -1117,76 +1117,76 @@
               <div class="fv-help-block">commitment is required</div>
             </div>
           </div>
+        </div>
+        <div class="col-lg-12 fv-row">
+          <label class="col-lg-8 col-form-label fw-bold fs-6">Status</label>
           <div class="col-lg-12 fv-row">
-            <label class="col-lg-8 col-form-label fw-bold fs-6">Status</label>
-            <div class="col-lg-12 fv-row">
-              <select
-                class="form-select form-select-solid form-select-lg fw-bold"
-                name="status"
-                formControlName="status"
-              >
-                <option value="" disabled>
-                  {{ "TRANSLATOR.SELECTION" | translate }}
-                </option>
-                <ng-container *ngFor="let status of lessonClassifications">
-                  <option [value]="status?.id">{{ status?.name }}</option>
-                </ng-container>
-              </select>
-              <div
-                *ngIf="
-                  scheduleForm?.get('status')?.invalid &&
-                  (scheduleForm?.get('status')?.dirty ||
-                    scheduleForm?.get('status')?.touched)
-                "
-                class="fv-plugins-message-container"
-              >
-                <div class="fv-help-block">status is required</div>
-              </div>
+            <select
+              class="form-select form-select-solid form-select-lg fw-bold"
+              name="status"
+              formControlName="status"
+            >
+              <option value="" disabled>
+                {{ "TRANSLATOR.SELECTION" | translate }}
+              </option>
+              <ng-container *ngFor="let status of lessonClassifications">
+                <option [value]="status?.id">{{ status?.name }}</option>
+              </ng-container>
+            </select>
+            <div
+              *ngIf="
+                scheduleForm?.get('status')?.invalid &&
+                (scheduleForm?.get('status')?.dirty ||
+                  scheduleForm?.get('status')?.touched)
+              "
+              class="fv-plugins-message-container"
+            >
+              <div class="fv-help-block">status is required</div>
             </div>
+          </div>
 
-            <div class="col-lg-12 fv-row">
-              <label class="col-lg-4 col-form-label fw-bold fs-6"
-                >Date of approval</label
-              >
-              <div class="col-lg-12 fv-row">
-                <input
-                  type="date"
-                  class="form-control form-control-lg form-control-solid text-start"
-                  name="date"
-                  formControlName="date"
-                />
-                <div
-                  *ngIf="
-                    scheduleForm?.get('date')?.invalid &&
-                    (scheduleForm?.get('date')?.dirty ||
-                      scheduleForm?.get('date')?.touched)
-                  "
-                  class="fv-plugins-message-container"
-                >
-                  <div class="fv-help-block">date is required</div>
-                </div>
-              </div>
+        </div>
+        <div class="col-lg-12 fv-row">
+          <label class="col-lg-4 col-form-label fw-bold fs-6"
+            >Date of approval</label
+          >
+          <div class="col-lg-12 fv-row">
+            <input
+              type="date"
+              class="form-control form-control-lg form-control-solid text-start"
+              name="date"
+              formControlName="date"
+            />
+            <div
+              *ngIf="
+                scheduleForm?.get('date')?.invalid &&
+                (scheduleForm?.get('date')?.dirty ||
+                  scheduleForm?.get('date')?.touched)
+              "
+              class="fv-plugins-message-container"
+            >
+              <div class="fv-help-block">date is required</div>
             </div>
-            <div class="col-lg-12 fv-row">
-              <label class="col-lg-4 col-form-label fw-bold fs-6">Notes</label>
-              <div class="col-lg-12 fv-row">
-                <textarea
-                  rows="2"
-                  class="form-control form-control-lg form-control-solid text-start"
-                  name="note"
-                  formControlName="note"
-                ></textarea>
-                <div
-                  *ngIf="
-                    scheduleForm?.get('note')?.invalid &&
-                    (scheduleForm?.get('note')?.dirty ||
-                      scheduleForm?.get('note')?.touched)
-                  "
-                  class="fv-plugins-message-container"
-                >
-                  <div class="fv-help-block">note required</div>
-                </div>
-              </div>
+          </div>
+        </div>
+        <div class="col-lg-12 fv-row">
+          <label class="col-lg-4 col-form-label fw-bold fs-6">Notes</label>
+          <div class="col-lg-12 fv-row">
+            <textarea
+              rows="2"
+              class="form-control form-control-lg form-control-solid text-start"
+              name="note"
+              formControlName="note"
+            ></textarea>
+            <div
+              *ngIf="
+                scheduleForm?.get('note')?.invalid &&
+                (scheduleForm?.get('note')?.dirty ||
+                  scheduleForm?.get('note')?.touched)
+              "
+              class="fv-plugins-message-container"
+            >
+              <div class="fv-help-block">note required</div>
             </div>
           </div>
         </div>
@@ -1225,6 +1225,101 @@
   </form>
 </ng-template>
 
+<ng-template #healthModal let-modal>
+  <form [formGroup]="healthForm" (ngSubmit)="onVisitHealth()">
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Criteria</h4>
+      <button
+        type="button"
+        class="btn-close"
+        aria-label="Close"
+        (click)="modal.dismiss('Cross click')"
+      ></button>
+    </div>
+    <div class="modal-body">
+      <div class="row mb-6">
+        <div class="col-lg-12 fv-row">
+          <label class="col-lg-8 col-form-label fw-bold fs-6">Commitment</label>
+          <div class="col-lg-12 fv-row">
+            <select
+              class="form-select form-select-solid form-select-lg fw-bold"
+              name="commitment"
+              formControlName="commitment"
+            >
+              <option value="" disabled>
+                {{ "TRANSLATOR.SELECTION" | translate }}
+              </option>
+              <ng-container *ngFor="let status of visitCommitments">
+                <option [value]="status?.id">{{ status?.name }}</option>
+              </ng-container>
+            </select>
+            <div
+              *ngIf="
+                healthForm?.get('commitment')?.invalid &&
+                (healthForm?.get('commitment')?.dirty ||
+                  healthForm?.get('commitment')?.touched)
+              "
+              class="fv-plugins-message-container"
+            >
+              <div class="fv-help-block">commitment is required</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-12 fv-row">
+          <label class="col-lg-4 col-form-label fw-bold fs-6">Notes</label>
+          <div class="col-lg-12 fv-row">
+            <textarea
+              rows="2"
+              class="form-control form-control-lg form-control-solid text-start"
+              name="note"
+              formControlName="note"
+            ></textarea>
+            <div
+              *ngIf="
+                healthForm?.get('note')?.invalid &&
+                (healthForm?.get('note')?.dirty ||
+                  healthForm?.get('note')?.touched)
+              "
+              class="fv-plugins-message-container"
+            >
+              <div class="fv-help-block">note required</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer flex-center">
+      <!--begin::Button-->
+      <button
+        type="reset"
+        id="kt_modal_update_customer_cancel"
+        class="btn btn-light me-3"
+        (click)="modal.dismiss('cancel')"
+      >
+        Discard
+      </button>
+      <!--end::Button-->
+
+      <!--begin::Button-->
+      <button
+        type="submit"
+        id="kt_modal_update_customer_submit"
+        class="btn btn-primary"
+        [disabled]="!healthForm.valid"
+        [attr.data-kt-indicator]="isLoading ? 'on' : 'off'"
+      >
+        <span class="indicator-label"> Submit </span>
+        <span class="indicator-progress">
+          Please wait...
+          <span
+            class="spinner-border spinner-border-sm align-middle ms-2"
+          ></span>
+        </span>
+      </button>
+      <!--end::Button-->
+    </div>
+  </form>
+</ng-template>
 <ng-template #chRequestsModal let-modal>
   <form [formGroup]="chRequestsForm" (ngSubmit)="onChRequests()">
     <div class="modal-header">
