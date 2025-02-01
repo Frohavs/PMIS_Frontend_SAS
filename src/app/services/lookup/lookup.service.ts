@@ -578,4 +578,14 @@ export class LookupService {
       headers: httpHeaders,
     });
   }
+  getCommitmentTypes(): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+      LanguageCode: 'en',
+    });
+    const url = `${this.API_USERS_URL}/GetCommitmentTypes`;
+    return this.http.get<any>(url, {
+      headers: httpHeaders,
+    });
+  }
 }

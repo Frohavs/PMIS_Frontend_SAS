@@ -1102,7 +1102,7 @@
               <option value="" disabled>
                 {{ "TRANSLATOR.SELECTION" | translate }}
               </option>
-              <ng-container *ngFor="let status of lessonClassifications">
+              <ng-container *ngFor="let status of visitCommitments">
                 <option [value]="status?.id">{{ status?.name }}</option>
               </ng-container>
             </select>
@@ -1313,22 +1313,29 @@
             >The Condition</label
           >
           <div class="col-lg-12 fv-row">
-            <input
-              (keypress)="numbersOnly($event)"
-              type="text"
-              class="form-control form-control-lg form-control-solid text-start"
+            <select
+              class="form-select form-select-solid form-select-lg fw-bold"
               name="condition"
               formControlName="condition"
-            />
+            >
+              <option value="" disabled>
+                {{ "TRANSLATOR.SELECTION" | translate }}
+              </option>
+              <ng-container *ngFor="let item of visitConditions">
+                <option [value]="item?.id">
+                  {{ item?.name }}
+                </option>
+              </ng-container>
+            </select>
             <div
               *ngIf="
-                chRequestsForm?.get('condition')?.invalid &&
-                (chRequestsForm?.get('condition')?.dirty ||
-                  chRequestsForm?.get('condition')?.touched)
+                lessonForm?.get('condition')?.invalid &&
+                (lessonForm?.get('condition')?.dirty ||
+                  lessonForm?.get('condition')?.touched)
               "
               class="fv-plugins-message-container"
             >
-              <div class="fv-help-block">condition required</div>
+              <div class="fv-help-block">condition is required</div>
             </div>
           </div>
         </div>
@@ -2252,7 +2259,7 @@
               <option value="" disabled>
                 {{ "TRANSLATOR.SELECTION" | translate }}
               </option>
-              <ng-container *ngFor="let item of correctivePlanConditions">
+              <ng-container *ngFor="let item of visitConditions">
                 <option [value]="item?.id">
                   {{ item?.name }}
                 </option>

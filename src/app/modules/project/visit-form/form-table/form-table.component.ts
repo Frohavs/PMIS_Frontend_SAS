@@ -128,16 +128,8 @@ export class FormTableComponent implements OnInit {
       id: 2,
     },
   ];
-  correctivePlanConditions: any[] = [
-    {
-      name: 'Type 1',
-      id: 1,
-    },
-    {
-      name: 'Type 2',
-      id: 2,
-    },
-  ];
+  visitCommitments: any[] = [];
+  visitConditions: any[] = [];
   @ViewChild('correctivePlanModal') correctivePlanModal: TemplateRef<any>;
 
   constructor(
@@ -200,6 +192,14 @@ export class FormTableComponent implements OnInit {
     });
     this.lookupService.getVisitFormRiskLevel().subscribe((res) => {
       this.visitRiskLevels = res.data;
+      this.cdr.detectChanges();
+    });
+    this.lookupService.getVisitFormConditions().subscribe((res) => {
+      this.visitConditions = res.data;
+      this.cdr.detectChanges();
+    });
+    this.lookupService.getCommitmentTypes().subscribe((res) => {
+      this.visitCommitments = res.data;
       this.cdr.detectChanges();
     });
     this.getObjectivesLookup();
@@ -583,7 +583,6 @@ export class FormTableComponent implements OnInit {
     );
   }
   onSchedulePosition() {
-    debugger
     if (this.scheduleForm.invalid) {
       this.scheduleForm.markAllAsTouched();
       return;
