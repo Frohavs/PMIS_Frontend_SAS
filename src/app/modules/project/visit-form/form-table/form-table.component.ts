@@ -712,6 +712,7 @@ export class FormTableComponent implements OnInit {
       },
       (error) => {
         this.modalService.dismissAll();
+        this.changeDocumentForm.reset();
         this.showAlert({
           icon: 'error',
           title: 'Error!',
@@ -758,6 +759,7 @@ export class FormTableComponent implements OnInit {
       },
       (error) => {
         this.isLoading = false;
+        this.attendanceForm.reset();
         this.modalService.dismissAll();
         this.showAlert({
           icon: 'error',
@@ -810,6 +812,7 @@ export class FormTableComponent implements OnInit {
       },
       (error) => {
         this.isLoading = false;
+        this.scheduleForm.reset();
         this.modalService.dismissAll();
         this.showAlert({
           icon: 'error',
@@ -860,6 +863,7 @@ export class FormTableComponent implements OnInit {
       },
       (error) => {
         this.isLoading = false;
+        this.healthForm.reset();
         this.modalService.dismissAll();
         this.showAlert({
           icon: 'error',
@@ -910,6 +914,7 @@ export class FormTableComponent implements OnInit {
       },
       (error) => {
         this.isLoading = false;
+        this.qualityGuarantorForm.reset();
         this.modalService.dismissAll();
         this.showAlert({
           icon: 'error',
@@ -960,6 +965,7 @@ export class FormTableComponent implements OnInit {
       },
       (error) => {
         this.isLoading = false;
+        this.periodicReportForm.reset();
         this.modalService.dismissAll();
         this.showAlert({
           icon: 'error',
@@ -1010,6 +1016,7 @@ export class FormTableComponent implements OnInit {
       },
       (error) => {
         this.isLoading = false;
+        this.StatusDocumentForm.reset();
         this.modalService.dismissAll();
         this.showAlert({
           icon: 'error',
@@ -1065,6 +1072,7 @@ export class FormTableComponent implements OnInit {
       },
       (error) => {
         this.isLoading = false;
+        this.chRequestsForm.reset();
         this.modalService.dismissAll();
         this.showAlert({
           icon: 'error',
@@ -1113,6 +1121,7 @@ export class FormTableComponent implements OnInit {
       },
       (error) => {
         this.isLoading = false;
+        this.objectivesForm.reset();
         this.modalService.dismissAll();
         this.showAlert({
           icon: 'error',
@@ -1163,6 +1172,7 @@ export class FormTableComponent implements OnInit {
       },
       (error) => {
         this.isLoading = false;
+        this.evidenceForm.reset();
         this.modalService.dismissAll();
         this.showAlert({
           icon: 'error',
@@ -1217,6 +1227,7 @@ export class FormTableComponent implements OnInit {
       },
       (error) => {
         this.isLoading = false;
+        this.criticalProblemsForm.reset();
         this.modalService.dismissAll();
         this.showAlert({
           icon: 'error',
@@ -1264,6 +1275,7 @@ export class FormTableComponent implements OnInit {
       },
       (error) => {
         this.isLoading = false;
+        this.lessonForm.reset();
         this.modalService.dismissAll();
         this.showAlert({
           icon: 'error',
@@ -1313,6 +1325,7 @@ export class FormTableComponent implements OnInit {
       },
       (error) => {
         this.isLoading = false;
+        this.riskForm.reset();
         this.modalService.dismissAll();
         this.showAlert({
           icon: 'error',
@@ -1365,6 +1378,7 @@ export class FormTableComponent implements OnInit {
       },
       (error) => {
         this.isLoading = false;
+        this.correctivePlanForm.reset();
         this.modalService.dismissAll();
         this.showAlert({
           icon: 'error',
