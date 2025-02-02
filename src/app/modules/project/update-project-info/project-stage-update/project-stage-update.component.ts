@@ -92,7 +92,7 @@ export class ProjectStageUpdateComponent implements OnInit {
     }
     this.isLoading = true;
     const payload: any = {
-      projectId: +this.projectId,
+      id: +this.projectId,
       offTrackDate: this.UpdateStageForm.value.offTrackDate,
       offTrackAttachment: this.UpdateStageForm.value.offTrackAttachment,
     };
