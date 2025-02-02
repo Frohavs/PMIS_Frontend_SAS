@@ -112,10 +112,6 @@ export const PROJECT_OPTIONS = [
       route: 'projects/rfi-list'
     },
     {
-      name: 'Exchange-data',
-      route: 'projects/exchange-data'
-    },
-    {
       name: 'Visit Form',
       route: 'projects/visit-list'
     },

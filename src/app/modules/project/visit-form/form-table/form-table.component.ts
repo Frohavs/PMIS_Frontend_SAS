@@ -1,6 +1,7 @@
 import {
   ChangeDetectorRef,
   Component,
+  ElementRef,
   OnInit,
   TemplateRef,
   ViewChild,
@@ -143,6 +144,17 @@ export class FormTableComponent implements OnInit {
   visitConditions: any[] = [];
   @ViewChild('correctivePlanModal') correctivePlanModal: TemplateRef<any>;
 
+  selectedFile1: any = null;
+  selectedFile2: any = null;
+  selectedFile3: any = null;
+  selectedFile4: any = null;
+  @ViewChild('fileInput1') fileInput1: ElementRef;
+  @ViewChild('fileInput2') fileInput2: ElementRef;
+  @ViewChild('fileInput3') fileInput3: ElementRef;
+  @ViewChild('fileInput4') fileInput4: ElementRef;
+
+  imageArray: any[] = [];
+
   constructor(
     private router: Router,
     private attachmentService: AttachmentService,
@@ -159,7 +171,7 @@ export class FormTableComponent implements OnInit {
   ngOnInit(): void {
     this.getLookups();
     this.initForms();
-    this.getIdsFromUrl()
+    this.getIdsFromUrl();
   }
 
   getIdsFromUrl() {
@@ -208,6 +220,7 @@ export class FormTableComponent implements OnInit {
       this.getQualityGuarantors();
       this.getPeriodicReports();
       this.getStatusDocuments();
+      this.getAttachmentSource();
       this.cdr.detectChanges();
     });
   }
@@ -340,6 +353,15 @@ export class FormTableComponent implements OnInit {
 
       this.visitStatusDocuments = transformedData;
       this.cdr.detectChanges();
+    });
+  }
+
+  getAttachmentSource() {
+    this.visitDetails?.attachments.forEach((element: any) => {
+      console.log('element', element);
+      this.attachmentService.downloadAttachment(element.attachment).subscribe((res) => {
+        this.imageArray.push(res.data)
+      });
     });
   }
 
@@ -695,7 +717,7 @@ export class FormTableComponent implements OnInit {
       communicationAndCoordination: this.changeDocumentForm.value.documentNo,
       safetyRecommendations: this.changeDocumentForm.value.documentNo,
       totalCommitmentPercentage: this.changeDocumentForm.value.documentNo,
-      signature: null
+      signature: null,
     };
 
     this.visitFormService.updateDocumentFields(payload).subscribe(
@@ -1387,6 +1409,175 @@ export class FormTableComponent implements OnInit {
         });
       }
     );
+  }
+
+  onAttachmentSelected1(event: any) {
+    this.selectedFile1 = <File>event.target.files[0];
+    const fd = new FormData();
+    fd.append('Attachment', this.selectedFile1, this.selectedFile1.name);
+    this.attachmentService.uploadAttachment(fd).subscribe((res) => {
+      let payload: any = {
+        step: 7,
+        body: {
+          id: 6,
+          attachment: res.data,
+          title: 'one',
+          attachmentType: +1,
+          visitFormId: this.visitId,
+        },
+      };
+
+      this.visitFormService.upsertVisitFormStep(payload).subscribe(
+        (res) => {
+          this.fileInput1.nativeElement.value = '';
+          this.getVisitDetails();
+          this.showAlert({
+            icon: 'success',
+            title: 'Success!',
+            text:
+              this.riskForm.value.id !== 0
+                ? 'Updated successfully!'
+                : 'Added successfully!',
+          });
+          this.cdr.detectChanges();
+        },
+        (error) => {
+          this.selectedFile1 = null;
+          this.fileInput1.nativeElement.value = '';
+          this.showAlert({
+            icon: 'error',
+            title: 'Error!',
+            text: 'Please try again',
+          });
+        }
+      );
+    });
+  }
+  onAttachmentSelected2(event: any) {
+    this.selectedFile2 = <File>event.target.files[0];
+    const fd = new FormData();
+    fd.append('Attachment', this.selectedFile2, this.selectedFile2.name);
+    this.attachmentService.uploadAttachment(fd).subscribe((res) => {
+      let payload: any = {
+        step: 7,
+        body: {
+          id: 0,
+          attachment: res.data,
+          title: 'second',
+          attachmentType: +1,
+          visitFormId: this.visitId,
+        },
+      };
+
+      this.visitFormService.upsertVisitFormStep(payload).subscribe(
+        (res) => {
+          this.fileInput2.nativeElement.value = '';
+          this.getVisitDetails();
+          this.showAlert({
+            icon: 'success',
+            title: 'Success!',
+            text:
+              this.riskForm.value.id !== 0
+                ? 'Updated successfully!'
+                : 'Added successfully!',
+          });
+          this.cdr.detectChanges();
+        },
+        (error) => {
+          this.selectedFile2 = null;
+          this.fileInput2.nativeElement.value = '';
+          this.showAlert({
+            icon: 'error',
+            title: 'Error!',
+            text: 'Please try again',
+          });
+        }
+      );
+    });
+  }
+  onAttachmentSelected3(event: any) {
+    this.selectedFile3 = <File>event.target.files[0];
+    const fd = new FormData();
+    fd.append('Attachment', this.selectedFile3, this.selectedFile3.name);
+    this.attachmentService.uploadAttachment(fd).subscribe((res) => {
+      let payload: any = {
+        step: 7,
+        body: {
+          id: 0,
+          attachment: res.data,
+          title: 'third',
+          attachmentType: +1,
+          visitFormId: this.visitId,
+        },
+      };
+
+      this.visitFormService.upsertVisitFormStep(payload).subscribe(
+        (res) => {
+          this.fileInput3.nativeElement.value = '';
+          this.getVisitDetails();
+          this.showAlert({
+            icon: 'success',
+            title: 'Success!',
+            text:
+              this.riskForm.value.id !== 0
+                ? 'Updated successfully!'
+                : 'Added successfully!',
+          });
+          this.cdr.detectChanges();
+        },
+        (error) => {
+          this.selectedFile3 = null;
+          this.fileInput3.nativeElement.value = '';
+          this.showAlert({
+            icon: 'error',
+            title: 'Error!',
+            text: 'Please try again',
+          });
+        }
+      );
+    });
+  }
+  onAttachmentSelected4(event: any) {
+    this.selectedFile4 = <File>event.target.files[0];
+    const fd = new FormData();
+    fd.append('Attachment', this.selectedFile4, this.selectedFile4.name);
+    this.attachmentService.uploadAttachment(fd).subscribe((res) => {
+      let payload: any = {
+        step: 7,
+        body: {
+          id: 0,
+          attachment: res.data,
+          title: 'forth',
+          attachmentType: +1,
+          visitFormId: this.visitId,
+        },
+      };
+
+      this.visitFormService.upsertVisitFormStep(payload).subscribe(
+        (res) => {
+          this.fileInput4.nativeElement.value = '';
+          this.getVisitDetails();
+          this.showAlert({
+            icon: 'success',
+            title: 'Success!',
+            text:
+              this.riskForm.value.id !== 0
+                ? 'Updated successfully!'
+                : 'Added successfully!',
+          });
+          this.cdr.detectChanges();
+        },
+        (error) => {
+          this.selectedFile4 = null;
+          this.fileInput4.nativeElement.value = '';
+          this.showAlert({
+            icon: 'error',
+            title: 'Error!',
+            text: 'Please try again',
+          });
+        }
+      );
+    });
   }
 
   showAlert(swalOptions: SweetAlertOptions) {

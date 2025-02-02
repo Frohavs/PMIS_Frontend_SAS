@@ -795,10 +795,25 @@
   <h4 class="py-3">5.1 Visit photos:</h4>
 
   <div class="img_wrapper">
-    <div class="one"></div>
-    <div class="one"></div>
-    <div class="one"></div>
-    <div class="one"></div>
+    <div class="one" (click)="fileInput1.click()">
+      <img *ngIf="imageArray[0]" [src]="imageArray[0]" alt="">
+      <input type="file" name="first" id="first" (change)="onAttachmentSelected1($event)" #fileInput1 style="display: none;">
+    </div>
+    <div class="one" (click)="fileInput2.click()">
+      <img *ngIf="imageArray[1]" [src]="imageArray[1]" alt="">
+      
+      <input type="file" name="second" id="second" (change)="onAttachmentSelected2($event)" #fileInput2 style="display: none;">
+    </div>
+    <div class="one" (click)="fileInput3.click()">
+      <img *ngIf="imageArray[2]" [src]="imageArray[2]" alt="">
+      
+      <input type="file" name="third" id="third" (change)="onAttachmentSelected3($event)" #fileInput3 style="display: none;">
+    </div>
+    <div class="one" (click)="fileInput4.click()">
+      <img *ngIf="imageArray[3]" [src]="imageArray[3]" alt="">
+
+      <input type="file" name="forth" id="forth" (change)="onAttachmentSelected4($event)" #fileInput4 style="display: none;">
+    </div>
   </div>
 </div>
 
