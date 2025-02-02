@@ -760,16 +760,6 @@
         <td>{{item?.na ? '&#8226;' : ""}}</td>
         <td>{{item?.note || "--"}}</td>
       </tr>
-      <tr>
-        <td class="greened">12</td>
-        <td><span class="shadow"> توفر مرافق رعاية الموظفين </span></td>
-        <td class="centered">&#8226;</td>
-        <!-- Green dot -->
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-      </tr>
     </tbody>
   </table>
   <!-- --------------------------------------------------------------------- -->
@@ -1694,7 +1684,7 @@
   </form>
 </ng-template>
 <ng-template #StatusDocumentModal let-modal>
-  <form [formGroup]="StatusDocumentForm" (ngSubmit)="onPeriodicReport()">
+  <form [formGroup]="StatusDocumentForm" (ngSubmit)="onStatusDocument()">
     <div class="modal-header">
       <h4 class="modal-title" id="modal-basic-title">Status Document Criteria</h4>
       <button
