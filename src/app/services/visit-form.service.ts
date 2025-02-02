@@ -36,6 +36,15 @@ export class VisitFormService {
       headers: httpHeaders
     });
   }
+  getVisitDetailsById(id: number | null): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/GetDetails/${id}`;
+    return this.http.get<any>(url, {
+      headers: httpHeaders
+    });
+  }
   getVisitById(id: number | null): Observable<any> {
     const httpHeaders = new HttpHeaders({
       Authorization: `Bearer ${this.token}`,

@@ -53,7 +53,7 @@ export class VisitDetailsComponent implements OnInit {
   }
 
   getVisitDetails() {
-    this.visitFormService.getVisitById(this.visitId).subscribe((res) => {
+    this.visitFormService.getVisitDetailsById(this.visitId).subscribe((res) => {
       this.visitDetails = res.data;
       this.cdr.detectChanges();
     });
