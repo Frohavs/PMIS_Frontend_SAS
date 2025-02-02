@@ -356,7 +356,11 @@
       </tr>
       <tr>
         <th></th>
-        <th style="background-color: #fff2cc !important; color: #000 !important">Fully committed</th>
+        <th
+          style="background-color: #fff2cc !important; color: #000 !important"
+        >
+          Fully committed
+        </th>
         <th>Partially committed</th>
         <th>Not committed</th>
         <th>N/A</th>
@@ -367,13 +371,15 @@
       <tr *ngFor="let item of visitHealths; index as i">
         <td class="greened">{{ i + 1 }}</td>
         <td>
-          <span class="shadow" (click)="openVisitHealth(item)"> {{ item?.name }}</span>
+          <span class="shadow" (click)="openVisitHealth(item)">
+            {{ item?.name }}</span
+          >
         </td>
-        <td>{{item?.fullyCommitted ? '&#8226;' : ""}}</td>
-        <td>{{item?.partiallyCommitted ? '&#8226;' : ""}}</td>
-        <td>{{item?.notCommitted ? '&#8226;' : ""}}</td>
-        <td>{{item?.na ? '&#8226;' : ""}}</td>
-        <td>{{item?.note || "--"}}</td>
+        <td>{{ item?.fullyCommitted ? "&#8226;" : "" }}</td>
+        <td>{{ item?.partiallyCommitted ? "&#8226;" : "" }}</td>
+        <td>{{ item?.notCommitted ? "&#8226;" : "" }}</td>
+        <td>{{ item?.na ? "&#8226;" : "" }}</td>
+        <td>{{ item?.note || "--" }}</td>
       </tr>
       <tr>
         <td class="greened">{{ this.visitHealths.length + 1 }}</td>
@@ -457,13 +463,15 @@
       <tr *ngFor="let item of visitQualityGuarantors; index as i">
         <td class="greened">{{ i + 1 }}</td>
         <td>
-          <span class="shadow" (click)="openQualityGuarantor(item)"> {{ item?.name }}</span>
+          <span class="shadow" (click)="openQualityGuarantor(item)">
+            {{ item?.name }}</span
+          >
         </td>
-        <td>{{item?.fullyCommitted ? '&#8226;' : ""}}</td>
-        <td>{{item?.partiallyCommitted ? '&#8226;' : ""}}</td>
-        <td>{{item?.notCommitted ? '&#8226;' : ""}}</td>
-        <td>{{item?.na ? '&#8226;' : ""}}</td>
-        <td>{{item?.note || "--"}}</td>
+        <td>{{ item?.fullyCommitted ? "&#8226;" : "" }}</td>
+        <td>{{ item?.partiallyCommitted ? "&#8226;" : "" }}</td>
+        <td>{{ item?.notCommitted ? "&#8226;" : "" }}</td>
+        <td>{{ item?.na ? "&#8226;" : "" }}</td>
+        <td>{{ item?.note || "--" }}</td>
       </tr>
     </tbody>
   </table>
@@ -502,13 +510,15 @@
       <tr *ngFor="let item of visitPeriodicReports; index as i">
         <td class="greened">{{ i + 1 }}</td>
         <td>
-          <span class="shadow" (click)="openPeriodicReport(item)"> {{ item?.name }}</span>
+          <span class="shadow" (click)="openPeriodicReport(item)">
+            {{ item?.name }}</span
+          >
         </td>
-        <td>{{item?.fullyCommitted ? '&#8226;' : ""}}</td>
-        <td>{{item?.partiallyCommitted ? '&#8226;' : ""}}</td>
-        <td>{{item?.notCommitted ? '&#8226;' : ""}}</td>
-        <td>{{item?.na ? '&#8226;' : ""}}</td>
-        <td>{{item?.note || "--"}}</td>
+        <td>{{ item?.fullyCommitted ? "&#8226;" : "" }}</td>
+        <td>{{ item?.partiallyCommitted ? "&#8226;" : "" }}</td>
+        <td>{{ item?.notCommitted ? "&#8226;" : "" }}</td>
+        <td>{{ item?.na ? "&#8226;" : "" }}</td>
+        <td>{{ item?.note || "--" }}</td>
       </tr>
     </tbody>
   </table>
@@ -752,13 +762,15 @@
       <tr *ngFor="let item of visitStatusDocuments; index as i">
         <td class="greened">{{ i + 1 }}</td>
         <td>
-          <span class="shadow" (click)="openStatusDocument(item)"> {{ item?.name }}</span>
+          <span class="shadow" (click)="openStatusDocument(item)">
+            {{ item?.name }}</span
+          >
         </td>
-        <td>{{item?.fullyCommitted ? '&#8226;' : ""}}</td>
-        <td>{{item?.partiallyCommitted ? '&#8226;' : ""}}</td>
-        <td>{{item?.notCommitted ? '&#8226;' : ""}}</td>
-        <td>{{item?.na ? '&#8226;' : ""}}</td>
-        <td>{{item?.note || "--"}}</td>
+        <td>{{ item?.fullyCommitted ? "&#8226;" : "" }}</td>
+        <td>{{ item?.partiallyCommitted ? "&#8226;" : "" }}</td>
+        <td>{{ item?.notCommitted ? "&#8226;" : "" }}</td>
+        <td>{{ item?.na ? "&#8226;" : "" }}</td>
+        <td>{{ item?.note || "--" }}</td>
       </tr>
     </tbody>
   </table>
@@ -777,6 +789,16 @@
     <a (click)="changeDocumentNo(4)" class="btn btn-sm btn-primary">
       {{ visitDetails?.safetyRecommendations || "--" }}
     </a>
+  </div>
+
+  <h3 class="pt-5">5. Accessories:</h3>
+  <h4 class="py-3">5.1 Visit photos:</h4>
+
+  <div class="img_wrapper">
+    <div class="one"></div>
+    <div class="one"></div>
+    <div class="one"></div>
+    <div class="one"></div>
   </div>
 </div>
 
@@ -1120,7 +1142,6 @@
               <div class="fv-help-block">status is required</div>
             </div>
           </div>
-
         </div>
         <div class="col-lg-12 fv-row">
           <label class="col-lg-4 col-form-label fw-bold fs-6"
@@ -1495,7 +1516,9 @@
 <ng-template #qualityGuarantorModal let-modal>
   <form [formGroup]="qualityGuarantorForm" (ngSubmit)="onQualityGuarantor()">
     <div class="modal-header">
-      <h4 class="modal-title" id="modal-basic-title">Quality Guarantor Criteria</h4>
+      <h4 class="modal-title" id="modal-basic-title">
+        Quality Guarantor Criteria
+      </h4>
       <button
         type="button"
         class="btn-close"
@@ -1591,7 +1614,9 @@
 <ng-template #periodicReportModal let-modal>
   <form [formGroup]="periodicReportForm" (ngSubmit)="onPeriodicReport()">
     <div class="modal-header">
-      <h4 class="modal-title" id="modal-basic-title">Periodic Report Criteria</h4>
+      <h4 class="modal-title" id="modal-basic-title">
+        Periodic Report Criteria
+      </h4>
       <button
         type="button"
         class="btn-close"
@@ -1686,7 +1711,9 @@
 <ng-template #StatusDocumentModal let-modal>
   <form [formGroup]="StatusDocumentForm" (ngSubmit)="onStatusDocument()">
     <div class="modal-header">
-      <h4 class="modal-title" id="modal-basic-title">Status Document Criteria</h4>
+      <h4 class="modal-title" id="modal-basic-title">
+        Status Document Criteria
+      </h4>
       <button
         type="button"
         class="btn-close"

@@ -171,3 +171,20 @@ h3 {
   font-size: 14px;
   font-weight: 600;
 }
+
+.img_wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  height: 350px;
+
+  .one {
+    padding: 10px;
+    height: 100%;
+    width: 45%;
+    object-fit: cover;
+    border: 1px dashed #000;
+    margin: 5px;
+  }
+}
