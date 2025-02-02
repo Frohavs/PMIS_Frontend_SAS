@@ -33,6 +33,7 @@ export class FormTableComponent implements OnInit {
   visitHealths: any[] = [];
   visitQualityGuarantors: any[] = [];
   visitPeriodicReports: any[] = [];
+  visitStatusDocuments: any[] = [];
   isLoading: boolean;
   documentType: number = 0;
   swalOptions: SweetAlertOptions = {};
@@ -56,6 +57,8 @@ export class FormTableComponent implements OnInit {
   @ViewChild('healthModal') healthModal: TemplateRef<any>;
   periodicReportForm: FormGroup;
   @ViewChild('periodicReportModal') periodicReportModal: TemplateRef<any>;
+  StatusDocumentForm: FormGroup;
+  @ViewChild('StatusDocumentModal') StatusDocumentModal: TemplateRef<any>;
   qualityGuarantorForm: FormGroup;
   @ViewChild('qualityGuarantorModal') qualityGuarantorModal: TemplateRef<any>;
   recommendationForm: FormGroup;
@@ -162,6 +165,7 @@ export class FormTableComponent implements OnInit {
     this.initHealthForm();
     this.initQualityGuarantorForm();
     this.initPeriodicReportForm();
+    this.initStatusDocumentForm();
     this.initChRequestsForm();
     this.initRecommendationForm();
     this.initEvidenceForm();
@@ -196,6 +200,7 @@ export class FormTableComponent implements OnInit {
       this.getVisitFormHealth();
       this.getQualityGuarantors();
       this.getPeriodicReports();
+      this.getStatusDocuments();
       this.cdr.detectChanges();
     });
   }
@@ -300,6 +305,29 @@ export class FormTableComponent implements OnInit {
       });
   
       this.visitPeriodicReports = transformedData;
+      this.cdr.detectChanges();
+    });
+  }
+  getStatusDocuments() {
+    this.lookupService.getStatusDocuments().subscribe((res) => {
+      this.visitStatusDocuments = res.data;
+  
+      const transformedData = this.visitStatusDocuments.map((item: any) => {
+        const matched = this.visitDetails?.statusDocuments?.find(
+          (v: any) => v.statusDocument === item.name
+        );
+        return {
+          id: item.id,
+          name: item.name,
+          fullyCommitted: matched?.commitment === 'Fully Committed' || false,
+          partiallyCommitted: matched?.commitment === 'Partially Committed' || false,
+          notCommitted: matched?.commitment === 'Not Committed' || false,
+          na: matched?.commitment === 'NA' || false,
+          note: matched?.note || '',
+        };
+      });
+  
+      this.visitStatusDocuments = transformedData;
       this.cdr.detectChanges();
     });
   }
@@ -413,6 +441,17 @@ export class FormTableComponent implements OnInit {
       });
     }
     this.modalService.open(this.periodicReportModal, this.modalConfig);
+  }
+  openStatusDocument(request?: any) {
+    this.StatusDocumentForm.reset();
+    if (request) {
+      this.StatusDocumentForm.patchValue({
+        statusDocumentId: request.id,
+        commitment: request.commitment,
+        note: request.note,
+      });
+    }
+    this.modalService.open(this.StatusDocumentModal, this.modalConfig);
   }
 
   openEvidence(evidence?: any) {
@@ -532,6 +571,13 @@ export class FormTableComponent implements OnInit {
   initPeriodicReportForm() {
     this.periodicReportForm = this.fb.group({
       periodicReportId: [0],
+      commitment: ['', Validators.required],
+      note: ['', Validators.required],
+    });
+  }
+  initStatusDocumentForm() {
+    this.StatusDocumentForm = this.fb.group({
+      statusDocumentId: [0],
       commitment: ['', Validators.required],
       note: ['', Validators.required],
     });
@@ -890,6 +936,56 @@ export class FormTableComponent implements OnInit {
         this.getVisitDetails();
         this.modalService.dismissAll();
         this.periodicReportForm.reset();
+        this.showAlert({
+          icon: 'success',
+          title: 'Success!',
+          text:
+            this.objectivesForm.value.id !== 0
+              ? 'Updated successfully!'
+              : 'Added successfully!',
+        });
+        this.cdr.detectChanges();
+      },
+      (error) => {
+        this.isLoading = false;
+        this.modalService.dismissAll();
+        this.showAlert({
+          icon: 'error',
+          title: 'Error!',
+          text: 'Please try again',
+        });
+      }
+    );
+  }
+  onStatusDocument() {
+    if (this.StatusDocumentForm.invalid) {
+      this.StatusDocumentForm.markAllAsTouched();
+      return;
+    }
+    this.isLoading = true;
+    let payload: any = {
+      step: 11,
+      body: {
+        commitment: +this.StatusDocumentForm.value.commitment,
+        note: this.StatusDocumentForm.value.note,
+        visitFormId: this.visitId,
+      },
+    };
+
+    if (
+      this.StatusDocumentForm.value.statusDocumentId !== 0 &&
+      this.StatusDocumentForm.value.statusDocumentId !== null
+    ) {
+      payload.body['statusDocumentId'] =
+        this.StatusDocumentForm.value.statusDocumentId;
+    }
+
+    this.visitFormService.upsertVisitFormStep(payload).subscribe(
+      (res) => {
+        this.isLoading = false;
+        this.getVisitDetails();
+        this.modalService.dismissAll();
+        this.StatusDocumentForm.reset();
         this.showAlert({
           icon: 'success',
           title: 'Success!',

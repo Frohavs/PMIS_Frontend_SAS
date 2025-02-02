@@ -578,6 +578,16 @@ export class LookupService {
       headers: httpHeaders,
     });
   }
+  getStatusDocuments(): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+      LanguageCode: 'en',
+    });
+    const url = `${this.API_USERS_URL}/GetStatusDocuments`;
+    return this.http.get<any>(url, {
+      headers: httpHeaders,
+    });
+  }
   getVisitFormRiskLevel(): Observable<any> {
     const httpHeaders = new HttpHeaders({
       Authorization: `Bearer ${this.token}`,
