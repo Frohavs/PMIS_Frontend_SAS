@@ -160,6 +160,8 @@ export class FormTableComponent implements OnInit {
     this.initObjectivesForm();
     this.initScheduleForm();
     this.initHealthForm();
+    this.initQualityGuarantorForm();
+    this.initPeriodicReportForm();
     this.initChRequestsForm();
     this.initRecommendationForm();
     this.initEvidenceForm();
@@ -260,7 +262,7 @@ export class FormTableComponent implements OnInit {
       this.visitQualityGuarantors = res.data;
   
       const transformedData = this.visitQualityGuarantors.map((item: any) => {
-        const matched = this.visitDetails?.visitFormHealth?.find(
+        const matched = this.visitDetails?.qualityGuarantors?.find(
           (v: any) => v.qualityGuarantor === item.name
         );
         return {
@@ -516,6 +518,20 @@ export class FormTableComponent implements OnInit {
   initHealthForm() {
     this.healthForm = this.fb.group({
       healthAndSecurityId: [0],
+      commitment: ['', Validators.required],
+      note: ['', Validators.required],
+    });
+  }
+  initQualityGuarantorForm() {
+    this.qualityGuarantorForm = this.fb.group({
+      qualityGuarantorId: [0],
+      commitment: ['', Validators.required],
+      note: ['', Validators.required],
+    });
+  }
+  initPeriodicReportForm() {
+    this.periodicReportForm = this.fb.group({
+      periodicReportId: [0],
       commitment: ['', Validators.required],
       note: ['', Validators.required],
     });

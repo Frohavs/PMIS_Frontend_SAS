@@ -456,12 +456,14 @@
     <tbody>
       <tr *ngFor="let item of visitQualityGuarantors">
         <td class="greened">1</td>
-        <td><span class="shadow" (click)="openQualityGuarantor(item)"> بدليل النماذج الموحدة (PDM) </span></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td>
+          <span class="shadow" (click)="openQualityGuarantor(item)"> {{ item?.name }}</span>
+        </td>
+        <td>{{item?.fullyCommitted ? '&#8226;' : ""}}</td>
+        <td>{{item?.partiallyCommitted ? '&#8226;' : ""}}</td>
+        <td>{{item?.notCommitted ? '&#8226;' : ""}}</td>
+        <td>{{item?.na ? '&#8226;' : ""}}</td>
+        <td>{{item?.note || "--"}}</td>
       </tr>
     </tbody>
   </table>
@@ -499,12 +501,14 @@
     <tbody>
       <tr *ngFor="let item of visitPeriodicReports">
         <td class="greened">1</td>
-        <td><span class="shadow" (click)="openPeriodicReport(item)"> بدليل النماذج الموحدة (PDM) </span></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td>
+          <span class="shadow" (click)="openPeriodicReport(item)"> {{ item?.name }}</span>
+        </td>
+        <td>{{item?.fullyCommitted ? '&#8226;' : ""}}</td>
+        <td>{{item?.partiallyCommitted ? '&#8226;' : ""}}</td>
+        <td>{{item?.notCommitted ? '&#8226;' : ""}}</td>
+        <td>{{item?.na ? '&#8226;' : ""}}</td>
+        <td>{{item?.note || "--"}}</td>
       </tr>
     </tbody>
   </table>
@@ -1591,6 +1595,7 @@
     </div>
   </form>
 </ng-template>
+
 <ng-template #periodicReportModal let-modal>
   <form [formGroup]="periodicReportForm" (ngSubmit)="onPeriodicReport()">
     <div class="modal-header">
@@ -2211,6 +2216,7 @@
     </div>
   </form>
 </ng-template>
+
 <ng-template #riskModal let-modal>
   <form [formGroup]="riskForm" (ngSubmit)="onAddRisk()">
     <div class="modal-header">
@@ -2399,6 +2405,7 @@
     </div>
   </form>
 </ng-template>
+
 <ng-template #correctivePlanModal let-modal>
   <form [formGroup]="correctivePlanForm" (ngSubmit)="onAddCorrectivePlan()">
     <div class="modal-header">
