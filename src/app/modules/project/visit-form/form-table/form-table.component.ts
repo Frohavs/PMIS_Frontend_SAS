@@ -695,6 +695,7 @@ export class FormTableComponent implements OnInit {
       communicationAndCoordination: this.changeDocumentForm.value.documentNo,
       safetyRecommendations: this.changeDocumentForm.value.documentNo,
       totalCommitmentPercentage: this.changeDocumentForm.value.documentNo,
+      signature: null
     };
 
     this.visitFormService.updateDocumentFields(payload).subscribe(
