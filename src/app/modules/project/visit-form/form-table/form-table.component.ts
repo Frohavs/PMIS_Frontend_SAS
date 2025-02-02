@@ -975,7 +975,7 @@ export class FormTableComponent implements OnInit {
     }
     this.isLoading = true;
     let payload: any = {
-      step: 11,
+      step: 8,
       body: {
         commitment: +this.StatusDocumentForm.value.commitment,
         note: this.StatusDocumentForm.value.note,
