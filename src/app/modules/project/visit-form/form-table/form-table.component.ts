@@ -158,6 +158,26 @@ export class FormTableComponent implements OnInit {
 
   ngOnInit(): void {
     this.getLookups();
+    this.initForms();
+    this.getIdsFromUrl()
+  }
+
+  getIdsFromUrl() {
+    this.activatedRoute.params.subscribe((params) => {
+      this.projectId = +params['id'];
+      if (this.projectId) {
+        this.getProjectDetails();
+      }
+    });
+    this.activatedRoute.queryParams.subscribe((params) => {
+      this.visitId = +params['visitId'];
+      if (this.visitId) {
+        this.getVisitDetails();
+      }
+    });
+  }
+
+  initForms() {
     this.initChangeDocumentForm();
     this.initAttendanceForm();
     this.initObjectivesForm();
@@ -173,19 +193,6 @@ export class FormTableComponent implements OnInit {
     this.initLesson();
     this.initRisk();
     this.initCorrectivePlan();
-
-    this.activatedRoute.params.subscribe((params) => {
-      this.projectId = +params['id'];
-      if (this.projectId) {
-        this.getProjectDetails();
-      }
-    });
-    this.activatedRoute.queryParams.subscribe((params) => {
-      this.visitId = +params['visitId'];
-      if (this.visitId) {
-        this.getVisitDetails();
-      }
-    });
   }
 
   getProjectDetails() {
@@ -241,23 +248,24 @@ export class FormTableComponent implements OnInit {
   getVisitFormHealth() {
     this.lookupService.getVisitFormHealth().subscribe((res) => {
       this.visitHealths = res.data;
-  
+
       const transformedData = this.visitHealths.map((item: any) => {
         const matched = this.visitDetails?.visitFormHealth?.find(
           (v: any) => v.healthAndSecurityTitle === item.name
         );
-  
+
         return {
           id: item.id,
           name: item.name,
           fullyCommitted: matched?.commitment === 'Fully Committed' || false,
-          partiallyCommitted: matched?.commitment === 'Partially Committed' || false,
+          partiallyCommitted:
+            matched?.commitment === 'Partially Committed' || false,
           notCommitted: matched?.commitment === 'Not Committed' || false,
           na: matched?.commitment === 'NA' || false,
           note: matched?.note || '',
         };
       });
-  
+
       this.visitHealths = transformedData;
       this.cdr.detectChanges();
     });
@@ -265,7 +273,7 @@ export class FormTableComponent implements OnInit {
   getQualityGuarantors() {
     this.lookupService.getQualityGuarantors().subscribe((res) => {
       this.visitQualityGuarantors = res.data;
-  
+
       const transformedData = this.visitQualityGuarantors.map((item: any) => {
         const matched = this.visitDetails?.qualityGuarantors?.find(
           (v: any) => v.qualityGuarantor === item.name
@@ -274,13 +282,14 @@ export class FormTableComponent implements OnInit {
           id: item.id,
           name: item.name,
           fullyCommitted: matched?.commitment === 'Fully Committed' || false,
-          partiallyCommitted: matched?.commitment === 'Partially Committed' || false,
+          partiallyCommitted:
+            matched?.commitment === 'Partially Committed' || false,
           notCommitted: matched?.commitment === 'Not Committed' || false,
           na: matched?.commitment === 'NA' || false,
           note: matched?.note || '',
         };
       });
-  
+
       this.visitQualityGuarantors = transformedData;
       this.cdr.detectChanges();
     });
@@ -288,7 +297,7 @@ export class FormTableComponent implements OnInit {
   getPeriodicReports() {
     this.lookupService.getPeriodicReports().subscribe((res) => {
       this.visitPeriodicReports = res.data;
-  
+
       const transformedData = this.visitPeriodicReports.map((item: any) => {
         const matched = this.visitDetails?.periodicReports?.find(
           (v: any) => v.periodicReport === item.name
@@ -297,13 +306,14 @@ export class FormTableComponent implements OnInit {
           id: item.id,
           name: item.name,
           fullyCommitted: matched?.commitment === 'Fully Committed' || false,
-          partiallyCommitted: matched?.commitment === 'Partially Committed' || false,
+          partiallyCommitted:
+            matched?.commitment === 'Partially Committed' || false,
           notCommitted: matched?.commitment === 'Not Committed' || false,
           na: matched?.commitment === 'NA' || false,
           note: matched?.note || '',
         };
       });
-  
+
       this.visitPeriodicReports = transformedData;
       this.cdr.detectChanges();
     });
@@ -311,7 +321,7 @@ export class FormTableComponent implements OnInit {
   getStatusDocuments() {
     this.lookupService.getStatusDocuments().subscribe((res) => {
       this.visitStatusDocuments = res.data;
-  
+
       const transformedData = this.visitStatusDocuments.map((item: any) => {
         const matched = this.visitDetails?.statusDocuments?.find(
           (v: any) => v.statusDocument === item.name
@@ -320,13 +330,14 @@ export class FormTableComponent implements OnInit {
           id: item.id,
           name: item.name,
           fullyCommitted: matched?.commitment === 'Fully Committed' || false,
-          partiallyCommitted: matched?.commitment === 'Partially Committed' || false,
+          partiallyCommitted:
+            matched?.commitment === 'Partially Committed' || false,
           notCommitted: matched?.commitment === 'Not Committed' || false,
           na: matched?.commitment === 'NA' || false,
           note: matched?.note || '',
         };
       });
-  
+
       this.visitStatusDocuments = transformedData;
       this.cdr.detectChanges();
     });
