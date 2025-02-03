@@ -26,6 +26,7 @@ export class FormTableComponent implements OnInit {
   projectId: number;
   visitId: number;
   projectDetails: any;
+  visitDataTable: any;
   visitDetails: any;
   visitIndices: any[] = [];
   visitRiskLevels: any[] = [];
@@ -214,6 +215,10 @@ export class FormTableComponent implements OnInit {
     });
   }
   getVisitDetails() {
+    this.visitFormService.getVisitDetailsById(this.visitId).subscribe((res) => {
+      this.visitDataTable = res.data;
+      this.cdr.detectChanges();
+    });
     this.visitFormService.getVisitById(this.visitId).subscribe((res) => {
       this.visitDetails = res.data;
       this.getVisitFormHealth();
@@ -357,11 +362,13 @@ export class FormTableComponent implements OnInit {
   }
 
   getAttachmentSource() {
-    this.visitDetails?.attachments.forEach((element: any) => {
+    this.visitDetails?.attachments.forEach((element: any, index: number) => {
       console.log('element', element);
-      this.attachmentService.downloadAttachment(element.attachment).subscribe((res) => {
-        this.imageArray.push(res.data)
-      });
+      this.attachmentService
+        .downloadAttachment(element.attachment)
+        .subscribe((res) => {
+          this.imageArray.push({ id: index, data: res.data });
+        });
     });
   }
 
@@ -877,7 +884,7 @@ export class FormTableComponent implements OnInit {
           icon: 'success',
           title: 'Success!',
           text:
-            this.objectivesForm.value.id !== 0
+            this.healthForm.value.id !== 0
               ? 'Updated successfully!'
               : 'Added successfully!',
         });
@@ -886,7 +893,6 @@ export class FormTableComponent implements OnInit {
       (error) => {
         this.isLoading = false;
         this.healthForm.reset();
-        this.modalService.dismissAll();
         this.showAlert({
           icon: 'error',
           title: 'Error!',
@@ -928,7 +934,7 @@ export class FormTableComponent implements OnInit {
           icon: 'success',
           title: 'Success!',
           text:
-            this.objectivesForm.value.id !== 0
+            this.qualityGuarantorForm.value.id !== 0
               ? 'Updated successfully!'
               : 'Added successfully!',
         });
@@ -937,7 +943,6 @@ export class FormTableComponent implements OnInit {
       (error) => {
         this.isLoading = false;
         this.qualityGuarantorForm.reset();
-        this.modalService.dismissAll();
         this.showAlert({
           icon: 'error',
           title: 'Error!',
@@ -979,7 +984,7 @@ export class FormTableComponent implements OnInit {
           icon: 'success',
           title: 'Success!',
           text:
-            this.objectivesForm.value.id !== 0
+            this.periodicReportForm.value.id !== 0
               ? 'Updated successfully!'
               : 'Added successfully!',
         });
@@ -988,7 +993,6 @@ export class FormTableComponent implements OnInit {
       (error) => {
         this.isLoading = false;
         this.periodicReportForm.reset();
-        this.modalService.dismissAll();
         this.showAlert({
           icon: 'error',
           title: 'Error!',
@@ -1030,7 +1034,7 @@ export class FormTableComponent implements OnInit {
           icon: 'success',
           title: 'Success!',
           text:
-            this.objectivesForm.value.id !== 0
+            this.StatusDocumentForm.value.id !== 0
               ? 'Updated successfully!'
               : 'Added successfully!',
         });
@@ -1039,7 +1043,6 @@ export class FormTableComponent implements OnInit {
       (error) => {
         this.isLoading = false;
         this.StatusDocumentForm.reset();
-        this.modalService.dismissAll();
         this.showAlert({
           icon: 'error',
           title: 'Error!',
@@ -1086,7 +1089,7 @@ export class FormTableComponent implements OnInit {
           icon: 'success',
           title: 'Success!',
           text:
-            this.objectivesForm.value.id !== 0
+            this.chRequestsForm.value.id !== 0
               ? 'Updated successfully!'
               : 'Added successfully!',
         });
@@ -1095,7 +1098,6 @@ export class FormTableComponent implements OnInit {
       (error) => {
         this.isLoading = false;
         this.chRequestsForm.reset();
-        this.modalService.dismissAll();
         this.showAlert({
           icon: 'error',
           title: 'Error!',
@@ -1144,7 +1146,6 @@ export class FormTableComponent implements OnInit {
       (error) => {
         this.isLoading = false;
         this.objectivesForm.reset();
-        this.modalService.dismissAll();
         this.showAlert({
           icon: 'error',
           title: 'Error!',
@@ -1195,7 +1196,6 @@ export class FormTableComponent implements OnInit {
       (error) => {
         this.isLoading = false;
         this.evidenceForm.reset();
-        this.modalService.dismissAll();
         this.showAlert({
           icon: 'error',
           title: 'Error!',
@@ -1250,7 +1250,6 @@ export class FormTableComponent implements OnInit {
       (error) => {
         this.isLoading = false;
         this.criticalProblemsForm.reset();
-        this.modalService.dismissAll();
         this.showAlert({
           icon: 'error',
           title: 'Error!',
@@ -1298,7 +1297,6 @@ export class FormTableComponent implements OnInit {
       (error) => {
         this.isLoading = false;
         this.lessonForm.reset();
-        this.modalService.dismissAll();
         this.showAlert({
           icon: 'error',
           title: 'Error!',
@@ -1348,7 +1346,6 @@ export class FormTableComponent implements OnInit {
       (error) => {
         this.isLoading = false;
         this.riskForm.reset();
-        this.modalService.dismissAll();
         this.showAlert({
           icon: 'error',
           title: 'Error!',
@@ -1392,7 +1389,7 @@ export class FormTableComponent implements OnInit {
           icon: 'success',
           title: 'Success!',
           text:
-            this.riskForm.value.id !== 0
+            this.correctivePlanForm.value.id !== 0
               ? 'Updated successfully!'
               : 'Added successfully!',
         });
@@ -1401,7 +1398,6 @@ export class FormTableComponent implements OnInit {
       (error) => {
         this.isLoading = false;
         this.correctivePlanForm.reset();
-        this.modalService.dismissAll();
         this.showAlert({
           icon: 'error',
           title: 'Error!',
@@ -1411,7 +1407,7 @@ export class FormTableComponent implements OnInit {
     );
   }
 
-  onAttachmentSelected1(event: any) {
+  onAttachmentSelected1(event: any, id: number) {
     this.selectedFile1 = <File>event.target.files[0];
     const fd = new FormData();
     fd.append('Attachment', this.selectedFile1, this.selectedFile1.name);
@@ -1419,7 +1415,7 @@ export class FormTableComponent implements OnInit {
       let payload: any = {
         step: 7,
         body: {
-          id: 6,
+          id: id || 0,
           attachment: res.data,
           title: 'one',
           attachmentType: +1,
@@ -1434,10 +1430,7 @@ export class FormTableComponent implements OnInit {
           this.showAlert({
             icon: 'success',
             title: 'Success!',
-            text:
-              this.riskForm.value.id !== 0
-                ? 'Updated successfully!'
-                : 'Added successfully!',
+            text: id !== 0 ? 'Updated successfully!' : 'Added successfully!',
           });
           this.cdr.detectChanges();
         },
@@ -1453,7 +1446,7 @@ export class FormTableComponent implements OnInit {
       );
     });
   }
-  onAttachmentSelected2(event: any) {
+  onAttachmentSelected2(event: any, id: number) {
     this.selectedFile2 = <File>event.target.files[0];
     const fd = new FormData();
     fd.append('Attachment', this.selectedFile2, this.selectedFile2.name);
@@ -1461,7 +1454,7 @@ export class FormTableComponent implements OnInit {
       let payload: any = {
         step: 7,
         body: {
-          id: 0,
+          id: id || 0,
           attachment: res.data,
           title: 'second',
           attachmentType: +1,
@@ -1476,10 +1469,7 @@ export class FormTableComponent implements OnInit {
           this.showAlert({
             icon: 'success',
             title: 'Success!',
-            text:
-              this.riskForm.value.id !== 0
-                ? 'Updated successfully!'
-                : 'Added successfully!',
+            text: id !== 0 ? 'Updated successfully!' : 'Added successfully!',
           });
           this.cdr.detectChanges();
         },
@@ -1495,7 +1485,7 @@ export class FormTableComponent implements OnInit {
       );
     });
   }
-  onAttachmentSelected3(event: any) {
+  onAttachmentSelected3(event: any, id: number) {
     this.selectedFile3 = <File>event.target.files[0];
     const fd = new FormData();
     fd.append('Attachment', this.selectedFile3, this.selectedFile3.name);
@@ -1503,7 +1493,7 @@ export class FormTableComponent implements OnInit {
       let payload: any = {
         step: 7,
         body: {
-          id: 0,
+          id: id || 0,
           attachment: res.data,
           title: 'third',
           attachmentType: +1,
@@ -1518,10 +1508,7 @@ export class FormTableComponent implements OnInit {
           this.showAlert({
             icon: 'success',
             title: 'Success!',
-            text:
-              this.riskForm.value.id !== 0
-                ? 'Updated successfully!'
-                : 'Added successfully!',
+            text: id !== 0 ? 'Updated successfully!' : 'Added successfully!',
           });
           this.cdr.detectChanges();
         },
@@ -1537,7 +1524,7 @@ export class FormTableComponent implements OnInit {
       );
     });
   }
-  onAttachmentSelected4(event: any) {
+  onAttachmentSelected4(event: any, id: number) {
     this.selectedFile4 = <File>event.target.files[0];
     const fd = new FormData();
     fd.append('Attachment', this.selectedFile4, this.selectedFile4.name);
@@ -1545,7 +1532,7 @@ export class FormTableComponent implements OnInit {
       let payload: any = {
         step: 7,
         body: {
-          id: 0,
+          id: id || 0,
           attachment: res.data,
           title: 'forth',
           attachmentType: +1,
@@ -1560,16 +1547,50 @@ export class FormTableComponent implements OnInit {
           this.showAlert({
             icon: 'success',
             title: 'Success!',
-            text:
-              this.riskForm.value.id !== 0
-                ? 'Updated successfully!'
-                : 'Added successfully!',
+            text: id !== 0 ? 'Updated successfully!' : 'Added successfully!',
           });
           this.cdr.detectChanges();
         },
         (error) => {
           this.selectedFile4 = null;
           this.fileInput4.nativeElement.value = '';
+          this.showAlert({
+            icon: 'error',
+            title: 'Error!',
+            text: 'Please try again',
+          });
+        }
+      );
+    });
+  }
+
+  addAttachment(event: any) {
+    const selectedFile = <File>event.target.files[0];
+    const fd = new FormData();
+    fd.append('Attachment', selectedFile, selectedFile.name);
+    this.attachmentService.uploadAttachment(fd).subscribe((res) => {
+      let payload: any = {
+        step: 7,
+        body: {
+          id: 0,
+          attachment: res.data,
+          title: 'forth',
+          attachmentType: 2,
+          visitFormId: this.visitId,
+        },
+      };
+
+      this.visitFormService.upsertVisitFormStep(payload).subscribe(
+        (res) => {
+          this.getVisitDetails();
+          this.showAlert({
+            icon: 'success',
+            title: 'Success!',
+            text: 'Added successfully!',
+          });
+          this.cdr.detectChanges();
+        },
+        (error) => {
           this.showAlert({
             icon: 'error',
             title: 'Error!',

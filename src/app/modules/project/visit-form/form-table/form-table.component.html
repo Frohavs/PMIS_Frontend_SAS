@@ -123,11 +123,15 @@
     <tbody>
       <tr>
         <td>Project Name</td>
-        <td>: Execution of King Abdullah International Gardens - Phase III</td>
+        <td>: {{visitDataTable?.projectName}}</td>
       </tr>
       <tr>
         <td>Date of visit</td>
-        <td>14-01-2025</td>
+        <td>{{visitDataTable?.fromDate | date: 'dd-MM-yyyy'}}</td>
+      </tr>
+      <tr>
+        <td>Justification</td>
+        <td>{{visitDataTable?.justification || '--'}}</td>
       </tr>
       <tr>
         <td>Those concerned with attendance</td>
@@ -174,60 +178,60 @@
       <tr>
         <td class="label">Project scope</td>
         <td colspan="3">
-          Execution of King Abdullah International Gardens - Phase III
+          {{visitDataTable?.projectName || '--'}}
         </td>
       </tr>
       <tr>
         <td class="label">Date of receipt of the site</td>
-        <td>21-07-2019</td>
+        <td>{{visitDataTable?.fromDate | date: 'dd-MM-yyyy'}}</td>
         <td class="label">Project end date</td>
-        <td>21-01-2022</td>
+        <td>{{visitDataTable?.finalDate | date: 'dd-MM-yyyy'}}</td>
       </tr>
       <tr>
         <td class="label">Contractual duration of the project (days)</td>
-        <td>900</td>
+        <td>--</td>
         <td class="label">
           Total duration of the project With extensions Approved (day)
         </td>
-        <td>2459</td>
+        <td>--</td>
       </tr>
       <tr>
         <td class="label">Approved extension periods (day)</td>
-        <td>1559</td>
+        <td>--</td>
         <td class="label">Percentage of elapsed period %</td>
-        <td>82%</td>
+        <td>--</td>
       </tr>
       <tr>
         <td class="label">Project end date yet Extension</td>
-        <td>29-04-2026</td>
+        <td>--</td>
         <td class="label">The value of the increase/saving Approved (SAR)</td>
-        <td>1,602,965,235.53</td>
+        <td>--</td>
       </tr>
       <tr>
         <td class="label">Contractual value For the project (SAR)</td>
-        <td>145,164,380.47</td>
+        <td>--</td>
         <td class="label">Total value Abstracts Approved (SAR)</td>
-        <td>1,748,130,616.00</td>
+        <td>--</td>
       </tr>
       <tr>
         <td class="label">
           Total value of the project After increase/saving (SAR)
         </td>
-        <td>1,143,705,292.34</td>
+        <td>--</td>
         <td class="label">Actual completion rate %</td>
-        <td>52.00</td>
+        <td>--</td>
       </tr>
       <tr>
         <td class="label">
           Financial percentage of completion % (approved extracts)
         </td>
-        <td>65.42</td>
+        <td>--</td>
         <td class="label">SPI</td>
-        <td>0.74</td>
+        <td>--</td>
       </tr>
       <tr>
         <td class="label">Planned completion rate %</td>
-        <td>70.00</td>
+        <td>--</td>
         <td></td>
         <td></td>
       </tr>
@@ -796,25 +800,34 @@
 
   <div class="img_wrapper">
     <div class="one" (click)="fileInput1.click()">
-      <img *ngIf="imageArray[0]" [src]="imageArray[0]" alt="">
-      <input type="file" name="first" id="first" (change)="onAttachmentSelected1($event)" #fileInput1 style="display: none;">
+      <img *ngIf="imageArray[0]?.data" [src]="imageArray[0]?.data" alt="">
+      <input type="file" name="first" id="first" (change)="onAttachmentSelected1($event, imageArray[0]?.id)" #fileInput1 style="display: none;">
     </div>
     <div class="one" (click)="fileInput2.click()">
-      <img *ngIf="imageArray[1]" [src]="imageArray[1]" alt="">
+      <img *ngIf="imageArray[1]?.data" [src]="imageArray[1]?.data" alt="">
       
-      <input type="file" name="second" id="second" (change)="onAttachmentSelected2($event)" #fileInput2 style="display: none;">
+      <input type="file" name="second" id="second" (change)="onAttachmentSelected2($event, imageArray[1]?.id)" #fileInput2 style="display: none;">
     </div>
     <div class="one" (click)="fileInput3.click()">
-      <img *ngIf="imageArray[2]" [src]="imageArray[2]" alt="">
+      <img *ngIf="imageArray[2]?.data" [src]="imageArray[2]?.data" alt="">
       
-      <input type="file" name="third" id="third" (change)="onAttachmentSelected3($event)" #fileInput3 style="display: none;">
+      <input type="file" name="third" id="third" (change)="onAttachmentSelected3($event, imageArray[2]?.id)" #fileInput3 style="display: none;">
     </div>
     <div class="one" (click)="fileInput4.click()">
-      <img *ngIf="imageArray[3]" [src]="imageArray[3]" alt="">
+      <img *ngIf="imageArray[3]?.data" [src]="imageArray[3]?.data" alt="">
 
-      <input type="file" name="forth" id="forth" (change)="onAttachmentSelected4($event)" #fileInput4 style="display: none;">
+      <input type="file" name="forth" id="forth" (change)="onAttachmentSelected4($event, imageArray[3]?.id)" #fileInput4 style="display: none;">
     </div>
   </div>
+</div>
+
+<h3 class="pt-5">5.2 Attachments:</h3>
+
+<div class="pt-2 d-flex">
+  <a (click)="fileAttachment.click()" class="btn btn-sm btn-dark d-flex">
+    Add Attachment
+  </a>
+  <input type="file" name="attach" id="attach" (change)="addAttachment($event)" #fileAttachment style="display: none;">
 </div>
 
 <ng-template #documentModal let-modal>
