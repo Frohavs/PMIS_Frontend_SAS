@@ -85,49 +85,13 @@ export class FormTableComponent implements OnInit {
   @ViewChild('criticalProblemsModal') criticalProblemsModal: TemplateRef<any>;
 
   lessonForm: FormGroup;
-  lessonClassifications: any[] = [
-    {
-      name: 'Type 1',
-      id: 1,
-    },
-    {
-      name: 'Type 2',
-      id: 2,
-    },
-  ];
+  lessonClassifications: any[] = [];
   @ViewChild('lessonModal') lessonModal: TemplateRef<any>;
-
+  
   riskForm: FormGroup;
-  expectedImpacts: any[] = [
-    {
-      name: 'Type 1',
-      id: 1,
-    },
-    {
-      name: 'Type 2',
-      id: 2,
-    },
-  ];
-  riskOwners: any[] = [
-    {
-      name: 'Type 1',
-      id: 1,
-    },
-    {
-      name: 'Type 2',
-      id: 2,
-    },
-  ];
-  typeResponses: any[] = [
-    {
-      name: 'Type 1',
-      id: 1,
-    },
-    {
-      name: 'Type 2',
-      id: 2,
-    },
-  ];
+  expectedImpacts: any[] = [];
+  typeResponses: any[] = [];
+  riskOwners: any[] = [];
   @ViewChild('riskModal') riskModal: TemplateRef<any>;
 
   correctivePlanForm: FormGroup;
@@ -244,6 +208,22 @@ export class FormTableComponent implements OnInit {
     });
     this.lookupService.getCommitmentTypes().subscribe((res) => {
       this.visitCommitments = res.data;
+      this.cdr.detectChanges();
+    });
+    this.lookupService.getAttachmentClassifications().subscribe((res) => {
+      this.lessonClassifications = res.data;
+      this.cdr.detectChanges();
+    });
+    this.lookupService.GetExpectedImpacts().subscribe((res) => {
+      this.expectedImpacts = res.data;
+      this.cdr.detectChanges();
+    });
+    this.lookupService.GetTypeResponses().subscribe((res) => {
+      this.typeResponses = res.data;
+      this.cdr.detectChanges();
+    });
+    this.lookupService.GetRiskOwners().subscribe((res) => {
+      this.riskOwners = res.data;
       this.cdr.detectChanges();
     });
     this.getObjectivesLookup();

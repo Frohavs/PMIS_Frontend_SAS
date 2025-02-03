@@ -2409,10 +2409,10 @@
                 {{ "TRANSLATOR.SELECTION" | translate }}
               </option>
               <ng-container
-                *ngFor="let classification of lessonClassifications"
+                *ngFor="let item of expectedImpacts"
               >
-                <option [value]="classification?.id">
-                  {{ classification?.name }}
+                <option [value]="item?.id">
+                  {{ item?.name }}
                 </option>
               </ng-container>
             </select>
@@ -2439,9 +2439,9 @@
               <option value="" disabled>
                 {{ "TRANSLATOR.SELECTION" | translate }}
               </option>
-              <ng-container *ngFor="let classification of riskOwners">
-                <option [value]="classification?.id">
-                  {{ classification?.name }}
+              <ng-container *ngFor="let item of riskOwners">
+                <option [value]="item?.id">
+                  {{ item?.name }}
                 </option>
               </ng-container>
             </select>
@@ -2471,10 +2471,10 @@
                 {{ "TRANSLATOR.SELECTION" | translate }}
               </option>
               <ng-container
-                *ngFor="let classification of lessonClassifications"
+                *ngFor="let type of typeResponses"
               >
-                <option [value]="classification?.id">
-                  {{ classification?.name }}
+                <option [value]="type?.id">
+                  {{ type?.name }}
                 </option>
               </ng-container>
             </select>

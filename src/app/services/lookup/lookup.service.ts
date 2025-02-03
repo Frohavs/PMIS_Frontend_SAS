@@ -618,4 +618,34 @@ export class LookupService {
       headers: httpHeaders,
     });
   }
+  GetExpectedImpacts(): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+      LanguageCode: 'en',
+    });
+    const url = `${this.API_USERS_URL}/GetExpectedImpacts`;
+    return this.http.get<any>(url, {
+      headers: httpHeaders,
+    });
+  }
+  GetTypeResponses(): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+      LanguageCode: 'en',
+    });
+    const url = `${this.API_USERS_URL}/GetTypeResponses`;
+    return this.http.get<any>(url, {
+      headers: httpHeaders,
+    });
+  }
+  GetRiskOwners(): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+      LanguageCode: 'en',
+    });
+    const url = `${this.API_USERS_URL}/GetRiskOwners`;
+    return this.http.get<any>(url, {
+      headers: httpHeaders,
+    });
+  }
 }
