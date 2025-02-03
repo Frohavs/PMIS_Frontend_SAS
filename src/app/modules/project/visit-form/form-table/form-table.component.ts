@@ -402,16 +402,16 @@ export class FormTableComponent implements OnInit {
 
   openSchedule(schedule?: any) {
     this.scheduleForm.reset();
-    debugger
-    if (schedule) {
-      this.scheduleForm.patchValue({
-        commitment: schedule.commitment,
-        schedulePositionId: schedule.schedulePositionId,
-        date: schedule.date.slice(0, 10),
-        status: schedule.status,
-        note: schedule.note,
-      });
-    }
+    // debugger
+    // if (schedule) {
+    //   this.scheduleForm.patchValue({
+    //     commitment: schedule.commitment,
+    //     schedulePositionId: schedule.schedulePositionId,
+    //     date: schedule.date.slice(0, 10),
+    //     status: schedule.status,
+    //     note: schedule.note,
+    //   });
+    // }
     this.modalService.open(this.scheduleModal, this.modalConfig);
   }
   openChRequests(request?: any) {
