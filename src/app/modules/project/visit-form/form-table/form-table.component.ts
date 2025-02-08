@@ -158,6 +158,7 @@ export class FormTableComponent implements OnInit {
         this.getQualityGuarantors();
         this.getPeriodicReports();
         this.getProjectPlans();
+        this.getStatusDocuments();
       }
     });
   }
@@ -194,7 +195,6 @@ export class FormTableComponent implements OnInit {
     });
     this.visitFormService.getVisitById(this.visitId).subscribe((res) => {
       this.visitDetails = res.data;
-      this.getStatusDocuments();
       this.getAttachmentSource();
       this.cdr.detectChanges();
     });
@@ -347,22 +347,19 @@ export class FormTableComponent implements OnInit {
     });
   }
   getStatusDocuments() {
-    this.lookupService.getStatusDocuments().subscribe((res) => {
+    this.visitFormService.getStatusDocuments(this.visitId).subscribe((res) => {
       this.visitStatusDocuments = res.data;
 
       const transformedData = this.visitStatusDocuments.map((item: any) => {
-        const matched = this.visitDetails?.statusDocuments?.find(
-          (v: any) => v.statusDocument === item.name
-        );
         return {
-          id: item.id,
-          name: item.name,
-          fullyCommitted: matched?.commitment === 'Fully Committed' || false,
+          id: item.statusDocumentId,
+          name: item.statusDocument,
+          fullyCommitted: item?.commitment === 'Fully Committed' || false,
           partiallyCommitted:
-            matched?.commitment === 'Partially Committed' || false,
-          notCommitted: matched?.commitment === 'Not Committed' || false,
-          na: matched?.commitment === 'NA' || false,
-          note: matched?.note || '',
+            item?.commitment === 'Partially Committed' || false,
+          notCommitted: item?.commitment === 'Not Committed' || false,
+          na: item?.commitment === 'NA' || false,
+          note: item?.note || '',
         };
       });
 
@@ -1108,7 +1105,7 @@ export class FormTableComponent implements OnInit {
     this.visitFormService.upsertVisitFormStep(payload).subscribe(
       (res) => {
         this.isLoading = false;
-        this.getVisitDetails();
+        this.getStatusDocuments();
         this.modalService.dismissAll();
         this.StatusDocumentForm.reset();
         this.showAlert({

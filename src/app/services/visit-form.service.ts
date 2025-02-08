@@ -126,6 +126,15 @@ export class VisitFormService {
       headers: httpHeaders
     });
   }
+  getStatusDocuments(id: any): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/GetStatusDocuments/${id}`;
+    return this.http.get<any>(url, {
+      headers: httpHeaders
+    });
+  }
   getSchedulePositions(id: any): Observable<any> {
     const httpHeaders = new HttpHeaders({
       Authorization: `Bearer ${this.token}`,
