@@ -267,8 +267,8 @@ export class FormTableComponent implements OnInit {
 
       const transformedData = this.visitHealths.map((item: any) => {
         return {
-          id: item.id,
-          name: item.name,
+          id: item.healthAndSecurityId,
+          name: item.healthAndSecurityTitle,
           fullyCommitted: item?.commitment === 'Fully Committed' || false,
           partiallyCommitted:
             item?.commitment === 'Partially Committed' || false,
