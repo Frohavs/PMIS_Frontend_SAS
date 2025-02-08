@@ -538,26 +538,6 @@ export class LookupService {
       headers: httpHeaders,
     });
   }
-  getSchedulePositions(): Observable<any> {
-    const httpHeaders = new HttpHeaders({
-      Authorization: `Bearer ${this.token}`,
-      LanguageCode: 'en',
-    });
-    const url = `${this.API_USERS_URL}/GetSchedulePositions`;
-    return this.http.get<any>(url, {
-      headers: httpHeaders,
-    });
-  }
-  getVisitFormHealth(): Observable<any> {
-    const httpHeaders = new HttpHeaders({
-      Authorization: `Bearer ${this.token}`,
-      LanguageCode: 'en',
-    });
-    const url = `${this.API_USERS_URL}/GetVisitFormHealth`;
-    return this.http.get<any>(url, {
-      headers: httpHeaders,
-    });
-  }
   getQualityGuarantors(): Observable<any> {
     const httpHeaders = new HttpHeaders({
       Authorization: `Bearer ${this.token}`,

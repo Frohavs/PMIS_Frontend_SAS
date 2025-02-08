@@ -87,7 +87,7 @@ export class FormTableComponent implements OnInit {
   lessonForm: FormGroup;
   lessonClassifications: any[] = [];
   @ViewChild('lessonModal') lessonModal: TemplateRef<any>;
-  
+
   riskForm: FormGroup;
   expectedImpacts: any[] = [];
   typeResponses: any[] = [];
@@ -150,6 +150,8 @@ export class FormTableComponent implements OnInit {
       this.visitId = +params['visitId'];
       if (this.visitId) {
         this.getVisitDetails();
+        this.getSchedulePositions();
+        this.getVisitFormHealth();
       }
     });
   }
@@ -227,7 +229,6 @@ export class FormTableComponent implements OnInit {
       this.cdr.detectChanges();
     });
     this.getObjectivesLookup();
-    this.getSchedulePositions();
   }
 
   getObjectivesLookup() {
@@ -238,32 +239,45 @@ export class FormTableComponent implements OnInit {
   }
 
   getSchedulePositions() {
-    this.lookupService.getSchedulePositions().subscribe((res) => {
-      this.visitSchedulePositions = res.data;
-      this.cdr.detectChanges();
-    });
+    this.visitFormService
+      .getSchedulePositions(this.visitId)
+      .subscribe((res) => {
+        this.visitSchedulePositions = res.data;
+        const transformedData = this.visitSchedulePositions.map((item: any) => {
+          return {
+            id: item.schedulePositionId,
+            name: item.schedulePosition,
+            status: item.status,
+            date: item.date,
+            fullyCommitted: item?.commitment === 'Fully Committed' || false,
+            partiallyCommitted:
+              item?.commitment === 'Partially Committed' || false,
+            notCommitted: item?.commitment === 'Not Committed' || false,
+            na: item?.commitment === 'NA' || false,
+            note: item?.note || '',
+          };
+        });
+        this.visitSchedulePositions = transformedData;
+        this.cdr.detectChanges();
+      });
   }
   getVisitFormHealth() {
-    this.lookupService.getVisitFormHealth().subscribe((res) => {
+    this.visitFormService.getVisitFormHealth(this.visitId).subscribe((res) => {
       this.visitHealths = res.data;
 
       const transformedData = this.visitHealths.map((item: any) => {
-        const matched = this.visitDetails?.visitFormHealth?.find(
-          (v: any) => v.healthAndSecurityTitle === item.name
-        );
-
         return {
           id: item.id,
           name: item.name,
-          fullyCommitted: matched?.commitment === 'Fully Committed' || false,
+          fullyCommitted: item?.commitment === 'Fully Committed' || false,
           partiallyCommitted:
-            matched?.commitment === 'Partially Committed' || false,
-          notCommitted: matched?.commitment === 'Not Committed' || false,
-          na: matched?.commitment === 'NA' || false,
-          note: matched?.note || '',
+            item?.commitment === 'Partially Committed' || false,
+          notCommitted: item?.commitment === 'Not Committed' || false,
+          na: item?.commitment === 'NA' || false,
+          note: item?.note || '',
         };
       });
-
+      debugger
       this.visitHealths = transformedData;
       this.cdr.detectChanges();
     });
@@ -807,7 +821,7 @@ export class FormTableComponent implements OnInit {
     this.visitFormService.upsertVisitFormStep(payload).subscribe(
       (res) => {
         this.isLoading = false;
-        this.getVisitDetails();
+        this.getSchedulePositions();
         this.modalService.dismissAll();
         this.scheduleForm.reset();
         this.showAlert({
@@ -858,7 +872,7 @@ export class FormTableComponent implements OnInit {
     this.visitFormService.upsertVisitFormStep(payload).subscribe(
       (res) => {
         this.isLoading = false;
-        this.getVisitDetails();
+        this.getVisitFormHealth();
         this.modalService.dismissAll();
         this.healthForm.reset();
         this.showAlert({

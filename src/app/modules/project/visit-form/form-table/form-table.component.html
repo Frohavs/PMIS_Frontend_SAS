@@ -265,13 +265,13 @@
             item?.name
           }}</span>
         </td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td>{{item?.status || ''}}</td>
+        <td>{{ item?.fullyCommitted ? "&#8226;" : "" }}</td>
+        <td>{{ item?.partiallyCommitted ? "&#8226;" : "" }}</td>
+        <td>{{ item?.notCommitted ? "&#8226;" : "" }}</td>
+        <td>{{ item?.na ? "&#8226;" : "" }}</td>
+        <td>{{ item?.date | date: 'dd-MM-yyyy' }}</td>
+        <td>{{ item?.note || "--" }}</td>
       </tr>
     </tbody>
   </table>
