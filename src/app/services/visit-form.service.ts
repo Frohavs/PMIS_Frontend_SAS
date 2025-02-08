@@ -162,5 +162,14 @@ export class VisitFormService {
       headers: httpHeaders
     });
   }
+  getProjectPlans(id: any): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/GetProjectPlans/${id}`;
+    return this.http.get<any>(url, {
+      headers: httpHeaders
+    });
+  }
 
 }

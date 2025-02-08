@@ -35,6 +35,7 @@ export class FormTableComponent implements OnInit {
   visitHealths: any[] = [];
   visitQualityGuarantors: any[] = [];
   visitPeriodicReports: any[] = [];
+  visitProjectPlans: any[] = [];
   visitStatusDocuments: any[] = [];
   isLoading: boolean;
   documentType: number = 0;
@@ -59,6 +60,8 @@ export class FormTableComponent implements OnInit {
   @ViewChild('healthModal') healthModal: TemplateRef<any>;
   periodicReportForm: FormGroup;
   @ViewChild('periodicReportModal') periodicReportModal: TemplateRef<any>;
+  projectPlanForm: FormGroup;
+  @ViewChild('projectPlanModal') projectPlanModal: TemplateRef<any>;
   StatusDocumentForm: FormGroup;
   @ViewChild('StatusDocumentModal') StatusDocumentModal: TemplateRef<any>;
   qualityGuarantorForm: FormGroup;
@@ -154,6 +157,7 @@ export class FormTableComponent implements OnInit {
         this.getVisitFormHealth();
         this.getQualityGuarantors();
         this.getPeriodicReports();
+        this.getProjectPlans();
       }
     });
   }
@@ -166,6 +170,7 @@ export class FormTableComponent implements OnInit {
     this.initHealthForm();
     this.initQualityGuarantorForm();
     this.initPeriodicReportForm();
+    this.initProjectPlanForm();
     this.initStatusDocumentForm();
     this.initChRequestsForm();
     this.initRecommendationForm();
@@ -322,6 +327,25 @@ export class FormTableComponent implements OnInit {
       this.cdr.detectChanges();
     });
   }
+  getProjectPlans() {
+    this.visitFormService.getProjectPlans(this.visitId).subscribe((res) => {
+      this.visitProjectPlans = res.data;
+
+      const transformedData = this.visitProjectPlans.map((item: any) => {
+        return {
+          id: item.projectPlanId,
+          name: item.projectPlan,
+          onProgressDrawings: item?.onProgressDrawings,
+          totalDrawings: item?.totalDrawings,
+          completedDrawings: item?.completedDrawings,
+          note: item?.notes || '',
+        };
+      });
+
+      this.visitProjectPlans = transformedData;
+      this.cdr.detectChanges();
+    });
+  }
   getStatusDocuments() {
     this.lookupService.getStatusDocuments().subscribe((res) => {
       this.visitStatusDocuments = res.data;
@@ -469,6 +493,20 @@ export class FormTableComponent implements OnInit {
     }
     this.modalService.open(this.periodicReportModal, this.modalConfig);
   }
+  openProjectPlan(request?: any) {
+    this.projectPlanForm.reset();
+    if (request) {
+      this.projectPlanForm.patchValue({
+        projectPlanId: request.id,
+        projectPlan: request.projectPlan,
+        onProgressDrawings: request.onProgressDrawings,
+        totalDrawings: request.totalDrawings,
+        completedDrawings: request.completedDrawings,
+        note: request.note,
+      });
+    }
+    this.modalService.open(this.projectPlanModal, this.modalConfig);
+  }
   openStatusDocument(request?: any) {
     this.StatusDocumentForm.reset();
     if (request) {
@@ -599,6 +637,13 @@ export class FormTableComponent implements OnInit {
     this.periodicReportForm = this.fb.group({
       periodicReportId: [0],
       commitment: ['', Validators.required],
+      note: ['', Validators.required],
+    });
+  }
+
+  initProjectPlanForm() {
+    this.projectPlanForm = this.fb.group({
+      projectPlanId: [0],
       note: ['', Validators.required],
     });
   }
@@ -965,6 +1010,55 @@ export class FormTableComponent implements OnInit {
       (res) => {
         this.isLoading = false;
         this.getPeriodicReports();
+        this.modalService.dismissAll();
+        this.periodicReportForm.reset();
+        this.showAlert({
+          icon: 'success',
+          title: 'Success!',
+          text:
+            this.periodicReportForm.value.id !== 0
+              ? 'Updated successfully!'
+              : 'Added successfully!',
+        });
+        this.cdr.detectChanges();
+      },
+      (error) => {
+        this.isLoading = false;
+        this.periodicReportForm.reset();
+        this.showAlert({
+          icon: 'error',
+          title: 'Error!',
+          text: 'Please try again',
+        });
+      }
+    );
+  }
+  onProjectPlan() {
+    if (this.projectPlanForm.invalid) {
+      this.projectPlanForm.markAllAsTouched();
+      return;
+    }
+    this.isLoading = true;
+    let payload: any = {
+      step: 11,
+      body: {
+
+        visitFormId: this.visitId,
+      },
+    };
+
+    if (
+      this.projectPlanForm.value.projectPlanId !== 0 &&
+      this.projectPlanForm.value.projectPlanId !== null
+    ) {
+      payload.body['projectPlanId'] =
+        this.projectPlanForm.value.projectPlanId;
+    }
+
+    this.visitFormService.upsertVisitFormStep(payload).subscribe(
+      (res) => {
+        this.isLoading = false;
+        this.getProjectDetails();
         this.modalService.dismissAll();
         this.periodicReportForm.reset();
         this.showAlert({
