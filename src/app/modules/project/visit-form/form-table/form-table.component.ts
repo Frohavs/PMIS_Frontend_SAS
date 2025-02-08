@@ -152,6 +152,8 @@ export class FormTableComponent implements OnInit {
         this.getVisitDetails();
         this.getSchedulePositions();
         this.getVisitFormHealth();
+        this.getQualityGuarantors();
+        this.getPeriodicReports();
       }
     });
   }
@@ -187,9 +189,6 @@ export class FormTableComponent implements OnInit {
     });
     this.visitFormService.getVisitById(this.visitId).subscribe((res) => {
       this.visitDetails = res.data;
-      this.getVisitFormHealth();
-      this.getQualityGuarantors();
-      this.getPeriodicReports();
       this.getStatusDocuments();
       this.getAttachmentSource();
       this.cdr.detectChanges();
@@ -277,28 +276,24 @@ export class FormTableComponent implements OnInit {
           note: item?.note || '',
         };
       });
-      debugger
       this.visitHealths = transformedData;
       this.cdr.detectChanges();
     });
   }
   getQualityGuarantors() {
-    this.lookupService.getQualityGuarantors().subscribe((res) => {
+    this.visitFormService.getQualityGuarantors(this.visitId).subscribe((res) => {
       this.visitQualityGuarantors = res.data;
 
       const transformedData = this.visitQualityGuarantors.map((item: any) => {
-        const matched = this.visitDetails?.qualityGuarantors?.find(
-          (v: any) => v.qualityGuarantor === item.name
-        );
         return {
-          id: item.id,
-          name: item.name,
-          fullyCommitted: matched?.commitment === 'Fully Committed' || false,
+          id: item.qualityGuarantorId,
+          name: item.qualityGuarantor,
+          fullyCommitted: item?.commitment === 'Fully Committed' || false,
           partiallyCommitted:
-            matched?.commitment === 'Partially Committed' || false,
-          notCommitted: matched?.commitment === 'Not Committed' || false,
-          na: matched?.commitment === 'NA' || false,
-          note: matched?.note || '',
+            item?.commitment === 'Partially Committed' || false,
+          notCommitted: item?.commitment === 'Not Committed' || false,
+          na: item?.commitment === 'NA' || false,
+          note: item?.note || '',
         };
       });
 
@@ -307,22 +302,19 @@ export class FormTableComponent implements OnInit {
     });
   }
   getPeriodicReports() {
-    this.lookupService.getPeriodicReports().subscribe((res) => {
+    this.visitFormService.getPeriodicReports(this.visitId).subscribe((res) => {
       this.visitPeriodicReports = res.data;
 
       const transformedData = this.visitPeriodicReports.map((item: any) => {
-        const matched = this.visitDetails?.periodicReports?.find(
-          (v: any) => v.periodicReport === item.name
-        );
         return {
-          id: item.id,
-          name: item.name,
-          fullyCommitted: matched?.commitment === 'Fully Committed' || false,
+          id: item.periodicReportId,
+          name: item.periodicReport,
+          fullyCommitted: item?.commitment === 'Fully Committed' || false,
           partiallyCommitted:
-            matched?.commitment === 'Partially Committed' || false,
-          notCommitted: matched?.commitment === 'Not Committed' || false,
-          na: matched?.commitment === 'NA' || false,
-          note: matched?.note || '',
+            item?.commitment === 'Partially Committed' || false,
+          notCommitted: item?.commitment === 'Not Committed' || false,
+          na: item?.commitment === 'NA' || false,
+          note: item?.note || '',
         };
       });
 
@@ -922,7 +914,7 @@ export class FormTableComponent implements OnInit {
     this.visitFormService.upsertVisitFormStep(payload).subscribe(
       (res) => {
         this.isLoading = false;
-        this.getVisitDetails();
+        this.getQualityGuarantors();
         this.modalService.dismissAll();
         this.qualityGuarantorForm.reset();
         this.showAlert({
@@ -972,7 +964,7 @@ export class FormTableComponent implements OnInit {
     this.visitFormService.upsertVisitFormStep(payload).subscribe(
       (res) => {
         this.isLoading = false;
-        this.getVisitDetails();
+        this.getPeriodicReports();
         this.modalService.dismissAll();
         this.periodicReportForm.reset();
         this.showAlert({

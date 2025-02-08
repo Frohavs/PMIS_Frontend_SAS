@@ -144,5 +144,23 @@ export class VisitFormService {
       headers: httpHeaders
     });
   }
+  getQualityGuarantors(id: any): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/GetQualityGuarantors/${id}`;
+    return this.http.get<any>(url, {
+      headers: httpHeaders
+    });
+  }
+  getPeriodicReports(id: any): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/GetPeriodicReports/${id}`;
+    return this.http.get<any>(url, {
+      headers: httpHeaders
+    });
+  }
 
 }
