@@ -9,7 +9,7 @@ export const environment = {
   // isMockEnabled: true,
   // apiUrl: 'api',
   isMockEnabled: false,
-  apiUrl: 'https://pmis-backend-d04a17b3c636.herokuapp.com/api',
+  apiUrl: 'https://localhost:7183/api',
   appThemeName: 'Metronic',
   appPurchaseUrl: 'https://1.envato.market/EA4JP',
   appHTMLIntegration:
