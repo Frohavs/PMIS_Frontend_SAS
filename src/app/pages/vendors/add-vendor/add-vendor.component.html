@@ -23,7 +23,7 @@
               <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="required">{{"VENDORS.cr_number" | translate}}</span></label>
               <div class="col-lg-8 fv-row">
                 <input type="text" class="form-control form-control-lg form-control-solid" placeholder="{{'VENDORS.cr_number' | translate}}"
-                  formControlName="crNumber" name="crNumber" />
+                  formControlName="crNumber" name="crNumber"  [readonly]="router.url.includes('edit')" />
                 <div
                   *ngIf="addVendorForm?.get('crNumber')?.invalid && (addVendorForm?.get('crNumber')?.dirty || addVendorForm?.get('crNumber')?.touched)"
                   class="fv-plugins-message-container">
@@ -71,7 +71,7 @@
                 <div
                   *ngIf="addVendorForm?.get('nameAr')?.invalid && (addVendorForm?.get('nameAr')?.dirty || addVendorForm?.get('nameAr')?.touched)"
                   class="fv-plugins-message-container">
-                  <div class="fv-help-block">Type is required</div>
+                  <div class="fv-help-block">Name is required</div>
                 </div>
               </div>
             </div>
@@ -85,7 +85,7 @@
                 <div
                   *ngIf="addVendorForm?.get('name')?.invalid && (addVendorForm?.get('name')?.dirty || addVendorForm?.get('name')?.touched)"
                   class="fv-plugins-message-container">
-                  <div class="fv-help-block">Type is required</div>
+                  <div class="fv-help-block">Name is required</div>
                 </div>
               </div>
             </div>
@@ -98,7 +98,7 @@
                 <div
                   *ngIf="addVendorForm?.get('phone')?.invalid && (addVendorForm?.get('phone')?.dirty || addVendorForm?.get('phone')?.touched)"
                   class="fv-plugins-message-container">
-                  <div class="fv-help-block">Type is required</div>
+                  <div class="fv-help-block">Phone is required</div>
                 </div>
               </div>
             </div>
@@ -111,7 +111,7 @@
                 <div
                   *ngIf="addVendorForm?.get('address')?.invalid && (addVendorForm?.get('address')?.dirty || addVendorForm?.get('address')?.touched)"
                   class="fv-plugins-message-container">
-                  <div class="fv-help-block">Type is required</div>
+                  <div class="fv-help-block">Address is required</div>
                 </div>
               </div>
             </div>
@@ -124,7 +124,7 @@
                 <div
                   *ngIf="addVendorForm?.get('description')?.invalid && (addVendorForm?.get('description')?.dirty || addVendorForm?.get('description')?.touched)"
                   class="fv-plugins-message-container">
-                  <div class="fv-help-block">Type is required</div>
+                  <div class="fv-help-block">Description is required</div>
                 </div>
               </div>
             </div>
