@@ -1,0 +1,16 @@
+
+:host {
+  background: linear-gradient(180deg, #5f5d8b 0%, #44567d 45%, #315a78 100%);
+  border-right: 0;
+  box-shadow: inset -1px 0 0 rgba(255, 255, 255, 0.08);
+}
+
+:host ::ng-deep .app-sidebar-logo {
+  min-height: 72px;
+  background: rgba(255, 255, 255, 0.06);
+  border-bottom: 0;
+}
+
+:host ::ng-deep .app-sidebar-menu {
+  padding-top: 0.5rem;
+}
