@@ -1,0 +1,23 @@
+:host {
+  display: block;
+}
+
+:host ::ng-deep .sidebar-brand {
+  font-size: 2.2rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  font-family: "Brush Script MT", "Segoe Script", cursive;
+  margin-bottom: 0;
+  line-height: 1;
+}
+
+:host ::ng-deep #kt_app_sidebar_toggle {
+  background: rgba(255, 255, 255, 0.2) !important;
+  border: 0;
+
+  i,
+  .ki-outline,
+  .ki-solid {
+    color: #ffffff !important;
+  }
+}

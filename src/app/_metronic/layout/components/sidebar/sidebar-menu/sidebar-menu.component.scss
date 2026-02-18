@@ -1,0 +1,102 @@
+:host {
+  display: block;
+}
+
+:host ::ng-deep {
+  #kt_app_sidebar_menu_scroll {
+    padding-right: 0.35rem;
+  }
+
+  .menu .menu-content .menu-section {
+    color: rgba(255, 255, 255, 0.72) !important;
+    font-weight: 700;
+    font-size: 0.85rem !important;
+    letter-spacing: 0.02em;
+  }
+
+  .menu .menu-item .menu-link {
+    border-radius: 0.45rem;
+    margin: 0.15rem 0;
+    min-height: 42px;
+
+    .menu-title {
+      color: #e5e9f6;
+      font-size: 1.15rem;
+      font-weight: 500;
+    }
+
+    .menu-icon,
+    .menu-arrow,
+    .menu-bullet {
+      color: rgba(220, 229, 250, 0.9);
+    }
+  }
+
+  .menu .menu-item .menu-link:hover,
+  .menu .menu-item .menu-link.active,
+  .menu .menu-item.show > .menu-link,
+  .menu .menu-item.here > .menu-link {
+    background: rgba(109, 118, 170, 0.72) !important;
+
+    .menu-title,
+    .menu-icon,
+    .menu-arrow,
+    .menu-bullet {
+      color: #ffffff;
+    }
+  }
+
+  .menu .menu-sub .menu-item .menu-link:hover,
+  .menu .menu-sub .menu-item .menu-link.active,
+  .menu .menu-sub .menu-item.show > .menu-link,
+  .menu .menu-sub .menu-item.here > .menu-link {
+    background: rgba(122, 131, 184, 0.65) !important;
+  }
+
+
+  .menu .menu-item.menu-accordion > .menu-link .menu-arrow {
+    --kt-text-muted: #ffffff;
+    color: #ffffff !important;
+    opacity: 0.95;
+  }
+
+  .menu .menu-item.menu-accordion > .menu-link .menu-arrow:after {
+    opacity: 1 !important;
+    filter: brightness(0) invert(1);
+  }
+
+  .menu .menu-sub.menu-sub-accordion {
+    position: relative;
+    margin-left: 1.45rem;
+    padding-left: 1.1rem;
+  }
+
+  .menu .menu-sub.menu-sub-accordion::before {
+    content: '';
+    position: absolute;
+    top: 0.2rem;
+    bottom: 0.2rem;
+    left: 0;
+    width: 2px;
+    border-radius: 2px;
+    background: rgba(194, 202, 242, 0.28);
+  }
+
+  .menu .menu-sub .menu-item .menu-link {
+    margin: 0.08rem 0;
+    min-height: 36px;
+    padding-top: 0.45rem;
+    padding-bottom: 0.45rem;
+  }
+
+  .menu .menu-sub .menu-item .menu-link .menu-bullet {
+    display: none;
+  }
+
+  .menu .menu-sub .menu-item .menu-link .menu-title {
+    font-size: 1.05rem;
+    color: rgba(238, 242, 255, 0.94);
+    font-weight: 500;
+  }
+
+}
