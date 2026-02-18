@@ -2,6 +2,31 @@
   height: 100%;
 }
 
-.bgi-position-center {
-  background-size: contain !important;
+.auth-form-panel {
+  background-color: #f8fafc;
+}
+
+.auth-form-wrapper {
+  width: 100%;
+  max-width: 450px;
+}
+
+.froha-branding-bg {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, #02040b 4%, #05218f 42%, #1760ff 74%, #49d6b4 100%);
+}
+
+.froha-branding-overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 0% 100%, rgba(0, 0, 0, 0.92) 0%, rgba(0, 0, 0, 0.65) 30%, rgba(0, 0, 0, 0) 58%),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.38) 0%, rgba(0, 0, 0, 0.05) 38%, rgba(0, 0, 0, 0) 100%);
+}
+
+.froha-branding-logo {
+  width: min(320px, 76%);
+  height: auto;
+  filter: drop-shadow(0 14px 30px rgba(0, 0, 0, 0.35));
 }

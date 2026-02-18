@@ -24,7 +24,7 @@ export class AddVendorComponent implements OnInit {
   constructor(
     private _location: Location,
     private cdr: ChangeDetectorRef,
-    private router: Router,
+    public router: Router,
     private formBuilder: FormBuilder,
     private activatedRoute: ActivatedRoute,
     private vendorService: VendorService,
