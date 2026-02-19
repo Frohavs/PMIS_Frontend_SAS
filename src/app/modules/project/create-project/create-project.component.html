@@ -1,309 +1,222 @@
-<div class="card mb-5 mb-xl-10">
-  <div class="card-header border-0 cursor-pointer" role="button" data-bs-toggle="collapse"
-    data-bs-target="#kt_create_project" aria-expanded="true" aria-controls="kt_create_project">
-    <div class="card-title m-0">
-      <h3 class="fw-bolder m-0" *ngIf="!projectId">{{"PROJECTS.Add_Project" | translate}}</h3>
-      <h3 class="fw-bolder m-0" *ngIf="projectId">{{"PROJECTS.Edit_Project" | translate}}</h3>
+<div class="create-project-page">
+  <div class="card mb-5 mb-xl-10 create-project-card">
+    <div class="card-header border-0">
+      <div class="card-title m-0">
+        <h3 class="fw-bolder m-0" *ngIf="!projectId">{{"PROJECTS.Add_Project" | translate}}</h3>
+        <h3 class="fw-bolder m-0" *ngIf="projectId">{{"PROJECTS.Edit_Project" | translate}}</h3>
+      </div>
+      <div class="card-toolbar">
+        <a (click)="back()" class="btn btn-sm btn-danger d-flex">
+          <app-keenicon name="arrow-left" class="fs-3"></app-keenicon>
+          {{"ECOMMERCE.COMMON.BACK" | translate}}
+        </a>
+      </div>
     </div>
-    <div class="card-toolbar">
-      <a (click)="back()" class="btn btn-sm btn-danger d-flex">
-        <app-keenicon name="arrow-left" class="fs-3"></app-keenicon>
-        {{"ECOMMERCE.COMMON.BACK" | translate}}
-      </a>
-    </div>
-  </div>
-  <div id="kt_create_project" class="collapse show">
+
     <form [formGroup]="addProjectForm" class="form">
       <div class="card-body border-top p-9">
-
-        <div class="row mb-6">
-          <label class="col-lg-4 col-form-label fw-bold fs-6"><span
-              class="required">{{"PROJECTS.project_stage" | translate}}</span></label>
-          <div class="col-lg-8 fv-row">
-            <select class="form-select form-select-solid form-select-lg fw-bold" name="contractStatus"
-              formControlName="contractStatus">
-              <option value="" disabled>{{"TRANSLATOR.SELECTION" | translate}}</option>
-              <ng-container *ngFor="let contractorStatus of contractorStatuses">
-                <option [value]="contractorStatus?.id">{{contractorStatus?.name}}</option>
-              </ng-container>
-            </select>
-            <div
-              *ngIf="addProjectForm?.get('project_stage')?.invalid && (addProjectForm?.get('project_stage')?.dirty || addProjectForm?.get('project_stage')?.touched)"
-              class="fv-plugins-message-container">
-              <div class="fv-help-block">stage is required</div>
-            </div>
+        <div class="form-progress mb-8">
+          <div class="progress-head">
+            <span>Form completion</span>
+            <strong>{{ completionPercentage }}%</strong>
           </div>
+          <div class="progress-track">
+            <div class="progress-fill" [style.width.%]="completionPercentage"></div>
+          </div>
+          <div class="progress-caption">{{ completedRequiredCount }}/16 required fields completed</div>
         </div>
 
-        <div class="row mb-6">
-          <label class="col-lg-4 col-form-label fw-bold fs-6"><span
-              class="required">{{"PROJECTS.Classification" | translate}}</span></label>
-          <div class="col-lg-8 fv-row">
-            <select class="form-select form-select-solid form-select-lg fw-bold" name="classification"
-              formControlName="classification">
-              <option value="" disabled>{{"TRANSLATOR.SELECTION" | translate}}</option>
-              <ng-container *ngFor="let type of classification">
-                <option [value]="type.id">{{type?.name}}</option>
-              </ng-container>
-            </select>
-            <div
-              *ngIf="addProjectForm?.get('classification')?.invalid && (addProjectForm?.get('classification')?.dirty || addProjectForm?.get('classification')?.touched)"
-              class="fv-plugins-message-container">
-              <div class="fv-help-block">classification is required</div>
-            </div>
-          </div>
+        <div class="project-tabs mb-8">
+          <button type="button" class="project-tab" [class.active]="isActiveTab('basic')" (click)="setActiveTab('basic')">Basic Info</button>
+          <button type="button" class="project-tab" [class.active]="isActiveTab('stakeholders')" (click)="setActiveTab('stakeholders')">Stakeholders & Location</button>
+          <button type="button" class="project-tab" [class.active]="isActiveTab('schedule')" (click)="setActiveTab('schedule')">Schedule</button>
+          <button type="button" class="project-tab" [class.active]="isActiveTab('contract')" (click)="setActiveTab('contract')">Contract & Value</button>
         </div>
 
-        <div class="row mb-6">
-          <label class="col-lg-4 col-form-label fw-bold fs-6"><span
-              class="required">{{"PROJECTS.Sector" | translate}}</span></label>
-          <div class="col-lg-8 fv-row">
-            <select class="form-select form-select-solid form-select-lg fw-bold" name="projectSector"
-              formControlName="projectSector">
-              <option value="" disabled>{{"TRANSLATOR.SELECTION" | translate}}</option>
-              <ng-container *ngFor="let sector of projectSectors">
-                <option [value]="sector.id">{{sector?.name}}</option>
-              </ng-container>
-            </select>
-            <div
-              *ngIf="addProjectForm?.get('projectSector')?.invalid && (addProjectForm?.get('projectSector')?.dirty || addProjectForm?.get('projectSector')?.touched)"
-              class="fv-plugins-message-container">
-              <div class="fv-help-block">sector is required</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="row mb-6">
-          <label class="col-lg-4 col-form-label fw-bold fs-6"><span
-              class="required">{{"PROJECTS.project_name" | translate}}</span></label>
-          <div class="col-lg-8 fv-row">
-            <input type="text" class="form-control form-control-lg form-control-solid text-start"
-              placeholder="{{'PROJECTS.project_name' | translate}}" name="nameAr" formControlName="nameAr" />
-            <div
-              *ngIf="addProjectForm?.get('nameAr')?.invalid && (addProjectForm?.get('nameAr')?.dirty || addProjectForm?.get('nameAr')?.touched)"
-              class="fv-plugins-message-container">
-              <div class="fv-help-block">project name is required</div>
-            </div>
-          </div>
-        </div>
-        <div class="row mb-6">
-          <label class="col-lg-4 col-form-label fw-bold fs-6"><span
-              class="required">{{"PROJECTS.project_location" | translate}}</span></label>
-          <div class="col-lg-8 fv-row d-flex justify-content-between">
-            <div style="flex: 0.45;">
-              <select class="form-select form-select-solid form-select-lg fw-bold" name="areaId"
-                formControlName="areaId">
-                <option value="" disabled>{{"PROJECTS.Municipality" | translate}}</option>
-                <ng-container *ngFor="let municipality of municipalities">
-                  <option [value]="municipality?.id">{{municipality?.name}}</option>
+        <div class="tab-panel" *ngIf="isActiveTab('basic')">
+          <div class="row mb-6">
+            <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="required">{{"PROJECTS.project_stage" | translate}}</span></label>
+            <div class="col-lg-8 fv-row">
+              <select class="form-select form-select-solid form-select-lg fw-bold enhanced-select" name="contractStatus" formControlName="contractStatus">
+                <option value="" disabled>{{"TRANSLATOR.SELECTION" | translate}}</option>
+                <ng-container *ngFor="let contractorStatus of contractorStatuses">
+                  <option [value]="contractorStatus?.id">{{contractorStatus?.name}}</option>
                 </ng-container>
               </select>
-              <div
-                *ngIf="addProjectForm?.get('areaId')?.invalid && (addProjectForm?.get('areaId')?.dirty || addProjectForm?.get('areaId')?.touched)"
-                class="fv-plugins-message-container">
-                <div class="fv-help-block">sector is required</div>
-              </div>
-            </div>
-            <div style="flex: 0.45;">
-              <select class="form-select form-select-solid form-select-lg fw-bold" name="districtId"
-                formControlName="districtId">
-                <option value="" disabled>{{"PROJECTS.District" | translate}}</option>
-                <ng-container *ngFor="let district of Districts">
-                  <option [value]="district?.id">{{district?.name}}</option>
-                </ng-container>
-              </select>
-              <div
-                *ngIf="addProjectForm?.get('project_sector')?.invalid && (addProjectForm?.get('project_sector')?.dirty || addProjectForm?.get('project_sector')?.touched)"
-                class="fv-plugins-message-container">
-                <div class="fv-help-block">sector is required</div>
+              <div *ngIf="addProjectForm?.get('contractStatus')?.invalid && (addProjectForm?.get('contractStatus')?.dirty || addProjectForm?.get('contractStatus')?.touched)" class="fv-plugins-message-container">
+                <div class="fv-help-block">stage is required</div>
               </div>
             </div>
           </div>
-        </div>
 
-        <div class="row mb-6">
-          <label class="col-lg-4 col-form-label fw-bold fs-6"><span
-              class="required">{{"PROJECTS.project_nameEn" | translate}}</span></label>
-          <div class="col-lg-8 fv-row">
-            <input type="text" class="form-control form-control-lg form-control-solid text-start"
-              placeholder="{{'PROJECTS.project_nameEn' | translate}}" name="name" formControlName="name" />
-            <div
-              *ngIf="addProjectForm?.get('name')?.invalid && (addProjectForm?.get('name')?.dirty || addProjectForm?.get('name')?.touched)"
-              class="fv-plugins-message-container">
-              <div class="fv-help-block">english name is required</div>
+          <div class="row mb-6">
+            <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="required">{{"PROJECTS.Classification" | translate}}</span></label>
+            <div class="col-lg-8 fv-row">
+              <select class="form-select form-select-solid form-select-lg fw-bold enhanced-select" name="classification" formControlName="classification">
+                <option value="" disabled>{{"TRANSLATOR.SELECTION" | translate}}</option>
+                <ng-container *ngFor="let type of classification">
+                  <option [value]="type.id">{{type?.name}}</option>
+                </ng-container>
+              </select>
+            </div>
+          </div>
+
+          <div class="row mb-6">
+            <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="required">{{"PROJECTS.Sector" | translate}}</span></label>
+            <div class="col-lg-8 fv-row">
+              <select class="form-select form-select-solid form-select-lg fw-bold enhanced-select" name="projectSector" formControlName="projectSector">
+                <option value="" disabled>{{"TRANSLATOR.SELECTION" | translate}}</option>
+                <ng-container *ngFor="let sector of projectSectors">
+                  <option [value]="sector.id">{{sector?.name}}</option>
+                </ng-container>
+              </select>
+            </div>
+          </div>
+
+          <div class="row mb-6">
+            <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="required">{{"PROJECTS.project_name" | translate}}</span></label>
+            <div class="col-lg-8 fv-row">
+              <input type="text" class="form-control form-control-lg form-control-solid text-start" placeholder="{{'PROJECTS.project_name' | translate}}" name="nameAr" formControlName="nameAr" />
+            </div>
+          </div>
+
+          <div class="row mb-6">
+            <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="required">{{"PROJECTS.project_nameEn" | translate}}</span></label>
+            <div class="col-lg-8 fv-row">
+              <input type="text" class="form-control form-control-lg form-control-solid text-start" placeholder="{{'PROJECTS.project_nameEn' | translate}}" name="name" formControlName="name" />
             </div>
           </div>
         </div>
 
-        <div class="row mb-6">
-          <label class="col-lg-4 col-form-label fw-bold fs-6"><span
-              class="required">{{"PROJECTS.contractor" | translate}}</span></label>
-          <div class="col-lg-8 fv-row">
-            <select class="form-select form-select-solid form-select-lg fw-bold" name="contractorId"
-              formControlName="contractorId">
-              <option value="" disabled>{{"TRANSLATOR.SELECTION" | translate}}</option>
-              <ng-container *ngFor="let contractor of contractors">
-                <option [value]="contractor.id">{{contractor?.name}}</option>
-              </ng-container>
-            </select>
-            <div
-              *ngIf="addProjectForm?.get('contractorId')?.invalid && (addProjectForm?.get('contractorId')?.dirty || addProjectForm?.get('contractorId')?.touched)"
-              class="fv-plugins-message-container">
-              <div class="fv-help-block">contractor is required</div>
+        <div class="tab-panel" *ngIf="isActiveTab('stakeholders')">
+          <div class="row mb-6">
+            <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="required">{{"PROJECTS.project_location" | translate}}</span></label>
+            <div class="col-lg-8 fv-row d-flex justify-content-between location-split">
+              <div class="location-col">
+                <select class="form-select form-select-solid form-select-lg fw-bold enhanced-select" name="areaId" formControlName="areaId">
+                  <option value="" disabled>{{"PROJECTS.Municipality" | translate}}</option>
+                  <ng-container *ngFor="let municipality of municipalities">
+                    <option [value]="municipality?.id">{{municipality?.name}}</option>
+                  </ng-container>
+                </select>
+              </div>
+              <div class="location-col">
+                <select class="form-select form-select-solid form-select-lg fw-bold enhanced-select" name="districtId" formControlName="districtId">
+                  <option value="" disabled>{{"PROJECTS.District" | translate}}</option>
+                  <ng-container *ngFor="let district of Districts">
+                    <option [value]="district?.id">{{district?.name}}</option>
+                  </ng-container>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="row mb-6">
+            <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="required">{{"PROJECTS.contractor" | translate}}</span></label>
+            <div class="col-lg-8 fv-row">
+              <select class="form-select form-select-solid form-select-lg fw-bold enhanced-select" name="contractorId" formControlName="contractorId">
+                <option value="" disabled>{{"TRANSLATOR.SELECTION" | translate}}</option>
+                <ng-container *ngFor="let contractor of contractors">
+                  <option [value]="contractor.id">{{contractor?.name}}</option>
+                </ng-container>
+              </select>
+            </div>
+          </div>
+
+          <div class="row mb-6">
+            <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="required">{{"PROJECTS.Consultant" | translate}}</span></label>
+            <div class="col-lg-8 fv-row">
+              <select class="form-select form-select-solid form-select-lg fw-bold enhanced-select" name="consultantId" formControlName="consultantId">
+                <option value="" disabled>{{"TRANSLATOR.SELECTION" | translate}}</option>
+                <ng-container *ngFor="let consultant of consultants">
+                  <option [value]="consultant.id">{{consultant?.name}}</option>
+                </ng-container>
+              </select>
+            </div>
+          </div>
+
+          <div class="row mb-6">
+            <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="required">{{"PROJECTS.project_manager" | translate}}</span></label>
+            <div class="col-lg-8 fv-row">
+              <select class="form-select form-select-solid form-select-lg fw-bold enhanced-select" name="managerId" formControlName="managerId">
+                <option value="" disabled>{{"TRANSLATOR.SELECTION" | translate}}</option>
+                <ng-container *ngFor="let manager of managers">
+                  <option [value]="manager?.id">{{manager?.name}}</option>
+                </ng-container>
+              </select>
             </div>
           </div>
         </div>
 
-        <div class="row mb-6">
-          <label class="col-lg-4 col-form-label fw-bold fs-6"><span
-              class="required">{{"PROJECTS.Consultant" | translate}}</span></label>
-          <div class="col-lg-8 fv-row">
-            <select class="form-select form-select-solid form-select-lg fw-bold" name="consultantId"
-              formControlName="consultantId">
-              <option value="" disabled>{{"TRANSLATOR.SELECTION" | translate}}</option>
-              <ng-container *ngFor="let consultant of consultants">
-                <option [value]="consultant.id">{{consultant?.name}}</option>
-              </ng-container>
-            </select>
-            <div
-              *ngIf="addProjectForm?.get('consultantId')?.invalid && (addProjectForm?.get('consultantId')?.dirty || addProjectForm?.get('consultantId')?.touched)"
-              class="fv-plugins-message-container">
-              <div class="fv-help-block">consultant is required</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="row mb-6">
-          <label class="col-lg-4 col-form-label fw-bold fs-6"><span
-              class="required">{{"PROJECTS.st_date" | translate}}</span></label>
-          <div class="col-lg-8 fv-row">
-            <input type="date" class="form-control form-control-lg form-control-solid text-start"
-              placeholder="{{'PROJECTS.st_date' | translate}}" name="executionStartDate"
-              formControlName="executionStartDate" />
-            <div
-              *ngIf="addProjectForm?.get('executionStartDate')?.invalid && (addProjectForm?.get('executionStartDate')?.dirty || addProjectForm?.get('executionStartDate')?.touched)"
-              class="fv-plugins-message-container">
-              <div class="fv-help-block">Execution Start Date required</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="row mb-6">
-          <label class="col-lg-4 col-form-label fw-bold fs-6"><span
-              class="required">{{durationDays.value ? 'Original Duration(Days)' : 'Original Duration(Month)'}}</span></label>
-          <div class="col-lg-4 fv-row">
-            <input type="number" class="form-control form-control-lg form-control-solid text-start"
-              placeholder="{{durationDays.value ? 'Original Duration(Days)' : 'Original Duration(Month)'}}"
-              name="duration" formControlName="duration" min="" />
-            <div
-              *ngIf="addProjectForm?.get('duration')?.invalid && (addProjectForm?.get('duration')?.dirty || addProjectForm?.get('duration')?.touched)"
-              class="fv-plugins-message-container">
-              <div class="fv-help-block">duration is required</div>
+        <div class="tab-panel" *ngIf="isActiveTab('schedule')">
+          <div class="row mb-6">
+            <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="required">{{"PROJECTS.st_date" | translate}}</span></label>
+            <div class="col-lg-8 fv-row">
+              <input type="date" class="form-control form-control-lg form-control-solid text-start" placeholder="{{'PROJECTS.st_date' | translate}}" name="executionStartDate" formControlName="executionStartDate" />
             </div>
           </div>
 
-          <div class="col-lg-4 d-flex align-items-center">
-            <div class="col-lg-8 d-flex align-items-center">
+          <div class="row mb-6">
+            <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="required">{{durationDays.value ? 'Original Duration(Days)' : 'Original Duration(Month)'}}</span></label>
+            <div class="col-lg-4 fv-row">
+              <input type="number" class="form-control form-control-lg form-control-solid text-start" placeholder="{{durationDays.value ? 'Original Duration(Days)' : 'Original Duration(Month)'}}" name="duration" formControlName="duration" />
+            </div>
+            <div class="col-lg-4 d-flex align-items-center">
               <div class="form-check form-check-solid form-switch d-flex align-items-center">
-                <input class="form-check-input w-45px h-30px me-2" type="checkbox" name="durationDays"
-                  formControlName="durationDays" />
+                <input class="form-check-input w-45px h-30px me-2" type="checkbox" name="durationDays" formControlName="durationDays" />
                 <label class="form-check-label">{{durationDays.value ? 'Days' : 'Month'}}</label>
               </div>
             </div>
           </div>
 
-        </div>
-
-        <div class="row mb-6">
-          <label class="col-lg-4 col-form-label fw-bold fs-6"><span
-              class="required">{{"PROJECTS.originalFinishDate" | translate}}</span></label>
-          <div class="col-lg-8 fv-row">
-            <input type="date" class="form-control form-control-lg form-control-solid text-start"
-              placeholder="{{'PROJECTS.originalFinishDate' | translate}}" name="originalFinishDate"
-              formControlName="originalFinishDate" readonly />
-          </div>
-        </div>
-
-        <div class="row mb-6">
-          <label class="col-lg-4 col-form-label fw-bold fs-6"><span
-              class="required">{{"PROJECTS.contract_no" | translate}}</span></label>
-          <div class="col-lg-8 fv-row">
-            <input type="text" class="form-control form-control-lg form-control-solid text-start"
-              placeholder="{{'PROJECTS.contract_no' | translate}}" name="contractNo" formControlName="contractNo" />
-            <div
-              *ngIf="addProjectForm?.get('contractNo')?.invalid && (addProjectForm?.get('contractNo')?.dirty || addProjectForm?.get('contractNo')?.touched)"
-              class="fv-plugins-message-container">
-              <div class="fv-help-block">english name is required</div>
+          <div class="row mb-6">
+            <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="required">{{"PROJECTS.originalFinishDate" | translate}}</span></label>
+            <div class="col-lg-8 fv-row">
+              <input type="date" class="form-control form-control-lg form-control-solid text-start" placeholder="{{'PROJECTS.originalFinishDate' | translate}}" name="originalFinishDate" formControlName="originalFinishDate" readonly />
             </div>
           </div>
         </div>
 
-        <div class="row mb-6">
-          <label class="col-lg-4 col-form-label fw-bold fs-6"><span
-              class="required">{{"PROJECTS.contract_date" | translate}}</span></label>
-          <div class="col-lg-8 fv-row">
-            <input type="date" class="form-control form-control-lg form-control-solid text-start"
-              placeholder="{{'PROJECTS.contract_date' | translate}}" name="contract_date"
-              formControlName="contract_date" />
-            <div
-              *ngIf="addProjectForm?.get('contract_date')?.invalid && (addProjectForm?.get('contract_date')?.dirty || addProjectForm?.get('contract_date')?.touched)"
-              class="fv-plugins-message-container">
-              <div class="fv-help-block">english name is required</div>
+        <div class="tab-panel" *ngIf="isActiveTab('contract')">
+          <div class="row mb-6">
+            <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="required">{{"PROJECTS.contract_no" | translate}}</span></label>
+            <div class="col-lg-8 fv-row">
+              <input type="text" class="form-control form-control-lg form-control-solid text-start" placeholder="{{'PROJECTS.contract_no' | translate}}" name="contractNo" formControlName="contractNo" />
+            </div>
+          </div>
+
+          <div class="row mb-6">
+            <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="required">{{"PROJECTS.contract_date" | translate}}</span></label>
+            <div class="col-lg-8 fv-row">
+              <input type="date" class="form-control form-control-lg form-control-solid text-start" placeholder="{{'PROJECTS.contract_date' | translate}}" name="contract_date" formControlName="contract_date" />
+            </div>
+          </div>
+
+          <div class="row mb-6">
+            <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="required">{{"PROJECTS.etimad_number" | translate}}</span></label>
+            <div class="col-lg-8 fv-row">
+              <input type="text" class="form-control form-control-lg form-control-solid text-start" placeholder="{{'PROJECTS.etimad_number' | translate}}" name="etimadNumber" formControlName="etimadNumber" (keypress)="numbersOnly($event)" />
+            </div>
+          </div>
+
+          <div class="row mb-6">
+            <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="required">{{"PROJECTS.project_value" | translate}}</span></label>
+            <div class="col-lg-8 fv-row">
+              <input type="text" class="form-control form-control-lg form-control-solid text-start" [currencyMask]="{ prefix: 'SAR ', thousands: ',', precision: 0, align: 'left' }" placeholder="{{'PROJECTS.project_value' | translate}}" name="originalValue" formControlName="originalValue" min="1" />
             </div>
           </div>
         </div>
-
-        <div class="row mb-6">
-          <label class="col-lg-4 col-form-label fw-bold fs-6"><span
-              class="required">{{"PROJECTS.etimad_number" | translate}}</span></label>
-          <div class="col-lg-8 fv-row">
-            <input type="text" class="form-control form-control-lg form-control-solid text-start"
-              placeholder="{{'PROJECTS.etimad_number' | translate}}" name="etimadNumber"
-              formControlName="etimadNumber" (keypress)="numbersOnly($event)" />
-          </div>
-        </div>
-
-        <div class="row mb-6">
-          <label class="col-lg-4 col-form-label fw-bold fs-6"><span
-              class="required">{{"PROJECTS.project_value" | translate}}</span></label>
-          <div class="col-lg-8 fv-row">
-            <input type="text" class="form-control form-control-lg form-control-solid text-start"
-              [currencyMask]="{ prefix: 'SAR ', thousands: ',', precision: 0, align: 'left' }"
-              placeholder="{{'PROJECTS.project_value' | translate}}" name="originalValue"
-              formControlName="originalValue" min="1" />
-            <div
-              *ngIf="addProjectForm?.get('originalValue')?.invalid && (addProjectForm?.get('originalValue')?.dirty || addProjectForm?.get('originalValue')?.touched)"
-              class="fv-plugins-message-container">
-              <div class="fv-help-block">english name is required</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="row mb-6">
-          <label class="col-lg-4 col-form-label fw-bold fs-6"><span
-              class="required">{{"PROJECTS.project_manager" | translate}}</span></label>
-          <div class="col-lg-8 fv-row">
-            <select class="form-select form-select-solid form-select-lg fw-bold" name="managerId"
-              formControlName="managerId">
-              <option value="" disabled>{{"TRANSLATOR.SELECTION" | translate}}</option>
-              <ng-container *ngFor="let manager of managers">
-                <option [value]="manager?.id">{{manager?.name}}</option>
-              </ng-container>
-            </select>
-            <div
-              *ngIf="addProjectForm?.get('managerId')?.invalid && (addProjectForm?.get('managerId')?.dirty || addProjectForm?.get('managerId')?.touched)"
-              class="fv-plugins-message-container">
-              <div class="fv-help-block">manager is required</div>
-            </div>
-          </div>
-        </div>
-
       </div>
-      <div class="card-footer d-flex justify-content-end py-6 px-9">
-        <button type="button" class="btn btn-primary" [disabled]="isLoading" (click)="saveProject()">
+
+      <div class="card-footer d-flex justify-content-between align-items-center py-6 px-9 flex-wrap gap-4">
+        <div class="footer-note">
+          <span class="footer-note-dot"></span>
+          Required fields are marked with an asterisk (*)
+        </div>
+        <button type="button" class="btn btn-primary save-btn" [disabled]="isLoading" (click)="saveProject()">
           <ng-container *ngIf="!isLoading">{{"TRANSLATOR.SAVE_CHANGES" | translate}}</ng-container>
           <ng-container *ngIf="isLoading">
-            <span clas="indicator-progress" [style.display]="'block'">
+            <span class="indicator-progress" [style.display]="'block'">
               Please wait...{{ " " }}
               <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
             </span>
@@ -315,5 +228,4 @@
 </div>
 
 <!-- modal -->
-<swal #noticeSwal [swalOptions]="swalOptions">
-</swal>
+<swal #noticeSwal [swalOptions]="swalOptions"></swal>

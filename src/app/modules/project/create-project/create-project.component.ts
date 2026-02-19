@@ -34,6 +34,25 @@ export class CreateProjectComponent implements OnInit, AfterViewInit, OnDestroy 
   contractors: any[] = [];
   private updating = false;
   private unsubscribe: Subscription[] = [];
+  activeTab: 'basic' | 'stakeholders' | 'schedule' | 'contract' = 'basic';
+  private readonly requiredFields: string[] = [
+    'contractStatus',
+    'classification',
+    'projectSector',
+    'nameAr',
+    'name',
+    'contractorId',
+    'consultantId',
+    'duration',
+    'contractNo',
+    'contract_date',
+    'originalValue',
+    'managerId',
+    'areaId',
+    'districtId',
+    'executionStartDate',
+    'etimadNumber'
+  ];
 
   swalOptions: SweetAlertOptions = {};
   @ViewChild('noticeSwal') noticeSwal!: SwalComponent;
@@ -237,6 +256,26 @@ export class CreateProjectComponent implements OnInit, AfterViewInit, OnDestroy 
   get durationDays(): FormControl {
     return this.addProjectForm.get('durationDays') as FormControl;
   }
+  setActiveTab(tab: 'basic' | 'stakeholders' | 'schedule' | 'contract') {
+    this.activeTab = tab;
+  }
+
+  isActiveTab(tab: 'basic' | 'stakeholders' | 'schedule' | 'contract'): boolean {
+    return this.activeTab === tab;
+  }
+
+  get completedRequiredCount(): number {
+    if (!this.addProjectForm) return 0;
+    return this.requiredFields.filter((field) => {
+      const value = this.addProjectForm.get(field)?.value;
+      return value !== null && value !== undefined && value !== '';
+    }).length;
+  }
+
+  get completionPercentage(): number {
+    return Math.round((this.completedRequiredCount / this.requiredFields.length) * 100);
+  }
+
 
   ngOnDestroy() {
     this.unsubscribe.forEach((sb) => sb.unsubscribe());
