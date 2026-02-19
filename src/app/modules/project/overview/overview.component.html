@@ -111,7 +111,7 @@
             <td>
               <div class="d-flex justify-content-center flex-shrink-0" *ngIf="checkAdmin(project.userName)">
                 <a class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1"
-                  (click)="checkProject(project.id)">
+                  (click)="checkProject(project.id, project?.nameAr || project?.name)">
                   <app-keenicon name="setting-2" class="fs-3"></app-keenicon>
                 </a>
                 <a class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1"
@@ -170,21 +170,48 @@
 </swal>
 
 <ng-template #SettingsModal let-modal>
+<div class="workspace-modal">
+    <div class="modal-header border-0 pb-0">
+      <h4 class="modal-title" id="modal-basic-title">{{ selectedProjectName || ("PROJECTS.projectSettings" | translate) }}</h4>
+      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
 
-  <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">{{"PROJECTS.projectSettings" | translate}}</h4>
-    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
-  </div>
-  <div class="modal-body">
-    <div class="d-flex flex-wrap text-gray-600">
-      <ng-container *ngFor="let option of projectOptions; let i = index">
-        <div class="d-flex align-items-center py-2 my-2" (click)="navigateTo(option.route)" style="width: 30%;">
-          <span class="bullet bg-primary me-3"></span>
-          <a class="text-gray-900 fw-bolder text-hover-primary d-block fs-6 cursor-pointer">
-            {{ option.name }}
-          </a>
+    <div class="modal-body pt-4">
+      <div class="workspace-search">
+        <app-keenicon name="magnifier" class="workspace-search-icon"></app-keenicon>
+        <input
+          type="text"
+          class="form-control form-control-solid workspace-search-input"
+          [placeholder]="'Search modules'"
+          [(ngModel)]="modalSearchText"
+          (ngModelChange)="onModalSearchChange()"
+        />
+      </div>
+
+      <div class="workspace-sections">
+        <div class="workspace-section" *ngFor="let section of filteredProjectOptionSections">
+          <h5 class="workspace-section-title">{{ section.title }}</h5>
+
+          <div class="workspace-grid">
+            <button class="workspace-card" type="button" *ngFor="let option of section.options" (click)="navigateTo(option.route)">
+              <span class="workspace-icon" [ngClass]="option.iconClass">
+                <app-keenicon [name]="option.icon" class="fs-3"></app-keenicon>
+              </span>
+
+              <span class="workspace-content">
+                <span class="workspace-name-row">
+                  <span class="workspace-name">{{ option.name }}</span>
+                  <span class="workspace-count" *ngIf="getOptionCount(option.route, option.count) !== null">{{ getOptionCount(option.route, option.count) }}</span>
+                </span>
+                <span class="workspace-description">{{ option.description }}</span>
+              </span>
+
+              <app-keenicon name="right" class="workspace-arrow"></app-keenicon>
+            </button>
+          </div>
+  
         </div>
-      </ng-container>
+   </div>
     </div>
   </div>
 
