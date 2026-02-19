@@ -1,0 +1,110 @@
+.add-user-card {
+  border: 1px solid #eef1f5;
+  border-radius: 0.9rem;
+  box-shadow: 0 8px 24px rgba(15, 52, 96, 0.06);
+
+  .card-header {
+    background: linear-gradient(90deg, #f8faff 0%, #ffffff 100%);
+    border-radius: 0.9rem 0.9rem 0 0;
+  }
+}
+
+.form-section {
+  padding: 1.25rem;
+  border: 1px solid #eff2f5;
+  border-radius: 0.75rem;
+  background-color: #fcfdff;
+  margin-bottom: 1.5rem;
+}
+
+.section-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #3f4254;
+  letter-spacing: 0.02em;
+  margin-bottom: 1rem;
+}
+
+.select-modern {
+  position: relative;
+
+  &.select-modern--multi {
+    &::after {
+      content: '';
+      position: absolute;
+      top: 1.2rem;
+      right: 1rem;
+      width: 0.5rem;
+      height: 0.5rem;
+      border-right: 2px solid #7e8299;
+      border-bottom: 2px solid #7e8299;
+      transform: rotate(45deg);
+      pointer-events: none;
+      z-index: 3;
+    }
+  }
+}
+
+:host ::ng-deep {
+  .select-modern--multi {
+    .multiselect-dropdown {
+      width: 100%;
+
+      .dropdown-btn {
+        min-height: 48px;
+        border-radius: 0.65rem !important;
+        border: 1px solid #e4e6ef !important;
+        background: #f5f8fa !important;
+        padding: 12px 42px 12px 14px !important;
+        display: flex;
+        align-items: center;
+
+        .selected-item-container,
+        .selected-item {
+          max-width: 100%;
+        }
+
+        .selected-item {
+          border: 0 !important;
+          background: transparent !important;
+          color: #181c32 !important;
+          font-weight: 600;
+          padding: 0 !important;
+        }
+
+        .dropdown-down,
+        .dropdown-up {
+          display: none !important;
+        }
+      }
+
+      .dropdown-list {
+        margin-top: 0.45rem !important;
+        border: 1px solid #e4e6ef !important;
+        border-radius: 0.65rem !important;
+        box-shadow: 0 10px 30px rgba(15, 52, 96, 0.12) !important;
+
+        .filter-textbox {
+          padding: 0.5rem !important;
+
+          input {
+            border: 1px solid #e4e6ef !important;
+            border-radius: 0.5rem !important;
+            min-height: 38px;
+          }
+        }
+
+        .item2 {
+          padding: 0.55rem 0.75rem !important;
+        }
+      }
+    }
+
+    .multiselect-dropdown .dropdown-btn:focus-within,
+    .multiselect-dropdown .dropdown-btn:focus {
+      border-color: #3699ff !important;
+      background-color: #ffffff !important;
+      box-shadow: 0 0 0 0.15rem rgba(54, 153, 255, 0.2) !important;
+    }
+  }
+}

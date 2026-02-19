@@ -17,6 +17,8 @@ export class AddVendorComponent implements OnInit {
   isLoading: boolean;
   addVendorForm: FormGroup;
   vendorTypes: any[] = VendorTypes;
+  activeTab: 'general' | 'contact' = 'general';
+  private readonly requiredFields: string[] = ['crNumber', 'email', 'nameAr', 'name', 'address', 'description', 'phone', 'typeId'];
 
   swalOptions: SweetAlertOptions = {};
   @ViewChild('noticeSwal') noticeSwal!: SwalComponent;
@@ -96,6 +98,26 @@ export class AddVendorComponent implements OnInit {
       });
     }
   }
+   setActiveTab(tab: 'general' | 'contact') {
+    this.activeTab = tab;
+  }
+
+  isActiveTab(tab: 'general' | 'contact'): boolean {
+    return this.activeTab === tab;
+  }
+
+  get completedRequiredCount(): number {
+    if (!this.addVendorForm) return 0;
+    return this.requiredFields.filter((field) => {
+      const value = this.addVendorForm.get(field)?.value;
+      return value !== null && value !== undefined && value !== '';
+    }).length;
+  }
+
+  get completionPercentage(): number {
+    return Math.round((this.completedRequiredCount / this.requiredFields.length) * 100);
+  }
+
 
   back() {
     this._location.back();

@@ -1,7 +1,6 @@
-<div class="row g-5 g-xl-8 justify-content-between">
+<div class="vendor-page row g-5 g-xl-8 justify-content-between">
   <div class="col-xl-12">
-    <div class="card mb-5 mb-xl-8">
-
+    <div class="card mb-5 mb-xl-8 vendor-card">
       <div class="card-header align-items-center border-0 mt-4">
         <h3 class="card-title align-items-start flex-column">
           <span class="fw-bolder text-gray-900">{{"VENDORS.Add_Vendor" | translate}}</span>
@@ -17,124 +16,97 @@
       <div class="card-body pt-3">
         <form [formGroup]="addVendorForm" class="form">
           <div class="card-body border-top p-9">
+            <div class="form-progress mb-8">
+              <div class="progress-head">
+                <span>Form completion</span>
+                <strong>{{ completionPercentage }}%</strong>
+              </div>
+              <div class="progress-track">
+                <div class="progress-fill" [style.width.%]="completionPercentage"></div>
+              </div>
+              <div class="progress-caption">{{ completedRequiredCount }}/8 required fields completed</div>
+            </div>
 
+            <div class="vendor-tabs mb-8">
+              <button type="button" class="vendor-tab" [class.active]="isActiveTab('general')" (click)="setActiveTab('general')">General Info</button>
+              <button type="button" class="vendor-tab" [class.active]="isActiveTab('contact')" (click)="setActiveTab('contact')">Contact & Details</button>
+            </div>
 
-            <div class="row mb-6" >
-              <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="required">{{"VENDORS.cr_number" | translate}}</span></label>
-              <div class="col-lg-8 fv-row">
-                <input type="text" class="form-control form-control-lg form-control-solid" placeholder="{{'VENDORS.cr_number' | translate}}"
-                  formControlName="crNumber" name="crNumber"  [readonly]="router.url.includes('edit')" />
-                <div
-                  *ngIf="addVendorForm?.get('crNumber')?.invalid && (addVendorForm?.get('crNumber')?.dirty || addVendorForm?.get('crNumber')?.touched)"
-                  class="fv-plugins-message-container">
-                  <div class="fv-help-block">CR is required</div>
+            <div class="tab-panel" *ngIf="isActiveTab('general')">
+              <div class="row mb-6">
+                <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="required">{{"VENDORS.cr_number" | translate}}</span></label>
+                <div class="col-lg-8 fv-row">
+                  <input type="text" class="form-control form-control-lg form-control-solid" placeholder="{{'VENDORS.cr_number' | translate}}" formControlName="crNumber" name="crNumber" [readonly]="router.url.includes('edit')" />
+                </div>
+              </div>
+
+              <div class="row mb-6">
+                <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="required">Vendor Type</span></label>
+                <div class="col-lg-8 fv-row">
+                  <select class="form-select form-select-solid form-select-lg fw-bold enhanced-select" name="typeId" formControlName="typeId">
+                    <option value="" disabled>{{"TRANSLATOR.SELECTION" | translate}}</option>
+                    <ng-container *ngFor="let item of vendorTypes">
+                      <option [value]="item?.id">{{item?.name}}</option>
+                    </ng-container>
+                  </select>
+                </div>
+              </div>
+
+              <div class="row mb-6">
+                <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="required">Vendor Name</span></label>
+                <div class="col-lg-8 fv-row">
+                  <input type="text" class="form-control form-control-lg form-control-solid" placeholder="Vendor Name" formControlName="nameAr" name="nameAr" />
+                </div>
+              </div>
+
+              <div class="row mb-6">
+                <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="required">Vendor English Name</span></label>
+                <div class="col-lg-8 fv-row">
+                  <input type="text" class="form-control form-control-lg form-control-solid" placeholder="Vendor English Name" formControlName="name" name="name" />
                 </div>
               </div>
             </div>
 
-            <div class="row mb-6">
-              <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="required">Email</span></label>
-              <div class="col-lg-8 fv-row">
-                <input type="email" class="form-control form-control-lg form-control-solid" placeholder="email"
-                  formControlName="email" name="email" />
-                <div
-                  *ngIf="addVendorForm?.get('email')?.invalid && (addVendorForm?.get('email')?.dirty || addVendorForm?.get('email')?.touched)"
-                  class="fv-plugins-message-container">
-                  <div class="fv-help-block">email is required</div>
+            <div class="tab-panel" *ngIf="isActiveTab('contact')">
+              <div class="row mb-6">
+                <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="required">Email</span></label>
+                <div class="col-lg-8 fv-row">
+                  <input type="email" class="form-control form-control-lg form-control-solid" placeholder="email" formControlName="email" name="email" />
+                </div>
+              </div>
+
+              <div class="row mb-6">
+                <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="required">Phone</span></label>
+                <div class="col-lg-8 fv-row">
+                  <input type="text" class="form-control form-control-lg form-control-solid" placeholder="phone" formControlName="phone" name="phone" />
+                </div>
+              </div>
+
+              <div class="row mb-6">
+                <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="required">Address</span></label>
+                <div class="col-lg-8 fv-row">
+                  <input type="text" class="form-control form-control-lg form-control-solid" placeholder="address" formControlName="address" name="address" />
+                </div>
+              </div>
+
+              <div class="row mb-6">
+                <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="required">Description</span></label>
+                <div class="col-lg-8 fv-row">
+                  <textarea class="form-control form-control-lg form-control-solid" placeholder="description" formControlName="description" name="description" rows="4"></textarea>
                 </div>
               </div>
             </div>
-
-            <div class="row mb-6">
-              <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="required">Vendor Type</span></label>
-              <div class="col-lg-8 fv-row">
-                <select class="form-select form-select-solid form-select-lg fw-bold" name="typeId"
-                  formControlName="typeId">
-                  <option value="" disabled>{{"TRANSLATOR.SELECTION" | translate}}</option>
-                  <ng-container *ngFor="let item of vendorTypes">
-                    <option [value]="item?.id">{{item?.name}}</option>
-                  </ng-container>
-                </select>
-                <div
-                  *ngIf="addVendorForm?.get('typeId')?.invalid && (addVendorForm?.get('typeId')?.dirty || addVendorForm?.get('typeId')?.touched)"
-                  class="fv-plugins-message-container">
-                  <div class="fv-help-block">Type is required</div>
-                </div>
-              </div>
-            </div>
-
-            <div class="row mb-6">
-              <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="required">Vendor Name</span></label>
-              <div class="col-lg-8 fv-row">
-                <input type="text" class="form-control form-control-lg form-control-solid" placeholder="Vendor English"
-                  formControlName="nameAr" name="nameAr" />
-                <div
-                  *ngIf="addVendorForm?.get('nameAr')?.invalid && (addVendorForm?.get('nameAr')?.dirty || addVendorForm?.get('nameAr')?.touched)"
-                  class="fv-plugins-message-container">
-                  <div class="fv-help-block">Name is required</div>
-                </div>
-              </div>
-            </div>
-
-            <div class="row mb-6">
-              <label class="col-lg-4 col-form-label fw-bold fs-6"><span class="required">Vendor English
-                  Name</span></label>
-              <div class="col-lg-8 fv-row">
-                <input type="text" class="form-control form-control-lg form-control-solid"
-                  placeholder="Vendor English Name" formControlName="name" name="name" />
-                <div
-                  *ngIf="addVendorForm?.get('name')?.invalid && (addVendorForm?.get('name')?.dirty || addVendorForm?.get('name')?.touched)"
-                  class="fv-plugins-message-container">
-                  <div class="fv-help-block">Name is required</div>
-                </div>
-              </div>
-            </div>
-
-            <div class="row mb-6">
-              <label class="col-lg-4 col-form-label fw-bold fs-6"><span>Phone</span></label>
-              <div class="col-lg-8 fv-row">
-                <input type="text" class="form-control form-control-lg form-control-solid" placeholder="phone"
-                  formControlName="phone" name="phone" />
-                <div
-                  *ngIf="addVendorForm?.get('phone')?.invalid && (addVendorForm?.get('phone')?.dirty || addVendorForm?.get('phone')?.touched)"
-                  class="fv-plugins-message-container">
-                  <div class="fv-help-block">Phone is required</div>
-                </div>
-              </div>
-            </div>
-
-            <div class="row mb-6">
-              <label class="col-lg-4 col-form-label fw-bold fs-6"><span>Address</span></label>
-              <div class="col-lg-8 fv-row">
-                <input type="text" class="form-control form-control-lg form-control-solid" placeholder="address"
-                  formControlName="address" name="address" />
-                <div
-                  *ngIf="addVendorForm?.get('address')?.invalid && (addVendorForm?.get('address')?.dirty || addVendorForm?.get('address')?.touched)"
-                  class="fv-plugins-message-container">
-                  <div class="fv-help-block">Address is required</div>
-                </div>
-              </div>
-            </div>
-
-            <div class="row mb-6">
-              <label class="col-lg-4 col-form-label fw-bold fs-6"><span>Description</span></label>
-              <div class="col-lg-8 fv-row">
-                <textarea class="form-control form-control-lg form-control-solid" placeholder="description"
-                  formControlName="description" name="description" rows="4"></textarea>
-                <div
-                  *ngIf="addVendorForm?.get('description')?.invalid && (addVendorForm?.get('description')?.dirty || addVendorForm?.get('description')?.touched)"
-                  class="fv-plugins-message-container">
-                  <div class="fv-help-block">Description is required</div>
-                </div>
-              </div>
-            </div>
-
           </div>
-          <div class="card-footer d-flex justify-content-end py-6 px-9">
-            <button type="button" class="btn btn-primary" [disabled]="isLoading" (click)="saveChanges()">
+
+          <div class="card-footer d-flex justify-content-between align-items-center py-6 px-9 flex-wrap gap-4">
+            <div class="footer-note">
+              <span class="footer-note-dot"></span>
+              Required fields are marked with an asterisk (*)
+            </div>
+            <button type="button" class="btn btn-primary save-btn" [disabled]="isLoading" (click)="saveChanges()">
               <ng-container *ngIf="!isLoading">{{"TRANSLATOR.ADD" | translate}}</ng-container>
               <ng-container *ngIf="isLoading">
-                <span clas="indicator-progress" [style.display]="'block'">
+                <span class="indicator-progress" [style.display]="'block'">
                   Please wait...{{ " " }}
                   <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
                 </span>
@@ -142,13 +114,9 @@
             </button>
           </div>
         </form>
-
       </div>
-      <!-- end::Body -->
     </div>
   </div>
 </div>
 
-<!-- modal -->
-<swal #noticeSwal [swalOptions]="swalOptions">
-</swal>
+<swal #noticeSwal [swalOptions]="swalOptions"></swal>

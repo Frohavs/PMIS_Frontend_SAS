@@ -11,6 +11,7 @@ import { AddUserComponent } from './add-user/add-user.component';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { TranslationModule } from '../i18n';
 import { NgbNavModule, NgbDropdownModule, NgbCollapseModule, NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 
 
 @NgModule({
@@ -30,6 +31,7 @@ import { NgbNavModule, NgbDropdownModule, NgbCollapseModule, NgbTooltipModule } 
     NgbDropdownModule,
     NgbCollapseModule,
     NgbTooltipModule,
+    NgMultiSelectDropDownModule.forRoot(),
     TranslationModule,
     SweetAlert2Module.forChild(),
   ]
