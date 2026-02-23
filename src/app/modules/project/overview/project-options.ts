@@ -132,52 +132,52 @@ export interface ProjectOptionSection {
 
 export const PROJECT_OPTION_SECTIONS: ProjectOptionSection[] = [
   {
-    title: 'Planning & Control',
+    title: 'Planning & Control | التخطيط والتحكم',
     options: [
       {
-        name: 'Schedule',
+        name: 'Schedule | الجدول الزمني',
         route: 'projects/flood-management',
-        description: 'Time schedule management',
+        description: 'Time schedule management | إدارة الجدول الزمني',
         icon: 'calendar',
         iconClass: 'bg-light-primary text-primary',
         count: 2
       },
       {
-        name: 'Critical Path',
+        name: 'Critical Path | المسار الحرج',
         route: 'projects/critical_path',
-        description: 'Manage key dependencies',
+        description: 'Manage key dependencies | إدارة التبعيات الرئيسية',
         icon: 'chart-simple',
         iconClass: 'bg-light-info text-info',
         count: 1
       },
       {
-        name: 'S-Curve',
+        name: 'S-Curve | المنحنى التراكمي',
         route: 'projects/s-curve',
-        description: 'Track Project progress',
+        description: 'Track project progress | تتبع تقدم المشروع',
         icon: 'chart-line',
         iconClass: 'bg-light-danger text-danger',
         count: 2
       },
       {
-        name: 'Resource Plan',
+        name: 'Resource Plan | خطة الموارد',
         route: 'projects/resource-plan-list',
-        description: 'Allocate project resources',
+        description: 'Allocate project resources | تخصيص موارد المشروع',
         icon: 'abstract-26',
         iconClass: 'bg-light-success text-success',
         count: 1
       },
        {
-        name: 'Cash Flow',
+        name: 'Cash Flow | التدفق النقدي',
         route: 'projects/cash-flow',
-        description: 'Cash flow analysis',
+        description: 'Cash flow analysis | تحليل التدفق النقدي',
         icon: 'dollar',
         iconClass: 'bg-light-success text-success',
         count: 5
       },
       {
-        name: 'Milestones',
+        name: 'Milestones | المخرجات الرئيسية',
         route: 'projects/milestone_list',
-        description: 'Monitor key deliverables',
+        description: 'Monitor key deliverables | متابعة المخرجات الرئيسية',
         icon: 'flag',
         iconClass: 'bg-light-warning text-warning',
         count: 9
@@ -185,68 +185,68 @@ export const PROJECT_OPTION_SECTIONS: ProjectOptionSection[] = [
     ]
   },
   {
-    title: 'Execution',
+    title: 'Execution | التنفيذ',
     options: [
       {
-        name: 'Daily Report',
+        name: 'Daily Report | التقرير اليومي',
         route: 'projects/daily-report',
-        description: 'Capture daily activity',
+        description: 'Capture daily activity | توثيق النشاط اليومي',
         icon: 'note',
         iconClass: 'bg-light-primary text-primary',
         count: 4
       },
       {
-        name: 'Project Sites',
+        name: 'Project Sites | مواقع المشروع',
         route: 'projects/project-sites',
-        description: 'Manage active sites',
+        description: 'Manage active sites | إدارة المواقع النشطة',
         icon: 'geolocation-home',
         iconClass: 'bg-light-warning text-warning',
         count: 2
       },
       {
-        name: 'HSE',
+        name: 'HSE | الصحة والسلامة والبيئة',
         route: 'projects/hse',
-        description: 'Health and safety controls',
+        description: 'Health and safety controls | ضوابط الصحة والسلامة',
         icon: 'shield-tick',
         iconClass: 'bg-light-success text-success',
         count: 2
       },
      {
-        name: 'Factory',
+        name: 'Approved Factories | المصانع المعتمدة',
         route: 'projects/factory-list',
-        description: 'Factory related data',
+        description: 'Factory related data | بيانات المصنع',
         icon: 'office-bag',
         iconClass: 'bg-light-warning text-warning',
         count: 2
       },
       {
-        name: 'Monthly Report',
+        name: 'Monthly Report | التقرير الشهري',
         route: 'projects/monthly_reports',
-        description: 'Monthly progress summary',
+        description: 'Monthly progress summary | ملخص التقدم الشهري',
         icon: 'calendar-8',
         iconClass: 'bg-light-info text-info',
         count: 2
       },
       {
-        name: 'OBS',
+        name: 'OBS | عوائق المشروع',
         route: 'projects/obs-list',
-        description: 'Organizational breakdown',
+        description: 'Obstruction List | عوائق المشروع',
         icon: 'abstract-39',
         iconClass: 'bg-light-info text-info',
         count: 2
       },
       {
-        name: 'Project Risks',
+        name: 'Project Risks | مخاطر المشروع',
         route: 'projects/risk-management',
-        description: 'Risk register and actions',
+        description: 'Risk register and actions | سجل المخاطر والإجراءات',
         icon: 'shield-search',
         iconClass: 'bg-light-danger text-danger',
         count: 2
       },
       {
-        name: 'MIR',
+        name: 'MIR | طلبات فحص المواد',
         route: 'projects/mir-list',
-        description: 'Material inspection requests',
+        description: 'Material inspection requests | طلبات فحص المواد',
         icon: 'document',
         iconClass: 'bg-light-primary text-primary',
         count: 2
@@ -254,36 +254,36 @@ export const PROJECT_OPTION_SECTIONS: ProjectOptionSection[] = [
     ]
   },
   {
-    title: 'Commercial & Contracts',
+    title: 'Commercial & Contracts | الشؤون التجارية والعقود',
     options: [
       {
-        name: 'BOQs',
+        name: 'BOQs | جدول الكميات',
         route: 'projects/boq-list',
-        description: 'Bill of quantities',
+        description: 'Bill of quantities | جدول الكميات',
         icon: 'book-square',
         iconClass: 'bg-light-primary text-primary',
         count: 2
       },
       {
-        name: 'Subcontractors',
+        name: 'Subcontractors | مقاول الباطن',
         route: 'projects/sub-contractors',
-        description: 'Subcontractor records',
+        description: 'Subcontractor records | سجلات مقاولين الباطن',
         icon: 'people',
         iconClass: 'bg-light-info text-info',
         count: 2
       },
       {
-        name: 'Consultant Evaluation',
+        name: 'Consultant Evaluation | تقييم الاستشاري',
         route: 'projects/consultant-evaluation',
-        description: 'Consultant performance',
+        description: 'Consultant performance | أداء الاستشاري',
         icon: 'like-shapes',
         iconClass: 'bg-light-warning text-warning',
         count: 2
       },
       {
-        name: 'Contractor Evaluation',
+        name: 'Contractor Evaluation | تقييم المقاول',
         route: 'projects/contractor-evaluation',
-        description: 'Contractor performance',
+        description: 'Contractor performance | أداء المقاول',
         icon: 'star',
         iconClass: 'bg-light-danger text-danger',
         count: 2
@@ -291,36 +291,36 @@ export const PROJECT_OPTION_SECTIONS: ProjectOptionSection[] = [
     ]
   },
   {
-    title: 'Documents & Communication',
+    title: 'Documents & Communication | المستندات والتواصل',
     options: [
       {
-        name: 'Project Letters',
+        name: 'Project Letters | خطابات المشروع',
         route: 'projects/project-letter',
-        description: 'Official correspondences',
+        description: 'Official correspondences | المراسلات الرسمية',
         icon: 'message-text-2',
         iconClass: 'bg-light-primary text-primary',
         count: 2
       },
       {
-        name: 'RFI',
+        name: 'RFI | طلبات المعلومات',
         route: 'projects/rfi-list',
-        description: 'Requests for information',
+        description: 'Requests for information | طلبات المعلومات',
         icon: 'information-5',
         iconClass: 'bg-light-danger text-danger',
         count: 12
       },
       {
-        name: 'Files',
+        name: 'Files | الملفات',
         route: 'projects/project-files',
-        description: 'Project file repository',
+        description: 'Project file repository | مستودع ملفات المشروع',
         icon: 'folder',
         iconClass: 'bg-light-success text-success',
          count: 12
       },
       {
-        name: 'Library',
+        name: 'Library | المكتبة',
         route: 'projects/library-file-listing',
-        description: 'Shared project resources',
+        description: 'Shared project resources | موارد المشروع المشتركة',
         icon: 'book-open',
         iconClass: 'bg-light-info text-info',
         count: 2
@@ -328,26 +328,26 @@ export const PROJECT_OPTION_SECTIONS: ProjectOptionSection[] = [
     ]
   },
   {
-    title: 'Project Setup',
+    title: 'Project Setup | إعداد المشروع',
     options: [
       {
-        name: 'Project Information',
+        name: 'Project Information | معلومات المشروع',
         route: 'projects/update-project-info',
-        description: 'Update core project details',
+        description: 'Update core project details | تحديث بيانات المشروع الأساسية',
         icon: 'setting-2',
         iconClass: 'bg-light-primary text-primary'
       },
       {
-        name: 'Delivery Status',
+        name: 'Delivery Status | حالة التسليم',
         route: 'projects/initial-delivery-status',
-        description: 'Initial and final delivery tracking',
+        description: 'Initial and final delivery tracking | متابعة التسليم الابتدائي والنهائي',
         icon: 'truck',
         iconClass: 'bg-light-success text-success'
       },
       {
-        name: 'Final Delivery Status',
+        name: 'Final Delivery Status | حالة التسليم النهائي',
         route: 'projects/final-delivery-status',
-        description: 'Final delivery checkpoints',
+        description: 'Final delivery checkpoints | نقاط فحص التسليم النهائي',
         icon: 'delivery-3',
         iconClass: 'bg-light-success text-success'
       }
@@ -355,27 +355,27 @@ export const PROJECT_OPTION_SECTIONS: ProjectOptionSection[] = [
     ]
   },
   {
-    title: 'Report & Dashboards',
+    title: 'Report & Dashboards | التقارير ولوحات المعلومات',
     options: [
       
       {
-        name: 'Status Report',
+        name: 'Status Report | تقرير الحالة',
         route: 'projects/project-status-report',
-        description: 'Current project status',
+        description: 'Current project status | حالة المشروع الحالية',
         icon: 'status',
         iconClass: 'bg-light-primary text-primary'
       },
       {
-        name: 'Initial Delivery List',
+        name: 'Initial Delivery List | قائمة الاستلام الابتدائي',
         route: 'projects/initial-delivery-list',
-        description: 'Manage delivery list',
+        description: 'Manage delivery list | إدارة قائمة التسليم',
         icon: 'clipboard',
         iconClass: 'bg-light-warning text-warning'
       },
       {
-        name: 'Visit Form',
+        name: 'Visit Form | نموذج الزيارة',
         route: 'projects/visit-list',
-        description: 'Site visits and logs',
+        description: 'Site visits and logs | زيارات الموقع وسجلاتها',
         icon: 'map',
         iconClass: 'bg-light-success text-success'
       }

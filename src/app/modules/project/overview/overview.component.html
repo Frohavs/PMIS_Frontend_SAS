@@ -190,7 +190,7 @@
 
       <div class="workspace-sections">
         <div class="workspace-section" *ngFor="let section of filteredProjectOptionSections">
-          <h5 class="workspace-section-title">{{ section.title }}</h5>
+          <h5 class="workspace-section-title">{{ getLocalizedText(section.title) }}</h5>
 
           <div class="workspace-grid">
             <button class="workspace-card" type="button" *ngFor="let option of section.options" (click)="navigateTo(option.route)">
@@ -200,10 +200,10 @@
 
               <span class="workspace-content">
                 <span class="workspace-name-row">
-                  <span class="workspace-name">{{ option.name }}</span>
+                  <span class="workspace-name">{{ getLocalizedText(option.name) }}</span>
                   <span class="workspace-count" *ngIf="getOptionCount(option.route, option.count) !== null">{{ getOptionCount(option.route, option.count) }}</span>
                 </span>
-                <span class="workspace-description">{{ option.description }}</span>
+                <span class="workspace-description">{{ getLocalizedText(option.description) }}</span>
               </span>
 
               <app-keenicon name="right" class="workspace-arrow"></app-keenicon>
