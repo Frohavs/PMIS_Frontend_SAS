@@ -6,7 +6,7 @@ import { fromEvent, Subscription } from 'rxjs';
 import { debounceTime, distinctUntilChanged, } from 'rxjs';
 import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
 import { SweetAlertOptions } from 'sweetalert2';
-import { PROJECT_OPTIONS } from './project-options';
+import { PROJECT_OPTION_SECTIONS, ProjectOptionSection } from './project-options';
 import { ProjectsService } from 'src/app/services/projects.service';
 import { DeliveryStatusService } from 'src/app/services/delivery-status.service';
 
@@ -23,7 +23,14 @@ export class OverviewComponent implements OnInit, AfterViewInit, OnDestroy {
   pagesCount: number[] = [];
   selected = 1;
   selectedSettingId: number | null;
-  projectOptions: any[] = PROJECT_OPTIONS;
+  selectedProjectName = '';
+  modalSearchText = '';
+  projectOptionSections: ProjectOptionSection[] = PROJECT_OPTION_SECTIONS;
+  filteredProjectOptionSections: ProjectOptionSection[] = PROJECT_OPTION_SECTIONS;
+  optionCounts: Record<string, number> = {
+    'projects/rfi-list': 0,
+  };
+
 
   // modal configs
   isLoading = false;
@@ -38,7 +45,7 @@ export class OverviewComponent implements OnInit, AfterViewInit, OnDestroy {
 
   userModel: { id: number | null, name: string, role: number } = { id: null, name: '', role: 0 };
   modalConfig: NgbModalOptions = {
-    modalDialogClass: 'modal-dialog modal-dialog-centered mw-850px',
+  modalDialogClass: 'modal-dialog-centered project-workspace-modal',
   };
 
   private inputSubscription: Subscription;
@@ -88,10 +95,40 @@ export class OverviewComponent implements OnInit, AfterViewInit, OnDestroy {
     });
   }
 
-  checkProject(id: number) {
+   checkProject(id: number, projectName?: string) {
     this.selectedSettingId = id;
+    this.selectedProjectName = projectName || 'Project Workspace';
+    this.modalSearchText = '';
+    this.filteredProjectOptionSections = this.projectOptionSections;
     this.modalService.open(this.SettingsModal, this.modalConfig);
   }
+
+  onModalSearchChange(): void {
+    const searchKey = this.modalSearchText.trim().toLowerCase();
+    if (!searchKey) {
+      this.filteredProjectOptionSections = this.projectOptionSections;
+      return;
+    }
+
+    this.filteredProjectOptionSections = this.projectOptionSections
+      .map(section => ({
+        ...section,
+        options: section.options.filter(option =>
+          option.name.toLowerCase().includes(searchKey) ||
+          option.description.toLowerCase().includes(searchKey)
+        )
+      }))
+      .filter(section => section.options.length > 0);
+  }
+
+  getOptionCount(route: string, defaultCount?: number): number | null {
+    if (this.optionCounts[route] !== undefined) {
+      return this.optionCounts[route];
+    }
+
+    return defaultCount ?? null;
+  }
+
 
   redirectToNew() {
     this.router.navigateByUrl('projects/create')
