@@ -5,6 +5,7 @@ import { NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
 import { Subject, Subscription, debounceTime, distinctUntilChanged } from 'rxjs';
 import { AttachmentService } from 'src/app/services/attachment/attachment.service';
+import { ProjectsService } from 'src/app/services/projects.service';
 import { StandardTreeService } from 'src/app/services/standard-tree.service';
 
 type FolderKind = 'root' | 'standard' | 'category' | 'subCategory' | 'leaf';
@@ -104,6 +105,7 @@ export class LibraryFileListingComponent implements OnInit, OnDestroy {
     private activatedRoute: ActivatedRoute,
     private modalService: NgbModal,
     private attachmentService: AttachmentService,
+    private projectsService: ProjectsService,
     private standardTreeService: StandardTreeService,
     private sanitizer: DomSanitizer,
     private translate: TranslateService
@@ -122,7 +124,27 @@ export class LibraryFileListingComponent implements OnInit, OnDestroy {
         this.projectId = +params['id'];
         this.projectName = `#${this.projectId}`;
         if (this.projectId) {
+          this.loadProjectName();
           this.fetchList();
+        }
+      })
+    );
+  }
+
+  loadProjectName(): void {
+    this.subscriptions.add(
+      this.projectsService.getByID(this.projectId).subscribe({
+        next: res => {
+          const data = res?.data || {};
+          const isArabic = this.translate.currentLang === 'ar' || document?.documentElement?.lang === 'ar';
+          const preferredName = isArabic
+            ? (data?.nameAr || data?.name)
+            : (data?.name || data?.nameAr);
+          this.projectName = preferredName || `#${this.projectId}`;
+          this.cdr.detectChanges();
+        },
+        error: () => {
+          this.projectName = `#${this.projectId}`;
         }
       })
     );
@@ -297,7 +319,7 @@ export class LibraryFileListingComponent implements OnInit, OnDestroy {
 
       let compare = 0;
       if (this.sortBy === 'name') {
-        compare = a.name.localeCompare(b.name);
+        compare = a.name.localeCompare(b.name, undefined, { numeric: true, sensitivity: 'base' });
       } else if (this.sortBy === 'date') {
         const aDate = a.uploadedDate ? new Date(a.uploadedDate).getTime() : 0;
         const bDate = b.uploadedDate ? new Date(b.uploadedDate).getTime() : 0;

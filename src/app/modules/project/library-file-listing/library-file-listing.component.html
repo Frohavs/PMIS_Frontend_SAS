@@ -5,7 +5,7 @@
       <nav class="library-breadcrumbs" aria-label="breadcrumb">
         <span>{{ 'MENU.PROJECTS' | translate }}</span>
         <span>/</span>
-        <span>{{ ('LIBRARY_FILES.PROJECT' | translate) + ' ' + projectName }}</span>
+        <span>{{ projectName || (('LIBRARY_FILES.PROJECT' | translate) + ' #' + projectId) }}</span>
         <span>/</span>
         <span>{{ 'LIBRARY_FILES.FILES' | translate }}</span>
       </nav>
@@ -28,10 +28,12 @@
   <div class="card-body">
     <div class="library-toolbar">
       <div class="library-search">
-        <app-keenicon name="magnifier" class="search-icon"></app-keenicon>
+        <span class="search-icon-shell" aria-hidden="true">
+          <app-keenicon name="magnifier" class="search-icon"></app-keenicon>
+        </span>
         <input
           type="text"
-          class="form-control form-control-solid"
+          class="form-control form-control-solid search-input"
           [value]="searchTerm"
           (input)="onSearchInput($any($event.target).value)"
           [placeholder]="'LIBRARY_FILES.SEARCH_FILES_FOLDERS' | translate"

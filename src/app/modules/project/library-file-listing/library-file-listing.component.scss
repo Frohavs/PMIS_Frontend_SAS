@@ -44,16 +44,29 @@
 
 .library-search {
   position: relative;
+  width: 100%;
 
-  .search-icon {
+  .search-icon-shell {
     position: absolute;
     inset-inline-start: 12px;
     top: 50%;
     transform: translateY(-50%);
+    z-index: 2;
+    pointer-events: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+  }
+
+  .search-icon {
     color: #6f819a;
   }
 
-  input {
+  .search-input {
+    width: 100%;
+    min-height: 42px;
+    padding-block: 0.55rem;
     padding-inline-start: 36px;
   }
 }
@@ -420,12 +433,12 @@
   }
 
   .library-search {
-    .search-icon {
+    .search-icon-shell {
       inset-inline-start: auto;
       inset-inline-end: 12px;
     }
 
-    input {
+    .search-input {
       padding-inline-start: 0.75rem;
       padding-inline-end: 36px;
       text-align: right;
