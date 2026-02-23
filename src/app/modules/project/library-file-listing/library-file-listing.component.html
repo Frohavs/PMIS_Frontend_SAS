@@ -1,80 +1,238 @@
-<div class="horizontal-tree">
-  <ng-container *ngFor="let node of treeData">
-    <div class="node-container">
-      <div class="node" [ngClass]="{'bg-hover-light-primary': node.attachments.length !== 0}">
-        <div class="node-content" (click)="openNodePopup(node)">
-          <span class="node-title">{{ node.name }}</span>
-        </div>
-        <button class="btn btn-icon btn-primary" (click)="toggleNode(node)" *ngIf="node.categories?.length > 0">
-          {{ node.expanded ? '-' : '+' }}
-        </button>
-        <input type="file" #fileInput (change)="uploadNodeTemplate($event, node)" style="display: none;">
-        <button class="btn btn-sm btn-success" (click)="fileInput.click()"
-          *ngIf="!node.categories?.length && !node.attachments.length">
-          {{ 'add' }}
-        </button>
+<div class="library-page card">
+  <div class="library-header card-header border-0">
+    <div>
+      <h2 class="library-title">{{ 'LIBRARY_FILES.PROJECT_FILES' | translate }}</h2>
+      <nav class="library-breadcrumbs" aria-label="breadcrumb">
+        <span>{{ 'MENU.PROJECTS' | translate }}</span>
+        <span>/</span>
+        <span>{{ ('LIBRARY_FILES.PROJECT' | translate) + ' ' + projectName }}</span>
+        <span>/</span>
+        <span>{{ 'LIBRARY_FILES.FILES' | translate }}</span>
+      </nav>
+    </div>
+
+    <div class="library-header-actions">
+      <input #toolbarUploadInput type="file" class="d-none" (change)="onToolbarFileSelected($event)" />
+      <button class="btn btn-light-primary" (click)="triggerToolbarUpload()" [disabled]="!canUploadHere(currentFolder) || isUploading">
+        <app-keenicon name="folder-up" class="me-1"></app-keenicon>
+        {{ isUploading ? ('LIBRARY_FILES.UPLOADING' | translate) : ('LIBRARY_FILES.UPLOAD' | translate) }}
+      </button>
+
+      <button class="btn btn-light" disabled [title]="'LIBRARY_FILES.NEW_FOLDER_HINT' | translate">
+        <app-keenicon name="folder-plus" class="me-1"></app-keenicon>
+        {{ 'LIBRARY_FILES.NEW_FOLDER' | translate }}
+      </button>
+    </div>
+  </div>
+
+  <div class="card-body">
+    <div class="library-toolbar">
+      <div class="library-search">
+        <app-keenicon name="magnifier" class="search-icon"></app-keenicon>
+        <input
+          type="text"
+          class="form-control form-control-solid"
+          [value]="searchTerm"
+          (input)="onSearchInput($any($event.target).value)"
+          [placeholder]="'LIBRARY_FILES.SEARCH_FILES_FOLDERS' | translate"
+        />
       </div>
 
-      <div class="child-nodes" *ngIf="node.expanded && node.categories?.length > 0">
-        <ng-container *ngFor="let category of node.categories">
-          <div class="child-node" [ngClass]="{'bg-hover-light-primary': category.attachments.length !== 0}" >
-            <span (click)="openNodePopup(category)">{{ category.name }}</span>
-            <button class="btn btn-icon btn-primary" (click)="toggleNode(category)"
-              *ngIf="category.subCategories?.length > 0">
-              {{ category.expanded ? '-' : '+' }}
-            </button>
-            <input type="file" #fileInput2 (change)="uploadCategoryTemplate($event, category)" style="display: none;">
-            <button *ngIf="!category.subCategories?.length && !category.attachments.length" class="btn btn-sm btn-success" (click)="fileInput2.click()">
-              {{ 'add' }}
-            </button>
+      <div class="toolbar-filters">
+        <select class="form-select form-select-sm" [(ngModel)]="selectedType" (change)="onFilterChange()">
+          <option *ngFor="let type of typeFilters" [value]="type.value">{{ type.labelKey | translate }}</option>
+        </select>
 
-            <div class="grandchild-nodes" *ngIf="category.expanded && category.subCategories?.length > 0">
-              <ng-container *ngFor="let subCategory of category.subCategories">
-                <div class="child-node" [ngClass]="{'bg-hover-light-primary': subCategory.attachments.length !== 0}" >
-                  <span (click)="openNodePopup(subCategory)">{{ subCategory.name }}</span>
-                  <button class="btn btn-icon btn-primary" (click)="toggleNode(subCategory)"
-                    *ngIf="subCategory.leaves?.length > 0">
-                    {{ subCategory.expanded ? '-' : '+' }}
+        <select class="form-select form-select-sm" [(ngModel)]="selectedUploader" (change)="onFilterChange()">
+          <option value="all">{{ 'LIBRARY_FILES.ALL_UPLOADERS' | translate }}</option>
+          <option *ngFor="let uploader of getUploaderOptions()" [value]="uploader">{{ uploader }}</option>
+        </select>
+
+        <input type="date" class="form-control form-control-sm" [(ngModel)]="fromDate" (change)="onFilterChange()" />
+        <input type="date" class="form-control form-control-sm" [(ngModel)]="toDate" (change)="onFilterChange()" />
+
+        <button class="btn btn-sm btn-light" (click)="clearFilters()">{{ 'LIBRARY_FILES.CLEAR' | translate }}</button>
+      </div>
+
+      <div class="toolbar-view-toggle btn-group">
+        <button class="btn btn-sm" [ngClass]="viewMode === 'list' ? 'btn-primary' : 'btn-light'" (click)="setViewMode('list')">{{ 'LIBRARY_FILES.LIST' | translate }}</button>
+        <button class="btn btn-sm" [ngClass]="viewMode === 'grid' ? 'btn-primary' : 'btn-light'" (click)="setViewMode('grid')">{{ 'LIBRARY_FILES.GRID' | translate }}</button>
+      </div>
+    </div>
+
+    <div class="folder-path" *ngIf="breadcrumbFolders.length">
+      <button class="btn btn-sm btn-light" (click)="goBackToParent()" [disabled]="breadcrumbFolders.length <= 1">{{ 'LIBRARY_FILES.BACK_TO_PARENT' | translate }}</button>
+      <div class="path-items">
+        <button type="button" class="path-link" *ngFor="let crumb of breadcrumbFolders; let i = index" (click)="goToBreadcrumb(i)">
+          {{ crumb.name }}
+        </button>
+      </div>
+    </div>
+
+    <div class="library-stats" *ngIf="!isLoading && !loadError">
+      <div class="stat-card">
+        <span class="stat-label">{{ 'LIBRARY_FILES.FOLDERS' | translate }}</span>
+        <span class="stat-value">{{ folderCount }}</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-label">{{ 'LIBRARY_FILES.FILES' | translate }}</span>
+        <span class="stat-value">{{ fileCount }}</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-label">{{ 'LIBRARY_FILES.SHOWING' | translate }}</span>
+        <span class="stat-value">{{ displayedRows.length }}</span>
+      </div>
+      <div class="stat-location">
+        <span class="location-label">{{ 'LIBRARY_FILES.CURRENT_FOLDER' | translate }}</span>
+        <span class="location-value">{{ currentFolder?.name || ('LIBRARY_FILES.PROJECT_FILES' | translate) }}</span>
+      </div>
+    </div>
+
+    <div class="active-filters" *ngIf="hasActiveFilters()">
+      <span class="filter-pill" *ngIf="searchTerm">{{ 'LIBRARY_FILES.SEARCH' | translate }}: "{{ searchTerm }}"</span>
+      <span class="filter-pill" *ngIf="selectedType !== 'all'">{{ 'LIBRARY_FILES.TYPE' | translate }}: {{ getTypeFilterLabelKey(selectedType) | translate }}</span>
+      <span class="filter-pill" *ngIf="selectedUploader !== 'all'">{{ 'LIBRARY_FILES.UPLOADER' | translate }}: {{ selectedUploader }}</span>
+      <span class="filter-pill" *ngIf="fromDate">{{ 'LIBRARY_FILES.FROM' | translate }}: {{ fromDate | date:'dd/MM/yyyy' }}</span>
+      <span class="filter-pill" *ngIf="toDate">{{ 'LIBRARY_FILES.TO' | translate }}: {{ toDate | date:'dd/MM/yyyy' }}</span>
+      <button class="btn btn-sm btn-light-primary" (click)="clearFilters()">{{ 'LIBRARY_FILES.CLEAR_FILTERS' | translate }}</button>
+    </div>
+
+    <input #inlineUploadInput type="file" class="d-none" (change)="onInlineFileSelected($event)" />
+
+    <div *ngIf="isLoading" class="state-wrap">
+      <div class="skeleton-row" *ngFor="let item of [1,2,3,4,5,6]"></div>
+    </div>
+
+    <div *ngIf="!isLoading && loadError" class="state-wrap">
+      <div class="alert alert-danger d-flex align-items-center justify-content-between mb-0">
+        <span>{{ 'LIBRARY_FILES.LOAD_FAILED' | translate }}</span>
+        <button class="btn btn-sm btn-danger" (click)="fetchList()">{{ 'LIBRARY_FILES.RETRY' | translate }}</button>
+      </div>
+    </div>
+
+    <ng-container *ngIf="!isLoading && !loadError">
+      <div *ngIf="displayedRows.length === 0" class="state-wrap empty-state">
+        <app-keenicon name="folder" class="empty-icon"></app-keenicon>
+        <h4>{{ 'LIBRARY_FILES.NO_FILES_FOUND' | translate }}</h4>
+        <p>{{ hasActiveFilters() ? ('LIBRARY_FILES.NO_FILTER_MATCH' | translate) : ('LIBRARY_FILES.UPLOAD_OR_ADJUST' | translate) }}</p>
+        <button *ngIf="!hasActiveFilters()" class="btn btn-primary" (click)="triggerInlineUpload()" [disabled]="!canUploadHere(currentFolder)">{{ 'LIBRARY_FILES.UPLOAD_FIRST_FILE' | translate }}</button>
+        <button *ngIf="hasActiveFilters()" class="btn btn-light-primary" (click)="clearFilters()">{{ 'LIBRARY_FILES.RESET_FILTERS' | translate }}</button>
+      </div>
+
+      <div *ngIf="displayedRows.length > 0 && viewMode === 'list'" class="library-table-wrap">
+        <table class="table align-middle library-table">
+          <thead>
+            <tr>
+              <th class="sortable" (click)="toggleSort('name')">{{ 'LIBRARY_FILES.FILE_FOLDER' | translate }} <span class="sort-indicator" [class.active]="sortBy === 'name'">{{ getSortIcon('name') }}</span></th>
+              <th>{{ 'LIBRARY_FILES.TYPE' | translate }}</th>
+              <th class="sortable col-size" (click)="toggleSort('size')">{{ 'LIBRARY_FILES.SIZE' | translate }} <span class="sort-indicator" [class.active]="sortBy === 'size'">{{ getSortIcon('size') }}</span></th>
+              <th class="col-uploader">{{ 'LIBRARY_FILES.UPLOADED_BY' | translate }}</th>
+              <th class="sortable col-date" (click)="toggleSort('date')">{{ 'LIBRARY_FILES.UPLOADED_DATE' | translate }} <span class="sort-indicator" [class.active]="sortBy === 'date'">{{ getSortIcon('date') }}</span></th>
+              <th class="text-end">{{ 'MENU.ACTIONS' | translate }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let row of displayedRows" (dblclick)="openRow(row)">
+              <td>
+                <div class="name-cell" [ngClass]="{ 'folder-cell': row.isFolder }">
+                  <span class="file-icon" [ngClass]="'type-' + row.extension">
+                    <app-keenicon [name]="getFileIcon(row)"></app-keenicon>
+                  </span>
+
+                  <button class="name-link" (click)="openRow(row)">
+                    {{ row.name }}
                   </button>
-                  <input type="file" #fileInput3 (change)="uploadSubCategoryTemplate($event, subCategory)"
-                    style="display: none;">
-                  <button *ngIf="!subCategory.leaves?.length && !subCategory.attachments.length" class="btn btn-sm btn-success"
-                    (click)="fileInput3.click()">
-                    {{ 'add' }}
+                </div>
+              </td>
+              <td>{{ getRowTypeLabelKey(row) | translate }}</td>
+              <td class="col-size">{{ formatSize(row.size) }}</td>
+              <td class="col-uploader">{{ row.uploadedBy }}</td>
+              <td class="col-date">{{ row.uploadedDate ? (row.uploadedDate | date:'dd/MM/yyyy') : '-' }}</td>
+              <td class="text-end">
+                <div class="row-actions" [ngClass]="{ 'visible': !row.isFolder }">
+                  <button class="btn btn-icon btn-sm btn-light-primary" [title]="'LIBRARY_FILES.PREVIEW' | translate" (click)="previewFile(row); $event.stopPropagation()" [disabled]="row.isFolder">
+                    <app-keenicon name="eye"></app-keenicon>
                   </button>
-                  <div class="leaf-nodes" *ngIf="subCategory.expanded && subCategory.leaves?.length > 0">
-                    <div class="child-node" *ngFor="let leaf of subCategory.leaves">
-                      <span>{{ leaf.name }}</span>
+                  <button class="btn btn-icon btn-sm btn-light-success" [title]="'LIBRARY_FILES.DOWNLOAD' | translate" (click)="downloadRow(row); $event.stopPropagation()" [disabled]="row.isFolder">
+                    <app-keenicon name="arrow-down"></app-keenicon>
+                  </button>
+
+                  <div class="dropdown d-inline-block">
+                    <button class="btn btn-icon btn-sm btn-light" data-bs-toggle="dropdown" [disabled]="row.isFolder" (click)="$event.stopPropagation()">
+                      <app-keenicon name="dots-horizontal"></app-keenicon>
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-end">
+                      <button class="dropdown-item" (click)="previewFile(row)">{{ 'LIBRARY_FILES.PREVIEW' | translate }}</button>
+                      <button class="dropdown-item" (click)="downloadRow(row)">{{ 'LIBRARY_FILES.DOWNLOAD' | translate }}</button>
+                      <button class="dropdown-item" (click)="copyRowLink(row)">{{ 'LIBRARY_FILES.COPY_LINK' | translate }}</button>
+                      <button class="dropdown-item disabled">{{ 'LIBRARY_FILES.RENAME' | translate }}</button>
+                      <button class="dropdown-item text-danger disabled">{{ 'LIBRARY_FILES.DELETE' | translate }}</button>
                     </div>
                   </div>
                 </div>
-              </ng-container>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div *ngIf="displayedRows.length > 0 && viewMode === 'grid'" class="library-grid">
+        <div class="grid-card" *ngFor="let row of displayedRows" (dblclick)="openRow(row)">
+          <div class="grid-top">
+            <span class="file-icon" [ngClass]="'type-' + row.extension">
+              <app-keenicon [name]="getFileIcon(row)"></app-keenicon>
+            </span>
+            <div class="grid-actions" *ngIf="!row.isFolder">
+              <button class="btn btn-icon btn-sm btn-light-primary" (click)="previewFile(row)"><app-keenicon name="eye"></app-keenicon></button>
+              <button class="btn btn-icon btn-sm btn-light-success" (click)="downloadRow(row)"><app-keenicon name="arrow-down"></app-keenicon></button>
             </div>
           </div>
-        </ng-container>
+
+          <button class="grid-name" (click)="openRow(row)">{{ row.name }}</button>
+          <div class="grid-meta">{{ getRowTypeLabelKey(row) | translate }} &bull; {{ row.uploadedDate ? (row.uploadedDate | date:'dd/MM/yyyy') : '-' }}</div>
+        </div>
       </div>
-    </div>
-  </ng-container>
+    </ng-container>
+  </div>
 </div>
 
-
-<ng-template #nodeModal let-modal>
+<ng-template #previewModal let-modal>
   <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">Role Details</h4>
+    <h4 class="modal-title">{{ previewTitle }}</h4>
     <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
   </div>
-  <div class="modal-body">
-    <div class="node_file_wrap">
-      <ng-container *ngFor="let item of this.nodeModelData?.attachments; let i = index">
-        <span>{{i+1}}.</span>
-        <h4 class="file">File:
-          <span class="bg-primary text-white badge" (click)="downloadFile(item.attachment)">
-            {{item?.attachment}}
-          </span>
-        </h4>
-        <h4 class="date">Created By: {{item?.createdBy}} </h4>
-      </ng-container>
 
+  <div class="modal-body preview-body">
+    <div class="preview-panel">
+      <div *ngIf="isPreviewLoading" class="preview-loading">{{ 'LIBRARY_FILES.LOADING_PREVIEW' | translate }}</div>
+
+      <ng-container *ngIf="!isPreviewLoading">
+        <iframe *ngIf="selectedFile && isPreviewSupported(selectedFile) && selectedFile.extension === 'pdf' && previewSafeUrl" [src]="previewSafeUrl" class="preview-frame"></iframe>
+        <img *ngIf="selectedFile && isPreviewSupported(selectedFile) && selectedFile.extension === 'image' && previewUrl" [src]="previewUrl" class="preview-image" alt="Preview" />
+
+        <div *ngIf="selectedFile && (!isPreviewSupported(selectedFile) || !previewUrl)" class="preview-unavailable">
+          <h5>{{ 'LIBRARY_FILES.PREVIEW_NOT_AVAILABLE' | translate }}</h5>
+          <p>{{ 'LIBRARY_FILES.PREVIEW_NOT_AVAILABLE_DESC' | translate }}</p>
+          <button class="btn btn-primary" (click)="downloadRow(selectedFile)">{{ 'LIBRARY_FILES.DOWNLOAD' | translate }}</button>
+        </div>
+      </ng-container>
+    </div>
+
+    <div class="details-panel" *ngIf="selectedFile">
+      <h5>{{ 'LIBRARY_FILES.FILE_DETAILS' | translate }}</h5>
+      <div class="meta-item"><strong>{{ 'LIBRARY_FILES.NAME' | translate }}:</strong> {{ selectedFile.name }}</div>
+      <div class="meta-item"><strong>{{ 'LIBRARY_FILES.TYPE' | translate }}:</strong> {{ getRowTypeLabelKey(selectedFile) | translate }}</div>
+      <div class="meta-item"><strong>{{ 'LIBRARY_FILES.SIZE' | translate }}:</strong> {{ formatSize(selectedFile.size) }}</div>
+      <div class="meta-item"><strong>{{ 'LIBRARY_FILES.UPLOADED_BY' | translate }}:</strong> {{ selectedFile.uploadedBy }}</div>
+      <div class="meta-item"><strong>{{ 'LIBRARY_FILES.UPLOADED_DATE' | translate }}:</strong> {{ selectedFile.uploadedDate ? (selectedFile.uploadedDate | date:'dd/MM/yyyy') : '-' }}</div>
+
+      <div class="details-actions">
+        <button class="btn btn-light-primary" (click)="downloadRow(selectedFile)">{{ 'LIBRARY_FILES.DOWNLOAD' | translate }}</button>
+        <button class="btn btn-light" (click)="copyRowLink(selectedFile)">{{ 'LIBRARY_FILES.COPY_LINK' | translate }}</button>
+        <button class="btn btn-light" disabled>{{ 'LIBRARY_FILES.RENAME' | translate }}</button>
+        <button class="btn btn-light-danger" disabled>{{ 'LIBRARY_FILES.DELETE' | translate }}</button>
+      </div>
     </div>
   </div>
 </ng-template>
+
