@@ -114,11 +114,25 @@ export class OverviewComponent implements OnInit, AfterViewInit, OnDestroy {
       .map(section => ({
         ...section,
         options: section.options.filter(option =>
-          option.name.toLowerCase().includes(searchKey) ||
-          option.description.toLowerCase().includes(searchKey)
+          this.getLocalizedText(option.name).toLowerCase().includes(searchKey) ||
+          this.getLocalizedText(option.description).toLowerCase().includes(searchKey)
         )
       }))
       .filter(section => section.options.length > 0);
+  }
+
+  getLocalizedText(value: string): string {
+    if (!value) {
+      return '';
+    }
+
+    const parts = value.split('|').map(part => part.trim());
+    if (parts.length < 2) {
+      return value;
+    }
+
+    const currentLang = this.translate.currentLang || localStorage.getItem('language') || this.translate.getDefaultLang() || 'en';
+    return currentLang === 'ar' ? (parts[1] || parts[0]) : parts[0];
   }
 
   getOptionCount(route: string, defaultCount?: number): number | null {
