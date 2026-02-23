@@ -161,6 +161,20 @@ export const PROJECT_OPTION_SECTIONS: ProjectOptionSection[] = [
         description: 'Allocate project resources',
         icon: 'abstract-26',
         iconClass: 'bg-light-success text-success'
+      },
+       {
+        name: 'Cash Flow',
+        route: 'projects/cash-flow',
+        description: 'Cash flow analysis',
+        icon: 'dollar',
+        iconClass: 'bg-light-success text-success'
+      },
+      {
+        name: 'Milestones',
+        route: 'projects/milestone_list',
+        description: 'Monitor key deliverables',
+        icon: 'flag',
+        iconClass: 'bg-light-warning text-warning'
       }
     ]
   },
@@ -175,13 +189,6 @@ export const PROJECT_OPTION_SECTIONS: ProjectOptionSection[] = [
         iconClass: 'bg-light-primary text-primary'
       },
       {
-        name: 'Milestones',
-        route: 'projects/milestone_list',
-        description: 'Monitor key deliverables',
-        icon: 'flag',
-        iconClass: 'bg-light-warning text-warning'
-      },
-      {
         name: 'Project Sites',
         route: 'projects/project-sites',
         description: 'Manage active sites',
@@ -194,6 +201,48 @@ export const PROJECT_OPTION_SECTIONS: ProjectOptionSection[] = [
         description: 'Health and safety controls',
         icon: 'shield-tick',
         iconClass: 'bg-light-success text-success'
+      },
+     {
+        name: 'Factory',
+        route: 'projects/factory-list',
+        description: 'Factory related data',
+        icon: 'office-bag',
+        iconClass: 'bg-light-warning text-warning'
+      },
+      {
+        name: 'Visit Form',
+        route: 'projects/visit-list',
+        description: 'Site visits and logs',
+        icon: 'map',
+        iconClass: 'bg-light-success text-success'
+      },
+      {
+        name: 'Monthly Report',
+        route: 'projects/monthly_reports',
+        description: 'Monthly progress summary',
+        icon: 'calendar-8',
+        iconClass: 'bg-light-info text-info'
+      },
+      {
+        name: 'OBS',
+        route: 'projects/obs-list',
+        description: 'Organizational breakdown',
+        icon: 'abstract-39',
+        iconClass: 'bg-light-info text-info'
+      },
+      {
+        name: 'Project Risks',
+        route: 'projects/risk-management',
+        description: 'Risk register and actions',
+        icon: 'shield-search',
+        iconClass: 'bg-light-danger text-danger'
+      },
+      {
+        name: 'MIR',
+        route: 'projects/mir-list',
+        description: 'Material inspection requests',
+        icon: 'document',
+        iconClass: 'bg-light-primary text-primary'
       }
     ]
   },
@@ -275,53 +324,6 @@ export const PROJECT_OPTION_SECTIONS: ProjectOptionSection[] = [
         iconClass: 'bg-light-primary text-primary'
       },
       {
-        name: 'Factory',
-        route: 'projects/factory-list',
-        description: 'Factory related data',
-        icon: 'office-bag',
-        iconClass: 'bg-light-warning text-warning'
-      },
-      {
-        name: 'Visit Form',
-        route: 'projects/visit-list',
-        description: 'Site visits and logs',
-        icon: 'map',
-        iconClass: 'bg-light-success text-success'
-      },
-      {
-        name: 'Monthly Report',
-        route: 'projects/monthly_reports',
-        description: 'Monthly progress summary',
-        icon: 'calendar-8',
-        iconClass: 'bg-light-info text-info'
-      }
-    ]
-  },
-  {
-    title: 'Risk & Governance',
-    options: [
-      {
-        name: 'Project Risks',
-        route: 'projects/risk-management',
-        description: 'Risk register and actions',
-        icon: 'shield-search',
-        iconClass: 'bg-light-danger text-danger'
-      },
-      {
-        name: 'OBS',
-        route: 'projects/obs-list',
-        description: 'Organizational breakdown',
-        icon: 'abstract-39',
-        iconClass: 'bg-light-info text-info'
-      },
-      {
-        name: 'Status Report',
-        route: 'projects/project-status-report',
-        description: 'Current project status',
-        icon: 'status',
-        iconClass: 'bg-light-primary text-primary'
-      },
-      {
         name: 'Delivery Status',
         route: 'projects/initial-delivery-status',
         description: 'Initial and final delivery tracking',
@@ -334,6 +336,20 @@ export const PROJECT_OPTION_SECTIONS: ProjectOptionSection[] = [
         description: 'Final delivery checkpoints',
         icon: 'delivery-3',
         iconClass: 'bg-light-success text-success'
+      }
+     
+    ]
+  },
+  {
+    title: 'Report & Dashboards',
+    options: [
+      
+      {
+        name: 'Status Report',
+        route: 'projects/project-status-report',
+        description: 'Current project status',
+        icon: 'status',
+        iconClass: 'bg-light-primary text-primary'
       },
       {
         name: 'Initial Delivery List',
@@ -341,21 +357,8 @@ export const PROJECT_OPTION_SECTIONS: ProjectOptionSection[] = [
         description: 'Manage delivery list',
         icon: 'clipboard',
         iconClass: 'bg-light-warning text-warning'
-      },
-      {
-        name: 'MIR',
-        route: 'projects/mir-list',
-        description: 'Material inspection requests',
-        icon: 'document',
-        iconClass: 'bg-light-primary text-primary'
-      },
-      {
-        name: 'Cash Flow',
-        route: 'projects/cash-flow',
-        description: 'Cash flow analysis',
-        icon: 'dollar',
-        iconClass: 'bg-light-success text-success'
       }
+     
     ]
   }
 ];
