@@ -268,7 +268,7 @@
               class="required">{{"PROJECTS.project_value" | translate}}</span></label>
           <div class="col-lg-8 fv-row">
             <input type="text" class="form-control form-control-lg form-control-solid text-start"
-              [currencyMask]="{ prefix: 'SAR ', thousands: ',', precision: 0, align: 'left' }"
+              currencyMask [options]="{ prefix: 'SAR ', thousands: ',', precision: 0, align: 'left' }"
               placeholder="{{'PROJECTS.project_value' | translate}}" name="originalValue"
               formControlName="originalValue" min="1" />
             <div

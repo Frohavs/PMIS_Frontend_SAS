@@ -134,7 +134,7 @@
               <div class="col-lg-12 fv-row">
                 <input disabled readonly type="text" class="form-control form-control-lg form-control-solid text-start"
                   name="voValue" name="voValue" [(ngModel)]="VoCard.voValue"
-                  [currencyMask]="{ prefix: 'SAR ', thousands: ',', precision: 0, align: 'left' }" />
+                  currencyMask [options]="{ prefix: 'SAR ', thousands: ',', precision: 0, align: 'left' }" />
               </div>
             </div>
             <div class="row mb-1">
@@ -144,7 +144,7 @@
               <div class="col-lg-12 fv-row">
                 <input disabled readonly type="text" class="form-control form-control-lg form-control-solid text-start"
                   name="voApprovedValue" name="voApprovedValue" [(ngModel)]="VoCard.voApprovedValue"
-                  [currencyMask]="{ prefix: 'SAR ', thousands: ',', precision: 0, align: 'left' }" />
+                  currencyMask [options]="{ prefix: 'SAR ', thousands: ',', precision: 0, align: 'left' }" />
               </div>
             </div>
             <div class="row mb-1">
@@ -154,7 +154,7 @@
               <div class="col-lg-12 fv-row">
                 <input disabled readonly type="text" class="form-control form-control-lg form-control-solid text-start"
                   name="voUpdatedValue" name="voUpdatedValue" [(ngModel)]="VoCard.voUpdatedValue"
-                  [currencyMask]="{ prefix: 'SAR ', thousands: ',', precision: 0, align: 'left' }" />
+                  currencyMask [options]="{ prefix: 'SAR ', thousands: ',', precision: 0, align: 'left' }" />
               </div>
             </div>
 
@@ -219,7 +219,7 @@
         <div class="fv-row mb-3">
           <label class="required fw-semibold fs-6 mb-2">VO Project Value</label>
           <input type="text" class="form-control form-control-solid " name="voValue" [(ngModel)]="VoModel.voValue"
-            [currencyMask]="{ prefix: 'SAR ', thousands: ',', precision: 0, align: 'left' }" #name="ngModel" required
+            currencyMask [options]="{ prefix: 'SAR ', thousands: ',', precision: 0, align: 'left' }" #name="ngModel" required
             (ngModelChange)="onVoValueInput($event)" min="0" />
         </div>
 
@@ -236,7 +236,7 @@
           <label class="required fw-semibold fs-6 mb-2">Updated Project Value</label>
           <input disabled readonly type="text" class="form-control form-control-solid " name="voUpdatedValue"
             [(ngModel)]="VoModel.voUpdatedValue" #name="ngModel" required
-            [currencyMask]="{ prefix: 'SAR ', thousands: ',', precision: 0, align: 'left' }" />
+            currencyMask [options]="{ prefix: 'SAR ', thousands: ',', precision: 0, align: 'left' }" />
         </div>
 
         <div class="fv-row mb-3">
