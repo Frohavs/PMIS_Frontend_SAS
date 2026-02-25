@@ -210,7 +210,7 @@
         <label class="fw-semibold fs-6 mb-2">Work done Value:</label>
 
         <input type="text" class="form-control form-control-lg form-control-solid text-start"
-          [currencyMask]="{ prefix: 'SAR ', thousands: ',', precision: 0, align: 'left' }"
+          currencyMask [options]="{ prefix: 'SAR ', thousands: ',', precision: 0, align: 'left' }"
           placeholder="{{'PROJECTS.project_value' | translate}}" name="workDoneValue" formControlName="workDoneValue"
           min="0" />
       </div>
