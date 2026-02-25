@@ -1,16 +1,36 @@
 
 :host {
-  background: linear-gradient(180deg, #5f5d8b 0%, #44567d 45%, #315a78 100%);
-  border-right: 0;
-  box-shadow: inset -1px 0 0 rgba(255, 255, 255, 0.08);
+  position: relative;
+  background:
+    radial-gradient(900px 520px at 90% 0%, rgba(37, 110, 255, 0.28) 0%, rgba(37, 110, 255, 0) 62%),
+    radial-gradient(680px 420px at 16% 36%, rgba(0, 214, 255, 0.14) 0%, rgba(0, 214, 255, 0) 62%),
+    linear-gradient(180deg, #071033 0%, #0a143c 46%, #0b1846 100%);
+  border-right: 1px solid rgba(93, 136, 255, 0.35);
+  box-shadow:
+    inset 1px 0 0 rgba(255, 255, 255, 0.08),
+    inset -1px 0 0 rgba(110, 170, 255, 0.2);
+}
+
+:host::before {
+  content: '';
+  position: absolute;
+  top: 76px;
+  bottom: 22px;
+  left: 0;
+  width: 3px;
+  background: linear-gradient(180deg, rgba(0, 236, 255, 0.95) 0%, rgba(0, 138, 255, 0.92) 100%);
+  box-shadow: 0 0 20px rgba(0, 218, 255, 0.8);
+  pointer-events: none;
 }
 
 :host ::ng-deep .app-sidebar-logo {
-  min-height: 72px;
-  background: rgba(255, 255, 255, 0.06);
-  border-bottom: 0;
+  min-height: 82px;
+  border-bottom: 1px solid rgba(148, 179, 255, 0.2);
+  background: linear-gradient(180deg, rgba(30, 52, 120, 0.4) 0%, rgba(20, 33, 88, 0.08) 100%);
+  padding-top: 0.15rem;
+  padding-bottom: 0.15rem;
 }
 
 :host ::ng-deep .app-sidebar-menu {
-  padding-top: 0.5rem;
+  padding-top: 0.4rem;
 }

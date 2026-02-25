@@ -13,6 +13,9 @@
 #splash-screen img {
   margin-left: calc(100vw - 100%);
   margin-bottom: 30px;
+  width: min(320px, 60vw);
+  height: auto;
+  object-fit: contain;
 }
 
 #splash-screen.hidden {

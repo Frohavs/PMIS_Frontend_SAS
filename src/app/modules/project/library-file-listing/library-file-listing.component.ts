@@ -1,4 +1,5 @@
 import { ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
@@ -7,6 +8,7 @@ import { Subject, Subscription, debounceTime, distinctUntilChanged } from 'rxjs'
 import { AttachmentService } from 'src/app/services/attachment/attachment.service';
 import { ProjectsService } from 'src/app/services/projects.service';
 import { StandardTreeService } from 'src/app/services/standard-tree.service';
+import { environment } from 'src/environments/environment';
 
 type FolderKind = 'root' | 'standard' | 'category' | 'subCategory' | 'leaf';
 type SortField = 'name' | 'date' | 'size';
@@ -99,9 +101,11 @@ export class LibraryFileListingComponent implements OnInit, OnDestroy {
   modalConfig: NgbModalOptions = {
     modalDialogClass: 'modal-dialog modal-dialog-centered modal-xl',
   };
+  private readonly apiOrigin: string = this.getApiOrigin();
 
   constructor(
     private cdr: ChangeDetectorRef,
+    private http: HttpClient,
     private activatedRoute: ActivatedRoute,
     private modalService: NgbModal,
     private attachmentService: AttachmentService,
@@ -299,6 +303,7 @@ export class LibraryFileListingComponent implements OnInit, OnDestroy {
 
     this.allRows = [...folderRows, ...fileRows];
     this.applyFiltersAndSort();
+    this.hydrateMissingSizes(fileRows);
   }
 
   applyFiltersAndSort(): void {
@@ -491,7 +496,7 @@ export class LibraryFileListingComponent implements OnInit, OnDestroy {
     this.subscriptions.add(
       this.attachmentService.downloadAttachment(row.attachment.attachment).subscribe({
         next: res => {
-          this.previewUrl = res?.data || '';
+          this.previewUrl = this.normalizeAttachmentUrl(this.extractDownloadUrl(res));
           if (this.previewType === 'pdf' && this.previewUrl) {
             this.previewSafeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.previewUrl);
           } else {
@@ -515,7 +520,17 @@ export class LibraryFileListingComponent implements OnInit, OnDestroy {
     }
 
     this.attachmentService.downloadAttachment(row.attachment.attachment).subscribe(res => {
-      window.open(res?.data, '_blank');
+      const url = this.normalizeAttachmentUrl(this.extractDownloadUrl(res));
+      if (!url) {
+        return;
+      }
+
+      const link = document.createElement('a');
+      link.href = url;
+      link.target = '_blank';
+      link.rel = 'noopener';
+      link.download = row.name;
+      link.click();
     });
   }
 
@@ -525,7 +540,7 @@ export class LibraryFileListingComponent implements OnInit, OnDestroy {
     }
 
     this.attachmentService.downloadAttachment(row.attachment.attachment).subscribe(res => {
-      const link = res?.data || '';
+      const link = this.normalizeAttachmentUrl(this.extractDownloadUrl(res));
       if (!link) {
         return;
       }
@@ -652,9 +667,29 @@ export class LibraryFileListingComponent implements OnInit, OnDestroy {
   }
 
   parseSize(file: any): number | null {
-    const size = file?.size || file?.fileSize || null;
-    const parsed = Number(size);
-    return Number.isFinite(parsed) && parsed > 0 ? parsed : null;
+    const candidates = [
+      file?.size,
+      file?.fileSize,
+      file?.attachmentSize,
+      file?.sizeInBytes,
+      file?.attachmentSizeInBytes,
+      file?.fileLength,
+      file?.contentLength,
+      file?.length,
+      file?.bytes,
+      file?.file?.size,
+      file?.attachmentInfo?.size,
+      file?.meta?.size,
+    ];
+
+    for (const candidate of candidates) {
+      const parsed = this.parseSizeValue(candidate);
+      if (parsed && parsed > 0) {
+        return parsed;
+      }
+    }
+
+    return null;
   }
 
   formatSize(size: number | null): string {
@@ -673,6 +708,137 @@ export class LibraryFileListingComponent implements OnInit, OnDestroy {
 
     const mb = kb / 1024;
     return `${mb.toFixed(1)} MB`;
+  }
+
+  private extractDownloadUrl(res: any): string {
+    const candidates = [
+      res?.data,
+      res?.url,
+      res?.downloadUrl,
+      res?.fileUrl,
+      res?.path,
+      res?.data?.url,
+      res?.data?.downloadUrl,
+      res?.data?.fileUrl,
+      res?.data?.path,
+      res?.data?.filePath,
+    ];
+
+    const value = candidates.find(item => typeof item === 'string' && item.trim().length > 0);
+    return value || '';
+  }
+
+  private normalizeAttachmentUrl(rawUrl: string): string {
+    if (!rawUrl) {
+      return '';
+    }
+
+    let value = String(rawUrl).trim().replace(/\\/g, '/');
+
+    if ((value.startsWith('"') && value.endsWith('"')) || (value.startsWith("'") && value.endsWith("'"))) {
+      value = value.slice(1, -1);
+    }
+
+    if (/^https?:\/\//i.test(value) || value.startsWith('blob:') || value.startsWith('data:')) {
+      return encodeURI(value);
+    }
+
+    if (value.startsWith('//')) {
+      return encodeURI(`${window.location.protocol}${value}`);
+    }
+
+    if (value.startsWith('/')) {
+      return encodeURI(`${this.apiOrigin}${value}`);
+    }
+
+    return encodeURI(`${this.apiOrigin}/${value.replace(/^\/+/, '')}`);
+  }
+
+  private parseSizeValue(value: unknown): number | null {
+    if (typeof value === 'number') {
+      return Number.isFinite(value) && value > 0 ? value : null;
+    }
+
+    if (typeof value !== 'string') {
+      return null;
+    }
+
+    const normalized = value.trim();
+    if (!normalized) {
+      return null;
+    }
+
+    const directNumber = Number(normalized);
+    if (Number.isFinite(directNumber) && directNumber > 0) {
+      return directNumber;
+    }
+
+    const unitMatch = normalized.match(/^([\d.]+)\s*(B|KB|MB|GB)$/i);
+    if (!unitMatch) {
+      return null;
+    }
+
+    const numericPart = Number(unitMatch[1]);
+    if (!Number.isFinite(numericPart) || numericPart <= 0) {
+      return null;
+    }
+
+    const unit = unitMatch[2].toUpperCase();
+    if (unit === 'B') return Math.round(numericPart);
+    if (unit === 'KB') return Math.round(numericPart * 1024);
+    if (unit === 'MB') return Math.round(numericPart * 1024 * 1024);
+    if (unit === 'GB') return Math.round(numericPart * 1024 * 1024 * 1024);
+
+    return null;
+  }
+
+  private getApiOrigin(): string {
+    try {
+      return new URL(environment.apiUrl).origin;
+    } catch {
+      return window.location.origin;
+    }
+  }
+
+  private hydrateMissingSizes(rows: LibraryRow[]): void {
+    const pendingRows = rows
+      .filter(row => !row.isFolder && !row.size && !!row.attachment?.attachment)
+      .slice(0, 20);
+
+    pendingRows.forEach(row => {
+      this.subscriptions.add(
+        this.attachmentService.downloadAttachment(row.attachment.attachment).subscribe({
+          next: res => {
+            const url = this.normalizeAttachmentUrl(this.extractDownloadUrl(res));
+            if (!url) {
+              return;
+            }
+
+            this.subscriptions.add(
+              this.http.get(url, { observe: 'response', responseType: 'blob' }).subscribe({
+                next: response => {
+                  const headerSize = Number(response.headers.get('content-length') || 0);
+                  const bodySize = response.body?.size || 0;
+                  const resolvedSize = headerSize > 0 ? headerSize : bodySize;
+
+                  if (resolvedSize > 0) {
+                    row.size = resolvedSize;
+                    this.applyFiltersAndSort();
+                    this.cdr.detectChanges();
+                  }
+                },
+                error: () => {
+                  // Keep size as unknown if remote file metadata cannot be accessed.
+                }
+              })
+            );
+          },
+          error: () => {
+            // Keep size as unknown if download URL cannot be resolved.
+          }
+        })
+      );
+    });
   }
 
   ngOnDestroy(): void {

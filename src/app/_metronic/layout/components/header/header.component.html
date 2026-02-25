@@ -22,7 +22,7 @@
     <!--begin::Mobile logo-->
     <div class="d-flex align-items-center flex-grow-1 flex-lg-grow-0">
       <a routerLink="/dashboard" class="d-lg-none">
-        <img alt="Logo" src="./assets/media/logos/froha_logo.png" class="h-30px" />
+        <img alt="FROHA Logo" src="./assets/media/logos/froha_logo_attached.svg" class="h-24px" />
       </a>
     </div>
     <!--end::Mobile logo-->
@@ -31,17 +31,9 @@
   <ng-container *ngIf="!appSidebarDisplay">
     <!--begin::Logo-->
     <div class="d-flex align-items-center flex-grow-1 flex-lg-grow-0 me-lg-15">
-      <a routerLink="/dashboard">
-        <ng-container *ngIf="currentLayoutType === 'dark-header'">
-          <img alt="Logo" src="./assets/media/logos/default-dark.svg"
-            class="h-20px h-lg-30px app-sidebar-logo-default" />
-        </ng-container>
-        <ng-container *ngIf="currentLayoutType !== 'dark-header'">
-          <img alt="Logo" src="./assets/media/logos/default.svg"
-            class="h-20px h-lg-30px app-sidebar-logo-default theme-light-show" />
-          <img alt="Logo" src="./assets/media/logos/default-dark.svg"
-            class="h-20px h-lg-30px app-sidebar-logo-default theme-dark-show" />
-        </ng-container>
+      <a routerLink="/dashboard" class="d-flex align-items-center">
+        <img alt="FROHA Logo" src="./assets/media/logos/froha_logo_attached.svg"
+          class="h-28px app-sidebar-logo-default" />
       </a>
     </div>
     <!--end::Logo-->

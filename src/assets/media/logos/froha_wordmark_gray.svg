@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 220" role="img" aria-label="FROHA wordmark">
+  <g fill="#c7c9cc">
+    <path d="M40 30h145v40H82v39h95v40H82v71H40z"/>
+    <path d="M233 180V30h111q31 0 49 20t18 47q0 30-24 45 18 8 18 36v2h-42v-6q0-18-20-18h-68v24zm42-64h62q15 0 24-9.5t9-20.5-9-20.5-24-9.5h-62z"/>
+    <path d="M449 30h130l28 28v94l-28 28H449l-29-29V58zm42 40v71h74V70z"/>
+    <path d="M643 30h42v79h70V30h42v150h-42v-31h-70v31h-42z"/>
+    <path d="M833 58l28-28h71l29 28v122h-42v-31h-44v31h-42zm42 52h44V70h-44z"/>
+  </g>
+</svg>

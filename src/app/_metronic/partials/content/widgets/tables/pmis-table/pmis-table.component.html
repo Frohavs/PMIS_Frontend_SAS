@@ -50,8 +50,8 @@
           </td>
           <td *ngIf="data?.img">
             <div class="d-flex align-items-center">
-              <div class="symbol symbol-50px me-5">
-                <img [src]="data.img" alt="com" />
+              <div class="symbol me-5" style="width: 90px; height: 28px;">
+                <img [src]="data.img" alt="com" style="width: 100%; height: 100%; object-fit: contain;" />
               </div>
               <div class="d-flex justify-content-start flex-column">
                 <a class="text-gray-900 fw-bolder text-hover-primary mb-1 fs-6">

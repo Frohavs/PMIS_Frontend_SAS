@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1560 420" role="img" aria-label="FROHA logo">
+  <defs>
+    <linearGradient id="ring" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#00284f"/>
+      <stop offset="55%" stop-color="#1366cf"/>
+      <stop offset="100%" stop-color="#58e8a2"/>
+    </linearGradient>
+  </defs>
+
+  <path d="M280 52a158 158 0 1 1-7 313" fill="none" stroke="url(#ring)" stroke-width="22" stroke-linecap="round"/>
+  <path d="M273 50a158 158 0 0 1 84 24" fill="none" stroke="url(#ring)" stroke-width="22" stroke-linecap="round" opacity=".9"/>
+
+  <path d="M227 190h86v44h-86zm0-62h128v44H227zM190 167l37-39v183h-37z" fill="#201b23"/>
+
+  <g fill="#1a53ea">
+    <path d="M560 132h145v40h-103v39h95v40h-95v84h-42z"/>
+    <path d="M753 335V132h111q31 0 49 20t18 47q0 30-24 45 18 8 18 36v55h-42v-48q0-18-20-18h-68v66zm42-106h62q15 0 24-9.5t9-20.5-9-20.5-24-9.5h-62z"/>
+    <path d="M969 132h130l28 28v146l-28 29H969l-29-29V160zm42 40v123h74V172z"/>
+    <path d="M1163 132h42v79h70v-79h42v203h-42v-84h-70v84h-42z"/>
+    <path d="M1354 160l28-28h121l29 28v175h-42v-58h-94v58h-42zm42 78h94v-66h-94z"/>
+  </g>
+</svg>

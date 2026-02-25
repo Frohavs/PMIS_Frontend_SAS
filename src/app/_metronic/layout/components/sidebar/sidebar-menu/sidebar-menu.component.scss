@@ -5,30 +5,36 @@
 :host ::ng-deep {
   #kt_app_sidebar_menu_scroll {
     padding-right: 0.35rem;
+    padding-left: 0.75rem;
   }
 
   .menu .menu-content .menu-section {
-    color: rgba(255, 255, 255, 0.72) !important;
+    color: rgba(205, 222, 255, 0.72) !important;
     font-weight: 700;
-    font-size: 0.85rem !important;
-    letter-spacing: 0.02em;
+    font-size: 0.9rem !important;
+    letter-spacing: 0.14em;
+    margin-top: 0.45rem;
+    margin-bottom: 0.65rem;
   }
 
   .menu .menu-item .menu-link {
-    border-radius: 0.45rem;
-    margin: 0.15rem 0;
-    min-height: 42px;
+    border-radius: 14px;
+    margin: 0.2rem 0;
+    min-height: 48px;
+    padding: 0.8rem 1rem;
+    border: 1px solid transparent;
+    transition: all 0.25s ease;
 
     .menu-title {
-      color: #e5e9f6;
-      font-size: 1.15rem;
+      color: rgba(211, 224, 253, 0.75);
+      font-size: 0.95rem;
       font-weight: 500;
     }
 
     .menu-icon,
     .menu-arrow,
     .menu-bullet {
-      color: rgba(220, 229, 250, 0.9);
+      color: rgba(153, 183, 255, 0.82);
     }
   }
 
@@ -36,7 +42,11 @@
   .menu .menu-item .menu-link.active,
   .menu .menu-item.show > .menu-link,
   .menu .menu-item.here > .menu-link {
-    background: rgba(109, 118, 170, 0.72) !important;
+    background: linear-gradient(90deg, rgba(27, 89, 255, 0.95) 0%, rgba(16, 187, 255, 0.9) 52%, rgba(67, 223, 167, 0.9) 100%) !important;
+    border-color: rgba(124, 236, 255, 0.42);
+    box-shadow:
+      inset 0 0 0 1px rgba(255, 255, 255, 0.06),
+      0 12px 24px rgba(5, 22, 73, 0.45);
 
     .menu-title,
     .menu-icon,
@@ -50,25 +60,28 @@
   .menu .menu-sub .menu-item .menu-link.active,
   .menu .menu-sub .menu-item.show > .menu-link,
   .menu .menu-sub .menu-item.here > .menu-link {
-    background: rgba(122, 131, 184, 0.65) !important;
+    background: rgba(33, 57, 124, 0.7) !important;
+    border-color: rgba(118, 157, 255, 0.3);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.03);
   }
 
 
   .menu .menu-item.menu-accordion > .menu-link .menu-arrow {
-    --kt-text-muted: #ffffff;
-    color: #ffffff !important;
-    opacity: 0.95;
+    --kt-text-muted: #afc8ff;
+    color: #afc8ff !important;
+    opacity: 1;
   }
 
   .menu .menu-item.menu-accordion > .menu-link .menu-arrow:after {
     opacity: 1 !important;
-    filter: brightness(0) invert(1);
+    filter: brightness(0) invert(0.88) sepia(0.07) saturate(3.4) hue-rotate(186deg);
   }
 
   .menu .menu-sub.menu-sub-accordion {
     position: relative;
     margin-left: 1.45rem;
     padding-left: 1.1rem;
+    margin-bottom: 0.65rem;
   }
 
   .menu .menu-sub.menu-sub-accordion::before {
@@ -79,12 +92,12 @@
     left: 0;
     width: 2px;
     border-radius: 2px;
-    background: rgba(194, 202, 242, 0.28);
+    background: rgba(117, 157, 255, 0.32);
   }
 
   .menu .menu-sub .menu-item .menu-link {
     margin: 0.08rem 0;
-    min-height: 36px;
+    min-height: 38px;
     padding-top: 0.45rem;
     padding-bottom: 0.45rem;
   }
@@ -94,9 +107,41 @@
   }
 
   .menu .menu-sub .menu-item .menu-link .menu-title {
-    font-size: 1.05rem;
-    color: rgba(238, 242, 255, 0.94);
+    font-size: 0.88rem;
+    color: rgba(215, 228, 255, 0.78);
     font-weight: 500;
   }
 
+  .menu .menu-item + .menu-item {
+    border-top: 1px solid rgba(138, 167, 245, 0.14);
+  }
+
+  .menu .menu-item .menu-content {
+    border-top: 1px solid rgba(126, 152, 223, 0.2);
+  }
+
+  .menu .menu-item:first-child .menu-content {
+    border-top: 0;
+  }
+
+  @media (max-width: 991.98px) {
+    #kt_app_sidebar_menu_scroll {
+      padding-left: 0.35rem;
+      padding-right: 0.2rem;
+    }
+
+    .menu .menu-content .menu-section {
+      font-size: 0.8rem !important;
+      letter-spacing: 0.12em;
+    }
+
+    .menu .menu-item .menu-link {
+      min-height: 44px;
+      padding: 0.62rem 0.8rem;
+    }
+
+    .menu .menu-item .menu-link .menu-title {
+      font-size: 0.9rem;
+    }
+  }
 }

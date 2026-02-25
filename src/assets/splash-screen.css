@@ -30,7 +30,9 @@ body {
 .splash-screen img {
   margin-left: calc(100vw - 100%);
   margin-bottom: 30px;
-  height: 30px !important;
+  width: min(320px, 60vw) !important;
+  height: auto !important;
+  object-fit: contain;
 }
 
 [data-bs-theme="dark"] .splash-screen {

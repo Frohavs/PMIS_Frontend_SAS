@@ -1,23 +1,45 @@
 :host {
   display: block;
+  width: 100%;
 }
 
-:host ::ng-deep .sidebar-brand {
-  font-size: 2.2rem;
-  font-weight: 600;
-  letter-spacing: 0.02em;
-  font-family: "Brush Script MT", "Segoe Script", cursive;
-  margin-bottom: 0;
-  line-height: 1;
+:host ::ng-deep .sidebar-logo-link {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  min-height: 70px;
+  padding: 0.4rem 0.35rem;
+}
+
+:host ::ng-deep .logo-wrap {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+}
+
+:host ::ng-deep .sidebar-logo-main {
+  height: 28px;
+  width: min(100%, 160px);
+  object-fit: contain;
+  filter: drop-shadow(0 1px 0 rgba(255, 255, 255, 0.08));
+}
+
+:host ::ng-deep .sidebar-logo-mini {
+  height: 24px;
+  width: 24px;
+  object-fit: contain;
+  border-radius: 6px;
 }
 
 :host ::ng-deep #kt_app_sidebar_toggle {
-  background: rgba(255, 255, 255, 0.2) !important;
-  border: 0;
+  background: rgba(22, 42, 105, 0.95) !important;
+  border: 1px solid rgba(116, 162, 255, 0.55);
+  box-shadow: 0 8px 22px rgba(3, 13, 44, 0.6);
 
   i,
   .ki-outline,
   .ki-solid {
-    color: #ffffff !important;
+    color: #cfe8ff !important;
   }
 }

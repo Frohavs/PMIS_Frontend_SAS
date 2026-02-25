@@ -55,7 +55,7 @@ export class OverviewComponent implements OnInit {
         this.dataList.push(
           {
             id: iterator.id,
-            img: './assets/media/logos/froha_logo.png',
+            img: './assets/media/logos/froha_logo_attached.svg',
             nameAr: iterator.name,
             name: iterator.email,
             subName: iterator?.nameAr || '--',
