@@ -1,160 +1,226 @@
-<!-- begin::Row -->
-<div class="row g-5 g-xl-8">
-  <div class="col-xl-3">
-    <app-stats-widget6 class="card bg-light-primary card-xl-stretch mb-xl-8" color="primary"
-      title="{{'PROJECTS.TITLE' | translate}}" description="{{'PROJECTS.on_going' | translate}}" progress="30%">
-    </app-stats-widget6>
-  </div>
-
-  <div class="col-xl-3">
-    <app-stats-widget6 class="card bg-light-success card-xl-stretch mb-xl-8" color="success"
-      title="{{'PROJECTS.TITLE' | translate}}" description="{{'PROJECTS.initial_delivery' | translate}}"
-      [progress]="'40%'"></app-stats-widget6>
-  </div>
-
-  <div class="col-xl-3">
-    <app-stats-widget6 class="card bg-light-danger card-xl-stretch mb-xl-8" color="danger"
-      title="{{'PROJECTS.TITLE' | translate}}" description="{{'PROJECTS.off_track' | translate}}" progress="10%">
-    </app-stats-widget6>
-  </div>
-
-  <div class="col-xl-3">
-    <app-stats-widget6 class="card bg-light-warning card-xl-stretch mb-xl-8" color="warning"
-      title="{{'PROJECTS.TITLE' | translate}}" description="{{'PROJECTS.prospective' | translate}}" progress="20%">
-    </app-stats-widget6>
-  </div>
-</div>
-<!-- end::Row -->
-
-<div class="card mb-5 mb-xl-8">
-  <!-- begin::Header -->
-
-  <div class="card-header border-0 pt-5">
-
-    <!--begin::Card title-->
-    <div class="card-title">
-      <!--begin::Search-->
-      <div class="d-flex align-items-center position-relative my-1">
-        <app-keenicon name="magnifier" class="fs-3 position-absolute ms-5"></app-keenicon>
-        <input type="text" data-action="filter" class="form-control form-control-solid w-250px ps-12"
-          [placeholder]="Search_text">
-      </div>
-      <!--end::Search-->
+<div class="projects-dashboard">
+  <div class="hero-strip"></div>
+  <div class="dashboard-shell">
+    <div class="dashboard-header">
+      <h2 class="dashboard-title">{{ 'PROJECTS.OVERVIEW.DASHBOARD_TITLE' | translate }}</h2>
     </div>
-    <!--begin::Card title-->
-    <div class="card-toolbar" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-trigger="hover"
-      title="Click to add a user">
-      <a class="btn btn-sm btn-light-primary" (click)="redirectToNew()">
-        <app-keenicon name="plus" class="fs-3"></app-keenicon>
-        {{Add_text}}
-      </a>
-    </div>
-  </div>
-  <!-- end::Header -->
-  <!-- begin::Body -->
-  <div class="card-body py-3">
-    <!-- begin::Table container -->
-    <div class="table-responsive">
-      <!-- begin::Table -->
-      <table class="table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4">
-        <!-- begin::Table head -->
-        <thead>
-          <tr class="fw-bolder text-muted">
-            <th class="min-w-200px">{{"PROJECTS.Project" | translate}}</th>
-            <th class="min-w-200px">{{"PROJECTS.Consultant" | translate}}</th>
-            <th class="min-w-200px">{{"PROJECTS.start_date" | translate}}</th>
-            <th class="min-w-200px">{{"PROJECTS.Sector" | translate}}</th>
-            <!-- <th class="max-w-50px"></th> -->
-            <th class="max-w-100px text-center">Actions</th>
 
-          </tr>
-        </thead>
-        <!-- end::Table head -->
-        <!-- begin::Table body -->
-        <tbody>
-          <tr *ngFor="let project of dataList; index as i">
-            <!-- <td>
-              <div class="form-check form-check-sm form-check-custom form-check-solid">
-                <input class="form-check-input widget-9-check" type="checkbox" [value]="project?.id"
-                  [checked]="project?.checked" (change)="checkProject(project?.id, $event)" />
+    <div class="dashboard-grid">
+      <section class="dashboard-main">
+        <div class="overview-strip">
+          <div class="overview-stat">
+            <div class="stat-head">
+              <span class="overview-label">{{ 'PROJECTS.OVERVIEW.TOTAL_PROJECTS' | translate }}</span>
+              <span class="stat-icon accent-blue"><app-keenicon name="abstract-26"></app-keenicon></span>
+            </div>
+            <span class="overview-value">{{ totalProjectsCount }}</span>
+          </div>
+          <div class="overview-stat">
+            <div class="stat-head">
+              <span class="overview-label">{{ 'PROJECTS.OVERVIEW.TOTAL_BUDGET' | translate }}</span>
+              <span class="stat-icon accent-amber"><app-keenicon name="chart-line-star"></app-keenicon></span>
+            </div>
+            <span class="overview-value">{{ totalBudgetValue | number:'1.0-0' }} </span>
+          </div>
+          <div class="overview-stat">
+            <div class="stat-head">
+              <span class="overview-label">{{ 'PROJECTS.OVERVIEW.AVG_PROGRESS' | translate }}</span>
+              <span class="stat-icon accent-green"><app-keenicon name="graph-up"></app-keenicon></span>
+            </div>
+            <span class="overview-value">{{ avgProgressValue }}%</span>
+            <div class="mini-progress">
+              <span class="mini-fill" [style.width.%]="avgProgressValue"></span>
+            </div>
+          </div>
+          <div class="overview-stat danger">
+            <div class="stat-head">
+              <span class="overview-label">{{ 'PROJECTS.OVERVIEW.HIGH_RISK' | translate }}</span>
+              <span class="stat-icon accent-red"><app-keenicon name="information-5"></app-keenicon></span>
+            </div>
+            <span class="overview-value">{{ highRiskProjectsCount }} </span>
+          </div>
+        </div>
+
+        <div class="status-cards">
+          <article class="status-card ongoing">
+            <span class="status-icon"><app-keenicon name="rocket"></app-keenicon></span>
+            <h4>{{ 'PROJECTS.OVERVIEW.ONGOING' | translate }}</h4>
+            <p>{{ ongoingProjectsCount }} {{ 'PROJECTS.OVERVIEW.PROJECTS_WORD' | translate }}</p>
+          </article>
+          <article class="status-card initial">
+            <span class="status-icon"><app-keenicon name="check-circle"></app-keenicon></span>
+            <h4>{{ 'PROJECTS.OVERVIEW.INITIAL_DELIVERY' | translate }}</h4>
+            <p>{{ initialDeliveryProjectsCount }} {{ 'PROJECTS.OVERVIEW.PROJECTS_WORD' | translate }}</p>
+          </article>
+          <article class="status-card offtrack">
+            <span class="status-icon"><app-keenicon name="information-5"></app-keenicon></span>
+            <h4>{{ 'PROJECTS.OVERVIEW.OFF_TRACK' | translate }}</h4>
+            <p>{{ offTrackProjectsCount }} {{ 'PROJECTS.OVERVIEW.PROJECTS_WORD' | translate }}</p>
+          </article>
+          <article class="status-card prospective">
+            <span class="status-icon"><app-keenicon name="medal-star"></app-keenicon></span>
+            <h4>{{ 'PROJECTS.OVERVIEW.PROSPECTIVE' | translate }}</h4>
+            <p>{{ prospectiveProjectsCount }} {{ 'PROJECTS.OVERVIEW.PROJECTS_WORD' | translate }}</p>
+          </article>
+        </div>
+
+        <div class="projects-table-card">
+          <div class="table-toolbar">
+            <div class="search-wrap">
+              <span class="search-icon-shell" aria-hidden="true">
+                <app-keenicon name="magnifier" class="search-icon"></app-keenicon>
+              </span>
+              <input
+                type="text"
+                data-action="filter"
+                class="form-control form-control-solid search-input"
+                [placeholder]="'PROJECTS.Search' | translate"
+                [(ngModel)]="searchTerm"
+                (ngModelChange)="onSearchTermChange($event)"
+              >
+            </div>
+
+            <select class="form-select form-select-solid toolbar-select" [(ngModel)]="sortBy">
+              <option value="startDate">{{ 'PROJECTS.OVERVIEW.SORT_START_DATE' | translate }}</option>
+              <option value="name">{{ 'PROJECTS.OVERVIEW.SORT_NAME' | translate }}</option>
+            </select>
+
+            <select class="form-select form-select-solid toolbar-select" [(ngModel)]="sectorFilter">
+              <option value="">{{ 'PROJECTS.OVERVIEW.SECTOR' | translate }}</option>
+              <option *ngFor="let sector of sectors" [value]="sector">{{ sector }}</option>
+            </select>
+
+            <button class="btn btn-primary new-project-btn" (click)="redirectToNew()">
+              <app-keenicon name="plus" class="fs-3"></app-keenicon>
+              {{ 'PROJECTS.Add_Project' | translate }}
+            </button>
+          </div>
+
+          <div class="table-responsive">
+            <table class="table align-middle projects-table">
+              <thead>
+                <tr>
+                  <th>{{ 'PROJECTS.OVERVIEW.PROJECT_NAME' | translate }}</th>
+                  <th>{{ 'PROJECTS.OVERVIEW.CLASSIFICATION' | translate }}</th>
+                  <th>{{ 'PROJECTS.OVERVIEW.PROGRESS' | translate }}</th>
+                  <th>{{ 'PROJECTS.OVERVIEW.BUDGET_SAR' | translate }}</th>
+                  <th>{{ 'PROJECTS.OVERVIEW.SCHEDULE_STATUS' | translate }}</th>
+                  <th>{{ 'PROJECTS.OVERVIEW.STATUS' | translate }}</th>
+                  <th class="text-center">{{ 'PROJECTS.OVERVIEW.ACTION' | translate }}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let project of filteredProjects">
+                  <td>
+                    <div class="project-name-cell">
+                      <span class="project-primary">{{ getProjectDisplayName(project) }}</span>
+                      <span class="project-secondary">{{ project?.name }}</span>
+                    </div>
+                  </td>
+                  <td>{{ project?.projectClassification || '--' }}</td>
+                  <td>
+                    <div class="progress-cell">
+                    
+                      <small class="text-muted d-block">{{ 'PROJECTS.OVERVIEW.PLANNED' | translate }}: {{ toNumber(project?.plannedPercentage) }}%</small>
+                        <small class="text-muted d-block">{{ 'PROJECTS.OVERVIEW.ACTUAL' | translate }}: {{ toNumber(project?.actualPercentage) }}%</small>
+                      <div class="progress-line planned-line">
+                        <div class="progress-fill planned-fill" [style.width.%]="getPlannedProgressValue(project)"></div>
+                      </div>
+                      <div class="progress-line actual-line">
+                        <div class="progress-fill actual-fill" [style.width.%]="getActualProgressValue(project)"></div>
+                      </div>
+                    </div>
+                  </td>
+                  <td>{{ toNumber(project?.projectValue || project?.contractValue || project?.budget) | number:'1.0-0' }}</td>
+                  <td>{{ project?.scheduleManagementStatus || '--' }}</td>
+                  <td>
+                    <span class="status-pill" [ngClass]="getProjectStatusClass(project)">{{ getProjectStatusText(project) }}</span>
+                  </td>
+                  <td>
+                    <div class="d-flex justify-content-center flex-shrink-0" *ngIf="checkAdmin(project.userName)">
+                      <a class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1"
+                        (click)="checkProject(project.id, project?.nameAr || project?.name)">
+                        <app-keenicon name="setting-2" class="fs-3"></app-keenicon>
+                      </a>
+                      <a class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1"
+                        (click)="editProject(project)">
+                        <app-keenicon name="pencil" class="fs-3"></app-keenicon>
+                      </a>
+                      <a class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm" (click)="deleteProject(project)">
+                        <app-keenicon name="trash" class="fs-3"></app-keenicon>
+                      </a>
+                    </div>
+                  </td>
+                </tr>
+                <tr *ngIf="!filteredProjects?.length">
+                  <td colspan="7" class="text-center py-10 text-muted">{{ 'PROJECTS.OVERVIEW.NO_ITEMS' | translate }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="d-flex flex-stack flex-wrap pt-5">
+            <div class="fs-6 fw-bold text-gray-700">{{ 'PROJECTS.OVERVIEW.SHOWING' | translate }} {{ filteredProjects.length }} {{ 'PROJECTS.OVERVIEW.OF' | translate }} {{ totalCount || 0 }} {{ 'PROJECTS.OVERVIEW.ENTRIES' | translate }}</div>
+            <ul class="pagination">
+              <li class="page-item previous" (click)="navigateArrows(false)">
+                <a class="page-link cursor-pointer"><i class="previous"></i></a>
+              </li>
+              <li class="page-item" [ngClass]="{'active': selected === i+1}" (click)="navigatePage(i+1)"
+                *ngFor="let page of pagesCount; index as i">
+                <a class="page-link cursor-pointer">{{ i + 1 }}</a>
+              </li>
+              <li class="page-item next" (click)="navigateArrows(true)">
+                <a class="page-link cursor-pointer"><i class="next"></i></a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <aside class="dashboard-side">
+        <div class="side-card">
+          <h4>{{ 'PROJECTS.OVERVIEW.PROJECT_DISTRIBUTION' | translate }}</h4>
+          <div class="distribution-wrap">
+            <div class="distribution-donut" [style.background]="'conic-gradient(#2475ff 0 ' + studyDesignPercent + '%, #18b677 ' + studyDesignPercent + '% ' + (studyDesignPercent + supervisorPercent) + '%, #f1416c ' + (studyDesignPercent + supervisorPercent) + '% ' + (studyDesignPercent + supervisorPercent + excusePercent) + '%, #f6c000 ' + (studyDesignPercent + supervisorPercent + excusePercent) + '% 100%)'">
+              <div class="distribution-center">
+                <strong>{{ totalProjectsCount }}</strong>
+                <span>{{ 'PROJECTS.OVERVIEW.PROJECTS_WORD' | translate }}</span>
               </div>
-            </td> -->
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="d-flex justify-content-start flex-column">
-                  <a class="text-gray-900 fw-bolder text-hover-primary fs-6">
-                    {{project?.nameAr}}
-                  </a>
-                  <span class="text-muted fw-bold text-muted d-block fs-7">
-                    {{project?.name}}
-                  </span>
+            </div>
+          </div>
+          <ul class="distribution-list">
+            <li><span class="dot ongoing"></span>{{ 'PROJECTS.OVERVIEW.STUDY_AND_DESIGN' | translate }} <strong>{{ studyDesignPercent }}%</strong></li>
+            <li><span class="dot initial"></span>{{ 'PROJECTS.OVERVIEW.SUPERVISOR' | translate }} <strong>{{ supervisorPercent }}%</strong></li>
+            <li><span class="dot offtrack"></span>{{ 'PROJECTS.OVERVIEW.EXCUSE' | translate }} <strong>{{ excusePercent }}%</strong></li>
+            <li><span class="dot prospective"></span>{{ 'PROJECTS.OVERVIEW.CONSULTANT_SERVICES' | translate }} <strong>{{ consultantServicesPercent }}%</strong></li>
+          </ul>
+        </div>
+
+        <div class="side-card">
+          <h4>{{ 'PROJECTS.OVERVIEW.UPCOMING_MILESTONES' | translate }}</h4>
+          <div class="milestone-list" *ngIf="upcomingMilestones.length; else noMilestones">
+            <div class="milestone-item" *ngFor="let project of upcomingMilestones; let i = index">
+              <div class="milestone-rail">
+                <span class="milestone-bullet">{{ i + 1 }}</span>
+                <span class="milestone-line" *ngIf="i + 1 < upcomingMilestones.length"></span>
+              </div>
+              <div class="milestone-content">
+                <div class="milestone-top">
+                  <span class="milestone-title">{{ getProjectDisplayName(project) }}</span>
+                  <span class="milestone-date">{{ project?.executionStartDate | date:'dd/MM/yyyy' }}</span>
+                </div>
+                <div class="milestone-bottom">
+                  <span class="milestone-sector">{{ project?.projectSectorName || '--' }}</span>
+                  <span class="status-pill milestone-status" [ngClass]="getProjectStatusClass(project)">{{ getProjectStatusText(project) }}</span>
                 </div>
               </div>
-            </td>
-
-            <td>
-              <a class="text-gray-900 fw-bolder text-hover-primary d-block fs-6">
-                {{project?.consultantName}}
-              </a>
-            </td>
-
-            <td>
-              <a class="text-gray-900 fw-bolder text-hover-primary d-block fs-6">
-                {{project?.executionStartDate | date: 'dd/MM/yyyy'}}
-              </a>
-            </td>
-            <td>
-              <a class="text-gray-900 fw-bolder text-hover-primary d-block fs-6">
-                {{project?.projectSectorName}}
-              </a>
-            </td>
-            <td>
-              <div class="d-flex justify-content-center flex-shrink-0" *ngIf="checkAdmin(project.userName)">
-                <a class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1"
-                  (click)="checkProject(project.id, project?.nameAr || project?.name)">
-                  <app-keenicon name="setting-2" class="fs-3"></app-keenicon>
-                </a>
-                <a class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1"
-                  (click)="editProject(project)">
-                  <app-keenicon name="pencil" class="fs-3"></app-keenicon>
-                </a>
-                <a class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm" (click)="deleteProject(project)">
-                  <app-keenicon name="trash" class="fs-3"></app-keenicon>
-                </a>
-              </div>
-            </td>
-          </tr>
-          <tr *ngIf="!dataList?.length">
-            <td colspan="8" class="text-center fs-2 text-primary">
-              no items retrieved yet
-            </td>
-          </tr>
-        </tbody>
-      </table>
-
-      <div class="d-flex flex-stack flex-wrap pt-10">
-        <div class="fs-6 fw-bold text-gray-700">Showing {{totalCount}} to 10 of {{totalCount}} entries</div>
-
-        <ul class="pagination">
-          <li class="page-item previous" (click)="navigateArrows(false)">
-            <a class="page-link cursor-pointer">
-              <i class="previous"></i>
-            </a>
-          </li>
-
-          <li class="page-item" [ngClass]="{'active': selected === i+1}" (click)="navigatePage(i+1)"
-            *ngFor="let page of pagesCount; index as i">
-            <a class="page-link cursor-pointer"> {{i+1}} </a>
-          </li>
-
-          <li class="page-item next" (click)="navigateArrows(true)">
-            <a class="page-link cursor-pointer">
-              <i class="next"></i>
-            </a>
-          </li>
-        </ul>
-        <!-- end::Table pagination -->
-      </div>
+            </div>
+          </div>
+          <ng-template #noMilestones>
+            <div class="timeline-sub">{{ 'PROJECTS.OVERVIEW.NO_UPCOMING_MILESTONES' | translate }}</div>
+          </ng-template>
+        </div>
+      </aside>
     </div>
   </div>
 </div>
@@ -164,7 +230,7 @@
 </swal>
 
 
-<swal #deleteSwal [swalOptions]="swalOptions" title="Are you sure to delete?" text="This can't be undone" icon="warning"
+<swal #deleteSwal [swalOptions]="swalOptions" [title]="'PROJECTS.OVERVIEW.DELETE_CONFIRM_TITLE' | translate" [text]="'PROJECTS.OVERVIEW.DELETE_CONFIRM_TEXT' | translate" icon="warning"
   [showCancelButton]="true" [focusCancel]="true"
   [customClass]="{confirmButton: 'btn btn-danger', cancelButton: 'btn btn-active-light'}">
 </swal>
@@ -178,11 +244,13 @@
 
     <div class="modal-body pt-4">
       <div class="workspace-search">
-        <app-keenicon name="magnifier" class="workspace-search-icon"></app-keenicon>
+        <span class="workspace-search-icon-shell" aria-hidden="true">
+          <app-keenicon name="magnifier" class="workspace-search-icon"></app-keenicon>
+        </span>
         <input
           type="text"
           class="form-control form-control-solid workspace-search-input"
-          [placeholder]="'Search modules'"
+          [placeholder]="'PROJECTS.OVERVIEW.SEARCH_MODULES' | translate"
           [(ngModel)]="modalSearchText"
           (ngModelChange)="onModalSearchChange()"
         />

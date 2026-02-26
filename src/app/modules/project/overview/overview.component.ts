@@ -1,9 +1,8 @@
-import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
-import { fromEvent, Subscription } from 'rxjs';
-import { debounceTime, distinctUntilChanged, } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
 import { SweetAlertOptions } from 'sweetalert2';
 import { PROJECT_OPTION_SECTIONS, ProjectOptionSection } from './project-options';
@@ -15,10 +14,9 @@ import { DeliveryStatusService } from 'src/app/services/delivery-status.service'
   templateUrl: './overview.component.html',
   styleUrl: './overview.component.scss'
 })
-export class OverviewComponent implements OnInit, AfterViewInit, OnDestroy {
-  Add_text: string;
-  Search_text: string;
+export class OverviewComponent implements OnInit, OnDestroy {
   dataList: any[] = []
+  allDataList: any[] = [];
   totalCount: number;
   pagesCount: number[] = [];
   selected = 1;
@@ -30,6 +28,9 @@ export class OverviewComponent implements OnInit, AfterViewInit, OnDestroy {
   optionCounts: Record<string, number> = {
     'projects/rfi-list': 0,
   };
+  searchTerm = '';
+  sectorFilter = '';
+  sortBy: 'startDate' | 'name' = 'startDate';
 
 
   // modal configs
@@ -53,37 +54,27 @@ export class OverviewComponent implements OnInit, AfterViewInit, OnDestroy {
   constructor(
     private cdr: ChangeDetectorRef,
     private router: Router,
-    private elRef: ElementRef,
     private modalService: NgbModal,
     private translate: TranslateService,
     private projectsService: ProjectsService,
     private deliveryStatusService: DeliveryStatusService,
   ) {
-    this.Add_text = this.translate.instant('PROJECTS.Add_Project');
-    this.Search_text = this.translate.instant('PROJECTS.Search');
   }
 
   ngOnInit(): void {
     this.initializeProjectData();
   }
 
-  ngAfterViewInit(): void {
-    const inputElement = this.elRef.nativeElement.querySelector('input[data-action="filter"]');
-
-    this.inputSubscription = fromEvent(inputElement, 'input').pipe(
-      debounceTime(500),
-      distinctUntilChanged(),
-    ).subscribe((event: any) => {
-      const searchText = event.target.value;
-      this.initializeProjectData(1, '')
-    });
-  }
-
   initializeProjectData(pageIndex?: number, search?: string) {
     this.projectsService.getAll(pageIndex, search).subscribe(res => {
-      this.dataList = res?.data?.items;
-      this.totalCount = res?.data?.totalcount;
+      this.dataList = res?.data?.items || [];
+      this.totalCount = res?.data?.totalcount || 0;
       this.pagesCount = Array.from({ length: Math.ceil(this.totalCount / 10) }, (_, index) => index + 1);
+      this.cdr.detectChanges();
+    });
+
+    this.projectsService.getAllProjects(1, search).subscribe(res => {
+      this.allDataList = res?.data?.items || [];
       this.cdr.detectChanges();
     });
   }
@@ -93,6 +84,201 @@ export class OverviewComponent implements OnInit, AfterViewInit, OnDestroy {
     this.dataList.forEach(project => {
       project.checked = isChecked ? true : false;
     });
+  }
+
+  get filteredProjects(): any[] {
+    let rows = [...(this.dataList || [])];
+
+    if (this.searchTerm.trim()) {
+      const key = this.searchTerm.trim().toLowerCase();
+      rows = rows.filter(project =>
+        (project?.nameAr || '').toLowerCase().includes(key) ||
+        (project?.name || '').toLowerCase().includes(key) ||
+        (project?.consultantName || '').toLowerCase().includes(key) ||
+        (project?.projectSectorName || '').toLowerCase().includes(key)
+      );
+    }
+
+    if (this.sectorFilter) {
+      rows = rows.filter(project => (project?.projectSectorName || '') === this.sectorFilter);
+    }
+
+    rows.sort((a, b) => {
+      if (this.sortBy === 'name') {
+        return this.getProjectDisplayName(a).localeCompare(this.getProjectDisplayName(b), undefined, { numeric: true, sensitivity: 'base' });
+      }
+
+      const aDate = a?.executionStartDate ? new Date(a.executionStartDate).getTime() : 0;
+      const bDate = b?.executionStartDate ? new Date(b.executionStartDate).getTime() : 0;
+      return bDate - aDate;
+    });
+
+    return rows;
+  }
+
+  get sectors(): string[] {
+    const names = (this.allDataList || [])
+      .map(project => project?.projectSectorName)
+      .filter((value: string | undefined) => !!value);
+    return Array.from(new Set(names));
+  }
+
+  get totalProjectsCount(): number {
+    return (this.allDataList || []).length;
+  }
+
+  get ongoingProjectsCount(): number {
+    return this.countByStage(['ongoing', 'on going', 'on_going', 'جاري']);
+  }
+
+  get initialDeliveryProjectsCount(): number {
+    return this.countByStage(['initial', 'delivery', 'ابتد']);
+  }
+
+  get offTrackProjectsCount(): number {
+    return this.countByStage(['off track', 'off_track', 'متعثر', 'خارج']);
+  }
+
+  get prospectiveProjectsCount(): number {
+    return this.countByStage(['prospective', 'مستقب']);
+  }
+
+  get ongoingPercent(): number {
+    return this.getPercent(this.ongoingProjectsCount);
+  }
+
+  get initialPercent(): number {
+    return this.getPercent(this.initialDeliveryProjectsCount);
+  }
+
+  get offTrackPercent(): number {
+    return this.getPercent(this.offTrackProjectsCount);
+  }
+
+  get prospectivePercent(): number {
+    return this.getPercent(this.prospectiveProjectsCount);
+  }
+
+  get studyDesignPercent(): number {
+    return this.getPercent(this.countByClassification(['study and design', 'دراسة']));
+  }
+
+  get supervisorPercent(): number {
+    return this.getPercent(this.countByClassification(['supervisor', 'إشراف']));
+  }
+
+  get excusePercent(): number {
+    return this.getPercent(this.countByClassification(['excuse', 'execuse']));
+  }
+
+  get consultantServicesPercent(): number {
+    return this.getPercent(this.countByClassification(['consultant services', 'استشار']));
+  }
+
+  get upcomingMilestones(): any[] {
+    return [...(this.allDataList || [])]
+      .filter(project => !!project?.executionStartDate)
+      .sort((a, b) => {
+        const aDate = new Date(a.executionStartDate).getTime();
+        const bDate = new Date(b.executionStartDate).getTime();
+        return aDate - bDate;
+      })
+      .slice(0, 5);
+  }
+
+  get totalBudgetValue(): number {
+    return (this.allDataList || []).reduce((sum, item) => sum + this.toNumber(
+      item?.projectValue ?? item?.contractValue ?? item?.budget ?? 0
+    ), 0);
+  }
+
+  get avgProgressValue(): number {
+    const values = (this.allDataList || [])
+      .map(item => this.toNumber(item?.actualPercentage ?? item?.plannedPercentage ?? item?.progress ?? item?.progressPercentage ?? item?.completionPercentage))
+      .filter(value => value >= 0);
+
+    if (!values.length) {
+      return 0;
+    }
+
+    const total = values.reduce((sum, current) => sum + current, 0);
+    return Math.round(total / values.length);
+  }
+
+  get highRiskProjectsCount(): number {
+    return (this.allDataList || []).filter(item => {
+      return this.toNumber(item?.totalRisk) > 0;
+    }).length;
+  }
+
+  getProjectDisplayName(project: any): string {
+    return project?.nameAr || project?.name || '--';
+  }
+
+  getProjectStatusText(project: any): string {
+    return project?.stage || project?.projectStageName || project?.projectStatusName || project?.stageName || '--';
+  }
+
+  getProjectStatusClass(project: any): string {
+    const status = this.getProjectStatusText(project).toLowerCase();
+    if (status.includes('off') || status.includes('متعثر') || status.includes('خارج')) {
+      return 'status-off-track';
+    }
+    if (status.includes('initial') || status.includes('delivery') || status.includes('ابتد')) {
+      return 'status-initial';
+    }
+    if (status.includes('prospective') || status.includes('مستقب')) {
+      return 'status-prospective';
+    }
+    return 'status-ongoing';
+  }
+
+  getProgressValue(project: any): number {
+    const value = this.toNumber(project?.actualPercentage ?? project?.plannedPercentage ?? project?.progress ?? project?.progressPercentage ?? project?.completionPercentage);
+    return Math.max(0, Math.min(100, value));
+  }
+
+  getActualProgressValue(project: any): number {
+    const value = this.toNumber(project?.actualPercentage);
+    return Math.max(0, Math.min(100, value));
+  }
+
+  getPlannedProgressValue(project: any): number {
+    const value = this.toNumber(project?.plannedPercentage);
+    return Math.max(0, Math.min(100, value));
+  }
+
+  onSearchTermChange(term: string): void {
+    this.searchTerm = term || '';
+    this.selected = 1;
+    this.initializeProjectData(1, this.searchTerm);
+  }
+
+  countByStage(keywords: string[]): number {
+    return (this.allDataList || []).filter(item => {
+      const stage = `${item?.stage || ''} ${item?.projectStageName || ''} ${item?.projectStatusName || ''} ${item?.stageName || ''}`.toLowerCase();
+      return keywords.some(keyword => stage.includes(keyword));
+    }).length;
+  }
+
+  countByClassification(keywords: string[]): number {
+    return (this.allDataList || []).filter(item => {
+      const classification = `${item?.projectClassification || ''}`.toLowerCase();
+      return keywords.some(keyword => classification.includes(keyword));
+    }).length;
+  }
+
+  toNumber(value: any): number {
+    const parsed = Number(value);
+    return Number.isFinite(parsed) ? parsed : 0;
+  }
+
+  getPercent(value: number): number {
+    if (!this.totalProjectsCount) {
+      return 0;
+    }
+
+    return Math.round((value / this.totalProjectsCount) * 100);
   }
 
    checkProject(id: number, projectName?: string) {
@@ -247,7 +433,7 @@ export class OverviewComponent implements OnInit, AfterViewInit, OnDestroy {
 
   navigatePage(pageIndex: number) {
     this.selected = pageIndex;
-    this.initializeProjectData(pageIndex, '');
+    this.initializeProjectData(pageIndex, this.searchTerm);
   }
 
   navigateArrows(next: boolean) {
@@ -256,14 +442,14 @@ export class OverviewComponent implements OnInit, AfterViewInit, OnDestroy {
         return;
       } else {
         this.selected += 1;
-        this.initializeProjectData(this.selected);
+        this.initializeProjectData(this.selected, this.searchTerm);
       }
     } else {
       if (this.selected === 1) {
         return;
       } else {
         this.selected -= 1;
-        this.initializeProjectData(this.selected);
+        this.initializeProjectData(this.selected, this.searchTerm);
       }
     }
   }
