@@ -112,7 +112,7 @@ export const locale = {
         TOTAL_PROJECTS: 'Total Projects',
         TOTAL_BUDGET: 'Total Budget',
         AVG_PROGRESS: 'Avg Progress',
-        HIGH_RISK: 'High Risk',
+        HIGH_RISK: 'Total Risks',
         PROJECTS_WORD: 'Projects',
         ONGOING: 'Ongoing',
         INITIAL_DELIVERY: 'Initial Delivery',
