@@ -8,6 +8,7 @@ import { SweetAlertOptions } from 'sweetalert2';
 import { PROJECT_OPTION_SECTIONS, ProjectOptionSection } from './project-options';
 import { ProjectsService } from 'src/app/services/projects.service';
 import { DeliveryStatusService } from 'src/app/services/delivery-status.service';
+import { MilestoneService } from 'src/app/services/milestone.service';
 
 @Component({
   selector: 'app-overview',
@@ -28,9 +29,16 @@ export class OverviewComponent implements OnInit, OnDestroy {
   optionCounts: Record<string, number> = {
     'projects/rfi-list': 0,
   };
+  actionRequiredRoutes: Set<string> = new Set([
+    'projects/rfi-list',
+    'projects/risk-management',
+    'projects/obs-list',
+    'projects/milestone_list',
+  ]);
   searchTerm = '';
   sectorFilter = '';
   sortBy: 'startDate' | 'name' = 'startDate';
+  upcomingMilestonesList: any[] = [];
 
 
   // modal configs
@@ -58,6 +66,7 @@ export class OverviewComponent implements OnInit, OnDestroy {
     private translate: TranslateService,
     private projectsService: ProjectsService,
     private deliveryStatusService: DeliveryStatusService,
+    private milestoneService: MilestoneService,
   ) {
   }
 
@@ -75,6 +84,33 @@ export class OverviewComponent implements OnInit, OnDestroy {
 
     this.projectsService.getAllProjects(1, search).subscribe(res => {
       this.allDataList = res?.data?.items || [];
+      this.cdr.detectChanges();
+    });
+
+    this.loadUpcomingMilestones();
+  }
+
+  loadUpcomingMilestones(): void {
+    this.milestoneService.getAllMilestones(1, 500).subscribe(res => {
+      const milestones = res?.data?.items || [];
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+
+      this.upcomingMilestonesList = milestones
+        .filter((milestone: any) => {
+          if (!milestone?.actualStartDate) {
+            return false;
+          }
+
+          const actualStartDate = new Date(milestone.actualStartDate);
+          return !Number.isNaN(actualStartDate.getTime()) && actualStartDate.getTime() > today.getTime();
+        })
+        .sort((a: any, b: any) => {
+          const aDate = new Date(a.actualStartDate).getTime();
+          const bDate = new Date(b.actualStartDate).getTime();
+          return aDate - bDate;
+        });
+
       this.cdr.detectChanges();
     });
   }
@@ -176,14 +212,7 @@ export class OverviewComponent implements OnInit, OnDestroy {
   }
 
   get upcomingMilestones(): any[] {
-    return [...(this.allDataList || [])]
-      .filter(project => !!project?.executionStartDate)
-      .sort((a, b) => {
-        const aDate = new Date(a.executionStartDate).getTime();
-        const bDate = new Date(b.executionStartDate).getTime();
-        return aDate - bDate;
-      })
-      .slice(0, 5);
+    return this.upcomingMilestonesList || [];
   }
 
   get totalBudgetValue(): number {
@@ -228,6 +257,32 @@ export class OverviewComponent implements OnInit, OnDestroy {
       return 'status-initial';
     }
     if (status.includes('prospective') || status.includes('مستقب')) {
+      return 'status-prospective';
+    }
+    return 'status-ongoing';
+  }
+
+  getMilestoneDisplayName(milestone: any): string {
+    return milestone?.title || milestone?.projectNameAr || milestone?.projectName || '--';
+  }
+
+  getMilestoneSectorName(milestone: any): string {
+    return milestone?.projectSectorName || milestone?.sectorName || '--';
+  }
+
+  getMilestoneStatusText(milestone: any): string {
+    return milestone?.status || milestone?.milestoneStatus || '--';
+  }
+
+  getMilestoneStatusClass(milestone: any): string {
+    const status = this.getMilestoneStatusText(milestone).toLowerCase();
+    if (status.includes('off') || status.includes('Ù…ØªØ¹Ø«Ø±') || status.includes('Ø®Ø§Ø±Ø¬')) {
+      return 'status-off-track';
+    }
+    if (status.includes('initial') || status.includes('delivery') || status.includes('Ø§Ø¨ØªØ¯')) {
+      return 'status-initial';
+    }
+    if (status.includes('prospective') || status.includes('Ù…Ø³ØªÙ‚Ø¨')) {
       return 'status-prospective';
     }
     return 'status-ongoing';
@@ -327,6 +382,15 @@ export class OverviewComponent implements OnInit, OnDestroy {
     }
 
     return defaultCount ?? null;
+  }
+
+  isActionRequired(route: string, defaultCount?: number): boolean {
+    if (!this.actionRequiredRoutes.has(route)) {
+      return false;
+    }
+
+    const count = this.getOptionCount(route, defaultCount);
+    return count !== null ? count > 0 : true;
   }
 
 

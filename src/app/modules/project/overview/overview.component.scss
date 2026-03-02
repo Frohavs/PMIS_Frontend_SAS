@@ -505,6 +505,12 @@
 .milestone-list {
   display: grid;
   gap: 0.8rem;
+  padding-inline-end: 0.25rem;
+}
+
+.upcoming-milestones-card .milestone-list {
+  max-height: clamp(220px, 34vh, 300px);
+  overflow-y: auto;
 }
 
 .milestone-item {
@@ -782,6 +788,79 @@
   justify-content: space-between;
 }
 
+.workspace-meta {
+  align-items: center;
+  display: inline-flex;
+  gap: 0.35rem;
+}
+
+.action-flag {
+  align-items: center;
+  display: inline-flex;
+  flex: 0 0 auto;
+  gap: 0.1rem;
+  height: 1.35rem;
+  width: 1.25rem;
+  transform-origin: center bottom;
+  animation: action-flag-bob 0.95s ease-in-out infinite;
+}
+
+.action-flag-pole {
+  background: linear-gradient(180deg, #a7b1c9 0%, #8894b0 100%);
+  border-radius: 99px;
+  display: inline-block;
+  height: 1.2rem;
+  margin-top: 0.15rem;
+  width: 3px;
+}
+
+.action-flag-cloth {
+  background: linear-gradient(120deg, #ff5f74 0%, #ff2f54 45%, #d81339 100%);
+  clip-path: polygon(0 0, 100% 20%, 88% 50%, 100% 80%, 0 100%);
+  filter: drop-shadow(0 0 4px rgba(241, 65, 108, 0.45));
+  display: inline-block;
+  height: 0.78rem;
+  margin-top: -0.35rem;
+  transform-origin: left center;
+  width: 0.9rem;
+  animation: action-flag-wave 0.95s ease-in-out infinite;
+}
+
+@keyframes action-flag-wave {
+  0% {
+    transform: rotate(0deg) skewY(0deg) scaleX(1);
+  }
+  30% {
+    transform: rotate(9deg) skewY(-8deg) scaleX(1.05);
+  }
+  65% {
+    transform: rotate(-8deg) skewY(7deg) scaleX(0.95);
+  }
+  100% {
+    transform: rotate(0deg) skewY(0deg) scaleX(1);
+  }
+}
+
+@keyframes action-flag-bob {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-1px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .action-flag,
+  .action-flag-cloth,
+  .workspace-count.attention-count {
+    animation: none;
+  }
+}
+
 .workspace-name {
   color: #182246;
   display: block;
@@ -804,6 +883,28 @@
   justify-content: center;
   min-width: 1.4rem;
   padding: 0 0.45rem;
+}
+
+.workspace-count.attention-count {
+  background: #ffe6ec;
+  color: #bc1d42;
+  box-shadow: 0 0 0 0 rgba(241, 65, 108, 0.38);
+  animation: attention-pulse 1.2s ease-in-out infinite;
+}
+
+@keyframes attention-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(241, 65, 108, 0.38);
+    transform: scale(1);
+  }
+  65% {
+    box-shadow: 0 0 0 5px rgba(241, 65, 108, 0);
+    transform: scale(1.06);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(241, 65, 108, 0);
+    transform: scale(1);
+  }
 }
 
 .workspace-description {

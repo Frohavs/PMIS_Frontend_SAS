@@ -35,6 +35,23 @@ export class MilestoneService {
       headers: httpHeaders
     });
   }
+
+  getAllMilestones(pageIndex = 1, pageSize = 200, search?: string): Observable<any> {
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const milestone = {
+      quickSearch: search || '',
+      pagedSearch: {
+        pageIndex,
+        pageSize
+      }
+    };
+    const url = `${this.API_USERS_URL}/Get`;
+    return this.http.post<any>(url, milestone, {
+      headers: httpHeaders
+    });
+  }
   // public methods
   getById(id: number): Observable<any> {
     const httpHeaders = new HttpHeaders({

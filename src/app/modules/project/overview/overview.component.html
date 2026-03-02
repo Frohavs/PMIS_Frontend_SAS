@@ -196,22 +196,22 @@
           </ul>
         </div>
 
-        <div class="side-card">
+        <div class="side-card upcoming-milestones-card">
           <h4>{{ 'PROJECTS.OVERVIEW.UPCOMING_MILESTONES' | translate }}</h4>
           <div class="milestone-list" *ngIf="upcomingMilestones.length; else noMilestones">
-            <div class="milestone-item" *ngFor="let project of upcomingMilestones; let i = index">
+            <div class="milestone-item" *ngFor="let milestone of upcomingMilestones; let i = index">
               <div class="milestone-rail">
                 <span class="milestone-bullet">{{ i + 1 }}</span>
                 <span class="milestone-line" *ngIf="i + 1 < upcomingMilestones.length"></span>
               </div>
               <div class="milestone-content">
                 <div class="milestone-top">
-                  <span class="milestone-title">{{ getProjectDisplayName(project) }}</span>
-                  <span class="milestone-date">{{ project?.executionStartDate | date:'dd/MM/yyyy' }}</span>
+                  <span class="milestone-title">{{ getMilestoneDisplayName(milestone) }}</span>
+                  <span class="milestone-date">{{ milestone?.actualStartDate | date:'dd/MM/yyyy' }}</span>
                 </div>
                 <div class="milestone-bottom">
-                  <span class="milestone-sector">{{ project?.projectSectorName || '--' }}</span>
-                  <span class="status-pill milestone-status" [ngClass]="getProjectStatusClass(project)">{{ getProjectStatusText(project) }}</span>
+                  <span class="milestone-sector">{{ getMilestoneSectorName(milestone) }}</span>
+                  <span class="status-pill milestone-status" [ngClass]="getMilestoneStatusClass(milestone)">{{ getMilestoneStatusText(milestone) }}</span>
                 </div>
               </div>
             </div>
@@ -269,7 +269,19 @@
               <span class="workspace-content">
                 <span class="workspace-name-row">
                   <span class="workspace-name">{{ getLocalizedText(option.name) }}</span>
-                  <span class="workspace-count" *ngIf="getOptionCount(option.route, option.count) !== null">{{ getOptionCount(option.route, option.count) }}</span>
+                  <span class="workspace-meta">
+                    <span class="action-flag" *ngIf="isActionRequired(option.route, option.count)" title="Action required" aria-label="Action required">
+                      <span class="action-flag-pole"></span>
+                      <span class="action-flag-cloth"></span>
+                    </span>
+                    <span
+                      class="workspace-count"
+                      [class.attention-count]="isActionRequired(option.route, option.count)"
+                      *ngIf="getOptionCount(option.route, option.count) !== null"
+                    >
+                      {{ getOptionCount(option.route, option.count) }}
+                    </span>
+                  </span>
                 </span>
                 <span class="workspace-description">{{ getLocalizedText(option.description) }}</span>
               </span>
