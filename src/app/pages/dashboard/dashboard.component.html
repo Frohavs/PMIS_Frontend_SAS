@@ -1,49 +1,239 @@
-<!--begin::Row-->
-<div class="row g-5 g-xl-10 mb-5 mb-xl-10">
-  <!--begin::Col-->
-  <div class="col-md-6 col-lg-6 col-xl-6 col-xxl-6 mb-md-5 mb-xl-10">
-    <app-cards-widget20 cssClass="h-md-50 mb-5 mb-xl-10" description="Active Projects" color="#F1416C"
-      img="./assets/media/patterns/vector-1.png"></app-cards-widget20>
+<div class="dashboard-screen">
+  <div class="dashboard-stage">
+    <section class="kpi-grid">
+      <article class="kpi-card">
+        <div class="kpi-head blue">
+          <span>{{ 'DASHBOARD_PAGE.PROJECTS_OVERVIEW' | translate }}</span>
+          <span class="arrow">></span>
+        </div>
+        <div class="kpi-body">
+          <div class="kpi-main"><strong>69</strong><span>{{ 'DASHBOARD_PAGE.TOTAL_PROJECTS' | translate }}</span></div>
+          <div class="kpi-row"><span>52 {{ 'DASHBOARD_PAGE.TOTAL_PROJECTS' | translate }}</span><span class="ok-mark">ok</span></div>
+          <div class="kpi-row split"><span>52 {{ 'DASHBOARD_PAGE.ACTIVE' | translate }}</span><span>6 {{ 'DASHBOARD_PAGE.DELAYED' | translate }}</span></div>
+        </div>
+      </article>
 
-    <app-cards-widget7 cssClass="h-md-50 mb-5 mb-xl-10" [icon]="false" [stats]="357" description="Professionals"
-      labelColor="dark" textColor="gray-300"></app-cards-widget7>
+      <article class="kpi-card">
+        <div class="kpi-head cyan">
+          <span>{{ 'DASHBOARD_PAGE.FINANCIAL_OVERVIEW' | translate }}</span>
+          <span class="arrow">></span>
+        </div>
+        <div class="kpi-body">
+          <div class="kpi-money"><strong>SAR 12.4M</strong><span>{{ 'DASHBOARD_PAGE.REVENUE' | translate }}</span></div>
+          <div class="kpi-row split"><span>{{ 'DASHBOARD_PAGE.ACTUAL_REVENUE' | translate }}</span><span>SAR 15.6M</span></div>
+          <div class="progress-line"><span style="width: 72%"></span></div>
+          <div class="kpi-row split small"><span>- $3.2M (30.4%)</span><span>+20.4%</span></div>
+        </div>
+      </article>
+
+      <article class="kpi-card">
+        <div class="kpi-head indigo">
+          <span>{{ 'DASHBOARD_PAGE.USERS_OVERVIEW' | translate }}</span>
+          <span class="arrow">></span>
+        </div>
+        <div class="kpi-body">
+          <div class="kpi-main"><strong>357</strong><span>{{ 'DASHBOARD_PAGE.TOTAL_USERS' | translate }}</span></div>
+          <div class="kpi-row split"><span>124 {{ 'DASHBOARD_PAGE.ACTIVE_TODAY' | translate }}</span><span class="badge-green">+8%</span></div>
+          <div class="kpi-row split"><span>60 {{ 'DASHBOARD_PAGE.DRAFT' | translate }}</span><span class="mini-bars"><i></i><i></i><i></i></span></div>
+        </div>
+      </article>
+
+      <article class="kpi-card">
+        <div class="kpi-head violet">
+          <span>{{ 'DASHBOARD_PAGE.COMPANIES_VENDORS' | translate }}</span>
+          <span class="arrow">></span>
+        </div>
+        <div class="kpi-body">
+          <div class="kpi-main"><strong>84</strong><span>{{ 'DASHBOARD_PAGE.REGISTERED_COMPANIES' | translate }}</span></div>
+          <div class="kpi-row"><span>63 {{ 'DASHBOARD_PAGE.ACTIVE_VENDORS' | translate }}</span><span class="side-icon">></span></div>
+          <div class="kpi-row"><span>5 {{ 'DASHBOARD_PAGE.PENDING_APPROVAL' | translate }}</span><span class="side-icon">></span></div>
+        </div>
+      </article>
+    </section>
+
+    <section class="mid-grid">
+      <article class="panel panel-dark revenue-panel">
+        <div class="panel-row revenue-head">
+          <h3>{{ 'DASHBOARD_PAGE.INVOICE_TREND' | translate }}</h3>
+          <div class="panel-sub">SAR 980</div>
+        </div>
+
+        <div class="revenue-chart">
+          <div class="y-axis">
+            <span>99K</span>
+            <span>30K</span>
+            <span>20K</span>
+            <span>10K</span>
+            <span>0</span>
+          </div>
+
+          <div class="chart-plot">
+            <div class="grid-lines">
+              <span></span><span></span><span></span><span></span><span></span>
+            </div>
+            <span class="rv-line rv-line-one"></span>
+            <span class="rv-line rv-line-two"></span>
+            <span class="rv-dot r1"></span><span class="rv-dot r2"></span><span class="rv-dot r3"></span><span class="rv-dot r4"></span><span class="rv-dot r5"></span><span class="rv-dot r6"></span>
+            <span class="rv-dot r7"></span><span class="rv-dot r8"></span><span class="rv-dot r9"></span><span class="rv-dot r10"></span><span class="rv-dot r11"></span><span class="rv-dot r12"></span>
+            <span class="rv-dot g1 green"></span><span class="rv-dot g2 green"></span><span class="rv-dot g3 green"></span><span class="rv-dot g4 green"></span><span class="rv-dot g5 green"></span><span class="rv-dot g6 green"></span>
+            <span class="rv-dot g7 green"></span><span class="rv-dot g8 green"></span><span class="rv-dot g9 green"></span><span class="rv-dot g10 green"></span><span class="rv-dot g11 green"></span><span class="rv-dot g12 green"></span>
+          </div>
+        </div>
+
+        <div class="x-axis">
+          <span>{{ 'CASHFLOW.November' | translate }}</span><span>{{ 'CASHFLOW.December' | translate }}</span><span>{{ 'CASHFLOW.January' | translate }}</span><span>{{ 'CASHFLOW.February' | translate }}</span><span>{{ 'CASHFLOW.March' | translate }}</span><span>{{ 'CASHFLOW.April' | translate }}</span>
+        </div>
+
+        <div class="legend revenue-legend">
+          <span><i class="c1"></i>{{ 'DASHBOARD_PAGE.TOTAL_INVOICES' | translate }}</span>
+          <span><i class="c2"></i>{{ 'DASHBOARD_PAGE.CASHFLOW' | translate }}</span>
+        </div>
+      </article>
+
+      <article class="panel panel-dark invoice-panel">
+        <div class="panel-row invoice-head">
+          <h3>{{ 'DASHBOARD_PAGE.INVOICE_STATUS' | translate }}</h3>
+          <div class="invoice-actions">
+            <span>↗</span>
+            <span>↘</span>
+          </div>
+        </div>
+        <div class="bar-chart status-bars">
+          <div class="status-bar" *ngFor="let item of invoiceStatusDummy">
+            <div class="bar-stack">
+              <span class="bar total" [style.height.%]="item.totalPercent"></span>
+              <span class="bar paid" [style.height.%]="item.paidPercent"></span>
+            </div>
+            <small>{{ item.label }}</small>
+          </div>
+        </div>
+        <div class="legend invoice-status-legend">
+          <span><i class="total"></i>{{ 'DASHBOARD_PAGE.TOTAL_USERS' | translate }}</span>
+          <span><i class="paid"></i>{{ 'DASHBOARD_PAGE.PAID_INVOICES' | translate }}</span>
+        </div>
+      </article>
+
+      <article class="panel alert-panel">
+        <h3>{{ 'DASHBOARD_PAGE.SYSTEM_ALERTS' | translate }}</h3>
+        <ul>
+          <li class="alert-item">
+            <div class="alert-left">
+              <span class="alert-icon red">!</span>
+              <b>60</b>
+              <span>{{ 'DASHBOARD_PAGE.OVERDUE_INVOICES' | translate }}</span>
+            </div>
+            <span class="alert-action">▣</span>
+          </li>
+          <li class="alert-item">
+            <div class="alert-left">
+              <span class="alert-icon amber">!</span>
+              <b>6</b>
+              <span>{{ 'DASHBOARD_PAGE.DELAYED_PROJECTS' | translate }}</span>
+            </div>
+            <span class="alert-action">▣</span>
+          </li>
+          <li class="alert-item">
+            <div class="alert-left">
+              <span class="alert-icon amber">!</span>
+              <b>5</b>
+              <span>{{ 'DASHBOARD_PAGE.VENDORS_PENDING_APPROVAL' | translate }}</span>
+            </div>
+            <span class="alert-action">▣</span>
+          </li>
+          <li class="alert-item">
+            <div class="alert-left">
+              <span class="alert-icon blue">!</span>
+              <b>12</b>
+              <span>{{ 'DASHBOARD_PAGE.USERS_PENDING_ROLE_ASSIGNMENT' | translate }}</span>
+            </div>
+            <span class="alert-action">▣</span>
+          </li>
+        </ul>
+      </article>
+    </section>
+
+    <section class="insights-grid">
+      <div class="insights-left">
+        <article class="panel insight-card">
+          <h3>{{ 'DASHBOARD_PAGE.DETAILED_PROJECT_ISSUES' | translate }}</h3>
+          <table class="issues-table">
+            <thead>
+              <tr>
+                <th>{{ 'DASHBOARD_PAGE.STATUS' | translate }}</th>
+                <th>{{ 'DASHBOARD_PAGE.AGENCY' | translate }}</th>
+                <th>{{ 'DASHBOARD_PAGE.COMPLETE_PERCENT' | translate }}</th>
+                <th>{{ 'DASHBOARD_PAGE.OVERDUE_TASKS' | translate }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="status-chip">{{ 'DASHBOARD_PAGE.DELAYED' | translate }}</span></td>
+                <td>{{ 'DASHBOARD_PAGE.AGENCY_1' | translate }}</td>
+                <td>61</td>
+                <td>{{ 'DASHBOARD_PAGE.ISSUE_1' | translate }}</td>
+              </tr>
+              <tr>
+                <td><span class="status-chip">{{ 'DASHBOARD_PAGE.DELAYED' | translate }}</span></td>
+                <td>{{ 'DASHBOARD_PAGE.AGENCY_3' | translate }}</td>
+                <td>56</td>
+                <td>{{ 'DASHBOARD_PAGE.ISSUE_2' | translate }}</td>
+              </tr>
+              <tr>
+                <td><span class="status-chip">{{ 'DASHBOARD_PAGE.DELAYED' | translate }}</span></td>
+                <td>{{ 'DASHBOARD_PAGE.AGENCY_2' | translate }}</td>
+                <td>53</td>
+                <td>{{ 'DASHBOARD_PAGE.ISSUE_3' | translate }}</td>
+              </tr>
+              <tr>
+                <td><span class="status-chip">{{ 'DASHBOARD_PAGE.DELAYED' | translate }}</span></td>
+                <td>{{ 'DASHBOARD_PAGE.AGENCY_4' | translate }}</td>
+                <td>61</td>
+                <td>{{ 'DASHBOARD_PAGE.ISSUE_4' | translate }}</td>
+              </tr>
+              <tr>
+                <td><span class="status-chip">{{ 'DASHBOARD_PAGE.DELAYED' | translate }}</span></td>
+                <td>{{ 'DASHBOARD_PAGE.AGENCY_1' | translate }}</td>
+                <td>51</td>
+                <td>{{ 'DASHBOARD_PAGE.ISSUE_5' | translate }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </article>
+
+        <article class="panel insight-card">
+          <h3>{{ 'DASHBOARD_PAGE.PROJECTS_STATUS_OVERVIEW' | translate }}</h3>
+          <div class="status-overview">
+            <div class="status-top-legend">
+              <span class="legend-item lg1"><i></i>{{ 'DASHBOARD_PAGE.ON_TRACK' | translate }}</span>
+              <span class="legend-item lg2"><i></i>{{ 'DASHBOARD_PAGE.CRITICAL' | translate }}</span>
+              <span class="legend-item lg3"><i></i>{{ 'DASHBOARD_PAGE.NEAR_DELAY' | translate }}</span>
+              <span class="legend-item lg4"><i></i>{{ 'DASHBOARD_PAGE.DELAYED' | translate }}</span>
+            </div>
+            <div class="status-pie-wrap">
+              <div class="status-pie"></div>
+              <span class="pie-label p1">90 (58.82%)</span>
+              <span class="pie-label p2">32 (20.92%)</span>
+              <span class="pie-label p3">17 (11.11%)</span>
+              <span class="pie-label p4">14 (9.15%)</span>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <article class="panel insight-card map-card">
+        <h3>{{ 'DASHBOARD_PAGE.PROJECT_LOCATIONS_MAP' | translate }}</h3>
+        <div class="map-canvas live-map">
+          <google-map
+            height="100%"
+            width="100%"
+            [center]="saudiMapCenter"
+            [zoom]="saudiMapZoom"
+            [options]="saudiMapOptions"
+          >
+            <map-marker [position]="saudiMarkerPosition" [options]="saudiMarkerOptions"></map-marker>
+          </google-map>
+        </div>
+      </article>
+    </section>
   </div>
-  <!--end::Col-->
-
-  <!--begin::Col-->
-  <div class="col-md-6 col-lg-6 col-xl-6 col-xxl-6 mb-md-5 mb-xl-10">
-    <app-cards-widget17 cssClass="h-md-50 mb-5 mb-xl-10"></app-cards-widget17>
-    <app-lists-widget26 class="h-lg-50"></app-lists-widget26>
-  </div>
-  <!--end::Col-->
-
-
-  <!--begin::Col-->
-  <!--end::Col-->
 </div>
-<!--end::Row-->
-
-<!--begin::Row-->
-<div class="row gx-5 gx-xl-10">
-  <!--begin::Col-->
-  <div class="col-xxl-6 mb-5 mb-xl-10">
-    <app-new-charts-widget8 cssClass="h-xl-100" chartHeight="275px" [chartHeightNumber]="275"></app-new-charts-widget8>
-  </div>
-  <!--end::Col-->
-
-  <!--begin::Col-->
-  <div class="col-xxl-6 mb-5 mb-xl-10">
-    <app-cards-widget18 cssClass="h-xl-100" image="./assets/media/stock/600x600/img-65.jpg"></app-cards-widget18>
-  </div>
-  <!--end::Col-->
-</div>
-<!--end::Row-->
-
-
-<!-- begin:: Modal example -->
-<!-- <app-modal #modal [modalConfig]="modalConfig">
-  Modal body html
-</app-modal>
-<button class="btn btn-primary" (click)="openModal()">Open modal</button> -->
-<!-- Note: Don't forget import ModalsModule (from _metronic/partials) into your module -->
-<!-- end:: Modal example -->
