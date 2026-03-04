@@ -352,10 +352,19 @@
 .x-axis {
   color: rgba(224, 236, 255, 0.78);
   display: grid;
-  font-size: 0.82rem;
+  font-size: 0.72rem;
   font-weight: 600;
-  grid-template-columns: repeat(6, 1fr);
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: 0.15rem;
   margin: 0.15rem 0 0.5rem 45px;
+}
+
+.x-axis span {
+  display: block;
+  overflow: hidden;
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .revenue-legend {

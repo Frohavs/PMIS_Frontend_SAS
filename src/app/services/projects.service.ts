@@ -187,4 +187,16 @@ export class ProjectsService {
     });
   }
 
+  getDashboardCardsOverview(): Observable<any> {
+    const lsValue = localStorage.getItem(this.authLocalStorageToken);
+    this.token = JSON.parse(lsValue as any)?.token || this.token;
+    const httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    const url = `${this.API_USERS_URL}/GetDashboardCardsOverview`;
+    return this.http.get<any>(url, {
+      headers: httpHeaders
+    });
+  }
+
 }

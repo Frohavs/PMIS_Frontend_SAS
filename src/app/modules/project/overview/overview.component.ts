@@ -18,6 +18,11 @@ import { MilestoneService } from 'src/app/services/milestone.service';
 export class OverviewComponent implements OnInit, OnDestroy {
   dataList: any[] = []
   allDataList: any[] = [];
+  dashboardCardsOverview: any = null;
+  dashboardTotalProjectsCount = 0;
+  dashboardTotalBudgetValue = 0;
+  dashboardAvgProgressValue = 0;
+  dashboardHighRiskProjectsCount = 0;
   totalCount: number;
   pagesCount: number[] = [];
   selected = 1;
@@ -87,7 +92,49 @@ export class OverviewComponent implements OnInit, OnDestroy {
       this.cdr.detectChanges();
     });
 
+    this.loadDashboardCardsOverview();
     this.loadUpcomingMilestones();
+  }
+
+  loadDashboardCardsOverview(): void {
+    this.projectsService.getDashboardCardsOverview().subscribe({
+      next: (res) => {
+        this.dashboardCardsOverview = res?.data ?? res ?? {};
+
+        this.dashboardTotalProjectsCount = this.resolveDashboardCardValue(
+          this.dashboardCardsOverview,
+          ['totalProjectsCount', 'totalProjects', 'projectsCount', 'projectCount', 'totalProjectCount'],
+          this.totalProjectsCount
+        );
+
+        this.dashboardTotalBudgetValue = this.resolveDashboardCardValue(
+          this.dashboardCardsOverview,
+          ['totalBudgetValue', 'totalBudget', 'budget', 'projectBudget', 'totalProjectValue'],
+          this.totalBudgetValue
+        );
+
+        this.dashboardAvgProgressValue = this.resolveDashboardCardValue(
+          this.dashboardCardsOverview,
+          ['avgProgressValue', 'averageProgress', 'avgProgress', 'averageCompletion', 'averageCompletionPercentage'],
+          this.avgProgressValue
+        );
+
+        this.dashboardHighRiskProjectsCount = this.resolveDashboardCardValue(
+          this.dashboardCardsOverview,
+          ['highRiskProjectsCount', 'highRiskCount', 'riskProjectsCount', 'highRiskProjects', 'riskyProjectsCount'],
+          this.highRiskProjectsCount
+        );
+
+        this.cdr.detectChanges();
+      },
+      error: () => {
+        this.dashboardTotalProjectsCount = this.totalProjectsCount;
+        this.dashboardTotalBudgetValue = this.totalBudgetValue;
+        this.dashboardAvgProgressValue = this.avgProgressValue;
+        this.dashboardHighRiskProjectsCount = this.highRiskProjectsCount;
+        this.cdr.detectChanges();
+      }
+    });
   }
 
   loadUpcomingMilestones(): void {
@@ -326,6 +373,68 @@ export class OverviewComponent implements OnInit, OnDestroy {
   toNumber(value: any): number {
     const parsed = Number(value);
     return Number.isFinite(parsed) ? parsed : 0;
+  }
+
+  private resolveDashboardCardValue(source: any, keys: string[], fallback: number): number {
+    const direct = this.findNumberInObject(source, keys);
+    if (direct !== null) {
+      return direct;
+    }
+
+    const fromArray = this.findNumberInCardsArray(source, keys);
+    if (fromArray !== null) {
+      return fromArray;
+    }
+
+    return fallback;
+  }
+
+  private findNumberInObject(source: any, keys: string[]): number | null {
+    if (!source || typeof source !== 'object' || Array.isArray(source)) {
+      return null;
+    }
+
+    const normalizedMap = new Map<string, any>();
+    Object.keys(source).forEach((key) => {
+      normalizedMap.set(key.toLowerCase(), source[key]);
+    });
+
+    for (const key of keys) {
+      const value = normalizedMap.get(key.toLowerCase());
+      if (value !== undefined) {
+        return this.toNumber(value);
+      }
+    }
+
+    return null;
+  }
+
+  private findNumberInCardsArray(source: any, keys: string[]): number | null {
+    const cards = Array.isArray(source)
+      ? source
+      : Array.isArray(source?.items)
+        ? source.items
+        : Array.isArray(source?.cards)
+          ? source.cards
+          : null;
+
+    if (!cards) {
+      return null;
+    }
+
+    const keyWords = keys.map(key => key.toLowerCase());
+    for (const card of cards) {
+      const label = `${card?.key || ''} ${card?.name || ''} ${card?.title || ''} ${card?.label || ''}`.toLowerCase();
+      if (!label) {
+        continue;
+      }
+
+      if (keyWords.some(word => label.includes(word))) {
+        return this.toNumber(card?.value ?? card?.count ?? card?.total ?? card?.amount ?? 0);
+      }
+    }
+
+    return null;
   }
 
   getPercent(value: number): number {

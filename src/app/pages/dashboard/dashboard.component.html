@@ -7,9 +7,18 @@
           <span class="arrow">></span>
         </div>
         <div class="kpi-body">
-          <div class="kpi-main"><strong>69</strong><span>{{ 'DASHBOARD_PAGE.TOTAL_PROJECTS' | translate }}</span></div>
-          <div class="kpi-row"><span>52 {{ 'DASHBOARD_PAGE.TOTAL_PROJECTS' | translate }}</span><span class="ok-mark">ok</span></div>
-          <div class="kpi-row split"><span>52 {{ 'DASHBOARD_PAGE.ACTIVE' | translate }}</span><span>6 {{ 'DASHBOARD_PAGE.DELAYED' | translate }}</span></div>
+          <div class="kpi-main">
+            <strong>{{ toNumber(dashboardCards.projectsOverview.totalProjects) }}</strong>
+            <span>{{ 'DASHBOARD_PAGE.TOTAL_PROJECTS' | translate }}</span>
+          </div>
+          <div class="kpi-row">
+            <span>{{ toNumber(dashboardCards.projectsOverview.onGoingProjects) }} {{ 'DASHBOARD_PAGE.ACTIVE' | translate }}</span>
+            <span class="ok-mark"></span>
+          </div>
+          <div class="kpi-row split">
+            <span>{{ toNumber(dashboardCards.projectsOverview.initialDeliveryProjects) }} {{ 'DASHBOARD_PAGE.DRAFT' | translate }}</span>
+            <span>{{ toNumber(dashboardCards.projectsOverview.offTrackProjects) }} {{ 'DASHBOARD_PAGE.DELAYED' | translate }}</span>
+          </div>
         </div>
       </article>
 
@@ -19,10 +28,21 @@
           <span class="arrow">></span>
         </div>
         <div class="kpi-body">
-          <div class="kpi-money"><strong>SAR 12.4M</strong><span>{{ 'DASHBOARD_PAGE.REVENUE' | translate }}</span></div>
-          <div class="kpi-row split"><span>{{ 'DASHBOARD_PAGE.ACTUAL_REVENUE' | translate }}</span><span>SAR 15.6M</span></div>
-          <div class="progress-line"><span style="width: 72%"></span></div>
-          <div class="kpi-row split small"><span>- $3.2M (30.4%)</span><span>+20.4%</span></div>
+          <div class="kpi-money">
+            <strong> {{ formatCurrency(dashboardCards.financialOverview.totalOriginalValue) }}</strong>
+            <span>{{ 'DASHBOARD_PAGE.REVENUE' | translate }}</span>
+          </div>
+          <div class="kpi-row split">
+            <span>{{ 'DASHBOARD_PAGE.ACTUAL_REVENUE' | translate }}</span>
+            <span>SAR {{ formatCurrency(dashboardCards.financialOverview.totalActualRevenue) }}</span>
+          </div>
+          <div class="progress-line">
+            <span [style.width.%]="toNumber(dashboardCards.financialOverview.revenueProgressPercentage)"></span>
+          </div>
+          <div class="kpi-row split small">
+            <span>SAR {{ formatCurrency(dashboardCards.financialOverview.currentMonthActualRevenue) }}</span>
+            <span>{{ toNumber(dashboardCards.financialOverview.currentMonthRevenuePercentage) }}%</span>
+          </div>
         </div>
       </article>
 
@@ -32,9 +52,18 @@
           <span class="arrow">></span>
         </div>
         <div class="kpi-body">
-          <div class="kpi-main"><strong>357</strong><span>{{ 'DASHBOARD_PAGE.TOTAL_USERS' | translate }}</span></div>
-          <div class="kpi-row split"><span>124 {{ 'DASHBOARD_PAGE.ACTIVE_TODAY' | translate }}</span><span class="badge-green">+8%</span></div>
-          <div class="kpi-row split"><span>60 {{ 'DASHBOARD_PAGE.DRAFT' | translate }}</span><span class="mini-bars"><i></i><i></i><i></i></span></div>
+          <div class="kpi-main">
+            <strong>{{ toNumber(dashboardCards.usersOverview.totalUsers) }}</strong>
+            <span>{{ 'DASHBOARD_PAGE.TOTAL_USERS' | translate }}</span>
+          </div>
+          <div class="kpi-row split">
+            <span>{{ toNumber(dashboardCards.usersOverview.confirmedUsers) }} {{ 'DASHBOARD_PAGE.ACTIVEU' | translate }}</span>
+            <span class="badge-green">ok</span>
+          </div>
+          <div class="kpi-row split">
+            <span>{{ toNumber(dashboardCards.usersOverview.unconfirmedUsers) }} {{ 'DASHBOARD_PAGE.DRAFTU' | translate }}</span>
+            <span class="mini-bars"><i></i><i></i><i></i></span>
+          </div>
         </div>
       </article>
 
@@ -44,9 +73,18 @@
           <span class="arrow">></span>
         </div>
         <div class="kpi-body">
-          <div class="kpi-main"><strong>84</strong><span>{{ 'DASHBOARD_PAGE.REGISTERED_COMPANIES' | translate }}</span></div>
-          <div class="kpi-row"><span>63 {{ 'DASHBOARD_PAGE.ACTIVE_VENDORS' | translate }}</span><span class="side-icon">></span></div>
-          <div class="kpi-row"><span>5 {{ 'DASHBOARD_PAGE.PENDING_APPROVAL' | translate }}</span><span class="side-icon">></span></div>
+          <div class="kpi-main">
+            <strong>{{ toNumber(dashboardCards.vendorsOverview.totalVendors) }}</strong>
+            <span>{{ 'DASHBOARD_PAGE.REGISTERED_COMPANIES' | translate }}</span>
+          </div>
+          <div class="kpi-row">
+            <span>{{ toNumber(dashboardCards.vendorsOverview.type2Vendors) }} {{ 'DASHBOARD_PAGE.ACTIVE_VENDORS' | translate }}</span>
+            <span class="side-icon">></span>
+          </div>
+          <div class="kpi-row">
+            <span>{{ toNumber(dashboardCards.vendorsOverview.type1Vendors) }} {{ 'DASHBOARD_PAGE.PENDING_APPROVAL' | translate }}</span>
+            <span class="side-icon">></span>
+          </div>
         </div>
       </article>
     </section>
@@ -55,7 +93,7 @@
       <article class="panel panel-dark revenue-panel">
         <div class="panel-row revenue-head">
           <h3>{{ 'DASHBOARD_PAGE.INVOICE_TREND' | translate }}</h3>
-          <div class="panel-sub">SAR 980</div>
+          <div class="panel-sub"></div>
         </div>
 
         <div class="revenue-chart">
@@ -81,7 +119,7 @@
         </div>
 
         <div class="x-axis">
-          <span>{{ 'CASHFLOW.November' | translate }}</span><span>{{ 'CASHFLOW.December' | translate }}</span><span>{{ 'CASHFLOW.January' | translate }}</span><span>{{ 'CASHFLOW.February' | translate }}</span><span>{{ 'CASHFLOW.March' | translate }}</span><span>{{ 'CASHFLOW.April' | translate }}</span>
+          <span *ngFor="let monthKey of invoiceTrendMonthKeys">{{ monthKey | translate }}</span>
         </div>
 
         <div class="legend revenue-legend">

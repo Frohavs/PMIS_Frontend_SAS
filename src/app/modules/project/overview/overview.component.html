@@ -13,23 +13,23 @@
               <span class="overview-label">{{ 'PROJECTS.OVERVIEW.TOTAL_PROJECTS' | translate }}</span>
               <span class="stat-icon accent-blue"><app-keenicon name="abstract-26"></app-keenicon></span>
             </div>
-            <span class="overview-value">{{ totalProjectsCount }}</span>
+            <span class="overview-value">{{ dashboardTotalProjectsCount }}</span>
           </div>
           <div class="overview-stat">
             <div class="stat-head">
               <span class="overview-label">{{ 'PROJECTS.OVERVIEW.TOTAL_BUDGET' | translate }}</span>
               <span class="stat-icon accent-amber"><app-keenicon name="chart-line-star"></app-keenicon></span>
             </div>
-            <span class="overview-value">{{ totalBudgetValue | number:'1.0-0' }} </span>
+            <span class="overview-value">{{ dashboardTotalBudgetValue | number:'1.0-0' }} </span>
           </div>
           <div class="overview-stat">
             <div class="stat-head">
               <span class="overview-label">{{ 'PROJECTS.OVERVIEW.AVG_PROGRESS' | translate }}</span>
               <span class="stat-icon accent-green"><app-keenicon name="graph-up"></app-keenicon></span>
             </div>
-            <span class="overview-value">{{ avgProgressValue }}%</span>
+            <span class="overview-value">{{ dashboardAvgProgressValue }}%</span>
             <div class="mini-progress">
-              <span class="mini-fill" [style.width.%]="avgProgressValue"></span>
+              <span class="mini-fill" [style.width.%]="dashboardAvgProgressValue"></span>
             </div>
           </div>
           <div class="overview-stat danger">
@@ -37,7 +37,7 @@
               <span class="overview-label">{{ 'PROJECTS.OVERVIEW.HIGH_RISK' | translate }}</span>
               <span class="stat-icon accent-red"><app-keenicon name="information-5"></app-keenicon></span>
             </div>
-            <span class="overview-value">{{ highRiskProjectsCount }} </span>
+            <span class="overview-value">{{ dashboardHighRiskProjectsCount }} </span>
           </div>
         </div>
 
